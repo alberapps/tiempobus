@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+   android:padding="6dip"
+   >
+    
+<LinearLayout
+  
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  
+  >
+  
+  			<TextView
+  			    android:padding="2dip"
+  			    android:id="@+id/legal"
+  			    android:layout_width="fill_parent"
+  			    android:layout_height="wrap_content"
+  			    android:background="@color/color_android"
+  			    android:text="@string/legal"
+  			    android:textAppearance="?android:attr/textAppearanceSmall"
+  			    android:textColor="@color/white"
+  			    android:textSize="9dp"
+  			    android:textStyle="italic" />
+  
+</LinearLayout>
+
+</LinearLayout>

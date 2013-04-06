@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="0"
+    android:orientation="vertical" android:background="@color/gris_blog"
+    android:id="@id/contenedor_favoritos">
+
+     <RelativeLayout
+         android:id="@+id/scroll"
+         android:layout_width="fill_parent"
+         android:layout_height="match_parent"
+         
+         >
+		
+		 <ListView
+            android:id="@+id/android:list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="true" android:divider="#00000000"/>
+
+        <TextView
+            android:id="@+id/android:empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/android:list"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/main_no_items" 
+            android:textColor="@color/color_android"
+            android:textStyle="bold"/>
+
+	
+	
+	</RelativeLayout>
+</LinearLayout>

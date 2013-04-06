@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="MissingRegistered" severity="ignore" />
+    <issue id="NewApi" severity="ignore" />
+    <issue id="Override">
+        <ignore path="src/alberapps/android/tiempobus/database/BuscadorLineasObserver.java" />
+    </issue>
+    <issue id="ParserError" severity="ignore" />
+    <issue id="ResourceAsColor" severity="ignore" />
+</lint>

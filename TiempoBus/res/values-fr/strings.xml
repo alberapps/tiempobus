@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TiempoBus</string>
+    <string name="app_version">2.4.2</string>
+    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="app_autor">Alberto Montiel</string>
+    <string name="app_autor_mail">alberapps@gmail.com</string>
+    <string name="app_autor_web">http://alberapps.blogspot.com</string>
+    <string name="poste">Code du arrêt&#8230;</string>
+    <string name="main_no_items">Pas d\'information</string>
+    <string name="ok">ok</string>
+    <string name="untitled">sans titre</string>
+    <string name="legal">Les temps sont obtenues du système ISAE, qui offre, en TEMP RÉEL, l\'APPROXIMATION des temps d\'arrive du réseau TAM.
+	\nLes temps peuvent varier en fonction de facteurs extérieures à l\'application, comme la circulation, changement de routes, etc.
+	\nLes fonctions qui utilisent la base de données locale peuvent ne pas disposer des dernières changements.
+	\nCette application n\'est PAS officiel et son développement est indépendant.
+	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil
+	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
+    <string name="tit_buses">Lignes&#8230;</string>
+    <string name="tit_direccion">Adresse&#8230;</string>
+    <string name="tit_paradas">Arrêt&#8230;</string>
+    <string name="tit_guardar">Garder arrêt%1$s</string>
+    <string name="tit_choose_alarm">Préviens-moi quand ils manquent&#8230;</string>
+    <string name="menu_alarma">Fixer alarme</string>
+	
+    <string name="alarm_bus">le Bus %1$s arrive à l\'arrêt %2$s</string>
+    <string name="no_favs">Il n\'y a pas d\'arrêtes gardées.\nCréez votre liste de favoris avec le bouton Ajouter.</string>
+    <string name="no_poste">Avant de garder, l\'arrêt doit être chargée</string>
+    <string name="notification_title">Alarm de Bus!</string>
+    <string name="updated_at">Mise à jour à</string>
+    <string name="err_bus_cerca">Pas possible de fixer alarme. Le bus arrive à l\'arrêt en %1$d minutes.</string>
+
+    <!-- PARA ICS -->
+
+    <string name="menu_refresh">Rafraîchir</string>
+    <string name="menu_search">Rechercher</string>
+    <string name="menu_share">Partager</string>
+    <string name="menu_save">Garder</string>
+    <string name="menu_favoritos">Favoris</string>
+    <string name="app_licencia_desc">GNU GPLv3</string>
+
+    <!-- ============================== -->
+    <!-- app/menu examples strings -->
+    <!-- ============================== -->
+    <string name="preferences">Paramètres</string>
+    <string name="preferences_from_xml">Paramètres</string>
+    <string name="launch_preferences">Information</string>
+    <string name="title_screen_preference">À propos de TiempoBus</string>
+    <string name="summary_screen_preference">À propos de l\'auteur et la licence</string>
+    <string name="nuevo_titulo">Titre</string>
+    <string name="nuevo_descripcion">Description</string>
+    <string name="nuevo_guardar">Garder</string>
+    <string name="aviso_recarga">Recharger données&#8230;</string>
+    <string name="aviso_error_datos">Erreur de communication</string>
+    <string name="tit_noticias">Nouvelles et Annonces</string>
+    <string name="dialogo_espera">Récupération des données en cours. Attendez, s\'il vous plaît&#8230;</string>
+    <string name="aviso_noticias">Information extraite de:</string>
+    <string name="menu_contextual">Fonctions applicables</string>
+    <string name="share_0">TiempoBus:</string>
+    <string name="share_0b">Arrêt:</string>
+    <string name="share_1">Ligne:</string>
+    <string name="share_2">Destination:</string>
+    <string name="share_3">Temps:</string>
+    <string name="tiempo_m_1">À l\'arrêt</string>
+    <string name="tiempo_m_2">Pas de données</string>
+    <string name="tiempo_m_3">&amp;</string>
+    <string name="alarma_cancelada">Alarme annulée</string>
+    <string name="menu_cancelar_alarma">Annuler alarme </string>
+    <string name="acercade_info">Application PAS officiel. L\'information est obtenue de:</string>
+    <string name="barcode_titulo">Installer Barcode Scanner?</string>
+    <string name="barcode_mensaje">Pour utiliser cette fonction, on recommande ZXing Barcode Scanner. Voulez-vous le télécharger de l\'Android Market?</string>
+    <string name="barcode_si">Oui</string>
+    <string name="barcode_no">Non</string>
+    <string name="mapa_ir_parada">Charger temps</string>
+    <string name="menu_mapa">Cartes</string>
+    <string name="lineas">Lignes:</string>
+    <string name="nuevas_noticias">Il y a des nouvelles annonces</string>
+    <string name="nuevas_noticias_b">Aller à la section des Nouvelles et Annonces</string>
+    <string name="conf_noticias">Nouvelles</string>
+    <string name="conf_noticias_a">Vérifier les nouvelles en ouvrir l\'application</string>
+    <string name="barcode_error">Incapable d\'extraire le code QR</string>
+    <string name="alarma_modal">Alarme activée</string>
+    <string name="alarma_activa_no">Alarme pas activée.</string>
+    <string name="alarma_establecida">Alarme fixée à</string>
+    <string name="alarma_establecida_linea">Ligne</string>
+    <string name="alarma_establecida_parada">Arrêt</string>
+    <string name="alarma_establecida_hora">Heure de l\'alarme</string>
+    <string name="configuracion_alarmas">Alarme</string>
+    <string name="configuracion_alarmas_vibrar_titulo">Annonce avec vibration</string>
+    <string name="configuracion_alarmas_vibrar_desc">Vibration en la notification</string>
+    <string name="configuracion_alarmas_tono_titulo">Ton de notification</string>
+    <string name="configuracion_alarmas_tono_desc">Sélectionez le ton pour les notifications</string>
+    <string name="mapa_lineas">Changer Ligne(online)</string>
+    <string name="mapa_lineas_offline">Changer Ligne(offline)</string>
+    <string name="mapa_ida">Aller (on/off)</string>
+    <string name="mapa_vuelta">Retour (on/off)</string>
+    <string name="mapa_aviso_vacio">La carte sera vide</string>
+    <string name="menu_ver_en_mapa">Ouvrir Carte</string>
+    <string name="preferencias_tiempos">Temps</string>
+    <string name="preferencias_tiempos_auto">Recharge automatique</string>
+    <string name="preferencias_tiempos_desc">Recharge automatique ou manuelle</string>
+    <string name="preferencias_noticias_auto">Vérifier les Nouvelles</string>
+    <string name="novedades_titulo">Nouveautés de la version</string>
+    <string name="menu_leer">Lire</string>
+    <string name="leer_1">Un bus de la ligne</string>
+    <string name="leer_2">avec destination</string>
+    <string name="leer_3">arrive en</string>
+    <string name="leer_4">minutes</string>
+    <string name="leer_ko">Données de langue pas disponible</string>
+    <string name="leer_ko_2">Données de langue pas disponible. On utilise la langue par défaut</string>
+    <string name="tit_modificar">Modifier arrêt %1$s</string>
+    <string name="menu_borrar">Effacer</string>
+    <string name="menu_modificar">Modifier</string>
+    <string name="info_borrar">Favori effacé</string>
+    <string name="info_modificar">Favori modifié</string>
+    <string name="pagina_play">TiempoBus en Google Play</string>
+    <string name="pagina_play_valora">Donez-nous votre opinion et, si vouz voulez, votre +1</string>
+    <string name="pagina_blog">Blog de TiempoBus</string>
+    <string name="pagina_blog_detalle">Information et Nouvelles</string>
+    <string name="preferencias_imagen">Found d\'écran</string>
+    <string name="seleccion_fondo_1">Galerie</string>
+    <string name="seleccion_fondo_2">Aucun</string>
+    <string name="seleccion_fondo_3">Annuler</string>
+    <string name="seleccion_ok">Found d\'écran fixé</string>
+    <string name="fondo_pantall">Found d\'écran</string>
+
+    <!-- The label for use as a searchable item -->
+    <string name="search_label">TiempoBus</string>
+
+    <!-- The hint text that appears in the search box. -->
+    <string name="search_hint">Arrêt, ligne, adresse</string>
+
+    <!-- The description that will show up in the search settings for this source. -->
+    <string name="settings_description">Recherche de lignes</string>
+
+    <!-- General instructions in the main activity. -->
+    <string name="search_instructions">Utilisez la loupe dans la barre superieur pour réaliser une nouvelle recherche</string>
+
+    <!-- Shown above search results when we receive a search request. -->
+    <plurals name="search_results">
+        <item quantity="one">%1$d résultat pour \"%2$s\": </item>
+        <item quantity="other">%1$d résultats pour \"%2$s\": </item>
+    </plurals>
+
+    <!-- Search failure message. -->
+    <string name="no_results">Pas de résultats pour \"%s\"</string>
+    <string name="linea">Ligne</string>
+    <string name="conexiones">Correspondances</string>
+    <string name="cercanas">Arrêts proches(GPS)</string>
+    <string name="busqueda">Rechercher</string>
+    <string name="datos_parada">Données de l\'arrêt</string>
+    <string name="favoritosN">Favoris</string>
+    <string name="ordenar_parada">Trier par Arrêt</string>
+    <string name="ordenar_nombre">Trier par Nom</string>
+    <string name="exportar">Exporter(SD)</string>
+    <string name="importar">Importer(SD)</string>
+    <string name="error_importar">ERREUR: Incapable d\'importer. Le fichier exporté doit être disponible en la route de la carte SD: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="dialog_procesando">Traitement de données en cours</string>
+    <string name="ok_importar">Favoris importés avec succès</string>
+    <string name="error_exportar">ERREUR: Incapable d\'exporter les favoris vers la carte SD</string>
+    <string name="ok_exportar">Favoris exportés avec succès à la route de la carte SD: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="gps_on">Voulez-vous activer la localisation par GPS?</string>
+    <string name="gps_recuperando">Récupération de la position actuelle en cours</string>
+    <string name="gps_no_paradas">Pas d\'arrêts trouvés en proximité</string>
+    <string name="favoritos_pregunta">La liste de favoris actuelle sera écrasée. Continuer?</string>
+    <string name="referencias">Références</string>
+    <string name="mapa_posible_error">AVIS: les données ont été récupérées de la web. Cette ligne peut être incomplète</string>
+    <string name="proximidad_1">Près</string>
+    <string name="proximidad_2">Distance moyenne</string>
+    <string name="proximidad_3">Loin</string>
+    <string name="proximidad">Proximité des arrêts</string>
+    <string name="destino">Destination</string>
+    <string name="localizacion">Localisation</string>
+    <string name="buscador_online">Recherche (Web Subús)</string>
+    <string name="ida">Aller</string>
+    <string name="vuelta">Retour</string>
+    <string name="ko_noticia">La nouvelle ne peut pas être affichée. Accédez à la web, s.v.p.</string>
+    <string name="aviso_noticia">Si le contenue est pas affiché correctement, cliquez sur le link pour accéder à la web</string>
+    <string name="noticias_links">Possibles links</string>
+    <string name="noticias_instrucciones">Cliquez à l\'annonce pour ouvrir le détail.</string>
+    <string name="aviso_buscador_online">Les parcours sont récuperés directement du site subus.es.\nAvec la loupe, vous accédez à la base de données locale.</string>
+    <string name="streetview_ko">Incapable d\'accéder à Street View. S.v.p., vérifiez s\'il est installé.</string>
+    <string name="streetview_boton">Street View</string>
+    <string name="guion">-</string>
+    <string name="url_subus">http://www.subus.es/</string>
+    <string name="hora_inicial">0:00</string>
+
+   
+    <string name="alarma_auto_aviso">* Avec cette option, les temps sont mises à jour tous les 60 secondes.</string>
+    <string name="alarma_auto_error">Problem avec l\'Actualisation de l\'Alarme</string>
+    <string name="alarma_auto_actualizada">Alarme actualisée</string>
+    <string name="err_bus_sin">Impossible de fixer une alarme.\nPas d\'estimation disponible.</string>
+    <string name="alarma_que_tiempo">Temps</string>
+    <string name="alarma_preferencias_refrescar">Actualiser avec Recharge</string>
+    <string name="alarma_preferencias_refrescar_desc">Vérifie s\'il faut actualiser l\'alarme en rechargeant les temps</string>
+    <string name="error_generico_1">En ce moment l\'information ne peut pas être montrée</string>
+    <string name="error_tiempos">Incapable de récupérer les données. Réessayez s.v.p. en quelques minutes. Si ça ne marche pas, vérifiez s.v.p. la disponibilité du service: isaealicante.subus.es/movil</string>
+   
+    <string name="error_gcode">Chargement de la liste des lignes locale</string>
+   
+    <string name="error_tabs">Incapable de charger les données. Essayez encore, s.v.p.</string>
+    <string name="error_datos_offline">Incapable de charger les données. S.v.p., essayez encore, ou accédez online.</string>
+   
+    <string name="error_fichero">Incapable d\'accéder au sistème des fichiers</string>
+	
+	<string name="error_red">L\'access à Internet n\'est pas disponible. Vérifiez s.v.p. votre connexion</string>
+	<string name="foreground_service_started">Vérifier temps tous les 60 secondes</string>
+	<string name="foreground_service">TiempoBus : Service d\'alarmes</string>
+	<string name="tab_noticias">Web Subús</string>
+	<string name="tab_tw">Twitter</string>
+	
+	<string name="dato_tw">Les tweets plus récentes du :</string>
+	<string name="tw1">https://twitter.com/alberapps</string>
+    <string name="tw2">https://twitter.com/Alicante_City</string>
+	
+	<string name="error_codigo">Le code d\'arrêt n\'est pas correct</string>
+	<string name="alarma_checkbox">Activer Service</string>
+	<string name="carga_noticias_msg">Chargement des Nouvelles Web en cours</string>
+	<string name="carga_tw_msg">Chargement de Twitter en cours</string>
+   
+	<!-- Nuevo -->
+    <string name="recarga_bd">TiempoBus</string>
+    <string name="recarga_bd_desc">Database Update</string>
+    
+    <string name="recarga_bd_desc_final">Database updated successfully</string>
+    
+    <string name="recarga_bd_desc_error">Database Error</string>
+    
+    <string name="traducciones">Traslations</string>
+    <string name="traducciones_tit">Language Support</string>
+    <string name="traducciones_cambiar">Change "locale"</string>
+    <string name="traducciones_locale">locale</string>
+    <string name="traducciones_desc">Information and authors</string>
+	
+	
+</resources>
+

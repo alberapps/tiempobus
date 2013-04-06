@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TiempoBus</string>
+    <string name="app_version">2.4.2</string>
+    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="app_autor">Alberto Montiel (2012)</string>
+    <string name="app_autor_mail">alberapps@gmail.com</string>
+    <string name="app_autor_web">http://alberapps.blogspot.com</string>
+    <string name="poste">Bus Stop Code&#8230;</string>
+    <string name="main_no_items">No information</string>
+    <string name="ok">ok</string>
+    <string name="untitled">no title</string>
+    <string name="legal">Time offered by ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM net.
+	\nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
+	\nFeatures using the local database may not show the latest route changes.
+	\nThis application is UNofficial and its development is independent.
+	\nLine data and step times obtained from: www.subus.es and isaealicante.subus.es/movil
+	\nLearn more: alberapps.blogspot.com and at Twitter: @alberapps</string>
+    <string name="tit_buses">Bus Lines&#8230;</string>
+    <string name="tit_direccion">Address&#8230;</string>
+    <string name="tit_paradas">Bus stop&#8230;</string>
+    <string name="tit_guardar">Save bus stop %1$s</string>
+    <string name="tit_choose_alarm">Alert me before bus arrives</string>
+    <string name="menu_alarma">Set alarm</string>
+   
+    <string name="alarm_bus">Bus %1$s arrives at the bus stop %2$s</string>
+    <string name="no_favs">There are no bus stops saved. \nUse the Add button to create your favorite list.</string>
+    <string name="no_poste">Before saving, the bus stop must be loaded</string>
+    <string name="notification_title">Bus Alert!</string>
+    <string name="updated_at">Updated at</string>
+    <string name="err_bus_cerca">Alarm setting not possible. The bus arrives in only %1$d minutes.</string>
+
+    <!-- PARA ICS -->
+
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_favoritos">Favorites</string>
+    <string name="app_licencia_desc">GNU GPLv3 License</string>
+
+    <!-- ============================== -->
+    <!-- app/menu examples strings -->
+    <!-- ============================== -->
+    <string name="preferences">Settings</string>
+    <string name="preferences_from_xml">Settings</string>
+    <string name="launch_preferences">Information</string>
+    <string name="title_screen_preference">About TiempoBus</string>
+    <string name="summary_screen_preference">About the author and license</string>
+    <string name="nuevo_titulo">Label</string>
+    <string name="nuevo_descripcion">Description</string>
+    <string name="nuevo_guardar">Save</string>
+    <string name="aviso_recarga">Reloading data&#8230;</string>
+    <string name="aviso_error_datos">Communication error</string>
+    <string name="tit_noticias">Notices and News</string>
+    <string name="dialogo_espera">Retrieving data. Wait&#8230;</string>
+    <string name="aviso_noticias">Information retrieved from:</string>
+    <string name="menu_contextual">Applicable Functions</string>
+    <string name="share_0">TiempoBus:</string>
+    <string name="share_0b">Bus Stop:</string>
+    <string name="share_1">Line:</string>
+    <string name="share_2">Destination:</string>
+    <string name="share_3">Time:</string>
+    <string name="tiempo_m_1">At bus stop</string>
+    <string name="tiempo_m_2">No data</string>
+    <string name="tiempo_m_3">&amp;</string>
+    <string name="alarma_cancelada">Alarm Off</string>
+    <string name="menu_cancelar_alarma">Alarm Off</string>
+    <string name="acercade_info">NOT official Application. The information is obtained from:</string>
+    <string name="barcode_titulo">Install Barcode Scanner?</string>
+    <string name="barcode_mensaje">To use this feature, ZXing Barcode Scanner is recommended. Download it from Android Market?</string>
+    <string name="barcode_si">Yes</string>
+    <string name="barcode_no">No</string>
+    <string name="mapa_ir_parada">See Time</string>
+    <string name="menu_mapa">Maps</string>
+    <string name="lineas">Bus Lines:</string>
+    <string name="nuevas_noticias">There are new Notices</string>
+    <string name="nuevas_noticias_b">Go to the Notices and News section</string>
+    <string name="conf_noticias">News</string>
+    <string name="conf_noticias_a">Check for news when the application starts</string>
+    <string name="barcode_error">Unable to retrieve the QR code</string>
+    <string name="alarma_modal">Alarm On</string>
+    <string name="alarma_activa_no">The alarm is off.</string>
+    <string name="alarma_establecida">Alarm set at</string>
+    <string name="alarma_establecida_linea">Bus Line</string>
+    <string name="alarma_establecida_parada">Bus Stop</string>
+    <string name="alarma_establecida_hora">Alarm Time</string>
+    <string name="configuracion_alarmas">Alarm</string>
+    <string name="configuracion_alarmas_vibrar_titulo">Vibration when Notifying</string>
+    <string name="configuracion_alarmas_vibrar_desc">Use vibration when notifying</string>
+    <string name="configuracion_alarmas_tono_titulo">Notification Tone</string>
+    <string name="configuracion_alarmas_tono_desc">Select the tone for notification</string>
+    <string name="mapa_lineas">Change Bus Line (online)</string>
+    <string name="mapa_lineas_offline">Change Bus Line (offline)</string>
+    <string name="mapa_ida">Forward (on/off)</string>
+    <string name="mapa_vuelta">Backward (on/off)</string>
+    <string name="mapa_aviso_vacio">The map would be empty</string>
+    <string name="menu_ver_en_mapa">Open Map</string>
+    <string name="preferencias_tiempos">Time</string>
+    <string name="preferencias_tiempos_auto">Refresh</string>
+    <string name="preferencias_tiempos_desc">Automatic or manual refresh</string>
+    <string name="preferencias_noticias_auto">Check News</string>
+    <string name="novedades_titulo">What\'s New</string>
+    <string name="menu_leer">Read</string>
+    <string name="leer_1">A bus of the line</string>
+    <string name="leer_2">with destination</string>
+    <string name="leer_3">is</string>
+    <string name="leer_4">minutes away</string>
+    <string name="leer_ko">Language data not available</string>
+    <string name="leer_ko_2">Language data not available. Using default language.</string>
+    <string name="tit_modificar">Modify bus stop %1$s</string>
+    <string name="menu_borrar">Delete</string>
+    <string name="menu_modificar">Modify</string>
+    <string name="info_borrar">Favorite deleted</string>
+    <string name="info_modificar">Favorite modified</string>
+    <string name="pagina_play">TiempoBus in Google Play</string>
+    <string name="pagina_play_valora">Give us your opinion and, if you want, your +1</string>
+    <string name="pagina_blog">TiempoBus Blog</string>
+    <string name="pagina_blog_detalle">Information and News</string>
+    <string name="preferencias_imagen">Wallpaper</string>
+    <string name="seleccion_fondo_1">Gallery</string>
+    <string name="seleccion_fondo_2">None</string>
+    <string name="seleccion_fondo_3">Cancel</string>
+    <string name="seleccion_ok">Wallpaper set</string>
+    <string name="fondo_pantall">Wallpaper</string>
+
+    <!-- The label for use as a searchable item -->
+    <string name="search_label">TiempoBus</string>
+
+    <!-- The hint text that appears in the search box. -->
+    <string name="search_hint">Bus Stop, line, address</string>
+
+    <!-- The description that will show up in the search settings for this source. -->
+    <string name="settings_description">Find bus lines</string>
+
+    <!-- General instructions in the main activity. -->
+    <string name="search_instructions">Use the magnifying glass on the top bar to perform a new search</string>
+
+    <!-- Shown above search results when we receive a search request. -->
+    <plurals name="search_results">
+        <item quantity="one">%1$d result for \"%2$s\":  </item>
+        <item quantity="other">%1$d results for \"%2$s\":  </item>
+    </plurals>
+
+    <!-- Search failure message. -->
+    <string name="no_results">No results for \"%s\"</string>
+    <string name="linea">Bus Line</string>
+    <string name="conexiones">Connections</string>
+    <string name="cercanas">Near bus stops (GPS)</string>
+    <string name="busqueda">Search</string>
+    <string name="datos_parada">Bus Stop Data</string>
+    <string name="favoritosN">Favorites</string>
+    <string name="ordenar_parada">Sort by Bus Stop</string>
+    <string name="ordenar_nombre">Sort by Name</string>
+    <string name="exportar">Export (SD)</string>
+    <string name="importar">Import (SD)</string>
+    <string name="error_importar">ERROR: Unable to import.  The exported file must be available on the SD card route: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="dialog_procesando">Processing Data</string>
+    <string name="ok_importar">Favorites imported correctly</string>
+    <string name="error_exportar">ERROR: Failed to export the favorites to the SD card</string>
+    <string name="ok_exportar">The favorites have been successfully exported to the SD card route: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="gps_on">Do you want to activate the GPS positioning?</string>
+    <string name="gps_recuperando">Retrieving current position</string>
+    <string name="gps_no_paradas">Could not find bus stops nearby</string>
+    <string name="favoritos_pregunta">The current favorite list will be overwritten, continue?</string>
+    <string name="referencias">References</string>
+    <string name="mapa_posible_error">WARNING: Data retrieved from the web may be incomplete for this line</string>
+    <string name="proximidad_1">Close</string>
+    <string name="proximidad_2">Average distance</string>
+    <string name="proximidad_3">Away</string>
+    <string name="proximidad">Proximity of bus stops</string>
+    <string name="destino">Destination</string>
+    <string name="localizacion">Location</string>
+    <string name="buscador_online">Search (Subús Web)</string>
+    <string name="ida">Forward</string>
+    <string name="vuelta">Backward</string>
+    <string name="ko_noticia">Cannot display correctly. Please access the web</string>
+    <string name="aviso_noticia">If content is not displayed correctly, please click the link to access the web</string>
+    <string name="noticias_links">Possible links</string>
+    <string name="noticias_instrucciones">Click on the ad to open its detail.</string>
+    <string name="aviso_buscador_online">Tours are retrieved directly from the site subus.es.\nWith magnifier, local database is queried.</string>
+    <string name="streetview_ko">Error accessing Street View. Please check if it is installed.</string>
+    <string name="streetview_boton">Street View</string>
+    <string name="guion">-</string>
+    <string name="url_subus">http://www.subus.es/</string>
+    <string name="hora_inicial">0:00</string>
+   
+    
+    <string name="alarma_auto_aviso">* With this option enabled, time is updated automatically every 60 seconds.</string>
+    <string name="alarma_auto_error">Problem Updating Alarm</string>
+    <string name="alarma_auto_actualizada">Alarm Updated</string>
+    <string name="err_bus_sin">Alarm setting not possible.\nNo estimation available.</string>
+    <string name="alarma_que_tiempo">Time</string>
+    <string name="alarma_preferencias_refrescar">Update with Reloading</string>
+    <string name="alarma_preferencias_refrescar_desc">Checks to update the alarm when performing a time recharge</string>
+    <string name="error_generico_1">Information cannot be displayed right now</string>
+    <string name="error_tiempos">Failed to retrieve data. Try again in a few minutes. If that does not work, check the availability of the service: isaealicante.subus.es/movil</string>
+   
+    <string name="error_gcode">Loading local list of lines</string>
+   
+    <string name="error_tabs">Unable to load data. Please try again.</string>
+    <string name="error_datos_offline">Unable to load data. Please try again or use the online access.</string>
+   
+    <string name="error_fichero">Error accessing file system</string>
+	
+	<string name="error_red">Internet access is not available. Please verify your connection</string>
+	<string name="foreground_service_started">Verify time every 60 seconds</string>
+	<string name="foreground_service">TiempoBus: Alert Service</string>
+	
+	
+	<string name="tab_noticias">Subús Web</string>
+	
+	<string name="tab_tw">Twitter</string>
+	
+	<string name="dato_tw">Most recent tweets from:</string>
+	<string name="tw1">https://twitter.com/alberapps</string>
+    <string name="tw2">https://twitter.com/Alicante_City</string>
+	
+	
+	<string name="error_codigo">The bus stop code is not correct</string>
+	<string name="alarma_checkbox">Activate service</string>
+	<string name="carga_noticias_msg">Loading web news</string>
+	<string name="carga_tw_msg">Loading Twitter</string>
+	
+	<!-- Nuevo -->
+    <string name="recarga_bd">TiempoBus</string>
+    <string name="recarga_bd_desc">Database Update</string>
+    
+    <string name="recarga_bd_desc_final">Database updated successfully</string>
+    
+    <string name="recarga_bd_desc_error">Database Error</string>
+    
+   	
+    <string name="traducciones">Traslations</string>
+    <string name="traducciones_tit">Language Support</string>
+    <string name="traducciones_cambiar">Change "locale"</string>
+    <string name="traducciones_locale">locale</string>
+    <string name="traducciones_desc">Information and authors</string>
+    
+    
+</resources>

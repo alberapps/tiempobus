@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="0"
+    android:orientation="vertical" android:background="@color/gris_blog"
+    android:id="@id/contenedor_tw">
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_android"
+        android:gravity="left"
+        android:text="@string/dato_tw"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
+        android:textStyle="italic" />
+
+    <TextView
+        android:id="@+id/accederNoticia"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:background="@color/color_android"
+        android:gravity="left"
+        android:text="@string/tw1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:background="@color/color_android"
+        android:gravity="left"
+        android:text="@string/tw2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
+        android:textStyle="italic" />
+
+     <RelativeLayout
+         android:id="@+id/scroll"
+         android:layout_width="fill_parent"
+         android:layout_height="match_parent"
+         
+         >
+		
+		 <ListView
+            android:id="@+id/listatw"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="true" android:divider="#00000000"/>
+
+        <TextView
+            android:id="@+id/vacio_tw"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/listatw"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/main_no_items" 
+            android:textColor="@color/color_android"
+            android:textStyle="bold"/>
+
+	
+	
+	</RelativeLayout>
+</LinearLayout>

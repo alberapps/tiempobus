@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:padding="6dip">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" android:background="@drawable/fondo_linea">
+
+        <TextView
+            android:id="@+id/bus_linea"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:cacheColorHint="#00000000"
+            android:gravity="center"
+            android:shadowColor="#ff335e80"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/guion"
+            android:textColor="@color/color_android"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/bus_destino"
+                style="@style/InfoPoste.Destino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@string/guion"
+                android:textColor="@color/color_android"
+                android:textSize="15sp" 
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/bus_proximo"
+                style="@style/InfoPoste.Proximo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                android:text="@string/guion"
+                android:textColor="@color/color_android"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+	
+</LinearLayout>

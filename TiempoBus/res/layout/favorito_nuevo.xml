@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:id="@id/contenedor_nuevo"
+	android:background="@color/gris_blog">
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" 
+	    android:background="@drawable/fondo_favorito">
+
+	    <TextView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:paddingTop="10dp"
+	        android:text="@string/nuevo_titulo"
+	        android:textStyle="bold" />
+
+	    <EditText
+	        android:id="@+id/titulo"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:ems="10" 
+	        android:inputType="text">
+
+	        <requestFocus />
+	    </EditText>
+
+	    <TextView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:paddingTop="10dp"
+	        android:text="@string/nuevo_descripcion"
+	        android:textStyle="bold" />
+
+	    <EditText
+	        android:id="@+id/descripcion"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:ems="10"
+	        android:inputType="textMultiLine"
+	        android:lines="3" />
+
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+
+	        <Button
+	            android:id="@+id/boton_go"
+	            android:layout_width="132dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_alignParentTop="true"
+	            android:layout_marginLeft="80dp"
+	            android:text="@string/nuevo_guardar" />
+	    </RelativeLayout>
+	</LinearLayout>
+
+</LinearLayout>
+

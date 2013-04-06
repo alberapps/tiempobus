@@ -1,0 +1,43 @@
+<!--
+  Copyright 2011 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_refresh"
+        android:title="@string/menu_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="1"
+        android:showAsAction="always" />
+    <item android:id="@+id/menu_search"
+        android:title="@string/menu_search"
+        android:icon="@drawable/ic_action_search"
+        android:orderInCategory="0"
+        android:showAsAction="always"/>
+    
+    <item android:id="@+id/menu_favoritos" android:title="@string/menu_favoritos" android:icon="@drawable/ic_menu_favoritos" android:orderInCategory="5" android:showAsAction="never" /><item android:id="@+id/menu_guardar"
+        android:title="@string/menu_save"
+        android:icon="@drawable/ic_menu_guardar"
+        android:orderInCategory="6"
+        android:showAsAction="never" /><item android:id="@id/menu_preferencias"
+        android:title="@string/preferences"
+        android:icon="@drawable/ic_menu_preferencias"
+        android:orderInCategory="7"
+        android:showAsAction="never" /><item android:id="@+id/menu_noticias" android:orderInCategory="4" android:title="@string/tit_noticias" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item><item android:id="@+id/menu_mapas" android:orderInCategory="1" android:title="@string/menu_mapa" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item><item android:id="@id/menu_fondo" android:title="@string/fondo_pantall" android:icon="@drawable/ic_menu_fondo" android:orderInCategory="8" android:showAsAction="never" />
+        
+        <!-- 
+        <item android:id="@+id/menu_cancelar_alarma" android:orderInCategory="5" android:title="@string/menu_cancelar_alarma" android:showAsAction="never" android:icon="@drawable/ic_menu_cancelar_alarma"></item>
+        -->
+        
+</menu>

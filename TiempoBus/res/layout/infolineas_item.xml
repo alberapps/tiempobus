@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="6dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/fondo_infolinea" >
+
+         <TextView
+            android:id="@+id/bus_linea"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp"
+            android:cacheColorHint="#00000000"
+            android:gravity="center"
+            android:shadowColor="#ff335e80"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:text="@string/guion"
+            android:textColor="@color/color_android"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/desc_linea"
+                style="@style/InfoPoste.Destino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                
+                android:text="@string/guion"
+                android:textColor="@color/color_android"
+                android:textSize="15sp" 
+                android:textStyle="bold"/>
+
+           
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
