@@ -29,4 +29,16 @@
     
     <string name="configura">Configurar</string>
     
+    <string name="alta_1">El bus de la parada actual ha sido añadido al widget.</string>
+    
+    <string name="alta_2">Seleccione "actualizar" en el widget para visualizar los nuevos datos.</string>
+    
+    <string name="tiempo_m_1">En la Parada</string>
+    <string name="tiempo_m_2">Sin Estimación</string>
+    <string name="tiempo_m_3">y</string>
+    
+    <string name="eliminar_ok">Se ha eliminado el dato</string>
+    
+    <string name="eliminar_pregunta">¿Eliminar el dato?</string>
+    
 </resources>

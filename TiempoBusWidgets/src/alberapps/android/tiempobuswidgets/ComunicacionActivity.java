@@ -1,11 +1,13 @@
 package alberapps.android.tiempobuswidgets;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -19,7 +21,7 @@ public class ComunicacionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 
-	    //setContentView(R.layout.main);
+	    setContentView(R.layout.comunicacion);
 
 	    // Get the intent that started this activity
 	    Intent intent = getIntent();
@@ -53,9 +55,42 @@ public class ComunicacionActivity extends Activity {
 		editor.commit();
 	    
 	    
+		actualizarWidget();
+		
 	    Toast.makeText(this, "prueba: " + datos, Toast.LENGTH_SHORT).show();
 	    
+	 // boton parada
+	 		Button botonAceptar = (Button) findViewById(R.id.aceptar_alta);
+	 		botonAceptar.setOnClickListener(new Button.OnClickListener() {
+	 			public void onClick(View arg0) {
+	 				finish();
+	 			}
 	    
+	    
+	 		});
+	 		
+	}
+	
+	
+	private void actualizarWidget(){
+		
+		AppWidgetManager awm = AppWidgetManager.getInstance(getApplicationContext());
+		
+		//int[] awid= awm.getAppWidgetIds(new ComponentName(this,TiemposWidgetProvider.class));
+		
+		//if(awid.length > 0){
+			
+			Intent updateIntent = new Intent(getApplicationContext(), TiemposWidgetProvider.class);
+			updateIntent.setAction(TiemposWidgetProvider.REFRESH_ACTION);
+			
+			getApplicationContext().sendBroadcast(updateIntent);
+			
+			//new TiemposWidgetProvider().actualizar(context, intent).onUpdate(this, awm, awid);
+		//}
+		
+		
+		
+		
 	}
 
 }

@@ -23,7 +23,10 @@ import java.util.List;
 
 import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
+import alberapps.java.datos.Datos;
+import alberapps.java.datos.GestionarDatos;
 import alberapps.java.tam.BusLlegada;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -32,6 +35,7 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
@@ -44,7 +48,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -79,7 +82,7 @@ class WeatherDataProviderObserver extends ContentObserver {
 public class TiemposWidgetProvider extends AppWidgetProvider {
 	public static String CLICK_ACTION = "alberapps.android.tiempobuswidgets.CLICK";
 	public static String REFRESH_ACTION = "alberapps.android.tiempobuswidgets.REFRESH";
-	public static String EXTRA_DAY_ID = "alberapps.android.tiempobuswidgets.linea";
+	public static String DATO_ID = "alberapps.android.tiempobuswidgets.dato";
 
 	private static HandlerThread sWorkerThread;
 	private static Handler sWorkerQueue;
@@ -119,31 +122,33 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			sDataObserver = new WeatherDataProviderObserver(mgr, cn, sWorkerQueue);
 			r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
 		}
-		
+
 		onReceive(context, new Intent().setAction(REFRESH_ACTION));
-		
+
 	}
 
 	/**
 	 * Lanza la subactivididad de preferencias
 	 */
 	private void showPreferencias(Context ctx) {
-		
+
 		final Context context = ctx;
-		
+
 		Intent i = new Intent(context, PreferencesFromXml.class);
 
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		
+
 		context.startActivity(i);
 
 	}
-	
+
 	@Override
-	public void onReceive(Context ctx, Intent intent) {
+	public void onReceive(Context ctx, final Intent intent) {
 		final String action = intent.getAction();
-		
+
 		final Context context = ctx;
+
+		
 		
 		if (action.equals(REFRESH_ACTION)) {
 
@@ -154,119 +159,141 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			// can be triggered from a background service, or perhaps as a
 			// result of user actions
 			// inside the main application.
-			
 
-			PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
-			preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+			actualizar(context, intent);
 
-			listaTiempos = new ArrayList<BusLlegada>();
-
-			LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
-				public void tiemposLoaded(List<BusLlegada> tiempos) {
-
-					listaTiempos = tiempos;
-
-					Log.d("tag", " " +tiempos.get(0).getProximo());
-					
-					
-					sWorkerQueue.removeMessages(0);
-					sWorkerQueue.post(new Runnable() {
-						@Override
-						public void run() {
-							final ContentResolver r = context.getContentResolver();
-							//final Cursor c = r.query(TiemposDataProvider.CONTENT_URI, null, null, null, null);
-							//final int count = c.getCount();
-
-							// We disable the data changed observer temporarily since
-							// each of the updates
-							// will trigger an onChange() in our data observer.
-							r.unregisterContentObserver(sDataObserver);
-														
-							r.delete(TiemposDataProvider.CONTENT_URI, null, null);
-							
-							for (int i = 0; i < listaTiempos.size(); ++i) {
-								
-								final Uri uri = ContentUris.withAppendedId(TiemposDataProvider.CONTENT_URI, i);
-
-								final ContentValues values = new ContentValues();
-
-								// Linea
-								values.put(TiemposDataProvider.Columns.LINEA, listaTiempos.get(i).getLinea());
-
-								// Tiempo
-								values.put(TiemposDataProvider.Columns.TIEMPO, listaTiempos.get(i).getProximo());
-								
-								//Destino
-								values.put(TiemposDataProvider.Columns.DESTINO, listaTiempos.get(i).getDestino());
-								
-								//Parada
-								values.put(TiemposDataProvider.Columns.PARADA, listaTiempos.get(i).getParada());
-
-								//r.update(uri, values, TiemposDataProvider.Columns.LINEA, new String[]{listaTiempos.get(i).getLinea()});
-							
-								
-								r.insert(uri, values);
-							}
-							r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
-
-							final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-							final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-							mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.weather_list);
-						}
-					});
-
-					
-					
-				}
-
-			};
-
-			// Control de disponibilidad de conexion
-			ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			if (networkInfo != null && networkInfo.isConnected()) {
-
-				String lineasParada = preferencias.getString("lineas_parada", "24,2902;10,2902");
-
-				new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(lineasParada);
-
-			} else {
-				Toast.makeText(context.getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-			}
-
-			final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-			
-			
-			//Cambiar hora actualizacion
-			RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-			final Calendar c = Calendar.getInstance();
-			SimpleDateFormat df = new SimpleDateFormat("HH:mm");			
-			String updated = df.format(c.getTime()).toString();			
-			rv.setTextViewText(R.id.hora_act, updated);
-			
-			
-			final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-			final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-			mgr.updateAppWidget(cn, rv);
-			
-			
-			Toast.makeText(context, "Actualiza", Toast.LENGTH_SHORT).show();
-			
-			
-			
-			
 		} else if (action.equals(CLICK_ACTION)) {
 			// Show a toast
 			final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-			final String day = intent.getStringExtra(EXTRA_DAY_ID);
-			final String formatStr = ctx.getResources().getString(R.string.toast_format_string);
-			Toast.makeText(ctx, String.format(formatStr, day), Toast.LENGTH_SHORT).show();
+			final int dato = intent.getIntExtra(DATO_ID, -1);
+
+			Log.d("tag", " eliminar: " + dato);
+
 			
-			showPreferencias(context);
+			Intent i = new Intent(context, EliminarDatoActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			i.putExtra("DATO", dato);			
+			context.startActivity(i);
 			
+			
+			
+			
+			
+
+					
+
+						//actualizar(context, intent);
+
+					
+			
+			
+			
+
+			// showPreferencias(context);
+
 		}
 
 		super.onReceive(ctx, intent);
+	}
+
+	
+	
+	public void actualizar(final Context context, Intent intent) {
+
+		PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+		preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+
+		listaTiempos = new ArrayList<BusLlegada>();
+
+		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
+			public void tiemposLoaded(List<BusLlegada> tiempos) {
+
+				listaTiempos = tiempos;
+
+				Log.d("tag", " " + tiempos.get(0).getProximo());
+
+				sWorkerQueue.removeMessages(0);
+				sWorkerQueue.post(new Runnable() {
+					@Override
+					public void run() {
+						final ContentResolver r = context.getContentResolver();
+						// final Cursor c =
+						// r.query(TiemposDataProvider.CONTENT_URI, null, null,
+						// null, null);
+						// final int count = c.getCount();
+
+						// We disable the data changed observer temporarily
+						// since
+						// each of the updates
+						// will trigger an onChange() in our data observer.
+						r.unregisterContentObserver(sDataObserver);
+
+						r.delete(TiemposDataProvider.CONTENT_URI, null, null);
+
+						for (int i = 0; i < listaTiempos.size(); ++i) {
+
+							final Uri uri = ContentUris.withAppendedId(TiemposDataProvider.CONTENT_URI, i);
+
+							final ContentValues values = new ContentValues();
+
+							// Linea
+							values.put(TiemposDataProvider.Columns.LINEA, listaTiempos.get(i).getLinea());
+
+							// Tiempo
+							values.put(TiemposDataProvider.Columns.TIEMPO, listaTiempos.get(i).getProximo());
+
+							// Destino
+							values.put(TiemposDataProvider.Columns.DESTINO, listaTiempos.get(i).getDestino());
+
+							// Parada
+							values.put(TiemposDataProvider.Columns.PARADA, listaTiempos.get(i).getParada());
+
+							// r.update(uri, values,
+							// TiemposDataProvider.Columns.LINEA, new
+							// String[]{listaTiempos.get(i).getLinea()});
+
+							r.insert(uri, values);
+						}
+						r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
+
+						final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+						final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+						mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.weather_list);
+					}
+				});
+
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+
+			List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", "24,2902;10,2902"));
+
+			new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(lineasParada);
+
+		} else {
+			Toast.makeText(context.getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+		}
+
+		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+
+		// Cambiar hora actualizacion
+		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+		final Calendar c = Calendar.getInstance();
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+		String updated = df.format(c.getTime()).toString();
+		rv.setTextViewText(R.id.hora_act, updated);
+
+		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+		mgr.updateAppWidget(cn, rv);
+
+		Toast.makeText(context, "Actualiza", Toast.LENGTH_SHORT).show();
+
 	}
 
 	private RemoteViews buildLayout(Context context, int appWidgetId, boolean largeLayout) {
@@ -306,10 +333,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 			// Restore the minimal header
 			rv.setTextViewText(R.id.city_name, context.getString(R.string.app_name));
-			
-			
-			
-			
+
 		} else {
 			rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout_small);
 
@@ -334,9 +358,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			RemoteViews layout = buildLayout(context, appWidgetIds[i], mIsLargeLayout);
 			appWidgetManager.updateAppWidget(appWidgetIds[i], layout);
 		}
-		
-		
-		
+
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 

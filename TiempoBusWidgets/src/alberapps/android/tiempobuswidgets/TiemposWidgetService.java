@@ -25,111 +25,162 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 /**
- * This is the service that provides the factory to be bound to the collection service.
+ * This is the service that provides the factory to be bound to the collection
+ * service.
  */
 public class TiemposWidgetService extends RemoteViewsService {
-    @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return new StackRemoteViewsFactory(this.getApplicationContext(), intent);
-    }
+	@Override
+	public RemoteViewsFactory onGetViewFactory(Intent intent) {
+		return new StackRemoteViewsFactory(this.getApplicationContext(), intent);
+	}
 }
 
 /**
  * This is the factory that will provide data to the collection widget.
  */
 class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private Context mContext;
-    private Cursor mCursor;
-    private int mAppWidgetId;
+	private Context mContext;
+	private Cursor mCursor;
+	private int mAppWidgetId;
 
-    public StackRemoteViewsFactory(Context context, Intent intent) {
-        mContext = context;
-        mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-                AppWidgetManager.INVALID_APPWIDGET_ID);
-    }
+	public StackRemoteViewsFactory(Context context, Intent intent) {
+		mContext = context;
+		mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+	}
 
-    public void onCreate() {
-        // Since we reload the cursor in onDataSetChanged() which gets called immediately after
-        // onCreate(), we do nothing here.
-    }
+	public void onCreate() {
+		// Since we reload the cursor in onDataSetChanged() which gets called
+		// immediately after
+		// onCreate(), we do nothing here.
+	}
 
-    public void onDestroy() {
-        if (mCursor != null) {
-            mCursor.close();
-        }
-    }
+	public void onDestroy() {
+		if (mCursor != null) {
+			mCursor.close();
+		}
+	}
 
-    public int getCount() {
-        return mCursor.getCount();
-    }
+	public int getCount() {
+		return mCursor.getCount();
+	}
 
-    public RemoteViews getViewAt(int position) {
-        // Get the data for this position from the content provider
-        String linea = "";
-        String tiempo = "";
-        String destino = "";
-        String parada = "";
-        if (mCursor.moveToPosition(position)) {
-            final int lineaColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.LINEA);
-            final int tiempoColIndex = mCursor.getColumnIndex(
-                    TiemposDataProvider.Columns.TIEMPO);
-            final int destinoColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.DESTINO);
-            final int paradaColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.PARADA);
-            
-            
-            linea = mCursor.getString(lineaColIndex);
-            tiempo = mCursor.getString(tiempoColIndex);
-            destino = mCursor.getString(destinoColIndex);
-            parada = mCursor.getString(paradaColIndex);
-        }
+	public RemoteViews getViewAt(int position) {
+		// Get the data for this position from the content provider
+		String linea = "";
+		String tiempo = "";
+		String destino = "";
+		String parada = "";
+		if (mCursor.moveToPosition(position)) {
+			final int lineaColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.LINEA);
+			final int tiempoColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.TIEMPO);
+			final int destinoColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.DESTINO);
+			final int paradaColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.PARADA);
 
-        // Return a proper item with the proper day and temperature
-        //final String formatStr = mContext.getResources().getString(R.string.item_format_string);
-        //final int itemId = R.layout.widget_item;
-        //RemoteViews rv = new RemoteViews(mContext.getPackageName(), itemId);
-        //rv.setTextViewText(R.id.widget_item, String.format(formatStr, temp, day));
+			linea = mCursor.getString(lineaColIndex);
+			tiempo = controlAviso(mCursor.getString(tiempoColIndex));
+			destino = mCursor.getString(destinoColIndex);
+			parada = mCursor.getString(paradaColIndex);
+		}
 
-        final int itemId = R.layout.tiempos_item;
-        RemoteViews rv = new RemoteViews(mContext.getPackageName(), itemId);
-        rv.setTextViewText(R.id.bus_linea, linea);
-        rv.setTextViewText(R.id.bus_destino, destino);
-        rv.setTextViewText(R.id.bus_proximo, tiempo);
-        rv.setTextViewText(R.id.bus_parada, parada);
-        
-        
-        // Set the click intent so that we can handle it and show a toast message
-        final Intent fillInIntent = new Intent();
-        final Bundle extras = new Bundle();
-        extras.putString(TiemposWidgetProvider.EXTRA_DAY_ID, linea);
-        fillInIntent.putExtras(extras);
-        rv.setOnClickFillInIntent(R.id.bus_linea, fillInIntent);
+		// Return a proper item with the proper day and temperature
+		// final String formatStr =
+		// mContext.getResources().getString(R.string.item_format_string);
+		// final int itemId = R.layout.widget_item;
+		// RemoteViews rv = new RemoteViews(mContext.getPackageName(), itemId);
+		// rv.setTextViewText(R.id.widget_item, String.format(formatStr, temp,
+		// day));
 
-        return rv;
-    }
-    public RemoteViews getLoadingView() {
-        // We aren't going to return a default loading view in this sample
-        return null;
-    }
+		final int itemId = R.layout.tiempos_item;
+		RemoteViews rv = new RemoteViews(mContext.getPackageName(), itemId);
+		rv.setTextViewText(R.id.bus_linea, linea);
+		rv.setTextViewText(R.id.bus_destino, destino);
+		rv.setTextViewText(R.id.bus_proximo, tiempo);
+		rv.setTextViewText(R.id.bus_parada, parada);
 
-    public int getViewTypeCount() {
-        // Technically, we have two types of views (the dark and light background views)
-        return 2;
-    }
+		// Set the click intent so that we can handle it and show a toast
+		// message
+		final Intent fillInIntent = new Intent();
+		final Bundle extras = new Bundle();
+		extras.putInt(TiemposWidgetProvider.DATO_ID, position);
+		fillInIntent.putExtras(extras);
+		rv.setOnClickFillInIntent(R.id.t_item, fillInIntent);
 
-    public long getItemId(int position) {
-        return position;
-    }
+		return rv;
+	}
 
-    public boolean hasStableIds() {
-        return true;
-    }
+	/**
+	 * Modificación para traducir por idioma
+	 * 
+	 * @param proximo
+	 * @return
+	 */
+	private String controlAviso(String proximo) {
 
-    public void onDataSetChanged() {
-        // Refresh the cursor
-        if (mCursor != null) {
-            mCursor.close();
-        }
-        mCursor = mContext.getContentResolver().query(TiemposDataProvider.CONTENT_URI, null, null,
-                null, null);
-    }
+		String traducido = "";
+
+		String[] procesa = proximo.split(";");
+
+		String tiempo1 = "";
+		String tiempo2 = "";
+
+		if (procesa[0].equals("enlaparada")) {
+
+			tiempo1 = mContext.getString(R.string.tiempo_m_1);
+
+		} else if (procesa[0].equals("sinestimacion")) {
+
+			tiempo1 = mContext.getString(R.string.tiempo_m_2);
+
+		} else {
+
+			tiempo1 = procesa[0];
+
+		}
+
+		if (procesa[1].equals("enlaparada")) {
+
+			tiempo2 = mContext.getString(R.string.tiempo_m_1);
+
+		} else if (procesa[1].equals("sinestimacion")) {
+
+			tiempo2 = mContext.getString(R.string.tiempo_m_2);
+
+		} else {
+
+			tiempo2 = procesa[1];
+
+		}
+
+		traducido = tiempo1 + " " + mContext.getString(R.string.tiempo_m_3) + " " + tiempo2;
+
+		return traducido;
+
+	}
+
+	public RemoteViews getLoadingView() {
+		// We aren't going to return a default loading view in this sample
+		return null;
+	}
+
+	public int getViewTypeCount() {
+		// Technically, we have two types of views (the dark and light
+		// background views)
+		return 2;
+	}
+
+	public long getItemId(int position) {
+		return position;
+	}
+
+	public boolean hasStableIds() {
+		return true;
+	}
+
+	public void onDataSetChanged() {
+		// Refresh the cursor
+		if (mCursor != null) {
+			mCursor.close();
+		}
+		mCursor = mContext.getContentResolver().query(TiemposDataProvider.CONTENT_URI, null, null, null, null);
+	}
 }

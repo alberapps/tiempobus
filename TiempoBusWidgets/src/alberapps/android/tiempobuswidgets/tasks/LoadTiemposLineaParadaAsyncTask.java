@@ -22,6 +22,7 @@ package alberapps.android.tiempobuswidgets.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
+import alberapps.java.datos.Datos;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
 import android.os.AsyncTask;
@@ -32,7 +33,7 @@ import android.os.AsyncTask;
  * 
  * 
  */
-public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, List<BusLlegada>> {
+public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void, List<BusLlegada>> {
 
 	/**
 	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
@@ -58,25 +59,23 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Lis
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
-	protected List<BusLlegada> doInBackground(String... datos) {
+	protected List<BusLlegada> doInBackground(List<Datos>... datos) {
 		List<BusLlegada> llegadasBus = null;
 		try {
 
-			String[] lineasParadaList = datos[0].split(";");
+			List<Datos> lineasParadaList = datos[0];
 
 			BusLlegada llegadaBus = null;
 
 			llegadasBus = new ArrayList<BusLlegada>();
 
-			for (int i = 0; i < lineasParadaList.length; i++) {
+			for (int i = 0; i < lineasParadaList.size(); i++) {
 
-				String[] lineaParada = lineasParadaList[i].split(",");
-
-				llegadaBus = ProcesarTiemposService.getPosteConLinea(lineaParada[0], lineaParada[1]);
+				llegadaBus = ProcesarTiemposService.getPosteConLinea(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada());
 
 				if (llegadaBus == null) {
 
-					llegadaBus = new BusLlegada(lineaParada[0], "", "Sin información", lineaParada[1]);
+					llegadaBus = new BusLlegada(lineasParadaList.get(i).getLinea(), "", "Sin información", lineasParadaList.get(i).getParada());
 
 				}
 
