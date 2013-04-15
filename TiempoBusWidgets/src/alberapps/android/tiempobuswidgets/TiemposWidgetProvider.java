@@ -226,8 +226,14 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 						// since
 						// each of the updates
 						// will trigger an onChange() in our data observer.
-						r.unregisterContentObserver(sDataObserver);
-
+						
+						try{
+							r.unregisterContentObserver(sDataObserver);
+						}catch(Exception e){
+							
+						}
+						
+						
 						r.delete(TiemposDataProvider.CONTENT_URI, null, null);
 
 						for (int i = 0; i < listaTiempos.size(); ++i) {

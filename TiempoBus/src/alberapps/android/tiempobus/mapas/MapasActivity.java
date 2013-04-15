@@ -29,7 +29,6 @@ import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask.LoadBusesAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask.LoadDatosMapaAsyncTaskResponder;
@@ -413,9 +412,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		String parametros[] = { lineaSeleccionadaNum };
 
-		Cursor cursor = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		Cursor cursorParadas = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
 
-		if (cursor != null) {
+		if (cursorParadas != null) {
 			List<Parada> listaParadasIda = new ArrayList<Parada>();
 
 			List<Parada> listaParadasVuelta = new ArrayList<Parada>();
@@ -423,19 +422,19 @@ public class MapasActivity extends ActionBarMapaActivity {
 			String destinoIda = "";
 			String destinoVuelta = "";
 
-			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
 
 				Parada par = new Parada();
 
-				par.setLineaNum(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				par.setLineaDesc(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				par.setDestino(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
 
 				if (destinoIda.equals("")) {
 					destinoIda = par.getDestino();
@@ -464,21 +463,17 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				datosMapaCargadosVuelta = datosVuelta;
 
-				cursor.close();
-
 				// Recorrido
 
-				cursor = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-				if (cursor != null) {
-					cursor.moveToFirst();
+				Cursor cursorRecorrido = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+				if (cursorRecorrido != null) {
+					cursorRecorrido.moveToFirst();
 
-					datosMapaCargadosIda.setRecorrido(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+					datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-					cursor.moveToNext();
+					cursorRecorrido.moveToNext();
 
-					datosMapaCargadosVuelta.setRecorrido(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-
-					cursor.close();
+					datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
 				}
 
@@ -703,7 +698,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 					descripcionAlert += datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
 				}
 
-				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim(), descripcionAlert);
+				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim(),
+						descripcionAlert);
 
 				itemizedOverlayIda.addOverlay(overlayitem);
 
@@ -777,7 +773,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 					descripcionAlert += datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
 				}
 
-				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim(), descripcionAlert);
+				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim(),
+						descripcionAlert);
 
 				if (coincide) {
 					itemizedOverlayMedio.addOverlay(overlayitem);

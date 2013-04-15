@@ -18,8 +18,12 @@
  */
 package alberapps.android.tiempobus.util;
 
-import alberapps.android.tiempobus.R;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -27,7 +31,15 @@ import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+/**
+ * Utilidades de uso en la interfaz
+ * 
+ *
+ */
 public class UtilidadesUI {
+
+	public static String WIDGET_PACKAGE = "alberapps.android.tiempobuswidgets";
+	public static String WIDGET_ACTIVITY = "alberapps.android.tiempobuswidgets.ComunicacionActivity";
 
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 		// Raw height and width of image
@@ -59,9 +71,7 @@ public class UtilidadesUI {
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeFile(res, options);
 	}
-	
-	
-	
+
 	public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
 
 		if (!fondoGaleria.equals("")) {
@@ -94,10 +104,27 @@ public class UtilidadesUI {
 		}
 
 	}
-	
-	
-	
-	
-	
+
+	/**
+	 * Verifica la instalacion del widget
+	 * 
+	 * @param context
+	 * @return boolean
+	 */
+	public static boolean verificarWidgetInstalado(Context context) {
+
+		PackageManager manager = context.getPackageManager();
+
+		List<ApplicationInfo> packages = manager.getInstalledApplications(0);
+
+		for (int i = 0; i < packages.size(); i++) {
+			if (packages.get(i).packageName.equals(WIDGET_PACKAGE)) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
 
 }

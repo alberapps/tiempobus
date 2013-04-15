@@ -242,4 +242,9 @@
     <string name="traducciones_locale">locale</string>
     <string name="traducciones_desc">Información y autores</string>
     
+    
+    <string name="menu_widget">>>TiempoBus Widget</string>
+    <string name="widget_instalar">¿Quieres accedera a Google Play para instalar TiempoBus Widgets?</string>
+    <string name="widget_market">Google Play no está instalado en el dispositivo</string>
+    
 </resources>

@@ -62,6 +62,7 @@ import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -75,6 +76,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -82,6 +84,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -513,7 +516,20 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 	 * 
 	 */
 	private void opcionesLineaSeleccionada() {
-		final CharSequence[] items = { getString(R.string.menu_alarma), getString(R.string.menu_share), getString(R.string.menu_ver_en_mapa), getString(R.string.menu_leer), "widget" };
+
+		List<CharSequence> itemsL = new ArrayList<CharSequence>();
+		itemsL.add(getString(R.string.menu_alarma));
+		itemsL.add(getString(R.string.menu_share));
+		itemsL.add(getString(R.string.menu_ver_en_mapa));
+		itemsL.add(getString(R.string.menu_leer));
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+			itemsL.add(getString(R.string.menu_widget));
+
+		}
+
+		final CharSequence[] items = itemsL.toArray(new CharSequence[itemsL.size()]);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.menu_contextual);
@@ -541,7 +557,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 					cantarLinea();
 					busSeleccionado = null;
 					break;
-					
+
 				case 4:
 					enviarAWidget();
 					busSeleccionado = null;
@@ -788,22 +804,51 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 		}
 	}
 
-	
-	private void enviarAWidget(){
-		
-		Intent intent = new Intent();
-		
-		intent.setComponent(new ComponentName("alberapps.android.tiempobuswidgets", "alberapps.android.tiempobuswidgets.ComunicacionActivity"));
-				
-		//24,2902;10,2902
-		
-		intent.putExtra("datos_linea", busSeleccionado.getLinea()+","+poste);
-		
-		startActivity(intent);
-		
+	/**
+	 * Enviar la parada al widget
+	 */
+	private void enviarAWidget() {
+
+		if (UtilidadesUI.verificarWidgetInstalado(this)) {
+
+			Intent intent = new Intent();
+
+			intent.setComponent(new ComponentName(UtilidadesUI.WIDGET_PACKAGE, UtilidadesUI.WIDGET_ACTIVITY));
+
+			// 24,2902;10,2902
+
+			intent.putExtra("datos_linea", busSeleccionado.getLinea() + "," + poste);
+
+			startActivity(intent);
+
+		} else {
+
+			AlertDialog.Builder downloadDialog = new AlertDialog.Builder(this);
+			downloadDialog.setTitle(getString(R.string.menu_widget));
+			downloadDialog.setMessage(getString(R.string.widget_instalar));
+			downloadDialog.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialogInterface, int i) {
+					Uri uri = Uri.parse("market://details?id=" + UtilidadesUI.WIDGET_PACKAGE);
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					try {
+						startActivity(intent);
+					} catch (ActivityNotFoundException anfe) {
+
+						Toast.makeText(getApplicationContext(), getString(R.string.widget_market), Toast.LENGTH_SHORT).show();
+					}
+				}
+			});
+			downloadDialog.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialogInterface, int i) {
+				}
+			});
+
+		}
+
 	}
-	
-	
+
 	/**
 	 * Compartir informacion del bus
 	 */
