@@ -22,5 +22,6 @@
   android:resizeMode="vertical"
   android:minResizeWidth="280dp"
   android:minResizeHeight="70dp"
-  android:previewImage="@drawable/preview">
+  android:previewImage="@drawable/preview"
+  android:widgetCategory="keyguard|home_screen">
 </appwidget-provider>

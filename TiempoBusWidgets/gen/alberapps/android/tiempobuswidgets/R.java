@@ -57,7 +57,7 @@ public final class R {
         public static final int t_item=0x7f070000;
         public static final int textView1=0x7f070001;
         public static final int textView2=0x7f070002;
-        public static final int weather_list=0x7f07000b;
+        public static final int tiempos_list=0x7f07000b;
         public static final int widget_item=0x7f070004;
     }
     public static final class layout {

@@ -1,19 +1,22 @@
-/*
- * Copyright (C) 2011 The Android Open Source Project
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2012 Alberto Montiel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  based on the Copyright (C) 2011 The Android Open Source Project
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package alberapps.android.tiempobuswidgets;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +29,6 @@ import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask.
 import alberapps.java.datos.Datos;
 import alberapps.java.datos.GestionarDatos;
 import alberapps.java.tam.BusLlegada;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -35,7 +37,6 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
@@ -52,14 +53,14 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 /**
- * Our data observer just notifies an update for all weather widgets when it
- * detects a change.
+ * Our data observer just notifies an update for all widgets when it detects a
+ * change.
  */
-class WeatherDataProviderObserver extends ContentObserver {
+class TiemposDataProviderObserver extends ContentObserver {
 	private AppWidgetManager mAppWidgetManager;
 	private ComponentName mComponentName;
 
-	WeatherDataProviderObserver(AppWidgetManager mgr, ComponentName cn, Handler h) {
+	TiemposDataProviderObserver(AppWidgetManager mgr, ComponentName cn, Handler h) {
 		super(h);
 		mAppWidgetManager = mgr;
 		mComponentName = cn;
@@ -72,12 +73,12 @@ class WeatherDataProviderObserver extends ContentObserver {
 		// In response, the factory's onDataSetChanged() will be called which
 		// will requery the
 		// cursor for the new data.
-		mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetManager.getAppWidgetIds(mComponentName), R.id.weather_list);
+		mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetManager.getAppWidgetIds(mComponentName), R.id.tiempos_list);
 	}
 }
 
 /**
- * The weather widget's AppWidgetProvider.
+ * The widget's AppWidgetProvider.
  */
 public class TiemposWidgetProvider extends AppWidgetProvider {
 	public static String CLICK_ACTION = "alberapps.android.tiempobuswidgets.CLICK";
@@ -86,7 +87,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	private static HandlerThread sWorkerThread;
 	private static Handler sWorkerQueue;
-	private static WeatherDataProviderObserver sDataObserver;
+	private static TiemposDataProviderObserver sDataObserver;
 	private static final int sMaxDegrees = 96;
 
 	private boolean mIsLargeLayout = true;
@@ -119,7 +120,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		if (sDataObserver == null) {
 			final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 			final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-			sDataObserver = new WeatherDataProviderObserver(mgr, cn, sWorkerQueue);
+			sDataObserver = new TiemposDataProviderObserver(mgr, cn, sWorkerQueue);
 			r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
 		}
 
@@ -148,8 +149,6 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 		final Context context = ctx;
 
-		
-		
 		if (action.equals(REFRESH_ACTION)) {
 
 			// BroadcastReceivers have a limited amount of time to do work, so
@@ -169,25 +168,12 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 			Log.d("tag", " eliminar: " + dato);
 
-			
 			Intent i = new Intent(context, EliminarDatoActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			i.putExtra("DATO", dato);			
+			i.putExtra("DATO", dato);
 			context.startActivity(i);
-			
-			
-			
-			
-			
 
-					
-
-						//actualizar(context, intent);
-
-					
-			
-			
-			
+			// actualizar(context, intent);
 
 			// showPreferencias(context);
 
@@ -196,8 +182,6 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		super.onReceive(ctx, intent);
 	}
 
-	
-	
 	public void actualizar(final Context context, Intent intent) {
 
 		PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
@@ -226,14 +210,13 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 						// since
 						// each of the updates
 						// will trigger an onChange() in our data observer.
-						
-						try{
+
+						try {
 							r.unregisterContentObserver(sDataObserver);
-						}catch(Exception e){
-							
+						} catch (Exception e) {
+
 						}
-						
-						
+
 						r.delete(TiemposDataProvider.CONTENT_URI, null, null);
 
 						for (int i = 0; i < listaTiempos.size(); ++i) {
@@ -264,7 +247,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 						final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 						final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-						mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.weather_list);
+						mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
 					}
 				});
 
@@ -312,12 +295,12 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 			intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 			rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-			rv.setRemoteAdapter(appWidgetId, R.id.weather_list, intent);
+			rv.setRemoteAdapter(appWidgetId, R.id.tiempos_list, intent);
 
 			// Set the empty view to be displayed if the collection is empty. It
 			// must be a sibling
 			// view of the collection view.
-			rv.setEmptyView(R.id.weather_list, R.id.empty_view);
+			rv.setEmptyView(R.id.tiempos_list, R.id.empty_view);
 
 			// Bind a click listener template for the contents of the weather
 			// list. Note that we
@@ -329,7 +312,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 			onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
 			final PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(context, 0, onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			rv.setPendingIntentTemplate(R.id.weather_list, onClickPendingIntent);
+			rv.setPendingIntentTemplate(R.id.tiempos_list, onClickPendingIntent);
 
 			// Bind the click intent for the refresh button on the widget
 			final Intent refreshIntent = new Intent(context, TiemposWidgetProvider.class);

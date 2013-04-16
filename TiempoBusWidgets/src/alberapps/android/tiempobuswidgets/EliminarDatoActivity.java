@@ -1,3 +1,20 @@
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2012 Alberto Montiel
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package alberapps.android.tiempobuswidgets;
 
 import java.util.List;
@@ -6,7 +23,6 @@ import alberapps.java.datos.Datos;
 import alberapps.java.datos.GestionarDatos;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -64,7 +80,7 @@ public class EliminarDatoActivity extends Activity {
 
 					final String mostrar = getString(R.string.eliminar_ok);
 					Toast.makeText(getApplicationContext(), mostrar, Toast.LENGTH_SHORT).show();
-					
+
 					actualizarWidget();
 
 				}
@@ -75,27 +91,25 @@ public class EliminarDatoActivity extends Activity {
 		});
 
 	}
-	
-	private void actualizarWidget(){
-		
+
+	private void actualizarWidget() {
+
 		AppWidgetManager awm = AppWidgetManager.getInstance(getApplicationContext());
-		
-		//int[] awid= awm.getAppWidgetIds(new ComponentName(this,TiemposWidgetProvider.class));
-		
-		//if(awid.length > 0){
-			
-			Intent updateIntent = new Intent(getApplicationContext(), TiemposWidgetProvider.class);
-			updateIntent.setAction(TiemposWidgetProvider.REFRESH_ACTION);
-			
-			getApplicationContext().sendBroadcast(updateIntent);
-			
-			//new TiemposWidgetProvider().actualizar(context, intent).onUpdate(this, awm, awid);
-		//}
-		
-		
-		
-		
+
+		// int[] awid= awm.getAppWidgetIds(new
+		// ComponentName(this,TiemposWidgetProvider.class));
+
+		// if(awid.length > 0){
+
+		Intent updateIntent = new Intent(getApplicationContext(), TiemposWidgetProvider.class);
+		updateIntent.setAction(TiemposWidgetProvider.REFRESH_ACTION);
+
+		getApplicationContext().sendBroadcast(updateIntent);
+
+		// new TiemposWidgetProvider().actualizar(context,
+		// intent).onUpdate(this, awm, awid);
+		// }
+
 	}
-	
 
 }

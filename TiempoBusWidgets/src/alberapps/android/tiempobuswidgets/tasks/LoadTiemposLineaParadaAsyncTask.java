@@ -2,7 +2,6 @@
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
  * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

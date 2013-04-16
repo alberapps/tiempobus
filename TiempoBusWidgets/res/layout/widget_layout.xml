@@ -57,7 +57,7 @@
         android:layout_gravity="center"
         android:background="#F8F8F8">
         <ListView
-            android:id="@+id/weather_list"
+            android:id="@+id/tiempos_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <TextView
