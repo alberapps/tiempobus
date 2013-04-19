@@ -844,6 +844,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 				public void onClick(DialogInterface dialogInterface, int i) {
 				}
 			});
+			
+			downloadDialog.show();
 
 		}
 

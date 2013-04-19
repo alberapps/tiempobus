@@ -396,7 +396,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		} else {
 
-			Toast.makeText(this, getString(R.string.gps_no_paradas), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), getString(R.string.gps_no_paradas), Toast.LENGTH_SHORT).show();
 
 		}
 

@@ -48,6 +48,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * The main activity for the dictionary. Displays search results triggered by
@@ -60,7 +61,6 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 
 	SharedPreferences preferencias = null;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -114,42 +114,49 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 	 */
 	private void showResults(String query) {
 
-		Cursor cursor = managedQuery(BuscadorLineasProvider.CONTENT_URI, null, null, new String[] { query }, null);
+		try {
 
-		if (cursor == null) {
-			// There are no results
-			mTextView.setText(getString(R.string.no_results, new Object[] { query }));
-		} else {
-			// Display the number of results
-			int count = cursor.getCount();
-			String countString = getResources().getQuantityString(R.plurals.search_results, count, new Object[] { count, query });
-			mTextView.setText(countString);
+			Cursor cursor = managedQuery(BuscadorLineasProvider.CONTENT_URI, null, null, new String[] { query }, null);
 
-			// Specify the columns we want to display in the result
-			String[] from = new String[] { DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION };
+			if (cursor == null) {
+				// There are no results
+				mTextView.setText(getString(R.string.no_results, new Object[] { query }));
+			} else {
+				// Display the number of results
+				int count = cursor.getCount();
+				String countString = getResources().getQuantityString(R.plurals.search_results, count, new Object[] { count, query });
+				mTextView.setText(countString);
 
-			// Specify the corresponding layout elements where we want the
-			// columns to go
-			int[] to = new int[] { R.id.titulo, R.id.descripcion };
+				// Specify the columns we want to display in the result
+				String[] from = new String[] { DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION };
 
-			// Create a simple cursor adapter for the definitions and apply them
-			// to the ListView
-			SimpleCursorAdapter words = new SimpleCursorAdapter(this, R.layout.resultado_offline_item, cursor, from, to);
+				// Specify the corresponding layout elements where we want the
+				// columns to go
+				int[] to = new int[] { R.id.titulo, R.id.descripcion };
 
-			mListView.setAdapter(words);
+				// Create a simple cursor adapter for the definitions and apply
+				// them
+				// to the ListView
+				SimpleCursorAdapter words = new SimpleCursorAdapter(this, R.layout.resultado_offline_item, cursor, from, to);
 
-			// Define the on-click listener for the list items
-			mListView.setOnItemClickListener(new OnItemClickListener() {
+				mListView.setAdapter(words);
 
-				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					// Build the Intent used to open WordActivity with a
-					// specific word Uri
-					Intent wordIntent = new Intent(getApplicationContext(), DatosParadaActivity.class);
-					Uri data = Uri.withAppendedPath(BuscadorLineasProvider.CONTENT_URI, String.valueOf(id));
-					wordIntent.setData(data);
-					startActivity(wordIntent);
-				}
-			});
+				// Define the on-click listener for the list items
+				mListView.setOnItemClickListener(new OnItemClickListener() {
+
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						// Build the Intent used to open WordActivity with a
+						// specific word Uri
+						Intent wordIntent = new Intent(getApplicationContext(), DatosParadaActivity.class);
+						Uri data = Uri.withAppendedPath(BuscadorLineasProvider.CONTENT_URI, String.valueOf(id));
+						wordIntent.setData(data);
+						startActivity(wordIntent);
+					}
+				});
+			}
+
+		} catch (Exception e) {
+			Toast.makeText(this, getResources().getText(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
 		}
 	}
 
