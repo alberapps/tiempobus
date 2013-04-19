@@ -15,23 +15,16 @@
 -->
 <resources>
     <string name="empty_view_text">Sin información</string>
-    <string name="toast_format_string">%1$s!</string>
-    <!-- <string name="item_format_string">%1$d\u00B0 on %2$s</string>-->
-    
-    <string name="item_format_string">%1$d min. para %2$s</string>
-    
-    <string name="header_format_string">%1$d\u00B0 in %2$s</string>
-
+   
     <string name="refresh">Actualizar</string>
-    <string name="city_name">San Francisco</string>
     
     <string name="app_name">TiempoBus Widgets</string>
     
     <string name="configura">Configurar</string>
     
-    <string name="alta_1">El bus de la parada actual ha sido añadido al widget.</string>
+    <string name="alta_1">El bus de la parada actual ha sido añadido a TiempoBus Widgets.</string>
     
-    <string name="alta_2">Seleccione "actualizar" en el widget para visualizar los nuevos datos.</string>
+    <string name="alta_2">Seleccione "Actualizar" en el widget para visualizar los nuevos datos.</string>
     
     <string name="tiempo_m_1">En la Parada</string>
     <string name="tiempo_m_2">Sin Estimación</string>
@@ -39,6 +32,8 @@
     
     <string name="eliminar_ok">Se ha eliminado el dato</string>
     
-    <string name="eliminar_pregunta">¿Eliminar el dato?</string>
+    <string name="eliminar_pregunta">¿Quieres eliminar el registro?</string>
+    
+     <string name="texto_tiempo">Actualizado: </string>
     
 </resources>

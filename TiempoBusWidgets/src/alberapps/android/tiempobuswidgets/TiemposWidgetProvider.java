@@ -40,7 +40,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -88,10 +87,8 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	private static HandlerThread sWorkerThread;
 	private static Handler sWorkerQueue;
 	private static TiemposDataProviderObserver sDataObserver;
-	private static final int sMaxDegrees = 96;
 
 	private boolean mIsLargeLayout = true;
-	private int mHeaderWeatherState = 0;
 
 	private List<BusLlegada> listaTiempos;
 
@@ -175,13 +172,17 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 			// actualizar(context, intent);
 
-			// showPreferencias(context);
-
 		}
 
 		super.onReceive(ctx, intent);
 	}
 
+	/**
+	 * Actualizar el contenido
+	 * 
+	 * @param context
+	 * @param intent
+	 */
 	public void actualizar(final Context context, Intent intent) {
 
 		PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
@@ -193,8 +194,6 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
 
 				listaTiempos = tiempos;
-
-				Log.d("tag", " " + tiempos.get(0).getProximo());
 
 				sWorkerQueue.removeMessages(0);
 				sWorkerQueue.post(new Runnable() {
@@ -219,7 +218,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 						r.delete(TiemposDataProvider.CONTENT_URI, null, null);
 
-						for (int i = 0; i < listaTiempos.size(); ++i) {
+						for (int i = 0; (listaTiempos != null && i < listaTiempos.size()); ++i) {
 
 							final Uri uri = ContentUris.withAppendedId(TiemposDataProvider.CONTENT_URI, i);
 
@@ -260,7 +259,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
 
-			List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", "24,2902;10,2902"));
+			List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", ""));
 
 			new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(lineasParada);
 
@@ -321,21 +320,22 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			rv.setOnClickPendingIntent(R.id.refresh, refreshPendingIntent);
 
 			// Restore the minimal header
-			rv.setTextViewText(R.id.city_name, context.getString(R.string.app_name));
+			rv.setTextViewText(R.id.titulo, context.getString(R.string.app_name));
 
 		} else {
 			rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout_small);
-
-			// Update the header to reflect the weather for "today"
-			Cursor c = context.getContentResolver().query(TiemposDataProvider.CONTENT_URI, null, null, null, null);
-			if (c.moveToPosition(0)) {
-				int tempColIndex = c.getColumnIndex(TiemposDataProvider.Columns.TIEMPO);
-				int temp = c.getInt(tempColIndex);
-				String formatStr = context.getResources().getString(R.string.header_format_string);
-				String header = String.format(formatStr, temp, "reduce");
-				rv.setTextViewText(R.id.city_name, header);
-			}
-			c.close();
+			/*
+			 * // Update the header to reflect the weather for "today" Cursor c
+			 * =
+			 * context.getContentResolver().query(TiemposDataProvider.CONTENT_URI
+			 * , null, null, null, null); if (c.moveToPosition(0)) { int
+			 * tempColIndex =
+			 * c.getColumnIndex(TiemposDataProvider.Columns.TIEMPO); int temp =
+			 * c.getInt(tempColIndex); String formatStr =
+			 * context.getResources().getString(R.string.header_format_string);
+			 * String header = String.format(formatStr, temp, "reduce");
+			 * rv.setTextViewText(R.id.titulo, header); } c.close();
+			 */
 		}
 		return rv;
 	}
@@ -354,18 +354,20 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
 
-		int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-		int maxWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
-		int minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-		int maxHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
-
-		RemoteViews layout;
-		if (minHeight < 200) {
-			mIsLargeLayout = false;
-		} else {
-			mIsLargeLayout = true;
-		}
-		layout = buildLayout(context, appWidgetId, mIsLargeLayout);
-		appWidgetManager.updateAppWidget(appWidgetId, layout);
+		/*
+		 * int minWidth =
+		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH); int
+		 * maxWidth =
+		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH); int
+		 * minHeight =
+		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT); int
+		 * maxHeight =
+		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+		 * 
+		 * RemoteViews layout; if (minHeight < 200) { mIsLargeLayout = false; }
+		 * else { mIsLargeLayout = true; } layout = buildLayout(context,
+		 * appWidgetId, mIsLargeLayout);
+		 * appWidgetManager.updateAppWidget(appWidgetId, layout);
+		 */
 	}
 }

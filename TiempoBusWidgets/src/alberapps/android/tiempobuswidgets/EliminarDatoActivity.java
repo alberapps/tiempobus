@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 /**
  * 
- * 
+ * Actividad para eliminar registros
  * 
  */
 public class EliminarDatoActivity extends Activity {
@@ -47,12 +47,6 @@ public class EliminarDatoActivity extends Activity {
 
 		// Get the intent that started this activity
 		Intent intent = getIntent();
-		// Uri data = intent.getData();
-
-		// if (intent.getType().equals("text/plain")) {
-		// Handle intents with text ...
-
-		// }
 
 		final int datoEliminar = intent.getIntExtra("DATO", -1);
 
@@ -66,7 +60,7 @@ public class EliminarDatoActivity extends Activity {
 
 				if (datoEliminar >= 0) {
 
-					List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", "24,2902;10,2902"));
+					List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", ""));
 
 					lineasParada.remove(datoEliminar);
 
@@ -92,6 +86,9 @@ public class EliminarDatoActivity extends Activity {
 
 	}
 
+	/**
+	 * Actualizar el contenido del widget
+	 */
 	private void actualizarWidget() {
 
 		AppWidgetManager awm = AppWidgetManager.getInstance(getApplicationContext());

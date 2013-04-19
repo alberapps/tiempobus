@@ -62,6 +62,10 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 		List<BusLlegada> llegadasBus = null;
 		try {
 
+			if (datos == null || datos[0] == null) {
+				return null;
+			}
+
 			List<Datos> lineasParadaList = datos[0];
 
 			BusLlegada llegadaBus = null;

@@ -29,11 +29,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 
 /**
- * A dummy class that we are going to use internally to store weather data.
- * Generally, this data will be stored in an external and persistent location
- * (ie. File, Database, SharedPreferences) so that the data can persist if the
- * process is ever killed. For simplicity, in this sample the data will only be
- * stored in memory.
+ * Informacion del registro
  */
 class TiemposDataPoint {
 	String linea;
@@ -50,7 +46,7 @@ class TiemposDataPoint {
 }
 
 /**
- * The AppWidgetProvider for our sample weather widget.
+ * The AppWidgetProvider
  */
 public class TiemposDataProvider extends ContentProvider {
 	public static final Uri CONTENT_URI = Uri.parse("content://alberapps.android.tiempobuswidgets.provider");

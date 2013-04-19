@@ -25,11 +25,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * 
- * 
+ * Actividad para comunicar con TiempoBus
  * 
  */
 public class ComunicacionActivity extends Activity {
@@ -42,12 +41,6 @@ public class ComunicacionActivity extends Activity {
 
 		// Get the intent that started this activity
 		Intent intent = getIntent();
-		// Uri data = intent.getData();
-
-		// if (intent.getType().equals("text/plain")) {
-		// Handle intents with text ...
-
-		// }
 
 		String datos = intent.getExtras().getString("datos_linea");
 
@@ -69,8 +62,6 @@ public class ComunicacionActivity extends Activity {
 		editor.commit();
 
 		// actualizarWidget();
-
-		Toast.makeText(this, "prueba: " + datos, Toast.LENGTH_SHORT).show();
 
 		// boton parada
 		Button botonAceptar = (Button) findViewById(R.id.aceptar_alta);

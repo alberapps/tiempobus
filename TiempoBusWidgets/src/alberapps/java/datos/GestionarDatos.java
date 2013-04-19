@@ -21,9 +21,23 @@ package alberapps.java.datos;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Gestion interna de los datos
+ * 
+ */
 public class GestionarDatos {
 
+	/**
+	 * Recupera la lista a partir del string de datos
+	 * 
+	 * @param lista
+	 * @return
+	 */
 	public static List<Datos> listaDatos(String lista) {
+
+		if (lista.length() == 0) {
+			return null;
+		}
 
 		String[] listaS = lista.split(";");
 
@@ -46,6 +60,12 @@ public class GestionarDatos {
 
 	}
 
+	/**
+	 * Recupera el String de datos a partir de la lista interna
+	 * 
+	 * @param lista
+	 * @return
+	 */
 	public static String getStringDeLista(List<Datos> lista) {
 
 		StringBuffer datos = new StringBuffer();
@@ -67,9 +87,5 @@ public class GestionarDatos {
 		return datos.toString();
 
 	}
-	
-	
-	
-	
 
 }

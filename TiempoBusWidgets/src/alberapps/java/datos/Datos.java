@@ -18,10 +18,14 @@
  */
 package alberapps.java.datos;
 
+/**
+ * Datos
+ * 
+ */
 public class Datos {
 
 	private String linea;
-	
+
 	private String parada;
 
 	public String getLinea() {
@@ -39,7 +43,5 @@ public class Datos {
 	public void setParada(String parada) {
 		this.parada = parada;
 	}
-	
-	
-	
+
 }
