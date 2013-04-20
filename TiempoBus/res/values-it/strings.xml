@@ -211,8 +211,7 @@
 	<string name="tab_tw">Twitter</string>
 	
 	<string name="dato_tw">Tweets più recenti da:</string>
-	<string name="tw1">https://twitter.com/alberapps</string>
-    <string name="tw2">https://twitter.com/Alicante_City</string>
+	<string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan</string>
 	
 	<string name="error_codigo">Il codice de fermata non é valido</string>
 	<string name="alarma_checkbox">Attivare Servizio</string>
@@ -236,5 +235,7 @@
     <string name="menu_widget">>>TiempoBus Widget</string>
     <string name="widget_instalar">¿Quieres acceder a Google Play para instalar TiempoBus Widgets?</string>
     <string name="widget_market">Google Play no está instalado en el dispositivo</string>
+    
+    <string name="ir_tw">>>Twitter</string>
     
 </resources>

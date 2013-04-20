@@ -32,64 +32,63 @@
              android:layout_width="wrap_content"
              android:layout_height="match_parent" >
         
-             
         <TextView
-                android:id="@+id/usuarioNombre"
-                style="@style/InfoPoste.Destino"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="15sp" 
-                android:textStyle="bold" />
+            android:id="@+id/usuarioNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@string/guion"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
          <TextView
-                android:id="@+id/usuarioId"
-                style="@style/InfoPoste.Destino"
+                android:id="@+id/usuarioId"               
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="12sp" 
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:textSize="12sp"
                  />
          
           </LinearLayout>
          
           <TextView
-                android:id="@+id/fecha"
-                style="@style/InfoPoste.Destino"
+                android:id="@+id/fecha"                
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="12sp" 
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:textSize="12sp"
                  />
 
        
                 
              <TextView
-        		android:id="@+id/noticia"
-       			style="@style/InfoPoste.Proximo"
+        		android:id="@+id/noticia"       			
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="12sp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="italic"
-        		android:autoLink="web"/>
+        		android:autoLink="web"
+        		android:textSize="12sp"/>
 
              <TextView
                  android:id="@+id/tw_web"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="Small Text"
-                 android:textAppearance="?android:attr/textAppearanceSmall" />
+                 android:text="@string/ir_tw"
+                 android:textAppearance="?android:attr/textAppearanceSmall" 
+                 android:textStyle="italic|bold"
+                 android:textSize="12sp"/>
             
           </LinearLayout>
          

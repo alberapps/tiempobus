@@ -152,7 +152,7 @@ favorit per crear la teua llista.</string>
     <string name="datos_parada">Dades Parada</string>
     <string name="favoritosN">Favorits</string>
     <string name="ordenar_parada">Ordenar per Parada</string>
-    <string name="ordenar_nombre">Ordenar por Nom</string>
+    <string name="ordenar_nombre">Ordenar per Nom</string>
     <string name="exportar">Exportar(SD)</string>
     <string name="importar">Importar(SD)</string>
     <string name="error_importar">ERROR: No s\'ha pogut importar. El fitxer exportat ha d\'estar disponible a la ruta de la targeta SD: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
@@ -207,7 +207,7 @@ favorit per crear la teua llista.</string>
     
      <!-- Nuevo -->
     
-    <string name="error_red">L\'accés a Internet no està disponible. Verifica la teva connexió</string>
+    <string name="error_red">L\'accés a Internet no està disponible. Verifica la teua connexió</string>
     
     <string name="foreground_service_started">Verifica temps cada 60 segons</string>
     <string name="foreground_service">TiempoBus: Servei Alertes</string>
@@ -216,8 +216,7 @@ favorit per crear la teua llista.</string>
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Tweets més recents de:</string>
-    <string name="tw1">https://twitter.com/alberapps</string>
-    <string name="tw2">https://twitter.com/Alicante_City</string>
+    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan</string>
     
     <string name="error_codigo">El codi de parada no és vàlid</string>
     
@@ -242,10 +241,10 @@ favorit per crear la teua llista.</string>
     
     
     <string name="menu_widget">>>TiempoBus Widget</string>
-    <string name="widget_instalar">¿Quieres acceder a Google Play para instalar TiempoBus Widgets?</string>
-    <string name="widget_market">Google Play no está instalado en el dispositivo</string>
+    <string name="widget_instalar">Vols accedir a Google Play per instal·lar TiempoBus Widgets?</string>
+    <string name="widget_market">Google Play no està instal·lat al dispositiu</string>
     
-    
+    <string name="ir_tw">>>Twitter</string>
     
     
 </resources>

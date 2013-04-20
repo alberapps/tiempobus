@@ -29,18 +29,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:background="@color/color_android"
-        android:gravity="left"
-        android:text="@string/tw2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:textStyle="italic" />
-
      <RelativeLayout
          android:id="@+id/scroll"
          android:layout_width="fill_parent"

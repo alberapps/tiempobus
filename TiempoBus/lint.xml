@@ -7,4 +7,5 @@
     </issue>
     <issue id="ParserError" severity="ignore" />
     <issue id="ResourceAsColor" severity="ignore" />
+    <issue id="Typos" severity="ignore" />
 </lint>

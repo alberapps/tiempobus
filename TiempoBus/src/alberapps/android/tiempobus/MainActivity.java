@@ -68,7 +68,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -84,7 +83,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -699,33 +697,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 			});
 
-			/*
-			 * dialog.setNeutralButton(R.string.menu_refresh, new
-			 * DialogInterface.OnClickListener() {
-			 * 
-			 * public void onClick(DialogInterface dialog, int id) {
-			 * //refrescarAlarma();
-			 * 
-			 * //mostrarModalAlertas();
-			 * 
-			 * //Intent intent = new Intent(MainActivity.this,
-			 * TiempoService.class);
-			 * 
-			 * //startService(intent);
-			 * 
-			 * Intent intent = new
-			 * Intent(TiemposForegroundService.ACTION_FOREGROUND);
-			 * intent.setClass(MainActivity.this,
-			 * TiemposForegroundService.class); intent.putExtra("PARADA",
-			 * poste); //intent.putExtra("ALARMRECEIVER", alarmReceiver);
-			 * 
-			 * startService(intent);
-			 * 
-			 * }
-			 * 
-			 * });
-			 */
-
 			dialog.show();
 
 		} else {
@@ -844,7 +815,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 				public void onClick(DialogInterface dialogInterface, int i) {
 				}
 			});
-			
+
 			downloadDialog.show();
 
 		}
@@ -1051,37 +1022,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 		mostrarModalTiemposAlerta(bus);
 
-		/*
-		 * final CharSequence[] items = { "5 min.", "10 min.", "15 min." };
-		 * 
-		 * final BusLlegada theBus = bus;
-		 * 
-		 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		 * builder.setTitle(R.string.tit_choose_alarm);
-		 * 
-		 * builder.setItems(items, new DialogInterface.OnClickListener() {
-		 * public void onClick(DialogInterface dialog, int item) {
-		 * 
-		 * // Anular si existe una alarma anterior cancelarAlarmas(false);
-		 * 
-		 * calcularAlarma(theBus, 1, item);
-		 * 
-		 * Intent intent = new
-		 * Intent(TiemposForegroundService.ACTION_FOREGROUND);
-		 * intent.setClass(MainActivity.this, TiemposForegroundService.class);
-		 * intent.putExtra("PARADA", poste);
-		 * 
-		 * boolean checkActivo = preferencias.getBoolean("activarServicio",
-		 * false); if (checkActivo) { startService(intent); }
-		 * 
-		 * mostrarModalAlertas();
-		 * 
-		 * } });
-		 * 
-		 * AlertDialog alert = builder.create();
-		 * 
-		 * alert.show();
-		 */
 	}
 
 	/**
@@ -1528,61 +1468,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 					if (lanzarAviso) {
 
 						Notificaciones.notificacionNoticias(getApplicationContext());
-
-						/*
-						 * String ns = Context.NOTIFICATION_SERVICE;
-						 * NotificationManager mNotificationManager =
-						 * (NotificationManager) getSystemService(ns);
-						 * 
-						 * int icon = R.drawable.ic_stat_tiempobus_notif;
-						 * CharSequence tickerText =
-						 * getString(R.string.nuevas_noticias); long when =
-						 * System.currentTimeMillis();
-						 * 
-						 * Notification notification = new Notification(icon,
-						 * tickerText, when);
-						 * 
-						 * Context context = getApplicationContext();
-						 * CharSequence contentTitle =
-						 * getString(R.string.nuevas_noticias); CharSequence
-						 * contentText = getString(R.string.nuevas_noticias_b);
-						 * Intent notificationIntent = new Intent(context,
-						 * NoticiasTabsPager.class);
-						 * 
-						 * PendingIntent contentIntent =
-						 * PendingIntent.getActivity(context, 0,
-						 * notificationIntent, 0);
-						 * 
-						 * notification.setLatestEventInfo(context,
-						 * contentTitle, contentText, contentIntent);
-						 * 
-						 * // Sonido seleccionado String strRingtonePreference =
-						 * preferencias.getString("noticias_tono",
-						 * "DEFAULT_SOUND");
-						 * 
-						 * Uri alertSound = null;
-						 * 
-						 * if (strRingtonePreference == "DEFAULT_SOUND") {
-						 * alertSound =
-						 * RingtoneManager.getDefaultUri(Notification
-						 * .DEFAULT_SOUND); } else { alertSound =
-						 * Uri.parse(strRingtonePreference); }
-						 * 
-						 * if (alertSound != null) { notification.sound =
-						 * alertSound; }
-						 * 
-						 * // Usar o no la vibracion boolean controlVibrar =
-						 * preferencias.getBoolean("noticias_vibrar", true);
-						 * 
-						 * if (controlVibrar) { // vibrate notification.defaults
-						 * |= Notification.DEFAULT_VIBRATE; }
-						 * 
-						 * // notification.defaults = Notification.DEFAULT_ALL;
-						 * 
-						 * notification.flags |= Notification.FLAG_AUTO_CANCEL;
-						 * 
-						 * mNotificationManager.notify(2, notification);
-						 */
 
 					}
 				} else {
