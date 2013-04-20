@@ -121,40 +121,50 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
 		String traducido = "";
 
-		String[] procesa = proximo.split(";");
+		if (proximo != null && !proximo.equals("")) {
 
-		String tiempo1 = "";
-		String tiempo2 = "";
+			String[] procesa = proximo.split(";");
 
-		if (procesa[0].equals("enlaparada")) {
+			String tiempo1 = "";
+			String tiempo2 = "";
 
-			tiempo1 = mContext.getString(R.string.tiempo_m_1);
+			if (procesa[0].equals("enlaparada")) {
 
-		} else if (procesa[0].equals("sinestimacion")) {
+				tiempo1 = mContext.getString(R.string.tiempo_m_1);
 
-			tiempo1 = mContext.getString(R.string.tiempo_m_2);
+			} else if (procesa[0].equals("sinestimacion")) {
+
+				tiempo1 = mContext.getString(R.string.tiempo_m_2);
+
+			} else {
+
+				tiempo1 = procesa[0];
+
+			}
+
+			if (procesa[1].equals("enlaparada")) {
+
+				tiempo2 = mContext.getString(R.string.tiempo_m_1);
+
+			} else if (procesa[1].equals("sinestimacion")) {
+
+				tiempo2 = mContext.getString(R.string.tiempo_m_2);
+
+			} else {
+
+				tiempo2 = procesa[1];
+
+			}
+
+			traducido = tiempo1 + " " + mContext.getString(R.string.tiempo_m_3) + " " + tiempo2;
 
 		} else {
 
-			tiempo1 = procesa[0];
+			// Sin informacion para mostrar
+
+			traducido = mContext.getString(R.string.empty_view_text);
 
 		}
-
-		if (procesa[1].equals("enlaparada")) {
-
-			tiempo2 = mContext.getString(R.string.tiempo_m_1);
-
-		} else if (procesa[1].equals("sinestimacion")) {
-
-			tiempo2 = mContext.getString(R.string.tiempo_m_2);
-
-		} else {
-
-			tiempo2 = procesa[1];
-
-		}
-
-		traducido = tiempo1 + " " + mContext.getString(R.string.tiempo_m_3) + " " + tiempo2;
 
 		return traducido;
 

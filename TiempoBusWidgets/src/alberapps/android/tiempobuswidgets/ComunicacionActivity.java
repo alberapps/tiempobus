@@ -19,10 +19,10 @@ package alberapps.android.tiempobuswidgets;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -44,8 +44,7 @@ public class ComunicacionActivity extends Activity {
 
 		String datos = intent.getExtras().getString("datos_linea");
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences preferencias = getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
 		String lineasParada = preferencias.getString("lineas_parada", "");
 
@@ -64,7 +63,7 @@ public class ComunicacionActivity extends Activity {
 		// actualizarWidget();
 
 		// boton parada
-		Button botonAceptar = (Button) findViewById(R.id.aceptar_alta);
+		Button botonAceptar = (Button) findViewById(R.id.aceptar_eliminar);
 		botonAceptar.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 				finish();

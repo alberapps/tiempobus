@@ -30,10 +30,19 @@
     <string name="tiempo_m_2">Sin Estimación</string>
     <string name="tiempo_m_3">y</string>
     
-    <string name="eliminar_ok">Se ha eliminado el dato</string>
+    <string name="eliminar_ok">Se ha quitado el bus del widget</string>
     
-    <string name="eliminar_pregunta">¿Quieres eliminar el registro?</string>
+    <string name="eliminar_pregunta">¿Quieres quitar el bus del widget?</string>
     
-     <string name="texto_tiempo">Actualizado: </string>
+    <string name="texto_tiempo">Actualizado: </string>
+    
+    <string name="aviso_recarga">Actualizando tiempos</string>
+    
+    <string name="aviso_recarga_completa">Tiempos actualizados</string>
+     
+    <string name="error_red">El acceso a Internet no está disponible. Verifica tu conexión</string>
+    
+    <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos. Si sigue sin funcionar, comprueba la disponibilidad del servicio en: isaealicante.subus.es/movil</string>
+    
     
 </resources>

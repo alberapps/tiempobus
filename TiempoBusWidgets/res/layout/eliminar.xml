@@ -20,16 +20,36 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/aceptar_alta"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#F8F8F8"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="@android:string/ok"
-        android:textAllCaps="true"
-        android:textColor="#232323"
-        android:textSize="14sp" />
+        android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelar_eliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:background="#F8F8F8"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@android:string/cancel"
+            android:textAllCaps="true"
+            android:textColor="#232323"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/aceptar_eliminar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:background="#F8F8F8"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@android:string/ok"
+            android:textAllCaps="true"
+            android:textColor="#232323"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

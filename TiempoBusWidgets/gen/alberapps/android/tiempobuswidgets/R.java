@@ -35,30 +35,32 @@ public final class R {
         public static final int item_bg_dark=0x7f020005;
         public static final int item_bg_light=0x7f020006;
         public static final int preview=0x7f020007;
-        public static final int refresh=0x7f020008;
-        public static final int refresh_button=0x7f020009;
-        public static final int refresh_pressed=0x7f02000a;
-        public static final int sunny=0x7f02000b;
+        public static final int previsualizar=0x7f020008;
+        public static final int refresh=0x7f020009;
+        public static final int refresh_button=0x7f02000a;
+        public static final int refresh_pressed=0x7f02000b;
+        public static final int sunny=0x7f02000c;
     }
     public static final class id {
-        public static final int TextView01=0x7f07000e;
-        public static final int aceptar_alta=0x7f070003;
-        public static final int bus_destino=0x7f070007;
-        public static final int bus_linea=0x7f070005;
-        public static final int bus_parada=0x7f070006;
-        public static final int bus_proximo=0x7f070008;
-        public static final int city_weather=0x7f070012;
-        public static final int empty_view=0x7f07000c;
-        public static final int frameLayout3=0x7f070010;
-        public static final int hora_act=0x7f07000f;
-        public static final int img_tiempobus=0x7f070009;
-        public static final int linearLayout1=0x7f07000d;
-        public static final int refresh=0x7f070011;
+        public static final int TextView01=0x7f07000f;
+        public static final int aceptar_eliminar=0x7f070003;
+        public static final int bus_destino=0x7f070008;
+        public static final int bus_linea=0x7f070006;
+        public static final int bus_parada=0x7f070007;
+        public static final int bus_proximo=0x7f070009;
+        public static final int cancelar_eliminar=0x7f070005;
+        public static final int city_weather=0x7f070013;
+        public static final int empty_view=0x7f07000d;
+        public static final int frameLayout3=0x7f070011;
+        public static final int hora_act=0x7f070010;
+        public static final int img_tiempobus=0x7f07000a;
+        public static final int linearLayout1=0x7f07000e;
+        public static final int refresh=0x7f070012;
         public static final int t_item=0x7f070000;
         public static final int textView1=0x7f070001;
         public static final int textView2=0x7f070002;
-        public static final int tiempos_list=0x7f07000b;
-        public static final int titulo=0x7f07000a;
+        public static final int tiempos_list=0x7f07000c;
+        public static final int titulo=0x7f07000b;
         public static final int widget_item=0x7f070004;
     }
     public static final class layout {
@@ -75,10 +77,14 @@ public final class R {
         public static final int alta_1=0x7f080004;
         public static final int alta_2=0x7f080005;
         public static final int app_name=0x7f080002;
+        public static final int aviso_recarga=0x7f08000c;
+        public static final int aviso_recarga_completa=0x7f08000d;
         public static final int configura=0x7f080003;
         public static final int eliminar_ok=0x7f080009;
         public static final int eliminar_pregunta=0x7f08000a;
         public static final int empty_view_text=0x7f080000;
+        public static final int error_red=0x7f08000e;
+        public static final int error_tiempos=0x7f08000f;
         public static final int refresh=0x7f080001;
         public static final int texto_tiempo=0x7f08000b;
         public static final int tiempo_m_1=0x7f080006;

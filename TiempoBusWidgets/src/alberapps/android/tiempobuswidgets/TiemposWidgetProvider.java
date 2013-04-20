@@ -46,7 +46,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -185,71 +184,76 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	 */
 	public void actualizar(final Context context, Intent intent) {
 
-		PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+		preferencias = context.getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
 		listaTiempos = new ArrayList<BusLlegada>();
 
 		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
 
-				listaTiempos = tiempos;
+				if (tiempos != null) {
 
-				sWorkerQueue.removeMessages(0);
-				sWorkerQueue.post(new Runnable() {
-					@Override
-					public void run() {
-						final ContentResolver r = context.getContentResolver();
-						// final Cursor c =
-						// r.query(TiemposDataProvider.CONTENT_URI, null, null,
-						// null, null);
-						// final int count = c.getCount();
+					listaTiempos = tiempos;
 
-						// We disable the data changed observer temporarily
-						// since
-						// each of the updates
-						// will trigger an onChange() in our data observer.
+					sWorkerQueue.removeMessages(0);
+					sWorkerQueue.post(new Runnable() {
+						@Override
+						public void run() {
+							final ContentResolver r = context.getContentResolver();
+							// final Cursor c =
+							// r.query(TiemposDataProvider.CONTENT_URI, null,
+							// null,
+							// null, null);
+							// final int count = c.getCount();
 
-						try {
-							r.unregisterContentObserver(sDataObserver);
-						} catch (Exception e) {
+							// We disable the data changed observer temporarily
+							// since
+							// each of the updates
+							// will trigger an onChange() in our data observer.
 
+							try {
+								r.unregisterContentObserver(sDataObserver);
+							} catch (Exception e) {
+
+							}
+
+							r.delete(TiemposDataProvider.CONTENT_URI, null, null);
+
+							for (int i = 0; (listaTiempos != null && i < listaTiempos.size()); ++i) {
+
+								final Uri uri = ContentUris.withAppendedId(TiemposDataProvider.CONTENT_URI, i);
+
+								final ContentValues values = new ContentValues();
+
+								// Linea
+								values.put(TiemposDataProvider.Columns.LINEA, listaTiempos.get(i).getLinea());
+
+								// Tiempo
+								values.put(TiemposDataProvider.Columns.TIEMPO, listaTiempos.get(i).getProximo());
+
+								// Destino
+								values.put(TiemposDataProvider.Columns.DESTINO, listaTiempos.get(i).getDestino());
+
+								// Parada
+								values.put(TiemposDataProvider.Columns.PARADA, listaTiempos.get(i).getParada());
+
+								r.insert(uri, values);
+							}
+							r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
+
+							final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+							final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+							mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
 						}
+					});
 
-						r.delete(TiemposDataProvider.CONTENT_URI, null, null);
+					Toast.makeText(context, context.getString(R.string.aviso_recarga_completa), Toast.LENGTH_SHORT).show();
 
-						for (int i = 0; (listaTiempos != null && i < listaTiempos.size()); ++i) {
+				} else {
 
-							final Uri uri = ContentUris.withAppendedId(TiemposDataProvider.CONTENT_URI, i);
+					Toast.makeText(context, context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
 
-							final ContentValues values = new ContentValues();
-
-							// Linea
-							values.put(TiemposDataProvider.Columns.LINEA, listaTiempos.get(i).getLinea());
-
-							// Tiempo
-							values.put(TiemposDataProvider.Columns.TIEMPO, listaTiempos.get(i).getProximo());
-
-							// Destino
-							values.put(TiemposDataProvider.Columns.DESTINO, listaTiempos.get(i).getDestino());
-
-							// Parada
-							values.put(TiemposDataProvider.Columns.PARADA, listaTiempos.get(i).getParada());
-
-							// r.update(uri, values,
-							// TiemposDataProvider.Columns.LINEA, new
-							// String[]{listaTiempos.get(i).getLinea()});
-
-							r.insert(uri, values);
-						}
-						r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
-
-						final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-						final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-						mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
-					}
-				});
-
+				}
 			}
 
 		};
@@ -264,7 +268,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(lineasParada);
 
 		} else {
-			Toast.makeText(context.getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 		}
 
 		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -280,7 +284,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
 		mgr.updateAppWidget(cn, rv);
 
-		Toast.makeText(context, "Actualiza", Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, context.getString(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 	}
 
