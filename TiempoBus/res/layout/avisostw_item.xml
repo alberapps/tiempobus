@@ -83,8 +83,13 @@
                 android:textSize="12sp"
                 android:textStyle="italic"
         		android:autoLink="web"/>
-            
-            
+
+             <TextView
+                 android:id="@+id/tw_web"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="Small Text"
+                 android:textAppearance="?android:attr/textAppearanceSmall" />
             
           </LinearLayout>
          

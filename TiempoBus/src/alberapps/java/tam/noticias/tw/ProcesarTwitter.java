@@ -26,6 +26,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -46,22 +47,50 @@ import com.google.gson.Gson;
 
 public class ProcesarTwitter {
 
-	public static final String url2 = "http://search.twitter.com/search.json?q=from:Alicante_City";
+	public static final String tw_alicante = "http://search.twitter.com/search.json?q=from:Alicante_City";
+	public static final String tw_alicante_ruta = "http://twitter.com/Alicante_City";
 
-	public static final String url1 = "http://search.twitter.com/search.json?q=from:alberapps";
+	public static final String tw_alberapps = "http://search.twitter.com/search.json?q=from:alberapps";
+	public static final String tw_alberapps_ruta = "http://twitter.com/alberapps";
 
+	public static final String tw_campello = "http://search.twitter.com/search.json?q=from:campelloturismo";
+	public static final String tw_campello_ruta = "http://twitter.com/campelloturismo";
+	
+	public static final String tw_sanvi = "http://search.twitter.com/search.json?q=from:aytoraspeig";
+	public static final String tw_sanvi_ruta = "http://twitter.com/aytoraspeig";
+		
+	public static final String tw_santjoan = "http://search.twitter.com/search.json?q=from:sant_joan";
+	public static final String tw_santjoan_ruta = "http://twitter.com/sant_joan";
+	
+	
+	public static final String TW_STATUS ="/status/";
+	
+	
 	/**
 	 * listas que se quieran
 	 * 
-	 * @return
+	 * @return listado
 	 */
 	public static List<TwResultado> procesar() {
 
 		List<TwResultado> lista;
 
-		lista = procesarTw(url1);
+		lista = procesarTw(tw_alberapps,tw_alberapps_ruta);
 
-		lista.addAll(procesarTw(url2));
+		lista.addAll(procesarTw(tw_alicante,tw_alicante_ruta));
+		
+		lista.addAll(procesarTw(tw_campello, tw_campello_ruta));
+		
+		lista.addAll(procesarTw(tw_sanvi, tw_sanvi_ruta));
+		
+		lista.addAll(procesarTw(tw_santjoan, tw_santjoan_ruta));
+
+		if (lista != null && !lista.isEmpty()) {
+
+			// Ordenar por fecha
+			Collections.sort(lista);
+
+		}
 
 		return lista;
 
@@ -71,9 +100,9 @@ public class ProcesarTwitter {
 	 * Procesar
 	 * 
 	 * @param url
-	 * @return
+	 * @return listado
 	 */
-	private static List<TwResultado> procesarTw(String url) {
+	private static List<TwResultado> procesarTw(String url, String ruta) {
 
 		List<TwResultado> listaDatos = new ArrayList<TwResultado>();
 
@@ -105,15 +134,20 @@ public class ProcesarTwitter {
 			// Fri, 14 Dec 2012 10:48:19 +0000
 
 			String fecha = formatearFechaTw(results.get(i).createdAt);
-			
-			if(fecha != null){
-				
+
+			if (fecha != null) {
+
 				dato.setFecha(fecha);
-				
-			}else{
-			
-			dato.setFecha(results.get(i).createdAt.substring(5, 16));
+				dato.setFechaDate(parsearFechaTw(results.get(i).createdAt));
+
+			} else {
+
+				dato.setFecha(results.get(i).createdAt.substring(5, 16));
 			}
+
+			dato.setUrl(ruta);
+
+			dato.setId(results.get(i).idStr);
 			
 			listaDatos.add(dato);
 		}
@@ -188,9 +222,34 @@ public class ProcesarTwitter {
 	 * Formatear la fecha devuelta por tw
 	 * 
 	 * @param fecha
-	 * @return
+	 * @return string
 	 */
 	private static String formatearFechaTw(String fecha) {
+
+		Date fechaTemp = parsearFechaTw(fecha);
+
+		if (fechaTemp != null) {
+
+			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
+
+			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.getDefault());
+
+			return sfNueva.format(fechaTemp);
+
+		} else {
+
+			return null;
+		}
+
+	}
+
+	/**
+	 * Pasar a Date
+	 * 
+	 * @param fecha
+	 * @return date
+	 */
+	private static Date parsearFechaTw(String fecha) {
 
 		Date fechaTemp = null;
 
@@ -208,20 +267,10 @@ public class ProcesarTwitter {
 
 		} catch (ParseException e) {
 
+			fechaTemp = null;
+
 		}
-
-		if (fechaTemp != null) {
-
-			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
-
-			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.getDefault());
-
-			return sfNueva.format(fechaTemp);
-
-		} else {
-
-			return null;
-		}
+		return fechaTemp;
 
 	}
 

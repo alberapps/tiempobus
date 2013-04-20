@@ -46,6 +46,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -311,11 +312,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	 */
 	private void recargarNoticias(boolean bloqueo) {
 
-		if (bloqueo) {			
+		if (bloqueo) {
 			dialog.show();
-			
+
 			dialog.setMessage(getString(R.string.carga_noticias_msg));
-			
+
 		} else {
 			getActionBarHelper().setRefreshActionItemState(true);
 		}
@@ -337,8 +338,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 					cargarListado(noticias, false);
 
 				}
-				
-				
+
 				// Inicia carga twitter
 				recargarTw();
 
@@ -465,11 +465,10 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	 */
 	private void recargarTw() {
 
-		
 		if (dialog != null && dialog.isShowing()) {
 			dialog.setMessage(getString(R.string.carga_tw_msg));
 		}
-		
+
 		/**
 		 * Sera llamado cuando la tarea de cargar las noticias
 		 */
@@ -539,7 +538,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			TextView vacio = (TextView) findViewById(R.id.vacio_tw);
 			lineasView.setEmptyView(vacio);
 
-			lineasView.setOnItemClickListener(twClickedHandler);
+			//lineasView.setOnItemClickListener(twClickedHandler);
 
 			lineasView.setAdapter(twAdapter);
 
@@ -567,6 +566,15 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 *            The row id of the item that was clicked
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			
+			String url = avisosRecuperados.get(position).getUrl();
+
+			Intent i = new Intent(Intent.ACTION_VIEW);
+
+			i.setData(Uri.parse(url));
+			startActivity(i);
 
 		}
 	};

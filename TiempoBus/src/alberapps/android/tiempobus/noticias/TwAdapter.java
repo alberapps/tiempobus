@@ -19,23 +19,24 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import java.net.URL;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.java.tam.noticias.tw.ProcesarTwitter;
 import alberapps.java.tam.noticias.tw.TwResultado;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Datos lista tiempos
+ * Datos lista de tw
  * 
  */
 public class TwAdapter extends ArrayAdapter<TwResultado> {
@@ -54,7 +55,7 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 	 */
 	public View getView(int position, View v, ViewGroup parent) {
 		if (v == null) {
-			Context ctx = this.getContext().getApplicationContext();
+			Context ctx = getContext();
 			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			v = vi.inflate(R.layout.avisostw_item, null);
@@ -62,30 +63,92 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 		}
 
 		if (this.getCount() > 0) {
-			TwResultado tw = getItem(position);
+			final TwResultado tw = getItem(position);
 			if (tw != null) {
 
 				TextView usuario = (TextView) v.findViewById(R.id.usuarioNombre);
 				TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
-				
-				
-				
-				ImageView imagen = (ImageView)v.findViewById(R.id.imagenTw);
-				
+
+				ImageView imagen = (ImageView) v.findViewById(R.id.imagenTw);
+
+				//Link de la imagen de usuario
+				imagen.setOnClickListener(new OnClickListener() {
+
+					public void onClick(View view) {
+
+						String url = tw.getUrl();
+
+						Intent i = new Intent(Intent.ACTION_VIEW);
+
+						i.setData(Uri.parse(url));
+						getContext().startActivity(i);
+
+					}
+
+				});
+
 				TextView usuarioId = (TextView) v.findViewById(R.id.usuarioId);
 				TextView fecha = (TextView) v.findViewById(R.id.fecha);
-				
 
 				usuario.setText(tw.getNombreCompleto());
 				noticiaText.setText(tw.getMensaje().trim());
 				usuarioId.setText(tw.getUsuario());
 				fecha.setText(tw.getFecha());
 
-				if(tw.getImagenBitmap() != null){
+				if (tw.getImagenBitmap() != null) {
 					imagen.setImageBitmap(tw.getImagenBitmap());
 				}
 				
+				//Link del nombre de usuario
+				usuario.setOnClickListener(new OnClickListener() {
+
+					public void onClick(View view) {
+
+						String url = tw.getUrl();
+
+						Intent i = new Intent(Intent.ACTION_VIEW);
+
+						i.setData(Uri.parse(url));
+						getContext().startActivity(i);
+
+					}
+
+				});
 				
+				//Link del nombre de usuario
+				usuarioId.setOnClickListener(new OnClickListener() {
+
+					public void onClick(View view) {
+
+						String url = tw.getUrl();
+
+						Intent i = new Intent(Intent.ACTION_VIEW);
+
+						i.setData(Uri.parse(url));
+						getContext().startActivity(i);
+
+					}
+
+				});
+				
+				TextView twwebText = (TextView) v.findViewById(R.id.tw_web);
+				
+				//Link del nombre de usuario
+				twwebText.setOnClickListener(new OnClickListener() {
+
+					public void onClick(View view) {
+
+						String url = tw.getUrl() + ProcesarTwitter.TW_STATUS + tw.getId();
+
+						Intent i = new Intent(Intent.ACTION_VIEW);
+
+						i.setData(Uri.parse(url));
+						getContext().startActivity(i);
+
+					}
+
+				});
+
 			}
 		}
 
@@ -93,9 +156,9 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 	}
 
 	/**
-	 * Anade todas las lineas al adapter
+	 * Anade todas al adapter
 	 * 
-	 * @param noticias
+	 * @param tw
 	 */
 	public void addAll(List<TwResultado> tw) {
 		if (tw == null) {
@@ -106,9 +169,5 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 			add(tw.get(i));
 		}
 	}
-	
-	
-	
-	
 
 }

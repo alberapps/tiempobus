@@ -18,9 +18,15 @@
  */
 package alberapps.java.tam.noticias.tw;
 
+import java.util.Date;
+
 import android.graphics.Bitmap;
 
-public class TwResultado {
+/**
+ * Resultados de tw
+ * 
+ */
+public class TwResultado implements Comparable<TwResultado> {
 
 	private String usuario;
 
@@ -28,6 +34,12 @@ public class TwResultado {
 
 	private String fecha;
 
+	private Date fechaDate;
+	
+	private String url;
+
+	private String id;
+	
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
@@ -80,6 +92,42 @@ public class TwResultado {
 
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
+	}
+
+	public int compareTo(TwResultado arg0) {
+
+		if (arg0.getFechaDate() != null) {
+
+			return arg0.getFechaDate().compareTo(getFechaDate());
+
+		} else {
+			return -1;
+		}
+
+	}
+
+	public Date getFechaDate() {
+		return fechaDate;
+	}
+
+	public void setFechaDate(Date fechaDate) {
+		this.fechaDate = fechaDate;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }
