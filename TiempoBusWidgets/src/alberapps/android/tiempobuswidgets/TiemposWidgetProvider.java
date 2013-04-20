@@ -251,7 +251,11 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 				} else {
 
-					Toast.makeText(context, context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
+					if (!preferencias.getString("lineas_parada", "").equals("")) {
+
+						Toast.makeText(context, context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
+
+					}
 
 				}
 			}
