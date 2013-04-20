@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2011 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="empty_view_text">Sense informació</string>
+   
+    <string name="refresh">Actualitzar</string>
+    
+    <string name="app_name">TiempoBus Widgets</string>
+    
+    <string name="configura">Configura</string>
+    
+    <string name="alta_1">El bus de la parada actual ha estat afegit a TiempoBus Widgets.</string>
+    
+    <string name="alta_2">Seleccioneu "Actualitzar" al widget per visualitzar les noves dades.</string>
+    
+    <string name="tiempo_m_1">A la Parada</string>
+    <string name="tiempo_m_2">Sense Estimació</string>
+    <string name="tiempo_m_3">i</string>
+    
+    <string name="eliminar_ok">S\'ha eliminat el bus del widget</string>
+    
+    <string name="eliminar_pregunta">Vols eliminar el bus del widget?</string>
+    
+    <string name="texto_tiempo">Actualitzat: </string>
+    
+    <string name="aviso_recarga">Actualitzant temps</string>
+    
+    <string name="aviso_recarga_completa">Temps actualitzats</string>
+     
+    <string name="error_red">L\'accés a Internet no està disponible. Verifica la teua connexió</string>
+    
+    <string name="error_tiempos">No s\'han pogut recuperar les dades. Intenta en uns minuts. Si encara no funciona, comprova la disponibilitat del servei en: isaealicante.subus.es/movil</string>
+    
+    
+</resources>

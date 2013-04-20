@@ -30,9 +30,9 @@
     <string name="tiempo_m_2">Sin Estimación</string>
     <string name="tiempo_m_3">y</string>
     
-    <string name="eliminar_ok">Se ha quitado el bus del widget</string>
+    <string name="eliminar_ok">Se ha eliminado el bus del widget</string>
     
-    <string name="eliminar_pregunta">¿Quieres quitar el bus del widget?</string>
+    <string name="eliminar_pregunta">¿Quieres eliminar el bus del widget?</string>
     
     <string name="texto_tiempo">Actualizado: </string>
     
