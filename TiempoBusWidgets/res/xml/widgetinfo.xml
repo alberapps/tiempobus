@@ -12,12 +12,14 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+     
+     android:updatePeriodMillis="1800000"
+     
 -->
 <appwidget-provider
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:minWidth="280dp"
-  android:minHeight="180dp"
-  android:updatePeriodMillis="1800000"
+  android:minHeight="180dp"  
   android:initialLayout="@layout/widget_layout"
   android:resizeMode="vertical"
   android:minResizeWidth="280dp"

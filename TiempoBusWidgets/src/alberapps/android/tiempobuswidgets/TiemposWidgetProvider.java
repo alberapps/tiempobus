@@ -211,11 +211,22 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 							// each of the updates
 							// will trigger an onChange() in our data observer.
 
-							try {
+							
+							try{
 								r.unregisterContentObserver(sDataObserver);
-							} catch (Exception e) {
-
+							}catch(Exception e){
+								
+								
+								final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+								final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+								sDataObserver = new TiemposDataProviderObserver(mgr, cn, sWorkerQueue);
+								r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
+								
+								
+								r.unregisterContentObserver(sDataObserver);
+								
 							}
+							
 
 							r.delete(TiemposDataProvider.CONTENT_URI, null, null);
 
