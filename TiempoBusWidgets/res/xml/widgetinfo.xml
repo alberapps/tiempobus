@@ -14,6 +14,7 @@
      limitations under the License.
      
      android:updatePeriodMillis="1800000"
+     android:widgetCategory="keyguard|home_screen">
      
 -->
 <appwidget-provider
@@ -25,5 +26,5 @@
   android:minResizeWidth="280dp"
   android:minResizeHeight="70dp"
   android:previewImage="@drawable/previsualizar"
-  android:widgetCategory="keyguard|home_screen">
+  android:widgetCategory="home_screen">
 </appwidget-provider>

@@ -260,6 +260,17 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 					Toast.makeText(context, context.getString(R.string.aviso_recarga_completa), Toast.LENGTH_SHORT).show();
 
+					// Cambiar hora actualizacion
+					RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+					final Calendar c = Calendar.getInstance();
+					SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+					String updated = df.format(c.getTime()).toString();
+					rv.setTextViewText(R.id.hora_act, updated);
+
+					final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+					final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+					mgr.updateAppWidget(cn, rv);
+					
 				} else {
 
 					if (!preferencias.getString("lineas_parada", "").equals("")) {
@@ -288,16 +299,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
-		// Cambiar hora actualizacion
-		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-		final Calendar c = Calendar.getInstance();
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		String updated = df.format(c.getTime()).toString();
-		rv.setTextViewText(R.id.hora_act, updated);
-
-		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-		mgr.updateAppWidget(cn, rv);
+		
 
 		Toast.makeText(context, context.getString(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 

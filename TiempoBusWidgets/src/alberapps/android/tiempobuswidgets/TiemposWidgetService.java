@@ -82,6 +82,11 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 			linea = mCursor.getString(lineaColIndex);
 			tiempo = controlAviso(mCursor.getString(tiempoColIndex));
 			destino = mCursor.getString(destinoColIndex);
+			
+			if(destino != null && !destino.equals("")){
+				destino = ">> "+destino;
+			}
+			
 			parada = mCursor.getString(paradaColIndex);
 		}
 
