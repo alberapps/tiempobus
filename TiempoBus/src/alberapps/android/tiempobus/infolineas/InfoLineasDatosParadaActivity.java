@@ -80,6 +80,7 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 			TextView destino = (TextView) findViewById(R.id.destino);
 			TextView localizacion = (TextView) findViewById(R.id.localizacion);
 			TextView conexiones = (TextView) findViewById(R.id.conexiones);
+			TextView observaciones = (TextView) findViewById(R.id.observaciones);
 
 			parada.setText(datosParada.getCodigoParada());
 
@@ -99,6 +100,7 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 			destino.setText(datosParada.getSentido());
 			localizacion.setText(datosParada.getTitle());
 			conexiones.setText(datosParada.getLineas());
+			observaciones.setText(datosParada.getObservaciones());
 
 			// boton parada
 			Button botonPoste = (Button) findViewById(R.id.buttonT);

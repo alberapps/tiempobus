@@ -697,6 +697,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 				if (datosMapaCargadosIda.getPlacemarks().get(i).getLineas() != null) {
 					descripcionAlert += datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
 				}
+				
+				descripcionAlert += "\n" + getResources().getText(R.string.observaciones) + " ";
+
+				if (datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null) {
+					descripcionAlert += datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones().trim();
+				}
 
 				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim(),
 						descripcionAlert);
@@ -771,6 +777,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				if (datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas() != null) {
 					descripcionAlert += datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
+				}
+				
+				descripcionAlert += "\n" + getResources().getText(R.string.observaciones) + " ";
+
+				if (datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null) {
+					descripcionAlert += datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones().trim();
 				}
 
 				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim(),

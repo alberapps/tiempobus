@@ -11,14 +11,12 @@
         android:layout_height="wrap_content"
         android:background="@drawable/fondo_favorito" >
          
-        
          <ImageView
-            android:id="@+id/imagenTw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_tiempobus" />
-
-         
+             android:id="@+id/imagenTw"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             android:src="@drawable/ic_tiempobus" />
         
          <LinearLayout
              android:id="@+id/linearLayout2"
@@ -40,46 +38,41 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:text="@string/guion"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="15sp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="bold" />
 
          <TextView
-                android:id="@+id/usuarioId"               
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:textSize="12sp"
-                 />
+             android:id="@+id/usuarioId"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="center_vertical"
+             android:maxLines="1"
+             android:text="@string/guion"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+             android:textSize="11sp"
+             android:textStyle="italic" />
          
           </LinearLayout>
          
           <TextView
-                android:id="@+id/fecha"                
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:textSize="12sp"
-                 />
+              android:id="@+id/fecha"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:maxLines="1"
+              android:text="@string/guion"
+              android:textAppearance="?android:attr/textAppearanceSmall"
+              android:textSize="11sp"
+              android:textStyle="italic" />
 
-       
-                
              <TextView
-        		android:id="@+id/noticia"       			
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="italic"
-        		android:autoLink="web"
-        		android:textSize="12sp"/>
+                 android:id="@+id/noticia"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:autoLink="web"
+                 android:gravity="top"
+                 android:text="@string/guion"
+                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
              <TextView
                  android:id="@+id/tw_web"
