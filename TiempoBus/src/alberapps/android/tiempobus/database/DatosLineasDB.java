@@ -58,6 +58,7 @@ public class DatosLineasDB {
 	public static final String COLUMN_COORDENADAS = "COORDENADAS";
 	public static final String COLUMN_DIRECCION = "DIRECCION";
 	public static final String COLUMN_CONEXION = "CONEXION";
+	public static final String COLUMN_OBSERVACIONES = "OBSERVACIONES";
 
 	public static final String COLUMN_LATITUD = "LATITUD";
 	public static final String COLUMN_LONGITUD = "LONGITUD";
@@ -65,7 +66,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 28;
+	private static final int DATABASE_VERSION = 29; //28
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -111,6 +112,7 @@ public class DatosLineasDB {
 		map.put(COLUMN_LINEA_NUM, COLUMN_LINEA_NUM);
 		map.put(COLUMN_LONGITUD, COLUMN_LONGITUD);
 		map.put(COLUMN_PARADA, COLUMN_PARADA);
+		map.put(COLUMN_OBSERVACIONES, COLUMN_OBSERVACIONES);
 
 		return map;
 	}
@@ -300,7 +302,7 @@ public class DatosLineasDB {
 		 * an alias for "rowid"
 		 */
 		private static final String FTS_TABLE_CREATE = "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE + " USING fts3 (" + KEY_WORD + ", " + KEY_DEFINITION + ", " + COLUMN_LINEA_NUM + ", " + COLUMN_LINEA_DESC + ", "
-				+ COLUMN_DESTINO + ", " + COLUMN_PARADA + ", " + COLUMN_COORDENADAS + ", " + COLUMN_DIRECCION + ", " + COLUMN_CONEXION + ", " + COLUMN_LATITUD + ", " + COLUMN_LONGITUD + ", " + ");";
+				+ COLUMN_DESTINO + ", " + COLUMN_PARADA + ", " + COLUMN_COORDENADAS + ", " + COLUMN_DIRECCION + ", " + COLUMN_CONEXION + ", " + COLUMN_LATITUD + ", " + COLUMN_LONGITUD + ", " + COLUMN_OBSERVACIONES + ");";
 
 		private static final String FTS_TABLE_CREATE_RECORRIDO = "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE_RECORRIDO + " USING fts3 (" + COLUMN_LINEA_NUM + ", " + COLUMN_DESTINO + ", " + COLUMN_COORDENADAS + ", "
 				+ ");";
@@ -507,7 +509,11 @@ public class DatosLineasDB {
 			initialValues.put(COLUMN_COORDENADAS, datos[4].trim());
 			initialValues.put(COLUMN_DIRECCION, datos[5].trim());
 			initialValues.put(COLUMN_CONEXION, datos[6].trim());
-
+			
+			
+			initialValues.put(COLUMN_OBSERVACIONES, datos[7].trim());
+			
+			
 			String[] coordenadas = datos[4].trim().split(",");
 
 			double lat = Double.parseDouble(coordenadas[1]); // 38.386058;

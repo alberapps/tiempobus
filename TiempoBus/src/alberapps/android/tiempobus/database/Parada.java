@@ -24,31 +24,6 @@ package alberapps.android.tiempobus.database;
  */
 public class Parada {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((parada == null) ? 0 : parada.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Parada other = (Parada) obj;
-		if (parada == null) {
-			if (other.parada != null)
-				return false;
-		} else if (!parada.equals(other.parada))
-			return false;
-		return true;
-	}
-
 	private String lineaNum;
 
 	private String lineaDesc;
@@ -66,6 +41,8 @@ public class Parada {
 	private Integer latitud;
 
 	private Integer longitud;
+
+	private String observaciones;
 
 	public String getLineaNum() {
 		return lineaNum;
@@ -137,6 +114,39 @@ public class Parada {
 
 	public void setLongitud(Integer longitud) {
 		this.longitud = longitud;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((parada == null) ? 0 : parada.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Parada other = (Parada) obj;
+		if (parada == null) {
+			if (other.parada != null)
+				return false;
+		} else if (!parada.equals(other.parada))
+			return false;
+		return true;
 	}
 
 }

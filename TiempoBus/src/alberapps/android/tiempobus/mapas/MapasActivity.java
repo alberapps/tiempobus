@@ -435,6 +435,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
 				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
 				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
 
 				if (destinoIda.equals("")) {
 					destinoIda = par.getDestino();
@@ -515,7 +516,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			placeMark.setCoordinates(listaParadas.get(i).getCoordenadas());
 			placeMark.setDescription(listaParadas.get(i).getLineaDesc());
 			placeMark.setLineas(listaParadas.get(i).getConexion());
-			placeMark.setObservaciones("");
+			placeMark.setObservaciones(listaParadas.get(i).getObservaciones());
 			placeMark.setSentido(listaParadas.get(i).getDestino());
 			placeMark.setTitle(listaParadas.get(i).getDireccion());
 
@@ -1111,16 +1112,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.mapa, menu);
 
-		/*
-		 * if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-		 * SearchManager searchManager = (SearchManager)
-		 * getSystemService(Context.SEARCH_SERVICE); SearchView searchView =
-		 * (SearchView) menu.findItem(R.id.menu_search).getActionView();
-		 * searchView
-		 * .setSearchableInfo(searchManager.getSearchableInfo(getComponentName
-		 * ())); searchView.setIconifiedByDefault(false); }
-		 */
-
+		
 		return super.onCreateOptionsMenu(menu);
 	}
 

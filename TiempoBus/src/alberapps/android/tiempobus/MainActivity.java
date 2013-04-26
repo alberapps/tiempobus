@@ -1787,6 +1787,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 					par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
 					par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
 
+					par.setObservaciones(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+
 					listaParadas.add(par);
 				}
 
@@ -1794,6 +1796,17 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 				if (listaParadas.get(0).getConexion() != null) {
 					descripcionAlert += listaParadas.get(0).getConexion().trim();
+				}
+
+				descripcionAlert += "\n" + getResources().getText(R.string.observaciones);
+
+				// Observaciones
+				for (int i = 0; i < listaParadas.size(); i++) {
+
+					if (listaParadas.get(i).getObservaciones() != null && !listaParadas.get(i).getObservaciones().trim().equals("")) {
+						descripcionAlert += "\n[" + listaParadas.get(i).getLineaNum() + "] " + listaParadas.get(i).getObservaciones().trim() + "\n";
+					}
+
 				}
 
 				AlertDialog.Builder dialog = new AlertDialog.Builder(this);

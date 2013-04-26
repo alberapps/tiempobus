@@ -162,6 +162,10 @@ public class ProcesarMapaService {
 								placeMark.setCodigoParada("");
 
 						}
+						
+						if(placeMark.getCodigoParada() != null){
+							placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
+						}
 
 						// Extraer sentido
 						pos = desc.indexOf("Sentido");
@@ -179,15 +183,27 @@ public class ProcesarMapaService {
 
 							}
 
-						} else
+						} else{
 							placeMark.setSentido("");
-
+						
+							placeMark.setObservaciones("");
+						}
+						
+						if(placeMark.getObservaciones() != null){
+							placeMark.setObservaciones(placeMark.getObservaciones().trim());
+						}
+							
 						// Extraer lineas
 						int pos2 = desc.indexOf("Líneas");
-						if (pos >= 0 && pos2 >= 0)
+						if (pos >= 0 && pos2 >= 0) {
 							placeMark.setLineas(desc.substring(pos2 + 7, pos));
-						else
+						}else{
 							placeMark.setLineas("");
+						}
+						
+						if(placeMark.getLineas() != null){
+							placeMark.setLineas(placeMark.getLineas().trim());
+						}
 
 					} else if (etiqueta.equals("name")) {
 

@@ -22,6 +22,7 @@ package alberapps.android.tiempobus.tasks;
 import java.util.ArrayList;
 
 import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.lineas.ProcesarLineasService;
 import android.os.AsyncTask;
 
@@ -60,7 +61,16 @@ public class LoadBusesAsyncTask extends AsyncTask<Void, Void, ArrayList<BusLinea
 		try {
 			
 			
-			lineasBus = ProcesarLineasService.getLineasBus();
+			//lineasBus = ProcesarLineasService.getLineasBus();
+			
+				
+			lineasBus = new ArrayList<BusLinea>();
+
+			for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++) {
+
+				lineasBus.add(new BusLinea(UtilidadesTAM.LINEAS_CODIGO_KML[i], UtilidadesTAM.LINEAS_DESCRIPCION[i], UtilidadesTAM.LINEAS_NUM[i]));
+
+			}
 			
 		} catch (Exception e) {
 			lineasBus = null;

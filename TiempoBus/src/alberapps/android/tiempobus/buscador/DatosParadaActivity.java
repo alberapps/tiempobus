@@ -84,6 +84,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			TextView destino = (TextView) findViewById(R.id.destino);
 			TextView localizacion = (TextView) findViewById(R.id.localizacion);
 			TextView conexiones = (TextView) findViewById(R.id.conexiones);
+			
+			TextView observaciones = (TextView) findViewById(R.id.observaciones);
 
 			int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
 			int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
@@ -92,6 +94,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
 
 			int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+			
+			int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
 
 			parada.setText(cursor.getString(paradaIndex));
 
@@ -102,6 +106,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			destino.setText(cursor.getString(destinoIndex));
 			localizacion.setText(cursor.getString(direccionIndex));
 			conexiones.setText(cursor.getString(conexionesIndex));
+			
+			observaciones.setText(cursor.getString(observacionesIndex));
 		}
 
 		// boton parada

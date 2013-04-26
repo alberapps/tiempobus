@@ -39,7 +39,14 @@ public class PlaceMark implements Serializable {
 	private String observaciones;
 
 	public String getObservaciones() {
-		return observaciones;
+		
+		if(observaciones != null){
+			return observaciones;
+		}else{
+			return " ";
+		}
+		
+		
 	}
 
 	public void setObservaciones(String observaciones) {

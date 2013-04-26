@@ -117,6 +117,8 @@ public class FragmentLineas extends Fragment {
 			Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			dialog.dismiss();
 		}
+		
+		
 
 	}
 

@@ -178,21 +178,21 @@ public class BuscadorLineasProvider extends ContentProvider {
 
 	private Cursor getWord(Uri uri) {
 		String rowId = uri.getLastPathSegment();
-		String[] columns = new String[] { DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION, DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA };
+		String[] columns = new String[] { DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION, DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES };
 
 		return mDictionary.getWord(rowId, columns);
 	}
 
 	private Cursor getParadasProximas(Uri uri, String latitudActual, String longitudActual, String distancia) {
 
-		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, };
+		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES };
 
 		return mDictionary.getPuntosProximos(latitudActual, longitudActual, distancia, columns);
 	}
 
 	private Cursor getParadasLinea(Uri uri, String linea) {
 
-		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA };
+		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES };
 
 		return mDictionary.getParadasLinea(linea, columns);
 	}
@@ -206,7 +206,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 
 	private Cursor getDatosParada(Uri uri, String parada) {
 
-		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA };
+		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES };
 
 		return mDictionary.getDatosParada(parada, columns);
 	}
