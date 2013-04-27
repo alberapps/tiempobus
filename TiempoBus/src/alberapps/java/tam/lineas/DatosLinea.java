@@ -29,6 +29,11 @@ public class DatosLinea {
 	private String lineaCodigoKML;
 	private String lineaNum;
 
+	//
+	private String tituloCabecera;
+	
+	
+	
 	public String getLineaDescripcion() {
 		return lineaDescripcion;
 	}
@@ -51,6 +56,14 @@ public class DatosLinea {
 
 	public void setLineaNum(String lineaNum) {
 		this.lineaNum = lineaNum;
+	}
+
+	public String getTituloCabecera() {
+		return tituloCabecera;
+	}
+
+	public void setTituloCabecera(String tituloCabecera) {
+		this.tituloCabecera = tituloCabecera;
 	}
 
 }

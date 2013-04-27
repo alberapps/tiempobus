@@ -23,32 +23,32 @@ import java.util.ArrayList;
 
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
-import alberapps.java.tam.lineas.ProcesarLineasService;
+import alberapps.java.tam.lineas.ProcesarDatosLineasService;
 import android.os.AsyncTask;
 
 /**
- * Tarea asincrona que se encarga de descargar el listado de buses
+ * Cargar informacion de las lineas
  * 
  * 
  */
-public class LoadBusesAsyncTask extends AsyncTask<Void, Void, ArrayList<BusLinea>> {
+public class LoadDatosLineasAsyncTask extends AsyncTask<Void, Void, ArrayList<BusLinea>> {
 	
 	/**
 	 * Interfaz que deberin implementar las clases que la quieran usar
 	 * Sirve como callback una vez termine la tarea asincrona
 	 * 
 	 */
-	public interface LoadBusesAsyncTaskResponder {
+	public interface LoadDatosLineasAsyncTaskResponder {
 	    public void busesLoaded(ArrayList<BusLinea> buses);
 	  }
-	private LoadBusesAsyncTaskResponder responder;
+	private LoadDatosLineasAsyncTaskResponder responder;
 	
 	/**
 	 * Constructor. Es necesario que nos pasen un objeto para el callback
 	 * 
 	 * @param responder
 	 */
-	public LoadBusesAsyncTask(LoadBusesAsyncTaskResponder responder) {
+	public LoadDatosLineasAsyncTask(LoadDatosLineasAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
 	
@@ -62,6 +62,8 @@ public class LoadBusesAsyncTask extends AsyncTask<Void, Void, ArrayList<BusLinea
 			
 			
 			//lineasBus = ProcesarLineasService.getLineasBus();
+			
+			//ProcesarDatosLineasService.getLineasInfo();
 			
 				
 			lineasBus = new ArrayList<BusLinea>();

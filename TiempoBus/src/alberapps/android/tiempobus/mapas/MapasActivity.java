@@ -28,8 +28,8 @@ import alberapps.android.tiempobus.data.BusAdapter;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
-import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask.LoadBusesAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask.LoadDatosMapaAsyncTaskResponder;
 import alberapps.java.tam.BusLinea;
@@ -983,7 +983,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadBusesAsyncTask(loadBusesAsyncTaskResponder).execute();
+			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -993,7 +993,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	}
 
-	LoadBusesAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadBusesAsyncTaskResponder() {
+	LoadDatosLineasAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadDatosLineasAsyncTaskResponder() {
 		public void busesLoaded(ArrayList<BusLinea> buses) {
 			if (buses != null) {
 				lineasBus = buses;

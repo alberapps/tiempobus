@@ -237,4 +237,7 @@
     <string name="widget_market">Google Play no está instalado en el dispositivo</string>
     
     <string name="ir_tw">>>Twitter</string>
+    
+    <string name="observaciones">Observaciones:</string>
+    
 </resources>

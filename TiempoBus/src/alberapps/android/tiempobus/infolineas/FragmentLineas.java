@@ -23,8 +23,8 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.NoticiasAdapter;
-import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadBusesAsyncTask.LoadBusesAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -112,7 +112,7 @@ public class FragmentLineas extends Fragment {
 		ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadBusesAsyncTask(loadBusesAsyncTaskResponder).execute();
+			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			dialog.dismiss();
@@ -125,7 +125,7 @@ public class FragmentLineas extends Fragment {
 	/**
 	 * Sera llamado cuando la tarea de cargar buses termine
 	 */
-	LoadBusesAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadBusesAsyncTaskResponder() {
+	LoadDatosLineasAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadDatosLineasAsyncTaskResponder() {
 		public void busesLoaded(ArrayList<BusLinea> buses) {
 			if (buses != null) {
 				lineasBus = buses;
