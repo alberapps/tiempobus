@@ -27,17 +27,7 @@
                 android:title="@string/preferencias_tiempos_auto"
                 android:summary="@string/preferencias_tiempos_desc" android:defaultValue="true"/>
 
-        <!--  
-        <ListPreference
-                android:key="image_fondo"
-                android:title="@string/preferencias_imagen"
-                android:summary="@string/preferencias_imagen_desc"
-                android:entries="@array/entries_list_fondos"
-                android:entryValues="@array/entryvalues_list_fondos"
-                android:dialogTitle="@string/preferencias_imagen_selec" 
-                android:defaultValue="0"/>
-        -->
-        
+                
     </PreferenceCategory>
     
     <PreferenceCategory
@@ -85,6 +75,37 @@
     			android:summary="@string/configuracion_alarmas_tono_desc"
     			android:defaultValue="content://settings/system/notification_sound"/>   
 
+        
+        
+         <PreferenceScreen
+                android:key="conf_twitter"
+                android:title="@string/tab_tw"
+                android:summary="@string/preferences"
+                >
+                
+             <CheckBoxPreference
+                android:key="tw_2"
+                android:title="\@Alicante_City"
+                android:defaultValue="true"/>
+             
+              <CheckBoxPreference
+                android:key="tw_3"
+                android:title="\@campelloturismo"
+                android:defaultValue="true"/>
+              
+              <CheckBoxPreference
+                android:key="tw_4"
+                android:title="\@aytoraspeig"
+                android:defaultValue="true"/>
+              
+              <CheckBoxPreference
+                android:key="tw_5"
+                android:title="\@sant_joan"
+                android:defaultValue="true"/>
+             
+             
+        </PreferenceScreen>
+        
     </PreferenceCategory>
     
      

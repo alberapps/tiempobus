@@ -18,8 +18,11 @@
  */
 package alberapps.android.tiempobus.mapas;
 
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -37,6 +40,7 @@ import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.DatosRuta;
 import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.util.Utilidades;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -45,6 +49,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -54,6 +59,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -162,8 +168,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			int lineaPos = UtilidadesTAM.getIdLinea(this.getIntent().getExtras().getString("LINEA_MAPA"));
 
-			if (lineaPos > -1) {
-
+			Log.d("mapas", "linea: " + lineaPos + "l: " + this.getIntent().getExtras().getString("LINEA_MAPA"));
+			
+			if (lineaPos > -1) {				
+				
 				lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
 				lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
 
@@ -698,7 +706,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 				if (datosMapaCargadosIda.getPlacemarks().get(i).getLineas() != null) {
 					descripcionAlert += datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
 				}
-				
+
 				descripcionAlert += "\n" + getResources().getText(R.string.observaciones) + " ";
 
 				if (datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null) {
@@ -779,7 +787,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 				if (datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas() != null) {
 					descripcionAlert += datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
 				}
-				
+
 				descripcionAlert += "\n" + getResources().getText(R.string.observaciones) + " ";
 
 				if (datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null) {
@@ -873,10 +881,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		flagOffline = false;
 
-		// Intent i = new Intent(MapasActivity.this, BusesActivity.class);
-		// i.putExtra("TIPO", "MAPA");
-		// startActivityForResult(i, SUB_ACTIVITY_REQUEST_LINEAS);
-
 		cargarDatosLineas();
 
 	}
@@ -884,10 +888,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 	private void launchBusesOffline() {
 
 		flagOffline = true;
-
-		// Intent i = new Intent(MapasActivity.this, BusesActivity.class);
-		// i.putExtra("TIPO", "MAPA");
-		// startActivityForResult(i, SUB_ACTIVITY_REQUEST_LINEAS);
 
 		cargarDatosLineas();
 
@@ -979,11 +979,23 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
 
+		String datosOffline = null;
+
+		//Carga local de lineas
+		if (flagOffline) {
+
+			Resources resources = getResources();
+			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
+
+			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+
+		}
+
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute();
+			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -1112,7 +1124,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.mapa, menu);
 
-		
 		return super.onCreateOptionsMenu(menu);
 	}
 

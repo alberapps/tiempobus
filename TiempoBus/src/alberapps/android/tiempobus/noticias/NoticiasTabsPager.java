@@ -502,7 +502,16 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute();
+
+			// Cargar lista de elementos a consultar
+			List<Boolean> listaTW = new ArrayList<Boolean>();
+
+			listaTW.add(preferencias.getBoolean("tw_2", true));
+			listaTW.add(preferencias.getBoolean("tw_3", true));
+			listaTW.add(preferencias.getBoolean("tw_4", true));
+			listaTW.add(preferencias.getBoolean("tw_5", true));
+
+			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
@@ -538,7 +547,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			TextView vacio = (TextView) findViewById(R.id.vacio_tw);
 			lineasView.setEmptyView(vacio);
 
-			//lineasView.setOnItemClickListener(twClickedHandler);
+			// lineasView.setOnItemClickListener(twClickedHandler);
 
 			lineasView.setAdapter(twAdapter);
 
@@ -568,7 +577,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			
+
 			String url = avisosRecuperados.get(position).getUrl();
 
 			Intent i = new Intent(Intent.ACTION_VIEW);

@@ -138,10 +138,10 @@ public class FragmentLineas extends Fragment {
 
 				dialog.dismiss();
 
-				Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_gcode), Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
 				toast.show();
 
-				// En caso de error carga la lista interna
+				/*// En caso de error carga la lista interna
 				lineasBus = new ArrayList<BusLinea>();
 
 				for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++) {
@@ -150,7 +150,7 @@ public class FragmentLineas extends Fragment {
 
 				}
 
-				cargarListado();
+				cargarListado();*/
 
 			}
 

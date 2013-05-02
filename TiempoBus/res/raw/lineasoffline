@@ -1,0 +1,65 @@
+<html>
+
+<body>
+
+<form>
+
+<select name="LineasBox" id="LineasBox" >
+	<option selected="selected" value="21">21 ALICANTE-P.S.JUAN-EL CAMPELLO</option>
+	<option value="22">22 ALICANTE-C. HUERTAS-P.S. JUAN</option>
+	<option value="23">23 ALICANTE-SANT JOAN-MUTXAMEL</option>
+	<option value="24">24 ALICANTE-UNIVERSIDAD-S.VICENTE</option>
+	<option value="25">25 ALICANTE-VILLAFRANQUEZA</option>
+	<option value="26">26 ALICANTE-VILLAFRANQUEZA-TANGEL</option>
+	<option value="30">30 SAN VICENTE-EL REBOLLEDO</option>
+	<option value="34">34 LANZADERA UNIVERSIDAD</option>
+	<option value="36">36 SAN GABRIEL-UNIVERSIDAD</option>
+	<option value="37">37 PADRE ESPLA-UNIVERSIDAD</option>
+	<option value="38">38 P.S.JUAN-H.ST.JOAN-UNIVERSIDAD</option>
+	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
+	<option value="21N">21N ALICANTE- P.S.JUAN-EL CAMPELLO</option>
+	<option value="22N">22N ALICANTE- PLAYA SAN JUAN</option>
+	<option value="23N">23N ALICANTE- MUTXAMEL</option>
+	<option value="24N">24N ALICANTE-UNIVERSIDAD-S.VICENTE</option>
+	<option value="01">01 S. GABRIEL- JUAN XXIII  (1&#186;S)</option>
+	<option value="02">02 LA FLORIDA - SAGRADA FAMILIA</option>
+	<option value="03">03 CIUDAD DE ASIS-COLONIA REQUENA</option>
+	<option value="04">04 CEMENTERIO-TOMBOLA</option>
+	<option value="05">05 EXPLANADA - SAN BLAS - RABASA</option>
+	<option value="06">06 E.AUTOBUSES - COLONIA REQUENA</option>
+	<option value="07">07 AV.&#211;SCAR ESPL&#193; - REBOLLEDO</option>
+	<option value="8A">8A VIRGEN DEL REMEDIO-EXPLANADA</option>
+	<option value="09">09 AV.OSCAR ESPLA - AV. NACIONES</option>
+	<option value="10">10 EXPLANADA-C.C. VISTAHERMOSA</option>
+	<option value="11">11 PZ.LUCEROS-AV. DENIA-H.ST.JOAN</option>
+	<option value="12">12 AV. CONSTITUCION-S. BLAS(PAUI)</option>
+	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
+	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
+	<option value="8B">8B EXPLANADA-VIRGEN DEL REMEDIO</option>
+	<option value="191">191 PLA - CAROLINAS - RICO PEREZ</option>
+	<option value="192">192 C. ASIS - BENALUA - RICO PEREZ</option>
+	<option value="M">M MUTXAMEL-URBANITZACIONS</option>
+	<option value="CEM">CEM MUTXAMEL - CEMENTERIO</option>
+	<option value="C2">C2 VENTA LANUZA - EL CAMPELLO</option>
+	<option value="C-51">C-51 MUTXAMEL - BUSOT</option>
+	<option value="C-52">C-52 BUSOT - EL CAMPELLO</option>
+	<option value="C6">C6 ALICANTE - AEROPUERTO</option>
+	<option value="27">27 ALICANTE-URBANOVA</option>
+	<option value="C-55">C-55 EL CAMPELLO-UNIVERSIDAD</option>
+	<option value="35">35 ALICANTE-PAULINAS-MUTXAMEL</option>
+	<option value="C-53">C-53 HOSPITAL SANT JOAN-EL CAMPELLO</option>
+	<option value="C-54">C-54 UNIVERSIDAD-HOSP. SANT JOAN</option>
+	<option value="C6*">C6* ALICANTE-URBANOVA-AEROPUERTO</option>
+	<option value="45">45 HOSPITAL-GIRASOLES-MANCHEGOS</option>
+	<option value="46A">46A HOSPITAL-VILLAMONTES-S.ANTONIO</option>
+	<option value="46B">46B HOSPITAL-P.CANASTELL-P.COTXETA</option>
+	<option value="TURI">TURI BUS TUR&#205;STICO (TURIBUS)</option>
+
+</select>
+
+
+</form>
+
+</body>
+
+</html>

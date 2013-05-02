@@ -60,8 +60,10 @@ public class LoadTwitterAsyncTask extends AsyncTask<Object, Void, List<TwResulta
 	protected List<TwResultado> doInBackground(Object... datos) {
 		List<TwResultado> twList = null;
 		try {
-						
-			twList = ProcesarTwitter.procesar();
+			
+			List<Boolean> lista = (List<Boolean>) datos[0];
+			
+			twList = ProcesarTwitter.procesar(lista);
 
 		} catch (Exception e) {
 			return null;

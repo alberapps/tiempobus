@@ -22,8 +22,7 @@ package alberapps.android.tiempobus.tasks;
 import java.util.ArrayList;
 
 import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.UtilidadesTAM;
-import alberapps.java.tam.lineas.ProcesarDatosLineasService;
+import alberapps.java.tam.lineas.ProcesarDatosLineasIsaeService;
 import android.os.AsyncTask;
 
 /**
@@ -31,18 +30,19 @@ import android.os.AsyncTask;
  * 
  * 
  */
-public class LoadDatosLineasAsyncTask extends AsyncTask<Void, Void, ArrayList<BusLinea>> {
-	
+public class LoadDatosLineasAsyncTask extends AsyncTask<String, Void, ArrayList<BusLinea>> {
+
 	/**
-	 * Interfaz que deberin implementar las clases que la quieran usar
-	 * Sirve como callback una vez termine la tarea asincrona
+	 * Interfaz que deberin implementar las clases que la quieran usar Sirve
+	 * como callback una vez termine la tarea asincrona
 	 * 
 	 */
 	public interface LoadDatosLineasAsyncTaskResponder {
-	    public void busesLoaded(ArrayList<BusLinea> buses);
-	  }
+		public void busesLoaded(ArrayList<BusLinea> buses);
+	}
+
 	private LoadDatosLineasAsyncTaskResponder responder;
-	
+
 	/**
 	 * Constructor. Es necesario que nos pasen un objeto para el callback
 	 * 
@@ -51,33 +51,42 @@ public class LoadDatosLineasAsyncTask extends AsyncTask<Void, Void, ArrayList<Bu
 	public LoadDatosLineasAsyncTask(LoadDatosLineasAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
-	
+
 	/**
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
-	protected ArrayList<BusLinea> doInBackground(Void... datos) {
+	protected ArrayList<BusLinea> doInBackground(String... datos) {
 		ArrayList<BusLinea> lineasBus = null;
 		try {
-			
-			
-			//lineasBus = ProcesarLineasService.getLineasBus();
-			
-			//ProcesarDatosLineasService.getLineasInfo();
-			
-				
-			lineasBus = new ArrayList<BusLinea>();
 
-			for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++) {
+			String datosOffline = null;
 
-				lineasBus.add(new BusLinea(UtilidadesTAM.LINEAS_CODIGO_KML[i], UtilidadesTAM.LINEAS_DESCRIPCION[i], UtilidadesTAM.LINEAS_NUM[i]));
-
+			if (datos != null && datos.length > 0 && datos[0] != null) {
+				datosOffline = datos[0];
 			}
-			
+
+			// lineasBus = ProcesarLineasService.getLineasBus();
+
+			lineasBus = ProcesarDatosLineasIsaeService.getLineasBus(datosOffline);
+
+			/*
+			 * lineasBus = new ArrayList<BusLinea>();
+			 * 
+			 * for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++)
+			 * {
+			 * 
+			 * lineasBus.add(new BusLinea(UtilidadesTAM.LINEAS_CODIGO_KML[i],
+			 * UtilidadesTAM.LINEAS_DESCRIPCION[i],
+			 * UtilidadesTAM.LINEAS_NUM[i]));
+			 * 
+			 * }
+			 */
+
 		} catch (Exception e) {
 			lineasBus = null;
 		}
-		
+
 		return lineasBus;
 	}
 
@@ -86,10 +95,9 @@ public class LoadDatosLineasAsyncTask extends AsyncTask<Void, Void, ArrayList<Bu
 	 */
 	@Override
 	protected void onPostExecute(ArrayList<BusLinea> result) {
-		if(responder != null) {
+		if (responder != null) {
 			responder.busesLoaded(result);
 		}
 	}
 
-	
 }

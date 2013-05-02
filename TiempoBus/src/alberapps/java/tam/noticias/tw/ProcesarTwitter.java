@@ -55,35 +55,41 @@ public class ProcesarTwitter {
 
 	public static final String tw_campello = "http://search.twitter.com/search.json?q=from:campelloturismo";
 	public static final String tw_campello_ruta = "http://twitter.com/campelloturismo";
-	
+
 	public static final String tw_sanvi = "http://search.twitter.com/search.json?q=from:aytoraspeig";
 	public static final String tw_sanvi_ruta = "http://twitter.com/aytoraspeig";
-		
+
 	public static final String tw_santjoan = "http://search.twitter.com/search.json?q=from:sant_joan";
 	public static final String tw_santjoan_ruta = "http://twitter.com/sant_joan";
-	
-	
-	public static final String TW_STATUS ="/status/";
-	
-	
+
+	public static final String TW_STATUS = "/status/";
+
 	/**
 	 * listas que se quieran
 	 * 
 	 * @return listado
 	 */
-	public static List<TwResultado> procesar() {
+	public static List<TwResultado> procesar(List<Boolean> cargar) {
 
 		List<TwResultado> lista;
 
-		lista = procesarTw(tw_alberapps,tw_alberapps_ruta);
+		lista = procesarTw(tw_alberapps, tw_alberapps_ruta);
 
-		lista.addAll(procesarTw(tw_alicante,tw_alicante_ruta));
-		
-		lista.addAll(procesarTw(tw_campello, tw_campello_ruta));
-		
-		lista.addAll(procesarTw(tw_sanvi, tw_sanvi_ruta));
-		
-		lista.addAll(procesarTw(tw_santjoan, tw_santjoan_ruta));
+		if (cargar.get(0)) {
+			lista.addAll(procesarTw(tw_alicante, tw_alicante_ruta));
+		}
+
+		if (cargar.get(1)) {
+			lista.addAll(procesarTw(tw_campello, tw_campello_ruta));
+		}
+
+		if (cargar.get(2)) {
+			lista.addAll(procesarTw(tw_sanvi, tw_sanvi_ruta));
+		}
+
+		if (cargar.get(3)) {
+			lista.addAll(procesarTw(tw_santjoan, tw_santjoan_ruta));
+		}
 
 		if (lista != null && !lista.isEmpty()) {
 
@@ -148,7 +154,7 @@ public class ProcesarTwitter {
 			dato.setUrl(ruta);
 
 			dato.setId(results.get(i).idStr);
-			
+
 			listaDatos.add(dato);
 		}
 

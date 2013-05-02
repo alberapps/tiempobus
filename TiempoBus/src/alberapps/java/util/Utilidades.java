@@ -25,6 +25,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -250,4 +251,20 @@ public class Utilidades {
 	 * networkInfo.isConnected()) { // fetch data } else { // display error }
 	 * ...
 	 */
+	
+	/**
+	 * 
+	 * @param inputStream
+	 * @return
+	 */
+	public static String obtenerStringDeStream(InputStream inputStream){
+		
+		String datos = "";
+		
+		Scanner s = new Scanner(inputStream, "ISO-8859-1").useDelimiter("\\A");
+		datos = s.hasNext() ? s.next() : "";
+		
+		return datos;
+	}
+	
 }
