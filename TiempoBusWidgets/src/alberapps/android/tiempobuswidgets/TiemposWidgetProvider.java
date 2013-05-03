@@ -363,12 +363,17 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		
+		Log.d("tag", "onUpdate ");
+		
 		// Update each of the widgets with the remote adapter
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			RemoteViews layout = buildLayout(context, appWidgetIds[i], mIsLargeLayout);
 			appWidgetManager.updateAppWidget(appWidgetIds[i], layout);
 		}
 
+		onEnabled(context);
+		
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
