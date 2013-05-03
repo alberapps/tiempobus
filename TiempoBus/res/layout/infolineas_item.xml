@@ -46,7 +46,16 @@
                 android:textSize="15sp" 
                 android:textStyle="bold"/>
 
-           
+            <TextView
+                android:id="@+id/datos_linea"
+                style="@style/InfoPoste.Proximo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:text="@string/guion"
+                android:textColor="@color/color_android"
+                android:textSize="11sp"
+                android:textStyle="italic" />
 
         </LinearLayout>
 

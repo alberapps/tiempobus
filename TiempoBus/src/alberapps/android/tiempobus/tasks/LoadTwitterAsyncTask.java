@@ -63,7 +63,9 @@ public class LoadTwitterAsyncTask extends AsyncTask<Object, Void, List<TwResulta
 			
 			List<Boolean> lista = (List<Boolean>) datos[0];
 			
-			twList = ProcesarTwitter.procesar(lista);
+			String cantidad = (String) datos[1];
+			
+			twList = ProcesarTwitter.procesar(lista, cantidad);
 
 		} catch (Exception e) {
 			return null;

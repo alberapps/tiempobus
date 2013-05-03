@@ -30,6 +30,8 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import android.util.Log;
+
 public class GetPasoParadaWebservice {
 
 	private String SOAP_ACTION = "http://tempuri.org/GetPasoParada";
@@ -111,8 +113,12 @@ public class GetPasoParadaWebservice {
 
 		} catch (Exception e) {
 			
+			Log.d("webservice", "Error consulta tiempos: " + linea + " - " + parada);
+			
+			e.printStackTrace();
+			
 			//Respuesta no esperada del servicio			
-			throw new Exception("Error en la consulta al servicio web");
+			throw e;
 			
 		}
 

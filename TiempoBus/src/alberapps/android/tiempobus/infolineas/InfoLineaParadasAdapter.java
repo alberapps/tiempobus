@@ -60,22 +60,31 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 			Context ctx = this.getContext().getApplicationContext();
 			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			v = vi.inflate(R.layout.infolineas_item, null);
+			v = vi.inflate(R.layout.infolineas_paradas_item, null);
 
 		}
 
-		TextView busLinea;
-		TextView descLinea;
+		TextView numParada;
+		TextView descParada;
+		TextView datos;
 
-		busLinea = (TextView) v.findViewById(R.id.bus_linea);
-		descLinea = (TextView) v.findViewById(R.id.desc_linea);
-
+		numParada = (TextView) v.findViewById(R.id.num_parada);
+		descParada = (TextView) v.findViewById(R.id.desc_parada);
+		datos = (TextView) v.findViewById(R.id.datos_parada);
+		
 		PlaceMark bus = getItem(position);
 
 		if (bus != null) {
-			busLinea.setText(bus.getCodigoParada());
-			descLinea.setText(bus.getTitle());
+			numParada.setText(bus.getCodigoParada());
+			descParada.setText(bus.getTitle());
+			datos.setText("T: ".concat(bus.getLineas()));
 
+			if(bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")){
+				
+				datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
+				
+			}
+			
 		}
 
 		return v;

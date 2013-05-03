@@ -48,6 +48,7 @@ public class ProcesarDatosLineasIsaeService {
 
 			Document doc = null;
 
+			//Carga desde internet o desde fichero local
 			if (offline == null) {
 				doc = Jsoup.parse(new URL(URL_SUBUS_LINEAS).openStream(), "ISO-8859-1", URL_SUBUS_LINEAS);
 			} else {
@@ -56,12 +57,8 @@ public class ProcesarDatosLineasIsaeService {
 
 				doc = Jsoup.parse(offline);
 			}
-
-			String title = doc.title();
-
-			Elements selectLineas = doc.select("select[name=LineasBox]"); // a
-																			// with
-																			// href
+		
+			Elements selectLineas = doc.select("select[name=LineasBox]"); 
 
 			Elements option = selectLineas.get(0).select("option");
 
@@ -82,6 +79,9 @@ public class ProcesarDatosLineasIsaeService {
 
 				if (posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
 					datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
+
+					datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
+
 				} else {
 					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**ERROR]"));
 				}
@@ -96,6 +96,8 @@ public class ProcesarDatosLineasIsaeService {
 					int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
 					datosLineaH.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicionH]);
 					datosLineaH.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicionH]);
+
+					datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
 
 					lineas.add(datosLineaH);
 				}
@@ -130,7 +132,7 @@ public class ProcesarDatosLineasIsaeService {
 			// Datos recuperados con exito
 			for (int i = 0; i < datosRecuperados.size(); i++) {
 
-				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum()));
+				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), datosRecuperados.get(i).getGrupoLinea()));
 
 			}
 		} else {
@@ -140,7 +142,5 @@ public class ProcesarDatosLineasIsaeService {
 
 		return lineasBus;
 	}
-
-	
 
 }

@@ -189,7 +189,7 @@ public class ProcesarLineasService {
 			// Datos recuperados con exito
 			for (int i = 0; i < datosRecuperados.size(); i++) {
 
-				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum()));
+				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(),null));
 
 			}
 		} else {

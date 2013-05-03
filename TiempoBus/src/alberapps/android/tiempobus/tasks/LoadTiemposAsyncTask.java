@@ -19,11 +19,13 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import java.io.EOFException;
 import java.util.ArrayList;
 
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos
@@ -31,17 +33,18 @@ import android.os.AsyncTask;
  * 
  */
 public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<BusLlegada>> {
-	
+
 	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar
-	 * Sirve como callback una vez termine la tarea asincrona
+	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
+	 * como callback una vez termine la tarea asincrona
 	 * 
 	 */
 	public interface LoadTiemposAsyncTaskResponder {
-	    public void tiemposLoaded(ArrayList<BusLlegada> buses);
-	  }
+		public void tiemposLoaded(ArrayList<BusLlegada> buses);
+	}
+
 	private LoadTiemposAsyncTaskResponder responder;
-	
+
 	/**
 	 * Constructor. Es necesario que nos pasen un objeto para el callback
 	 * 
@@ -50,7 +53,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 	public LoadTiemposAsyncTask(LoadTiemposAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
-	
+
 	/**
 	 * Ejecuta el proceso en segundo plano
 	 */
@@ -59,10 +62,27 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 		ArrayList<BusLlegada> llegadasBus = null;
 		try {
 			llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+		} catch (EOFException e1) {
+
+			Log.d("tiempos", "Tiempos error intento 1");
+
+			try {
+
+				Log.d("tiempos", "Tiempos intento 2");
+
+				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+			} catch (Exception e2) {
+
+				Log.d("tiempos", "Tiempos error intento 2");
+
+				return null;
+			}
+
 		} catch (Exception e) {
+
 			return null;
 		}
-		
+
 		return llegadasBus;
 	}
 
@@ -71,10 +91,9 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 	 */
 	@Override
 	protected void onPostExecute(ArrayList<BusLlegada> result) {
-		if(responder != null) {
+		if (responder != null) {
 			responder.tiemposLoaded(result);
 		}
 	}
 
-	
 }

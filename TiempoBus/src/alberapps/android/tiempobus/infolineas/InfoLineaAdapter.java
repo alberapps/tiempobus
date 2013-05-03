@@ -62,15 +62,20 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 
 		TextView busLinea;
 		TextView descLinea;
+		TextView datosLinea;
 
 		busLinea = (TextView) v.findViewById(R.id.bus_linea);
 		descLinea = (TextView) v.findViewById(R.id.desc_linea);
-
+		datosLinea = (TextView) v.findViewById(R.id.datos_linea);
+		
+		
 		BusLinea bus = getItem(position);
 
 		if (bus != null) {
 			busLinea.setText(bus.getNumLinea());
-			descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()));
+			descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
+			
+			datosLinea.setText(bus.getGrupo());
 
 		}
 

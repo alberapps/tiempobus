@@ -41,6 +41,8 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
 
 	private String numLinea;
 	
+	private String grupo;
+	
 	public String getNumLinea() {
 		return numLinea;
 	}
@@ -58,14 +60,15 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
 		this.idlinea = idlinea;
 	}
 
-	public BusLinea(String idlinea, String linea, String numLinea) {
+	public BusLinea(String idlinea, String linea, String numLinea, String grupo) {
 		this(idlinea);
 		this.linea = linea;
 		this.numLinea = numLinea;
+		this.grupo = grupo;
 	}
 
 	public BusLinea(String idlinea, String linea, String numLinea, HashMap<String, String> destinos, ArrayList<BusParada> paradas) {
-		this(idlinea, linea, numLinea);
+		this(idlinea, linea, numLinea, null);
 
 		this.destinos = destinos;
 		this.paradas = paradas;
@@ -102,6 +105,14 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
 	@Override
 	public String toString() {
 		return "" + linea + " (" + idlinea + ") \n" + "Destinos: " + destinos + "\n" + "Paradas: " + paradas;
+	}
+
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 }

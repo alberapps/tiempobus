@@ -82,7 +82,16 @@
                 android:title="@string/tab_tw"
                 android:summary="@string/preferences"
                 >
-                
+             
+             <ListPreference
+                android:key="tweets_maximos"
+                android:title="@string/tw_maximo"
+                android:summary="@string/tw_maximo_desc"
+                android:entries="@array/cantidad_tw"
+                android:entryValues="@array/cantidad_tw"
+                android:dialogTitle="@string/tw_maximo"
+                android:defaultValue="5" />
+             
              <CheckBoxPreference
                 android:key="tw_2"
                 android:title="\@Alicante_City"

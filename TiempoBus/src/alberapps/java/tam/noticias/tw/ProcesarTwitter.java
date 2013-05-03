@@ -69,26 +69,26 @@ public class ProcesarTwitter {
 	 * 
 	 * @return listado
 	 */
-	public static List<TwResultado> procesar(List<Boolean> cargar) {
+	public static List<TwResultado> procesar(List<Boolean> cargar, String cantidad) {
 
 		List<TwResultado> lista;
 
-		lista = procesarTw(tw_alberapps, tw_alberapps_ruta);
+		lista = procesarTw(tw_alberapps + "&rpp=" + cantidad, tw_alberapps_ruta);
 
 		if (cargar.get(0)) {
-			lista.addAll(procesarTw(tw_alicante, tw_alicante_ruta));
+			lista.addAll(procesarTw(tw_alicante + "&rpp=" + cantidad, tw_alicante_ruta));
 		}
 
 		if (cargar.get(1)) {
-			lista.addAll(procesarTw(tw_campello, tw_campello_ruta));
+			lista.addAll(procesarTw(tw_campello + "&rpp=" + cantidad, tw_campello_ruta));
 		}
 
 		if (cargar.get(2)) {
-			lista.addAll(procesarTw(tw_sanvi, tw_sanvi_ruta));
+			lista.addAll(procesarTw(tw_sanvi + "&rpp=" + cantidad, tw_sanvi_ruta));
 		}
 
 		if (cargar.get(3)) {
-			lista.addAll(procesarTw(tw_santjoan, tw_santjoan_ruta));
+			lista.addAll(procesarTw(tw_santjoan + "&rpp=" + cantidad, tw_santjoan_ruta));
 		}
 
 		if (lista != null && !lista.isEmpty()) {

@@ -31,9 +31,9 @@ public class DatosLinea {
 
 	//
 	private String tituloCabecera;
-	
-	
-	
+
+	private String grupoLinea;
+
 	public String getLineaDescripcion() {
 		return lineaDescripcion;
 	}
@@ -64,6 +64,14 @@ public class DatosLinea {
 
 	public void setTituloCabecera(String tituloCabecera) {
 		this.tituloCabecera = tituloCabecera;
+	}
+
+	public String getGrupoLinea() {
+		return grupoLinea;
+	}
+
+	public void setGrupoLinea(String grupoLinea) {
+		this.grupoLinea = grupoLinea;
 	}
 
 }

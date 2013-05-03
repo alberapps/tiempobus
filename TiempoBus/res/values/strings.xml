@@ -217,7 +217,7 @@
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Tweets más recientes de:</string>
-    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan</string>
+    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
    
     
     <string name="error_codigo">El código de parada no es valido</string>
@@ -250,5 +250,10 @@
     <string name="ir_tw">>>Twitter</string>
     
     <string name="observaciones">Observaciones:</string>
+    
+    <string name="tw_maximo">Tweets</string>
+    <string name="tw_maximo_desc">Tweets máximos de cada uno</string>
+    
+    
     
 </resources>
