@@ -42,6 +42,14 @@
         <item>15 minutes</item>            
     </string-array> 
    
+    <string-array name="cantidad_tw">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>            
+        <item>10</item>
+        <item>15</item>
+    </string-array> 
+   
   <!--   
     <string-array name="entries_list_fondos">
         <item>Eliminar</item>

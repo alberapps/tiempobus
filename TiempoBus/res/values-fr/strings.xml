@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.2</string>
+    <string name="app_version">2.4.3</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -211,7 +211,7 @@
 	<string name="tab_tw">Twitter</string>
 	
 	<string name="dato_tw">Les tweets plus récentes du :</string>
-	<string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan</string>
+	<string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
 	
 	<string name="error_codigo">Le code d\'arrêt n\'est pas correct</string>
 	<string name="alarma_checkbox">Activer Service</string>
@@ -220,11 +220,11 @@
    
 	<!-- Nuevo -->
     <string name="recarga_bd">TiempoBus</string>
-    <string name="recarga_bd_desc">Database Update</string>
+    <string name="recarga_bd_desc">Actualizando Base de Datos</string>
     
-    <string name="recarga_bd_desc_final">Database updated successfully</string>
+    <string name="recarga_bd_desc_final">Base de Datos Actualizada Correctamente</string>
     
-    <string name="recarga_bd_desc_error">Database Error</string>
+    <string name="recarga_bd_desc_error">Error en la recarga de la Base de Datos</string>
     
     <string name="traducciones">Traslations</string>
     <string name="traducciones_tit">Language Support</string>
@@ -239,6 +239,9 @@
     <string name="ir_tw">>>Twitter</string>
     
     <string name="observaciones">Observaciones:</string>
+    
+    <string name="tw_maximo">Tweets</string>
+    <string name="tw_maximo_desc">Máximos de cada uno</string>
     
 </resources>
 

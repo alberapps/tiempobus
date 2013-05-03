@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.2</string>
+    <string name="app_version">2.4.3</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2012)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -252,7 +252,7 @@
     <string name="observaciones">Observaciones:</string>
     
     <string name="tw_maximo">Tweets</string>
-    <string name="tw_maximo_desc">Tweets máximos de cada uno</string>
+    <string name="tw_maximo_desc">Máximos de cada uno</string>
     
     
     

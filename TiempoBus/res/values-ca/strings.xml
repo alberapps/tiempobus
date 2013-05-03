@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.2</string>
+    <string name="app_version">2.4.3</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -216,7 +216,7 @@ favorit per crear la teua llista.</string>
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Tweets més recents de:</string>
-    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan</string>
+    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable a Preferències</string>
     
     <string name="error_codigo">El codi de parada no és vàlid</string>
     
@@ -247,5 +247,8 @@ favorit per crear la teua llista.</string>
     <string name="ir_tw">>>Twitter</string>
     
     <string name="observaciones">Observacions:</string>
+    
+    <string name="tw_maximo">Tweets</string>
+    <string name="tw_maximo_desc">Màxims de cadascun</string>
     
 </resources>

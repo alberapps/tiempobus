@@ -103,8 +103,8 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity implements TextToSpeech.OnInitListener {
 
 	// Novedades
-	private int REV_ACTUAL = 26;
-	private String NOVEDADES = "(2.4.2)\n1. Nuevas traducciones .\n2. Cambios en el sistema de notificaciones y alertas.\n3. Mejoras en la actualización de la base de datos\n4. Mejoras en las notificaciones\n5. Cambios de interfaz y resolución de fallos.";
+	private int REV_ACTUAL = 27;
+	private String NOVEDADES = "(2.4.3)\n**Acceso al nuevo TiempoBus Widgets(Android 3.0 y sup) \n1. Información extra de líneas y paradas.\n2. Carga dínamica de lista de líneas desde subus.es.\n3. Mejoras en el cliente de Twitter y nuevas fuentes.\n4. Actualización de la Base de Datos.\n5. Resolución de bugs.";
 	// Fin novedades
 
 	protected static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
