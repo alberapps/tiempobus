@@ -363,7 +363,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		
+				
 		Log.d("tag", "onUpdate ");
 		
 		// Update each of the widgets with the remote adapter
@@ -372,7 +372,13 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			appWidgetManager.updateAppWidget(appWidgetIds[i], layout);
 		}
 
-		onEnabled(context);
+		final ContentResolver r = context.getContentResolver();
+		
+		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+		sDataObserver = new TiemposDataProviderObserver(mgr, cn, sWorkerQueue);
+		r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
+		
 		
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
