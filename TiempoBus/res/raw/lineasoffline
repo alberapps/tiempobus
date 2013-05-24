@@ -5,6 +5,15 @@
 <form>
 
 <select name="LineasBox" id="LineasBox" >
+	
+	<option value="L1">L1 LINEA 1</option>
+	<option value="L3">L3 LINEA 3</option>
+	<option value="L4">L4 LINEA 4</option>
+	<option value="L9">L9 LINEA 9</option>
+	<option value="4L">4L LINEA 4L</option>
+	
+	
+	
 	<option selected="selected" value="21">21 ALICANTE-P.S.JUAN-EL CAMPELLO</option>
 	<option value="22">22 ALICANTE-C. HUERTAS-P.S. JUAN</option>
 	<option value="23">23 ALICANTE-SANT JOAN-MUTXAMEL</option>

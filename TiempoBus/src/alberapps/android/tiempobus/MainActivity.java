@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 		showProgressBar(true);
 
 		setupView();
-
+ 
 		// Verificar si hay parada por defecto
 		if (preferencias.contains("parada_inicio")) {
 			poste = preferencias.getInt("parada_inicio", poste);

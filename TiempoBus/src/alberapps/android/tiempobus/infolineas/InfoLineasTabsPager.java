@@ -33,10 +33,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -73,7 +69,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	DatosMapa datosIda = null;
 	DatosMapa datosVuelta = null;
 
-	private static final int GRIS_BLOG = R.color.gris_blog;
+	boolean modoOffline = false;
 
 	SharedPreferences preferencias = null;
 
@@ -88,6 +84,9 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		//Control de modo offline
+		modoOffline = this.getIntent().getBooleanExtra("MODO_OFFLINE", false);
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
@@ -116,8 +115,6 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
-
-		
 
 	}
 
@@ -295,10 +292,37 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 			break;
 
+		case R.id.menu_search_online:
+
+			Intent intent2 = getIntent();
+			intent2.putExtra("MODO_OFFLINE", false);
+			finish();
+			startActivity(intent2);
+
+			break;
+		case R.id.menu_search_offline:
+
+			Intent intent3 = getIntent();
+			intent3.putExtra("MODO_OFFLINE", true);
+			finish();
+			startActivity(intent3);
+
+			break;
+
 		}
 
 		return super.onOptionsItemSelected(item);
 
 	}
+
+	public boolean isModoOffline() {
+		return modoOffline;
+	}
+
+	public void setModoOffline(boolean modoOffline) {
+		this.modoOffline = modoOffline;
+	}
+
+	
 
 }

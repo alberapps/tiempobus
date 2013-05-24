@@ -95,6 +95,12 @@ public class PosteAdapter extends ArrayAdapter<BusLlegada> {
 		
 		String[] procesa = proximo.split(";");
 		
+		//TODO para el TRAM
+		if(procesa[0].equals("TRAM")){
+			return procesa[1];
+		}
+		
+		
 		String tiempo1 = "";
 		String tiempo2 = "";
 		

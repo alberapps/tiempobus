@@ -42,6 +42,10 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	 */
 	private String proximo;
 
+	public BusLlegada(){
+		
+	}
+	
 	/**
 	 * Constructor
 	 * 

@@ -63,10 +63,12 @@ public class DatosLineasDB {
 	public static final String COLUMN_LATITUD = "LATITUD";
 	public static final String COLUMN_LONGITUD = "LONGITUD";
 
+	public static final String COLUMN_RED_LINEAS = "RED_LINEAS";
+
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 37; 
+	private static final int DATABASE_VERSION = 47; //37
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -113,6 +115,7 @@ public class DatosLineasDB {
 		map.put(COLUMN_LONGITUD, COLUMN_LONGITUD);
 		map.put(COLUMN_PARADA, COLUMN_PARADA);
 		map.put(COLUMN_OBSERVACIONES, COLUMN_OBSERVACIONES);
+		map.put(COLUMN_RED_LINEAS, COLUMN_RED_LINEAS);
 
 		return map;
 	}
@@ -124,6 +127,7 @@ public class DatosLineasDB {
 		map.put(COLUMN_DESTINO, COLUMN_DESTINO);
 
 		map.put(COLUMN_LINEA_NUM, COLUMN_LINEA_NUM);
+		map.put(COLUMN_RED_LINEAS, COLUMN_RED_LINEAS);
 
 		return map;
 	}
@@ -302,10 +306,11 @@ public class DatosLineasDB {
 		 * an alias for "rowid"
 		 */
 		private static final String FTS_TABLE_CREATE = "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE + " USING fts3 (" + KEY_WORD + ", " + KEY_DEFINITION + ", " + COLUMN_LINEA_NUM + ", " + COLUMN_LINEA_DESC + ", "
-				+ COLUMN_DESTINO + ", " + COLUMN_PARADA + ", " + COLUMN_COORDENADAS + ", " + COLUMN_DIRECCION + ", " + COLUMN_CONEXION + ", " + COLUMN_LATITUD + ", " + COLUMN_LONGITUD + ", " + COLUMN_OBSERVACIONES + ");";
+				+ COLUMN_DESTINO + ", " + COLUMN_PARADA + ", " + COLUMN_COORDENADAS + ", " + COLUMN_DIRECCION + ", " + COLUMN_CONEXION + ", " + COLUMN_LATITUD + ", " + COLUMN_LONGITUD + ", " + COLUMN_OBSERVACIONES
+				+ ", " + COLUMN_RED_LINEAS + ");";
 
 		private static final String FTS_TABLE_CREATE_RECORRIDO = "CREATE VIRTUAL TABLE " + FTS_VIRTUAL_TABLE_RECORRIDO + " USING fts3 (" + COLUMN_LINEA_NUM + ", " + COLUMN_DESTINO + ", " + COLUMN_COORDENADAS + ", "
-				+ ");";
+				+ COLUMN_RED_LINEAS + ", " + ");";
 
 		DatosLineasOpenHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -330,7 +335,7 @@ public class DatosLineasDB {
 
 					final Builder mBuilder = Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
 
-					//mDatabase.beginTransaction();
+					// mDatabase.beginTransaction();
 
 					try {
 
@@ -340,6 +345,9 @@ public class DatosLineasDB {
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
 						cargarLineas();
+						
+						//TRAM
+						cargarLineasTRAM();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
@@ -347,7 +355,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 100);
 
-						//mDatabase.setTransactionSuccessful();
+						// mDatabase.setTransactionSuccessful();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_FINAL, mBuilder, null);
 
@@ -359,7 +367,7 @@ public class DatosLineasDB {
 
 					} finally {
 
-						//mDatabase.endTransaction();
+						// mDatabase.endTransaction();
 
 					}
 
@@ -372,14 +380,12 @@ public class DatosLineasDB {
 		 */
 		private void reCargarBaseDatos() {
 
-			
 			new Thread(new Runnable() {
 				public void run() {
 
 					final Builder mBuilder = Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
 
-					
-					//mDatabase.beginTransaction();
+					// mDatabase.beginTransaction();
 
 					try {
 
@@ -392,6 +398,9 @@ public class DatosLineasDB {
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
 						cargarLineas();
+						
+						//TRAM
+						cargarLineasTRAM();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
@@ -399,7 +408,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 100);
 
-						//mDatabase.setTransactionSuccessful();
+						// mDatabase.setTransactionSuccessful();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_FINAL, mBuilder, null);
 
@@ -411,7 +420,7 @@ public class DatosLineasDB {
 
 					} finally {
 
-						//mDatabase.endTransaction();
+						// mDatabase.endTransaction();
 
 					}
 
@@ -428,6 +437,10 @@ public class DatosLineasDB {
 			try {
 				String line;
 				while ((line = reader.readLine()) != null) {
+
+					// Para TAM
+					line = line.concat(";;TAM");
+
 					String[] strings = TextUtils.split(line, ";;");
 					// if (strings.length < 2) continue;
 
@@ -462,6 +475,10 @@ public class DatosLineasDB {
 				// Recorridos
 				line = null;
 				while ((line = readerR.readLine()) != null) {
+
+					// Para TAM
+					line = line.concat(";;TAM");
+
 					String[] strings = TextUtils.split(line, ";;");
 					// if (strings.length < 2) continue;
 
@@ -472,6 +489,10 @@ public class DatosLineasDB {
 				}
 
 				while ((line = readerR2.readLine()) != null) {
+					
+					// Para TAM
+					line = line.concat(";;TAM");
+					
 					String[] strings = TextUtils.split(line, ";;");
 					// if (strings.length < 2) continue;
 
@@ -489,6 +510,104 @@ public class DatosLineasDB {
 				readerR2.close();
 			}
 			Log.d(TAG, "DONE loading database RECORRIDO.");
+		}
+
+		private void cargarLineasTRAM() throws IOException {
+			Log.d(TAG, "Loading database LINEA TRAM...");
+			Resources resources = mHelperContext.getResources();
+			InputStream inputStream = resources.openRawResource(R.raw.precargainfolineas_tram);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+			try {
+				String line;
+				while ((line = reader.readLine()) != null) {
+
+					
+
+					// [nombre, identificador, latitud, longitud,1/0 si hay o no
+					// marquesinas de la emt cerca,lista de líneas de la
+					// estación] de las estaciones
+					// ["Albufereta",7,38.3667945862,-0.4425750077,1,3,4],
+
+					// 21;;21 ALICANTE-P.S.JUAN-EL CAMPELLO;;El
+					// Campello;;2964;;-0.494466158,38.342115635,0;;OSCAR ESPLA
+					// 33;;21, 22, 24;;
+
+					// 4L -> 41
+
+					line = line.replace("[", "");
+					line = line.replace("]", "");
+					line = line.replace("\"", "");
+
+					String[] strings1 = TextUtils.split(line, ",");
+
+					String numParada = strings1[1];
+					String latitud = strings1[2];
+					String longitud = strings1[3];
+					String direccion = strings1[0];
+
+					String[] strings = new String[9];
+
+					for (int i = 5; i < strings1.length - 1; i++) {
+
+						if (strings1[i].equals("1")) {
+							strings[0] = "L1";
+							strings[1] = "L1";
+						} else if (strings1[i].equals("3")) {
+							strings[0] = "L3";
+							strings[1] = "L3";
+						} else if (strings1[i].equals("4")) {
+							strings[0] = "L4";
+							strings[1] = "L4";
+						} else if (strings1[i].equals("9")) {
+							strings[0] = "L9";
+							strings[1] = "L9";
+						} else if (strings1[i].equals("41")) {
+							strings[0] = "4L";
+							strings[1] = "4L";
+						}
+
+						strings[2] = "IDA";
+
+						strings[3] = numParada;
+
+						strings[4] = longitud + "," + latitud + ",0";
+
+						strings[5] = direccion;
+
+						strings[6] = "";
+
+						strings[7] = "";
+
+						strings[8] = "TRAM";
+
+					}
+
+					
+					//ida
+					long id = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
+							+ "] - " + strings[5].trim(), strings);
+					if (id < 0) {
+						Log.e(TAG, "unable to add line: " + strings[0].trim());
+					}
+					
+					strings[2] = "VUELTA";
+					
+					//vuelta
+					long id2 = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
+							+ "] - " + strings[5].trim(), strings);
+					if (id2 < 0) {
+						Log.e(TAG, "unable to add line: " + strings[0].trim());
+					}
+					
+				}
+
+			} finally {
+				inputStream.close();
+				reader.close();
+
+			}
+			Log.d(TAG, "DONE loading database LINEA TRAM.");
 		}
 
 		/**
@@ -509,11 +628,11 @@ public class DatosLineasDB {
 			initialValues.put(COLUMN_COORDENADAS, datos[4].trim());
 			initialValues.put(COLUMN_DIRECCION, datos[5].trim());
 			initialValues.put(COLUMN_CONEXION, datos[6].trim());
-			
-			
+
 			initialValues.put(COLUMN_OBSERVACIONES, datos[7].trim());
-			
-			
+
+			initialValues.put(COLUMN_RED_LINEAS, datos[8].trim());
+
 			String[] coordenadas = datos[4].trim().split(",");
 
 			double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
@@ -538,6 +657,8 @@ public class DatosLineasDB {
 			initialValues.put(COLUMN_LINEA_NUM, datos[0].trim());
 			initialValues.put(COLUMN_DESTINO, datos[1].trim());
 			initialValues.put(COLUMN_COORDENADAS, datos[2].trim());
+
+			initialValues.put(COLUMN_RED_LINEAS, datos[3].trim());
 
 			return mDatabase.insert(FTS_VIRTUAL_TABLE_RECORRIDO, null, initialValues);
 		}

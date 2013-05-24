@@ -18,10 +18,14 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.database.BuscadorLineasProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.noticias.NoticiasAdapter;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
@@ -30,10 +34,15 @@ import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask.LoadDatosI
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
+import alberapps.java.tam.mapas.DatosMapa;
+import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.util.Utilidades;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -74,6 +83,8 @@ public class FragmentLineas extends Fragment {
 
 	InfoLineaParadasAdapter infoLineaParadasAdapter;
 
+	
+
 	/**
 	 * On Create
 	 */
@@ -109,16 +120,25 @@ public class FragmentLineas extends Fragment {
 
 		dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
 
+		// Carga local de lineas
+		String datosOffline = null;
+		if (actividad.isModoOffline()) {
+
+			Resources resources = getResources();
+			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
+
+			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+
+		}
+
 		ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute();
+			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
 		} else {
 			Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			dialog.dismiss();
 		}
-		
-		
 
 	}
 
@@ -141,31 +161,15 @@ public class FragmentLineas extends Fragment {
 				Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
 				toast.show();
 
-				/*// En caso de error carga la lista interna
-				lineasBus = new ArrayList<BusLinea>();
-
-				for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++) {
-
-					lineasBus.add(new BusLinea(UtilidadesTAM.LINEAS_CODIGO_KML[i], UtilidadesTAM.LINEAS_DESCRIPCION[i], UtilidadesTAM.LINEAS_NUM[i]));
-
-				}
-
-				cargarListado();*/
-
 			}
 
 		}
 	};
 
+	/**
+	 * Cargar el listado de lineas
+	 */
 	private void cargarListado() {
-
-		// List<String> lineasListString = new ArrayList<String>();
-
-		// for (int i = 0; i < lineasBus.size(); i++) {
-
-		// lineasListString.add(lineasBus.get(i).getLinea());
-
-		// }
 
 		infoLineaAdapter = new InfoLineaAdapter(getActivity(), R.layout.infolineas_item);
 
@@ -174,9 +178,6 @@ public class FragmentLineas extends Fragment {
 		// Controlar pulsacion
 		lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
 		lineasView.setOnItemClickListener(lineasClickedHandler);
-
-		// lineasView.setAdapter(new ArrayAdapter<String>(getActivity(),
-		// R.layout.infolineas_item, R.id.dato, lineasListString));
 
 		lineasView.setAdapter(infoLineaAdapter);
 
@@ -225,7 +226,12 @@ public class FragmentLineas extends Fragment {
 
 		dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
 
-		loadDatosMapa();
+		// Control para el nuevo modo offline
+		if (!actividad.isModoOffline()) {
+			loadDatosMapa();
+		} else if (actividad.isModoOffline()) {
+			loadDatosMapaOffline();
+		}
 
 	}
 
@@ -238,13 +244,8 @@ public class FragmentLineas extends Fragment {
 
 		String url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
 
-		// FragmentIda fIda = (FragmentIda)
-		// getFragmentManager().findFragmentByTag("android:switcher:" + getId()
-		// + ":1");
-
 		DatosInfoLinea datos = new DatosInfoLinea();
 		datos.setUrl(url);
-		// datos.setfIda(fIda);
 
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -260,6 +261,53 @@ public class FragmentLineas extends Fragment {
 
 	}
 
+	/**
+	 * Carga las paradas de MAPAS OFFLINE
+	 */
+	private void loadDatosMapaOffline() {
+
+		List<DatosInfoLinea> datosRecorridos = cargarDatosMapaBD(actividad.getLinea().getNumLinea());
+
+		if (datosRecorridos != null) {
+
+			actividad.datosVuelta = datosRecorridos.get(1).getResult();
+
+			actividad.datosIda = datosRecorridos.get(0).getResult();
+
+			TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
+
+			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
+				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+			} else {
+				titIda.setText("-");
+			}
+
+			cargarListadoIda();
+
+			actividad.cambiarTab();
+
+			if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+
+				Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
+
+			}
+
+		} else {
+
+			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
+			toast.show();
+
+		}
+
+		dialog.dismiss();
+
+	}
+
+	/**
+	 * Paradas ida
+	 * 
+	 * @param fIda
+	 */
 	private void loadDatosMapaIda(FragmentIda fIda) {
 
 		// String url = "http://www.subus.es/Lineas/kml/ALC34ParadasIda.xml";
@@ -347,18 +395,6 @@ public class FragmentLineas extends Fragment {
 
 	public void cargarListadoIda() {
 
-		/*
-		 * List<String> datosListString = new ArrayList<String>();
-		 * 
-		 * for (int i = 0; i < actividad.datosIda.getPlacemarks().size(); i++) {
-		 * 
-		 * datosListString.add(actividad.datosIda.getPlacemarks().get(i).
-		 * getCodigoParada() + " " +
-		 * actividad.datosIda.getPlacemarks().get(i).getTitle());
-		 * 
-		 * }
-		 */
-
 		infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
 
 		infoLineaParadasAdapter.addAll(actividad.datosIda.getPlacemarks());
@@ -366,12 +402,7 @@ public class FragmentLineas extends Fragment {
 		ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
 		idaView.setOnItemClickListener(idaClickedHandler);
 
-		// idaView.setAdapter(new ArrayAdapter<String>(getActivity(),
-		// R.layout.infolineas_item, R.id.dato, datosListString));
-
 		idaView.setAdapter(infoLineaParadasAdapter);
-
-		// Controlar pulsacion
 
 	}
 
@@ -411,6 +442,136 @@ public class FragmentLineas extends Fragment {
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 
+	}
+
+	/**
+	 * Cargar datos en modo offline
+	 */
+	private List<DatosInfoLinea> cargarDatosMapaBD(String lineaSeleccionadaNum) {
+
+		List<DatosInfoLinea> datosInfoLinea = null;
+
+		DatosMapa datosIda = new DatosMapa();
+		DatosMapa datosVuelta = new DatosMapa();
+
+		String parametros[] = { lineaSeleccionadaNum };
+
+		Cursor cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+
+		if (cursorParadas != null) {
+			List<Parada> listaParadasIda = new ArrayList<Parada>();
+
+			List<Parada> listaParadasVuelta = new ArrayList<Parada>();
+
+			String destinoIda = "";
+			String destinoVuelta = "";
+
+			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
+
+				Parada par = new Parada();
+
+				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+
+				if (destinoIda.equals("")) {
+					destinoIda = par.getDestino();
+				} else if (destinoVuelta.equals("") && !destinoIda.equals(par.getDestino())) {
+					destinoVuelta = par.getDestino();
+				}
+
+				if (par.getDestino().equals(destinoIda)) {
+
+					listaParadasIda.add(par);
+
+				} else if (par.getDestino().equals(destinoVuelta)) {
+
+					listaParadasVuelta.add(par);
+
+				}
+
+			}
+
+			if (listaParadasIda != null && !listaParadasIda.isEmpty() && listaParadasVuelta != null && !listaParadasVuelta.isEmpty()) {
+				datosIda = mapearDatosModelo(listaParadasIda);
+
+				datosVuelta = mapearDatosModelo(listaParadasVuelta);
+
+				// Recorrido
+
+				Cursor cursorRecorrido = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+				if (cursorRecorrido != null) {
+					cursorRecorrido.moveToFirst();
+
+					datosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+					cursorRecorrido.moveToNext();
+
+					datosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+				}
+
+				// Datos a la estructura esperada
+				datosInfoLinea = new ArrayList<DatosInfoLinea>();
+				DatosInfoLinea datoIda = new DatosInfoLinea();
+				datoIda.setResult(datosIda);
+				DatosInfoLinea datoVuelta = new DatosInfoLinea();
+				datoVuelta.setResult(datosVuelta);
+				datosInfoLinea.add(datoIda);
+				datosInfoLinea.add(datoVuelta);
+
+			} else {
+				Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
+				toast.show();
+			}
+
+		} else {
+			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			toast.show();
+		}
+
+		return datosInfoLinea;
+
+	}
+
+	/**
+	 * Cargar datos en modo online
+	 * 
+	 * @param listaParadas
+	 * @return
+	 */
+	private DatosMapa mapearDatosModelo(List<Parada> listaParadas) {
+
+		DatosMapa datos = new DatosMapa();
+
+		datos.setPlacemarks(new ArrayList<PlaceMark>());
+
+		for (int i = 0; i < listaParadas.size(); i++) {
+
+			PlaceMark placeMark = new PlaceMark();
+
+			placeMark.setAddress(listaParadas.get(i).getDireccion());
+			placeMark.setCodigoParada(listaParadas.get(i).getParada());
+			placeMark.setCoordinates(listaParadas.get(i).getCoordenadas());
+			placeMark.setDescription(listaParadas.get(i).getLineaDesc());
+			placeMark.setLineas(listaParadas.get(i).getConexion());
+			placeMark.setObservaciones(listaParadas.get(i).getObservaciones());
+			placeMark.setSentido(listaParadas.get(i).getDestino());
+			placeMark.setTitle(listaParadas.get(i).getDireccion());
+
+			datos.getPlacemarks().add(placeMark);
+		}
+
+		datos.setCurrentPlacemark(datos.getPlacemarks().get(0));
+
+		return datos;
 	}
 
 }

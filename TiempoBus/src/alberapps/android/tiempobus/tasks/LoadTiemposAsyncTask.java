@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
+import alberapps.java.tram.ProcesarTiemposTramService;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -61,7 +62,21 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 	protected ArrayList<BusLlegada> doInBackground(Integer... datos) {
 		ArrayList<BusLlegada> llegadasBus = null;
 		try {
-			llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+			
+			
+			//llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+			
+			String parada = ((Integer)datos[0]).toString();
+			
+			if(parada.length() == 4){
+				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+			}else if( parada.length() < 4){
+				llegadasBus = ProcesarTiemposTramService.procesaTiemposLlegada(datos[0]);
+			}
+			
+			
+			
+			
 		} catch (EOFException e1) {
 
 			Log.d("tiempos", "Tiempos error intento 1");

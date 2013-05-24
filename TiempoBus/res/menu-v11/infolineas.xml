@@ -25,4 +25,6 @@
         android:orderInCategory="0"
         android:showAsAction="collapseActionView|ifRoom" android:actionViewClass="android.widget.SearchView"/>
     
+    <item android:id="@id/menu_search_online" android:orderInCategory="4" android:title="@string/mapa_lineas" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item><item android:id="@id/menu_search_offline" android:orderInCategory="3" android:title="@string/mapa_lineas_offline" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item>
+    
 </menu>
