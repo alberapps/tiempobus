@@ -18,9 +18,6 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.content.SharedPreferences;
@@ -32,7 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 

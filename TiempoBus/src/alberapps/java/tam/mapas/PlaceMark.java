@@ -20,7 +20,7 @@ package alberapps.java.tam.mapas;
 
 import java.io.Serializable;
 
-public class PlaceMark implements Serializable {
+public class PlaceMark implements Serializable, Comparable<PlaceMark> {
 
 	/**
 	 * 
@@ -35,18 +35,19 @@ public class PlaceMark implements Serializable {
 	private String codigoParada;
 	private String sentido;
 	private String lineas;
-	
+
 	private String observaciones;
 
+	private int orden = 0;
+	
 	public String getObservaciones() {
-		
-		if(observaciones != null){
+
+		if (observaciones != null) {
 			return observaciones;
-		}else{
+		} else {
 			return " ";
 		}
-		
-		
+
 	}
 
 	public void setObservaciones(String observaciones) {
@@ -132,6 +133,25 @@ public class PlaceMark implements Serializable {
 		} else if (!codigoParada.equals(other.codigoParada))
 			return false;
 		return true;
+	}
+
+	public int compareTo(PlaceMark another) {
+
+		Integer c1 = Integer.parseInt(this.getCodigoParada());
+		Integer c2 = Integer.parseInt(another.getCodigoParada());
+
+		return c1.compareTo(c2);
+
+		//return orden.compareTo(another.orden);
+		
+	}
+
+	public int getOrden() {
+		return orden;
+	}
+
+	public void setOrden(int orden) {
+		this.orden = orden;
 	}
 
 }

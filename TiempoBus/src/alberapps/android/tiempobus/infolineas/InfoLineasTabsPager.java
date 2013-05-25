@@ -69,7 +69,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	DatosMapa datosIda = null;
 	DatosMapa datosVuelta = null;
 
-	boolean modoOffline = false;
+	// Red a usar 0(subus online) 1(subus local) 2(tram)
+	public static int MODO_RED_SUBUS_ONLINE = 0;
+	public static int MODO_RED_SUBUS_OFFLINE = 1;
+	public static int MODO_RED_TRAM_OFFLINE = 2;
+
+	int modoRed = MODO_RED_SUBUS_ONLINE;
 
 	SharedPreferences preferencias = null;
 
@@ -85,11 +90,17 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//Control de modo offline
-		modoOffline = this.getIntent().getBooleanExtra("MODO_OFFLINE", false);
-
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+		// Control de modo de red
+		modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
+
+		if (this.getIntent().getExtras() == null || (this.getIntent().getExtras() != null && !this.getIntent().getExtras().containsKey("MODO_RED"))) {
+
+			modoRed = preferencias.getInt("infolinea_modo", 0);
+
+		}
 
 		setContentView(R.layout.fragment_tabs_pager);
 
@@ -292,37 +303,18 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 			break;
 
-		case R.id.menu_search_online:
-
-			Intent intent2 = getIntent();
-			intent2.putExtra("MODO_OFFLINE", false);
-			finish();
-			startActivity(intent2);
-
-			break;
-		case R.id.menu_search_offline:
-
-			Intent intent3 = getIntent();
-			intent3.putExtra("MODO_OFFLINE", true);
-			finish();
-			startActivity(intent3);
-
-			break;
-
 		}
 
 		return super.onOptionsItemSelected(item);
 
 	}
 
-	public boolean isModoOffline() {
-		return modoOffline;
+	public int getModoRed() {
+		return modoRed;
 	}
 
-	public void setModoOffline(boolean modoOffline) {
-		this.modoOffline = modoOffline;
+	public void setModoRed(int modoRed) {
+		this.modoRed = modoRed;
 	}
-
-	
 
 }

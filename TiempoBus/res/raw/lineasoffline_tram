@@ -1,0 +1,22 @@
+<html>
+
+<body>
+
+<form>
+
+<select name="LineasBox" id="LineasBox" >
+	
+	<option value="L1">L1 LINEA 1</option>
+	<option value="L3">L3 LINEA 3</option>
+	<option value="L4">L4 LINEA 4</option>
+	<option value="L9">L9 LINEA 9</option>
+	<option value="4L">4L LINEA 4L</option>
+	
+</select>
+
+
+</form>
+
+</body>
+
+</html>

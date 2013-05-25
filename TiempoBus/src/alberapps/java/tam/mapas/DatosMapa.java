@@ -20,10 +20,11 @@ package alberapps.java.tam.mapas;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class DatosMapa implements Serializable{
+public class DatosMapa implements Serializable {
 
 	@Override
 	public int hashCode() {
@@ -55,18 +56,14 @@ public class DatosMapa implements Serializable{
 	 */
 	private static final long serialVersionUID = 623708931441052658L;
 
-	
 	private List<PlaceMark> placemarks = new ArrayList<PlaceMark>();
 	private PlaceMark currentPlacemark;
 	private PlaceMark routePlacemark;
 
-	
-	//Recorrido
+	private List<PlaceMark> placemarksInversa = new ArrayList<PlaceMark>();
+
+	// Recorrido
 	private String recorrido;
-	
-	
-	
-	
 
 	public String getRecorrido() {
 		return recorrido;
@@ -77,41 +74,65 @@ public class DatosMapa implements Serializable{
 	}
 
 	public String toString() {
-	    String s= "";
-	    for (Iterator<PlaceMark> iter=placemarks.iterator();iter.hasNext();) {
-	        PlaceMark p = (PlaceMark)iter.next();
-	        s += p.getTitle() + "\n" + p.getDescription() + "\n\n";
-	    }
-	    return s;
+		String s = "";
+		for (Iterator<PlaceMark> iter = placemarks.iterator(); iter.hasNext();) {
+			PlaceMark p = (PlaceMark) iter.next();
+			s += p.getTitle() + "\n" + p.getDescription() + "\n\n";
+		}
+		return s;
 	}
 
 	public void addCurrentPlacemark() {
-	    placemarks.add(currentPlacemark);
+		placemarks.add(currentPlacemark);
 	}
 
 	public List<PlaceMark> getPlacemarks() {
-	    return placemarks;
+		return placemarks;
 	}
 
 	public void setPlacemarks(List<PlaceMark> placemarks) {
-	    this.placemarks = placemarks;
+		this.placemarks = placemarks;
 	}
 
 	public PlaceMark getCurrentPlacemark() {
-	    return currentPlacemark;
+		return currentPlacemark;
 	}
 
 	public void setCurrentPlacemark(PlaceMark currentPlacemark) {
-	    this.currentPlacemark = currentPlacemark;
+		this.currentPlacemark = currentPlacemark;
 	}
 
 	public PlaceMark getRoutePlacemark() {
-	    return routePlacemark;
+		return routePlacemark;
 	}
 
 	public void setRoutePlacemark(PlaceMark routePlacemark) {
-	    this.routePlacemark = routePlacemark;
+		this.routePlacemark = routePlacemark;
 	}
+
+	/**
+	 * Lista reordenada
+	 * 
+	 * @return lista
+	 */
+	public List<PlaceMark> getPlacemarksInversa() {
+
+		// Reordenar
+		placemarksInversa = new ArrayList<PlaceMark>(placemarks);
+		Collections.reverse(placemarksInversa);
+
+		return placemarksInversa;
+	}
+
+	public void setPlacemarksInversa(List<PlaceMark> placemarksInversa) {
+		this.placemarksInversa = placemarksInversa;
+	}
+
 	
+	public void ordenarPlacemark(){
+		
+		Collections.sort(placemarks);
+		
+	}
 	
 }

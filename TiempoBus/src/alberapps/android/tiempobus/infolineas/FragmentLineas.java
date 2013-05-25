@@ -26,20 +26,21 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
-import alberapps.android.tiempobus.noticias.NoticiasAdapter;
-import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -53,8 +54,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,7 +86,7 @@ public class FragmentLineas extends Fragment {
 
 	InfoLineaParadasAdapter infoLineaParadasAdapter;
 
-	
+	SharedPreferences preferencias;
 
 	/**
 	 * On Create
@@ -94,7 +97,8 @@ public class FragmentLineas extends Fragment {
 
 		actividad = (InfoLineasTabsPager) getActivity();
 
-		cargarLineas();
+		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
+		preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 	}
 
@@ -103,8 +107,70 @@ public class FragmentLineas extends Fragment {
 
 		setupFondoAplicacion();
 
+		// Combo de seleccion de datos
+		final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_datos);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+
+		// Seleccion inicial
+		int infolineaModo = preferencias.getInt("infolinea_modo", 0);
+		spinner.setSelection(infolineaModo);
+
+		// Seleccion
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+				// Solo en caso de haber cambiado
+				if (preferencias.getInt("infolinea_modo", 0) != arg2) {
+
+					// Guarda la nueva seleciccion
+					Toast.makeText(getActivity(), "Seleccion" + arg2, Toast.LENGTH_SHORT).show();
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putInt("infolinea_modo", arg2);
+					editor.commit();
+
+					// cambiar el modo de la actividad
+					if (arg2 == 0) {
+
+						Intent intent2 = getActivity().getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+						getActivity().finish();
+						startActivity(intent2);
+
+					} else if (arg2 == 1) {
+
+						Intent intent2 = getActivity().getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+						getActivity().finish();
+						startActivity(intent2);
+
+					} else if (arg2 == 2) {
+
+						Intent intent2 = getActivity().getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+						getActivity().finish();
+						startActivity(intent2);
+
+					}
+
+				}
+
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
+		// Consultar si es necesario, si ya lo tiene carga la lista
 		if (lineasBus != null) {
 			cargarListado();
+		} else {
+			cargarLineas();
 		}
 
 		super.onViewCreated(view, savedInstanceState);
@@ -122,10 +188,17 @@ public class FragmentLineas extends Fragment {
 
 		// Carga local de lineas
 		String datosOffline = null;
-		if (actividad.isModoOffline()) {
+		if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
 			Resources resources = getResources();
 			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
+
+			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+
+		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			Resources resources = getResources();
+			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline_tram);
 
 			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
 
@@ -227,10 +300,15 @@ public class FragmentLineas extends Fragment {
 		dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
 
 		// Control para el nuevo modo offline
-		if (!actividad.isModoOffline()) {
+		if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+
 			loadDatosMapa();
-		} else if (actividad.isModoOffline()) {
+		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+
 			loadDatosMapaOffline();
+		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			loadDatosMapaTRAMOffline();
 		}
 
 	}
@@ -274,6 +352,53 @@ public class FragmentLineas extends Fragment {
 
 			actividad.datosIda = datosRecorridos.get(0).getResult();
 
+			TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
+
+			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
+				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+			} else {
+				titIda.setText("-");
+			}
+
+			cargarListadoIda();
+
+			actividad.cambiarTab();
+
+			if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+
+				Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
+
+			}
+
+		} else {
+
+			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
+			toast.show();
+
+		}
+
+		dialog.dismiss();
+
+	}
+
+	/**
+	 * Carga las paradas de MAPAS OFFLINE
+	 */
+	private void loadDatosMapaTRAMOffline() {
+
+		List<DatosInfoLinea> datosRecorridos = cargarDatosMapaTRAMBD(actividad.getLinea().getNumLinea());
+
+		if (datosRecorridos != null) {
+
+			actividad.datosIda = datosRecorridos.get(0).getResult();
+
+			//actividad.datosIda.setPlacemarks(UtilidadesTRAM.posicionesRecorrido(actividad.getLinea().getNumLinea(), datosRecorridos.get(0).getResult().getPlacemarks()));
+			
+			actividad.datosIda.ordenarPlacemark();
+			
+			actividad.datosVuelta = new DatosMapa();
+			actividad.datosVuelta.setPlacemarks(actividad.datosIda.getPlacemarksInversa());
+			
 			TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
 
 			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
@@ -531,6 +656,61 @@ public class FragmentLineas extends Fragment {
 				Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
 				toast.show();
 			}
+
+		} else {
+			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			toast.show();
+		}
+
+		return datosInfoLinea;
+
+	}
+
+	/**
+	 * Cargar datos en modo offline TRAM
+	 */
+	private List<DatosInfoLinea> cargarDatosMapaTRAMBD(String lineaSeleccionadaNum) {
+
+		List<DatosInfoLinea> datosInfoLinea = null;
+
+		DatosMapa datosIda = new DatosMapa();
+
+		String parametros[] = { lineaSeleccionadaNum };
+
+		Cursor cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+
+		if (cursorParadas != null) {
+			List<Parada> listaParadasIda = new ArrayList<Parada>();
+
+			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
+
+				Parada par = new Parada();
+
+				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+
+				listaParadasIda.add(par);
+
+				datosIda = mapearDatosModelo(listaParadasIda);
+			}
+
+			// Datos a la estructura esperada
+			datosInfoLinea = new ArrayList<DatosInfoLinea>();
+			DatosInfoLinea datoIda = new DatosInfoLinea();
+			datoIda.setResult(datosIda);
+
+			DatosInfoLinea datoVuelta = new DatosInfoLinea();
+
+			datosInfoLinea.add(datoIda);
+			datosInfoLinea.add(datoVuelta);
 
 		} else {
 			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);

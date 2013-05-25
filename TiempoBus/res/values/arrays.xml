@@ -50,18 +50,10 @@
         <item>15</item>
     </string-array> 
    
-  <!--   
-    <string-array name="entries_list_fondos">
-        <item>Eliminar</item>
-        <item>Mantener</item>         
-    </string-array>
- -->
-   
- <!--      
-    <string-array name="entryvalues_list_fondos">
-        <item>1</item>
-        <item>0</item>        
-    </string-array>
- -->   
+   <string-array name="spinner_datos">
+        <item>Web Subús</item>
+        <item>BD local</item>
+        <item>TRAM local</item>            
+    </string-array> 
    
 </resources>

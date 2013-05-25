@@ -68,7 +68,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 47; //37
+	private static final int DATABASE_VERSION = 49; // 37
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -345,8 +345,8 @@ public class DatosLineasDB {
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
 						cargarLineas();
-						
-						//TRAM
+
+						// TRAM
 						cargarLineasTRAM();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
@@ -398,8 +398,8 @@ public class DatosLineasDB {
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
 						cargarLineas();
-						
-						//TRAM
+
+						// TRAM
 						cargarLineasTRAM();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
@@ -489,10 +489,10 @@ public class DatosLineasDB {
 				}
 
 				while ((line = readerR2.readLine()) != null) {
-					
+
 					// Para TAM
 					line = line.concat(";;TAM");
-					
+
 					String[] strings = TextUtils.split(line, ";;");
 					// if (strings.length < 2) continue;
 
@@ -521,8 +521,6 @@ public class DatosLineasDB {
 			try {
 				String line;
 				while ((line = reader.readLine()) != null) {
-
-					
 
 					// [nombre, identificador, latitud, longitud,1/0 si hay o no
 					// marquesinas de la emt cerca,lista de líneas de la
@@ -581,25 +579,27 @@ public class DatosLineasDB {
 
 						strings[8] = "TRAM";
 
+						// ida
+						long id = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
+								+ "] - " + strings[5].trim(), strings);
+						if (id < 0) {
+							Log.e(TAG, "unable to add line: " + strings[0].trim());
+						}
+
+						/*
+						strings[2] = "VUELTA";
+
+						// vuelta
+						long id2 = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
+								+ "] - " + strings[5].trim(), strings);
+						if (id2 < 0) {
+							Log.e(TAG, "unable to add line: " + strings[0].trim());
+						}
+						
+						*/
+
 					}
 
-					
-					//ida
-					long id = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
-							+ "] - " + strings[5].trim(), strings);
-					if (id < 0) {
-						Log.e(TAG, "unable to add line: " + strings[0].trim());
-					}
-					
-					strings[2] = "VUELTA";
-					
-					//vuelta
-					long id2 = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
-							+ "] - " + strings[5].trim(), strings);
-					if (id2 < 0) {
-						Log.e(TAG, "unable to add line: " + strings[0].trim());
-					}
-					
 				}
 
 			} finally {
