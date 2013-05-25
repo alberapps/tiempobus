@@ -31,6 +31,7 @@ import alberapps.android.tiempobus.data.BusAdapter;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
@@ -67,8 +68,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
@@ -119,13 +123,15 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	boolean primeraCarga = true;
 
-	boolean flagOffline = false;
+	// boolean flagOffline = false;
 
 	private MyLocationOverlay mMyLocationOverlay;
 
 	private ProgressDialog dialog;
 
 	SharedPreferences preferencias = null;
+
+	int modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -145,6 +151,15 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+		// Control de modo de red
+		modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
+
+		if (this.getIntent().getExtras() == null || (this.getIntent().getExtras() != null && !this.getIntent().getExtras().containsKey("MODO_RED"))) {
+
+			modoRed = preferencias.getInt("infolinea_modo", 0);
+
+		}
 
 		primeraCarga = true;
 
@@ -169,9 +184,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 			int lineaPos = UtilidadesTAM.getIdLinea(this.getIntent().getExtras().getString("LINEA_MAPA"));
 
 			Log.d("mapas", "linea: " + lineaPos + "l: " + this.getIntent().getExtras().getString("LINEA_MAPA"));
-			
-			if (lineaPos > -1) {				
-				
+
+			if (lineaPos > -1) {
+
 				lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
 				lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
 
@@ -221,6 +236,64 @@ public class MapasActivity extends ActionBarMapaActivity {
 			// miLocalizacion();
 
 		}
+
+		// Combo de seleccion de datos
+		final Spinner spinner = (Spinner) findViewById(R.id.spinner_datos);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_datos, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+
+		// Seleccion inicial
+		int infolineaModo = preferencias.getInt("infolinea_modo", 0);
+		spinner.setSelection(infolineaModo);
+
+		// Seleccion
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+				// Solo en caso de haber cambiado
+				if (preferencias.getInt("infolinea_modo", 0) != arg2) {
+
+					// Guarda la nueva seleciccion
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putInt("infolinea_modo", arg2);
+					editor.commit();
+
+					// cambiar el modo de la actividad
+					if (arg2 == 0) {
+
+						Intent intent2 = getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+						finish();
+						startActivity(intent2);
+
+					} else if (arg2 == 1) {
+
+						Intent intent2 = getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+						finish();
+						startActivity(intent2);
+
+					} else if (arg2 == 2) {
+
+						Intent intent2 = getIntent();
+						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+						finish();
+						startActivity(intent2);
+
+					}
+
+				}
+
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
 
 	}
 
@@ -504,6 +577,55 @@ public class MapasActivity extends ActionBarMapaActivity {
 	}
 
 	/**
+	 * Cargar datos en modo offline
+	 */
+	private void loadDatosMapaTRAMOffline() {
+
+		DatosMapa datosIda = new DatosMapa();
+
+		String parametros[] = { lineaSeleccionadaNum };
+
+		Cursor cursorParadas = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+
+		if (cursorParadas != null) {
+			List<Parada> listaParadasIda = new ArrayList<Parada>();
+
+			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
+
+				Parada par = new Parada();
+
+				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+
+				listaParadasIda.add(par);
+
+			}
+
+			datosIda = mapearDatosModelo(listaParadasIda);
+
+			datosMapaCargadosIda = datosIda;
+
+			// Cargar datos en el mapa
+			cargarMapa();
+
+		} else {
+			Toast toast = Toast.makeText(this, getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			toast.show();
+		}
+
+		dialog.dismiss();
+
+	}
+
+	/**
 	 * Cargar datos en modo online
 	 * 
 	 * @param listaParadas
@@ -651,7 +773,15 @@ public class MapasActivity extends ActionBarMapaActivity {
 		mapView.setBuiltInZoomControls(true);
 
 		mapOverlays = mapView.getOverlays();
-		drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
+		
+		
+		if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+			drawableIda = this.getResources().getDrawable(R.drawable.tramway);
+		}else{
+			drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
+		}
+		
+		
 		drawableVuelta = this.getResources().getDrawable(R.drawable.busstop_green);
 		drawableMedio = this.getResources().getDrawable(R.drawable.busstop_medio);
 		itemizedOverlayIda = new MapasItemizedOverlay(drawableIda, this);
@@ -852,9 +982,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 			Bundle b = new Bundle();
 			b.putInt("poste", codigo);
 			intent.putExtras(b);
-			// setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
-
-			// intent.addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 
 			SharedPreferences.Editor editor = preferencias.edit();
 			editor.putInt("parada_inicio", codigo);
@@ -879,7 +1006,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	private void launchBuses() {
 
-		flagOffline = false;
+		// flagOffline = false;
 
 		cargarDatosLineas();
 
@@ -887,7 +1014,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	private void launchBusesOffline() {
 
-		flagOffline = true;
+		// flagOffline = true;
 
 		cargarDatosLineas();
 
@@ -964,10 +1091,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
 
-		if (!flagOffline) {
+		if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 			loadDatosMapa();
-		} else {
+		} else if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			loadDatosMapaOffline();
+		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+			loadDatosMapaTRAMOffline();
 		}
 
 	}
@@ -979,13 +1108,19 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
 
+		// Carga local de lineas
 		String datosOffline = null;
-
-		//Carga local de lineas
-		if (flagOffline) {
+		if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
 			Resources resources = getResources();
 			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
+
+			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+
+		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			Resources resources = getResources();
+			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline_tram);
 
 			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
 
@@ -1025,44 +1160,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		}
 	};
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (resultCode == SUB_ACTIVITY_RESULT_OK) {
-			/*
-			 * switch (requestCode) {
-			 * 
-			 * 
-			 * case SUB_ACTIVITY_REQUEST_LINEAS:
-			 * 
-			 * // Limpiar lista anterior para nuevas busquedas if (mapView !=
-			 * null && mapView.getOverlays() != null)
-			 * mapView.getOverlays().clear();
-			 * 
-			 * lineaSeleccionada = data.getExtras().getString("LINEA");
-			 * lineaSeleccionadaDesc = data.getExtras().getString("LINEADESC");
-			 * 
-			 * // int lineaPos = UtilidadesTAM.getNumLinea(lineaSeleccionada);
-			 * 
-			 * // lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
-			 * 
-			 * lineaSeleccionadaNum = data.getExtras().getString("LINEANUM");
-			 * 
-			 * dialog = ProgressDialog.show(MapasActivity.this, "",
-			 * getString(R.string.dialogo_espera), true);
-			 * 
-			 * if (!flagOffline) { loadDatosMapa(); } else {
-			 * loadDatosMapaOffline(); }
-			 * 
-			 * break;
-			 * 
-			 * }
-			 */
-
-		}
-	}
 
 	/**
 	 * Mostrar y ocultar el recorrido de ida

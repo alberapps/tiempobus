@@ -699,9 +699,11 @@ public class FragmentLineas extends Fragment {
 
 				listaParadasIda.add(par);
 
-				datosIda = mapearDatosModelo(listaParadasIda);
+				
 			}
 
+			datosIda = mapearDatosModelo(listaParadasIda);
+			
 			// Datos a la estructura esperada
 			datosInfoLinea = new ArrayList<DatosInfoLinea>();
 			DatosInfoLinea datoIda = new DatosInfoLinea();
