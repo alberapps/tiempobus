@@ -91,8 +91,8 @@
     <string name="configuracion_alarmas_vibrar_desc">Use vibration when notifying</string>
     <string name="configuracion_alarmas_tono_titulo">Notification Tone</string>
     <string name="configuracion_alarmas_tono_desc">Select the tone for notification</string>
-    <string name="mapa_lineas">Change Bus Line (online)</string>
-    <string name="mapa_lineas_offline">Change Bus Line (offline)</string>
+    <string name="mapa_lineas">Change Bus Line</string>
+    
     <string name="mapa_ida">Forward (on/off)</string>
     <string name="mapa_vuelta">Backward (on/off)</string>
     <string name="mapa_aviso_vacio">The map would be empty</string>

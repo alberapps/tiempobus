@@ -194,5 +194,28 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		return minutos;
 	}
+	
+	public Integer getProximoMinutosTRAM() {
+		Integer minutos = 1000;
+
+		String[] procesa = this.proximo.split(";");
+
+		if (procesa[1].trim().charAt(0) == '<') {
+			minutos = 0;
+		} else if (procesa[1].trim().charAt(0) == '>') {
+			minutos = 9999;
+		} else {
+			Pattern p = Pattern.compile("([0-9]+) min.");
+			Matcher m = p.matcher(procesa[1]);
+			if (m.find()) {
+				minutos = Integer.valueOf(m.group(1));
+			}else{
+				minutos = 9999;
+			}
+		}
+
+		return minutos;
+	}
+	
 
 }

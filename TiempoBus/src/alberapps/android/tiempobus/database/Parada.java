@@ -44,6 +44,8 @@ public class Parada {
 
 	private String observaciones;
 
+	private String red;
+	
 	public String getLineaNum() {
 		return lineaNum;
 	}
@@ -147,6 +149,14 @@ public class Parada {
 		} else if (!parada.equals(other.parada))
 			return false;
 		return true;
+	}
+
+	public String getRed() {
+		return red;
+	}
+
+	public void setRed(String red) {
+		this.red = red;
 	}
 
 }

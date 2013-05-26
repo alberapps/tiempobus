@@ -91,8 +91,8 @@
     <string name="configuracion_alarmas_vibrar_desc">Vibration en la notification</string>
     <string name="configuracion_alarmas_tono_titulo">Ton de notification</string>
     <string name="configuracion_alarmas_tono_desc">Sélectionez le ton pour les notifications</string>
-    <string name="mapa_lineas">Changer Ligne(online)</string>
-    <string name="mapa_lineas_offline">Changer Ligne(offline)</string>
+    <string name="mapa_lineas">Changer Ligne</string>
+    
     <string name="mapa_ida">Aller (on/off)</string>
     <string name="mapa_vuelta">Retour (on/off)</string>
     <string name="mapa_aviso_vacio">La carte sera vide</string>

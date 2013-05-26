@@ -163,7 +163,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 		showProgressBar(true);
 
 		setupView();
- 
+
 		// Verificar si hay parada por defecto
 		if (preferencias.contains("parada_inicio")) {
 			poste = preferencias.getInt("parada_inicio", poste);
@@ -672,6 +672,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 			dialog.setView(vista);
 
 			CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
+			
+			if(esTram()){
+				check.setEnabled(false);
+			}
+			
 			boolean checkActivo = preferencias.getBoolean("activarServicio", false);
 			check.setChecked(checkActivo);
 
@@ -1066,7 +1071,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 				intent.putExtra("PARADA", poste);
 
 				boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-				if (checkActivo) {
+				if (checkActivo && !esTram()) {
 					startService(intent);
 				}
 
@@ -1109,14 +1114,23 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 		long mins = ((item + 1) * 5);
 
-		// Que tiempo usar
-		// Si el primer bus no cumple, se usa el segundo
-		if (theBus.getProximoMinutos() < mins) {
-			et = theBus.getSiguienteMinutos();
-			tiempo = 2;
-		} else {
-			et = theBus.getProximoMinutos();
+		// Si es tram
+		if (esTram()) {
+
+			et = theBus.getProximoMinutosTRAM();
 			tiempo = 1;
+
+		} else {
+			// Que tiempo usar
+			// Si el primer bus no cumple, se usa el segundo
+			if (theBus.getProximoMinutos() < mins) {
+				et = theBus.getSiguienteMinutos();
+				tiempo = 2;
+			} else {
+				et = theBus.getProximoMinutos();
+				tiempo = 1;
+			}
+
 		}
 
 		// Control de tiempo insuficiente o excesivo
@@ -1943,6 +1957,16 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 			Toast.makeText(getApplicationContext(), getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
 
+		}
+
+	}
+
+	private boolean esTram() {
+
+		if (Integer.toString(poste).length() < 4) {
+			return true;
+		} else {
+			return false;
 		}
 
 	}

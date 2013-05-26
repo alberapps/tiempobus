@@ -185,7 +185,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 
 	private Cursor getParadasProximas(Uri uri, String latitudActual, String longitudActual, String distancia) {
 
-		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES };
+		String[] columns = new String[] { DatosLineasDB.COLUMN_CONEXION, DatosLineasDB.COLUMN_COORDENADAS, DatosLineasDB.COLUMN_DESTINO, DatosLineasDB.COLUMN_DIRECCION, DatosLineasDB.COLUMN_LATITUD, DatosLineasDB.COLUMN_LINEA_DESC, DatosLineasDB.COLUMN_LINEA_NUM, DatosLineasDB.COLUMN_LONGITUD, DatosLineasDB.COLUMN_PARADA, DatosLineasDB.COLUMN_OBSERVACIONES, DatosLineasDB.COLUMN_RED_LINEAS };
 
 		return mDictionary.getPuntosProximos(latitudActual, longitudActual, distancia, columns);
 	}

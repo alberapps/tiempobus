@@ -92,8 +92,8 @@
     <string name="configuracion_alarmas_vibrar_desc">Usar la vibración en la notificación</string>
     <string name="configuracion_alarmas_tono_titulo">Tono de Aviso</string>
     <string name="configuracion_alarmas_tono_desc">Seleccionar el tono de aviso</string>
-    <string name="mapa_lineas">Cambiar Línea(internet)</string>
-    <string name="mapa_lineas_offline">Cambiar Línea(local)</string>
+    <string name="mapa_lineas">Cambiar Línea</string>
+    
     <string name="mapa_ida">Ida (on/off)</string>
     <string name="mapa_vuelta">Vuelta (on/off)</string>
     <string name="mapa_aviso_vacio">El mapa quedaría vacio</string>

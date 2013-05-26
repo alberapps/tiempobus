@@ -421,7 +421,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		// latitud, longitud
 		// String parametros[] = {"38.346242", "-0.489838","-0.001"};
-		// //-0.489838 38.346242
+		// //LONG: -0,489838 LATI:38,346242
 
 		String parametros[] = { Integer.toString(latitud), Integer.toString(longitud), distancia };
 
@@ -446,6 +446,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 				par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
 				par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)).trim());
 
+				par.setRed(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_RED_LINEAS)));
+
 				if (!listaParadas.contains(par)) {
 					listaParadas.add(par);
 				}
@@ -454,7 +456,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 			for (int i = 0; i < listaParadas.size(); i++) {
 
 				mapOverlays = mapView.getOverlays();
-				drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
+
+				if (listaParadas.get(i).getRed().equals(DatosLineasDB.RED_TRAM)) {
+					drawableIda = this.getResources().getDrawable(R.drawable.tramway);
+				} else {
+					drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
+				}
+
 				itemizedOverlayIda = new MapasItemizedOverlay(drawableIda, this);
 
 				GeoPoint point = null;
@@ -773,15 +781,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 		mapView.setBuiltInZoomControls(true);
 
 		mapOverlays = mapView.getOverlays();
-		
-		
+
 		if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 			drawableIda = this.getResources().getDrawable(R.drawable.tramway);
-		}else{
+		} else {
 			drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
 		}
-		
-		
+
 		drawableVuelta = this.getResources().getDrawable(R.drawable.busstop_green);
 		drawableMedio = this.getResources().getDrawable(R.drawable.busstop_medio);
 		itemizedOverlayIda = new MapasItemizedOverlay(drawableIda, this);
@@ -795,7 +801,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		 * 38.344820, -0.483320‎ +38° 20' 41.35", -0° 28' 59.95"
 		 * 38.34482,-0.48332
 		 * 
-		 * 38.386058, -0.510018‎
+		 * long: -0,510018  lati: 38,386058 PRUEBAS‎
 		 * 
 		 */
 
@@ -1240,10 +1246,14 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			break;
 		case R.id.menu_ida:
-			cargarOcultarIda();
+			if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+				cargarOcultarIda();
+			}
 			break;
 		case R.id.menu_vuelta:
-			cargarOcultarVuelta();
+			if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+				cargarOcultarVuelta();
+			}
 			break;
 		case R.id.menu_cercanas:
 
@@ -1256,10 +1266,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 		case R.id.menu_search_online:
 			launchBuses();
 			break;
-		case R.id.menu_search_offline:
-			launchBusesOffline();
-			break;
-
+		/*
+		 * case R.id.menu_search_offline: launchBusesOffline(); break;
+		 */
 		case android.R.id.home:
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

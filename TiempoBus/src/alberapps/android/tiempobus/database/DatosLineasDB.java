@@ -77,6 +77,9 @@ public class DatosLineasDB {
 
 	static Context contexto;
 
+	public static final String RED_TAM  = "TAM";
+	public static final String RED_TRAM  = "TRAM";
+	
 	/**
 	 * Constructor
 	 * 

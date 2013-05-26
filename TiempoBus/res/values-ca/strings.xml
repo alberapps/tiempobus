@@ -91,8 +91,7 @@ favorit per crear la teua llista.</string>
     <string name="configuracion_alarmas_vibrar_desc">Utilitza la vibració en la notificació</string>
     <string name="configuracion_alarmas_tono_titulo">To d\'avís</string>
     <string name="configuracion_alarmas_tono_desc">Seleccionar el to d\'avís</string>
-    <string name="mapa_lineas">Canviar Línia(internet)</string>
-    <string name="mapa_lineas_offline">Canviar Línia(local)</string>
+    <string name="mapa_lineas">Canviar Línia</string>
     <string name="mapa_ida">Anada (on/off)</string>
     <string name="mapa_vuelta">Tornada (on/off)</string>
     <string name="mapa_aviso_vacio">El mapa quedaria buit</string>

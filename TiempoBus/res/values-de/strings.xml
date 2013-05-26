@@ -91,8 +91,8 @@
     <string name="configuracion_alarmas_vibrar_desc">Vibrieren für Nachrichten benutzen</string>
     <string name="configuracion_alarmas_tono_titulo">Signalton</string>
     <string name="configuracion_alarmas_tono_desc">Signalton auswählen</string>
-    <string name="mapa_lineas">Linie verändern (online)</string>
-    <string name="mapa_lineas_offline">Linie verändern (offline)</string>
+    <string name="mapa_lineas">Linie verändern</string>
+    
     <string name="mapa_ida">Hinfahrt (on/off)</string>
     <string name="mapa_vuelta">Rückfahrt (on/off)</string>
     <string name="mapa_aviso_vacio">Die Karte wäre Leere</string>
