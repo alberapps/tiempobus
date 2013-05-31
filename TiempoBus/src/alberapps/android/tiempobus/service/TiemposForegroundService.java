@@ -21,9 +21,9 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import alberapps.android.tiempobus.AlarmReceiver;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.alarma.AlarmReceiver;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.PreferencesUtil;
