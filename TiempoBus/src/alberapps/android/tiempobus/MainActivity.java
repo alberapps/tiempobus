@@ -27,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
-import alberapps.android.tiempobus.actionbar.ActionBarActivity;
+import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
@@ -76,10 +76,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity implements TextToSpeech.OnInitListener {
+public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener {
 
 	// Novedades
 	private int REV_ACTUAL = 27;
@@ -137,6 +138,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 	GestionarWidget gestionarWidget;
 
+	private ListView tiemposView;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -399,13 +402,22 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 		// registerForContextMenu(getListView());
 
+		
+		
 		// Pie para la lista de resultados
 		LayoutInflater li = LayoutInflater.from(this);
 		View v = li.inflate(R.layout.tiempos_aviso, null);
-		getListView().addFooterView(v);
+		
+		tiemposView = (ListView) findViewById(R.id.lista_tiempos);
+		
+		tiemposView.addFooterView(v);
 
+		
+		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+		tiemposView.setEmptyView(vacio);
+		
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
-		getListView().setOnItemClickListener(new OnItemClickListener() {
+		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
 				BusLlegada bus = (BusLlegada) view.getItemAtPosition(position);
 
@@ -420,7 +432,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 			}
 		});
 
-		getListView().setOnLongClickListener(new OnLongClickListener() {
+		tiemposView.setOnLongClickListener(new OnLongClickListener() {
 
 			public boolean onLongClick(View view) {
 				// TODO Auto-generated method stub
@@ -429,7 +441,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 		});
 
 		// Asignamos el adapter a la lista
-		setListAdapter(posteAdapter);
+		tiemposView.setAdapter(posteAdapter);
 		posteAdapter.notifyDataSetChanged();
 
 		// registerForContextMenu(guiTitulo);
