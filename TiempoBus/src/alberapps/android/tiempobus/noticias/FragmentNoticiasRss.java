@@ -24,18 +24,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
- * Fragmento tw
+ * Fragmento vuelta
  * 
  * 
  */
-public class FragmentTwitter extends Fragment {
+public class FragmentNoticiasRss extends Fragment {
 
-	
+	private static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
+
 	private NoticiasTabsPager actividad;
 	
 	/**
@@ -53,23 +56,30 @@ public class FragmentTwitter extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		
+		// TextView titVuelta = (TextView)
+		// actividad.findViewById(R.id.tituloVuelta);
 
 		setupFondoAplicacion();
-		
-		
-		if(actividad.avisosRecuperados != null){
-			actividad.cargarListadoTw();
+
+		if(actividad.noticiasRss != null){
+			actividad.cargarListadoRss();
 		}
 		
+		/*
+		TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticia);
 
+		accederNoticia.setLinksClickable(true);
+		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
+
+		accederNoticia.setText(noticiasURL);
+*/
 		super.onViewCreated(view, savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.avisostw, container, false);
+		return inflater.inflate(R.layout.noticias_rss, container, false);
 	}
 
 	/**
@@ -82,7 +92,7 @@ public class FragmentTwitter extends Fragment {
 
 		String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		View contenedor_principal = getActivity().findViewById(R.id.contenedor_tw);
+		View contenedor_principal = getActivity().findViewById(R.id.contenedor_noticias_rss);
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 

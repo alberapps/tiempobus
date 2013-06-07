@@ -32,7 +32,6 @@ import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.Utilidades;
-import alberapps.android.tiempobus.data.PosteAdapter;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
@@ -41,6 +40,7 @@ import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.principal.GestionarFondo;
 import alberapps.android.tiempobus.principal.GestionarWidget;
+import alberapps.android.tiempobus.principal.TiemposAdapter;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private static final long DELAY_RECARGA = 750;
 
 	private ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
-	private PosteAdapter posteAdapter;
+	private TiemposAdapter posteAdapter;
 	private TextView guiHora;
 	private TextView datosParada;
 
@@ -398,7 +398,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		/**
 		 * Configuramos la lista de resultados
 		 */
-		posteAdapter = new PosteAdapter(this, R.layout.tiempos_item);
+		posteAdapter = new TiemposAdapter(this, R.layout.tiempos_item);
 
 		// registerForContextMenu(getListView());
 

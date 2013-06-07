@@ -21,9 +21,8 @@ package alberapps.android.tiempobus.tasks;
 
 import java.util.List;
 
-import alberapps.java.tam.noticias.Noticias;
-import alberapps.java.tam.noticias.ProcesarNoticias;
-import alberapps.java.tam.noticias.rss.ParserXML;
+import alberapps.java.rss.ParserXML;
+import alberapps.java.tam.noticias.rss.NoticiaRss;
 import android.os.AsyncTask;
 
 /**
@@ -31,18 +30,18 @@ import android.os.AsyncTask;
  * 
  * 
  */
-public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias>> {
+public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<NoticiaRss>> {
 
 	/**
 	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
 	 * como callback una vez termine la tarea asincrona
 	 * 
 	 */
-	public interface LoadNoticiasAsyncTaskResponder {
-		public void noticiasLoaded(List<Noticias> noticias);
+	public interface LoadNoticiasRssAsyncTaskResponder {
+		public void noticiasRssLoaded(List<NoticiaRss> noticias);
 	}
 
-	private LoadNoticiasAsyncTaskResponder responder;
+	private LoadNoticiasRssAsyncTaskResponder responder;
 
 	
 	/**
@@ -50,7 +49,7 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 	 * 
 	 * @param responder
 	 */
-	public LoadNoticiasAsyncTask(LoadNoticiasAsyncTaskResponder responder) {
+	public LoadNoticiasRssAsyncTask(LoadNoticiasRssAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
 
@@ -58,14 +57,12 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
-	protected List<Noticias> doInBackground(Object... datos) {
-		List<Noticias> noticiasList = null;
-		try {
-						
-			noticiasList = ProcesarNoticias.getTamNews();
+	protected List<NoticiaRss> doInBackground(Object... datos) {
+		List<NoticiaRss> noticiasList = null;
+		try {		
 
 			
-			//ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
+			noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
 			
 		} catch (Exception e) {
 			return null;
@@ -78,9 +75,9 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
 	 */
 	@Override
-	protected void onPostExecute(List<Noticias> result) {
+	protected void onPostExecute(List<NoticiaRss> result) {
 		if (responder != null) {
-			responder.noticiasLoaded(result);
+			responder.noticiasRssLoaded(result);
 		}
 
 		

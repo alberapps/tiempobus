@@ -29,6 +29,7 @@ import org.jsoup.select.Elements;
 
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.util.Log;
 
 /**
@@ -76,13 +77,31 @@ public class ProcesarDatosLineasIsaeService {
 
 				// KML
 				int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
+				
+				boolean esTram = false;
+				
+				if(posicion < 0){
+					
+					//Verificar si es TRAM
+					posicion = UtilidadesTRAM.getIdLinea(datosLinea.getLineaNum());
+					
+					esTram = true;
+					
+				}
+				
 
-				if (posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
+				if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
 					datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
 
 					datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
 
-				} else {
+				} else if (esTram && posicion >= 0 ) {
+					
+					datosLinea.setGrupoLinea(UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]]);
+
+				}
+				
+				else {
 					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**ERROR]"));
 				}
 

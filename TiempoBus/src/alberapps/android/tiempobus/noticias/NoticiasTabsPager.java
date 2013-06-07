@@ -28,12 +28,15 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRssAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask.LoadTwitterAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.noticias.Noticias;
+import alberapps.java.tam.noticias.rss.NoticiaRss;
 import alberapps.java.tam.noticias.tw.TwResultado;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import android.app.ActionBar;
@@ -96,10 +99,16 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	NoticiasAdapter noticiasAdapter;
 
 	private ListView lineasView;
+	
+	private ListView noticiasRssView;
 
 	List<TwResultado> avisosRecuperados;
 
+	List<NoticiaRss> noticiasRss;
+	
 	TwAdapter twAdapter;
+	
+	NoticiasRssAdapter noticiasRssAdapter;
 
 	private ProgressDialog dialog;
 
@@ -133,6 +142,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
 		mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
+		mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.tab_tw)), FragmentNoticiasRss.class, null);
 		mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
 
 		if (savedInstanceState != null) {
@@ -371,7 +381,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	 * @param noticiasList
 	 * @param ok
 	 */
-	private void cargarListado(List<Noticias> noticiasList, boolean ok) {
+	public void cargarListado(List<Noticias> noticiasList, boolean ok) {
 
 		try {
 
@@ -385,7 +395,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			}
 
 			// Listado noticias
-			noticiasView = (ListView) findViewById(android.R.id.list);
+			noticiasView = (ListView) findViewById(R.id.lista_noticias);
 			noticiasView.setOnItemClickListener(noticiasClickedHandler);
 			noticiasView.setAdapter(noticiasAdapter);
 			View emptyView = findViewById(R.id.vacio_noticias);
@@ -487,13 +497,16 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				}
 
-				getActionBarHelper().setRefreshActionItemState(false);
+				
+				recargarRss();
+				
+				/*getActionBarHelper().setRefreshActionItemState(false);
 
 				if (dialog != null && dialog.isShowing()) {
 
 					dialog.dismiss();
 
-				}
+				}*/
 
 			}
 		};
@@ -589,5 +602,146 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		}
 	};
+	
+	
+	
+	
+	
+	
+	/////////RSS
+	
+	
+	/**
+	 * Recarga de datos twitter
+	 */
+	private void recargarRss() {
+
+		if (dialog != null && dialog.isShowing()) {
+			dialog.setMessage(getString(R.string.carga_tw_msg));
+		}
+
+		/**
+		 * Sera llamado cuando la tarea de cargar las noticias
+		 */
+		LoadNoticiasRssAsyncTaskResponder loadNoticiasRssAsyncTaskResponder = new LoadNoticiasRssAsyncTaskResponder() {
+			public void noticiasRssLoaded(List<NoticiaRss> noticias) {
+
+				if (noticias != null && !noticias.isEmpty()) {
+					noticiasRss = noticias;
+					cargarListadoRss();
+
+				} else {
+
+					noticiasRss = null;
+					// Error al recuperar datos
+					cargarListadoRss();
+
+				}
+
+				getActionBarHelper().setRefreshActionItemState(false);
+
+				if (dialog != null && dialog.isShowing()) {
+
+					dialog.dismiss();
+
+				}
+
+			}
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+	
+
+			new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+			getActionBarHelper().setRefreshActionItemState(false);
+
+			if (dialog != null && dialog.isShowing()) {
+
+				dialog.dismiss();
+
+			}
+		}
+
+	}
+
+	/**
+	 * Carga el listado
+	 */
+	public void cargarListadoRss() {
+
+		try {
+
+			noticiasRssAdapter = new NoticiasRssAdapter(this, R.layout.noticias_rss_item);
+
+			if (noticiasRss != null) {
+
+				noticiasRssAdapter.addAll(noticiasRss);
+				noticiasRssAdapter.notifyDataSetChanged();
+
+			}
+
+			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+
+			TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
+			noticiasRssView.setEmptyView(vacio);
+
+			// lineasView.setOnItemClickListener(twClickedHandler);
+
+			noticiasRssView.setAdapter(noticiasRssAdapter);
+
+		} catch (Exception e) {
+
+			// Para evitar fallos en caso de volver antes de terminar
+
+		}
+
+	}
+
+	/**
+	 * Listener encargado de gestionar las pulsaciones sobre los items
+	 */
+	private OnItemClickListener noticiaRssClickedHandler = new OnItemClickListener() {
+
+		/**
+		 * @param l
+		 *            The ListView where the click happened
+		 * @param v
+		 *            The view that was clicked within the ListView
+		 * @param position
+		 *            The position of the view in the list
+		 * @param id
+		 *            The row id of the item that was clicked
+		 */
+		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+
+			/*Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+			String url = avisosRecuperados.get(position).getUrl();
+
+			Intent i = new Intent(Intent.ACTION_VIEW);
+
+			i.setData(Uri.parse(url));
+			startActivity(i);
+*/
+		}
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

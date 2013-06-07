@@ -125,7 +125,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
 		} else if (modoRed == MODO_RED_TRAM_OFFLINE) {
 			mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
-			mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
+			mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
 
 		}
 		

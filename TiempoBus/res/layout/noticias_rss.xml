@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:layout_weight="0"
     android:orientation="vertical" android:background="@color/gris_blog"
-    android:id="@id/contenedor_noticias">
+    android:id="@id/contenedor_noticias_rss">
 
     <TextView
         android:id="@+id/TextView01"
@@ -46,7 +46,7 @@
          >
 		
 		 <ListView
-            android:id="@+id/lista_noticias"
+            android:id="@+id/noticias_rss"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="#00000000"
@@ -54,10 +54,10 @@
             android:scrollingCache="true" android:divider="#00000000"/>
 
         <TextView
-            android:id="@+id/vacio_noticias"
+            android:id="@+id/vacio_noticias_rss"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/android:list"
+            android:layout_below="@+id/noticias_rss"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items" 
             android:textColor="@color/color_android"

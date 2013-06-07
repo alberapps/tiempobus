@@ -48,4 +48,5 @@
     <item type="id" name="menu_satelite"/>
     <item name="contenedor_tw" type="id"/>
     <item type="id" name="spinner_tiempos"/>
+    <item type="id" name="contenedor_noticias_rss"/>
 </resources>

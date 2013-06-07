@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.data;
+package alberapps.android.tiempobus.principal;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.tam.BusLlegada;
@@ -31,7 +31,7 @@ import android.widget.TextView;
 /**
  * Adaptador Tiempos
  */
-public class PosteAdapter extends ArrayAdapter<BusLlegada> {
+public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 	
 	private Context contexto;
 	
@@ -40,7 +40,7 @@ public class PosteAdapter extends ArrayAdapter<BusLlegada> {
 	 * @param context
 	 * @param textViewResourceId
 	 */
-	public PosteAdapter(Context context, int textViewResourceId) {
+	public TiemposAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
 		
 		this.contexto = context;

@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.noticias;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,11 +40,17 @@ public class FragmentNoticias extends Fragment {
 
 	private static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
+	
+	private NoticiasTabsPager actividad;
+	
 	/**
 	 * On Create
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
+		actividad = (NoticiasTabsPager) getActivity();
+		
 		super.onCreate(savedInstanceState);
 
 	}
@@ -63,6 +70,10 @@ public class FragmentNoticias extends Fragment {
 
 		accederNoticia.setText(noticiasURL);
 
+		if(actividad.noticiasRecuperadas != null){
+			actividad.cargarListado(actividad.noticiasRecuperadas, true);
+		}
+		
 		super.onViewCreated(view, savedInstanceState);
 	}
 

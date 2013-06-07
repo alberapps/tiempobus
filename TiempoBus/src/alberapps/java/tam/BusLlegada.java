@@ -42,10 +42,10 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	 */
 	private String proximo;
 
-	public BusLlegada(){
-		
+	public BusLlegada() {
+
 	}
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -174,7 +174,7 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		return minutos;
 	}
-	
+
 	public Integer getSiguienteMinutos() {
 		Integer minutos = 1000;
 
@@ -194,7 +194,12 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		return minutos;
 	}
-	
+
+	/**
+	 * Tiempos con formato tram
+	 * 
+	 * @return tiempo
+	 */
 	public Integer getProximoMinutosTRAM() {
 		Integer minutos = 1000;
 
@@ -204,18 +209,22 @@ public class BusLlegada implements Comparable<BusLlegada> {
 			minutos = 0;
 		} else if (procesa[1].trim().charAt(0) == '>') {
 			minutos = 9999;
+		} else if (procesa[1].trim().charAt(0) == '-') {
+			return 9999;
+		} else if (procesa[1].trim().charAt(0) == 'E') {
+			return 9999;
+
 		} else {
 			Pattern p = Pattern.compile("([0-9]+) min.");
 			Matcher m = p.matcher(procesa[1]);
 			if (m.find()) {
 				minutos = Integer.valueOf(m.group(1));
-			}else{
+			} else {
 				minutos = 9999;
 			}
 		}
 
 		return minutos;
 	}
-	
 
 }

@@ -278,7 +278,7 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-	
+
 	public boolean esTram(int paradaActual) {
 
 		if (Integer.toString(paradaActual).length() < 4) {
@@ -288,7 +288,7 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-	
+
 	/**
 	 * Formatea la salida por idioma
 	 * 
@@ -303,6 +303,11 @@ public class DatosPantallaPrincipal {
 
 		String tiempo1 = "";
 		String tiempo2 = "";
+
+		//Si es tram devuelve solo un dato
+		if (procesa[0].equals("TRAM")) {
+			return procesa[1];
+		}
 
 		if (procesa[0].equals("enlaparada")) {
 
@@ -337,7 +342,7 @@ public class DatosPantallaPrincipal {
 		return traducido;
 
 	}
-	
+
 	/**
 	 * Compartir informacion del bus
 	 */

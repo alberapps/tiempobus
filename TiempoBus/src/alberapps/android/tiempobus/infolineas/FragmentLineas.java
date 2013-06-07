@@ -402,7 +402,14 @@ public class FragmentLineas extends Fragment {
 			TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
 
 			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+				//titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+			
+				int posicion = UtilidadesTRAM.getIdLinea(actividad.getLinea().getNumLinea());
+				
+				String desc = UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]];
+				
+				titIda.setText(desc);
+			
 			} else {
 				titIda.setText("-");
 			}
