@@ -38,7 +38,7 @@ public class PlaceMark implements Serializable, Comparable<PlaceMark> {
 
 	private String observaciones;
 
-	private int orden = 0;
+	private Integer orden = 0;
 	
 	public String getObservaciones() {
 
@@ -137,20 +137,20 @@ public class PlaceMark implements Serializable, Comparable<PlaceMark> {
 
 	public int compareTo(PlaceMark another) {
 
-		Integer c1 = Integer.parseInt(this.getCodigoParada());
-		Integer c2 = Integer.parseInt(another.getCodigoParada());
+		//Integer c1 = Integer.parseInt(this.getCodigoParada());
+		//Integer c2 = Integer.parseInt(another.getCodigoParada());
 
-		return c1.compareTo(c2);
+		//return c1.compareTo(c2);
 
-		//return orden.compareTo(another.orden);
+		return orden.compareTo(another.orden);
 		
 	}
 
-	public int getOrden() {
+	public Integer getOrden() {
 		return orden;
 	}
 
-	public void setOrden(int orden) {
+	public void setOrden(Integer orden) {
 		this.orden = orden;
 	}
 

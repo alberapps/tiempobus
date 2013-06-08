@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -68,7 +69,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 49; // 37
+	private static final int DATABASE_VERSION = 50; // 37
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -77,9 +78,9 @@ public class DatosLineasDB {
 
 	static Context contexto;
 
-	public static final String RED_TAM  = "TAM";
-	public static final String RED_TRAM  = "TRAM";
-	
+	public static final String RED_TAM = "TAM";
+	public static final String RED_TRAM = "TRAM";
+
 	/**
 	 * Constructor
 	 * 
@@ -549,6 +550,29 @@ public class DatosLineasDB {
 
 					String[] strings = new String[9];
 
+					// Transbordos
+					StringBuffer transbordo = new StringBuffer();
+					for (int i = 5; i < strings1.length - 1; i++) {
+
+						if (transbordo.length() > 0) {
+							transbordo.append(",");
+						}
+
+						if (strings1[i].equals("1")) {
+							transbordo.append("L1");
+						} else if (strings1[i].equals("3")) {
+							transbordo.append("L3");
+						} else if (strings1[i].equals("4")) {
+							transbordo.append("L4");
+						} else if (strings1[i].equals("9")) {
+							transbordo.append("L9");
+						} else if (strings1[i].equals("41")) {
+							transbordo.append("4L");
+						}
+
+					}
+
+					// Monta la linea para BD
 					for (int i = 5; i < strings1.length - 1; i++) {
 
 						if (strings1[i].equals("1")) {
@@ -568,7 +592,11 @@ public class DatosLineasDB {
 							strings[1] = "4L";
 						}
 
-						strings[2] = "IDA";
+						int posicion = UtilidadesTRAM.getIdLinea(strings[0]);
+
+						strings[2] = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
+
+						// strings[2] = "IDA";
 
 						strings[3] = numParada;
 
@@ -576,7 +604,7 @@ public class DatosLineasDB {
 
 						strings[5] = direccion;
 
-						strings[6] = "";
+						strings[6] = transbordo.toString();
 
 						strings[7] = "";
 
@@ -590,16 +618,16 @@ public class DatosLineasDB {
 						}
 
 						/*
-						strings[2] = "VUELTA";
-
-						// vuelta
-						long id2 = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
-								+ "] - " + strings[5].trim(), strings);
-						if (id2 < 0) {
-							Log.e(TAG, "unable to add line: " + strings[0].trim());
-						}
-						
-						*/
+						 * strings[2] = "VUELTA";
+						 * 
+						 * // vuelta long id2 = addWord(strings[0].trim() +
+						 * " > " + strings[2].trim() + " - " + strings[3].trim()
+						 * + " " + strings[5].trim(), strings[1].trim() + " > "
+						 * + strings[2].trim() + " [" + strings[3].trim() +
+						 * "] - " + strings[5].trim(), strings); if (id2 < 0) {
+						 * Log.e(TAG, "unable to add line: " +
+						 * strings[0].trim()); }
+						 */
 
 					}
 

@@ -8,7 +8,7 @@
     android:id="@id/contenedor_noticias">
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/TextView01n"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_android"
@@ -19,7 +19,7 @@
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/accederNoticia"
+        android:id="@+id/accederNoticiaL"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_android"
@@ -28,7 +28,7 @@
         android:textColor="@color/white" />
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/TextView02n"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_android"
@@ -57,7 +57,7 @@
             android:id="@+id/vacio_noticias"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@+id/android:list"
+            android:layout_below="@+id/lista_noticias"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items" 
             android:textColor="@color/color_android"

@@ -125,8 +125,7 @@ public class FragmentLineas extends Fragment {
 				// Solo en caso de haber cambiado
 				if (preferencias.getInt("infolinea_modo", 0) != arg2) {
 
-					// Guarda la nueva seleciccion
-					Toast.makeText(getActivity(), "Seleccion" + arg2, Toast.LENGTH_SHORT).show();
+					// Guarda la nueva seleciccion					
 					SharedPreferences.Editor editor = preferencias.edit();
 					editor.putInt("infolinea_modo", arg2);
 					editor.commit();
@@ -392,7 +391,7 @@ public class FragmentLineas extends Fragment {
 
 			actividad.datosIda = datosRecorridos.get(0).getResult();
 
-			//actividad.datosIda.setPlacemarks(UtilidadesTRAM.posicionesRecorrido(actividad.getLinea().getNumLinea(), datosRecorridos.get(0).getResult().getPlacemarks()));
+			actividad.datosIda.setPlacemarks(UtilidadesTRAM.posicionesRecorrido(actividad.getLinea().getNumLinea(), datosRecorridos.get(0).getResult().getPlacemarks()));
 			
 			actividad.datosIda.ordenarPlacemark();
 			
@@ -406,7 +405,7 @@ public class FragmentLineas extends Fragment {
 			
 				int posicion = UtilidadesTRAM.getIdLinea(actividad.getLinea().getNumLinea());
 				
-				String desc = UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]];
+				String desc = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
 				
 				titIda.setText(desc);
 			

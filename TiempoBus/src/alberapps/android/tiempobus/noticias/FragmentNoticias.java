@@ -19,7 +19,6 @@
 package alberapps.android.tiempobus.noticias;
 
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -63,7 +62,7 @@ public class FragmentNoticias extends Fragment {
 
 		setupFondoAplicacion();
 
-		TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticia);
+		TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticiaL);
 
 		accederNoticia.setLinksClickable(true);
 		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);

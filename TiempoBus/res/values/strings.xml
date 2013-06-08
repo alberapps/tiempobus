@@ -173,14 +173,14 @@
     <string name="proximidad">Proximidad de las paradas</string>
     <string name="destino">Destino</string>
     <string name="localizacion">Localización</string>
-    <string name="buscador_online">Buscador (Web Subús)</string>
+    <string name="buscador_online">Buscador</string>
     <string name="ida">Ida</string>
     <string name="vuelta">Vuelta</string>
     <string name="ko_noticia">No se puede mostrar correctamente, accede a la web</string>
     <string name="aviso_noticia">Si el contenido no se visualiza correctamente, pulsa el link para acceder a la web</string>
     <string name="noticias_links">Enlaces posibles</string>
     <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.</string>
-    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de subus.es.\nCon la lupa se consulta la base de datos local.</string>
+    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de subus.es y tramalicante.es.</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
@@ -255,5 +255,9 @@
     <string name="tw_maximo_desc">Máximos de cada uno</string>
     
     <string name="parada_tram">Parada</string>
+    
+    <string name="rss_tram">TRAM(rss)</string>
+    <string name="carga_rss_tram_msg">Cargando RSS</string>
+    <!-- cambiar aviso_buscador_online buscador_online-->
     
 </resources>

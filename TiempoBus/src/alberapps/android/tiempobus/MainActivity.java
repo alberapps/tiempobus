@@ -139,7 +139,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	GestionarWidget gestionarWidget;
 
 	private ListView tiemposView;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -402,20 +402,17 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// registerForContextMenu(getListView());
 
-		
-		
 		// Pie para la lista de resultados
 		LayoutInflater li = LayoutInflater.from(this);
 		View v = li.inflate(R.layout.tiempos_aviso, null);
-		
+
 		tiemposView = (ListView) findViewById(R.id.lista_tiempos);
-		
+
 		tiemposView.addFooterView(v);
 
-		
 		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 		tiemposView.setEmptyView(vacio);
-		
+
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
 		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
@@ -532,7 +529,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		itemsL.add(getString(R.string.menu_ver_en_mapa));
 		itemsL.add(getString(R.string.menu_leer));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && !datosPantallaPrincipal.esTram(paradaActual)) {
 
 			itemsL.add(getString(R.string.menu_widget));
 

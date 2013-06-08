@@ -142,7 +142,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
 		mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.tab_tw)), FragmentNoticiasRss.class, null);
+		mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
 		mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
 
 		if (savedInstanceState != null) {
@@ -617,7 +617,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	private void recargarRss() {
 
 		if (dialog != null && dialog.isShowing()) {
-			dialog.setMessage(getString(R.string.carga_tw_msg));
+			dialog.setMessage(getString(R.string.carga_rss_tram_msg));
 		}
 
 		/**
