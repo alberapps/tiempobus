@@ -64,6 +64,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,6 +75,7 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -140,9 +144,24 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	private ListView tiemposView;
 
+	// drawer
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+
+	private CharSequence mDrawerTitle;
+	private CharSequence mTitle;
+	private String[] mDrawerTitles;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.pantalla_principal);
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			iniciarDrawer(savedInstanceState);
+		}
+		
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -153,7 +172,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		cambiarLocale(false);
 
-		setContentView(R.layout.pantalla_principal);
+		
+
+		
 
 		showProgressBar(true);
 
@@ -188,6 +209,135 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			datosPantallaPrincipal.verificarNuevasNoticias();
 		}
 
+	}
+
+	private void iniciarDrawer(Bundle savedInstanceState) {
+		mTitle = mDrawerTitle = getTitle();
+		mDrawerTitles = getResources().getStringArray(R.array.menu_array);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+		// set a custom shadow that overlays the main content when the drawer
+		// opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		
+
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+		mDrawerLayout, /* DrawerLayout object */
+		R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+		R.string.drawer_open, /* "open drawer" description for accessibility */
+		R.string.drawer_close /* "close drawer" description for accessibility */
+		) {
+			public void onDrawerClosed(View view) {
+				getActionBar().setTitle(mTitle);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+
+			public void onDrawerOpened(View drawerView) {
+				getActionBar().setTitle(mDrawerTitle);
+				invalidateOptionsMenu(); // creates call to
+											// onPrepareOptionsMenu()
+			}
+		};
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		if (savedInstanceState == null) {
+			//selectItem(0);
+		}
+
+	}
+
+	/* The click listner for ListView in the navigation drawer */
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			selectItem(position);
+
+		}
+	}
+
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+			// If the nav drawer is open, hide action items related to the
+			// content view
+			boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+			menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
+			menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
+		}
+
+		return super.onPrepareOptionsMenu(menu);
+
+	}
+
+	private void selectItem(int position) {
+		// update the main content by replacing fragments
+		// FragmentPrincipalDrawer fragment = new FragmentPrincipalDrawer();
+		// Bundle args = new Bundle();
+		// args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
+		// fragment.setArguments(args);
+
+		// FragmentManager fragmentManager = getFragmentManager();
+		// fragmentManager.beginTransaction().replace(R.id.content_frame,
+		// fragment).commit();
+
+		// update selected item and title, then close the drawer
+		// mDrawerList.setItemChecked(position, true);
+		// setTitle(mDrawerTitles[position]);
+		
+
+		switch (position) {
+
+		case 0:
+
+			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+
+			break;
+			
+		case 1:
+
+			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
+			break;
+			
+		case 2:
+			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+			break;
+			
+		case 3:
+			nuevoFavorito();
+			break;
+		
+		case 4:
+
+			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
+			break;
+
+		
+		case 5:
+
+			gestionarFondo.seleccionarFondo();
+
+			break;
+
+		};
+
+		mDrawerList.setItemChecked(position, false);
+		mDrawerLayout.closeDrawer(mDrawerList);
+		
 	}
 
 	/**
@@ -307,6 +457,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
 		controlMostrarNovedades();
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			mDrawerToggle.syncState();
+		}
+		
 	}
 
 	@Override
@@ -321,7 +476,24 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	}
 
 	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        	// Pass any configuration change to the drawer toggls
+        	mDrawerToggle.onConfigurationChanged(newConfig);
+        }
+    }
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			if (mDrawerToggle.onOptionsItemSelected(item)) {
+				return true;
+			}
+		}
+
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();

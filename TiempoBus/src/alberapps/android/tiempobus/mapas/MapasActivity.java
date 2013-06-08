@@ -19,18 +19,13 @@
 package alberapps.android.tiempobus.mapas;
 
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarMapaActivity;
 import alberapps.android.tiempobus.data.BusAdapter;
-import alberapps.android.tiempobus.database.BuscadorLineasProvider;
-import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
@@ -51,7 +46,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -92,11 +86,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	protected static final int SUB_ACTIVITY_REQUEST_LINEAS = 1000;
 	public static final int SUB_ACTIVITY_RESULT_OK = 1002;
 
-	private static final String DISTACIA_CERCANA = "-0.001";
-	private static final String DISTACIA_MEDIA = "-0.002";
-	private static final String DISTACIA_LEJOS = "-0.004";
-
-	private String distancia = DISTACIA_CERCANA;
+	String distancia = ParadasCercanas.DISTACIA_CERCANA;
 
 	LinearLayout linearLayout;
 	MapView mapView;
@@ -123,15 +113,17 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	boolean primeraCarga = true;
 
-	// boolean flagOffline = false;
-
-	private MyLocationOverlay mMyLocationOverlay;
+	MyLocationOverlay mMyLocationOverlay;
 
 	private ProgressDialog dialog;
 
 	SharedPreferences preferencias = null;
 
 	int modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE;
+
+	MapasOffline mapasOffline;
+
+	ParadasCercanas paradasCercanas;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -151,6 +143,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+		mapasOffline = new MapasOffline(this, preferencias);
+		paradasCercanas = new ParadasCercanas(this, preferencias);
 
 		// Control de modo de red
 		modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
@@ -196,7 +191,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				// loadDatosMapa();
 
-				loadDatosMapaOffline();
+				mapasOffline.loadDatosMapaOffline();
 
 			} else {
 				// launchBuses();
@@ -208,13 +203,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			String lineaPos = this.getIntent().getExtras().getString("LINEA_MAPA_FICHA");
 
-			// lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
-
-			// int pos = UtilidadesTAM.getIdLinea(lineaPos);
-
-			// lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[pos];
-			// lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[pos];
-
 			lineaSeleccionada = this.getIntent().getExtras().getString("LINEA_MAPA_FICHA_KML");
 			lineaSeleccionadaDesc = this.getIntent().getExtras().getString("LINEA_MAPA_FICHA_DESC");
 
@@ -225,7 +213,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			if (this.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
 				loadDatosMapa();
 			} else {
-				loadDatosMapaOffline();
+				mapasOffline.loadDatosMapaOffline();
 			}
 
 		}
@@ -307,7 +295,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 * 
 	 * @param cercanas
 	 */
-	private void miLocalizacion(final boolean cercanas) {
+	public void miLocalizacion(final boolean cercanas) {
 
 		if (!mMyLocationOverlay.isMyLocationEnabled()) {
 
@@ -344,7 +332,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 						mapView.getController().animateTo(mMyLocationOverlay.getMyLocation());
 
 						if (cercanas) {
-							cargarParadasCercanas(mMyLocationOverlay.getMyLocation().getLatitudeE6(), mMyLocationOverlay.getMyLocation().getLongitudeE6());
+							paradasCercanas.cargarParadasCercanas(mMyLocationOverlay.getMyLocation().getLatitudeE6(), mMyLocationOverlay.getMyLocation().getLongitudeE6());
 						}
 
 						primeraCarga = false;
@@ -376,7 +364,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		Toast.makeText(this, getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
 
 		if (cercanas) {
-			cargarParadasCercanas(mMyLocationOverlay.getMyLocation().getLatitudeE6(), mMyLocationOverlay.getMyLocation().getLongitudeE6());
+			paradasCercanas.cargarParadasCercanas(mMyLocationOverlay.getMyLocation().getLatitudeE6(), mMyLocationOverlay.getMyLocation().getLongitudeE6());
 
 		}
 
@@ -386,284 +374,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 		mapView.setClickable(true);
 		mapView.setEnabled(true);
 
-	}
-
-	/**
-	 * Recuperar las paradas cercanas
-	 * 
-	 * @param latitud
-	 * @param longitud
-	 */
-	private void cargarParadasCercanas(int latitud, int longitud) {
-
-		if (mapOverlays != null) {
-			mapOverlays.clear();
-
-			mapOverlays.add(mMyLocationOverlay);
-		}
-
-		datosMapaCargadosIda = null;
-		datosMapaCargadosVuelta = null;
-		lineaSeleccionada = null;
-		lineaSeleccionadaDesc = null;
-		lineaSeleccionadaNum = null;
-
-		// String query =
-		// Integer.toString(BuscadorLineasProvider.GET_PARADAS_PROXIMAS);
-
-		// WHERE (LATITUD> (-509837) AND LATITUD < (-469839) AND LONGITUD >
-		// (38326241) AND LONGITUD < (38366239))
-		// LATITUD> (-709838) AND LATITUD < (-269838) AND LONGITUD > (38126242)
-		// AND LONGITUD < (38566242)
-		// lat 38342115 ----- long -494467
-		// LATITUD> (38126242) AND LATITUD < (38566242) AND LONGITUD > (-709838)
-		// AND LONGITUD < (-269838)
-
-		// latitud, longitud
-		// String parametros[] = {"38.346242", "-0.489838","-0.001"};
-		// //LONG: -0,489838 LATI:38,346242
-
-		String parametros[] = { Integer.toString(latitud), Integer.toString(longitud), distancia };
-
-		String selection = Integer.toString(BuscadorLineasProvider.GET_PARADAS_PROXIMAS);
-
-		Cursor cursor = managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
-
-		if (cursor != null) {
-			List<Parada> listaParadas = new ArrayList<Parada>();
-
-			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-
-				Parada par = new Parada();
-
-				// par.setLineaNum(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				// par.setLineaDesc(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				// par.setDestino(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)).trim());
-
-				par.setRed(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_RED_LINEAS)));
-
-				if (!listaParadas.contains(par)) {
-					listaParadas.add(par);
-				}
-			}
-
-			for (int i = 0; i < listaParadas.size(); i++) {
-
-				mapOverlays = mapView.getOverlays();
-
-				if (listaParadas.get(i).getRed().equals(DatosLineasDB.RED_TRAM)) {
-					drawableIda = this.getResources().getDrawable(R.drawable.tramway);
-				} else {
-					drawableIda = this.getResources().getDrawable(R.drawable.busstop_blue);
-				}
-
-				itemizedOverlayIda = new MapasItemizedOverlay(drawableIda, this);
-
-				GeoPoint point = null;
-
-				point = new GeoPoint(listaParadas.get(i).getLatitud(), listaParadas.get(i).getLongitud());
-
-				String descripcionAlert = getResources().getText(R.string.lineas) + " ";
-
-				if (listaParadas.get(i).getConexion() != null) {
-					descripcionAlert += listaParadas.get(i).getConexion().trim();
-				}
-
-				OverlayItem overlayitem = new OverlayItem(point, "[" + listaParadas.get(i).getParada().trim() + "] " + listaParadas.get(i).getDireccion().trim(), descripcionAlert);
-
-				itemizedOverlayIda.addOverlay(overlayitem);
-
-				mapOverlays.add(itemizedOverlayIda);
-
-			}
-
-		} else {
-
-			Toast.makeText(getApplicationContext(), getString(R.string.gps_no_paradas), Toast.LENGTH_SHORT).show();
-
-		}
-
-	}
-
-	/**
-	 * Cargar datos en modo offline
-	 */
-	private void loadDatosMapaOffline() {
-
-		DatosMapa datosIda = new DatosMapa();
-		DatosMapa datosVuelta = new DatosMapa();
-
-		String parametros[] = { lineaSeleccionadaNum };
-
-		Cursor cursorParadas = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-
-		if (cursorParadas != null) {
-			List<Parada> listaParadasIda = new ArrayList<Parada>();
-
-			List<Parada> listaParadasVuelta = new ArrayList<Parada>();
-
-			String destinoIda = "";
-			String destinoVuelta = "";
-
-			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
-
-				Parada par = new Parada();
-
-				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
-				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
-
-				if (destinoIda.equals("")) {
-					destinoIda = par.getDestino();
-				} else if (destinoVuelta.equals("") && !destinoIda.equals(par.getDestino())) {
-					destinoVuelta = par.getDestino();
-				}
-
-				if (par.getDestino().equals(destinoIda)) {
-
-					listaParadasIda.add(par);
-
-				} else if (par.getDestino().equals(destinoVuelta)) {
-
-					listaParadasVuelta.add(par);
-
-				}
-
-			}
-
-			if (listaParadasIda != null && !listaParadasIda.isEmpty() && listaParadasVuelta != null && !listaParadasVuelta.isEmpty()) {
-				datosIda = mapearDatosModelo(listaParadasIda);
-
-				datosVuelta = mapearDatosModelo(listaParadasVuelta);
-
-				datosMapaCargadosIda = datosIda;
-
-				datosMapaCargadosVuelta = datosVuelta;
-
-				// Recorrido
-
-				Cursor cursorRecorrido = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-				if (cursorRecorrido != null) {
-					cursorRecorrido.moveToFirst();
-
-					datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-
-					cursorRecorrido.moveToNext();
-
-					datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-
-				}
-
-				// Cargar datos en el mapa
-				cargarMapa();
-
-			} else {
-				Toast toast = Toast.makeText(this, getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
-				toast.show();
-			}
-
-		} else {
-			Toast toast = Toast.makeText(this, getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-			toast.show();
-		}
-
-		dialog.dismiss();
-
-	}
-
-	/**
-	 * Cargar datos en modo offline
-	 */
-	private void loadDatosMapaTRAMOffline() {
-
-		DatosMapa datosIda = new DatosMapa();
-
-		String parametros[] = { lineaSeleccionadaNum };
-
-		Cursor cursorParadas = managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-
-		if (cursorParadas != null) {
-			List<Parada> listaParadasIda = new ArrayList<Parada>();
-
-			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
-
-				Parada par = new Parada();
-
-				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
-				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
-
-				listaParadasIda.add(par);
-
-			}
-
-			datosIda = mapearDatosModelo(listaParadasIda);
-
-			datosMapaCargadosIda = datosIda;
-
-			// Cargar datos en el mapa
-			cargarMapa();
-
-		} else {
-			Toast toast = Toast.makeText(this, getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-			toast.show();
-		}
-
-		dialog.dismiss();
-
-	}
-
-	/**
-	 * Cargar datos en modo online
-	 * 
-	 * @param listaParadas
-	 * @return
-	 */
-	private DatosMapa mapearDatosModelo(List<Parada> listaParadas) {
-
-		DatosMapa datos = new DatosMapa();
-
-		datos.setPlacemarks(new ArrayList<PlaceMark>());
-
-		for (int i = 0; i < listaParadas.size(); i++) {
-
-			PlaceMark placeMark = new PlaceMark();
-
-			placeMark.setAddress(listaParadas.get(i).getDireccion());
-			placeMark.setCodigoParada(listaParadas.get(i).getParada());
-			placeMark.setCoordinates(listaParadas.get(i).getCoordenadas());
-			placeMark.setDescription(listaParadas.get(i).getLineaDesc());
-			placeMark.setLineas(listaParadas.get(i).getConexion());
-			placeMark.setObservaciones(listaParadas.get(i).getObservaciones());
-			placeMark.setSentido(listaParadas.get(i).getDestino());
-			placeMark.setTitle(listaParadas.get(i).getDireccion());
-
-			datos.getPlacemarks().add(placeMark);
-		}
-
-		datos.setCurrentPlacemark(datos.getPlacemarks().get(0));
-
-		return datos;
 	}
 
 	/**
@@ -771,7 +481,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 * Cargar el mapa con las paradas de la linea
 	 * 
 	 */
-	private void cargarMapa() {
+	public void cargarMapa() {
 
 		// Cargar datos cabecera
 		String cabdatos = lineaSeleccionadaDesc;
@@ -801,7 +511,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		 * 38.344820, -0.483320‎ +38° 20' 41.35", -0° 28' 59.95"
 		 * 38.34482,-0.48332
 		 * 
-		 * long: -0,510018  lati: 38,386058 PRUEBAS‎
+		 * long: -0,510018 lati: 38,386058 PRUEBAS‎
 		 * 
 		 */
 
@@ -1100,9 +810,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 		if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 			loadDatosMapa();
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-			loadDatosMapaOffline();
+			mapasOffline.loadDatosMapaOffline();
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-			loadDatosMapaTRAMOffline();
+			mapasOffline.loadDatosMapaTRAMOffline();
 		}
 
 	}
@@ -1257,7 +967,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			break;
 		case R.id.menu_cercanas:
 
-			seleccionarProximidad();
+			paradasCercanas.seleccionarProximidad();
 
 			break;
 		case R.id.menu_posicion:
@@ -1298,42 +1008,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 	protected void onStop() {
 		mMyLocationOverlay.disableMyLocation();
 		super.onStop();
-	}
-
-	private void seleccionarProximidad() {
-
-		final CharSequence[] items = { getResources().getString(R.string.proximidad_1), getResources().getString(R.string.proximidad_2), getResources().getString(R.string.proximidad_3) };
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.proximidad);
-
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
-
-				if (item == 0) {
-
-					distancia = DISTACIA_CERCANA;
-					miLocalizacion(true);
-
-				} else if (item == 1) {
-
-					distancia = DISTACIA_MEDIA;
-					miLocalizacion(true);
-
-				} else if (item == 2) {
-
-					distancia = DISTACIA_LEJOS;
-					miLocalizacion(true);
-
-				}
-
-			}
-		});
-
-		AlertDialog alert = builder.create();
-
-		alert.show();
-
 	}
 
 	public void drawPath(DatosMapa navSet, int color, MapView mMapView01) {
@@ -1400,6 +1074,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 			}
 		}
 
+	}
+
+	public ProgressDialog getDialog() {
+		return dialog;
 	}
 
 }

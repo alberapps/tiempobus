@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/contenedor_principal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="0"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_android" >
+
+        <TextView
+            android:id="@+id/datos_parada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:maxLines="1"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout3"
+            android:layout_width="15dp"
+            android:layout_height="match_parent" >
+        </FrameLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/scroll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dip" >
+
+        <ListView
+            android:id="@+id/lista_tiempos"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="#00000000"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="true" />
+
+        <TextView
+            android:id="@+id/tiempos_vacio"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/lista_tiempos"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/main_no_items"
+            android:textColor="@color/color_android"
+            android:textStyle="bold" />
+    </RelativeLayout>
+-->
+
+    <!-- Pie -->
+
+    <LinearLayout
+        android:id="@+id/pieLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="-51dip"
+        android:background="#2f2d2e" >
+
+        <FrameLayout
+            android:id="@+id/frameLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="31.36" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/updated_at"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/ultima_act"
+                    style="@style/InfoPoste.Hora"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="@string/hora_inicial"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/boton_barcode"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_barcode_32" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout5"
+            android:layout_width="3dp"
+            android:layout_height="match_parent" >
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/campo_poste"
+            android:layout_width="66dp"
+            android:layout_height="27dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="@string/poste"
+            android:inputType="number"
+            android:maxLength="4"
+            android:textSize="24sp" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/boton_subposte"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/actionbar_compat_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/images_slideshow" />
+
+        <FrameLayout
+            android:id="@+id/FrameLayout01"
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:layout_weight="11.24" >
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/boton_alertas"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/actionbar_compat_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/access_alarms" />
+
+        <ImageButton
+            android:id="@+id/boton_info"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/actionbar_compat_item"
+            android:scaleType="centerInside"
+            android:src="@drawable/action_info" />
+
+        <FrameLayout
+            android:id="@+id/frameLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="17.74" >
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -7,7 +7,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent" android:background="@drawable/fondo_linea">
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_sombra" >
 
         <TextView
             android:id="@+id/bus_linea"
@@ -23,38 +24,38 @@
             android:shadowRadius="1"
             android:text="@string/guion"
             android:textColor="@color/color_android"
-            android:textSize="23sp"
-            android:textStyle="bold" />
+           
+            android:textStyle="bold" 
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/bus_destino"
-                style="@style/InfoPoste.Destino"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="15sp" 
-                android:textStyle="bold"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" 
+                android:textColor="@color/color_android" />
 
             <TextView
                 android:id="@+id/bus_proximo"
-                style="@style/InfoPoste.Proximo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:maxLines="2"
                 android:text="@string/guion"
-                android:textColor="@color/color_android"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textAppearance="?android:attr/textAppearanceSmall"                 
+                android:textColor="@color/color_android" />
 
         </LinearLayout>
 

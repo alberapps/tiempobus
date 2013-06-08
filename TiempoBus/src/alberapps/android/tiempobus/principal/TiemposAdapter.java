@@ -69,12 +69,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 		
 		BusLlegada bus = getItem(position);
 		if (bus != null) {
-			tag.busLinea.setText(bus.getLinea());
-			tag.busDestino.setText(bus.getDestino());
+			tag.busLinea.setText(bus.getLinea().trim());
+			tag.busDestino.setText(bus.getDestino().trim());
 			
 			
 			//tag.busProximo.setText(bus.getProximo());
-			tag.busProximo.setText(controlAviso(bus.getProximo()));
+			tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
 			
 			
 			

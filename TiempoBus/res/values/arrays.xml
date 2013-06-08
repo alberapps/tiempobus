@@ -56,4 +56,14 @@
         <item>Tranvía TRAM (offline)</item>            
     </string-array> 
    
+   
+   <string-array name="menu_array">
+        <item>Mapas</item>
+        <item>Avisos y Noticias</item>
+        <item>Favoritos</item>
+        <item>Guardar</item>
+        <item>Preferencias</item>
+        <item>Fondo</item>        
+    </string-array>
+   
 </resources>

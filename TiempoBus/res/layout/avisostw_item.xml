@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/fondo_favorito" >
+        android:background="@drawable/item_sombra" >
          
          <ImageView
              android:id="@+id/imagenTw"
