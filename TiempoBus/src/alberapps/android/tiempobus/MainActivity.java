@@ -807,7 +807,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			dialog.setTitle(getString(R.string.novedades_titulo));
 
 			dialog.setMessage(NOVEDADES);
-			dialog.setIcon(R.drawable.ic_tiempobus);
+			dialog.setIcon(R.drawable.ic_tiempobus_3);
 
 			dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 

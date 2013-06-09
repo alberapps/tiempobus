@@ -23,7 +23,7 @@
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:src="@drawable/ic_tiempobus_acercade" 
+                android:src="@drawable/ic_tiempobus_3_acercade" 
                 android:contentDescription="@string/app_name"/>
 
             <LinearLayout
