@@ -1149,6 +1149,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					cabdatos = getString(R.string.share_0b) + " " + paradaActual;
 				}
 
+				if(datosPantallaPrincipal.esTram(paradaActual)){
+					cabdatos = "TRAM " + cabdatos;
+				}
+				
 				datosParada.setText(cabdatos);
 
 				final Calendar c = Calendar.getInstance();

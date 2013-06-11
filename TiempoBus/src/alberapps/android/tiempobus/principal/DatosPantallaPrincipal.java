@@ -289,6 +289,16 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	public static boolean esTram(String paradaActual) {
+
+		if (paradaActual.length() < 4) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+	
 	/**
 	 * Formatea la salida por idioma
 	 * 

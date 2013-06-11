@@ -43,9 +43,10 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold" 
-                android:textColor="@color/color_android" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="italic" 
+                android:textColor="@color/color_android" 
+                />
 
             <TextView
                 android:id="@+id/bus_proximo"
@@ -55,7 +56,8 @@
                 android:maxLines="2"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceSmall"                 
-                android:textColor="@color/color_android" />
+                android:textColor="@color/color_android" 
+                 />
 
         </LinearLayout>
 

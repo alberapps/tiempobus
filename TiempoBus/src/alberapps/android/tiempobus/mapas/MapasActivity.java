@@ -692,8 +692,20 @@ public class MapasActivity extends ActionBarMapaActivity {
 		int codigo;
 
 		if (paradaSeleccionada != null) {
-			codigo = Integer.parseInt(paradaSeleccionada.substring(1, 5));
-
+			try{
+				codigo = Integer.parseInt(paradaSeleccionada.substring(1, 5));
+			}catch(Exception e){
+				
+				//Por si es tram
+				int c1 = paradaSeleccionada.indexOf("[");
+				int c2 =paradaSeleccionada.indexOf("]");
+				
+				codigo = Integer.parseInt(paradaSeleccionada.substring(c1+1, c2));
+				
+				Log.d("", "mapa:" + codigo);
+				
+			}
+			
 			Intent intent = new Intent(this, MainActivity.class);
 			Bundle b = new Bundle();
 			b.putInt("poste", codigo);

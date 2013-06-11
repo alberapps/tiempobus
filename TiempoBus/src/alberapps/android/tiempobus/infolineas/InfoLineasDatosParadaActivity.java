@@ -23,6 +23,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.mapas.MapasActivity;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.PlaceMark;
@@ -116,7 +117,7 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 
 					}
 
-					if (codigo != -1 && paradaSel.length() == 4) {
+					if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
 
 						cargarTiempos(codigo);
 
