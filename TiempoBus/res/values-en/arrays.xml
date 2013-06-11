@@ -50,18 +50,20 @@
         <item>15</item>
     </string-array> 
    
-  <!--   
-    <string-array name="entries_list_fondos">
-        <item>Eliminar</item>
-        <item>Mantener</item>         
-    </string-array>
- -->
+  <string-array name="spinner_datos">
+        <item>Bus TAM (Web Subús)</item>
+        <item>Bus TAM (offline)</item>
+        <item>Tranvía TRAM (offline)</item>            
+    </string-array> 
    
- <!--      
-    <string-array name="entryvalues_list_fondos">
-        <item>1</item>
-        <item>0</item>        
+   
+   <string-array name="menu_array">
+        <item>Maps</item>
+        <item>Notices and News</item>
+        <item>Favorites</item>
+        <item>Save</item>
+        <item>Settings</item>
+        <item>Wallpaper</item>        
     </string-array>
- -->   
    
 </resources>

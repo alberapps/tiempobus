@@ -243,4 +243,14 @@
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Máximos de cada uno</string>
     
+     <string name="parada_tram">Fermata</string>
+    
+    <string name="rss_tram">TRAM(rss)</string>
+    <string name="carga_rss_tram_msg">Caricando RSS</string>
+    <!-- cambiar aviso_buscador_online buscador_online-->
+    
+    
+     <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    
 </resources>

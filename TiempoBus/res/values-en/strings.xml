@@ -172,7 +172,7 @@
     <string name="proximidad">Proximity of bus stops</string>
     <string name="destino">Destination</string>
     <string name="localizacion">Location</string>
-    <string name="buscador_online">Search (Subús Web)</string>
+    <string name="buscador_online">Search</string>
     <string name="ida">Forward</string>
     <string name="vuelta">Backward</string>
     <string name="ko_noticia">Cannot display correctly. Please access the web</string>
@@ -248,6 +248,14 @@
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Maximum of each item</string>
     
+     <string name="parada_tram">Bus Stop</string>
     
+    <string name="rss_tram">TRAM(rss)</string>
+    <string name="carga_rss_tram_msg">Loading RSS</string>
+    <!-- cambiar aviso_buscador_online buscador_online-->
+    
+    
+     <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     
 </resources>
