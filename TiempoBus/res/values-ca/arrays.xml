@@ -37,9 +37,11 @@
     </string-array> 
     
    <string-array name="spinner_minutos">
+    	<item>3 minuts</item>
         <item>5 minuts</item>
         <item>10 minuts</item>
-        <item>15 minuts</item>            
+        <item>15 minuts</item>  
+        <item>20 minuts</item>          
     </string-array> 
    
     <string-array name="cantidad_tw">

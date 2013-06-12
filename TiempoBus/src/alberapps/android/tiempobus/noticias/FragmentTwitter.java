@@ -58,9 +58,9 @@ public class FragmentTwitter extends Fragment {
 		setupFondoAplicacion();
 		
 		
-		if(actividad.avisosRecuperados != null){
+		//if(actividad.avisosRecuperados != null){
 			actividad.cargarListadoTw();
-		}
+		//}
 		
 
 		super.onViewCreated(view, savedInstanceState);

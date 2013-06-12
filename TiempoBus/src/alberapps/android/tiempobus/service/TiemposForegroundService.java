@@ -1,19 +1,22 @@
-/*
- * Copyright (C) 2009 The Android Open Source Project
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2012 Alberto Montiel
+ * 
+ *  based on code by The Android Open Source Project
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package alberapps.android.tiempobus.service;
 
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +27,7 @@ import java.util.Date;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.alarma.AlarmReceiver;
+import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.PreferencesUtil;
@@ -214,17 +218,10 @@ public class TiemposForegroundService extends Service {
 
 		public void run() {
 
-			/*
-			 * String alarma = preferencias.getString("alerta", "");
-			 * 
-			 * if(alarma.equals("")){ Log.d("TiemposService",
-			 * "Se detiene el servicio"); stopSelf(); }else{
-			 */
 			refrescarAlarma();
 			manejador.removeCallbacks(mRecarga);
 			manejador.postDelayed(this, 60000);
 
-			// }
 		}
 	};
 
@@ -240,16 +237,7 @@ public class TiemposForegroundService extends Service {
 
 		try {
 
-			// showProgressBar(true);
-
-			//SharedPreferences preferencias2 = PreferenceManager.getDefaultSharedPreferences(this);
-
-			//SharedPreferences preferenciasAlertas = getSharedPreferences("prefalertas", Context.MODE_MULTI_PROCESS);
-			
-			
 			String aviso = PreferencesUtil.getAlertaInfo(this);
-			
-			//String aviso = preferenciasAlertas.getString("alerta", "");
 
 			/**
 			 * Sera llamado cuando la tarea de cargar tiempos termine
@@ -257,14 +245,7 @@ public class TiemposForegroundService extends Service {
 			LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 				public void tiemposLoaded(BusLlegada tiempos) {
 
-					//SharedPreferences preferencias2 = PreferenceManager.getDefaultSharedPreferences(TiemposForegroundService.this);
-
-					//SharedPreferences preferenciasAlertas = getSharedPreferences("prefalertas", Context.MODE_MULTI_PROCESS);
-					
-					
 					String aviso = PreferencesUtil.getAlertaInfo(getApplicationContext());
-					
-					//String aviso = preferenciasAlertas.getString("alerta", "");
 
 					if (aviso != null && !aviso.equals("") && tiempos != null) {
 
@@ -375,7 +356,7 @@ public class TiemposForegroundService extends Service {
 
 		long et;
 
-		long mins = ((item + 1) * 5);
+		long mins = GestionarAlarmas.obtenerMinutos(item); // ((item + 1) * 5);
 
 		// Que tiempo usar
 		// Si el primer bus no cumple, se usa el segundo
@@ -420,14 +401,7 @@ public class TiemposForegroundService extends Service {
 
 		Log.d("TiemposService", "Tiempo actualizado a: " + horaT);
 
-		//SharedPreferences preferenciasAlertas = context.getSharedPreferences("prefalertas", Context.MODE_MULTI_PROCESS);
-		
 		PreferencesUtil.putAlertaInfo(this, alertaDialog);
-		
-		
-		//SharedPreferences.Editor editor = preferenciasAlertas.edit();
-		//editor.putString("alerta", alertaDialog);
-		//editor.commit();
 
 	}
 
@@ -450,15 +424,8 @@ public class TiemposForegroundService extends Service {
 
 			alarmReceiver = null;
 
-			//SharedPreferences preferenciasAlertas = getSharedPreferences("prefalertas", Context.MODE_MULTI_PROCESS);
-			
-			
-			//SharedPreferences.Editor editor = preferenciasAlertas.edit();
-			//editor.putString("alerta", "");
-			//editor.commit();
-
 			PreferencesUtil.clearAlertaInfo(this);
-			
+
 			if (avisar) {
 				Toast.makeText(this, getString(R.string.alarma_cancelada), Toast.LENGTH_SHORT).show();
 			}
@@ -466,47 +433,4 @@ public class TiemposForegroundService extends Service {
 		}
 	}
 
-	// ----------------------------------------------------------------------
-
-	/**
-	 * <p>
-	 * Example of explicitly starting and stopping the
-	 * {@link TiemposForegroundService}.
-	 * 
-	 * <p>
-	 * Note that this is implemented as an inner class only keep the sample all
-	 * together; typically this code would appear in some separate class.
-	 */
-	/*
-	 * public static class Controller extends Activity {
-	 * 
-	 * @Override protected void onCreate(Bundle savedInstanceState) {
-	 * super.onCreate(savedInstanceState);
-	 * 
-	 * setContentView(R.layout.foreground_service_controller);
-	 * 
-	 * // Watch for button clicks. Button button =
-	 * (Button)findViewById(R.id.start_foreground);
-	 * button.setOnClickListener(mForegroundListener); button =
-	 * (Button)findViewById(R.id.start_background);
-	 * button.setOnClickListener(mBackgroundListener); button =
-	 * (Button)findViewById(R.id.stop);
-	 * button.setOnClickListener(mStopListener); }
-	 * 
-	 * private OnClickListener mForegroundListener = new OnClickListener() {
-	 * public void onClick(View v) { Intent intent = new
-	 * Intent(TiemposForegroundService.ACTION_FOREGROUND);
-	 * intent.setClass(Controller.this, TiemposForegroundService.class);
-	 * startService(intent); } };
-	 * 
-	 * private OnClickListener mBackgroundListener = new OnClickListener() {
-	 * public void onClick(View v) { Intent intent = new
-	 * Intent(TiemposForegroundService.ACTION_BACKGROUND);
-	 * intent.setClass(Controller.this, TiemposForegroundService.class);
-	 * startService(intent); } };
-	 * 
-	 * private OnClickListener mStopListener = new OnClickListener() { public
-	 * void onClick(View v) { stopService(new Intent(Controller.this,
-	 * TiemposForegroundService.class)); } }; }
-	 */
 }

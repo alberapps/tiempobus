@@ -44,7 +44,7 @@
                 android:maxLines="1"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="italic" 
+                android:textStyle="bold" 
                 android:textColor="@color/color_android" 
                 />
 

@@ -92,21 +92,20 @@ public class GestionarAlarmas {
 	}
 
 	/**
-	 * Calcula y estable la alarma
+	 * Calcular y activar la alarma
 	 * 
 	 * @param theBus
 	 * @param tiempo
 	 * @param item
+	 * @param paradaActual
+	 * @param alarmReceiver
 	 */
 	public void calcularAlarma(BusLlegada theBus, int tiempo, int item, int paradaActual, PendingIntent alarmReceiver) {
 
-		Context contexto = context.getApplicationContext();
-
-		
-
 		long et;
 
-		long mins = ((item + 1) * 5);
+		// Obtener los minutos de la seleccion
+		long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
 		// Si es tram
 		if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
@@ -136,7 +135,22 @@ public class GestionarAlarmas {
 			return;
 		}
 
-		
+		// Establecer la alarma
+		establecerAlarma(et, mins, theBus, tiempo, item, paradaActual, alarmReceiver);
+
+	}
+
+	/**
+	 * 
+	 * @param et
+	 * @param mins
+	 * @param theBus
+	 * @param tiempo
+	 * @param item
+	 * @param paradaActual
+	 * @param alarmReceiver
+	 */
+	public void establecerAlarma(long et, long mins, BusLlegada theBus, int tiempo, int item, int paradaActual, PendingIntent alarmReceiver) {
 
 		Date actual = new Date();
 
@@ -156,26 +170,82 @@ public class GestionarAlarmas {
 
 	/**
 	 * 
+	 * @param item
+	 * @return minutos
+	 */
+	public static long obtenerMinutos(int item) {
+
+		long mins = 0;
+
+		switch (item) {
+
+		case 0:
+
+			// 3 min
+
+			mins = 3;
+
+			break;
+
+		case 1:
+
+			// 5 min
+
+			mins = 5;
+
+			break;
+
+		case 2:
+
+			// 10 min
+
+			mins = 10;
+
+			break;
+
+		case 3:
+
+			// 15 min
+
+			mins = 15;
+
+			break;
+
+		case 4:
+
+			// 20min
+
+			mins = 20;
+
+			break;
+
+		}
+		;
+
+		return mins;
+
+	}
+
+	/**
+	 * 
 	 * @param theBus
 	 * @param paradaActual
 	 * @return
 	 */
-	public PendingIntent activarReceiver(BusLlegada theBus, int paradaActual){
-		
+	public PendingIntent activarReceiver(BusLlegada theBus, int paradaActual) {
+
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		
+
 		String txt = String.format(context.getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + paradaActual);
 		intent.putExtra("alarmTxt", txt);
 		intent.putExtra("poste", paradaActual);
 
 		PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
-		
+
 		return alarmReceiver;
-		
-		
+
 	}
-	
-	
+
 	/**
 	 * Nuevo selector de tiempos
 	 * 
@@ -199,6 +269,9 @@ public class GestionarAlarmas {
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 		spinner.setAdapter(adapter);
+
+		// Por defecto 5
+		spinner.setSelection(1);
 
 		dialog.setView(vista);
 
@@ -261,7 +334,8 @@ public class GestionarAlarmas {
 			String[] datos = aviso.split(";");
 
 			String alertaDialog = context.getString(R.string.alarma_establecida_linea) + ": " + datos[0] + "\n" + context.getString(R.string.alarma_establecida_parada) + ": " + datos[1] + "\n"
-					+ context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n" + context.getString(R.string.alarma_auto_aviso);
+					+ context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n"
+					+ context.getString(R.string.alarma_auto_aviso);
 
 			// dialog.setMessage(alertaDialog);
 			dialog.setIcon(R.drawable.ic_alarm_modal);

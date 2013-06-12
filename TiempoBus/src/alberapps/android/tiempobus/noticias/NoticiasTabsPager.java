@@ -57,6 +57,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -98,7 +99,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 	NoticiasAdapter noticiasAdapter;
 
-	private ListView lineasView;
+	private ListView listTwWiew;
 	
 	private ListView noticiasRssView;
 
@@ -405,6 +406,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			// Para evitar fallos si se intenta volver antes de terminar
 
+			e.printStackTrace();
+			
 		}
 
 	}
@@ -487,13 +490,13 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				if (mensajes != null && !mensajes.isEmpty()) {
 					avisosRecuperados = mensajes;
-					cargarListadoTw();
+					//cargarListadoTw();
 
 				} else {
 
 					avisosRecuperados = null;
 					// Error al recuperar datos
-					cargarListadoTw();
+					//cargarListadoTw();
 
 				}
 
@@ -555,20 +558,27 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 				twAdapter.addAll(avisosRecuperados);
 				twAdapter.notifyDataSetChanged();
 
+			}else{
+				
+				twAdapter.clear();
+				twAdapter.notifyDataSetChanged();
+				
 			}
 
-			lineasView = (ListView) findViewById(R.id.listatw);
+			listTwWiew = (ListView) findViewById(R.id.listatw);
 
 			TextView vacio = (TextView) findViewById(R.id.vacio_tw);
-			lineasView.setEmptyView(vacio);
+			listTwWiew.setEmptyView(vacio);
 
 			// lineasView.setOnItemClickListener(twClickedHandler);
 
-			lineasView.setAdapter(twAdapter);
+			listTwWiew.setAdapter(twAdapter);
 
 		} catch (Exception e) {
 
 			// Para evitar fallos en caso de volver antes de terminar
+			
+			e.printStackTrace();
 
 		}
 
@@ -698,6 +708,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		} catch (Exception e) {
 
 			// Para evitar fallos en caso de volver antes de terminar
+			e.printStackTrace();
 
 		}
 
