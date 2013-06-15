@@ -350,8 +350,12 @@ public class DatosLineasDB {
 
 						cargarLineas();
 
-						// TRAM
-						cargarLineasTRAM();
+						if (UtilidadesTRAM.ACTIVADO_TRAM) {
+							// TRAM
+							cargarLineasTRAM();
+						}
+						
+						
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
@@ -403,8 +407,10 @@ public class DatosLineasDB {
 
 						cargarLineas();
 
-						// TRAM
-						cargarLineasTRAM();
+						if (UtilidadesTRAM.ACTIVADO_TRAM) {
+							// TRAM
+							cargarLineasTRAM();
+						}
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 

@@ -18,7 +18,6 @@
  */
 package alberapps.java.tam.noticias;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +26,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import alberapps.java.util.Utilidades;
+
 /**
  * 
  * Procesar lista de noticias usando JSOUP
- *
+ * 
  */
 public class ProcesarNoticias {
 
@@ -40,8 +41,7 @@ public class ProcesarNoticias {
 
 		List<Noticias> noticias = new ArrayList<Noticias>();
 
-		
-		Document doc = Jsoup.parse(new URL(URL_SUBUS_NOTICIAS).openStream(), "ISO-8859-1", URL_SUBUS_NOTICIAS);
+		Document doc = Jsoup.parse(Utilidades.recuperarStreamConexionSimple(URL_SUBUS_NOTICIAS), "ISO-8859-1", URL_SUBUS_NOTICIAS);
 
 		String title = doc.title();
 
@@ -74,15 +74,13 @@ public class ProcesarNoticias {
 
 				noticias.add(noticia);
 
-				
-				
 			}
 
 		}
-		if(!noticias.isEmpty()){
+		if (!noticias.isEmpty()) {
 			noticias.remove(0);
 		}
-		
+
 		return noticias;
 
 	}

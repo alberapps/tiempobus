@@ -73,6 +73,11 @@ public class FragmentIda extends Fragment {
 
 		if (actividad.datosIda != null) {
 			cargarListado();
+		} else {
+			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
+
+			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lista_ida_vacio);
+			idaView.setEmptyView(vacio);
 		}
 
 		super.onViewCreated(view, savedInstanceState);
@@ -91,13 +96,14 @@ public class FragmentIda extends Fragment {
 		infoLineaParadasAdapter.addAll(actividad.datosIda.getPlacemarks());
 
 		ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
+
+		TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lista_ida_vacio);
+		idaView.setEmptyView(vacio);
+
 		idaView.setOnItemClickListener(idaClickedHandler);
 
-	
 		idaView.setAdapter(infoLineaParadasAdapter);
 
-		
-		
 	}
 
 	/**

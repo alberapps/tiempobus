@@ -24,7 +24,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
@@ -38,8 +40,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import android.os.Build;
-
 /**
  * 
  * Utilidadades de acceso a la red
@@ -47,19 +47,59 @@ import android.os.Build;
  */
 public class Utilidades {
 
-	public static InputStream recuperarStream(String url) {
+	/**
+	 * Conexion sencilla
+	 * 
+	 * @param urlEntrada
+	 * @return stream
+	 */
+	public static InputStream recuperarStreamConexionSimple(String urlEntrada) {
 
-		// Seleccion del metodo de acceso en funcion de la version del sistema
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-			return recuperarStreamNuevo(url);
-		} else {
-			return recuperarStreamBasic(url);
+		InputStream is = null;
+
+		try {
+
+			URL url = new URL(urlEntrada);
+
+			URLConnection con = url.openConnection();
+
+			// timeout
+			con.setReadTimeout(15000);
+			con.setConnectTimeout(10000);
+
+			is = con.getInputStream();
+
+		} catch (MalformedURLException e) {
+
+		} catch (IOException e) {
+
 		}
+
+		return is;
 
 	}
 
+	/*
+	 * public static InputStream recuperarStream(String url) {
+	 * 
+	 * // Seleccion del metodo de acceso en funcion de la version del sistema if
+	 * (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) { return
+	 * recuperarStreamNuevo(url); } else { return recuperarStreamBasic(url); }
+	 * 
+	 * }
+	 */
+
+	
+	/**
+	 * 
+	 * Otros sistemas de conexion
+	 * 
+	 */
+	
+	
 	/**
 	 * Recuperar con basic
+	 * 
 	 * @param url
 	 * @return
 	 */
@@ -153,7 +193,7 @@ public class Utilidades {
 		InputStream is = null;
 		// Only display the first 500 characters of the retrieved
 		// web page content.
-		//int len = 500;
+		// int len = 500;
 
 		try {
 			URL url = new URL(myurl);
@@ -209,7 +249,7 @@ public class Utilidades {
 			conn.setDoInput(true);
 			// Starts the query
 			conn.connect();
-			//int response = conn.getResponseCode();
+			// int response = conn.getResponseCode();
 
 			is = conn.getInputStream();
 
@@ -251,20 +291,20 @@ public class Utilidades {
 	 * networkInfo.isConnected()) { // fetch data } else { // display error }
 	 * ...
 	 */
-	
+
 	/**
 	 * 
 	 * @param inputStream
 	 * @return
 	 */
-	public static String obtenerStringDeStream(InputStream inputStream){
-		
+	public static String obtenerStringDeStream(InputStream inputStream) {
+
 		String datos = "";
-		
+
 		Scanner s = new Scanner(inputStream, "ISO-8859-1").useDelimiter("\\A");
 		datos = s.hasNext() ? s.next() : "";
-		
+
 		return datos;
 	}
-	
+
 }

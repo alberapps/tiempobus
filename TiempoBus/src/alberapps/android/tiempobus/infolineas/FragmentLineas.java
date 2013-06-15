@@ -109,8 +109,17 @@ public class FragmentLineas extends Fragment {
 
 		// Combo de seleccion de datos
 		final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_datos);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
+
+		ArrayAdapter<CharSequence> adapter = null;
+
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
+			adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
+		} else {
+			adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+		}
+
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 		spinner.setAdapter(adapter);
 
 		// Seleccion inicial
@@ -125,7 +134,7 @@ public class FragmentLineas extends Fragment {
 				// Solo en caso de haber cambiado
 				if (preferencias.getInt("infolinea_modo", 0) != arg2) {
 
-					// Guarda la nueva seleciccion					
+					// Guarda la nueva seleciccion
 					SharedPreferences.Editor editor = preferencias.edit();
 					editor.putInt("infolinea_modo", arg2);
 					editor.commit();
@@ -169,6 +178,11 @@ public class FragmentLineas extends Fragment {
 		if (lineasBus != null) {
 			cargarListado();
 		} else {
+
+			ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
+			lineasVi.setEmptyView(vacio);
+
 			cargarLineas();
 		}
 
@@ -250,6 +264,9 @@ public class FragmentLineas extends Fragment {
 		// Controlar pulsacion
 		lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
 		lineasView.setOnItemClickListener(lineasClickedHandler);
+
+		TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
+		lineasView.setEmptyView(vacio);
 
 		lineasView.setAdapter(infoLineaAdapter);
 
@@ -392,23 +409,24 @@ public class FragmentLineas extends Fragment {
 			actividad.datosIda = datosRecorridos.get(0).getResult();
 
 			actividad.datosIda.setPlacemarks(UtilidadesTRAM.posicionesRecorrido(actividad.getLinea().getNumLinea(), datosRecorridos.get(0).getResult().getPlacemarks()));
-			
+
 			actividad.datosIda.ordenarPlacemark();
-			
+
 			actividad.datosVuelta = new DatosMapa();
 			actividad.datosVuelta.setPlacemarks(actividad.datosIda.getPlacemarksInversa());
-			
+
 			TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
 
 			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-				//titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-			
+				// titIda.setText(">> " +
+				// actividad.datosIda.getCurrentPlacemark().getSentido());
+
 				int posicion = UtilidadesTRAM.getIdLinea(actividad.getLinea().getNumLinea());
-				
+
 				String desc = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
-				
+
 				titIda.setText(desc);
-			
+
 			} else {
 				titIda.setText("-");
 			}
@@ -705,11 +723,10 @@ public class FragmentLineas extends Fragment {
 
 				listaParadasIda.add(par);
 
-				
 			}
 
 			datosIda = mapearDatosModelo(listaParadasIda);
-			
+
 			// Datos a la estructura esperada
 			datosInfoLinea = new ArrayList<DatosInfoLinea>();
 			DatosInfoLinea datoIda = new DatosInfoLinea();

@@ -54,7 +54,7 @@ public class ProcesarMapaService {
 		DatosMapa datosMapa = null;
 		try {
 
-			is = Utilidades.recuperarStream(url);
+			is = Utilidades.recuperarStreamConexionSimple(url);
 
 			if (is != null) {
 
@@ -162,8 +162,8 @@ public class ProcesarMapaService {
 								placeMark.setCodigoParada("");
 
 						}
-						
-						if(placeMark.getCodigoParada() != null){
+
+						if (placeMark.getCodigoParada() != null) {
 							placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
 						}
 
@@ -183,25 +183,25 @@ public class ProcesarMapaService {
 
 							}
 
-						} else{
+						} else {
 							placeMark.setSentido("");
-						
+
 							placeMark.setObservaciones("");
 						}
-						
-						if(placeMark.getObservaciones() != null){
+
+						if (placeMark.getObservaciones() != null) {
 							placeMark.setObservaciones(placeMark.getObservaciones().trim());
 						}
-							
+
 						// Extraer lineas
 						int pos2 = desc.indexOf("Líneas");
 						if (pos >= 0 && pos2 >= 0) {
 							placeMark.setLineas(desc.substring(pos2 + 7, pos));
-						}else{
+						} else {
 							placeMark.setLineas("");
 						}
-						
-						if(placeMark.getLineas() != null){
+
+						if (placeMark.getLineas() != null) {
 							placeMark.setLineas(placeMark.getLineas().trim());
 						}
 
@@ -253,7 +253,7 @@ public class ProcesarMapaService {
 		String coordenadas = null;
 
 		try {
-			is = Utilidades.recuperarStream(url);
+			is = Utilidades.recuperarStreamConexionSimple(url);
 
 			if (is != null) {
 

@@ -62,7 +62,7 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 		List<Noticias> noticiasList = null;
 		try {
 						
-			noticiasList = ProcesarNoticias.getTamNews();
+			//noticiasList = ProcesarNoticias.getTamNews();
 
 			
 			//ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");

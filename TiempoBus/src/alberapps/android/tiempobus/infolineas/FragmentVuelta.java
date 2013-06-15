@@ -75,6 +75,12 @@ public class FragmentVuelta extends Fragment {
 
 		if (actividad.datosVuelta != null) {
 			cargarListado();
+		} else {
+
+			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+
+			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+			idaView.setEmptyView(vacio);
 		}
 
 		super.onViewCreated(view, savedInstanceState);
@@ -93,6 +99,10 @@ public class FragmentVuelta extends Fragment {
 		infoLineaParadasAdapter.addAll(actividad.datosVuelta.getPlacemarks());
 
 		ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+
+		TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+		idaView.setEmptyView(vacio);
+
 		idaView.setOnItemClickListener(lineasClickedHandler);
 
 		idaView.setAdapter(infoLineaParadasAdapter);

@@ -1,7 +1,25 @@
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2012 Alberto Montiel
+ * 
+ *  
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package alberapps.java.rss;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,29 +32,29 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import alberapps.java.tam.noticias.rss.NoticiaRss;
+import alberapps.java.util.Utilidades;
 import android.text.Html;
 
+/**
+ * Parsear RSS
+ * 
+ * 
+ */
 public class ParserXML {
 
-	
 	public static List<NoticiaRss> parsea(String urlEntrada) {
-
-		URL url = null;
-
-		try {
-			url = new URL(urlEntrada);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		List<NoticiaRss> listaNoticias = new ArrayList<NoticiaRss>();
 		NoticiaRss noticia = null;
 
+		InputStream st = null;
+
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document dom = builder.parse(url.openConnection().getInputStream());
+			st = Utilidades.recuperarStreamConexionSimple(urlEntrada);
+			Document dom = builder.parse(st);
 			Element root = dom.getDocumentElement();
 			NodeList items = root.getElementsByTagName("item");
 			for (int i = 0; i < items.getLength(); i++) {
@@ -51,7 +69,7 @@ public class ParserXML {
 					if (name.equalsIgnoreCase("title")) {
 
 						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
-						
+
 						noticia.setTitulo(textoProc);
 
 					} else if (name.equalsIgnoreCase("link")) {
@@ -59,7 +77,7 @@ public class ParserXML {
 						noticia.setLink(property.getFirstChild().getNodeValue());
 
 					} else if (name.equalsIgnoreCase("description")) {
-						
+
 						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
 						noticia.setDescripcion(textoProc);
@@ -71,6 +89,16 @@ public class ParserXML {
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
+
 		}
 
 		return listaNoticias;

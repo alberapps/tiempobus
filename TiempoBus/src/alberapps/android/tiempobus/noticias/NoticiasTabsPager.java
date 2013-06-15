@@ -39,6 +39,7 @@ import alberapps.java.tam.noticias.Noticias;
 import alberapps.java.tam.noticias.rss.NoticiaRss;
 import alberapps.java.tam.noticias.tw.TwResultado;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -100,15 +101,15 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	NoticiasAdapter noticiasAdapter;
 
 	private ListView listTwWiew;
-	
+
 	private ListView noticiasRssView;
 
 	List<TwResultado> avisosRecuperados;
 
 	List<NoticiaRss> noticiasRss;
-	
+
 	TwAdapter twAdapter;
-	
+
 	NoticiasRssAdapter noticiasRssAdapter;
 
 	private ProgressDialog dialog;
@@ -143,7 +144,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
 		mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
-		mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
+
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
+			mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
+		}
+
 		mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
 
 		if (savedInstanceState != null) {
@@ -407,7 +412,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			// Para evitar fallos si se intenta volver antes de terminar
 
 			e.printStackTrace();
-			
+
 		}
 
 	}
@@ -490,26 +495,31 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				if (mensajes != null && !mensajes.isEmpty()) {
 					avisosRecuperados = mensajes;
-					//cargarListadoTw();
+					// cargarListadoTw();
 
 				} else {
 
 					avisosRecuperados = null;
 					// Error al recuperar datos
-					//cargarListadoTw();
+					// cargarListadoTw();
 
 				}
 
-				
-				recargarRss();
-				
-				/*getActionBarHelper().setRefreshActionItemState(false);
+				if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
-				if (dialog != null && dialog.isShowing()) {
+					recargarRss();
 
-					dialog.dismiss();
+				} else {
 
-				}*/
+					getActionBarHelper().setRefreshActionItemState(false);
+
+					if (dialog != null && dialog.isShowing()) {
+
+						dialog.dismiss();
+
+					}
+
+				}
 
 			}
 		};
@@ -526,10 +536,10 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			listaTW.add(preferencias.getBoolean("tw_3", true));
 			listaTW.add(preferencias.getBoolean("tw_4", true));
 			listaTW.add(preferencias.getBoolean("tw_5", true));
-			
+
 			String cantidad = preferencias.getString("tweets_maximos", "5");
 
-			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW,cantidad);
+			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
@@ -558,11 +568,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 				twAdapter.addAll(avisosRecuperados);
 				twAdapter.notifyDataSetChanged();
 
-			}else{
-				
+			} else {
+
 				twAdapter.clear();
 				twAdapter.notifyDataSetChanged();
-				
+
 			}
 
 			listTwWiew = (ListView) findViewById(R.id.listatw);
@@ -577,7 +587,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		} catch (Exception e) {
 
 			// Para evitar fallos en caso de volver antes de terminar
-			
+
 			e.printStackTrace();
 
 		}
@@ -612,15 +622,9 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		}
 	};
-	
-	
-	
-	
-	
-	
-	/////////RSS
-	
-	
+
+	// ///////RSS
+
 	/**
 	 * Recarga de datos twitter
 	 */
@@ -663,7 +667,6 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-	
 
 			new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
 		} else {
@@ -731,28 +734,17 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			/*Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-
-			String url = avisosRecuperados.get(position).getUrl();
-
-			Intent i = new Intent(Intent.ACTION_VIEW);
-
-			i.setData(Uri.parse(url));
-			startActivity(i);
-*/
+			/*
+			 * Toast.makeText(getApplicationContext(),
+			 * getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			 * 
+			 * String url = avisosRecuperados.get(position).getUrl();
+			 * 
+			 * Intent i = new Intent(Intent.ACTION_VIEW);
+			 * 
+			 * i.setData(Uri.parse(url)); startActivity(i);
+			 */
 		}
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

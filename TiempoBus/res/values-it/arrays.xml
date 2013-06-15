@@ -58,6 +58,10 @@
         <item>Tranvía TRAM (offline)</item>            
     </string-array> 
    
+    <string-array name="spinner_datos_b">
+        <item>Bus TAM (Web Subús)</item>
+        <item>Bus TAM (offline)</item>                 
+    </string-array> 
    
    <string-array name="menu_array">
         <item>Mappe</item>

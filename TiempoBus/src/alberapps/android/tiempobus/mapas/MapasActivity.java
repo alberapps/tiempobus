@@ -36,6 +36,7 @@ import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.DatosRuta;
 import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -227,8 +228,17 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		// Combo de seleccion de datos
 		final Spinner spinner = (Spinner) findViewById(R.id.spinner_datos);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_datos, android.R.layout.simple_spinner_item);
+
+		ArrayAdapter<CharSequence> adapter = null;
+
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
+			adapter = ArrayAdapter.createFromResource(this, R.array.spinner_datos, android.R.layout.simple_spinner_item);
+		} else {
+			adapter = ArrayAdapter.createFromResource(this, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+		}
+
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 		spinner.setAdapter(adapter);
 
 		// Seleccion inicial
@@ -692,20 +702,20 @@ public class MapasActivity extends ActionBarMapaActivity {
 		int codigo;
 
 		if (paradaSeleccionada != null) {
-			try{
+			try {
 				codigo = Integer.parseInt(paradaSeleccionada.substring(1, 5));
-			}catch(Exception e){
-				
-				//Por si es tram
+			} catch (Exception e) {
+
+				// Por si es tram
 				int c1 = paradaSeleccionada.indexOf("[");
-				int c2 =paradaSeleccionada.indexOf("]");
-				
-				codigo = Integer.parseInt(paradaSeleccionada.substring(c1+1, c2));
-				
+				int c2 = paradaSeleccionada.indexOf("]");
+
+				codigo = Integer.parseInt(paradaSeleccionada.substring(c1 + 1, c2));
+
 				Log.d("", "mapa:" + codigo);
-				
+
 			}
-			
+
 			Intent intent = new Intent(this, MainActivity.class);
 			Bundle b = new Bundle();
 			b.putInt("poste", codigo);

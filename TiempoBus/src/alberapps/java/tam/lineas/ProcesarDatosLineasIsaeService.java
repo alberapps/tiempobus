@@ -19,7 +19,7 @@
 package alberapps.java.tam.lineas;
 
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +30,7 @@ import org.jsoup.select.Elements;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Utilidades;
 import android.util.Log;
 
 /**
@@ -45,21 +46,24 @@ public class ProcesarDatosLineasIsaeService {
 
 		List<DatosLinea> lineas = null;
 
+		InputStream st = null;
+
 		try {
 
 			Document doc = null;
 
-			//Carga desde internet o desde fichero local
+			// Carga desde internet o desde fichero local
 			if (offline == null) {
-				doc = Jsoup.parse(new URL(URL_SUBUS_LINEAS).openStream(), "ISO-8859-1", URL_SUBUS_LINEAS);
+				st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS_LINEAS);
+				doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
 			} else {
 
 				Log.d("lineas", "datos offline: " + offline);
 
 				doc = Jsoup.parse(offline);
 			}
-		
-			Elements selectLineas = doc.select("select[name=LineasBox]"); 
+
+			Elements selectLineas = doc.select("select[name=LineasBox]");
 
 			Elements option = selectLineas.get(0).select("option");
 
@@ -77,30 +81,29 @@ public class ProcesarDatosLineasIsaeService {
 
 				// KML
 				int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
-				
+
 				boolean esTram = false;
-				
-				if(posicion < 0){
-					
-					//Verificar si es TRAM
+
+				if (posicion < 0) {
+
+					// Verificar si es TRAM
 					posicion = UtilidadesTRAM.getIdLinea(datosLinea.getLineaNum());
-					
+
 					esTram = true;
-					
+
 				}
-				
 
 				if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
 					datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
 
 					datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
 
-				} else if (esTram && posicion >= 0 ) {
-					
+				} else if (esTram && posicion >= 0) {
+
 					datosLinea.setGrupoLinea(UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]]);
 
 				}
-				
+
 				else {
 					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**ERROR]"));
 				}
@@ -126,6 +129,18 @@ public class ProcesarDatosLineasIsaeService {
 		} catch (Exception e) {
 
 			lineas = null;
+			
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
 
 		}
 

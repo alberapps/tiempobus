@@ -34,6 +34,7 @@ import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsync
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.noticias.Noticias;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -281,6 +282,10 @@ public class DatosPantallaPrincipal {
 
 	public boolean esTram(int paradaActual) {
 
+		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+			return false;
+		}
+
 		if (Integer.toString(paradaActual).length() < 4) {
 			return true;
 		} else {
@@ -291,6 +296,10 @@ public class DatosPantallaPrincipal {
 
 	public static boolean esTram(String paradaActual) {
 
+		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+			return false;
+		}
+
 		if (paradaActual.length() < 4) {
 			return true;
 		} else {
@@ -298,7 +307,7 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-	
+
 	/**
 	 * Formatea la salida por idioma
 	 * 
@@ -314,7 +323,7 @@ public class DatosPantallaPrincipal {
 		String tiempo1 = "";
 		String tiempo2 = "";
 
-		//Si es tram devuelve solo un dato
+		// Si es tram devuelve solo un dato
 		if (procesa[0].equals("TRAM")) {
 			return procesa[1];
 		}

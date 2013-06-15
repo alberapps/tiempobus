@@ -54,7 +54,7 @@ public class ProcesarLineasService {
 
 		try {
 
-			is = Utilidades.recuperarStream(url);
+			is = Utilidades.recuperarStreamConexionSimple(url);
 
 			if (is != null) {
 

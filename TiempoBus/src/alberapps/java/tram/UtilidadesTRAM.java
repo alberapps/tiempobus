@@ -25,6 +25,8 @@ import android.util.Log;
 
 public class UtilidadesTRAM {
 
+	public static boolean ACTIVADO_TRAM = false;
+		
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L" };
 
 	public static int[] L1_ORDEN = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };

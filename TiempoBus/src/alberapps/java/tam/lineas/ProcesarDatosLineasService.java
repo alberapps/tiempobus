@@ -18,22 +18,15 @@
  */
 package alberapps.java.tam.lineas;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.protocol.HTTP;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.noticias.Noticias;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -45,13 +38,13 @@ public class ProcesarDatosLineasService {
 
 	public static final String URL_SUBUS_LINEAS = "http://www.subus.es/Lineas/MapaMapsAgregadorZoom.asp";
 
-	
 	public static void getLineasInfo() throws Exception {
 
-		//List<Noticias> noticias = new ArrayList<Noticias>();
+		// List<Noticias> noticias = new ArrayList<Noticias>();
 
+		InputStream st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS_LINEAS);
 		
-		Document doc = Jsoup.parse(new URL(URL_SUBUS_LINEAS).openStream(), "ISO-8859-1", URL_SUBUS_LINEAS);
+		Document doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
 
 		String title = doc.title();
 
@@ -59,94 +52,93 @@ public class ProcesarDatosLineasService {
 
 		Element tablaGlobal = tables.get(8);
 
-		
 		DatosLinea datosLinea = new DatosLinea();
-		
+
 		List<DatosLinea> lineas = new ArrayList<DatosLinea>();
-		
+
 		String tituloCabecera = "";
 		String lineaDesc = "";
 		String lineaNum = "";
-		
-		//Grupo
-		//Element tablaAlicanteUrbano = tables.get(8).select("table").get(1).select("table").get(0);
-		
-		//Titulo cabecera grupo
+
+		// Grupo
+		// Element tablaAlicanteUrbano =
+		// tables.get(8).select("table").get(1).select("table").get(0);
+
+		// Titulo cabecera grupo
 		tituloCabecera = tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza").text();
-		
-		for(int i = 0; i< tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").size();i++){
-		
-			//Descripcion linea
+
+		for (int i = 0; i < tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").size(); i++) {
+
+			// Descripcion linea
 			lineaDesc = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).attr("title");
-		
-			//Numero linea
+
+			// Numero linea
 			lineaNum = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).text();
-		
-		
+
 			datosLinea = new DatosLinea();
 			datosLinea.setTituloCabecera(tituloCabecera);
 			datosLinea.setLineaDescripcion(lineaDesc);
 			datosLinea.setLineaNum(lineaNum);
-			
+
 			lineas.add(datosLinea);
 		}
-		
-		
-		
-		//urbano : tables.get(8).select("table").get(1).select("table").get(0)
-		
-		//titulo urbano:  tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza") 
-		
-		//elementos: tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace")
-		
-		//links valor: tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
-		
-		//textos lineas: tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
-		
-		//titulo tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(0).attr("title")
-		
-		//javascript link : tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("input").get(0).attr("onclick")
-		
-		//tables.get(8).select("table").get(1).select("table").get(1) elemento
-		
-		
-		
-		/*Elements filas = tabla.select("tr");
 
-		for (int i = 0; i < filas.size(); i++) {
+		// urbano : tables.get(8).select("table").get(1).select("table").get(0)
 
-			if (filas.get(i).select("td").size() == 2) {
-				Noticias noticia = new Noticias();
+		// titulo urbano:
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza")
 
-				noticia.setFecha(filas.get(i).select("td").get(0).text());
+		// elementos:
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace")
 
-				noticia.setNoticia(filas.get(i).select("td").get(1).text());
+		// links valor:
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
 
-				noticia.setLinks(new ArrayList<String>());
-				noticia.setDescLink(new ArrayList<String>());
+		// textos lineas:
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
 
-				Elements links = filas.get(i).select("td").get(1).select("a[href]");
+		// titulo
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(0).attr("title")
 
-				for (Element link : links) {
+		// javascript link :
+		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("input").get(0).attr("onclick")
 
-					noticia.getLinks().add(link.attr("abs:href"));
-					noticia.getDescLink().add(link.text());
+		// tables.get(8).select("table").get(1).select("table").get(1) elemento
 
-				}
-
-				noticias.add(noticia);
-
-				
-				
-			}
-
-		}
-		if(!noticias.isEmpty()){
-			noticias.remove(0);
-		}
-		
-		return noticias;
-*/
+		/*
+		 * Elements filas = tabla.select("tr");
+		 * 
+		 * for (int i = 0; i < filas.size(); i++) {
+		 * 
+		 * if (filas.get(i).select("td").size() == 2) { Noticias noticia = new
+		 * Noticias();
+		 * 
+		 * noticia.setFecha(filas.get(i).select("td").get(0).text());
+		 * 
+		 * noticia.setNoticia(filas.get(i).select("td").get(1).text());
+		 * 
+		 * noticia.setLinks(new ArrayList<String>()); noticia.setDescLink(new
+		 * ArrayList<String>());
+		 * 
+		 * Elements links = filas.get(i).select("td").get(1).select("a[href]");
+		 * 
+		 * for (Element link : links) {
+		 * 
+		 * noticia.getLinks().add(link.attr("abs:href"));
+		 * noticia.getDescLink().add(link.text());
+		 * 
+		 * }
+		 * 
+		 * noticias.add(noticia);
+		 * 
+		 * 
+		 * 
+		 * }
+		 * 
+		 * } if(!noticias.isEmpty()){ noticias.remove(0); }
+		 * 
+		 * return noticias;
+		 */
 	}
 
 }

@@ -22,6 +22,7 @@ package alberapps.android.tiempobus.tasks;
 import java.io.EOFException;
 import java.util.ArrayList;
 
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramService;
@@ -62,21 +63,18 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 	protected ArrayList<BusLlegada> doInBackground(Integer... datos) {
 		ArrayList<BusLlegada> llegadasBus = null;
 		try {
-			
-			
-			//llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
-			
-			String parada = ((Integer)datos[0]).toString();
-			
-			if(parada.length() == 4){
-				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
-			}else if( parada.length() < 4){
+
+			// llegadasBus =
+			// ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+
+			String parada = ((Integer) datos[0]).toString();
+
+			if (DatosPantallaPrincipal.esTram(parada)) {
 				llegadasBus = ProcesarTiemposTramService.procesaTiemposLlegada(datos[0]);
+			} else {
+				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
 			}
-			
-			
-			
-			
+
 		} catch (EOFException e1) {
 
 			Log.d("tiempos", "Tiempos error intento 1");

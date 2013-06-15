@@ -18,7 +18,8 @@
  */
 package alberapps.java.tam.noticias;
 
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,30 +27,37 @@ import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
+import alberapps.java.util.Utilidades;
 import android.util.Log;
 
 /**
  * 
  * Procesar el detalle de la noticia
- *
+ * 
  */
 public class ProcesarDetalleNoticia {
 
 	public static Noticias getDetalleNoticia(String url) throws Exception {
 
-		Noticias noticias = new Noticias();
-		
-		Document doc = Jsoup.parse(new URL(url).openStream(), "ISO-8859-1", url);
+		InputStream st = null;
 
-		String title = doc.title();
+		Noticias noticias = null;
 
-		Elements tables = doc.select("table"); // a with href
+		try {
 
-		Element tabla = tables.get(3);
+			st = Utilidades.recuperarStreamConexionSimple(url);
 
-		Elements filas = tabla.select("tr");
+			Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 
-		
+			noticias = new Noticias();
+
+			String title = doc.title();
+
+			Elements tables = doc.select("table"); // a with href
+
+			Element tabla = tables.get(3);
+
+			Elements filas = tabla.select("tr");
 
 			Element filaDetalle = filas.get(7);
 
@@ -61,26 +69,44 @@ public class ProcesarDetalleNoticia {
 
 			// Problema caracteres
 			String limpiar = safe.replace("", "-").replace("", "&euro;");
-			
-			
 
 			Log.d("NOTICIAS", "html: " + limpiar);
-			
+
 			noticias.setContenidoHtml(limpiar);
 
-		
+			// Cabecera
+			Element filaCabecera2 = filas.get(5);
+			Elements contCabecera2 = filaCabecera2.select("td");
+			noticias.setFechaCabecera(contCabecera2.get(0).text().trim());
+			noticias.setTituloCabecera(contCabecera2.get(1).text().trim());
 
-		// Cabecera
-		Element filaCabecera2 = filas.get(5);
-		Elements contCabecera2 = filaCabecera2.select("td");
-		noticias.setFechaCabecera(contCabecera2.get(0).text().trim());
-		noticias.setTituloCabecera(contCabecera2.get(1).text().trim());
+			// Cabecera linea
+			noticias.setLineaCabecera(filas.get(1).text().trim());
 
-		// Cabecera linea
-		noticias.setLineaCabecera(filas.get(1).text().trim());
+		} catch (Exception e) {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
+
+			throw e;
+
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
+
+		}
 
 		return noticias;
-
 	}
 
 }
