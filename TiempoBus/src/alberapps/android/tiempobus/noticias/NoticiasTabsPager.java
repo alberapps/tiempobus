@@ -495,13 +495,19 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				if (mensajes != null && !mensajes.isEmpty()) {
 					avisosRecuperados = mensajes;
-					// cargarListadoTw();
+					
+					if(!UtilidadesTRAM.ACTIVADO_TRAM){
+					
+						cargarListadoTw();
+					}
 
 				} else {
 
 					avisosRecuperados = null;
 					// Error al recuperar datos
-					// cargarListadoTw();
+					if(!UtilidadesTRAM.ACTIVADO_TRAM){
+						cargarListadoTw();
+					}
 
 				}
 

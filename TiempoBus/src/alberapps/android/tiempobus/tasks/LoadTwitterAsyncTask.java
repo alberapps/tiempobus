@@ -24,6 +24,7 @@ import java.util.List;
 import alberapps.java.tam.noticias.tw.ProcesarTwitter;
 import alberapps.java.tam.noticias.tw.TwResultado;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar las Twitter
@@ -66,9 +67,18 @@ public class LoadTwitterAsyncTask extends AsyncTask<Object, Void, List<TwResulta
 			String cantidad = (String) datos[1];
 			
 			twList = ProcesarTwitter.procesar(lista, cantidad);
+			
+			Log.d("tw", "lista: " + twList.size());
+			
 
 		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
 			return null;
+			
+			
+			
 		}
 
 		return twList;

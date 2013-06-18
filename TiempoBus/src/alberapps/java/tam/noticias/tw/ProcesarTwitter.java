@@ -40,6 +40,7 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import alberapps.java.tam.noticias.tw.tw4j.ProcesarTwitter4j;
 import alberapps.java.tam.noticias.tw.v11.ProcesarTwitterV11;
 import alberapps.java.util.Utilidades;
 import android.graphics.Bitmap;
@@ -101,7 +102,7 @@ public class ProcesarTwitter {
 		if (lista != null && !lista.isEmpty()) {
 
 			// Ordenar por fecha
-			Collections.sort(lista);
+			//Collections.sort(lista);
 
 		}
 
@@ -119,9 +120,21 @@ public class ProcesarTwitter {
 
 		List<TwResultado> listaDatos = new ArrayList<TwResultado>();
 
-		String auth = ProcesarTwitterV11.recuperarAuth();
+		
+		ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
+		
+		procesar4j.setUp();
+		
+		//procesar4j.recuperarRateLimit();
+		
+		listaDatos = procesar4j.recuperarTimeline();
+		
+		//listaDatos = procesar4j.recuperarSearch();
+		
+		//String auth = ProcesarTwitterV11.recuperarAuth();
+		
 
-		String json = ProcesarTwitterV11.recuperarTwV11(url, auth);
+		//String json = ProcesarTwitterV11.recuperarTwV11(url, auth);
 
 		// InputStream source = ProcesarTwitterV11.recuperarStreamV11(url);
 
@@ -183,7 +196,7 @@ public class ProcesarTwitter {
 		// 2011","favourites_count":7,"utc_offset":-36000,"time_zone":"Hawaii","geo_enabled":true,"verified":false,"statuses_count":2594,"lang":"es","contributors_enabled":false,"is_translator"...
 		// Reader reader = new InputStreamReader(source);
 
-		Respuesta response = gson.fromJson(json, Respuesta.class);
+		/*Respuesta response = gson.fromJson(json, Respuesta.class);
 
 		List<Resultado> results = response.results;
 
@@ -221,7 +234,7 @@ public class ProcesarTwitter {
 			dato.setId(results.get(i).idStr);
 
 			listaDatos.add(dato);
-		}
+		}*/
 
 		return listaDatos;
 	}
