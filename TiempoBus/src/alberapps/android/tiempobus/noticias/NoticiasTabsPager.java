@@ -33,11 +33,11 @@ import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRs
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask.LoadTwitterAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.rss.NoticiaRss;
+import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.noticias.Noticias;
-import alberapps.java.tam.noticias.rss.NoticiaRss;
-import alberapps.java.tam.noticias.tw.TwResultado;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 import android.app.ActionBar;

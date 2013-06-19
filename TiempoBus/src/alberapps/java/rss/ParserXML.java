@@ -31,7 +31,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import alberapps.java.tam.noticias.rss.NoticiaRss;
+import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.util.Utilidades;
 import android.text.Html;
 

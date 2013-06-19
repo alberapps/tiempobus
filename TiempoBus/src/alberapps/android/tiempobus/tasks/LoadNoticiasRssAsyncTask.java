@@ -21,8 +21,8 @@ package alberapps.android.tiempobus.tasks;
 
 import java.util.List;
 
+import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.rss.ParserXML;
-import alberapps.java.tam.noticias.rss.NoticiaRss;
 import android.os.AsyncTask;
 
 /**

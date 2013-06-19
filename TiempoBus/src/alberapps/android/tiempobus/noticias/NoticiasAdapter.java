@@ -22,7 +22,7 @@ package alberapps.android.tiempobus.noticias;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
-import alberapps.java.tam.noticias.Noticias;
+import alberapps.java.noticias.Noticias;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

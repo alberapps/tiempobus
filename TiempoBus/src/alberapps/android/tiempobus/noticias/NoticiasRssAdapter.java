@@ -21,7 +21,7 @@ package alberapps.android.tiempobus.noticias;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
-import alberapps.java.tam.noticias.rss.NoticiaRss;
+import alberapps.java.noticias.rss.NoticiaRss;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

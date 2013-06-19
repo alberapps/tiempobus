@@ -20,6 +20,7 @@ package alberapps.android.tiempobus.util;
 
 import java.util.List;
 
+import alberapps.android.tiempobus.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -94,12 +95,12 @@ public class UtilidadesUI {
 			if (dr != null) {
 				contenedorPrincipal.setBackgroundDrawable(dr);
 			} else {
-				contenedorPrincipal.setBackgroundResource(android.R.color.darker_gray);
+				contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
 			}
 
 		} else {
 
-			contenedorPrincipal.setBackgroundResource(android.R.color.darker_gray);
+			contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
 
 		}
 

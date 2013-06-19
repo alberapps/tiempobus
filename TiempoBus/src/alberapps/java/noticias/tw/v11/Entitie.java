@@ -16,67 +16,22 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.noticias.tw.v11;
+package alberapps.java.noticias.tw.v11;
 
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class Entitie {
 
 	
 	
 	 public long id;
 	 
-	 @SerializedName("id_str")
-	    public String idStr;
-	 
-	 
-	 public String name;
-	 
-	 @SerializedName("screen_name")
-	    public String screenName;
+	
 	 
 	 
 	 
 	 
-	 
-	 public String location;
-	 
-	 
-	 public String description;
-	 
-	 
-	 public String url;
-	 
-	 
-	 
-	 @SerializedName("in_reply_to_status_id_str")
-	    public String inReplyToStatusIdStr;
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 @SerializedName("in_reply_to_user_id")
-	    public String inReplyToUserId;
-	 
-	 
-	 @SerializedName("in_reply_to_user_id_str")
-	    public String inReplyToUserIdStr;
-	 
-	 
-	 
-	 @SerializedName("in_reply_to_screen_name")
-	    public String inReplyToScreenName;
-	 
-	 
-	 
-	 @SerializedName("from_user")
-	    public String fromUser;
-	 
-	 
-	 
+	
     
 	
     //{"user":{,,"entities":{"url":{"urls":[{"url":"http:\/\/t.co\/S6kErxdnun","expanded_url":"http:\/\/www.alicanteturismo.com","display_url":"alicanteturismo.com","indices":[0,22]}]},"description":{"urls":[]}},"protected":false,"followers_count":3083,"friends_count":466,"listed_count":98

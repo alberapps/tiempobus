@@ -1,11 +1,33 @@
-package alberapps.java.tam.noticias.tw.tw4j;
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2012 Alberto Montiel
+ * 
+ *  
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package alberapps.java.noticias.tw.tw4j;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
@@ -16,32 +38,53 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
-import alberapps.java.tam.noticias.tw.TwResultado;
-import alberapps.java.tam.noticias.tw.v11.Constantes;
+import alberapps.java.noticias.tw.TwResultado;
+import alberapps.java.noticias.tw.v11.Constantes;
 import alberapps.java.util.Utilidades;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+/**
+ * Acceso a la api de twitter mediante la libreria twitter4j
+ * 
+ */
 public class ProcesarTwitter4j {
 
 	private ConfigurationBuilder builder;
 
+	private Twitter twitter;
+
+	/**
+	 * Inicializar
+	 */
 	public void setUp() {
 
 		builder = new ConfigurationBuilder();
 		builder.setUseSSL(true);
 		builder.setApplicationOnlyAuthEnabled(true);
 
-	}
-
-	public void recuperarRateLimit() {
-
 		try {
-			Twitter twitter = new TwitterFactory(builder.build()).getInstance();
+
+			twitter = new TwitterFactory(builder.build()).getInstance();
 
 			twitter.setOAuthConsumer(Constantes.ck, Constantes.cs);
 
+			// Para que cargue
 			OAuth2Token token = twitter.getOAuth2Token();
+
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Recuperar el limite
+	 */
+	public void recuperarRateLimit() {
+
+		try {
 
 			Map<String, RateLimitStatus> rateLimit = twitter.getRateLimitStatus("search");
 
@@ -54,28 +97,25 @@ public class ProcesarTwitter4j {
 
 	}
 
-	
+	/**
+	 * Buscar
+	 * 
+	 * @return lista
+	 */
 	public List<TwResultado> recuperarSearch() {
 
 		List<TwResultado> listaResultados = null;
 
 		try {
 
-			Twitter twitter = new TwitterFactory(builder.build()).getInstance();
+			Query query = new Query("from:Alicante_City");
 
-			twitter.setOAuthConsumer(Constantes.ck, Constantes.cs);
+			QueryResult resultados = twitter.search(query);
 
-			OAuth2Token token = twitter.getOAuth2Token();
-			
-			Query query = new Query("from:Alicante_City");			
-			
-			QueryResult resultados = twitter.search(query );
-			
-			List<Status> timeline = resultados.getTweets(); 
+			List<Status> timeline = resultados.getTweets();
 
 			listaResultados = new ArrayList<TwResultado>();
 
-			
 			TwResultado resultado = null;
 
 			for (int i = 0; i < timeline.size(); i++) {
@@ -106,20 +146,26 @@ public class ProcesarTwitter4j {
 		return listaResultados;
 
 	}
-	
-	public List<TwResultado> recuperarTimeline() {
 
-		List<TwResultado> listaResultados = null;
+	/**
+	 * Recuperar el timeline del usuario indicado
+	 * 
+	 * @param twuser
+	 * @param url
+	 * @param elementos
+	 * @return listado
+	 */
+	public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) {
+
+		List<TwResultado> listaResultados = new ArrayList<TwResultado>();
 
 		try {
 
-			Twitter twitter = new TwitterFactory(builder.build()).getInstance();
+			Paging pagina = new Paging();
 
-			twitter.setOAuthConsumer(Constantes.ck, Constantes.cs);
+			pagina.setCount(elementos);
 
-			OAuth2Token token = twitter.getOAuth2Token();
-			
-			ResponseList<Status> timeline = twitter.getUserTimeline("alberapps");
+			ResponseList<Status> timeline = twitter.getUserTimeline(twuser, pagina);
 
 			listaResultados = new ArrayList<TwResultado>();
 
@@ -133,18 +179,18 @@ public class ProcesarTwitter4j {
 
 				resultado.setId(Long.toString(timeline.get(i).getId()));
 				resultado.setFechaDate(timeline.get(i).getCreatedAt());
-				
-				resultado.setFecha(resultado.getFechaDate().toString());
-				
+
+				resultado.setFecha(formatearFechaTw(resultado.getFechaDate()));
+
 				resultado.setNombreCompleto(timeline.get(i).getUser().getName());
-				resultado.setUsuario(timeline.get(i).getUser().getScreenName());
+				resultado.setUsuario("@" + timeline.get(i).getUser().getScreenName());
 				resultado.setMensaje(timeline.get(i).getText());
-				resultado.setImagen(timeline.get(i).getUser().getMiniProfileImageURLHttps());
+				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURLHttps());
 
 				// Imagen de perfil
 				resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
-				resultado.setUrl("http://twitter.com/Alicante_City");
+				resultado.setUrl(url);
 
 				listaResultados.add(resultado);
 
@@ -194,6 +240,29 @@ public class ProcesarTwitter4j {
 		}
 
 		return bm;
+
+	}
+
+	/**
+	 * Formatear la fecha devuelta por tw
+	 * 
+	 * @param fecha
+	 * @return string
+	 */
+	private static String formatearFechaTw(Date fecha) {
+
+		if (fecha != null) {
+
+			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
+
+			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.getDefault());
+
+			return sfNueva.format(fecha);
+
+		} else {
+
+			return null;
+		}
 
 	}
 

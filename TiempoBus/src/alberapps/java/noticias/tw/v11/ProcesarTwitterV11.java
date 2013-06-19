@@ -1,4 +1,4 @@
-package alberapps.java.tam.noticias.tw.v11;
+package alberapps.java.noticias.tw.v11;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

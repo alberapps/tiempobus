@@ -21,9 +21,9 @@ package alberapps.android.tiempobus.tasks;
 
 import java.util.List;
 
-import alberapps.java.tam.noticias.Noticias;
-import alberapps.java.tam.noticias.ProcesarNoticias;
-import alberapps.java.tam.noticias.rss.ParserXML;
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.ProcesarNoticias;
+import alberapps.java.noticias.rss.ParserXML;
 import android.os.AsyncTask;
 
 /**
@@ -44,7 +44,6 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 
 	private LoadNoticiasAsyncTaskResponder responder;
 
-	
 	/**
 	 * Constructor. Es necesario que nos pasen un objeto para el callback
 	 * 
@@ -61,12 +60,9 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 	protected List<Noticias> doInBackground(Object... datos) {
 		List<Noticias> noticiasList = null;
 		try {
-						
-			//noticiasList = ProcesarNoticias.getTamNews();
 
-			
-			//ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
-			
+			noticiasList = ProcesarNoticias.getTamNews();
+
 		} catch (Exception e) {
 			return null;
 		}
@@ -83,7 +79,6 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 			responder.noticiasLoaded(result);
 		}
 
-		
 	}
 
 }

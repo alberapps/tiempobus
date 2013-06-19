@@ -1,4 +1,4 @@
-package alberapps.java.tam.noticias.rss;
+package alberapps.java.noticias.rss;
 
 public class NoticiaRss {
 

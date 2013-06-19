@@ -22,8 +22,8 @@ package alberapps.android.tiempobus.noticias;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
-import alberapps.java.tam.noticias.tw.ProcesarTwitter;
-import alberapps.java.tam.noticias.tw.TwResultado;
+import alberapps.java.noticias.tw.ProcesarTwitter;
+import alberapps.java.noticias.tw.TwResultado;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;

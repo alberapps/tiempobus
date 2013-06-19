@@ -21,8 +21,8 @@ package alberapps.android.tiempobus.tasks;
 
 import java.util.List;
 
-import alberapps.java.tam.noticias.tw.ProcesarTwitter;
-import alberapps.java.tam.noticias.tw.TwResultado;
+import alberapps.java.noticias.tw.ProcesarTwitter;
+import alberapps.java.noticias.tw.TwResultado;
 import android.os.AsyncTask;
 import android.util.Log;
 

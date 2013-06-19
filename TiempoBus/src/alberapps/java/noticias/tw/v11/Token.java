@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.noticias.tw.v11;
+package alberapps.java.noticias.tw.v11;
 
 import com.google.gson.annotations.SerializedName;
 

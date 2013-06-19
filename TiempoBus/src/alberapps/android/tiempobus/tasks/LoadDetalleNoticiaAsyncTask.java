@@ -19,8 +19,8 @@
  */
 package alberapps.android.tiempobus.tasks;
 
-import alberapps.java.tam.noticias.Noticias;
-import alberapps.java.tam.noticias.ProcesarDetalleNoticia;
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.ProcesarDetalleNoticia;
 import android.os.AsyncTask;
 
 /**

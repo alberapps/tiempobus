@@ -24,7 +24,7 @@ import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
-import alberapps.java.tam.noticias.Noticias;
+import alberapps.java.noticias.Noticias;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;

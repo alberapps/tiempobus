@@ -1,4 +1,4 @@
-package alberapps.java.tam.noticias.rss;
+package alberapps.java.noticias.rss;
 
 import java.io.IOException;
 import java.io.InputStream;
