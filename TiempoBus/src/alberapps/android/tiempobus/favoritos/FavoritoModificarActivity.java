@@ -29,10 +29,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,7 +55,6 @@ public class FavoritoModificarActivity extends ActionBarBuscadorActivity {
 
 	private long id_uri;
 
-	
 	SharedPreferences preferencias = null;
 
 	/**
@@ -184,7 +179,7 @@ public class FavoritoModificarActivity extends ActionBarBuscadorActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.infolineas, menu);
+		inflater.inflate(R.menu.sin_menu, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}

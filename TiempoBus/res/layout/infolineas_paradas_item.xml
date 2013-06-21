@@ -32,10 +32,12 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="7dp"
             android:layout_weight="1"
-            android:orientation="vertical" 
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp">
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/desc_parada"
@@ -47,7 +49,7 @@
                 android:textColor="@color/color_android"
                 
                 android:textStyle="bold" 
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
                 android:id="@+id/datos_parada"
@@ -60,6 +62,43 @@
                 
                 android:textStyle="italic" 
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" >
+
+                <TextView
+                    android:id="@+id/infoparada_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/launch_preferences"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/infoparada_cargar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:text="@string/mapa_ir_parada"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -2,13 +2,13 @@
 <LinearLayout android:layout_width="fill_parent"
 	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
 	android:id="@id/contenedor_nuevo"
-	android:background="@color/gris_blog">
+	android:padding="6dip">
 
 	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical" 
-	    android:background="@drawable/fondo_favorito">
+	    android:background="@drawable/item_sombra">
 
 	    <TextView
 	        android:layout_width="fill_parent"
@@ -25,7 +25,8 @@
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginRight="10dp"
 	        android:ems="10" 
-	        android:inputType="text">
+	        android:inputType="text"
+	        android:textAppearance="?android:attr/textAppearanceMedium">
 
 	        <requestFocus />
 	    </EditText>
@@ -46,7 +47,8 @@
 	        android:layout_marginRight="10dp"
 	        android:ems="10"
 	        android:inputType="textMultiLine"
-	        android:lines="3" />
+	        android:lines="3" 
+	        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 	    <RelativeLayout
 	        android:layout_width="match_parent"

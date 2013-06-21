@@ -3,8 +3,7 @@
     android:id="@id/contenedor_infolinea_ida"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_weight="0"
-    android:background="@color/gris_blog_b"
+    android:layout_weight="0"    
     android:orientation="vertical" >
 
     <TextView

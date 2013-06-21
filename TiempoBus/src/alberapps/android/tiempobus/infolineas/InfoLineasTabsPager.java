@@ -27,6 +27,7 @@ import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
+import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import android.app.ActionBar;
 import android.app.SearchManager;
@@ -128,7 +129,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
 
 		}
-		
+
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
@@ -160,6 +161,32 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
 		i.putExtra("DATOS_PARADA", datosVuelta.getPlacemarks().get(posicion));
+		i.putExtra("DATOS_LINEA", linea);
+		startActivity(i);
+
+	}
+
+	public void cargarTiempos(int codigo) {
+
+		Intent intent = new Intent(this, MainActivity.class);
+		Bundle b = new Bundle();
+		b.putInt("poste", codigo);
+		intent.putExtras(b);
+
+		SharedPreferences.Editor editor = preferencias.edit();
+		editor.putInt("parada_inicio", codigo);
+		editor.commit();
+
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+		startActivity(intent);
+
+	}
+
+	public void irInformacion(PlaceMark datosParada) {
+
+		Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
+		i.putExtra("DATOS_PARADA", datosParada);
 		i.putExtra("DATOS_LINEA", linea);
 		startActivity(i);
 

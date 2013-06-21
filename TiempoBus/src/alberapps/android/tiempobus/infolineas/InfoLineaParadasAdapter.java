@@ -22,13 +22,16 @@ package alberapps.android.tiempobus.infolineas;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.mapas.PlaceMark;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Adaptador Tiempos
@@ -54,7 +57,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 	 * Genera la vista de cada uno de los items
 	 */
 	@Override
-	public View getView(int position, View v, ViewGroup parent) {
+	public View getView(final int position, View v, ViewGroup parent) {
 		// Si no tenemos la vista de la fila creada componemos una
 		if (v == null) {
 			Context ctx = this.getContext().getApplicationContext();
@@ -71,21 +74,64 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 		numParada = (TextView) v.findViewById(R.id.num_parada);
 		descParada = (TextView) v.findViewById(R.id.desc_parada);
 		datos = (TextView) v.findViewById(R.id.datos_parada);
-		
-		PlaceMark bus = getItem(position);
+
+		final PlaceMark bus = getItem(position);
 
 		if (bus != null) {
 			numParada.setText(bus.getCodigoParada());
 			descParada.setText(bus.getTitle());
 			datos.setText("T: ".concat(bus.getLineas()));
 
-			if(bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")){
-				
+			if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
+
 				datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
-				
+
 			}
-			
+
 		}
+
+		TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
+
+		// Link informacion
+		informacionText.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View view) {
+
+				((InfoLineasTabsPager) contexto).irInformacion(bus);
+
+			}
+
+		});
+
+		TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
+
+		// Link cargar
+		cargarText.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View view) {
+				
+				int codigo = -1;
+
+				try {
+					codigo = Integer.parseInt(bus.getCodigoParada());
+
+				} catch (Exception e) {
+
+				}
+
+				if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
+
+					((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
+
+				} else {
+
+					Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+
+				}
+
+			}
+
+		});
 
 		return v;
 	}

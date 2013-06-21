@@ -48,7 +48,7 @@
                 android:textColor="@color/color_android"
                
                 android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <TextView
                 android:id="@+id/datos_linea"

@@ -11,7 +11,7 @@
   
   android:layout_width="fill_parent"
   android:layout_height="wrap_content"
-  
+  android:background="@drawable/item_sombra"
   >
   
   			<TextView
@@ -19,12 +19,12 @@
   			    android:id="@+id/legal"
   			    android:layout_width="fill_parent"
   			    android:layout_height="wrap_content"
-  			    android:background="@color/color_android"
+  			    
   			    android:text="@string/legal"
   			    android:textAppearance="?android:attr/textAppearanceSmall"
-  			    android:textColor="@color/white"
-  			    android:textSize="9dp"
-  			    android:textStyle="italic" />
+  			    android:textColor="@android:color/black"
+  			    android:textSize="9sp"
+  			    />
   
 </LinearLayout>
 

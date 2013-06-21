@@ -35,10 +35,6 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,7 +58,6 @@ public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 
 	private String poste;
 
-	
 	SharedPreferences preferencias = null;
 
 	/**
@@ -210,7 +205,7 @@ public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.infolineas, menu);
+		inflater.inflate(R.menu.sin_menu, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -231,6 +226,11 @@ public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 
 	}
 
+	/**
+	 * Carga la descripcion desde la base de datos
+	 * 
+	 * @return parada
+	 */
 	private Parada cargarDescripcionBD() {
 
 		try {

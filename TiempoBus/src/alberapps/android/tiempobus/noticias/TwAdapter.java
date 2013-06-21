@@ -133,7 +133,7 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 				
 				TextView twwebText = (TextView) v.findViewById(R.id.tw_web);
 				
-				//Link del nombre de usuario
+				//Link de acceso a twitter
 				twwebText.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View view) {
