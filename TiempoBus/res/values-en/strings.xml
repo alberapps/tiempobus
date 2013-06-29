@@ -258,4 +258,6 @@
      <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
+    <string name="aviso_offline">*In offline mode without service lines may appear.</string>
+    
 </resources>

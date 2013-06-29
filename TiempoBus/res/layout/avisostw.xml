@@ -71,14 +71,16 @@
             android:textColor="@color/color_android"
             android:textStyle="bold"/>
 
+        
+	
         <ProgressBar
             android:id="@+id/tiempos_progreso_tw"
-            style="@android:style/Widget.ProgressBar.Large"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content"             
             android:layout_centerInParent="true"
-            android:layout_below="@+id/listatw" />
-	
+            android:layout_below="@+id/listatw"
+             />
 	
 	</RelativeLayout>
 </LinearLayout>
