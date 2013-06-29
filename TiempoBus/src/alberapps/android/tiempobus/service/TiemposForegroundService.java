@@ -184,7 +184,7 @@ public class TiemposForegroundService extends Service {
 			CharSequence text = getText(R.string.foreground_service_started);
 
 			// Set the icon, scrolling text and timestamp
-			Notification notification = new Notification(R.drawable.ic_stat_tiempobus_notif, text, System.currentTimeMillis());
+			Notification notification = new Notification(R.drawable.ic_stat_tiempobus_3, text, System.currentTimeMillis());
 
 			// The PendingIntent to launch our activity if the user selects this
 			// notification
@@ -257,7 +257,10 @@ public class TiemposForegroundService extends Service {
 
 						long milisegundosAlarma = Long.parseLong(datos[5]);
 
-						long mins = ((item + 1) * 5);
+						//long mins = ((item + 1) * 5);
+						
+						long mins = GestionarAlarmas.obtenerMinutos(item);
+						
 						Date actual = new Date();
 
 						boolean cambioTiempo = false;

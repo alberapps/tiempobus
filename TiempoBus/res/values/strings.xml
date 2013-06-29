@@ -261,7 +261,11 @@
     <!-- cambiar aviso_buscador_online buscador_online-->
     
     
-     <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    
+    
+    <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio.</string>
+    
     
 </resources>

@@ -179,7 +179,7 @@
     <string name="aviso_noticia">Se non riesci a vedere il contenuto correttamente, pulsi il link per accedere alla web</string>
     <string name="noticias_links">Coincidenze possibili</string>
     <string name="noticias_instrucciones">Clica sulla notifica per aprire il suo dettaglio.</string>
-    <string name="aviso_buscador_online">I percorsi si recuperano direttamente dalla web da subus.es\nCon la lente si consulta il database locale. </string>
+    <string name="aviso_buscador_online">I percorsi si recuperano direttamente dalla web da subus.es.</string>
     <string name="streetview_ko">Errore nell\'accesso a Street View. Controlla se è installato.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>

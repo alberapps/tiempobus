@@ -179,7 +179,7 @@
     <string name="aviso_noticia">Wenn der Inhalt nicht richtig gezeigt wird, bitte klicken Sie das Link, um auf das Web zu zugreifen.</string>
     <string name="noticias_links">Mögliche Linken</string>
     <string name="noticias_instrucciones">Klicken Sie bitte auf die Nachricht, um ihr Detail zu öffnen.</string>
-    <string name="aviso_buscador_online">Die Verläufe wird direkt von subus.es erlangt.\nMit die Lupe abfragen Sie die lokale Datenbank.</string>
+    <string name="aviso_buscador_online">Die Verläufe wird direkt von subus.es erlangt.</string>
     <string name="streetview_ko">Fehler beim Zugreifen auf Street View. Bitte überprüfen Sie, wenn es installiert ist.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>

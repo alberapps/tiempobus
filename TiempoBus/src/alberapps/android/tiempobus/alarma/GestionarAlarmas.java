@@ -66,12 +66,17 @@ public class GestionarAlarmas {
 	/**
 	 * Cancelar alarmas establecidas
 	 */
-	public void cancelarAlarmas(boolean avisar, PendingIntent alarmReceiver) {
+	public void cancelarAlarmas(boolean avisar) {
 
 		// Cancelar posible notificacion
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
 		mNotificationManager.cancel(AlarmReceiver.ALARM_ID);
+
+		// Iniciar receiver
+		Intent intent = new Intent(context, AlarmReceiver.class);
+
+		PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 		// Cancelar alarma si hay una definida
 		if (alarmReceiver != null) {
@@ -100,7 +105,7 @@ public class GestionarAlarmas {
 	 * @param paradaActual
 	 * @param alarmReceiver
 	 */
-	public void calcularAlarma(BusLlegada theBus, int tiempo, int item, int paradaActual, PendingIntent alarmReceiver) {
+	public boolean calcularAlarma(BusLlegada theBus, int tiempo, int item, int paradaActual) {
 
 		long et;
 
@@ -129,15 +134,16 @@ public class GestionarAlarmas {
 		// Control de tiempo insuficiente o excesivo
 		if (et < mins) {
 			Toast.makeText(context, String.format(context.getString(R.string.err_bus_cerca), et), Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		} else if (et == 9999) {
 			Toast.makeText(context, String.format(context.getString(R.string.err_bus_sin), et), Toast.LENGTH_SHORT).show();
-			return;
+			return false;
 		}
 
 		// Establecer la alarma
-		establecerAlarma(et, mins, theBus, tiempo, item, paradaActual, alarmReceiver);
+		establecerAlarma(et, mins, theBus, tiempo, item, paradaActual);
 
+		return true;
 	}
 
 	/**
@@ -150,11 +156,21 @@ public class GestionarAlarmas {
 	 * @param paradaActual
 	 * @param alarmReceiver
 	 */
-	public void establecerAlarma(long et, long mins, BusLlegada theBus, int tiempo, int item, int paradaActual, PendingIntent alarmReceiver) {
+	public void establecerAlarma(long et, long mins, BusLlegada theBus, int tiempo, int item, int paradaActual) {
+
+		PendingIntent alarmReceiver;
 
 		Date actual = new Date();
 
 		long milisegundos = (actual.getTime() + (et * 60000)) - (mins * 60000);
+
+		// Iniciar receiver
+		Intent intent = new Intent(context, AlarmReceiver.class);
+		String txt = String.format(context.getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + paradaActual);
+		intent.putExtra("alarmTxt", txt);
+		intent.putExtra("poste", paradaActual);
+
+		alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
 
 		alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
 
@@ -232,17 +248,11 @@ public class GestionarAlarmas {
 	 * @param paradaActual
 	 * @return
 	 */
-	public PendingIntent activarReceiver(BusLlegada theBus, int paradaActual) {
-
-		Intent intent = new Intent(context, AlarmReceiver.class);
+	public String prepararReceiver(BusLlegada theBus, int paradaActual) {
 
 		String txt = String.format(context.getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + paradaActual);
-		intent.putExtra("alarmTxt", txt);
-		intent.putExtra("poste", paradaActual);
 
-		PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
-
-		return alarmReceiver;
+		return txt;
 
 	}
 
@@ -251,7 +261,7 @@ public class GestionarAlarmas {
 	 * 
 	 * @param bus
 	 */
-	public void mostrarModalTiemposAlerta(BusLlegada bus, final int paradaActual, final PendingIntent alarmReceiver) {
+	public void mostrarModalTiemposAlerta(BusLlegada bus, final int paradaActual, final String textoReceiver) {
 
 		final BusLlegada theBus = bus;
 
@@ -280,24 +290,31 @@ public class GestionarAlarmas {
 			public void onClick(DialogInterface dialog, int id) {
 
 				// Anular si existe una alarma anterior
-				cancelarAlarmas(false, alarmReceiver);
+				cancelarAlarmas(false);
 
 				int seleccion = spinner.getSelectedItemPosition();
 
-				calcularAlarma(theBus, 1, seleccion, paradaActual, alarmReceiver);
+				boolean correcto = calcularAlarma(theBus, 1, seleccion, paradaActual);
 
-				Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
-				intent.setClass(context, TiemposForegroundService.class);
-				intent.putExtra("PARADA", paradaActual);
+				// Si se ha podido establecer
+				if (correcto) {
 
-				boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-				if (checkActivo && !context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-					context.startService(intent);
+					Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
+					intent.setClass(context, TiemposForegroundService.class);
+					intent.putExtra("PARADA", paradaActual);
+
+					boolean checkActivo = preferencias.getBoolean("activarServicio", false);
+					if (checkActivo && !context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+						context.startService(intent);
+					}
+
+					dialog.dismiss();
+
+					mostrarModalAlertas(paradaActual);
+
+				} else {
+					dialog.dismiss();
 				}
-
-				dialog.dismiss();
-
-				mostrarModalAlertas(paradaActual, alarmReceiver);
 
 			}
 
@@ -321,7 +338,7 @@ public class GestionarAlarmas {
 	 * Modal con informacion de la alarma activa
 	 * 
 	 */
-	public void mostrarModalAlertas(int paradaActual, final PendingIntent alarmReceiver) {
+	public void mostrarModalAlertas(int paradaActual) {
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
@@ -375,7 +392,7 @@ public class GestionarAlarmas {
 
 					context.stopService(intent);
 
-					cancelarAlarmas(true, alarmReceiver);
+					cancelarAlarmas(true);
 				}
 
 			});

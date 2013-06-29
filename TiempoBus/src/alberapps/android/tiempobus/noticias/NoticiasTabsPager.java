@@ -543,7 +543,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			listaTW.add(preferencias.getBoolean("tw_4", true));
 			listaTW.add(preferencias.getBoolean("tw_5", true));
 
-			String cantidad = preferencias.getString("tweets_maximos", "5");
+			String cantidad = preferencias.getString("tweets_maximos_v11", "3");
 
 			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
 		} else {

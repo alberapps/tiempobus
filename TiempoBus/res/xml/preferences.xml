@@ -84,13 +84,13 @@
                 >
              
              <ListPreference
-                android:key="tweets_maximos"
+                android:key="tweets_maximos_v11"
                 android:title="@string/tw_maximo"
                 android:summary="@string/tw_maximo_desc"
                 android:entries="@array/cantidad_tw"
                 android:entryValues="@array/cantidad_tw"
                 android:dialogTitle="@string/tw_maximo"
-                android:defaultValue="5" />
+                android:defaultValue="3" />
              
              <CheckBoxPreference
                 android:key="tw_2"

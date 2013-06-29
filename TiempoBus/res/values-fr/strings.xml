@@ -179,7 +179,7 @@
     <string name="aviso_noticia">Si le contenue est pas affiché correctement, cliquez sur le link pour accéder à la web</string>
     <string name="noticias_links">Possibles links</string>
     <string name="noticias_instrucciones">Cliquez à l\'annonce pour ouvrir le détail.</string>
-    <string name="aviso_buscador_online">Les parcours sont récuperés directement du site subus.es.\nAvec la loupe, vous accédez à la base de données locale.</string>
+    <string name="aviso_buscador_online">Les parcours sont récuperés directement du site subus.es.</string>
     <string name="streetview_ko">Incapable d\'accéder à Street View. S.v.p., vérifiez s\'il est installé.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>

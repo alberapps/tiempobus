@@ -74,7 +74,7 @@ public class Notificaciones {
 
 			NotificationCompat.Builder mBuilder = null;
 
-			mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_notif)
+			mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
 					.setContentTitle(contexto.getString(R.string.recarga_bd))
 					.setContentText(contexto.getString(R.string.recarga_bd_desc));
 
@@ -171,7 +171,7 @@ public class Notificaciones {
 
 		NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_notif)
+		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
 				.setContentTitle(contexto.getString(R.string.nuevas_noticias))
 				.setContentText(contexto.getString(R.string.nuevas_noticias_b));
 
@@ -246,7 +246,7 @@ public class Notificaciones {
 
 		NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_notif)
+		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
 				.setContentTitle(contexto.getString(R.string.notification_title)).setContentText(aviso);
 
 		// Led

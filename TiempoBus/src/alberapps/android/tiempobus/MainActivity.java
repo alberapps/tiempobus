@@ -132,8 +132,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private boolean lecturaOK = true;
 	private boolean lecturaAlternativa = false;
 
-	PendingIntent alarmReceiver = null;
-
+	
 	DatosPantallaPrincipal datosPantallaPrincipal;
 
 	GestionarFondo gestionarFondo;
@@ -671,7 +670,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		botonAlerta.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 
-				gestionarAlarmas.mostrarModalAlertas(paradaActual, alarmReceiver);
+				gestionarAlarmas.mostrarModalAlertas(paradaActual);
 
 			}
 		});
@@ -718,11 +717,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				switch (item) {
 				case 0:
 
-					// Iniciar alarm receiver
-					alarmReceiver = gestionarAlarmas.activarReceiver(busSeleccionado, paradaActual);
+					// Texto para receiver
+					String textoReceiver = gestionarAlarmas.prepararReceiver(busSeleccionado, paradaActual);
 
 					// Activar alarma y mostrar modal
-					gestionarAlarmas.mostrarModalTiemposAlerta(busSeleccionado, paradaActual, alarmReceiver);
+					gestionarAlarmas.mostrarModalTiemposAlerta(busSeleccionado, paradaActual, textoReceiver);
 					busSeleccionado = null;
 					break;
 

@@ -105,6 +105,14 @@ public class FragmentLineas extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
+		if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+
+			TextView descrip = (TextView) getActivity().findViewById(R.id.tituloAviso);
+
+			descrip.setText(R.string.aviso_offline);
+
+		}
+
 		setupFondoAplicacion();
 
 		// Combo de seleccion de datos

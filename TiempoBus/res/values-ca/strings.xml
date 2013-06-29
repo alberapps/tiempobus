@@ -178,7 +178,7 @@ favorit per crear la teua llista.</string>
     <string name="aviso_noticia">Si el contingut no es visualitza correctament, selecciona l\'enllaç per accedir a la web</string>
     <string name="noticias_links">Enllaços possibles</string>
     <string name="noticias_instrucciones">Seleccionar l\'avís per obrir el seu detall.</string>
-    <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de subus.es.\nAmb la lupa es consulta la base de dades local.</string>
+    <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de subus.es.</string>
     <string name="streetview_ko">Error en intentar accedir a Street View, comprova si està instal·lat.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
