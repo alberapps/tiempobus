@@ -21,7 +21,6 @@ package alberapps.android.tiempobus.noticias;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
-import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
 import alberapps.java.noticias.Noticias;
@@ -135,8 +134,6 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
 
 		accederNoticia.setText(link);
-
-		// Linkify.addLinks(accederNoticia, mask)
 
 		if (noticia.getContenidoHtml() != null) {
 			mWebView = (WebView) findViewById(R.id.webViewDetalle);

@@ -88,6 +88,4 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
 		}
 	}
 
-	
-	
 }

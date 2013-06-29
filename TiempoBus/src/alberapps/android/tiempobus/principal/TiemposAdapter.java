@@ -32,31 +32,31 @@ import android.widget.TextView;
  * Adaptador Tiempos
  */
 public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
-	
+
 	private Context contexto;
-	
+
 	/**
 	 * Constructor
+	 * 
 	 * @param context
 	 * @param textViewResourceId
 	 */
 	public TiemposAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
-		
+
 		this.contexto = context;
-		
+
 	}
 
 	/**
-	 * Genera la vista de cada uno de los items 
+	 * Genera la vista de cada uno de los items
 	 */
 	@Override
 	public View getView(int position, View v, ViewGroup parent) {
 		// Si no tenemos la vista de la fila creada componemos una
 		if (v == null) {
 			Context ctx = this.getContext().getApplicationContext();
-			LayoutInflater vi = (LayoutInflater) ctx
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			v = vi.inflate(R.layout.tiempos_item, null);
 
@@ -66,82 +66,72 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 		// Accedemos a la vista cacheada y la rellenamos
 		ViewHolder tag = (ViewHolder) v.getTag();
 
-		
 		BusLlegada bus = getItem(position);
 		if (bus != null) {
 			tag.busLinea.setText(bus.getLinea().trim());
 			tag.busDestino.setText(bus.getDestino().trim());
-			
-			
-			//tag.busProximo.setText(bus.getProximo());
+
+			// tag.busProximo.setText(bus.getProximo());
 			tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
-			
-			
-			
+
 		}
 
 		return v;
 	}
-	
+
 	/**
 	 * Modificación para traducir por idioma
 	 * 
 	 * @param proximo
 	 * @return
 	 */
-	private String controlAviso(String proximo){
-		
+	private String controlAviso(String proximo) {
+
 		String traducido = "";
-		
+
 		String[] procesa = proximo.split(";");
-		
-		//TODO para el TRAM
-		if(procesa[0].equals("TRAM")){
+
+		// TODO para el TRAM
+		if (procesa[0].equals("TRAM")) {
 			return procesa[1];
 		}
-		
-		
+
 		String tiempo1 = "";
 		String tiempo2 = "";
-		
-		
-		if(procesa[0].equals("enlaparada")){
-			
+
+		if (procesa[0].equals("enlaparada")) {
+
 			tiempo1 = (String) contexto.getResources().getText(R.string.tiempo_m_1);
-			
-		}else if(procesa[0].equals("sinestimacion")){
-			
+
+		} else if (procesa[0].equals("sinestimacion")) {
+
 			tiempo1 = (String) contexto.getResources().getText(R.string.tiempo_m_2);
-			
-		}else{
-			
+
+		} else {
+
 			tiempo1 = procesa[0];
-			
+
 		}
-		
-		if(procesa[1].equals("enlaparada")){
-			
+
+		if (procesa[1].equals("enlaparada")) {
+
 			tiempo2 = (String) contexto.getResources().getText(R.string.tiempo_m_1);
-			
-		}else if(procesa[1].equals("sinestimacion")){
-			
+
+		} else if (procesa[1].equals("sinestimacion")) {
+
 			tiempo2 = (String) contexto.getResources().getText(R.string.tiempo_m_2);
-			
-		}else{
-			
+
+		} else {
+
 			tiempo2 = procesa[1];
-			
+
 		}
-		
-		
-		
-		traducido = tiempo1 + " " +  contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
-			
-		
+
+		traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+
 		return traducido;
-		
+
 	}
-	
 
 	/*
 	 * Clase contendora de los elementos de la vista de fila para agilizar su

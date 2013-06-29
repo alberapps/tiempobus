@@ -40,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -111,8 +112,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		}
 
 		// boton parada
-		Button botonPoste = (Button) findViewById(R.id.buttonT);
-		botonPoste.setOnClickListener(new Button.OnClickListener() {
+		TextView botonPoste = (TextView) findViewById(R.id.buttonT);
+		botonPoste.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 
 				int codigo = -1;
@@ -138,8 +139,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		});
 
 		// boton mapa
-		Button botonMapa = (Button) findViewById(R.id.buttonM);
-		botonMapa.setOnClickListener(new Button.OnClickListener() {
+		TextView botonMapa = (TextView) findViewById(R.id.buttonM);
+		botonMapa.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 
 				launchMapasSeleccion(lineaSel);

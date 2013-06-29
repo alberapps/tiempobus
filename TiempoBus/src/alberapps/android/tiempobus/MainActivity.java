@@ -81,6 +81,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -581,9 +582,15 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		tiemposView.addFooterView(v);
 
-		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
-		tiemposView.setEmptyView(vacio);
+		//Progreso inicial
+		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);		
+		vacio.setVisibility(View.INVISIBLE);		
+		ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
+		lpb.setIndeterminate(true);
+		tiemposView.setEmptyView(lpb);
 
+		
+		
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
 		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
@@ -1051,11 +1058,18 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 			getActionBarHelper().setRefreshActionItemState(true);
+			
+			
+			
+			
 
 		} else {
 
 			getActionBarHelper().setRefreshActionItemState(false);
 
+			
+			
+			
 		}
 	}
 
@@ -1083,6 +1097,18 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							showProgressBar(false);
 							handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
 						}
+						
+						
+						//Quitar barra progreso inicial
+						ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
+						lpb.clearAnimation();
+						lpb.setVisibility(View.INVISIBLE);
+						
+						if (tiempos == null || tiempos.isEmpty()) {
+							TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+							tiemposView.setEmptyView(vacio);
+						}
+						
 					}
 				};
 

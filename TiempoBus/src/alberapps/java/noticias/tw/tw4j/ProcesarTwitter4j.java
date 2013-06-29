@@ -185,7 +185,7 @@ public class ProcesarTwitter4j {
 				resultado.setNombreCompleto(timeline.get(i).getUser().getName());
 				resultado.setUsuario("@" + timeline.get(i).getUser().getScreenName());
 				resultado.setMensaje(timeline.get(i).getText());
-				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURLHttps());
+				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
 				// Imagen de perfil
 				resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));

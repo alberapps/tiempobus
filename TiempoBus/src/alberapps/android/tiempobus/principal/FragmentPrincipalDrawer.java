@@ -20,17 +20,11 @@ package alberapps.android.tiempobus.principal;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 
 /**
  * Fragmento vuelta
@@ -39,11 +33,7 @@ import android.widget.ListView;
  */
 public class FragmentPrincipalDrawer extends Fragment {
 
-	private ListView lineasView;
-
 	MainActivity actividad;
-
-	
 
 	/**
 	 * On Create
@@ -59,15 +49,6 @@ public class FragmentPrincipalDrawer extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		//setupFondoAplicacion();
-
-		
-		
-
-		
-			cargarListado();
-		
-
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -75,57 +56,6 @@ public class FragmentPrincipalDrawer extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.pantalla_principal_fragment, container, false);
-	}
-
-	public void cargarListado() {
-/*
-		infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
-
-		infoLineaParadasAdapter.addAll(actividad.datosVuelta.getPlacemarks());
-
-		ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
-		idaView.setOnItemClickListener(lineasClickedHandler);
-
-		idaView.setAdapter(infoLineaParadasAdapter);
-*/
-	}
-
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener lineasClickedHandler = new OnItemClickListener() {
-
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
-			//actividad.seleccionarParadaVuelta(position);
-
-		}
-	};
-
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
-
-		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-		String fondo_galeria = preferencias.getString("image_galeria", "");
-
-		View contenedor_principal = getActivity().findViewById(R.id.contenedor_infolinea_vuelta);
-
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
-
 	}
 
 }

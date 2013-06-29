@@ -27,6 +27,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 /**
  * Fragmento tw
@@ -35,17 +38,16 @@ import android.view.ViewGroup;
  */
 public class FragmentTwitter extends Fragment {
 
-	
 	private NoticiasTabsPager actividad;
-	
+
 	/**
 	 * On Create
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		actividad = (NoticiasTabsPager) getActivity();
-		
+
 		super.onCreate(savedInstanceState);
 
 	}
@@ -53,15 +55,19 @@ public class FragmentTwitter extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		
-
 		setupFondoAplicacion();
-		
-		
-		if(actividad.avisosRecuperados != null ){
+
+		if (actividad.avisosRecuperados != null) {
 			actividad.cargarListadoTw();
 		}
-		
+
+		// Progreso lista
+		ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
+		TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
+		vacio.setVisibility(View.INVISIBLE);
+		ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
+		lpb.setIndeterminate(true);
+		listTwWiew.setEmptyView(lpb);
 
 		super.onViewCreated(view, savedInstanceState);
 	}

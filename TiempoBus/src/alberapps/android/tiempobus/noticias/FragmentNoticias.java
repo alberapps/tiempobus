@@ -28,10 +28,12 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * Fragmento vuelta
+ * Fragmento Noticias
  * 
  * 
  */
@@ -39,26 +41,22 @@ public class FragmentNoticias extends Fragment {
 
 	private static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
-	
 	private NoticiasTabsPager actividad;
-	
+
 	/**
 	 * On Create
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		actividad = (NoticiasTabsPager) getActivity();
-		
+
 		super.onCreate(savedInstanceState);
 
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-
-		// TextView titVuelta = (TextView)
-		// actividad.findViewById(R.id.tituloVuelta);
 
 		setupFondoAplicacion();
 
@@ -69,10 +67,18 @@ public class FragmentNoticias extends Fragment {
 
 		accederNoticia.setText(noticiasURL);
 
-		if(actividad.noticiasRecuperadas != null){
+		if (actividad.noticiasRecuperadas != null) {
 			actividad.cargarListado(actividad.noticiasRecuperadas, true);
 		}
-		
+
+		// Progreso lista
+		ListView listNoticiasWiew = (ListView) actividad.findViewById(R.id.lista_noticias);
+		TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias);
+		vacio.setVisibility(View.INVISIBLE);
+		ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_noticias);
+		lpb.setIndeterminate(true);
+		listNoticiasWiew.setEmptyView(lpb);
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 

@@ -43,8 +43,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -148,7 +148,7 @@ public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 		/*
 		 * Asignamos el comprotamiento de los botones
 		 */
-		Button guiGo = (Button) findViewById(R.id.boton_go);
+		TextView guiGo = (TextView) findViewById(R.id.boton_go);
 		guiGo.setOnClickListener(guiGoOnClickListener);
 
 		/*

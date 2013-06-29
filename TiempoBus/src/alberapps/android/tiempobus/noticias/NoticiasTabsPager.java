@@ -67,6 +67,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
@@ -155,8 +156,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 
-		dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
+		//dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
 
+		
+		
+		
 	}
 
 	@Override
@@ -309,7 +313,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(ns);
 		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS);
 
-		recargarNoticias(true);
+		recargarNoticias(false);
 
 	}
 
@@ -355,6 +359,17 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				}
 
+				//Quitar barra progreso inicial
+				ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
+				lpb.clearAnimation();
+				lpb.setVisibility(View.INVISIBLE);
+				
+				if (noticias == null || noticias.isEmpty()) {
+					TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
+					noticiasView.setEmptyView(vacio);
+				}
+				
+				
 				// Inicia carga twitter
 				recargarTw();
 
@@ -526,6 +541,16 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 					}
 
 				}
+				
+				//Quitar barra progreso inicial
+				ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
+				lpb.clearAnimation();
+				lpb.setVisibility(View.INVISIBLE);
+				
+				if (mensajes == null || mensajes.isEmpty()) {
+					TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+					listTwWiew.setEmptyView(vacio);
+				}
 
 			}
 		};
@@ -582,9 +607,6 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			}
 
 			listTwWiew = (ListView) findViewById(R.id.listatw);
-
-			TextView vacio = (TextView) findViewById(R.id.vacio_tw);
-			listTwWiew.setEmptyView(vacio);
 
 			// lineasView.setOnItemClickListener(twClickedHandler);
 

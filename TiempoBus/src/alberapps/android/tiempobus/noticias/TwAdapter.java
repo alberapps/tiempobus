@@ -71,7 +71,7 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 
 				ImageView imagen = (ImageView) v.findViewById(R.id.imagenTw);
 
-				//Link de la imagen de usuario
+				// Link de la imagen de usuario
 				imagen.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View view) {
@@ -98,8 +98,8 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 				if (tw.getImagenBitmap() != null) {
 					imagen.setImageBitmap(tw.getImagenBitmap());
 				}
-				
-				//Link del nombre de usuario
+
+				// Link del nombre de usuario
 				usuario.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View view) {
@@ -114,8 +114,8 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 					}
 
 				});
-				
-				//Link del nombre de usuario
+
+				// Link del nombre de usuario
 				usuarioId.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View view) {
@@ -130,10 +130,10 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
 					}
 
 				});
-				
+
 				TextView twwebText = (TextView) v.findViewById(R.id.tw_web);
-				
-				//Link de acceso a twitter
+
+				// Link de acceso a twitter
 				twwebText.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View view) {

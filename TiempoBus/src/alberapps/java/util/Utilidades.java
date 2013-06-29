@@ -71,8 +71,11 @@ public class Utilidades {
 
 		} catch (MalformedURLException e) {
 
+			e.printStackTrace();
+
 		} catch (IOException e) {
 
+			e.printStackTrace();
 		}
 
 		return is;
@@ -89,14 +92,12 @@ public class Utilidades {
 	 * }
 	 */
 
-	
 	/**
 	 * 
 	 * Otros sistemas de conexion
 	 * 
 	 */
-	
-	
+
 	/**
 	 * Recuperar con basic
 	 * 
