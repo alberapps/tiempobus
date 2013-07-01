@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.3</string>
+    <string name="app_version">2.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2012)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -55,7 +55,7 @@
     <string name="aviso_recarga">Recargando datos&#8230;</string>
     <string name="aviso_error_datos">Error al obtener los datos</string>
     <string name="tit_noticias">Avisos y Noticias</string>
-    <string name="dialogo_espera">Recuperando datos. Espere&#8230;</string>
+    <string name="dialogo_espera">Recuperando datos. Espera&#8230;</string>
     <string name="aviso_noticias">Información recuperada de:</string>
     <string name="menu_contextual">Funciones Aplicables</string>
     <string name="share_0">TiempoBus:</string>
@@ -230,7 +230,7 @@
     
     <!-- Nuevo -->
     <string name="recarga_bd">TiempoBus</string>
-    <string name="recarga_bd_desc">Actualizando Base de Datos</string>
+    <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>
     
     <string name="recarga_bd_desc_final">Base de Datos Actualizada Correctamente</string>
     
@@ -265,7 +265,7 @@
     <string name="drawer_close">Close navigation drawer</string>
     
     
-    <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio.</string>
+    <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
     
     
 </resources>

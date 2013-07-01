@@ -48,7 +48,6 @@ import alberapps.java.tam.BusLlegada;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -88,8 +87,8 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener {
 
 	// Novedades
-	private int REV_ACTUAL = 27;
-	private String NOVEDADES = "(2.4.3)\n**Acceso al nuevo TiempoBus Widgets(Android 3.0 y sup) \n1. Información extra de líneas y paradas.\n2. Carga dínamica de lista de líneas desde subus.es.\n3. Mejoras en el cliente de Twitter y nuevas fuentes.\n4. Actualización de la Base de Datos.\n5. Resolución de bugs.";
+	// private int REV_ACTUAL = 27;
+	// private String NOVEDADES = "";
 	// Fin novedades
 
 	protected static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
@@ -133,7 +132,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private boolean lecturaOK = true;
 	private boolean lecturaAlternativa = false;
 
-	
 	DatosPantallaPrincipal datosPantallaPrincipal;
 
 	GestionarFondo gestionarFondo;
@@ -157,11 +155,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.pantalla_principal);
-		
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			iniciarDrawer(savedInstanceState);
 		}
-		
+
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -173,10 +171,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		cambiarLocale(false);
 
 		
-
-		
-
-		showProgressBar(true);
 
 		setupView();
 
@@ -211,6 +205,22 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
+	
+	@Override
+	protected void onResume() {
+		
+		showProgressBar(true);
+		
+		super.onResume();
+		
+	}
+	
+	
+	/**
+	 * Drawer Layout
+	 * 
+	 * @param savedInstanceState
+	 */
 	private void iniciarDrawer(Bundle savedInstanceState) {
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerTitles = getResources().getStringArray(R.array.menu_array);
@@ -223,8 +233,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// set up the drawer's list view with items and click listener
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		
 
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the sliding drawer and the action bar app icon
@@ -251,9 +259,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// enable ActionBar app icon to behave as action to toggle nav drawer
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		
+
 		if (savedInstanceState == null) {
-			//selectItem(0);
+			// selectItem(0);
 		}
 
 	}
@@ -298,7 +306,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// update selected item and title, then close the drawer
 		// mDrawerList.setItemChecked(position, true);
 		// setTitle(mDrawerTitles[position]);
-		
 
 		switch (position) {
 
@@ -307,37 +314,37 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
-			
+
 		case 1:
 
 			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
 			break;
-			
+
 		case 2:
 			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
-			
+
 		case 3:
 			nuevoFavorito();
 			break;
-		
+
 		case 4:
 
 			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 			break;
 
-		
 		case 5:
 
 			gestionarFondo.seleccionarFondo();
 
 			break;
 
-		};
+		}
+		;
 
 		mDrawerList.setItemChecked(position, false);
 		mDrawerLayout.closeDrawer(mDrawerList);
-		
+
 	}
 
 	/**
@@ -457,11 +464,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
 		controlMostrarNovedades();
-		
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			mDrawerToggle.syncState();
 		}
-		
+
 	}
 
 	@Override
@@ -476,15 +483,15 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	}
 
 	@Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-        	// Pass any configuration change to the drawer toggls
-        	mDrawerToggle.onConfigurationChanged(newConfig);
-        }
-    }
-	
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			// Pass any configuration change to the drawer toggls
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -582,15 +589,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		tiemposView.addFooterView(v);
 
-		//Progreso inicial
-		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);		
-		vacio.setVisibility(View.INVISIBLE);		
+		// Progreso inicial
+		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+		vacio.setVisibility(View.INVISIBLE);
 		ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
 		lpb.setIndeterminate(true);
 		tiemposView.setEmptyView(lpb);
 
-		
-		
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
 		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
@@ -804,34 +809,36 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private void controlMostrarNovedades() {
 		// Mostrar novedades
 
-		int revAviso = preferencias.getInt("revAviso", 0);
-
-		if (revAviso < REV_ACTUAL) {
-
-			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-
-			dialog.setTitle(getString(R.string.novedades_titulo));
-
-			dialog.setMessage(NOVEDADES);
-			dialog.setIcon(R.drawable.ic_tiempobus_3);
-
-			dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-
-				public void onClick(DialogInterface dialog, int id) {
-
-					dialog.dismiss();
-
-				}
-
-			});
-
-			dialog.show();
-
-			SharedPreferences.Editor editor = preferencias.edit();
-			editor.putInt("revAviso", REV_ACTUAL);
-			editor.commit();
-
-		}
+		/*
+		 * int revAviso = preferencias.getInt("revAviso", 0);
+		 * 
+		 * if (revAviso < REV_ACTUAL) {
+		 * 
+		 * AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		 * 
+		 * dialog.setTitle(getString(R.string.novedades_titulo));
+		 * 
+		 * dialog.setMessage(NOVEDADES);
+		 * dialog.setIcon(R.drawable.ic_tiempobus_3);
+		 * 
+		 * dialog.setPositiveButton(R.string.ok, new
+		 * DialogInterface.OnClickListener() {
+		 * 
+		 * public void onClick(DialogInterface dialog, int id) {
+		 * 
+		 * dialog.dismiss();
+		 * 
+		 * }
+		 * 
+		 * });
+		 * 
+		 * dialog.show();
+		 * 
+		 * SharedPreferences.Editor editor = preferencias.edit();
+		 * editor.putInt("revAviso", REV_ACTUAL); editor.commit();
+		 * 
+		 * }
+		 */
 
 	}
 
@@ -845,8 +852,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case R.id.checkBoxAlerta:
 			if (checked) {
 
-				Toast.makeText(this, "activar", Toast.LENGTH_SHORT).show();
-
 				Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
 				intent.setClass(MainActivity.this, TiemposForegroundService.class);
 				intent.putExtra("PARADA", paradaActual);
@@ -858,7 +863,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				startService(intent);
 
 			} else {
-				Toast.makeText(this, "desactivar", Toast.LENGTH_SHORT).show();
 
 				Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
 				intent.setClass(MainActivity.this, TiemposForegroundService.class);
@@ -1058,18 +1062,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 			getActionBarHelper().setRefreshActionItemState(true);
-			
-			
-			
-			
 
 		} else {
 
 			getActionBarHelper().setRefreshActionItemState(false);
 
-			
-			
-			
 		}
 	}
 
@@ -1097,18 +1094,17 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							showProgressBar(false);
 							handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
 						}
-						
-						
-						//Quitar barra progreso inicial
+
+						// Quitar barra progreso inicial
 						ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
 						lpb.clearAnimation();
 						lpb.setVisibility(View.INVISIBLE);
-						
+
 						if (tiempos == null || tiempos.isEmpty()) {
 							TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 							tiemposView.setEmptyView(vacio);
 						}
-						
+
 					}
 				};
 
@@ -1174,10 +1170,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					cabdatos = getString(R.string.share_0b) + " " + paradaActual;
 				}
 
-				if(datosPantallaPrincipal.esTram(paradaActual)){
+				if (datosPantallaPrincipal.esTram(paradaActual)) {
 					cabdatos = "TRAM " + cabdatos;
 				}
-				
+
 				datosParada.setText(cabdatos);
 
 				final Calendar c = Calendar.getInstance();

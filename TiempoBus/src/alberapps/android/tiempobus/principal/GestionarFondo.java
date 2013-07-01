@@ -88,7 +88,7 @@ public class GestionarFondo {
 
 				} else if (item == 1) {
 					View contenedor_principal = context.findViewById(R.id.contenedor_principal);
-					contenedor_principal.setBackgroundResource(android.R.color.darker_gray);
+					contenedor_principal.setBackgroundResource(R.color.fondo_g);
 
 					SharedPreferences.Editor editor = preferencias.edit();
 					editor.putString("image_galeria", "");
@@ -129,7 +129,7 @@ public class GestionarFondo {
 				f.createNewFile();
 			} catch (IOException e) {
 
-				int i = 1;
+				//int i = 1;
 
 			}
 			return f;

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.3</string>
+    <string name="app_version">2.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -54,7 +54,7 @@ favorit per crear la teua llista.</string>
     <string name="aviso_recarga">Recarregant dades&#8230;</string>
     <string name="aviso_error_datos">Error en obtenir les dades</string>
     <string name="tit_noticias">Avisos i Noticies</string>
-    <string name="dialogo_espera">Recuperant dades. Espere&#8230;</string>
+    <string name="dialogo_espera">Recuperant dades. Espera&#8230;</string>
     <string name="aviso_noticias">Informació recuperada de:</string>
     <string name="menu_contextual">Funcions Aplicables</string>
     <string name="share_0">TiempoBus:</string>
@@ -226,7 +226,7 @@ favorit per crear la teua llista.</string>
     
     <!-- Nuevo -->
     <string name="recarga_bd">TiempoBus</string>
-    <string name="recarga_bd_desc">Actualitzant base de dades</string>
+    <string name="recarga_bd_desc">Actualitzant base de dades. Espera&#8230;</string>
     
     <string name="recarga_bd_desc_final">Base de Dades Actualitzada Correctament</string>
     
@@ -261,7 +261,7 @@ favorit per crear la teua llista.</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
-    <string name="aviso_offline">*En mode offline poden aparèixer línies sense servei.</string>
+    <string name="aviso_offline">*En mode offline poden aparèixer línies sense servei o recorreguts sense actualitzar</string>
     
     
     

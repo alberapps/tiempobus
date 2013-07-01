@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.4.3</string>
+    <string name="app_version">2.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2012)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -224,7 +224,7 @@
 	
 	<!-- Nuevo -->
     <string name="recarga_bd">TiempoBus</string>
-    <string name="recarga_bd_desc">Database Update</string>
+    <string name="recarga_bd_desc">Database Update. Wait&#8230;</string>
     
     <string name="recarga_bd_desc_final">Database updated successfully</string>
     
@@ -258,6 +258,6 @@
      <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
-    <string name="aviso_offline">*In offline mode without service lines may appear.</string>
+    <string name="aviso_offline">*In offline mode without service lines may appear, or outdated data</string>
     
 </resources>

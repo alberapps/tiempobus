@@ -78,7 +78,7 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 	
 	private void links() {
 
-		final CharSequence[] items = { "zgzBus\nhttp://code.google.com/p/zgzbus","ksoap2-android\nhttp://code.google.com/p/ksoap2-android/","ZXing Team\nhttp://code.google.com/p/zxing","Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa","Mapicons\nhttp://mapicons.nicolasmollet.com","JSoup\nhttp://jsoup.org","google-gson\nhttp://code.google.com/p/google-gson"};
+		final CharSequence[] items = { "zgzBus\nhttp://code.google.com/p/zgzbus","ksoap2-android\nhttp://code.google.com/p/ksoap2-android/","ZXing Team\nhttp://code.google.com/p/zxing","Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa","Mapicons\nhttp://mapicons.nicolasmollet.com","JSoup\nhttp://jsoup.org","google-gson\nhttp://code.google.com/p/google-gson","twitter4j\nhttp://twitter4j.org"};
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.referencias);

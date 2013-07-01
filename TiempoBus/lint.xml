@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="InlinedApi">
+        <ignore path="src/alberapps/android/tiempobus/actionbar/ActionBarHelperBase.java" />
+        <ignore path="src/alberapps/android/tiempobus/util/PreferencesUtil.java" />
+    </issue>
+    <issue id="InvalidPackage">
+        <ignore path="libs/twitter4j-core-3.0.4-SNAPSHOT.jar" />
+    </issue>
     <issue id="MissingRegistered" severity="ignore" />
     <issue id="NewApi" severity="ignore" />
     <issue id="Override">
