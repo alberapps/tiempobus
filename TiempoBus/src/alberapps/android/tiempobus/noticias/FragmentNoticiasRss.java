@@ -28,6 +28,8 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -65,6 +67,13 @@ public class FragmentNoticiasRss extends Fragment {
 			actividad.cargarListadoRss();
 		}
 		
+		// Progreso lista
+		ListView listRssWiew = (ListView) actividad.findViewById(R.id.noticias_rss);
+		TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias_rss);
+		vacio.setVisibility(View.INVISIBLE);
+		ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_rss);
+		lpb.setIndeterminate(true);
+		listRssWiew.setEmptyView(lpb);
 		
 		TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticiaRss);
 

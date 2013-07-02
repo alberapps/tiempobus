@@ -25,7 +25,7 @@ import android.util.Log;
 
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = false;
+	public static boolean ACTIVADO_TRAM = true;
 		
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L" };
 

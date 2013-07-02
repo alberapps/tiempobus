@@ -156,11 +156,9 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 
-		//dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
+		// dialog = ProgressDialog.show(this, "",
+		// getString(R.string.dialogo_espera), true);
 
-		
-		
-		
 	}
 
 	@Override
@@ -359,17 +357,16 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				}
 
-				//Quitar barra progreso inicial
+				// Quitar barra progreso inicial
 				ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
 				lpb.clearAnimation();
 				lpb.setVisibility(View.INVISIBLE);
-				
+
 				if (noticias == null || noticias.isEmpty()) {
 					TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
 					noticiasView.setEmptyView(vacio);
 				}
-				
-				
+
 				// Inicia carga twitter
 				recargarTw();
 
@@ -510,19 +507,15 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				if (mensajes != null && !mensajes.isEmpty()) {
 					avisosRecuperados = mensajes;
-					
-					if(!UtilidadesTRAM.ACTIVADO_TRAM){
-					
-						cargarListadoTw();
-					}
+
+					cargarListadoTw();
 
 				} else {
 
 					avisosRecuperados = null;
 					// Error al recuperar datos
-					if(!UtilidadesTRAM.ACTIVADO_TRAM){
-						cargarListadoTw();
-					}
+
+					cargarListadoTw();
 
 				}
 
@@ -541,15 +534,17 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 					}
 
 				}
-				
-				//Quitar barra progreso inicial
-				ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
-				lpb.clearAnimation();
-				lpb.setVisibility(View.INVISIBLE);
-				
-				if (mensajes == null || mensajes.isEmpty()) {
-					TextView vacio = (TextView) findViewById(R.id.vacio_tw);
-					listTwWiew.setEmptyView(vacio);
+
+				if (listTwWiew != null) {
+					// Quitar barra progreso inicial
+					ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
+					lpb.clearAnimation();
+					lpb.setVisibility(View.INVISIBLE);
+
+					if (mensajes == null || mensajes.isEmpty()) {
+						TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+						listTwWiew.setEmptyView(vacio);
+					}
 				}
 
 			}
@@ -592,25 +587,29 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		try {
 
-			twAdapter = new TwAdapter(this, R.layout.avisostw_item);
-
-			if (avisosRecuperados != null) {
-
-				twAdapter.addAll(avisosRecuperados);
-				twAdapter.notifyDataSetChanged();
-
-			} else {
-
-				twAdapter.clear();
-				twAdapter.notifyDataSetChanged();
-
-			}
-
 			listTwWiew = (ListView) findViewById(R.id.listatw);
 
-			// lineasView.setOnItemClickListener(twClickedHandler);
+			if (listTwWiew != null) {
 
-			listTwWiew.setAdapter(twAdapter);
+				twAdapter = new TwAdapter(this, R.layout.avisostw_item);
+
+				if (avisosRecuperados != null) {
+
+					twAdapter.addAll(avisosRecuperados);
+					twAdapter.notifyDataSetChanged();
+
+				} else {
+
+					twAdapter.clear();
+					twAdapter.notifyDataSetChanged();
+
+				}
+
+				// lineasView.setOnItemClickListener(twClickedHandler);
+
+				listTwWiew.setAdapter(twAdapter);
+
+			}
 
 		} catch (Exception e) {
 
@@ -688,6 +687,18 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				}
 
+				if (noticiasRssView != null) {
+					// Quitar barra progreso inicial
+					ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_rss);
+					lpb.clearAnimation();
+					lpb.setVisibility(View.INVISIBLE);
+
+					if (noticias == null || noticias.isEmpty()) {
+						TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
+						noticiasRssView.setEmptyView(vacio);
+					}
+				}
+				
 			}
 		};
 

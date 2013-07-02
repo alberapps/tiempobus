@@ -62,7 +62,7 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
 		try {		
 
 			
-			//noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
+			noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
 			
 		} catch (Exception e) {
 			return null;
