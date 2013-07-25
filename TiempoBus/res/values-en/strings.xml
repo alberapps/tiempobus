@@ -260,4 +260,6 @@
     
     <string name="aviso_offline">*In offline mode without service lines may appear, or outdated data</string>
     
+    <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
+    
 </resources>

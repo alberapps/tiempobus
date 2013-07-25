@@ -1112,7 +1112,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual);
+					new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext());
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 					showProgressBar(false);

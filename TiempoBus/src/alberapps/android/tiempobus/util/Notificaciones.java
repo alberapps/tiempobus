@@ -67,15 +67,13 @@ public class Notificaciones {
 	 */
 	public static Builder notificacionBaseDatos(Context contexto, String accion, Builder mBuilderN, Integer incrementa) {
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		if (accion.equals(NOTIFICACION_BD_INICIAL)) {
 
 			NotificationCompat.Builder mBuilder = null;
 
-			mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
-					.setContentTitle(contexto.getString(R.string.recarga_bd))
+			mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.recarga_bd))
 					.setContentText(contexto.getString(R.string.recarga_bd_desc));
 
 			mBuilder.setAutoCancel(false);
@@ -164,16 +162,15 @@ public class Notificaciones {
 	 * 
 	 * @param contexto
 	 */
-	public static void notificacionNoticias(Context contexto) {
+	public static void notificacionNoticias(Context contexto, String[] extendido, int nuevas) {
 
 		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
 		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
 		NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
-				.setContentTitle(contexto.getString(R.string.nuevas_noticias))
-				.setContentText(contexto.getString(R.string.nuevas_noticias_b));
+		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias))
+				.setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas);
 
 		mBuilder.setAutoCancel(true);
 
@@ -210,6 +207,20 @@ public class Notificaciones {
 		CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
 		mBuilder.setTicker(tickerText);
 
+		NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
+		String[] events = extendido;
+		// Sets a title for the Inbox style big view
+		inboxStyle.bigText(extendido[0] + "\n" + extendido[1]);
+
+		// Moves events into the big view
+		// for (int i=0; i < events.length; i++) {
+
+		// inboxStyle..addLine(events[i]);
+		// }
+		inboxStyle.setSummaryText(contexto.getString(R.string.app_name) + " (" + contexto.getString(R.string.tab_noticias) + ")");
+		// Moves the big view style object into the notification object.
+		mBuilder.setStyle(inboxStyle);
+
 		// Creates an explicit intent for an Activity in your app
 		Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
 
@@ -227,8 +238,7 @@ public class Notificaciones {
 		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(resultPendingIntent);
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
 		mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
 
@@ -246,8 +256,7 @@ public class Notificaciones {
 
 		NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3)
-				.setContentTitle(contexto.getString(R.string.notification_title)).setContentText(aviso);
+		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.notification_title)).setContentText(aviso);
 
 		// Led
 		int defaults = Notification.DEFAULT_LIGHTS;
@@ -304,8 +313,7 @@ public class Notificaciones {
 		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		mBuilder.setContentIntent(resultPendingIntent);
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto
-				.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
 		// mId allows you to update the notification later on.
 		mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
 

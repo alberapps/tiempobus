@@ -68,6 +68,8 @@ public class ParadasCercanas {
 			context.mapOverlays.clear();
 
 			context.mapOverlays.add(context.mMyLocationOverlay);
+		} else {
+			context.mapOverlays = context.mapView.getOverlays();
 		}
 
 		context.datosMapaCargadosIda = null;
@@ -119,8 +121,6 @@ public class ParadasCercanas {
 			}
 
 			for (int i = 0; i < listaParadas.size(); i++) {
-
-				context.mapOverlays = context.mapView.getOverlays();
 
 				if (listaParadas.get(i).getRed().equals(DatosLineasDB.RED_TRAM)) {
 					context.drawableIda = context.getResources().getDrawable(R.drawable.tramway);

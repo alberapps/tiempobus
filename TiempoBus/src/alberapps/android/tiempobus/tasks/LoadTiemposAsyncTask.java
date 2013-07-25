@@ -25,7 +25,9 @@ import java.util.ArrayList;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
+import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.ProcesarTiemposTramService;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -34,7 +36,7 @@ import android.util.Log;
  * 
  * 
  */
-public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<BusLlegada>> {
+public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, ArrayList<BusLlegada>> {
 
 	/**
 	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
@@ -60,7 +62,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
-	protected ArrayList<BusLlegada> doInBackground(Integer... datos) {
+	protected ArrayList<BusLlegada> doInBackground(Object... datos) {
 		ArrayList<BusLlegada> llegadasBus = null;
 		try {
 
@@ -68,11 +70,16 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 			// ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
 
 			String parada = ((Integer) datos[0]).toString();
+			
+			int paradaI = (Integer) datos[0];
 
+			Context contexto = (Context) datos[1];
+			
 			if (DatosPantallaPrincipal.esTram(parada)) {
-				llegadasBus = ProcesarTiemposTramService.procesaTiemposLlegada(datos[0]);
+				//llegadasBus = ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
+				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI);
 			} else {
-				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
 			}
 
 		} catch (EOFException e1) {
@@ -83,7 +90,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Integer, Void, ArrayList<Bus
 
 				Log.d("tiempos", "Tiempos intento 2");
 
-				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada((Integer) datos[0]);
 			} catch (Exception e2) {
 
 				Log.d("tiempos", "Tiempos error intento 2");

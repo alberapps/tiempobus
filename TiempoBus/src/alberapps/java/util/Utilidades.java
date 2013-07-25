@@ -27,6 +27,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
@@ -39,6 +44,11 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+
+import alberapps.android.tiempobus.R;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * 
@@ -76,6 +86,123 @@ public class Utilidades {
 		} catch (IOException e) {
 
 			e.printStackTrace();
+		}
+
+		return is;
+
+	}
+
+	public static InputStream recuperarStreamConexionSimpleDepuracion(Context contexto, String urlEntrada) throws IOException {
+
+		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+
+		int readTimeout = Integer.parseInt(preferencias.getString("read_timeout", "60")) * 1000;
+
+		int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout", "50")) * 1000;
+
+		InputStream is = null;
+
+		try {
+
+			URL url = new URL(urlEntrada);
+
+			URLConnection con = url.openConnection();
+
+			// timeout
+			if (readTimeout > 0) {
+				con.setReadTimeout(readTimeout);
+			}
+			if (conexionTimeout > 0) {
+				con.setConnectTimeout(conexionTimeout);
+			}
+
+			is = con.getInputStream();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+			throw e;
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+			throw e;
+		}
+
+		return is;
+
+	}
+
+	public static InputStream recuperarStreamConexionSimpleDepuracionTipo2(Context contexto, String urlEntrada) throws Exception {
+
+		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+
+		int readTimeout = Integer.parseInt(preferencias.getString("read_timeout_2", "60")) * 1000;
+
+		int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout_2", "50")) * 1000;
+
+		InputStream is = null;
+
+		try {
+
+			HttpGet request = new HttpGet(urlEntrada);
+
+			int timeout = 60000;
+
+			HttpParams httpParam = new BasicHttpParams();
+
+			// Timeout para establecer conexion
+			if (conexionTimeout > 0) {
+				timeout = conexionTimeout;
+
+				HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+
+			}
+
+			// Timeout para recibir datos
+			int timeoutSocket = 60000;
+			if (readTimeout > 0) {
+				timeoutSocket = readTimeout;
+
+				HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+
+			}
+
+			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+
+			HttpResponse response = client.execute(request);
+
+			final int statusCode = response.getStatusLine().getStatusCode();
+
+			/*
+			 * if (statusCode != HttpStatus.SC_OK) {
+			 * 
+			 * return null; }
+			 */
+
+			HttpEntity responseEntity = response.getEntity();
+			is = responseEntity.getContent();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+			throw e;
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+			throw e;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+
+			throw e;
 		}
 
 		return is;
@@ -307,5 +434,29 @@ public class Utilidades {
 
 		return datos;
 	}
+	
+	
+	public static Date getFechaDate(String fecha) {
+
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+		Date fechaDate = null;
+
+		if (fecha != null) {
+			try {
+				fechaDate = df.parse(fecha);
+
+				return fechaDate;
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return null;
+
+	}
+
+	
 
 }

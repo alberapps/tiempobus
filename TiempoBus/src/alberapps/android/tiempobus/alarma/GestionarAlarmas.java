@@ -113,12 +113,12 @@ public class GestionarAlarmas {
 		long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
 		// Si es tram
-		if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+		/*if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
 
 			et = theBus.getProximoMinutosTRAM();
 			tiempo = 1;
 
-		} else {
+		} else {*/
 			// Que tiempo usar
 			// Si el primer bus no cumple, se usa el segundo
 			if (theBus.getProximoMinutos() < mins) {
@@ -129,7 +129,7 @@ public class GestionarAlarmas {
 				tiempo = 1;
 			}
 
-		}
+		//}
 
 		// Control de tiempo insuficiente o excesivo
 		if (et < mins) {

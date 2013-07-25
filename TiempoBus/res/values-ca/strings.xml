@@ -263,7 +263,7 @@ favorit per crear la teua llista.</string>
     
     <string name="aviso_offline">*En mode offline poden aparèixer línies sense servei o recorreguts sense actualitzar</string>
     
-    
+    <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
     
 </resources>

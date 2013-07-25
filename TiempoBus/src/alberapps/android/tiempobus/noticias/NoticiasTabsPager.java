@@ -51,6 +51,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -115,6 +117,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 	private ProgressDialog dialog;
 
+	AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
+
+	AsyncTask<Object, Void, List<TwResultado>> loadTwTask = null;
+
+	AsyncTask<Object, Void, List<NoticiaRss>> loadNoticiasRssTask = null;
+
 	public BusLinea getLinea() {
 		return linea;
 	}
@@ -156,15 +164,45 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 		}
 
-		// dialog = ProgressDialog.show(this, "",
-		// getString(R.string.dialogo_espera), true);
-
+		
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putString("tab", mTabHost.getCurrentTabTag());
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		// Se cancelan las tareas en caso de volver sin terminar
+
+		if (loadNoticiasTask != null && loadNoticiasTask.getStatus() == Status.RUNNING) {
+
+			loadNoticiasTask.cancel(true);
+
+			Log.d("noticias", "Cancelada task noticias");
+
+		}
+
+		if (loadTwTask != null && loadTwTask.getStatus() == Status.RUNNING) {
+
+			loadTwTask.cancel(true);
+
+			Log.d("noticias", "Cancelada task twitter");
+
+		}
+
+		if (loadNoticiasRssTask != null && loadNoticiasRssTask.getStatus() == Status.RUNNING) {
+
+			loadNoticiasRssTask.cancel(true);
+
+			Log.d("noticias", "Cancelada task rss");
+
+		}
+
+		super.onDestroy();
 	}
 
 	/**
@@ -377,7 +415,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute();
+			loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute();
+
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
@@ -565,7 +604,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			String cantidad = preferencias.getString("tweets_maximos_v11", "3");
 
-			new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
+			loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
@@ -698,7 +737,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 						noticiasRssView.setEmptyView(vacio);
 					}
 				}
-				
+
 			}
 		};
 
@@ -707,7 +746,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
 
-			new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
+			loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
@@ -773,16 +812,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			/*
-			 * Toast.makeText(getApplicationContext(),
-			 * getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			 * 
-			 * String url = avisosRecuperados.get(position).getUrl();
-			 * 
-			 * Intent i = new Intent(Intent.ACTION_VIEW);
-			 * 
-			 * i.setData(Uri.parse(url)); startActivity(i);
-			 */
+			
 		}
 	};
 

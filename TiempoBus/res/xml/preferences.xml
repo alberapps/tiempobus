@@ -19,6 +19,28 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
 
+     <PreferenceCategory
+            android:title="TIEMPOS">
+
+        <EditTextPreference
+                android:key="read_timeout_2"
+                android:title="ESPERA LECTURA"
+                android:summary="En segundos"
+                android:dialogTitle="Lectura en segundos" 
+                android:defaultValue="60"/>    
+                
+         <EditTextPreference
+                android:key="conexion_timeout_2"
+                android:title="ESPERA CONEXION"
+                android:summary="En segundos"
+                android:dialogTitle="Conexion en segundos" 
+                android:defaultValue="50"/> 
+        
+
+    </PreferenceCategory>
+    
+    
+    
     <PreferenceCategory
             android:title="@string/preferencias_tiempos">
             

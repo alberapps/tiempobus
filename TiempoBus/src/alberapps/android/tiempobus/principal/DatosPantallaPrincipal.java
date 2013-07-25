@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.principal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Utilidades;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -231,12 +233,35 @@ public class DatosPantallaPrincipal {
 
 				if (noticias != null && !noticias.isEmpty()) {
 
+					int nuevas = 0;
+
 					String fecha_ultima = "";
 					boolean lanzarAviso = false;
+					
 
 					// Ver si se guardo la fecha de la ultima noticia
 					if (preferencias.contains("ultima_noticia")) {
 						fecha_ultima = preferencias.getString("ultima_noticia", "");
+
+						if (fecha_ultima != null) {
+
+							Date fechaUltima = Utilidades.getFechaDate(fecha_ultima);
+
+							// Contar nuevas noticias
+
+							for (int i = 0; i < noticias.size(); i++) {
+
+								if (noticias.get(i).getFechaDate() != null) {
+									if (fechaUltima.after(noticias.get(i).getFechaDate())) {
+										nuevas++;
+									} else {
+										break;
+									}
+								}
+
+							}
+
+						}
 
 						if (!fecha_ultima.equals(noticias.get(0).getFecha())) {
 
@@ -260,7 +285,19 @@ public class DatosPantallaPrincipal {
 					// aviso
 					if (lanzarAviso) {
 
-						Notificaciones.notificacionNoticias(context.getApplicationContext());
+						// Extendido
+
+						String[] extendido = new String[2];
+
+						extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getNoticia();
+
+						if (noticias.size() > 1) {
+							extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getNoticia();
+						} else {
+							extendido[1] = "";
+						}
+
+						Notificaciones.notificacionNoticias(context.getApplicationContext(), extendido, nuevas);
 
 					}
 				} else {
