@@ -1024,11 +1024,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 	protected void onResume() {
 		super.onResume();
 		mMyLocationOverlay.enableMyLocation();
+		mMyLocationOverlay.enableCompass();
 	}
 
 	@Override
 	protected void onStop() {
 		mMyLocationOverlay.disableMyLocation();
+		mMyLocationOverlay.disableCompass();
 		super.onStop();
 	}
 

@@ -78,6 +78,9 @@ public class ProcesarDatosLineasIsaeService {
 				datosLinea.setLineaDescripcion(option.get(i).text());
 
 				datosLinea.setLineaNum(option.get(i).attr("value"));
+				
+				//Para evitar puntos
+				datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
 
 				// KML
 				int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
@@ -105,7 +108,7 @@ public class ProcesarDatosLineasIsaeService {
 				}
 
 				else {
-					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**ERROR]"));
+					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**Sin información]"));
 				}
 
 				lineas.add(datosLinea);
