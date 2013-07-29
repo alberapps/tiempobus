@@ -252,10 +252,8 @@ public class DatosPantallaPrincipal {
 							for (int i = 0; i < noticias.size(); i++) {
 
 								if (noticias.get(i).getFechaDate() != null) {
-									if (fechaUltima.after(noticias.get(i).getFechaDate())) {
+									if (noticias.get(i).getFechaDate().after(fechaUltima)) {
 										nuevas++;
-									} else {
-										break;
 									}
 								}
 
