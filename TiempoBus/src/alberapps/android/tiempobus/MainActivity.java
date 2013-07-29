@@ -170,8 +170,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		cambiarLocale(false);
 
-		
-
 		setupView();
 
 		// Verificar si hay parada por defecto
@@ -205,17 +203,15 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
-	
 	@Override
 	protected void onResume() {
-		
+
 		showProgressBar(true);
-		
+
 		super.onResume();
-		
+
 	}
-	
-	
+
 	/**
 	 * Drawer Layout
 	 * 
@@ -1022,10 +1018,18 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// Galeria de imagenes
 		if (requestCode == CARGAR_IMAGEN)
 			if (resultCode == Activity.RESULT_OK) {
-				Uri selectedImage = data.getData();
 
-				// Cargamos imagen seleccionada
-				gestionarFondo.activarNuevoFondo(selectedImage);
+				try {
+
+					Uri selectedImage = data.getData();
+
+					// Cargamos imagen seleccionada
+					gestionarFondo.activarNuevoFondo(selectedImage);
+				} catch (Exception e) {
+
+					Toast.makeText(this, getString(R.string.error_fichero), Toast.LENGTH_SHORT).show();
+
+				}
 
 			}
 
