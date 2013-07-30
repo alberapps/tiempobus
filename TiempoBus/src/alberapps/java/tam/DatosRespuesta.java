@@ -1,6 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
+ * 
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,43 +16,36 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.webservice;
+package alberapps.java.tam;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class GetPasoParadaResult implements Serializable {
+public class DatosRespuesta implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8238534853834758312L;
+	private static final long serialVersionUID = 6379507005761833173L;
+	
+	private ArrayList<BusLlegada> listaBusLlegada;
+	
+	private Integer error = 0;
 
-	private List<PasoParada> pasoParadaList;
-
-	private String status;
-
-	public GetPasoParadaResult() {
-
-		pasoParadaList = new ArrayList<PasoParada>();
-
+	public ArrayList<BusLlegada> getListaBusLlegada() {
+		return listaBusLlegada;
 	}
 
-	public List<PasoParada> getPasoParadaList() {
-		return pasoParadaList;
+	public void setListaBusLlegada(ArrayList<BusLlegada> listaBusLlegada) {
+		this.listaBusLlegada = listaBusLlegada;
 	}
 
-	public void setPasoParadaList(List<PasoParada> pasoParadaList) {
-		this.pasoParadaList = pasoParadaList;
+	public Integer getError() {
+		return error;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setError(Integer error) {
+		this.error = error;
 	}
 
 }

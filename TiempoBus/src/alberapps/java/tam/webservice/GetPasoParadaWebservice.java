@@ -39,8 +39,8 @@ public class GetPasoParadaWebservice {
 	private String NAMESPACE = "http://tempuri.org/";
 	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
-	private int timeout = 15 * 1000; //15 segundos
-	
+	private int timeout = 15 * 1000; // 15 segundos
+
 	public GetPasoParadaWebservice() {
 	}
 
@@ -50,7 +50,7 @@ public class GetPasoParadaWebservice {
 	 * @param linea
 	 * @param parada
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
 
@@ -67,7 +67,7 @@ public class GetPasoParadaWebservice {
 
 		soapEnvelope.dotNet = true;
 		soapEnvelope.setOutputSoapObject(request);
-		HttpTransportSE aht = new HttpTransportSE(URL,timeout);
+		HttpTransportSE aht = new HttpTransportSE(URL, timeout);
 
 		try {
 			aht.call(SOAP_ACTION, soapEnvelope);
@@ -75,9 +75,6 @@ public class GetPasoParadaWebservice {
 
 			GetPasoParadaResult resultados = new GetPasoParadaResult();
 			List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
-
-			// Status
-			String status = respuesta.get(1).toString();
 
 			// Lista de lineas
 			SoapObject respuestaDatos = (SoapObject) respuesta.get(0);
@@ -107,19 +104,24 @@ public class GetPasoParadaWebservice {
 				}
 			}
 
+			// Status
+			String status = respuesta.get(1).toString();
+
+			resultados.setStatus(status);
+
 			resultados.setPasoParadaList(pasoParadaList);
 
 			return resultados;
 
 		} catch (Exception e) {
-			
+
 			Log.d("webservice", "Error consulta tiempos: " + linea + " - " + parada);
-			
+
 			e.printStackTrace();
-			
-			//Respuesta no esperada del servicio			
+
+			// Respuesta no esperada del servicio
 			throw e;
-			
+
 		}
 
 	}

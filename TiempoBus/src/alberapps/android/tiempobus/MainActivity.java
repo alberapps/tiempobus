@@ -44,7 +44,9 @@ import alberapps.android.tiempobus.principal.TiemposAdapter;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
+import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
+import alberapps.java.tam.DatosRespuesta;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -1087,7 +1089,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				 * Sera llamado cuando la tarea de cargar tiempos termine
 				 */
 				LoadTiemposAsyncTaskResponder loadTiemposAsyncTaskResponder = new LoadTiemposAsyncTaskResponder() {
-					public void tiemposLoaded(ArrayList<BusLlegada> tiempos) {
+					public void tiemposLoaded(DatosRespuesta datosRespuesta) {
+
+						ArrayList<BusLlegada> tiempos = datosRespuesta.getListaBusLlegada();
 
 						if (tiempos != null) {
 							buses = tiempos;
@@ -1107,6 +1111,12 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 						if (tiempos == null || tiempos.isEmpty()) {
 							TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 							tiemposView.setEmptyView(vacio);
+						}
+
+						if (datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
+
+							Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
+
 						}
 
 					}

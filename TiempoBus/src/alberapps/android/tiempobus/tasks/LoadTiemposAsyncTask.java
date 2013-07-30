@@ -23,10 +23,12 @@ import java.io.EOFException;
 import java.util.ArrayList;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.java.exception.TiempoBusException;
+import alberapps.java.horarios.ProcesarHorarios;
 import alberapps.java.tam.BusLlegada;
+import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
-import alberapps.java.tram.ProcesarTiemposTramService;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -36,7 +38,7 @@ import android.util.Log;
  * 
  * 
  */
-public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, ArrayList<BusLlegada>> {
+public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta> {
 
 	/**
 	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
@@ -44,7 +46,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, ArrayList<BusL
 	 * 
 	 */
 	public interface LoadTiemposAsyncTaskResponder {
-		public void tiemposLoaded(ArrayList<BusLlegada> buses);
+		public void tiemposLoaded(DatosRespuesta buses);
 	}
 
 	private LoadTiemposAsyncTaskResponder responder;
@@ -62,26 +64,30 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, ArrayList<BusL
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
-	protected ArrayList<BusLlegada> doInBackground(Object... datos) {
+	protected DatosRespuesta doInBackground(Object... datos) {
 		ArrayList<BusLlegada> llegadasBus = null;
+		DatosRespuesta datosRespuesta = new DatosRespuesta();
 		try {
 
 			// llegadasBus =
 			// ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
 
 			String parada = ((Integer) datos[0]).toString();
-			
+
 			int paradaI = (Integer) datos[0];
 
 			Context contexto = (Context) datos[1];
-			
+
 			if (DatosPantallaPrincipal.esTram(parada)) {
-				//llegadasBus = ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
+				// llegadasBus =
+				// ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
 				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI);
 			} else {
 				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
 			}
 
+			datosRespuesta.setListaBusLlegada(llegadasBus);
+			
 		} catch (EOFException e1) {
 
 			Log.d("tiempos", "Tiempos error intento 1");
@@ -97,20 +103,38 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, ArrayList<BusL
 
 				return null;
 			}
+			
+			datosRespuesta.setListaBusLlegada(llegadasBus);
+
+		} catch (TiempoBusException e) {
+
+			datosRespuesta.setError(e.getCodigo());
+			datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
+			
+			e.printStackTrace();
 
 		} catch (Exception e) {
 
 			return null;
 		}
 
-		return llegadasBus;
+		
+		//Pruebas
+		/*try {
+			ProcesarHorarios.getDetalleHorario();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+
+		return datosRespuesta;
 	}
 
 	/**
 	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
 	 */
 	@Override
-	protected void onPostExecute(ArrayList<BusLlegada> result) {
+	protected void onPostExecute(DatosRespuesta result) {
 		if (responder != null) {
 			responder.tiemposLoaded(result);
 		}

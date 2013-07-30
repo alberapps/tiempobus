@@ -22,6 +22,7 @@ package alberapps.java.tam;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.webservice.GetPasoParadaResult;
 import alberapps.java.tam.webservice.GetPasoParadaWebservice;
 
@@ -47,6 +48,14 @@ public class ProcesarTiemposService {
 
 		GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada));
 
+		//Control errores del status
+		if(serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus().equals("-1")){
+			
+			throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
+			
+		}
+		
+		
 		for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 
 			String infoSalidas = "";

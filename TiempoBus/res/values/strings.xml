@@ -269,5 +269,7 @@
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
+    <string name="error_status">El servicio de tiempos ha devuelto un estado incorrecto. Verifica la disponibilidad.</string>
+    
     
 </resources>
