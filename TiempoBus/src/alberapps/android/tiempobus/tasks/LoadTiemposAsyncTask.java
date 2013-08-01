@@ -119,13 +119,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 		}
 
 		
-		//Pruebas
-		/*try {
-			ProcesarHorarios.getDetalleHorario();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
 
 		return datosRespuesta;
 	}

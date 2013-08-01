@@ -79,6 +79,46 @@
                 android:textStyle="italic" 
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" >
+
+                <TextView
+                    android:id="@+id/infoparada_horarios"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/infolinea_horarios"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" 
+                    android:background="@drawable/actionbar_compat_item"/>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/infoparada_paradas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="right"
+                        android:text="@string/infolinea_paradas"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" 
+                        android:background="@drawable/actionbar_compat_item"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            
+            
         </LinearLayout>
 
     </LinearLayout>

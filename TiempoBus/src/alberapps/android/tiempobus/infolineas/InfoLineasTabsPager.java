@@ -20,20 +20,27 @@
 package alberapps.android.tiempobus.infolineas;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
+import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.horarios.DatosHorarios;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,9 +53,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.Toast;
 
 /**
  * Demonstrates combining a TabHost with a ViewPager to implement a tab UI that
@@ -70,6 +79,10 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	DatosMapa datosIda = null;
 	DatosMapa datosVuelta = null;
 
+	DatosHorarios datosHorarios = null;
+	
+	ProgressDialog dialog = null;
+	
 	// Red a usar 0(subus online) 1(subus local) 2(tram)
 	public static int MODO_RED_SUBUS_ONLINE = 0;
 	public static int MODO_RED_SUBUS_OFFLINE = 1;
@@ -350,4 +363,114 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		this.modoRed = modoRed;
 	}
 
+	
+	/*HORARIOS*/
+	
+	public void cargarHorarios(BusLinea linea, int index) {
+		
+
+		// We can display everything in-place with fragments, so update
+		// the list to highlight the selected item and show the data.
+		ListView lineasView = (ListView) findViewById(R.id.infolinea_lista_lineas);
+
+		lineasView.setItemChecked(index, true);
+
+		lineasMapas = null;
+		sentidoIda = null;
+		sentidoVuelta = null;
+
+		dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
+
+		
+		loadHorarios(linea);
+		
+		// Control para el nuevo modo offline
+		/*if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+
+			loadDatosMapa();
+		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+
+			loadDatosMapaOffline();
+		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			loadDatosMapaTRAMOffline();
+		}*/
+		
+		
+
+	}
+	
+	/**
+	 * Carga las paradas de MAPAS
+	 */
+	private void loadHorarios(BusLinea datosLinea) {
+
+		// String url = "http://www.subus.es/Lineas/kml/ALC34ParadasVuelta.xml";
+
+		//String url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
+
+		//DatosInfoLinea datos = new DatosInfoLinea();
+		//datos.setUrl(url);
+
+		
+		
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new LoadHorariosInfoLineasAsyncTask(loadHorariosInfoLineasAsyncTaskResponder).execute(datosLinea);
+		} else {
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			if (dialog != null && dialog.isShowing()) {
+				dialog.dismiss();
+			}
+		}
+
+	}
+	
+	
+	/**
+	 * Se llama cuando las paradas hayan sido cargadas
+	 */
+	LoadHorariosInfoLineasAsyncTaskResponder loadHorariosInfoLineasAsyncTaskResponder = new LoadHorariosInfoLineasAsyncTaskResponder() {
+		public void datosHorariosInfoLineasLoaded(DatosHorarios datos) {
+
+			if (datos != null) {
+
+				datosHorarios = datos;
+				
+				cargarListadoHorarioIda();
+
+				cambiarTab();
+
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				toast.show();
+				dialog.dismiss();
+
+			}
+
+			dialog.dismiss();
+			
+		}
+	};
+	
+	public void cargarListadoHorarioIda() {
+
+		InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
+
+		
+		
+		DatosHorarios horario = new DatosHorarios();
+		
+		
+		infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosIda());
+
+		ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
+		//idaView.setOnItemClickListener(idaClickedHandler);
+
+		idaView.setAdapter(infoLineaHorariosAdapter);
+
+	}
+	
 }

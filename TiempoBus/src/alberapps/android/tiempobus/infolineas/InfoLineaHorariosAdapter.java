@@ -22,33 +22,33 @@ package alberapps.android.tiempobus.infolineas;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
-import alberapps.java.tam.BusLinea;
+import alberapps.java.horarios.DatosHorarios;
+import alberapps.java.horarios.Horario;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
  * Adaptador Tiempos
  */
-public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
+public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
 
 	private Context contexto;
-	
+
 	/**
 	 * Constructor
 	 * 
 	 * @param context
 	 * @param textViewResourceId
 	 */
-	public InfoLineaAdapter(Context context, int textViewResourceId) {
+	public InfoLineaHorariosAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
 
 		this.contexto = context;
-		
+
 	}
 
 	/**
@@ -61,49 +61,58 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 			Context ctx = this.getContext().getApplicationContext();
 			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			v = vi.inflate(R.layout.infolineas_item, null);
+			v = vi.inflate(R.layout.infolineas_horarios_item, null);
 
 		}
 
-		TextView busLinea;
-		TextView descLinea;
-		TextView datosLinea;
-
-		busLinea = (TextView) v.findViewById(R.id.bus_linea);
-		descLinea = (TextView) v.findViewById(R.id.desc_linea);
-		datosLinea = (TextView) v.findViewById(R.id.datos_linea);
 		
-		
-		final BusLinea bus = getItem(position);
+		TextView descHorario;
+		TextView datosHorario;
 
-		if (bus != null) {
-			busLinea.setText(bus.getNumLinea());
-			descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
+		
+		descHorario = (TextView) v.findViewById(R.id.desc_horario);
+		datosHorario = (TextView) v.findViewById(R.id.datos_horario);
+
+		final Horario horario = getItem(position);
+
+		if (horario != null) {
 			
-			datosLinea.setText(bus.getGrupo());
+			descHorario.setText(horario.getTituloHorario());
+			
+			StringBuffer sb = new StringBuffer("");
+			
+			int horaAnterior = 0;
+			
+			for(int i = 0;i<horario.getHorarios().size();i++){
+				
+				String[] num = horario.getHorarios().get(i).split(":");
+				
+				int hora = 0;
+				
+				try{
+					hora = Integer.parseInt(num[0]);
+				
+				}catch(Exception e){
+					continue;
+				}
+				
+				if(hora > horaAnterior){
+					sb.append(" ");
+					horaAnterior = hora;
+				}else{
+					sb.append("\n\n");
+					horaAnterior = 0;
+				}
+				
+				sb.append(horario.getHorarios().get(i));
+				
+				
+			}
+			
+			datosHorario.setText(sb.toString());
 
 		}
 
-		
-		TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
-
-		// Link informacion
-		informacionText.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View view) {
-
-				((InfoLineasTabsPager) contexto).setLinea(bus);
-				
-				((InfoLineasTabsPager) contexto).setTitle(bus.getLinea());
-				
-				((InfoLineasTabsPager) contexto).cargarHorarios(bus, position);
-								
-
-			}
-
-		});
-		
-		
 		
 		return v;
 	}
@@ -113,13 +122,13 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 	 * 
 	 * @param noticias
 	 */
-	public void addAll(List<BusLinea> busLinea) {
-		if (busLinea == null) {
+	public void addAll(List<Horario> horarios) {
+		if (horarios == null) {
 			return;
 		}
 
-		for (int i = 0; i < busLinea.size(); i++) {
-			add(busLinea.get(i));
+		for (int i = 0; i < horarios.size(); i++) {
+			add(horarios.get(i));
 		}
 	}
 

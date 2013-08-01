@@ -271,5 +271,8 @@
     
     <string name="error_status">El servicio de tiempos ha devuelto un estado incorrecto. Verifica la disponibilidad.</string>
     
+    <string name="infolinea_horarios">Horarios</string>
+    <string name="infolinea_paradas">Paradas</string>
+    <string name="horario_lunes">Lunes a viernes laborables</string>
     
 </resources>

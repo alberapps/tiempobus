@@ -27,6 +27,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
+import alberapps.java.tam.BusLinea;
 import alberapps.java.util.Utilidades;
 import android.util.Log;
 
@@ -37,17 +38,27 @@ import android.util.Log;
  */
 public class ProcesarHorarios {
 
+	public static String URL_SUBUS = "http://www.subus.es";
+	
 	public static String HORARIO_URL = "http://www.subus.es/Lineas/Horario.asp?codigo=189";
 	
-	public static void getDetalleHorario() throws Exception {
+	public static String LINEA_URL = "http://www.subus.es/Lineas/Linea.asp?linea=ALC24";
+	
+	public static DatosHorarios getDetalleHorario(BusLinea datosLinea) throws Exception {
 
 		InputStream st = null;
 
+		DatosHorarios datosHorario = null;
+		
 		String url = HORARIO_URL;
 
 		try {
 
-			st = Utilidades.recuperarStreamConexionSimple(url);
+			datosHorario = getNumeroHorario();
+			
+			for(int i = 0;i< datosHorario.getHorariosIda().size();i++){
+			
+			st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS + datosHorario.getHorariosIda().get(i).getLinkHorario());
 
 			Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 
@@ -75,6 +86,22 @@ public class ProcesarHorarios {
 
 			Log.d("HORARIOS", "html: " + limpiar);
 
+			limpiar = limpiar.replaceAll("\n", "");
+			limpiar = limpiar.replaceAll("\t", "");
+			
+			String[] listaHorarios = limpiar.split(" ");
+			
+			
+			
+			for(int j = 0;j< listaHorarios.length;j++){
+				if(!listaHorarios[i].trim().equals("")){
+					datosHorario.getHorariosIda().get(i).getHorarios().add(listaHorarios[j].trim());
+					
+					Log.d("HORARIOS", "html sin saltos: " + listaHorarios[j].trim());
+				}
+			}
+			
+			
 			
 			//Horarios sabados
 			Element tabla2 = tables.get(6);
@@ -114,6 +141,9 @@ public class ProcesarHorarios {
 			// Cabecera linea
 			//noticias.setLineaCabecera(filas.get(1).text().trim());
 
+			
+			}
+			
 		} catch (Exception e) {
 			try {
 				if (st != null) {
@@ -137,7 +167,69 @@ public class ProcesarHorarios {
 
 		}
 
-		
+		return datosHorario;
 	}
 
+	
+	private static DatosHorarios getNumeroHorario() throws Exception{
+		
+		DatosHorarios datos = new DatosHorarios();
+		
+		InputStream st = null;
+		
+		String url = LINEA_URL;
+
+		try {
+
+			st = Utilidades.recuperarStreamConexionSimple(url);
+
+			Document doc = Jsoup.parse(st, "ISO-8859-1", url);
+			
+			Elements elementos = doc.select("a[href^=/Lineas/Horario.asp?codigo=]");
+			
+			Horario horario = null;
+			
+			for(int i = 0; i< elementos.size();i++){
+			
+				horario = new Horario();
+				
+				horario.setLinkHorario(elementos.get(i).attr("href"));
+				
+			
+				horario.setTituloHorario(elementos.get(i).text());
+			
+				
+			
+				datos.getHorariosIda().add(horario);
+				
+				
+			}
+			
+		} catch (Exception e) {
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
+
+			throw e;
+
+		} finally {
+
+			try {
+				if (st != null) {
+					st.close();
+				}
+			} catch (IOException eb) {
+
+			}
+
+		}
+		
+		return datos;
+		
+	}
+	
 }
