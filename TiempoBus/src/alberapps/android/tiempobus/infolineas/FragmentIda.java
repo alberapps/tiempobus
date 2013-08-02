@@ -65,13 +65,21 @@ public class FragmentIda extends Fragment {
 
 		TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
 
-		if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-			titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-		} else {
-			titIda.setText("-");
-		}
+		
 
-		if (actividad.datosIda != null) {
+		if(actividad.datosHorarios != null){
+		
+			titIda.setText(actividad.datosHorarios.getTituloSalidaIda());
+			
+			
+		}else if (actividad.datosIda != null) {
+			
+			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
+				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+			} else {
+				titIda.setText("-");
+			}
+			
 			cargarListado();
 		} else {
 			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);

@@ -57,6 +57,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -440,6 +441,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 				datosHorarios = datos;
 				
 				cargarListadoHorarioIda();
+				
+				//cargarListadoHorarioVuelta();
 
 				cambiarTab();
 
@@ -457,12 +460,16 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	
 	public void cargarListadoHorarioIda() {
 
+		TextView titIda = (TextView) findViewById(R.id.tituloIda);
+		
+		titIda.setText(datosHorarios.getTituloSalidaIda());
+		
+		
 		InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
 
 		
 		
-		DatosHorarios horario = new DatosHorarios();
-		
+				
 		
 		infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosIda());
 
@@ -470,6 +477,25 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		//idaView.setOnItemClickListener(idaClickedHandler);
 
 		idaView.setAdapter(infoLineaHorariosAdapter);
+
+	}
+	
+	
+	public void cargarListadoHorarioVuelta() {
+
+		InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
+
+		
+		
+		DatosHorarios horario = new DatosHorarios();
+		
+		
+		infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosVuelta());
+
+		ListView vueltaView = (ListView) findViewById(R.id.infolinea_lista_vuelta);
+		//idaView.setOnItemClickListener(idaClickedHandler);
+
+		vueltaView.setAdapter(infoLineaHorariosAdapter);
 
 	}
 	
