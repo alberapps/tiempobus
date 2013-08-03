@@ -81,7 +81,7 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
 			
 			StringBuffer sb = new StringBuffer("");
 			
-			int horaAnterior = 0;
+			int horaAnterior = -1;
 			
 			for(int i = 0;i<horario.getHorarios().size();i++){
 				

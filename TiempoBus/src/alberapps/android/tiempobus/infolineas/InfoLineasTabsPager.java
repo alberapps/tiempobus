@@ -20,7 +20,6 @@
 package alberapps.android.tiempobus.infolineas;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -29,6 +28,7 @@ import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.horarios.DatosHorarios;
+import alberapps.java.horarios.ProcesarHorarios;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
@@ -41,19 +41,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
@@ -87,6 +93,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 	View vistaPieHorarioIda = null;
 	View vistaPieHorarioVuelta = null;
+	View vistaPieAviso = null;
 
 	// Red a usar 0(subus online) 1(subus local) 2(tram)
 	public static int MODO_RED_SUBUS_ONLINE = 0;
@@ -97,6 +104,11 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 	SharedPreferences preferencias = null;
 
+	AsyncTask<Object, Void, DatosHorarios> taskHorarios = null;
+	AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
+	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
+	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
+	
 	public BusLinea getLinea() {
 		return linea;
 	}
@@ -153,7 +165,53 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
+	
+	@Override
+	protected void onDestroy() {
+		
+		detenerTareas();
+		
+		
+		super.onDestroy();
+	}
+	
+	public void detenerTareas() {
 
+		if (taskHorarios != null && taskHorarios.getStatus() == Status.RUNNING) {
+
+			taskHorarios.cancel(true);
+
+			Log.d("INFOLINEA", "Cancelada task horarios");
+
+		}
+		
+		if (taskBuses != null && taskBuses.getStatus() == Status.RUNNING) {
+
+			taskBuses.cancel(true);
+
+			Log.d("INFOLINEA", "Cancelada task buses");
+
+		}
+		
+		if (taskDatosLinea != null && taskDatosLinea.getStatus() == Status.RUNNING) {
+
+			taskDatosLinea.cancel(true);
+
+			Log.d("INFOLINEA", "Cancelada task datos linea");
+
+		}
+		
+		if (taskInfoLineaIda != null && taskInfoLineaIda.getStatus() == Status.RUNNING) {
+
+			taskInfoLineaIda.cancel(true);
+
+			Log.d("INFOLINEA", "Cancelada task linea ida");
+
+		}
+
+	}
+	
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -412,7 +470,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadHorariosInfoLineasAsyncTask(loadHorariosInfoLineasAsyncTaskResponder).execute(datosLinea);
+			taskHorarios = new LoadHorariosInfoLineasAsyncTask(loadHorariosInfoLineasAsyncTaskResponder).execute(datosLinea);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -437,6 +495,9 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 				cambiarTab();
 
 			} else {
+
+				datosHorarios = null;
+
 				Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
 				toast.show();
 				dialog.dismiss();
@@ -475,11 +536,35 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			descHorario.setText(getString(R.string.observaciones));
 
 			idaView.addFooterView(vistaPieHorarioIda);
+
+			// Pie aviso
+			LayoutInflater li2 = LayoutInflater.from(this);
+			vistaPieAviso = li2.inflate(R.layout.infolineas_horarios_item, null);
+			TextView descHorario2 = (TextView) vistaPieAviso.findViewById(R.id.desc_horario);
+			TextView datosHorario2 = (TextView) vistaPieAviso.findViewById(R.id.datos_horario);
+			descHorario2.setText(getString(R.string.aviso_noticia));
+			datosHorario2.setAutoLinkMask(Linkify.ALL);
+			datosHorario2.setLinksClickable(true);
+			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+
+			idaView.addFooterView(vistaPieAviso);
+
 		}
 
 		TextView datosHorario = (TextView) vistaPieHorarioIda.findViewById(R.id.datos_horario);
 
-		datosHorario.setText(datosHorarios.getValidezHorarios());
+		StringBuffer comentarios = new StringBuffer("");
+
+		if (datosHorarios.getComentariosIda() != null && !datosHorarios.getComentariosIda().equals("")) {
+			comentarios.append(datosHorarios.getComentariosIda());
+			comentarios.append("\n");
+		}
+
+		if (datosHorarios.getValidezHorarios() != null) {
+			comentarios.append(datosHorarios.getValidezHorarios());
+		}
+
+		datosHorario.setText(comentarios.toString());
 
 		idaView.setAdapter(infoLineaHorariosAdapter);
 
@@ -509,11 +594,35 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			descHorario.setText(getString(R.string.observaciones));
 
 			vueltaView.addFooterView(vistaPieHorarioVuelta);
+
+			// Pie aviso
+			LayoutInflater li2 = LayoutInflater.from(this);
+			vistaPieAviso = li2.inflate(R.layout.infolineas_horarios_item, null);
+			TextView descHorario2 = (TextView) vistaPieAviso.findViewById(R.id.desc_horario);
+			TextView datosHorario2 = (TextView) vistaPieAviso.findViewById(R.id.datos_horario);
+			descHorario2.setText(getString(R.string.aviso_noticia));
+			datosHorario2.setAutoLinkMask(Linkify.ALL);
+			datosHorario2.setLinksClickable(true);
+			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+
+			vueltaView.addFooterView(vistaPieAviso);
+
 		}
 
 		TextView datosHorario = (TextView) vistaPieHorarioVuelta.findViewById(R.id.datos_horario);
 
-		datosHorario.setText(datosHorarios.getValidezHorarios());
+		StringBuffer comentarios = new StringBuffer("");
+
+		if (datosHorarios.getComentariosVuelta() != null && !datosHorarios.getComentariosVuelta().equals("")) {
+			comentarios.append(datosHorarios.getComentariosVuelta());
+			comentarios.append("\n");
+		}
+
+		if (datosHorarios.getValidezHorarios() != null) {
+			comentarios.append(datosHorarios.getValidezHorarios());
+		}
+
+		datosHorario.setText(comentarios);
 
 		vueltaView.setAdapter(infoLineaHorariosAdapter);
 
@@ -548,6 +657,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		if (vueltaView.getFooterViewsCount() > 0) {
 			vueltaView.removeFooterView(vistaPieHorarioVuelta);
+			vueltaView.removeFooterView(vistaPieAviso);
 			vistaPieHorarioVuelta = null;
 		}
 

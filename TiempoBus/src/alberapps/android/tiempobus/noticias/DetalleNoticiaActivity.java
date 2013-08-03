@@ -30,9 +30,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +55,8 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 	Noticias noticia;
 
 	String link;
+
+	AsyncTask<String, Void, Noticias> taskDetalle = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,12 +108,32 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link);
+			taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
 				dialog.dismiss();
 			}
+		}
+
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		detenerTareas();
+
+		super.onDestroy();
+	}
+
+	public void detenerTareas() {
+
+		if (taskDetalle != null && taskDetalle.getStatus() == Status.RUNNING) {
+
+			taskDetalle.cancel(true);
+
+			Log.d("NOTICIAS", "Cancelada task detalle");
+
 		}
 
 	}

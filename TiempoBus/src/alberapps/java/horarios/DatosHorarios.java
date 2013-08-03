@@ -22,15 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatosHorarios {
-	
+
 	private String tituloSalidaIda;
 
 	private String tituloSalidaVuelta;
-	
+
 	private String validezHorarios;
-	
+
+	private StringBuffer comentariosIda;
+
+	private StringBuffer comentariosVuelta;
+
 	private List<Horario> horariosIda = new ArrayList<Horario>();
-	
+
 	private List<Horario> horariosVuelta = new ArrayList<Horario>();
 
 	public List<Horario> getHorariosIda() {
@@ -73,9 +77,21 @@ public class DatosHorarios {
 		this.validezHorarios = validezHorarios;
 	}
 
-	
-	
-	
-	
+	public StringBuffer getComentariosIda() {
+		return comentariosIda;
+	}
 
+	public void setComentariosIda(StringBuffer comentariosIda) {
+		this.comentariosIda = comentariosIda;
+	}
+
+	public StringBuffer getComentariosVuelta() {
+		return comentariosVuelta;
+	}
+
+	public void setComentariosVuelta(StringBuffer comentariosVuelta) {
+		this.comentariosVuelta = comentariosVuelta;
+	}
+
+	
 }

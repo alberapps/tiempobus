@@ -86,6 +86,7 @@ public class FragmentVuelta extends Fragment {
 			cargarListado();
 		} else {
 
+						
 			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
 
 			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);

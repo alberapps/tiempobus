@@ -51,8 +51,10 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.AsyncTask.Status;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -126,6 +128,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	ParadasCercanas paradasCercanas;
 
+	AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
+	AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
+	AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
+	
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
@@ -294,6 +300,43 @@ public class MapasActivity extends ActionBarMapaActivity {
 		});
 
 	}
+	
+	@Override
+	protected void onDestroy() {
+		
+		detenerTareas();
+		
+		
+		super.onDestroy();
+	}
+	
+
+	public void detenerTareas() {
+
+		if (taskDatosMapa != null && taskDatosMapa.getStatus() == Status.RUNNING) {
+
+			taskDatosMapa.cancel(true);
+
+			Log.d("MAPAS", "Cancelada task datos mapa");
+
+		}
+		
+		if (taskDatosMapaVuelta != null && taskDatosMapaVuelta.getStatus() == Status.RUNNING) {
+
+			taskDatosMapaVuelta.cancel(true);
+
+			Log.d("MAPAS", "Cancelada task datos mapa vuelta");
+
+		}
+		
+		if (taskBuses != null && taskBuses.getStatus() == Status.RUNNING) {
+
+			taskBuses.cancel(true);
+
+			Log.d("MAPAS", "Cancelada task taskBuses");
+
+		}
+	}
 
 	private void enableLocationSettings() {
 		Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -399,7 +442,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDatosMapaAsyncTask(loadDatosMapaAsyncTaskResponderIda).execute(url, urlRecorrido);
+			taskDatosMapa = new LoadDatosMapaAsyncTask(loadDatosMapaAsyncTaskResponderIda).execute(url, urlRecorrido);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -443,7 +486,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDatosMapaAsyncTask(loadDatosMapaAsyncTaskResponderVuelta).execute(url, urlVuelta);
+			taskDatosMapaVuelta = new LoadDatosMapaAsyncTask(loadDatosMapaAsyncTaskResponderVuelta).execute(url, urlVuelta);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -868,7 +911,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
+			taskBuses = new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {

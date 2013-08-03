@@ -262,4 +262,10 @@
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
+     <string name="error_status">No results: Check the number of stop or if the service is available.</string>
+    
+    <string name="infolinea_horarios">Timetable</string>
+    <string name="infolinea_paradas">Bus stops</string>
+    
+    
 </resources>

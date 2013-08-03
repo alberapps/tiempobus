@@ -41,6 +41,8 @@
   			    android:textAppearance="?android:attr/textAppearanceSmall"
   			    android:textColor="@android:color/black"
   			    android:textSize="9sp"
+  			    android:autoLink="web"
+  			    android:textColorLink="@android:color/darker_gray"
   			    />
   
 </LinearLayout>

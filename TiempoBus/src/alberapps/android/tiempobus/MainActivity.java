@@ -45,6 +45,7 @@ import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
 import alberapps.java.exception.TiempoBusException;
+import alberapps.java.noticias.Noticias;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import android.app.Activity;
@@ -59,15 +60,18 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.AsyncTask.Status;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -152,6 +156,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mDrawerTitles;
+
+	AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -427,7 +433,21 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			mTts.shutdown();
 		}
 
+		detenerTareaTiempos();
+
 		super.onDestroy();
+	}
+
+	public void detenerTareaTiempos() {
+
+		if (loadTiemposTask != null && loadTiemposTask.getStatus() == Status.RUNNING) {
+
+			loadTiemposTask.cancel(true);
+
+			Log.d("tiempos", "Cancelada task tiempos");
+
+		}
+
 	}
 
 	@Override
@@ -517,34 +537,41 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case R.id.menu_search:
 
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, InfoLineasTabsPager.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
 		case R.id.menu_preferencias:
 
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 			break;
 
 		case R.id.menu_guardar:
+			detenerTareaTiempos();
 			nuevoFavorito();
 			break;
 
 		case R.id.menu_favoritos:
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 		case R.id.menu_noticias:
 
+			detenerTareaTiempos();
 			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
 			break;
 		case R.id.menu_mapas:
 
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
 		case R.id.menu_fondo:
 
+			detenerTareaTiempos();
 			gestionarFondo.seleccionarFondo();
 
 			break;
@@ -1119,7 +1146,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext());
+					loadTiemposTask = new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext());
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 					showProgressBar(false);

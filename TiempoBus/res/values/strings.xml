@@ -269,10 +269,10 @@
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
-    <string name="error_status">Sin resultados: Comprueba que el número de parada sea valido o si el servicio está disponible.</string>
+    <string name="error_status">Sin resultados: Comprueba el número de parada o si el servicio está disponible.</string>
     
     <string name="infolinea_horarios">Horarios</string>
     <string name="infolinea_paradas">Paradas</string>
-    <string name="horario_lunes">Lunes a viernes laborables</string>
+    
     
 </resources>
