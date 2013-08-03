@@ -53,6 +53,12 @@ public class ProcesarHorarios {
 		
 		String url = HORARIO_URL;
 
+		/*
+		 * Especiales: 30, 31, 30P, 4, 7, 191. 192, M, C2, C6, 27, C-53, 45, 46B
+		 * Revisar 21N Los que empiezan a las 0:00 
+		 * Sin datos: 25N TURIBUS
+		 */
+		
 		try {
 
 			datosHorario = getNumeroHorario(datosLinea);
@@ -161,6 +167,17 @@ public class ProcesarHorarios {
 				}
 			}
 			
+			
+			
+			//Horarios validod
+			Element table9 = tables.get(9);
+			String safe9 = Jsoup.clean(table9.html(), Whitelist.basic());
+
+			// Problema caracteres
+			String limpiar9 = safe9.replace("", "-").replace("", "&euro;").replace("&nbsp;", "").trim();
+			
+			
+			datosHorario.setValidezHorarios(Html.fromHtml(limpiar9).toString());
 			
 			
 			

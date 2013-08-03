@@ -174,6 +174,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		setupView();
 
+		showProgressBar(true);
+
 		// Verificar si hay parada por defecto
 		if (preferencias.contains("parada_inicio")) {
 			paradaActual = preferencias.getInt("parada_inicio", paradaActual);
@@ -202,15 +204,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		if (verificaNoticias) {
 			datosPantallaPrincipal.verificarNuevasNoticias();
 		}
-
-	}
-
-	@Override
-	protected void onResume() {
-
-		showProgressBar(true);
-
-		super.onResume();
 
 	}
 

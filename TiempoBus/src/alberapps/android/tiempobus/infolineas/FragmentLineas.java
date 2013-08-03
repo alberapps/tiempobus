@@ -304,7 +304,8 @@ public class FragmentLineas extends Fragment {
 			actividad.setTitle(linea.getLinea());
 
 			//Quitar de horarios
-			actividad.datosHorarios = null;
+			actividad.limpiarHorariosIda();
+			
 			
 			cargarParadas(position);
 

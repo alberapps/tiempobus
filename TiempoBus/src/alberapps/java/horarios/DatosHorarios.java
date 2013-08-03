@@ -27,6 +27,8 @@ public class DatosHorarios {
 
 	private String tituloSalidaVuelta;
 	
+	private String validezHorarios;
+	
 	private List<Horario> horariosIda = new ArrayList<Horario>();
 	
 	private List<Horario> horariosVuelta = new ArrayList<Horario>();
@@ -61,6 +63,14 @@ public class DatosHorarios {
 
 	public void setTituloSalidaVuelta(String tituloSalidaVuelta) {
 		this.tituloSalidaVuelta = tituloSalidaVuelta;
+	}
+
+	public String getValidezHorarios() {
+		return validezHorarios;
+	}
+
+	public void setValidezHorarios(String validezHorarios) {
+		this.validezHorarios = validezHorarios;
 	}
 
 	

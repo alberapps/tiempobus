@@ -48,6 +48,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -81,9 +82,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	DatosMapa datosVuelta = null;
 
 	DatosHorarios datosHorarios = null;
-	
+
 	ProgressDialog dialog = null;
-	
+
+	View vistaPieHorarioIda = null;
+	View vistaPieHorarioVuelta = null;
+
 	// Red a usar 0(subus online) 1(subus local) 2(tram)
 	public static int MODO_RED_SUBUS_ONLINE = 0;
 	public static int MODO_RED_SUBUS_OFFLINE = 1;
@@ -364,11 +368,9 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		this.modoRed = modoRed;
 	}
 
-	
-	/*HORARIOS*/
-	
+	/* HORARIOS */
+
 	public void cargarHorarios(BusLinea linea, int index) {
-		
 
 		// We can display everything in-place with fragments, so update
 		// the list to highlight the selected item and show the data.
@@ -379,42 +381,33 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		lineasMapas = null;
 		sentidoIda = null;
 		sentidoVuelta = null;
+		datosHorarios = null;
 
 		dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
 
-		
 		loadHorarios(linea);
-		
+
 		// Control para el nuevo modo offline
-		/*if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
-
-			loadDatosMapa();
-		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-
-			loadDatosMapaOffline();
-		} else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-
-			loadDatosMapaTRAMOffline();
-		}*/
-		
-		
+		/*
+		 * if (actividad.getModoRed() ==
+		 * InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+		 * 
+		 * loadDatosMapa(); } else if (actividad.getModoRed() ==
+		 * InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+		 * 
+		 * loadDatosMapaOffline(); } else if (actividad.getModoRed() ==
+		 * InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+		 * 
+		 * loadDatosMapaTRAMOffline(); }
+		 */
 
 	}
-	
+
 	/**
-	 * Carga las paradas de MAPAS
+	 * Carga los horarios
 	 */
 	private void loadHorarios(BusLinea datosLinea) {
 
-		// String url = "http://www.subus.es/Lineas/kml/ALC34ParadasVuelta.xml";
-
-		//String url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
-
-		//DatosInfoLinea datos = new DatosInfoLinea();
-		//datos.setUrl(url);
-
-		
-		
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -428,8 +421,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-	
-	
+
 	/**
 	 * Se llama cuando las paradas hayan sido cargadas
 	 */
@@ -439,10 +431,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			if (datos != null) {
 
 				datosHorarios = datos;
-				
+
 				cargarListadoHorarioIda();
-				
-				//cargarListadoHorarioVuelta();
 
 				cambiarTab();
 
@@ -454,49 +444,113 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			}
 
 			dialog.dismiss();
-			
+
 		}
 	};
-	
+
+	/**
+	 * Carga lista con los horarios de ida
+	 */
 	public void cargarListadoHorarioIda() {
 
 		TextView titIda = (TextView) findViewById(R.id.tituloIda);
-		
+
 		titIda.setText(datosHorarios.getTituloSalidaIda());
-		
-		
+
 		InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
 
-		
-		
-				
-		
 		infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosIda());
 
 		ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
-		//idaView.setOnItemClickListener(idaClickedHandler);
+		// idaView.setOnItemClickListener(idaClickedHandler);
+
+		if (idaView.getFooterViewsCount() == 0) {
+
+			LayoutInflater li = LayoutInflater.from(this);
+
+			vistaPieHorarioIda = li.inflate(R.layout.infolineas_horarios_item, null);
+
+			TextView descHorario = (TextView) vistaPieHorarioIda.findViewById(R.id.desc_horario);
+
+			descHorario.setText(getString(R.string.observaciones));
+
+			idaView.addFooterView(vistaPieHorarioIda);
+		}
+
+		TextView datosHorario = (TextView) vistaPieHorarioIda.findViewById(R.id.datos_horario);
+
+		datosHorario.setText(datosHorarios.getValidezHorarios());
 
 		idaView.setAdapter(infoLineaHorariosAdapter);
 
+		infoLineaHorariosAdapter.notifyDataSetChanged();
+
 	}
-	
-	
+
+	/**
+	 * Carga lista con los horarios de vuelta
+	 */
 	public void cargarListadoHorarioVuelta() {
 
 		InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
 
-		
-		
-		DatosHorarios horario = new DatosHorarios();
-		
-		
 		infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosVuelta());
 
 		ListView vueltaView = (ListView) findViewById(R.id.infolinea_lista_vuelta);
-		//idaView.setOnItemClickListener(idaClickedHandler);
+		// idaView.setOnItemClickListener(idaClickedHandler);
+
+		if (vueltaView.getFooterViewsCount() == 0) {
+
+			LayoutInflater li = LayoutInflater.from(this);
+			vistaPieHorarioVuelta = li.inflate(R.layout.infolineas_horarios_item, null);
+
+			TextView descHorario = (TextView) vistaPieHorarioVuelta.findViewById(R.id.desc_horario);
+
+			descHorario.setText(getString(R.string.observaciones));
+
+			vueltaView.addFooterView(vistaPieHorarioVuelta);
+		}
+
+		TextView datosHorario = (TextView) vistaPieHorarioVuelta.findViewById(R.id.datos_horario);
+
+		datosHorario.setText(datosHorarios.getValidezHorarios());
 
 		vueltaView.setAdapter(infoLineaHorariosAdapter);
 
+		infoLineaHorariosAdapter.notifyDataSetChanged();
+
 	}
-	
+
+	/**
+	 * Eliminar datos horarios
+	 */
+	public void limpiarHorariosIda() {
+
+		datosHorarios = null;
+
+		ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
+
+		if (idaView.getFooterViewsCount() > 0) {
+			idaView.removeFooterView(vistaPieHorarioIda);
+			vistaPieHorarioIda = null;
+		}
+
+	}
+
+	/**
+	 * Eliminar datos horarios
+	 */
+	public void limpiarHorariosVuelta() {
+
+		datosHorarios = null;
+
+		ListView vueltaView = (ListView) findViewById(R.id.infolinea_lista_vuelta);
+
+		if (vueltaView.getFooterViewsCount() > 0) {
+			vueltaView.removeFooterView(vistaPieHorarioVuelta);
+			vistaPieHorarioVuelta = null;
+		}
+
+	}
+
 }

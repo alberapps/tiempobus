@@ -67,22 +67,22 @@ public class FragmentVuelta extends Fragment {
 
 		TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
 
-		
+		if (actividad.datosHorarios != null) {
 
-		if(actividad.datosHorarios != null){
-			
 			titVuelta.setText(actividad.datosHorarios.getTituloSalidaVuelta());
-			
+
 			actividad.cargarListadoHorarioVuelta();
-			
-		}else if (actividad.datosVuelta != null) {
-			
+
+		} else if (actividad.datosVuelta != null) {
+
+			actividad.limpiarHorariosVuelta();
+
 			if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
 				titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
 			} else {
 				titVuelta.setText("-");
 			}
-			
+
 			cargarListado();
 		} else {
 

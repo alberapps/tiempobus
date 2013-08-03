@@ -269,7 +269,7 @@
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
-    <string name="error_status">El servicio de tiempos ha devuelto un estado incorrecto. Verifica la disponibilidad.</string>
+    <string name="error_status">Sin resultados: Comprueba que el número de parada sea valido o si el servicio está disponible.</string>
     
     <string name="infolinea_horarios">Horarios</string>
     <string name="infolinea_paradas">Paradas</string>
