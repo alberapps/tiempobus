@@ -41,8 +41,6 @@ public class ProcesarHorarios {
 
 	public static String URL_SUBUS = "http://www.subus.es";
 
-	public static String HORARIO_URL = "http://www.subus.es/Lineas/Horario.asp?codigo=189";
-
 	public static String LINEA_URL = "http://www.subus.es/Lineas/Linea.asp?linea=";// ALC24";
 
 	public static DatosHorarios getDetalleHorario(BusLinea datosLinea) throws Exception {
@@ -51,12 +49,10 @@ public class ProcesarHorarios {
 
 		DatosHorarios datosHorario = null;
 
-		String url = HORARIO_URL;
-
 		/*
-		 * Especiales resueltas: 31, 30P, 4, 7, C6,27, C-53, 46B
-		 * faltantes: 30, 191, 192,M, C2, 45, 46A, 46B
-		 * Revisar 21N Los que empiezan a las 0:00 Sin datos: 25N TURIBUS
+		 * Especiales resueltas: 31, 30P, 4, 7, C6,27, C-53, 46B faltantes: 30,
+		 * 191, 192,M, C2, 45, 46A, 46B Revisar 21N Los que empiezan a las 0:00
+		 * Sin datos: 25N TURIBUS
 		 */
 
 		try {
@@ -67,19 +63,15 @@ public class ProcesarHorarios {
 
 				int posicionTabla = 5;
 
-				st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS + datosHorario.getHorariosIda().get(i).getLinkHorario());
+				String url = URL_SUBUS + datosHorario.getHorariosIda().get(i).getLinkHorario();
+
+				st = Utilidades.recuperarStreamConexionSimple(url);
 
 				Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 
 				String title = doc.title();
 
 				Elements tables = doc.select("table");
-
-				// Log.d("HORARIOS", "table3: " + tables.get(3));
-
-				// Log.d("HORARIOS", "table4: " + tables.get(4));
-
-				// Log.d("HORARIOS", "table5: " + tables.get(5));
 
 				// Titulo ida
 				Element table5 = tables.get(posicionTabla);
@@ -121,12 +113,11 @@ public class ProcesarHorarios {
 
 						if (datosHorario.getComentariosIda() == null) {
 							datosHorario.setComentariosIda(new StringBuffer(""));
-						} 
-						
+						}
+
 						datosHorario.getComentariosIda().append("[");
 						datosHorario.getComentariosIda().append(datosHorario.getHorariosIda().get(i).getTituloHorario());
 						datosHorario.getComentariosIda().append("]: ");
-						
 
 						datosHorario.getComentariosIda().append(posibleComentario);
 
@@ -182,12 +173,11 @@ public class ProcesarHorarios {
 
 						if (datosHorario.getComentariosVuelta() == null) {
 							datosHorario.setComentariosVuelta(new StringBuffer(""));
-						} 
-						
+						}
+
 						datosHorario.getComentariosVuelta().append("[");
 						datosHorario.getComentariosVuelta().append(datosHorario.getHorariosVuelta().get(i).getTituloHorario());
 						datosHorario.getComentariosVuelta().append("]: ");
-						
 
 						datosHorario.getComentariosVuelta().append(posibleComentario2);
 
@@ -217,9 +207,9 @@ public class ProcesarHorarios {
 			} catch (IOException eb) {
 
 			}
-			
+
 			Log.d("HORARIOS", "Error en procesado de tiempos");
-			
+
 			throw e;
 
 		} finally {
@@ -277,11 +267,10 @@ public class ProcesarHorarios {
 				datos.getHorariosVuelta().add(horario);
 
 			}
-			
-			if(datos.getHorariosIda() == null || datos.getHorariosIda().isEmpty()){
+
+			if (datos.getHorariosIda() == null || datos.getHorariosIda().isEmpty()) {
 				throw new Exception("Error paso 1");
 			}
-			
 
 		} catch (Exception e) {
 			try {
@@ -293,7 +282,7 @@ public class ProcesarHorarios {
 			}
 
 			Log.d("HORARIOS", "Error en procesado de tiempos paso 1");
-			
+
 			throw e;
 
 		} finally {

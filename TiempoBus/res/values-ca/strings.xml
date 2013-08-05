@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.5</string>
+    <string name="app_version">2.5.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -265,7 +265,7 @@ favorit per crear la teua llista.</string>
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
-    <string name="error_status">Sense resultats: Comprova el número de parada o si el servei està disponible.</string>
+    <string name="error_status">El servei no ha tornat resultats</string>
     
     <string name="infolinea_horarios">Horaris</string>
     <string name="infolinea_paradas">Parades</string>

@@ -42,9 +42,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.AsyncTask.Status;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -57,9 +57,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
@@ -93,7 +91,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 	View vistaPieHorarioIda = null;
 	View vistaPieHorarioVuelta = null;
-	View vistaPieAviso = null;
+	View vistaPieAvisoIda = null;
+	View vistaPieAvisoVuelta = null;
 
 	// Red a usar 0(subus online) 1(subus local) 2(tram)
 	public static int MODO_RED_SUBUS_ONLINE = 0;
@@ -108,7 +107,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
 	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
 	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
-	
+
 	public BusLinea getLinea() {
 		return linea;
 	}
@@ -165,16 +164,15 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-	
+
 	@Override
 	protected void onDestroy() {
-		
+
 		detenerTareas();
-		
-		
+
 		super.onDestroy();
 	}
-	
+
 	public void detenerTareas() {
 
 		if (taskHorarios != null && taskHorarios.getStatus() == Status.RUNNING) {
@@ -184,7 +182,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			Log.d("INFOLINEA", "Cancelada task horarios");
 
 		}
-		
+
 		if (taskBuses != null && taskBuses.getStatus() == Status.RUNNING) {
 
 			taskBuses.cancel(true);
@@ -192,7 +190,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			Log.d("INFOLINEA", "Cancelada task buses");
 
 		}
-		
+
 		if (taskDatosLinea != null && taskDatosLinea.getStatus() == Status.RUNNING) {
 
 			taskDatosLinea.cancel(true);
@@ -200,7 +198,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			Log.d("INFOLINEA", "Cancelada task datos linea");
 
 		}
-		
+
 		if (taskInfoLineaIda != null && taskInfoLineaIda.getStatus() == Status.RUNNING) {
 
 			taskInfoLineaIda.cancel(true);
@@ -210,8 +208,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-	
-	
+
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -539,15 +536,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 			// Pie aviso
 			LayoutInflater li2 = LayoutInflater.from(this);
-			vistaPieAviso = li2.inflate(R.layout.infolineas_horarios_item, null);
-			TextView descHorario2 = (TextView) vistaPieAviso.findViewById(R.id.desc_horario);
-			TextView datosHorario2 = (TextView) vistaPieAviso.findViewById(R.id.datos_horario);
-			descHorario2.setText(getString(R.string.aviso_noticia));
-			datosHorario2.setAutoLinkMask(Linkify.ALL);
-			datosHorario2.setLinksClickable(true);
-			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+			vistaPieAvisoIda = li2.inflate(R.layout.infolineas_horarios_item, null);
+			TextView descHorario2 = (TextView) vistaPieAvisoIda.findViewById(R.id.desc_horario);
 
-			idaView.addFooterView(vistaPieAviso);
+			descHorario2.setText(getString(R.string.aviso_noticia));
+
+			idaView.addFooterView(vistaPieAvisoIda);
 
 		}
 
@@ -565,6 +559,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 		datosHorario.setText(comentarios.toString());
+
+		// Aviso
+		TextView datosHorario2 = (TextView) vistaPieAvisoIda.findViewById(R.id.datos_horario);
+		datosHorario2.setAutoLinkMask(Linkify.ALL);
+		datosHorario2.setLinksClickable(true);
+		datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
 
 		idaView.setAdapter(infoLineaHorariosAdapter);
 
@@ -597,15 +597,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 			// Pie aviso
 			LayoutInflater li2 = LayoutInflater.from(this);
-			vistaPieAviso = li2.inflate(R.layout.infolineas_horarios_item, null);
-			TextView descHorario2 = (TextView) vistaPieAviso.findViewById(R.id.desc_horario);
-			TextView datosHorario2 = (TextView) vistaPieAviso.findViewById(R.id.datos_horario);
-			descHorario2.setText(getString(R.string.aviso_noticia));
-			datosHorario2.setAutoLinkMask(Linkify.ALL);
-			datosHorario2.setLinksClickable(true);
-			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+			vistaPieAvisoVuelta = li2.inflate(R.layout.infolineas_horarios_item, null);
+			TextView descHorario2 = (TextView) vistaPieAvisoVuelta.findViewById(R.id.desc_horario);
 
-			vueltaView.addFooterView(vistaPieAviso);
+			descHorario2.setText(getString(R.string.aviso_noticia));
+
+			vueltaView.addFooterView(vistaPieAvisoVuelta);
 
 		}
 
@@ -624,6 +621,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		datosHorario.setText(comentarios);
 
+		// Aviso
+		TextView datosHorario2 = (TextView) vistaPieAvisoVuelta.findViewById(R.id.datos_horario);
+		datosHorario2.setAutoLinkMask(Linkify.ALL);
+		datosHorario2.setLinksClickable(true);
+		datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+
 		vueltaView.setAdapter(infoLineaHorariosAdapter);
 
 		infoLineaHorariosAdapter.notifyDataSetChanged();
@@ -635,12 +638,15 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	 */
 	public void limpiarHorariosIda() {
 
+		Log.d("INFOLINEAS", "limpiar horarios ida");
+
 		datosHorarios = null;
 
 		ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
 
 		if (idaView.getFooterViewsCount() > 0) {
 			idaView.removeFooterView(vistaPieHorarioIda);
+			idaView.removeFooterView(vistaPieAvisoIda);
 			vistaPieHorarioIda = null;
 		}
 
@@ -657,7 +663,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		if (vueltaView.getFooterViewsCount() > 0) {
 			vueltaView.removeFooterView(vistaPieHorarioVuelta);
-			vueltaView.removeFooterView(vistaPieAviso);
+			vueltaView.removeFooterView(vistaPieAvisoVuelta);
 			vistaPieHorarioVuelta = null;
 		}
 

@@ -74,6 +74,8 @@ public class FragmentIda extends Fragment {
 			
 		}else if (actividad.datosIda != null) {
 			
+			actividad.limpiarHorariosIda();
+			
 			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
 				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
 			} else {

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.5</string>
+    <string name="app_version">2.5.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2012)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -262,7 +262,7 @@
     
     <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
-     <string name="error_status">No results: Check the number of stop or if the service is available.</string>
+     <string name="error_status">The service did not return results</string>
     
     <string name="infolinea_horarios">Timetable</string>
     <string name="infolinea_paradas">Bus stops</string>

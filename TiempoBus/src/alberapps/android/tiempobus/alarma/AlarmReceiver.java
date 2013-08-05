@@ -37,120 +37,34 @@ import android.util.Log;
  */
 public class AlarmReceiver extends BroadcastReceiver {
 	public static final int ALARM_ID = 1;
-	
-	
-	
-	
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Bundle extras = intent.getExtras();
 
 		CharSequence tickerText = extras.getCharSequence("alarmTxt");
 		int parada = extras.getInt("poste");
-		
-		//SharedPreferences preferencias =  PreferenceManager.getDefaultSharedPreferences(context);
-		
-		//SharedPreferences preferenciasAlertas = context.getSharedPreferences("prefalertas", Context.MODE_MULTI_PROCESS);
-		
-		/*
-		// Get a reference to the notification manager
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
 
-		// Instantiate the Notification
-		int icon = R.drawable.ic_stat_tiempobus_notif;
-		CharSequence tickerText = extras.getCharSequence("alarmTxt");
-		long when = System.currentTimeMillis();
-
-		Notification notification = new Notification(icon, tickerText, when);
-		
-		// Define the Notification's expanded message and Intent:
-		CharSequence contentTitle = context.getString(R.string.notification_title);
-		CharSequence contentText = "" + extras.getString("alarmTxt");
-		
-		
-		//Sonido seleccionado
-		String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");        
-		
-		Uri alertSound = null;
-		
-		if(strRingtonePreference == "DEFAULT_SOUND"){
-			alertSound = RingtoneManager.getDefaultUri( Notification.DEFAULT_SOUND );
-		}else{
-			alertSound = Uri.parse(strRingtonePreference);
-		}		
-		
-				
-		// play a sound
-		//Uri alertSound = RingtoneManager.getDefaultUri( Notification.DEFAULT_SOUND );
-		if(alertSound!=null) {
-			notification.sound = alertSound;
-		}
-		
-		//Usar o no la vibracion
-		boolean controlVibrar = preferencias.getBoolean("alarma_vibrar", true);
-		
-		if(controlVibrar){
-			// vibrate
-			notification.defaults |= Notification.DEFAULT_VIBRATE;
-			notification.vibrate = new long[] {0,100,200,300};
-		}
-		
-		
-		// leds
-		notification.ledARGB = Color.YELLOW;
-		notification.ledOnMS = 300;
-		notification.ledOffMS = 1000;
-		notification.flags |= Notification.FLAG_SHOW_LIGHTS;	
-
-		// the asociated item
-		Intent notificationIntent = new Intent(context, MainActivity.class);		
-				
-		notificationIntent.putExtra("poste", extras.getInt("poste"));
-		 
-		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-		// Rock&Roll
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		
-		mNotificationManager.notify(ALARM_ID, notification);
-		
-		*/
-		
 		Log.d("", "Notificar alarma");
-		
+
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
+
 		PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
-		
+
 		alarmManager.cancel(alarmReceiver);
-		
+
 		alarmReceiver.cancel();
-		
-		
-		
-		
-		//Quitar info de la alarma
-	    //SharedPreferences.Editor editor = preferenciasAlertas.edit();
-		//editor.putString("alerta", "");
-		//editor.commit();
-		
+
 		PreferencesUtil.clearAlertaInfo(context);
-		
+
 		Log.d("", "Alarma finalizada1");
-		
-		//Parar el servic
-		context.stopService(new Intent(context,
-                TiemposForegroundService.class));
-		
+
+		// Parar el servic
+		context.stopService(new Intent(context, TiemposForegroundService.class));
+
 		Log.d("", "Alarma finalizada2");
-		
+
 		Notificaciones.notificacionAlarma(context, tickerText, parada);
-		
-		
-		
+
 	}
 }
