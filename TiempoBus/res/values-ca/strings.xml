@@ -15,7 +15,7 @@
         Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
 	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
 	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
-		\nDades de línies i temps obtinguts de: www.subus.es i isaealicante.subus.es/movil
+		\nDades de línies i temps obtinguts de: www.subus.es i isaealicante.subus.es/movil/index.aspx
 		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
     <string name="tit_buses">Línies&#8230;</string>
     <string name="tit_direccion">Direcció&#8230;</string>

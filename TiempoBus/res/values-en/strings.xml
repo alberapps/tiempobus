@@ -15,7 +15,7 @@
 	\nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
 	\nFeatures using the local database may not show the latest route changes.
 	\nThis application is UNofficial and its development is independent.
-	\nLine data and step times obtained from: www.subus.es and isaealicante.subus.es/movil
+	\nLine data and step times obtained from: www.subus.es and isaealicante.subus.es/movil/index.aspx
 	\nLearn more: alberapps.blogspot.com and at Twitter: @alberapps</string>
     <string name="tit_buses">Bus Lines&#8230;</string>
     <string name="tit_direccion">Address&#8230;</string>

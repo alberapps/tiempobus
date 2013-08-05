@@ -15,7 +15,7 @@
 	Questi tempi possono variare per motivi diversi aliene dalla applicazione, come il traffico, modifiche nel percorso, etc.
 	\nLe funzione che usano il database, possono non essere aggiornate.
 	\nQuesta applicazione NON è ufficiale e si sviluppa in modo indipendente.
-	\nDati di linee e tempi ottenuti da: www.subus.es ed isaealicante.subus.es/movil
+	\nDati di linee e tempi ottenuti da: www.subus.es ed isaealicante.subus.es/movil/index.aspx
 	\nPiù informazione: alberapps.blogspot.com e su Twitter: @alberapps</string>
     <string name="tit_buses">Linee&#8230;</string>
     <string name="tit_direccion">Destinazione&#8230;</string>
