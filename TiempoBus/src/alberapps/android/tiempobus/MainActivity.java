@@ -307,25 +307,30 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case 0:
 
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
 		case 1:
 
+			detenerTareaTiempos();
 			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
 			break;
 
 		case 2:
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
 		case 3:
+			detenerTareaTiempos();
 			nuevoFavorito();
 			break;
 
 		case 4:
 
+			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 			break;
 
@@ -570,7 +575,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case R.id.menu_fondo:
 
-			detenerTareaTiempos();
 			gestionarFondo.seleccionarFondo();
 
 			break;
@@ -1110,7 +1114,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				LoadTiemposAsyncTaskResponder loadTiemposAsyncTaskResponder = new LoadTiemposAsyncTaskResponder() {
 					public void tiemposLoaded(DatosRespuesta datosRespuesta) {
 
-						ArrayList<BusLlegada> tiempos = datosRespuesta.getListaBusLlegada();
+						ArrayList<BusLlegada> tiempos = null;
+
+						if (datosRespuesta != null) {
+							tiempos = datosRespuesta.getListaBusLlegada();
+						}
 
 						if (tiempos != null) {
 							buses = tiempos;
@@ -1132,7 +1140,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							tiemposView.setEmptyView(vacio);
 						}
 
-						if (datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
+						if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
 
 							Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
 

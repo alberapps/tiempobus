@@ -24,7 +24,6 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
-import alberapps.java.horarios.ProcesarHorarios;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
@@ -87,7 +86,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 			}
 
 			datosRespuesta.setListaBusLlegada(llegadasBus);
-			
+
 		} catch (EOFException e1) {
 
 			Log.d("tiempos", "Tiempos error intento 1");
@@ -103,23 +102,20 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 				return null;
 			}
-			
+
 			datosRespuesta.setListaBusLlegada(llegadasBus);
 
 		} catch (TiempoBusException e) {
 
 			datosRespuesta.setError(e.getCodigo());
 			datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
-			
+
 			e.printStackTrace();
 
 		} catch (Exception e) {
 
 			return null;
 		}
-
-		
-		
 
 		return datosRespuesta;
 	}
