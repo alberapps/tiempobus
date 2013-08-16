@@ -27,7 +27,7 @@ import android.provider.BaseColumns;
  * 
  */
 public class HistorialDB {
-	public static final String AUTHORITY = "alberapps.android.tiempobus";
+	public static final String AUTHORITY = "alberapps.android.tiempobus.historial.HistorialProvider";
 
 	// This class cannot be instantiated
 	private HistorialDB() {
@@ -45,6 +45,8 @@ public class HistorialDB {
 		 * content:// estilo URL para esta tabla
 		 */
 		public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/historial");
+		
+		public static final Uri CONTENT_URI_ID_PARADA = Uri.parse("content://" + AUTHORITY + "/historial/parada");
 
 		public static final String DEFAULT_SORT_ORDER = "fecha DESC";
 

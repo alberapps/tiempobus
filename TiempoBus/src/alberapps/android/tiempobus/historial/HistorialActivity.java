@@ -239,7 +239,7 @@ public class HistorialActivity extends ActionBarActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.favoritos, menu);
+		menuInflater.inflate(R.menu.historial, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -250,67 +250,12 @@ public class HistorialActivity extends ActionBarActivity {
 		SharedPreferences.Editor editor = preferencias.edit();
 
 		switch (item.getItemId()) {
-		case R.id.menu_ordenar_parada:
-
-			if (orden.equals(TiempoBusDb.Favoritos.NUM_A_SORT_ORDER)) {
-
-				orden = TiempoBusDb.Favoritos.NUM_D_SORT_ORDER;
-
-				consultarDatos(orden);
-
-				// Guardar
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_D_SORT_ORDER);
-				editor.commit();
-
-			} else {
-
-				orden = TiempoBusDb.Favoritos.NUM_A_SORT_ORDER;
-
-				consultarDatos(orden);
-
-				// Guardar
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_A_SORT_ORDER);
-				editor.commit();
-
-			}
-
-			break;
-		case R.id.menu_ordenar_nombre:
-
-			if (orden.equals(TiempoBusDb.Favoritos.NAME_A_SORT_ORDER)) {
-
-				orden = TiempoBusDb.Favoritos.NAME_D_SORT_ORDER;
-
-				consultarDatos(orden);
-
-				// Guarda
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_D_SORT_ORDER);
-				editor.commit();
-			} else {
-
-				orden = TiempoBusDb.Favoritos.NAME_A_SORT_ORDER;
-
-				consultarDatos(orden);
-
-				// Guarda
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_A_SORT_ORDER);
-				editor.commit();
-
-			}
-
-			break;
-
-		case R.id.menu_exportar:
+		case R.id.menu_hist_borrar:
 
 			
 
 			break;
-
-		case R.id.menu_importar:
-
-			
-
-			break;
+		
 
 		case android.R.id.home:
 			Intent intent = new Intent(this, MainActivity.class);

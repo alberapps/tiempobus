@@ -29,7 +29,9 @@ import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
+import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
+import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
@@ -38,12 +40,16 @@ import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 import android.app.AlertDialog;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -220,6 +226,106 @@ public class DatosPantallaPrincipal {
 	}
 
 	/**
+	 * 
+	 * @param paradaActual
+	 * @return
+	 */
+	public void gestionarHistorial(int paradaActual) {
+
+		try {
+
+			// Consultar datos
+			String parametros[] = { Integer.toString(paradaActual) };
+
+			Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+
+			if (cursor != null) {
+				List<Parada> listaParadas = new ArrayList<Parada>();
+
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+					Parada par = new Parada();
+
+					par.setLineaNum(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+					par.setLineaDesc(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+					par.setConexion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+					par.setCoordenadas(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+					par.setDestino(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+					par.setDireccion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+					par.setLatitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+					par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+					par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+
+					listaParadas.add(par);
+				}
+
+				Integer id = cargarIdParadaHistorial(Integer.toString(paradaActual));
+
+				// Almacenar historial
+				ContentValues values = new ContentValues();
+
+				Date fechaActual = new Date();
+
+				values.put(HistorialDB.Historial.TITULO, Utilidades.getFechaString(fechaActual));
+
+				if (listaParadas != null && !listaParadas.isEmpty() && listaParadas.get(0).getDireccion() != null) {
+					values.put(HistorialDB.Historial.DESCRIPCION, listaParadas.get(0).getDireccion());
+				} else {
+					values.put(HistorialDB.Historial.DESCRIPCION, "");
+				}
+
+				values.put(HistorialDB.Historial.PARADA, paradaActual);
+
+				values.put(HistorialDB.Historial.FECHA, Utilidades.getFechaSQL(fechaActual));
+
+				if (id != null) {
+
+					Uri miUriM = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, id);
+
+					context.getContentResolver().update(miUriM, values, null, null);
+
+				} else {
+
+					context.getContentResolver().insert(HistorialDB.Historial.CONTENT_URI, values);
+				}
+
+			} else {
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public Integer cargarIdParadaHistorial(String parada) {
+
+		try {
+
+			String parametros[] = { parada };
+
+			Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
+
+			if (cursor != null) {
+
+				cursor.moveToFirst();
+
+				Log.d("HISTORIAL", "historial: " + cursor.getInt(cursor.getColumnIndex(HistorialDB.Historial._ID)));
+
+				return cursor.getInt(cursor.getColumnIndex(HistorialDB.Historial._ID));
+
+			} else {
+				return null;
+			}
+
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
+	/**
 	 * Verifica si hay nuevas noticias y muestra un aviso
 	 * 
 	 */
@@ -237,7 +343,6 @@ public class DatosPantallaPrincipal {
 
 					String fecha_ultima = "";
 					boolean lanzarAviso = false;
-					
 
 					// Ver si se guardo la fecha de la ultima noticia
 					if (preferencias.contains("ultima_noticia")) {

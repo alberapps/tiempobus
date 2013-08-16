@@ -275,4 +275,10 @@
     <string name="infolinea_paradas">Paradas</string>
     
     
+    <string name="historial_titulo">Historial</string>
+    <string name="historial_borrar_todo">Borrar Todo</string>
+    
+    
+    
+    
 </resources>

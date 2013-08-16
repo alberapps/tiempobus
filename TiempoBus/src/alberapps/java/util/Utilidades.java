@@ -198,8 +198,7 @@ public class Utilidades {
 			e.printStackTrace();
 
 			throw e;
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 
 			throw e;
@@ -434,8 +433,12 @@ public class Utilidades {
 
 		return datos;
 	}
-	
-	
+
+	/**
+	 * Date desde string
+	 * @param fecha
+	 * @return
+	 */
 	public static Date getFechaDate(String fecha) {
 
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -457,6 +460,53 @@ public class Utilidades {
 
 	}
 
+	/**
+	 * String desde date
+	 * 
+	 * @param fecha
+	 * @return
+	 */
+	public static String getFechaString(Date fecha) {
+
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+
+		String fechaString = null;
+
+		if (fecha != null) {
+
+			fechaString = df.format(fecha);
+
+			return fechaString;
+
+		}
+
+		return null;
+
+	}
 	
+	/**
+	 * String desde date
+	 * 
+	 * @param fecha
+	 * @return
+	 */
+	public static String getFechaSQL(Date fecha) {
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+		String fechaString = null;
+
+		if (fecha != null) {
+
+			fechaString = df.format(fecha);
+
+			return fechaString;
+
+		}
+
+		return null;
+
+	}
+
 
 }

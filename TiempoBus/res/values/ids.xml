@@ -49,4 +49,5 @@
     <item name="contenedor_tw" type="id"/>
     <item type="id" name="spinner_tiempos"/>
     <item type="id" name="contenedor_noticias_rss"/>
+    <item name="menu_hist_borrar" type="id"/>
 </resources>

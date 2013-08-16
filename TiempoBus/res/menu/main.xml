@@ -34,7 +34,7 @@
         android:title="@string/preferences"
         android:icon="@drawable/ic_menu_preferencias"
         android:orderInCategory="7"
-        android:showAsAction="never" /><item android:id="@+id/menu_noticias" android:orderInCategory="4" android:title="@string/tit_noticias" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item><item android:id="@+id/menu_mapas" android:orderInCategory="1" android:title="@string/menu_mapa" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item><item android:id="@id/menu_fondo" android:title="@string/fondo_pantall" android:icon="@drawable/ic_menu_fondo" android:orderInCategory="8" android:showAsAction="never" />
+        android:showAsAction="never" /><item android:id="@+id/menu_noticias" android:orderInCategory="4" android:title="@string/tit_noticias" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item><item android:id="@+id/menu_mapas" android:orderInCategory="1" android:title="@string/menu_mapa" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item><item android:id="@id/menu_fondo" android:title="@string/fondo_pantall" android:icon="@drawable/ic_menu_fondo" android:orderInCategory="8" android:showAsAction="never" /><item android:id="@+id/menu_hitorial" android:orderInCategory="9" android:title="@string/historial_titulo" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item>
         
         <!-- 
         <item android:id="@+id/menu_cancelar_alarma" android:orderInCategory="5" android:title="@string/menu_cancelar_alarma" android:showAsAction="never" android:icon="@drawable/ic_menu_cancelar_alarma"></item>

@@ -52,7 +52,7 @@ public class HistorialProvider extends ContentProvider {
 
 	private static final int HISTORIAL = 1;
 	private static final int HISTORIAL_ID = 2;
-	// private static final int FAVORITOS_POSTE = 3;
+	private static final int HISTORIAL_PARADA = 3;
 
 	private static HashMap<String, String> sHistorialProjectionMap;
 
@@ -83,7 +83,13 @@ public class HistorialProvider extends ContentProvider {
 
 		case HISTORIAL_ID:
 			qb.setProjectionMap(sHistorialProjectionMap);
-			qb.appendWhere(Favoritos._ID + "=" + uri.getPathSegments().get(1));
+			qb.appendWhere(Historial._ID + "=" + uri.getPathSegments().get(1));
+			break;
+
+		case HISTORIAL_PARADA:
+			qb.setProjectionMap(sHistorialProjectionMap);			
+			//qb.appendWhere(Historial.PARADA + "=" + selectionArgs[0]);
+			selection = Historial.PARADA + "= ?";
 			break;
 
 		default:
@@ -102,7 +108,7 @@ public class HistorialProvider extends ContentProvider {
 		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, orderBy);
 
-		Log.d("**debug**", c.toString());
+		Log.d("**debug**", Integer.toString(c.getCount()));
 		// Tell the cursor what uri to watch, so it knows when its source data
 		// changes
 		c.setNotificationUri(getContext().getContentResolver(), uri);
@@ -218,8 +224,7 @@ public class HistorialProvider extends ContentProvider {
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-		// sUriMatcher.addURI(HistorialDB.AUTHORITY, "favoritos/poste/#",
-		// FAVORITOS_POSTE);
+		sUriMatcher.addURI(HistorialDB.AUTHORITY, "historial/parada", HISTORIAL_PARADA);
 		sUriMatcher.addURI(HistorialDB.AUTHORITY, "historial/#", HISTORIAL_ID);
 		sUriMatcher.addURI(HistorialDB.AUTHORITY, "historial", HISTORIAL);
 

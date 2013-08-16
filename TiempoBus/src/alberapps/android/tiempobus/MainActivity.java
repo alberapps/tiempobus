@@ -34,6 +34,7 @@ import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.Utilidades;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
+import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
@@ -577,6 +578,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			gestionarFondo.seleccionarFondo();
 
+			break;
+			
+		case R.id.menu_hitorial:
+			detenerTareaTiempos();
+			startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
 		}
@@ -1215,6 +1221,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					cabdatos = "TRAM " + cabdatos;
 				}
 
+				//Historial
+				datosPantallaPrincipal.gestionarHistorial(paradaActual);
+				
+				
 				datosParada.setText(cabdatos);
 
 				final Calendar c = Calendar.getInstance();
