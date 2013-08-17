@@ -70,7 +70,7 @@
     <string name="menu_cancelar_alarma">Cancelar Alarma</string>
     <string name="acercade_info">Aplicación NO oficial. La información se obtiene de:</string>
     <string name="barcode_titulo">¿Desea instalar el lector de códigos QR?</string>
-    <string name="barcode_mensaje">Se recomienda Barcode Scanner de Zxing, para usar esta función. ¿Desea descargarla del Android Market?</string>
+    <string name="barcode_mensaje">Se recomienda Barcode Scanner de Zxing, para usar esta función. ¿Desea descargarla del Google Play?</string>
     <string name="barcode_si">Si</string>
     <string name="barcode_no">No</string>
     <string name="mapa_ir_parada">Cargar Tiempos</string>
@@ -278,7 +278,7 @@
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
-    
+    <string name="menu_export_qr">Exportar QR</string>
     
     
     

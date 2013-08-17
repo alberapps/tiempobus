@@ -69,7 +69,7 @@ favorit per crear la teua llista.</string>
     <string name="menu_cancelar_alarma">Cancel·lar Alarma</string>
     <string name="acercade_info">Aplicació NO oficial. La informació s\'obté de:</string>
     <string name="barcode_titulo">Voleu instal·lar el lector de codis QR?</string>
-    <string name="barcode_mensaje">Es recomana Barcode Scanner de ZXing, per emprar aquesta funció. Voleu descarregarla del Android Market?</string>
+    <string name="barcode_mensaje">Es recomana Barcode Scanner de ZXing, per emprar aquesta funció. Voleu descarregarla del Google Play?</string>
     <string name="barcode_si">Si</string>
     <string name="barcode_no">No</string>
     <string name="mapa_ir_parada">Carregar Temps</string>

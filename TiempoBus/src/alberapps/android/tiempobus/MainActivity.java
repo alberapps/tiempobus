@@ -289,20 +289,12 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
+	/**
+	 * Seleccion del menu lateral
+	 * 
+	 * @param position
+	 */
 	private void selectItem(int position) {
-		// update the main content by replacing fragments
-		// FragmentPrincipalDrawer fragment = new FragmentPrincipalDrawer();
-		// Bundle args = new Bundle();
-		// args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-		// fragment.setArguments(args);
-
-		// FragmentManager fragmentManager = getFragmentManager();
-		// fragmentManager.beginTransaction().replace(R.id.content_frame,
-		// fragment).commit();
-
-		// update selected item and title, then close the drawer
-		// mDrawerList.setItemChecked(position, true);
-		// setTitle(mDrawerTitles[position]);
 
 		switch (position) {
 
@@ -338,6 +330,26 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case 5:
 
 			gestionarFondo.seleccionarFondo();
+
+			break;
+
+		case 6:
+			detenerTareaTiempos();
+			startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+			break;
+
+		case 7:
+			IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+
+			// configurar
+			integrator.setTitleByID(R.string.barcode_titulo);
+			integrator.setMessageByID(R.string.barcode_mensaje);
+			integrator.setButtonYesByID(R.string.barcode_si);
+			integrator.setButtonNoByID(R.string.barcode_no);
+
+			String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
+
+			integrator.shareText(paradaCodificada);
 
 			break;
 
@@ -579,13 +591,31 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			gestionarFondo.seleccionarFondo();
 
 			break;
-			
+
 		case R.id.menu_hitorial:
 			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
+		case R.id.menu_exportar_qr:
+			// detenerTareaTiempos();
+
+			IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+
+			// configurar
+			integrator.setTitleByID(R.string.barcode_titulo);
+			integrator.setMessageByID(R.string.barcode_mensaje);
+			integrator.setButtonYesByID(R.string.barcode_si);
+			integrator.setButtonNoByID(R.string.barcode_no);
+
+			String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
+
+			integrator.shareText(paradaCodificada);
+
+			break;
+
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -1221,10 +1251,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					cabdatos = "TRAM " + cabdatos;
 				}
 
-				//Historial
+				// Historial
 				datosPantallaPrincipal.gestionarHistorial(paradaActual);
-				
-				
+
 				datosParada.setText(cabdatos);
 
 				final Calendar c = Calendar.getInstance();

@@ -69,7 +69,7 @@
     <string name="menu_cancelar_alarma">Annulla Allarme</string>
     <string name="acercade_info">Applicazione NON officiale Informazione ottenuta da:</string>
     <string name="barcode_titulo">Vuole installare il lettore di codici QR?</string>
-    <string name="barcode_mensaje">Si consiglia Barcode Scanner da Zxing per usare questa funzione. Vuole scaricare lui dall\'Android Market?</string>
+    <string name="barcode_mensaje">Si consiglia Barcode Scanner da Zxing per usare questa funzione. Vuole scaricare lui da Google Play?</string>
     <string name="barcode_si">Si</string>
     <string name="barcode_no">No</string>
     <string name="mapa_ir_parada">Carica Tempi</string>

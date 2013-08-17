@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package alberapps.android.tiempobus.barcode;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -30,7 +29,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 
 /**
@@ -106,15 +104,9 @@ import android.util.Log;
  * </p>
  * 
  * <p>
- * Finally, you can use {@link #addExtra(String, Object)} to add more parameters
- * to the Intent used to invoke the scanner. This can be used to set additional
- * options not directly exposed by this simplified API.
- * </p>
- * 
- * <p>
  * By default, this will only allow applications that are known to respond to
  * this intent correctly do so. The apps that are allowed to response can be set
- * with {@link #setTargetApplications(List)}. For example, set to
+ * with {@link #setTargetApplications(Collection)}. For example, set to
  * {@link #TARGET_BARCODE_SCANNER_ONLY} to only target the Barcode Scanner app
  * itself.
  * </p>
@@ -131,22 +123,13 @@ import android.util.Log;
  * Anobiit application.
  * </p>
  * 
- * <h2>Enabling experimental barcode formats</h2>
- * 
- * <p>
- * Some formats are not enabled by default even when scanning with
- * {@link #ALL_CODE_TYPES}, such as PDF417. Use
- * {@link #initiateScan(java.util.Collection)} with a collection containing the
- * names of formats to scan for explicitly, like "PDF_417", to use such formats.
- * </p>
- * 
  * @author Sean Owen
  * @author Fred Lin
  * @author Isaac Potoczny-Jones
  * @author Brad Drehmer
  * @author gcstang
  */
-public class IntentIntegrator {
+public class IntentIntegratorAnterior {
 
 	public static final int REQUEST_CODE = 0x0000c0de; // Only use bottom 16
 														// bits
@@ -158,7 +141,6 @@ public class IntentIntegrator {
 	public static final String DEFAULT_NO = "No";
 
 	private static final String BS_PACKAGE = "com.google.zxing.client.android";
-	private static final String BSPLUS_PACKAGE = "com.srowen.bs.android";
 
 	// supported barcode formats
 	public static final Collection<String> PRODUCT_CODE_TYPES = list("UPC_A", "UPC_E", "EAN_8", "EAN_13", "RSS_14");
@@ -168,12 +150,12 @@ public class IntentIntegrator {
 
 	public static final Collection<String> ALL_CODE_TYPES = null;
 
-	public static final List<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singletonList(BS_PACKAGE);
-	public static final List<String> TARGET_ALL_KNOWN = list(BSPLUS_PACKAGE, // Barcode
-																				// Scanner+
-			BSPLUS_PACKAGE + ".simple", // Barcode Scanner+ Simple
-			BS_PACKAGE // Barcode Scanner
-	// What else supports this intent?
+	public static final Collection<String> TARGET_BARCODE_SCANNER_ONLY = Collections.singleton(BS_PACKAGE);
+	public static final Collection<String> TARGET_ALL_KNOWN = list(BS_PACKAGE, // Barcode
+																				// Scanner
+			"com.srowen.bs.android", // Barcode Scanner+
+			"com.srowen.bs.android.simple" // Barcode Scanner+ Simple
+	// TODO add more -- what else supports this intent?
 	);
 
 	private final Activity activity;
@@ -181,17 +163,15 @@ public class IntentIntegrator {
 	private String message;
 	private String buttonYes;
 	private String buttonNo;
-	private List<String> targetApplications;
-	private final Map<String, Object> moreExtras;
+	private Collection<String> targetApplications;
 
-	public IntentIntegrator(Activity activity) {
+	public IntentIntegratorAnterior(Activity activity) {
 		this.activity = activity;
 		title = DEFAULT_TITLE;
 		message = DEFAULT_MESSAGE;
 		buttonYes = DEFAULT_YES;
 		buttonNo = DEFAULT_NO;
 		targetApplications = TARGET_ALL_KNOWN;
-		moreExtras = new HashMap<String, Object>(3);
 	}
 
 	public String getTitle() {
@@ -246,29 +226,18 @@ public class IntentIntegrator {
 		return targetApplications;
 	}
 
-	public final void setTargetApplications(List<String> targetApplications) {
-		if (targetApplications.isEmpty()) {
-			throw new IllegalArgumentException("No target applications");
-		}
+	public void setTargetApplications(Collection<String> targetApplications) {
 		this.targetApplications = targetApplications;
 	}
 
 	public void setSingleTargetApplication(String targetApplication) {
-		this.targetApplications = Collections.singletonList(targetApplication);
-	}
-
-	public Map<String, ?> getMoreExtras() {
-		return moreExtras;
-	}
-
-	public final void addExtra(String key, Object value) {
-		moreExtras.put(key, value);
+		this.targetApplications = Collections.singleton(targetApplication);
 	}
 
 	/**
 	 * Initiates a scan for all known barcode types.
 	 */
-	public final AlertDialog initiateScan() {
+	public AlertDialog initiateScan() {
 		return initiateScan(ALL_CODE_TYPES);
 	}
 
@@ -277,11 +246,8 @@ public class IntentIntegrator {
 	 * strings corresponding to their names in ZXing's {@code BarcodeFormat}
 	 * class like "UPC_A". You can supply constants like
 	 * {@link #PRODUCT_CODE_TYPES} for example.
-	 * 
-	 * @return the {@link AlertDialog} that was shown to the user prompting them
-	 *         to download the app if a prompt was needed, or null otherwise
 	 */
-	public final AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
+	public AlertDialog initiateScan(Collection<String> desiredBarcodeFormats) {
 		Intent intentScan = new Intent(BS_PACKAGE + ".SCAN");
 		intentScan.addCategory(Intent.CATEGORY_DEFAULT);
 
@@ -305,15 +271,14 @@ public class IntentIntegrator {
 		intentScan.setPackage(targetAppPackage);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intentScan.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		attachMoreExtras(intentScan);
 		startActivityForResult(intentScan, REQUEST_CODE);
 		return null;
 	}
 
 	/**
-	 * Start an activity. This method is defined to allow different methods of
-	 * activity starting for newer versions of Android and for compatibility
-	 * library.
+	 * Start an activity.<br>
+	 * This method is defined to allow different methods of activity starting
+	 * for newer versions of Android and for compatibility library.
 	 * 
 	 * @param intent
 	 *            Intent to start.
@@ -330,23 +295,14 @@ public class IntentIntegrator {
 		PackageManager pm = activity.getPackageManager();
 		List<ResolveInfo> availableApps = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
 		if (availableApps != null) {
-			for (String targetApp : targetApplications) {
-				if (contains(availableApps, targetApp)) {
-					return targetApp;
+			for (ResolveInfo availableApp : availableApps) {
+				String packageName = availableApp.activityInfo.packageName;
+				if (targetApplications.contains(packageName)) {
+					return packageName;
 				}
 			}
 		}
 		return null;
-	}
-
-	private static boolean contains(Iterable<ResolveInfo> availableApps, String targetApp) {
-		for (ResolveInfo availableApp : availableApps) {
-			String packageName = availableApp.activityInfo.packageName;
-			if (targetApp.equals(packageName)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private AlertDialog showDownloadDialog() {
@@ -356,15 +312,13 @@ public class IntentIntegrator {
 		downloadDialog.setPositiveButton(buttonYes, new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialogInterface, int i) {
-				//String packageName = targetApplications.get(0);
-				String packageName = targetApplications.get(2);
-				Uri uri = Uri.parse("market://details?id=" + packageName);
+				Uri uri = Uri.parse("market://details?id=" + BS_PACKAGE);
 				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 				try {
 					activity.startActivity(intent);
 				} catch (ActivityNotFoundException anfe) {
 					// Hmm, market is not installed
-					Log.w(TAG, "Google Play is not installed; cannot install " + packageName);
+					Log.w(TAG, "Android Market is not installed; cannot install Barcode Scanner");
 				}
 			}
 		});
@@ -403,70 +357,31 @@ public class IntentIntegrator {
 	}
 
 	/**
-	 * Defaults to type "TEXT_TYPE".
-	 * 
-	 * @see #shareText(CharSequence, CharSequence)
-	 */
-	public final AlertDialog shareText(CharSequence text) {
-		return shareText(text, "TEXT_TYPE");
-	}
-
-	/**
 	 * Shares the given text by encoding it as a barcode, such that another user
 	 * can scan the text off the screen of the device.
 	 * 
 	 * @param text
 	 *            the text string to encode as a barcode
-	 * @param type
-	 *            type of data to encode. See
-	 *            {@code com.google.zxing.client.android.Contents.Type}
-	 *            constants.
-	 * @return the {@link AlertDialog} that was shown to the user prompting them
-	 *         to download the app if a prompt was needed, or null otherwise
 	 */
-	public final AlertDialog shareText(CharSequence text, CharSequence type) {
+	public void shareText(CharSequence text) {
 		Intent intent = new Intent();
 		intent.addCategory(Intent.CATEGORY_DEFAULT);
 		intent.setAction(BS_PACKAGE + ".ENCODE");
-		intent.putExtra("ENCODE_TYPE", type);
+		intent.putExtra("ENCODE_TYPE", "TEXT_TYPE");
 		intent.putExtra("ENCODE_DATA", text);
 		String targetAppPackage = findTargetAppPackage(intent);
 		if (targetAppPackage == null) {
-			return showDownloadDialog();
+			showDownloadDialog();
+		} else {
+			intent.setPackage(targetAppPackage);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+			activity.startActivity(intent);
 		}
-		intent.setPackage(targetAppPackage);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		attachMoreExtras(intent);
-		activity.startActivity(intent);
-		return null;
 	}
 
-	private static List<String> list(String... values) {
-		return Collections.unmodifiableList(Arrays.asList(values));
-	}
-
-	private void attachMoreExtras(Intent intent) {
-		for (Map.Entry<String, Object> entry : moreExtras.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-			// Kind of hacky
-			if (value instanceof Integer) {
-				intent.putExtra(key, (Integer) value);
-			} else if (value instanceof Long) {
-				intent.putExtra(key, (Long) value);
-			} else if (value instanceof Boolean) {
-				intent.putExtra(key, (Boolean) value);
-			} else if (value instanceof Double) {
-				intent.putExtra(key, (Double) value);
-			} else if (value instanceof Float) {
-				intent.putExtra(key, (Float) value);
-			} else if (value instanceof Bundle) {
-				intent.putExtra(key, (Bundle) value);
-			} else {
-				intent.putExtra(key, value.toString());
-			}
-		}
+	private static Collection<String> list(String... values) {
+		return Collections.unmodifiableCollection(Arrays.asList(values));
 	}
 
 }

@@ -26,7 +26,7 @@ public class Utilidades {
 	 * 
 	 * 
 	 * @param qrCodeRecuperado
-	 * @return
+	 * @return codigo
 	 */
 	public static String parsearCodigoParada(String qrCodeRecuperado) {
 
@@ -47,6 +47,31 @@ public class Utilidades {
 		}
 
 		return codigo;
+
+	}
+
+	/**
+	 * 
+	 * FORMATO: SMSTO:215034:TAM 2932
+	 * 
+	 * Codificar el codigo para exportar
+	 * 
+	 * @param codigo
+	 * @return codigo
+	 */
+	public static String codificarCodigoParada(String codigo) {
+
+		StringBuffer qrCodeRecuperado = null;
+
+		if (codigo != null && !codigo.equals("")) {
+
+			qrCodeRecuperado = new StringBuffer("");
+			qrCodeRecuperado.append("SMSTO:215034:TAM ");
+			qrCodeRecuperado.append(codigo);
+
+		}
+
+		return qrCodeRecuperado.toString();
 
 	}
 

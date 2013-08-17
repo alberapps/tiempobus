@@ -71,6 +71,8 @@
         <item>Guardar</item>
         <item>Preferencias</item>
         <item>Fondo</item>        
+        <item>Historial</item>
+        <item>Exportar QR</item>
     </string-array>
    
 </resources>

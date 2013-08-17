@@ -69,7 +69,7 @@
     <string name="menu_cancelar_alarma">Annuler alarme </string>
     <string name="acercade_info">Application PAS officiel. L\'information est obtenue de:</string>
     <string name="barcode_titulo">Installer Barcode Scanner?</string>
-    <string name="barcode_mensaje">Pour utiliser cette fonction, on recommande ZXing Barcode Scanner. Voulez-vous le télécharger de l\'Android Market?</string>
+    <string name="barcode_mensaje">Pour utiliser cette fonction, on recommande ZXing Barcode Scanner. Voulez-vous le télécharger de Google Play?</string>
     <string name="barcode_si">Oui</string>
     <string name="barcode_no">Non</string>
     <string name="mapa_ir_parada">Charger temps</string>
