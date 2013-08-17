@@ -226,9 +226,10 @@ public class DatosPantallaPrincipal {
 	}
 
 	/**
+	 * Gestiona el historial
 	 * 
 	 * @param paradaActual
-	 * @return
+	 * 
 	 */
 	public void gestionarHistorial(int paradaActual) {
 
@@ -259,6 +260,7 @@ public class DatosPantallaPrincipal {
 					listaParadas.add(par);
 				}
 
+				// Comprueba si ya existe la parada para sustituirla
 				Integer id = cargarIdParadaHistorial(Integer.toString(paradaActual));
 
 				// Almacenar historial
@@ -268,24 +270,40 @@ public class DatosPantallaPrincipal {
 
 				values.put(HistorialDB.Historial.TITULO, Utilidades.getFechaString(fechaActual));
 
+				StringBuffer descripcion = new StringBuffer("");
+
 				if (listaParadas != null && !listaParadas.isEmpty() && listaParadas.get(0).getDireccion() != null) {
-					values.put(HistorialDB.Historial.DESCRIPCION, listaParadas.get(0).getDireccion());
-				} else {
-					values.put(HistorialDB.Historial.DESCRIPCION, "");
+					descripcion.append(listaParadas.get(0).getDireccion());
+					descripcion.append("\n");
+					descripcion.append("T: ");
+					descripcion.append(listaParadas.get(0).getConexion());
 				}
 
-				values.put(HistorialDB.Historial.PARADA, paradaActual);
+				// Descripcion del favorito
+				String favorito = cargarDescripcion(Integer.toString(paradaActual));
 
+				if (favorito != null && !favorito.equals("")) {
+					if (descripcion.length() > 1) {
+						descripcion.append("\n");
+					}
+					descripcion.append("\"");
+					descripcion.append(favorito);
+					descripcion.append("\"");
+				}
+
+				values.put(HistorialDB.Historial.DESCRIPCION, descripcion.toString());
+
+				values.put(HistorialDB.Historial.PARADA, paradaActual);
 				values.put(HistorialDB.Historial.FECHA, Utilidades.getFechaSQL(fechaActual));
 
 				if (id != null) {
-
+					// La actualiza
 					Uri miUriM = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, id);
 
 					context.getContentResolver().update(miUriM, values, null, null);
 
 				} else {
-
+					// Una nueva
 					context.getContentResolver().insert(HistorialDB.Historial.CONTENT_URI, values);
 				}
 
@@ -299,6 +317,12 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	/**
+	 * Consultar si la parada ya esta en el historial
+	 * 
+	 * @param parada
+	 * @return
+	 */
 	public Integer cargarIdParadaHistorial(String parada) {
 
 		try {

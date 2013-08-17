@@ -22,7 +22,6 @@ package alberapps.android.tiempobus.historial;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
-import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.ActionBar;
@@ -53,18 +52,16 @@ import android.widget.Toast;
  * 
  */
 public class HistorialActivity extends ActionBarActivity {
-	
 
 	public static final String[] PROJECTION = new String[] { HistorialDB.Historial._ID, // 0
-		HistorialDB.Historial.PARADA, // 1
-		HistorialDB.Historial.TITULO, // 2
-		HistorialDB.Historial.DESCRIPCION, // 3
-		HistorialDB.Historial.FECHA, // 4
+			HistorialDB.Historial.PARADA, // 1
+			HistorialDB.Historial.TITULO, // 2
+			HistorialDB.Historial.DESCRIPCION, // 3
+			HistorialDB.Historial.FECHA, // 4
 	};
 
 	private static final int MENU_BORRAR = 2;
 
-	
 	private ListView favoritosView;
 
 	SimpleCursorAdapter adapter;
@@ -122,7 +119,7 @@ public class HistorialActivity extends ActionBarActivity {
 		/*
 		 * Mapeamos las querys SQL a los campos de las vistas
 		 */
-		String[] camposDb = new String[] { HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION};
+		String[] camposDb = new String[] { HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION };
 		int[] camposView = new int[] { R.id.poste, R.id.titulo, R.id.descripcion };
 
 		adapter = new SimpleCursorAdapter(this, R.layout.favoritos_item, cursor, camposDb, camposView);
@@ -146,12 +143,6 @@ public class HistorialActivity extends ActionBarActivity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-		/*
-		 * if (adapter.getCount() == 0) { Toast.makeText(FavoritosActivity.this,
-		 * R.string.no_favs, Toast.LENGTH_SHORT).show();
-		 * 
-		 * finish(); }
-		 */
 	}
 
 	/**
@@ -192,7 +183,6 @@ public class HistorialActivity extends ActionBarActivity {
 		menu.setHeaderTitle(R.string.menu_contextual);
 
 		menu.add(0, MENU_BORRAR, 0, getResources().getText(R.string.menu_borrar));
-		
 
 	}
 
@@ -209,19 +199,15 @@ public class HistorialActivity extends ActionBarActivity {
 
 			getContentResolver().delete(miUri, null, null);
 
-			Toast.makeText(this, getResources().getText(R.string.info_borrar), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 
 			return true;
-
-		
 
 		default:
 			// return super.onContextItemSelected(item);
 		}
 		return false;
 	}
-
-	
 
 	/**
 	 * Seleccion del fondo de la galeria en el arranque
@@ -247,15 +233,14 @@ public class HistorialActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		SharedPreferences.Editor editor = preferencias.edit();
-
 		switch (item.getItemId()) {
 		case R.id.menu_hist_borrar:
 
-			
+			getContentResolver().delete(HistorialDB.Historial.CONTENT_URI, null, null);
+
+			Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 
 			break;
-		
 
 		case android.R.id.home:
 			Intent intent = new Intent(this, MainActivity.class);
@@ -268,5 +253,4 @@ public class HistorialActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	
 }

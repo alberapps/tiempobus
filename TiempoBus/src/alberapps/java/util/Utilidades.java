@@ -436,6 +436,7 @@ public class Utilidades {
 
 	/**
 	 * Date desde string
+	 * 
 	 * @param fecha
 	 * @return
 	 */
@@ -468,7 +469,7 @@ public class Utilidades {
 	 */
 	public static String getFechaString(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.getDefault());
 
 		String fechaString = null;
 
@@ -483,7 +484,7 @@ public class Utilidades {
 		return null;
 
 	}
-	
+
 	/**
 	 * String desde date
 	 * 
@@ -507,6 +508,5 @@ public class Utilidades {
 		return null;
 
 	}
-
 
 }

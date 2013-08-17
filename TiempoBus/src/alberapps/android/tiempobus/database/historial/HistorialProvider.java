@@ -87,8 +87,7 @@ public class HistorialProvider extends ContentProvider {
 			break;
 
 		case HISTORIAL_PARADA:
-			qb.setProjectionMap(sHistorialProjectionMap);			
-			//qb.appendWhere(Historial.PARADA + "=" + selectionArgs[0]);
+			qb.setProjectionMap(sHistorialProjectionMap);
 			selection = Historial.PARADA + "= ?";
 			break;
 
@@ -148,8 +147,6 @@ public class HistorialProvider extends ContentProvider {
 		} else {
 			values = new ContentValues();
 		}
-
-		// Long now = Long.valueOf(System.currentTimeMillis());
 
 		// Make sure that the fields are all set
 		if (values.containsKey(HistorialDB.Historial.DESCRIPCION) == false) {
