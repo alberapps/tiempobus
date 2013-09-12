@@ -69,7 +69,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 45; // 42
+	private static final int DATABASE_VERSION = 47; // 45
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -370,6 +370,8 @@ public class DatosLineasDB {
 					} catch (Exception e) {
 
 						Log.d(TAG, "No se pueden precargar los datos");
+						
+						e.printStackTrace();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
 
@@ -426,6 +428,8 @@ public class DatosLineasDB {
 
 						Log.d(TAG, "No se pueden precargar los datos");
 
+						e.printStackTrace();
+						
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
 
 					} finally {
@@ -574,6 +578,8 @@ public class DatosLineasDB {
 							transbordo.append("L9");
 						} else if (strings1[i].equals("41")) {
 							transbordo.append("4L");
+						}else if (strings1[i].equals("2")) {
+							transbordo.append("L2");
 						}
 
 					}
@@ -596,9 +602,18 @@ public class DatosLineasDB {
 						} else if (strings1[i].equals("41")) {
 							strings[0] = "4L";
 							strings[1] = "4L";
+						} else if (strings1[i].equals("2")) {
+							strings[0] = "L2";
+							strings[1] = "L2";
 						}
 
 						int posicion = UtilidadesTRAM.getIdLinea(strings[0]);
+						
+						Log.d("DB", "linea = " + strings[0] + " - " + strings1[i]);
+						Log.d("DB", "poscion = " + Integer.toString(posicion));
+						Log.d("DB", "poscion 2 = " + UtilidadesTRAM.TIPO[posicion]);
+						Log.d("DB", "poscion 3 = " + UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]]);
+						
 
 						strings[2] = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
 

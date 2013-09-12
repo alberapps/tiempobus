@@ -28,9 +28,8 @@ import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
-import android.content.Context;
+import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos
@@ -66,21 +65,25 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 	protected DatosRespuesta doInBackground(Object... datos) {
 		ArrayList<BusLlegada> llegadasBus = null;
 		DatosRespuesta datosRespuesta = new DatosRespuesta();
+
+		String parada = null;
+		int paradaI = 0;
+
 		try {
 
 			// llegadasBus =
 			// ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
 
-			String parada = ((Integer) datos[0]).toString();
+			parada = ((Integer) datos[0]).toString();
 
-			int paradaI = (Integer) datos[0];
+			paradaI = (Integer) datos[0];
 
-			Context contexto = (Context) datos[1];
+			//Context contexto = (Context) datos[1];
 
 			if (DatosPantallaPrincipal.esTram(parada)) {
 				// llegadasBus =
 				// ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
-				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI);
+				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, GetPasoParadaWebservice.URL1);
 			} else {
 				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
 			}
@@ -89,21 +92,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 		} catch (EOFException e1) {
 
-			Log.d("tiempos", "Tiempos error intento 1");
-
-			try {
-
-				Log.d("tiempos", "Tiempos intento 2");
-
-				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada((Integer) datos[0]);
-			} catch (Exception e2) {
-
-				Log.d("tiempos", "Tiempos error intento 2");
-
-				return null;
-			}
-
-			datosRespuesta.setListaBusLlegada(llegadasBus);
+			return null;
 
 		} catch (TiempoBusException e) {
 
@@ -113,6 +102,22 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 			e.printStackTrace();
 
 		} catch (Exception e) {
+
+			// Probar con acceso secundario
+			if (DatosPantallaPrincipal.esTram(parada)) {
+
+				try {
+					llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, GetPasoParadaWebservice.URL2);
+
+					datosRespuesta.setListaBusLlegada(llegadasBus);
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+
+					return null;
+
+				}
+			}
 
 			return null;
 		}

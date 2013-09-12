@@ -24,7 +24,7 @@ import alberapps.java.tam.mapas.ProcesarMapaService;
 import android.os.AsyncTask;
 
 /**
- * Tarea asincrona que se encarga de consultar las noticias
+ * Tarea para la carga de datos de los mapas
  * 
  * 
  */

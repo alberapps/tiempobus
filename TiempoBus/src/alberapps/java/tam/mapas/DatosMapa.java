@@ -24,32 +24,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
+
 public class DatosMapa implements Serializable {
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((placemarks == null) ? 0 : placemarks.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DatosMapa other = (DatosMapa) obj;
-		if (placemarks == null) {
-			if (other.placemarks != null)
-				return false;
-		} else if (!placemarks.equals(other.placemarks))
-			return false;
-		return true;
-	}
 
 	/**
 	 * 
@@ -61,6 +38,8 @@ public class DatosMapa implements Serializable {
 	private PlaceMark routePlacemark;
 
 	private List<PlaceMark> placemarksInversa = new ArrayList<PlaceMark>();
+
+	List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
 
 	// Recorrido
 	private String recorrido;
@@ -128,11 +107,43 @@ public class DatosMapa implements Serializable {
 		this.placemarksInversa = placemarksInversa;
 	}
 
-	
-	public void ordenarPlacemark(){
-		
+	public void ordenarPlacemark() {
+
 		Collections.sort(placemarks);
-		
+
 	}
-	
+
+	public List<InfoVehiculo> getVehiculosList() {
+		return vehiculosList;
+	}
+
+	public void setVehiculosList(List<InfoVehiculo> vehiculosList) {
+		this.vehiculosList = vehiculosList;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((placemarks == null) ? 0 : placemarks.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DatosMapa other = (DatosMapa) obj;
+		if (placemarks == null) {
+			if (other.placemarks != null)
+				return false;
+		} else if (!placemarks.equals(other.placemarks))
+			return false;
+		return true;
+	}
+
 }

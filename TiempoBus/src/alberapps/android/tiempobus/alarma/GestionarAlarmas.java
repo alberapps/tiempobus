@@ -178,7 +178,7 @@ public class GestionarAlarmas {
 
 		String horaT = ft.format(milisegundos);
 
-		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos;
+		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" +theBus.getDestino();
 
 		PreferencesUtil.putAlertaInfo(context, alertaDialog);
 
@@ -304,7 +304,8 @@ public class GestionarAlarmas {
 					intent.putExtra("PARADA", paradaActual);
 
 					boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-					if (checkActivo && !context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+					//if (checkActivo && !context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+					if (checkActivo) {
 						context.startService(intent);
 					}
 
@@ -368,9 +369,9 @@ public class GestionarAlarmas {
 
 			CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
 
-			if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-				check.setEnabled(false);
-			}
+			//if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+				//check.setEnabled(false);
+			//}
 
 			boolean checkActivo = preferencias.getBoolean("activarServicio", false);
 			check.setChecked(checkActivo);

@@ -37,7 +37,7 @@ import android.widget.TextView;
 public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 
 	private Context contexto;
-	
+
 	/**
 	 * Constructor
 	 * 
@@ -48,7 +48,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 		super(context, textViewResourceId);
 
 		this.contexto = context;
-		
+
 	}
 
 	/**
@@ -72,39 +72,42 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 		busLinea = (TextView) v.findViewById(R.id.bus_linea);
 		descLinea = (TextView) v.findViewById(R.id.desc_linea);
 		datosLinea = (TextView) v.findViewById(R.id.datos_linea);
-		
-		
+
 		final BusLinea bus = getItem(position);
 
 		if (bus != null) {
 			busLinea.setText(bus.getNumLinea());
 			descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
-			
+
 			datosLinea.setText(bus.getGrupo());
 
 		}
 
-		
 		TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
 
-		// Link informacion
-		informacionText.setOnClickListener(new OnClickListener() {
+		if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
-			public void onClick(View view) {
+			// Link informacion
+			informacionText.setOnClickListener(new OnClickListener() {
 
-				((InfoLineasTabsPager) contexto).setLinea(bus);
-				
-				((InfoLineasTabsPager) contexto).setTitle(bus.getLinea());
-				
-				((InfoLineasTabsPager) contexto).cargarHorarios(bus, position);
-								
+				public void onClick(View view) {
 
-			}
+					((InfoLineasTabsPager) contexto).setLinea(bus);
 
-		});
-		
-		
-		
+					((InfoLineasTabsPager) contexto).setTitle(bus.getLinea());
+
+					((InfoLineasTabsPager) contexto).cargarHorarios(bus, position);
+
+				}
+
+			});
+
+		} else {
+
+			informacionText.setVisibility(View.INVISIBLE);
+
+		}
+
 		return v;
 	}
 

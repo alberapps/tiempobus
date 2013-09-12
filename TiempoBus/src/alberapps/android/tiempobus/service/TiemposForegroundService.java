@@ -28,6 +28,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.alarma.AlarmReceiver;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.PreferencesUtil;
@@ -329,7 +330,16 @@ public class TiemposForegroundService extends Service {
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-					new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1]);
+				
+					if(DatosPantallaPrincipal.esTram(datos[0])){
+						
+						Log.d("TiemposService", "Recalculando para TRAM");
+						
+						new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1], datos[6]);
+					}else{
+						new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1]);
+					}
+				
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 				}
@@ -400,7 +410,7 @@ public class TiemposForegroundService extends Service {
 
 		String horaT = ft.format(milisegundos);
 
-		String alertaDialog = theBus.getLinea() + ";" + poste + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos;
+		String alertaDialog = theBus.getLinea() + ";" + poste + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" +theBus.getDestino();
 
 		Log.d("TiemposService", "Tiempo actualizado a: " + horaT);
 

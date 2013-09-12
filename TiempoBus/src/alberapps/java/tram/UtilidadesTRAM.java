@@ -25,9 +25,10 @@ import android.util.Log;
 
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = false;
+	public static boolean ACTIVADO_TRAM = true;
 		
-	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L" };
+	
+	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
 
 	public static int[] L1_ORDEN = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
 
@@ -38,13 +39,17 @@ public class UtilidadesTRAM {
 	public static int[] L9_ORDEN = { 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 };
 
 	public static int[] L4L_ORDEN = { 101, 102, 5 };
-
-	public static String[] DESC_TIPO = { "", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L" };
-
-	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta" };
-
 	
-	public static int[] TIPO = { 1, 2, 3, 4, 5 };
+	public static int[] L2_ORDEN = { 2, 3, 4, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161 };
+
+		
+	public static String[] DESC_TIPO = { "", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2" };
+
+
+	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente" };
+	
+	
+	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
 
 	public static List<PlaceMark> posicionesRecorrido(String linea, List<PlaceMark> recorrido) {
 
@@ -113,7 +118,20 @@ public class UtilidadesTRAM {
 				}
 
 			}
+		} else if (linea.equals("L2")) {
+			for (int i = 0; i < L2_ORDEN.length; i++) {
+
+			PlaceMark busqueda = new PlaceMark();
+			busqueda.setCodigoParada(Integer.toString(L2_ORDEN[i]));
+
+			try {
+				recorrido.get(recorrido.lastIndexOf(busqueda)).setOrden(i);
+			} catch (Exception e) {
+				Log.d("", L2_ORDEN[i] + " :L2");
+			}
+
 		}
+	}
 
 		return recorrido;
 	}
