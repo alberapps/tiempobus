@@ -262,4 +262,11 @@
     <string name="infolinea_horarios">Orari</string>
     <string name="infolinea_paradas">Fermata</string>
     
+    <!-- nuevo -->
+    <string name="historial_titulo">Historial</string>
+    <string name="historial_borrar_todo">Borrar Todo</string>
+    <string name="hist_info_borrar">Historial borrado</string>
+    <string name="menu_export_qr">Exportar QR</string>
+    
+    
 </resources>

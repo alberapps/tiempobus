@@ -30,6 +30,7 @@ import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos
@@ -78,7 +79,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 			paradaI = (Integer) datos[0];
 
-			//Context contexto = (Context) datos[1];
+			// Context contexto = (Context) datos[1];
 
 			if (DatosPantallaPrincipal.esTram(parada)) {
 				// llegadasBus =
@@ -92,6 +93,8 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 		} catch (EOFException e1) {
 
+			e1.printStackTrace();
+			
 			return null;
 
 		} catch (TiempoBusException e) {
@@ -107,6 +110,9 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 			if (DatosPantallaPrincipal.esTram(parada)) {
 
 				try {
+
+					Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
+
 					llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, GetPasoParadaWebservice.URL2);
 
 					datosRespuesta.setListaBusLlegada(llegadasBus);
@@ -117,9 +123,11 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 					return null;
 
 				}
-			}
+			} else {
 
-			return null;
+				return null;
+
+			}
 		}
 
 		return datosRespuesta;

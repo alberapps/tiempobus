@@ -1187,6 +1187,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	private void loadDatosVehiculos() {
 		
+		dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
+		
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -1212,6 +1214,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 				datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
 
 				cargarVehiculosMapa();
+				
+				dialog.dismiss();
 
 			} else {
 
@@ -1235,7 +1239,11 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	public void cargarVehiculosMapa() {
 
-	
+		if(itemizedOverlayVehiculos != null){
+			mapOverlays.remove(itemizedOverlayVehiculos);
+		}
+		
+		
 		drawableVehiculo = this.getResources().getDrawable(R.drawable.tramway);
 	
 		itemizedOverlayVehiculos = new MapasItemizedOverlay(drawableVehiculo, this);
@@ -1248,22 +1256,29 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		
 			for (int i = 0; i < datosMapaCargadosIda.getVehiculosList().size(); i++) {
-
-				//String[] coordenadas = datosMapaCargadosIda.getVehiculosList().get(i).getCoordinates().split(",");
-
-				//double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-				//double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
-				//int glat = (int) (lat * 1E6);
-				//int glng = (int) (lng * 1E6);
-
-				int glat = Integer.parseInt(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
-				int glng = Integer.parseInt(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
 				
-				double lat = (glat / 1E6);
-				double lng = (glng / 1E6);
+				double y = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
+				double x = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
+								
+				String coord = UtilidadesGeo.getLatLongUTMBus(y,x);
+				
+				String[] coordenadas = coord.split(",");
+				
+				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+				int glat = (int) (lat * 1E6);
+				int glng = (int) (lng * 1E6);
+				
+				point = new GeoPoint(glat, glng);
+				
+				
+				String descripcionAlert = getResources().getText(R.string.share_2) + " ";
+				
+				
+				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim() + "] " ,
+						descripcionAlert);
 
-				Log.d("MAPAS", "glat: " + glat + " glng: " + glng +    " lat: " + lat + " lng: " + lng);
-				   
+				itemizedOverlayVehiculos.addOverlay(overlayitem);
 				
 				/*
 				// 19240000,-99120000
@@ -1274,23 +1289,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				long x: 715923
 				lat y: 4253901
-				
+				30N 715923 4253901 -> 38.40728 -0.52710
+				geographiclib
 				//lat:38337176
 				//long:-491890
 
-				point = new GeoPoint(glat, glng);
-				// GeoPoint point = new GeoPoint(19240000,-99120000);
-
-				String descripcionAlert = getResources().getText(R.string.share_2) + " ";
-
-				
-
-				
-				
-				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim() + "] " ,
-						descripcionAlert);
-
-				itemizedOverlayVehiculos.addOverlay(overlayitem);*/
+				*/
 
 			}
 
@@ -1300,7 +1304,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 				avisoPosibleError();
 			}
 
-			
+			mapView.refreshDrawableState();
 			
 			
 			
