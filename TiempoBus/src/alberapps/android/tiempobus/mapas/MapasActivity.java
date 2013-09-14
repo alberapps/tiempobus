@@ -21,6 +21,8 @@ package alberapps.android.tiempobus.mapas;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -54,9 +56,10 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.AsyncTask.Status;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -65,6 +68,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -73,6 +77,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -104,7 +109,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	MapasItemizedOverlay itemizedOverlayIda;
 	MapasItemizedOverlay itemizedOverlayVuelta;
 	MapasItemizedOverlay itemizedOverlayMedio;
-	MapasItemizedOverlay itemizedOverlayVehiculos;
+	VehiculosItemizedOverlay itemizedOverlayVehiculos;
 
 	DatosMapa datosMapaCargadosIda;
 	DatosMapa datosMapaCargadosVuelta;
@@ -136,8 +141,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 	AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
 	AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
 	AsyncTask<String, Void, DatosMapa> taskVehiculosMapa = null;
-	
-	
+
+	Timer timer = null;
+
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
@@ -305,17 +311,65 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		});
 
+		// Control de boton vehiculos
+		final ToggleButton botonVehiculos = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
+
+		if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
+
+			if (vehiculosPref) {
+				botonVehiculos.setChecked(true);
+			}
+
+			botonVehiculos.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View v) {
+
+					if (botonVehiculos.isChecked()) {
+
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putBoolean("mapas_vehiculos", true);
+						editor.commit();
+
+						loadDatosVehiculos();
+					} else {
+
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putBoolean("mapas_vehiculos", false);
+						editor.commit();
+
+						if (itemizedOverlayVehiculos != null) {
+							mapOverlays.remove(itemizedOverlayVehiculos);
+							itemizedOverlayVehiculos = null;
+
+							if (timer != null) {
+								timer.cancel();
+							}
+							
+							mapView.invalidate();
+
+						}
+					}
+
+				}
+			});
+
+		} else {
+
+			botonVehiculos.setVisibility(View.INVISIBLE);
+
+		}
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
-		
+
 		detenerTareas();
-		
-		
+
 		super.onDestroy();
 	}
-	
 
 	public void detenerTareas() {
 
@@ -326,7 +380,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			Log.d("MAPAS", "Cancelada task datos mapa");
 
 		}
-		
+
 		if (taskDatosMapaVuelta != null && taskDatosMapaVuelta.getStatus() == Status.RUNNING) {
 
 			taskDatosMapaVuelta.cancel(true);
@@ -334,7 +388,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			Log.d("MAPAS", "Cancelada task datos mapa vuelta");
 
 		}
-		
+
 		if (taskBuses != null && taskBuses.getStatus() == Status.RUNNING) {
 
 			taskBuses.cancel(true);
@@ -342,7 +396,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			Log.d("MAPAS", "Cancelada task taskBuses");
 
 		}
-		
+
 		if (taskVehiculosMapa != null && taskVehiculosMapa.getStatus() == Status.RUNNING) {
 
 			taskVehiculosMapa.cancel(true);
@@ -351,7 +405,11 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		}
 
-		
+		if (timer != null) {
+
+			timer.cancel();
+
+		}
 	}
 
 	private void enableLocationSettings() {
@@ -522,8 +580,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 				try {
 					datosMapaCargadosVuelta = datos;
 					cargarMapa();
-					
-					
+
+					if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+						loadDatosVehiculos();
+					}
 
 				} catch (Exception e) {
 
@@ -590,6 +650,14 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		GeoPoint point = null;
 
+		// Recorrido ida
+		if (datosMapaCargadosIda != null && datosMapaCargadosIda.getRecorrido() != null && !datosMapaCargadosIda.getRecorrido().isEmpty()) {
+
+			// Recorrido
+			drawPath(datosMapaCargadosIda, Color.parseColor("#157087"), mapView);
+
+		}
+
 		// Datos IDA
 		if (datosMapaCargadosIda != null && !datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
@@ -606,8 +674,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 				int glng = (int) (lng * 1E6);
 
 				// 19240000,-99120000
-				//38337176
-				//-491890
+				// 38337176
+				// -491890
 
 				point = new GeoPoint(glat, glng);
 				// GeoPoint point = new GeoPoint(19240000,-99120000);
@@ -649,11 +717,16 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		boolean coincide = false;
 
-		// Datos VUELTA
-		if (datosMapaCargadosVuelta != null && !datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
+		// Recorrido vuelta
+		if (datosMapaCargadosVuelta != null && datosMapaCargadosVuelta.getRecorrido() != null && !datosMapaCargadosVuelta.getRecorrido().isEmpty()) {
 
 			// Recorrido
 			drawPath(datosMapaCargadosVuelta, Color.parseColor("#6C8715"), mapView);
+
+		}
+
+		// Datos VUELTA
+		if (datosMapaCargadosVuelta != null && !datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
 
 			for (int i = 0; i < datosMapaCargadosVuelta.getPlacemarks().size(); i++) {
 
@@ -740,7 +813,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 			mapView.getOverlays().add(mMyLocationOverlay);
 			mapView.getController().animateTo(mMyLocationOverlay.getMyLocation());
 
-		} else {
+		} else if (point != null) {
 
 			MapController mapController = mapView.getController();
 
@@ -881,9 +954,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	private void lineaSeleccionada(int posicion) {
 
+		detenerTareas();
+		
 		// Limpiar lista anterior para nuevas busquedas
-		if (mapView != null && mapView.getOverlays() != null)
+		if (mapView != null && mapView.getOverlays() != null){
 			mapView.getOverlays().clear();
+		}
 
 		lineaSeleccionada = lineasBus.get(posicion).getIdlinea();
 		lineaSeleccionadaDesc = lineasBus.get(posicion).getLinea();
@@ -967,11 +1043,15 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	private void cargarOcultarIda() {
 
-		if (datosMapaCargadosVuelta != null && datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
+		// if (datosMapaCargadosVuelta != null &&
+		// datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
 
-			Toast.makeText(this, getString(R.string.mapa_aviso_vacio), Toast.LENGTH_SHORT).show();
+		// Toast.makeText(this, getString(R.string.mapa_aviso_vacio),
+		// Toast.LENGTH_SHORT).show();
 
-		} else if (datosMapaCargadosIda != null) {
+		// } else
+
+		if (datosMapaCargadosIda != null) {
 
 			if (!datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 				datosMapaCargadosIdaAux = new DatosMapa();
@@ -986,6 +1066,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 				mapView.getOverlays().clear();
 
 			cargarMapa();
+
+			loadDatosVehiculos();
 		}
 	}
 
@@ -994,11 +1076,15 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	private void cargarOcultarVuelta() {
 
-		if (datosMapaCargadosIda != null && datosMapaCargadosIda.getPlacemarks().isEmpty()) {
+		// if (datosMapaCargadosIda != null &&
+		// datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
-			Toast.makeText(this, getString(R.string.mapa_aviso_vacio), Toast.LENGTH_SHORT).show();
+		// Toast.makeText(this, getString(R.string.mapa_aviso_vacio),
+		// Toast.LENGTH_SHORT).show();
 
-		} else if (datosMapaCargadosVuelta != null) {
+		// } else
+
+		if (datosMapaCargadosVuelta != null) {
 
 			if (!datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
 				datosMapaCargadosVueltaAux = new DatosMapa();
@@ -1013,6 +1099,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 				mapView.getOverlays().clear();
 
 			cargarMapa();
+
+			loadDatosVehiculos();
 
 		}
 	}
@@ -1044,11 +1132,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 			if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 				cargarOcultarIda();
 			}
-			
-			//Prueba
-			//loadDatosVehiculos();
-			
-			
+
+			// Prueba
+			// loadDatosVehiculos();
+
 			break;
 		case R.id.menu_vuelta:
 			if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
@@ -1172,28 +1259,53 @@ public class MapasActivity extends ActionBarMapaActivity {
 		return dialog;
 	}
 
-	
-	
-	
-	
-	
-	
 	/*
 	 * VEHICULOS
 	 */
-	
+
 	/**
 	 * Carga de vehiculos de la linea
 	 */
 	private void loadDatosVehiculos() {
-		
-		dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
-		
+
+		ToggleButton toogleButton = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
+
+		if (!toogleButton.isChecked() || lineaSeleccionadaNum == null || lineaSeleccionadaNum.equals("")) {
+			return;
+		}
+
+		// dialog = ProgressDialog.show(MapasActivity.this, "",
+		// getString(R.string.dialogo_espera), true);
+
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute("24");
+
+			if (timer != null) {
+				timer.cancel();
+			}
+
+			final Handler handler = new Handler();
+			timer = new Timer();
+			TimerTask timerTask = new TimerTask() {
+
+				@Override
+				public void run() {
+					handler.post(new Runnable() {
+
+						public void run() {
+
+							taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(lineaSeleccionadaNum);
+
+						}
+					});
+
+				}
+			};
+
+			timer.schedule(timerTask, 0, 30000);
+
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 			if (dialog != null && dialog.isShowing()) {
@@ -1207,14 +1319,14 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 * Carga de vehiculos de la linea
 	 */
 	LoadVehiculosMapaAsyncTaskResponder loadVehiculosMapaAsyncTaskResponder = new LoadVehiculosMapaAsyncTaskResponder() {
-		
+
 		public void vehiculosMapaLoaded(DatosMapa datosMapa) {
 
 			if (datosMapa != null && datosMapa.getVehiculosList() != null) {
 				datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
 
 				cargarVehiculosMapa();
-				
+
 				dialog.dismiss();
 
 			} else {
@@ -1230,71 +1342,55 @@ public class MapasActivity extends ActionBarMapaActivity {
 		}
 	};
 
-	
-	
-	
 	/**
 	 * Cargar el mapa con las paradas de la linea
 	 * 
 	 */
 	public void cargarVehiculosMapa() {
 
-		if(itemizedOverlayVehiculos != null){
+		if (itemizedOverlayVehiculos != null) {
 			mapOverlays.remove(itemizedOverlayVehiculos);
 		}
-		
-		
-		drawableVehiculo = this.getResources().getDrawable(R.drawable.tramway);
-	
-		itemizedOverlayVehiculos = new MapasItemizedOverlay(drawableVehiculo, this);
-	
-	
+
+		drawableVehiculo = this.getResources().getDrawable(R.drawable.bus);
+
+		itemizedOverlayVehiculos = new VehiculosItemizedOverlay(drawableVehiculo, this);
+
 		GeoPoint point = null;
 
 		// Datos IDA
 		if (datosMapaCargadosIda != null && !datosMapaCargadosIda.getVehiculosList().isEmpty()) {
 
-		
 			for (int i = 0; i < datosMapaCargadosIda.getVehiculosList().size(); i++) {
-				
+
 				double y = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
 				double x = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
-								
-				String coord = UtilidadesGeo.getLatLongUTMBus(y,x);
-				
+
+				String coord = UtilidadesGeo.getLatLongUTMBus(y, x);
+
 				String[] coordenadas = coord.split(",");
-				
+
 				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
 				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
 				int glat = (int) (lat * 1E6);
 				int glng = (int) (lng * 1E6);
-				
+
 				point = new GeoPoint(glat, glng);
-				
-				
-				String descripcionAlert = getResources().getText(R.string.share_2) + " ";
-				
-				
-				OverlayItem overlayitem = new OverlayItem(point, "[" + datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim() + "] " ,
-						descripcionAlert);
+
+				String descripcionAlert = "";
+
+				OverlayItem overlayitem = new OverlayItem(point, datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim(), descripcionAlert);
 
 				itemizedOverlayVehiculos.addOverlay(overlayitem);
-				
+
 				/*
-				// 19240000,-99120000
-
-//UTM a geograficas
- * geotools
- * jcoord
-
-				long x: 715923
-				lat y: 4253901
-				30N 715923 4253901 -> 38.40728 -0.52710
-				geographiclib
-				//lat:38337176
-				//long:-491890
-
-				*/
+				 * // 19240000,-99120000
+				 * 
+				 * //UTM a geograficas geotools jcoord
+				 * 
+				 * long x: 715923 lat y: 4253901 30N 715923 4253901 -> 38.40728
+				 * -0.52710 geographiclib //lat:38337176 //long:-491890
+				 */
 
 			}
 
@@ -1304,35 +1400,22 @@ public class MapasActivity extends ActionBarMapaActivity {
 				avisoPosibleError();
 			}
 
-			mapView.refreshDrawableState();
-			
-			
-			
+			mapView.invalidate();
+
 		}
 
-		
-		/*if (!primeraCarga) {
-			mapView.getOverlays().add(mMyLocationOverlay);
-			mapView.getController().animateTo(mMyLocationOverlay.getMyLocation());
-
-		} else {
-
-			MapController mapController = mapView.getController();
-
-			mapController.animateTo(point);
-			mapController.setZoom(15);
-		}*/
+		/*
+		 * if (!primeraCarga) { mapView.getOverlays().add(mMyLocationOverlay);
+		 * mapView
+		 * .getController().animateTo(mMyLocationOverlay.getMyLocation());
+		 * 
+		 * } else {
+		 * 
+		 * MapController mapController = mapView.getController();
+		 * 
+		 * mapController.animateTo(point); mapController.setZoom(15); }
+		 */
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

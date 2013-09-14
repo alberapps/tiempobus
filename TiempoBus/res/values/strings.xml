@@ -274,12 +274,14 @@
     <string name="infolinea_horarios">Horarios</string>
     <string name="infolinea_paradas">Paradas</string>
     
-    
+    <!-- nuevo -->
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
     <string name="menu_export_qr">Exportar QR</string>
     
-    
+    <string name="mapas_vehiculo_on">Bus SI</string>
+    <string name="mapas_vehiculo_off">Bus NO</string>
+    <string name="mapas_vehiculo_titulo">Bus</string>
     
 </resources>
