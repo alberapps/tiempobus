@@ -211,6 +211,11 @@ public class MapasActivity extends ActionBarMapaActivity {
 				// loadDatosMapa();
 
 				mapasOffline.loadDatosMapaOffline();
+				
+				if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+					loadDatosVehiculos();
+				}
+				
 
 			} else {
 				// launchBuses();
@@ -972,6 +977,11 @@ public class MapasActivity extends ActionBarMapaActivity {
 			loadDatosMapa();
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			mapasOffline.loadDatosMapaOffline();
+			
+			
+			loadDatosVehiculos();
+			
+			
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 			mapasOffline.loadDatosMapaTRAMOffline();
 		}
@@ -1363,6 +1373,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			for (int i = 0; i < datosMapaCargadosIda.getVehiculosList().size(); i++) {
 
+				if(!datosMapaCargadosIda.getVehiculosList().get(i).getEstado().equals("512")){
+					continue;
+				}
+				
 				double y = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
 				double x = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
 
@@ -1372,6 +1386,24 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
 				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+				
+				//Desvio en el calculo
+				lat = lat - 0.001517;
+				lng = lng - 0.001517;
+				
+				/*
+				 * prueba no: 0,002185
+				 * 
+				 * Erronea: 38.337297,-0.492949
+				 * correcta: 38.337625,-0.492155
+				 * desvio: +0,000328, +0,000794
+				 * 
+				 * Erronea: 38.338631,-0.490427
+				 * Correcta: 38.337114,-0.491668
+				 * desvio: 0,001517, −0,001241
+				 * 
+				 */
+				
 				int glat = (int) (lat * 1E6);
 				int glng = (int) (lng * 1E6);
 
