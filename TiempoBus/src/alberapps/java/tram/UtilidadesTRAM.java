@@ -25,7 +25,7 @@ import android.util.Log;
 
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = true;
+	public static boolean ACTIVADO_TRAM = false;
 		
 	
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
@@ -40,13 +40,15 @@ public class UtilidadesTRAM {
 
 	public static int[] L4L_ORDEN = { 101, 102, 5 };
 	
-	public static int[] L2_ORDEN = { 2, 3, 4, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161 };
+	public static int[] L2_ORDEN = { 2, 3, 4, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211 };
 
 		
 	public static String[] DESC_TIPO = { "", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2" };
 
 
 	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente" };
+	
+	public static String OBSERVACIONES_L9 = "** Actualmente la L9 no ofrece información de tiempos.";
 	
 	
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };

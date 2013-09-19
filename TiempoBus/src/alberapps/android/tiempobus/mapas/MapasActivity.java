@@ -1373,9 +1373,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			for (int i = 0; i < datosMapaCargadosIda.getVehiculosList().size(); i++) {
 
-				if(!datosMapaCargadosIda.getVehiculosList().get(i).getEstado().equals("512")){
-					continue;
-				}
+				//if(!datosMapaCargadosIda.getVehiculosList().get(i).getEstado().equals("512")){
+					//continue;
+				//}
 				
 				double y = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
 				double x = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
@@ -1411,7 +1411,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				String descripcionAlert = "";
 
-				OverlayItem overlayitem = new OverlayItem(point, datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim(), descripcionAlert);
+				OverlayItem overlayitem = new OverlayItem(point, datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim() + " Estado: " + datosMapaCargadosIda.getVehiculosList().get(i).getEstado(), descripcionAlert);
 
 				itemizedOverlayVehiculos.addOverlay(overlayitem);
 

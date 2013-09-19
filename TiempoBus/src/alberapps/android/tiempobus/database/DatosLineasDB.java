@@ -69,7 +69,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 47; // 45
+	private static final int DATABASE_VERSION = 49; // 45
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -627,7 +627,13 @@ public class DatosLineasDB {
 
 						strings[6] = transbordo.toString();
 
-						strings[7] = "";
+						if(strings[0].equals("L9")){
+							strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
+						}else{
+							strings[7] = "";
+						}
+						
+						
 
 						strings[8] = "TRAM";
 

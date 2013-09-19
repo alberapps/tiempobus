@@ -450,7 +450,7 @@ public class DatosPantallaPrincipal {
 			return false;
 		}
 
-		if (Integer.toString(paradaActual).length() < 4) {
+		if (Integer.toString(paradaActual).length() < 4 || Integer.toString(paradaActual).charAt(0) == '1') {
 			return true;
 		} else {
 			return false;
@@ -464,7 +464,7 @@ public class DatosPantallaPrincipal {
 			return false;
 		}
 
-		if (paradaActual.length() < 4) {
+		if (paradaActual.length() < 4 || paradaActual.charAt(0) == '1') {
 			return true;
 		} else {
 			return false;

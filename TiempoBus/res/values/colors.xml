@@ -24,7 +24,8 @@
     <color name="color_android">#292c29</color>
     <color name="gris_blog">#f1f1f1</color>
     <color name="gris_blog_b">#848284</color>
-    <color name="fondo_g">#e9e9e9</color>
+    <!-- <color name="fondo_g">#e9e9e9</color>-->
+     <color name="fondo_g">#eeeeee</color>
     
     <color name="color_tarjeta_1">#efefef</color>
     
