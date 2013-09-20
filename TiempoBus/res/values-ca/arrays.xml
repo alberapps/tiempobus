@@ -69,7 +69,9 @@
         <item>Favorits</item>
         <item>Guardar</item>
         <item>Preferències</item>
-        <item>Fons</item>        
+        <item>Fons</item>
+        <item>Historial</item>
+        <item>Exportar QR</item>        
     </string-array>
     
 </resources>

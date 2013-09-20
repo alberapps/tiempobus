@@ -69,7 +69,9 @@
         <item>Favoriti</item>
         <item>Salva</item>
         <item>Preferenze</item>
-        <item>Sfondo</item>        
+        <item>Sfondo</item> 
+        <item>Historial</item>
+        <item>Exportar QR</item>       
     </string-array>
    
 </resources>

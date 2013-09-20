@@ -69,7 +69,9 @@
         <item>Favoriten</item>
         <item>Speichern</item>
         <item>Einstellungen</item>
-        <item>Grund</item>        
+        <item>Grund</item>
+        <item>Historial</item>
+        <item>Exportar QR</item>        
     </string-array>
    
 </resources>

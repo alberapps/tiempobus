@@ -23,11 +23,7 @@ import java.util.ArrayList;
 import alberapps.android.tiempobus.R;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.widget.Toast;
 
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
@@ -74,8 +70,8 @@ public class VehiculosItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
 		dialog.setTitle(context.getString(R.string.mapas_vehiculo_titulo));
-		//dialog.setMessage(item.getSnippet());
-		dialog.setMessage(item.getTitle());		
+		// dialog.setMessage(item.getSnippet());
+		dialog.setMessage(item.getTitle());
 		dialog.setIcon(R.drawable.bus);
 
 		dialog.show();

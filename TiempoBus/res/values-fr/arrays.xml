@@ -69,7 +69,9 @@
         <item>Favoris</item>
         <item>Garder</item>
         <item>Paramètres</item>
-        <item>Found d\'écran</item>        
+        <item>Found d\'écran</item> 
+        <item>Historial</item>
+        <item>Exportar QR</item>       
     </string-array>
    
 </resources>

@@ -69,7 +69,9 @@
         <item>Favorites</item>
         <item>Save</item>
         <item>Settings</item>
-        <item>Wallpaper</item>        
+        <item>Wallpaper</item>  
+        <item>History</item>
+        <item>QR Export</item>      
     </string-array>
    
 </resources>

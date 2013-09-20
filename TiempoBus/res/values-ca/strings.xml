@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.5.2.1</string>
+    <string name="app_version">2.5.3</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -272,12 +272,12 @@ favorit per crear la teua llista.</string>
     
     <!-- nuevo -->
     <string name="historial_titulo">Historial</string>
-    <string name="historial_borrar_todo">Borrar Todo</string>
-    <string name="hist_info_borrar">Historial borrado</string>
+    <string name="historial_borrar_todo">Eliminar Tots</string>
+    <string name="hist_info_borrar">Historial eliminat</string>
     <string name="menu_export_qr">Exportar QR</string>
     
-     <string name="mapas_vehiculo_on">Bus SI</string>
-    <string name="mapas_vehiculo_off">Bus NO</string>
+     <string name="mapas_vehiculo_on">Bus ON</string>
+    <string name="mapas_vehiculo_off">Bus OFF</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
     
 </resources>
