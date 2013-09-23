@@ -655,7 +655,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		GeoPoint point = null;
 
 		// Recorrido ida
-		if (datosMapaCargadosIda != null && datosMapaCargadosIda.getRecorrido() != null && !datosMapaCargadosIda.getRecorrido().isEmpty()) {
+		if (datosMapaCargadosIda != null && datosMapaCargadosIda.getRecorrido() != null && !datosMapaCargadosIda.getRecorrido().equals("")) {
 
 			// Recorrido
 			drawPath(datosMapaCargadosIda, Color.parseColor("#157087"), mapView);
@@ -722,7 +722,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		boolean coincide = false;
 
 		// Recorrido vuelta
-		if (datosMapaCargadosVuelta != null && datosMapaCargadosVuelta.getRecorrido() != null && !datosMapaCargadosVuelta.getRecorrido().isEmpty()) {
+		if (datosMapaCargadosVuelta != null && datosMapaCargadosVuelta.getRecorrido() != null && !datosMapaCargadosVuelta.getRecorrido().equals("")) {
 
 			// Recorrido
 			drawPath(datosMapaCargadosVuelta, Color.parseColor("#6C8715"), mapView);
@@ -1329,7 +1329,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		public void vehiculosMapaLoaded(DatosMapa datosMapa) {
 
-			if (datosMapa != null && datosMapa.getVehiculosList() != null) {
+			if (datosMapa != null && datosMapa.getVehiculosList() != null && datosMapaCargadosIda != null) {
 				datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
 
 				cargarVehiculosMapa();
@@ -1430,7 +1430,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		}
 
-		
 	}
 
 }
