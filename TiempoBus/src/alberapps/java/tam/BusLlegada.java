@@ -42,6 +42,8 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	 */
 	private String proximo;
 
+	private BusLlegada segundoTram;
+
 	public BusLlegada() {
 
 	}
@@ -225,6 +227,14 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		}
 
 		return minutos;
+	}
+
+	public BusLlegada getSegundoTram() {
+		return segundoTram;
+	}
+
+	public void setSegundoTram(BusLlegada segundoTram) {
+		this.segundoTram = segundoTram;
 	}
 
 }

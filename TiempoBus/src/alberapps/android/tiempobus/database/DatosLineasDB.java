@@ -634,6 +634,12 @@ public class DatosLineasDB {
 						}
 						
 						
+						if(strings[0].equals("L1")){
+							strings[7] = UtilidadesTRAM.getObservacionesL1(strings[3]);
+						}else{
+							strings[7] = "";
+						}
+						
 
 						strings[8] = "TRAM";
 

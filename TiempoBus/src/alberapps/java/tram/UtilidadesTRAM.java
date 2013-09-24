@@ -25,12 +25,19 @@ import android.util.Log;
 
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = false;
+	public static boolean ACTIVADO_TRAM = true;
 		
 	
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
 
-	public static int[] L1_ORDEN = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
+	public static int[] L1_ORDEN_SIN_L3 = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
+	
+	public static int[] L1_ORDEN_CAMPELLO = { 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
+	
+	
+	//Con L3 fines de semana
+	public static int[] L1_ORDEN = { 2, 3, 4, 5, 6, 7, 8, 9, 51, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
+	
 
 	public static int[] L3_ORDEN = { 2, 3, 4, 5, 6, 7, 8, 9, 51, 10, 11, 12, 13, 14, 15, 16, 17 };
 
@@ -49,6 +56,8 @@ public class UtilidadesTRAM {
 	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente" };
 	
 	public static String OBSERVACIONES_L9 = "** Actualmente la L9 no ofrece información de tiempos.";
+	
+	public static String OBSERVACIONES_L1 = "** Parada solo fines de semana y festivos.";
 	
 	
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
@@ -158,4 +167,26 @@ public class UtilidadesTRAM {
 
 	}
 
+	
+	public static String getObservacionesL1(String parada){
+		
+				
+		for(int i = 0;i<L1_ORDEN_SIN_L3.length ; i++){
+			if(parada.equals(Integer.toString(L1_ORDEN_SIN_L3[i]))){
+				return "";
+			}			
+			
+		}
+		
+		for(int i = 0;i<L1_ORDEN_CAMPELLO.length ; i++){
+			if(parada.equals(Integer.toString(L1_ORDEN_CAMPELLO[i]))){
+				return "";
+			}			
+			
+		}
+		
+		return OBSERVACIONES_L1;
+		
+	}
+	
 }
