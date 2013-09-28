@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.tasks;
 
 import java.io.EOFException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
@@ -70,6 +71,28 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 		String parada = null;
 		int paradaI = 0;
 
+		int url1 = 1;
+		int url2 = 1;
+
+		// Ip a usar de forma aleatoria
+		boolean iprandom = ipRandom();
+
+		if (iprandom) {
+
+			url1 = GetPasoParadaWebservice.URL1;
+			url2 = GetPasoParadaWebservice.URL2;
+			
+			Log.d("TIEMPOS", "Combinacion url 1");
+
+		} else {
+
+			url2 = GetPasoParadaWebservice.URL1;
+			url1 = GetPasoParadaWebservice.URL2;
+
+			Log.d("TIEMPOS", "Combinacion url 2");
+			
+		}
+
 		try {
 
 			// llegadasBus =
@@ -84,7 +107,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 			if (DatosPantallaPrincipal.esTram(parada)) {
 				// llegadasBus =
 				// ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
-				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, GetPasoParadaWebservice.URL1);
+				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1);
 			} else {
 				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
 			}
@@ -94,7 +117,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 		} catch (EOFException e1) {
 
 			e1.printStackTrace();
-			
+
 			return null;
 
 		} catch (TiempoBusException e) {
@@ -113,7 +136,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 					Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
-					llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, GetPasoParadaWebservice.URL2);
+					llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2);
 
 					datosRespuesta.setListaBusLlegada(llegadasBus);
 				} catch (Exception e1) {
@@ -141,6 +164,28 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 		if (responder != null) {
 			responder.tiemposLoaded(result);
 		}
+	}
+
+	/**
+	 * Aleatorio
+	 * 
+	 * @return int
+	 */
+	private boolean ipRandom() {
+
+		int min = 0;
+		int max = 1;
+
+		Random rand = new Random();
+
+		int random = rand.nextInt((max - min) + 1) + min;
+
+		if (random == 0) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 }

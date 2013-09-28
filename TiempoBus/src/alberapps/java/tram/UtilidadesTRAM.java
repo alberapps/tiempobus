@@ -23,21 +23,26 @@ import java.util.List;
 import alberapps.java.tam.mapas.PlaceMark;
 import android.util.Log;
 
+/**
+ * Informacion constante para las funciones del tram 
+ *
+ */
 public class UtilidadesTRAM {
 
 	public static boolean ACTIVADO_TRAM = true;
-		
-	
+
+	//Para la carga en BD
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
+	
+	//Para el servicio de consultas
+	public static String[] LINEAS_A_CONSULTAR = { "L1", "L3", "L4", "L9", "L2" };
 
 	public static int[] L1_ORDEN_SIN_L3 = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
-	
+
 	public static int[] L1_ORDEN_CAMPELLO = { 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
-	
-	
-	//Con L3 fines de semana
+
+	// Con L3 fines de semana
 	public static int[] L1_ORDEN = { 2, 3, 4, 5, 6, 7, 8, 9, 51, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
-	
 
 	public static int[] L3_ORDEN = { 2, 3, 4, 5, 6, 7, 8, 9, 51, 10, 11, 12, 13, 14, 15, 16, 17 };
 
@@ -46,20 +51,17 @@ public class UtilidadesTRAM {
 	public static int[] L9_ORDEN = { 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 };
 
 	public static int[] L4L_ORDEN = { 101, 102, 5 };
-	
+
 	public static int[] L2_ORDEN = { 2, 3, 4, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211 };
 
-		
 	public static String[] DESC_TIPO = { "", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2" };
 
-
 	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente" };
-	
+
 	public static String OBSERVACIONES_L9 = "** Actualmente la L9 no ofrece información de tiempos.";
-	
+
 	public static String OBSERVACIONES_L1 = "** Parada solo fines de semana y festivos.";
-	
-	
+
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
 
 	public static List<PlaceMark> posicionesRecorrido(String linea, List<PlaceMark> recorrido) {
@@ -132,17 +134,17 @@ public class UtilidadesTRAM {
 		} else if (linea.equals("L2")) {
 			for (int i = 0; i < L2_ORDEN.length; i++) {
 
-			PlaceMark busqueda = new PlaceMark();
-			busqueda.setCodigoParada(Integer.toString(L2_ORDEN[i]));
+				PlaceMark busqueda = new PlaceMark();
+				busqueda.setCodigoParada(Integer.toString(L2_ORDEN[i]));
 
-			try {
-				recorrido.get(recorrido.lastIndexOf(busqueda)).setOrden(i);
-			} catch (Exception e) {
-				Log.d("", L2_ORDEN[i] + " :L2");
+				try {
+					recorrido.get(recorrido.lastIndexOf(busqueda)).setOrden(i);
+				} catch (Exception e) {
+					Log.d("", L2_ORDEN[i] + " :L2");
+				}
+
 			}
-
 		}
-	}
 
 		return recorrido;
 	}
@@ -167,26 +169,30 @@ public class UtilidadesTRAM {
 
 	}
 
-	
-	public static String getObservacionesL1(String parada){
-		
-				
-		for(int i = 0;i<L1_ORDEN_SIN_L3.length ; i++){
-			if(parada.equals(Integer.toString(L1_ORDEN_SIN_L3[i]))){
+	/**
+	 * Carga de observaciones en BD
+	 * 
+	 * @param parada
+	 * @return observacion
+	 */
+	public static String getObservacionesL1(String parada) {
+
+		for (int i = 0; i < L1_ORDEN_SIN_L3.length; i++) {
+			if (parada.equals(Integer.toString(L1_ORDEN_SIN_L3[i]))) {
 				return "";
-			}			
-			
+			}
+
 		}
-		
-		for(int i = 0;i<L1_ORDEN_CAMPELLO.length ; i++){
-			if(parada.equals(Integer.toString(L1_ORDEN_CAMPELLO[i]))){
+
+		for (int i = 0; i < L1_ORDEN_CAMPELLO.length; i++) {
+			if (parada.equals(Integer.toString(L1_ORDEN_CAMPELLO[i]))) {
 				return "";
-			}			
-			
+			}
+
 		}
-		
+
 		return OBSERVACIONES_L1;
-		
+
 	}
-	
+
 }
