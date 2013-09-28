@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+   Copyright (C) 2012 Alberto Montiel
+         
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:orientation="horizontal"
-    android:padding="6dip">
+    android:padding="6dip" >
 
     <LinearLayout
         android:id="@id/t_item"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="#F0F0F0" >
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_sombra" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,17 +45,16 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="1"
-                android:text="-"
-                android:textColor="#232323"
-                android:textSize="23sp"
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/color_android"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bus_parada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="-"
-                
+                               
                 android:layout_marginLeft="5sp"
                 android:layout_marginRight="5sp"
                 android:cacheColorHint="#00000000"
@@ -47,45 +63,40 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="1"
-                
-                android:textColor="#232323"
-                android:textStyle="bold"
-                android:textSize="10sp"/>
-
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/color_android"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/bus_destino"
-                android:paddingLeft="4sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="-"
-                android:textColor="#232323"
-                android:textSize="15sp" 
-                android:textStyle="bold"/>
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/color_android"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bus_proximo"
-                android:paddingLeft="4sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:maxLines="2"
-                android:text="-"
-               android:textColor="#232323"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/color_android" />
         </LinearLayout>
-
     </LinearLayout>
-	
+
 </LinearLayout>

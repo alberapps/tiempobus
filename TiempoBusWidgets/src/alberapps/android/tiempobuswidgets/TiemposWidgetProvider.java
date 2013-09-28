@@ -191,7 +191,13 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
 
-				if (tiempos != null) {
+				boolean sinParadas = false;
+
+				if (preferencias.getString("lineas_parada", "").equals("")) {
+					sinParadas = true;
+				}
+
+				if (tiempos != null || sinParadas) {
 
 					listaTiempos = tiempos;
 
@@ -211,22 +217,18 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 							// each of the updates
 							// will trigger an onChange() in our data observer.
 
-							
-							try{
+							try {
 								r.unregisterContentObserver(sDataObserver);
-							}catch(Exception e){
-								
-								
+							} catch (Exception e) {
+
 								final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 								final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
 								sDataObserver = new TiemposDataProviderObserver(mgr, cn, sWorkerQueue);
 								r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
-								
-								
+
 								r.unregisterContentObserver(sDataObserver);
-								
+
 							}
-							
 
 							r.delete(TiemposDataProvider.CONTENT_URI, null, null);
 
@@ -258,28 +260,51 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 						}
 					});
 
-					Toast.makeText(context, context.getString(R.string.aviso_recarga_completa), Toast.LENGTH_SHORT).show();
+					// Toast.makeText(context,
+					// context.getString(R.string.aviso_recarga_completa),
+					// Toast.LENGTH_SHORT).show();
 
 					// Cambiar hora actualizacion
-					RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-					final Calendar c = Calendar.getInstance();
-					SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-					String updated = df.format(c.getTime()).toString();
-					rv.setTextViewText(R.id.hora_act, updated);
+					/*
+					 * RemoteViews rv = new
+					 * RemoteViews(context.getPackageName(),
+					 * R.layout.widget_layout); final Calendar c =
+					 * Calendar.getInstance(); SimpleDateFormat df = new
+					 * SimpleDateFormat("HH:mm"); String updated =
+					 * df.format(c.getTime()).toString();
+					 * rv.setTextViewText(R.id.hora_act, updated);
+					 * 
+					 * final AppWidgetManager mgr =
+					 * AppWidgetManager.getInstance(context); final
+					 * ComponentName cn = new ComponentName(context,
+					 * TiemposWidgetProvider.class); mgr.updateAppWidget(cn,
+					 * rv);
+					 */
 
-					final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-					final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
-					mgr.updateAppWidget(cn, rv);
-					
+					actualizarHora(context, "ok");
+
 				} else {
 
-					if (!preferencias.getString("lineas_parada", "").equals("")) {
+					if (!sinParadas) {
 
-						Toast.makeText(context, context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
+						// Toast.makeText(context,
+						// context.getString(R.string.error_tiempos),
+						// Toast.LENGTH_LONG).show();
+
+						actualizarHora(context, "error");
 
 					}
 
 				}
+
+				if (sinParadas) {
+					actualizarHora(context, "nuevo");
+
+					final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+					final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+					mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
+				}
+
 			}
 
 		};
@@ -288,6 +313,8 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
+
+			actualizarHora(context, "carga");
 
 			List<Datos> lineasParada = GestionarDatos.listaDatos(preferencias.getString("lineas_parada", ""));
 
@@ -299,9 +326,38 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
-		
+		// Toast.makeText(context, context.getString(R.string.aviso_recarga),
+		// Toast.LENGTH_SHORT).show();
 
-		Toast.makeText(context, context.getString(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
+	}
+
+	/**
+	 * Textos de carga
+	 * 
+	 * @param context
+	 * @param estado
+	 */
+	private void actualizarHora(Context context, String estado) {
+
+		// Cambiar hora actualizacion
+		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+		final Calendar c = Calendar.getInstance();
+
+		if (estado.equals("ok")) {
+			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+			String updated = df.format(c.getTime()).toString();
+			rv.setTextViewText(R.id.hora_act, updated);
+		} else if (estado.equals("carga")) {
+			rv.setTextViewText(R.id.hora_act, context.getString(R.string.texto_carga));
+		} else if (estado.equals("nuevo")) {
+			rv.setTextViewText(R.id.hora_act, context.getString(R.string.texto_nuevo));
+		} else {
+			rv.setTextViewText(R.id.hora_act, context.getString(R.string.error_tiempos));
+		}
+
+		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+		mgr.updateAppWidget(cn, rv);
 
 	}
 
@@ -363,9 +419,9 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-				
+
 		Log.d("tag", "onUpdate ");
-		
+
 		// Update each of the widgets with the remote adapter
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			RemoteViews layout = buildLayout(context, appWidgetIds[i], mIsLargeLayout);
@@ -373,13 +429,12 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		}
 
 		final ContentResolver r = context.getContentResolver();
-		
+
 		final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 		final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
 		sDataObserver = new TiemposDataProviderObserver(mgr, cn, sWorkerQueue);
 		r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
-		
-		
+
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 

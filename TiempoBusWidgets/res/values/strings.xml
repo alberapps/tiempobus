@@ -44,5 +44,12 @@
     
     <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos. Si sigue sin funcionar, comprueba la disponibilidad del servicio en: isaealicante.subus.es/movil</string>
     
+    <string name="texto_carga">Actualizando&#8230;</string>
+    
+    <string name="texto_nuevo">No hay paradas</string>
+    
+    <string name="guion">-</string>
+    
+    <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \'Actualizar\'. En caso contrario accede a TiempoBus y seleccionalas en la lista de tiempos.</string>
     
 </resources>

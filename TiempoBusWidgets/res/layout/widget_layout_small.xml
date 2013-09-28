@@ -34,7 +34,7 @@
             android:padding="12dp"
             android:scaleType="fitStart"
             android:adjustViewBounds="true"
-            android:src="@drawable/sunny" />
+            android:src="@drawable/item_bg_light" />
 
         <TextView
             android:id="@+id/titulo"
