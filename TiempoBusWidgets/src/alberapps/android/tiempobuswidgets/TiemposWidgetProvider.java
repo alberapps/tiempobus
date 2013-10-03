@@ -321,7 +321,10 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(lineasParada);
 
 		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			//Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			
+			actualizarHora(context, "error_red");
+			
 		}
 
 		final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -351,6 +354,8 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			rv.setTextViewText(R.id.hora_act, context.getString(R.string.texto_carga));
 		} else if (estado.equals("nuevo")) {
 			rv.setTextViewText(R.id.hora_act, context.getString(R.string.texto_nuevo));
+		} else if (estado.equals("error_red")) {
+			rv.setTextViewText(R.id.hora_act, context.getString(R.string.error_red));
 		} else {
 			rv.setTextViewText(R.id.hora_act, context.getString(R.string.error_tiempos));
 		}

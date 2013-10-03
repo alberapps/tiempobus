@@ -44,5 +44,13 @@
     
     <string name="error_tiempos">No s\'han pogut recuperar les dades. Intenta en uns minuts. Si encara no funciona, comprova la disponibilitat del servei en: isaealicante.subus.es/movil</string>
     
+     <string name="texto_carga">Actualitzant&#8230;</string>
+    
+    <string name="texto_nuevo">No hi ha parades</string>
+    
+    <string name="guion">-</string>
+    
+    <string name="aviso_sin_datos">Si ja tens parades carregades, prem \'Actualitzar\'. En cas contrari accedeix a TiempoBus i selecciona el bus a la llista de temps.</string>
+    
     
 </resources>
