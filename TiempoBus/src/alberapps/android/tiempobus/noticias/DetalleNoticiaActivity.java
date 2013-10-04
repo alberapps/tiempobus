@@ -164,6 +164,7 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 			mWebView = (WebView) findViewById(R.id.webViewDetalle);
 
 			mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+					
 		}
 
 	}

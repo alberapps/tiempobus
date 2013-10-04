@@ -177,6 +177,32 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		return minutos;
 	}
 
+	public void cambiarProximo(Integer proximoMinutosNuevo) {
+
+		String[] procesa = this.proximo.split(";");
+
+		StringBuffer proximoNuevo = new StringBuffer();
+
+		if (proximoMinutosNuevo.equals(0)) {
+			proximoNuevo.append("enlaparada");
+		} else if (proximoMinutosNuevo.equals(9999)) {
+			proximoNuevo.append("sinestimacion");
+		} else {
+			proximoNuevo.append(proximoMinutosNuevo);
+			proximoNuevo.append(" ");
+			int pos = procesa[0].indexOf("m");
+			
+			proximoNuevo.append(procesa[0].substring(pos));
+			
+		}
+
+		proximoNuevo.append(";");
+		proximoNuevo.append(procesa[1]);
+
+		proximo = proximoNuevo.toString();
+
+	}
+
 	public Integer getSiguienteMinutos() {
 		Integer minutos = 1000;
 
@@ -195,6 +221,35 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		}
 
 		return minutos;
+	}
+
+	public void cambiarSiguiente(Integer siguienteMinutosNuevo) {
+
+		String[] procesa = this.proximo.split(";");
+
+		StringBuffer siguienteNuevo = new StringBuffer();
+
+		siguienteNuevo.append(procesa[0]);
+		siguienteNuevo.append(";");
+
+		if (siguienteMinutosNuevo.equals(0)) {
+			siguienteNuevo.append("enlaparada");
+		} else if (siguienteMinutosNuevo.equals(9999)) {
+			siguienteNuevo.append("sinestimacion");
+		} else {
+			siguienteNuevo.append(siguienteMinutosNuevo);
+			
+			siguienteNuevo.append(" ");
+			
+			int pos = procesa[1].indexOf("m");
+			
+			siguienteNuevo.append(procesa[1].substring(pos));
+						
+			
+		}
+
+		proximo = siguienteNuevo.toString();
+
 	}
 
 	/**

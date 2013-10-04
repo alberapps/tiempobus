@@ -212,9 +212,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				mapasOffline.loadDatosMapaOffline();
 
-				if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+				//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 					loadDatosVehiculos();
-				}
+				//}
 
 			} else {
 				// launchBuses();
@@ -318,7 +318,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 		// Control de boton vehiculos
 		final ToggleButton botonVehiculos = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
 
-		if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+		//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
 			boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
@@ -359,11 +359,11 @@ public class MapasActivity extends ActionBarMapaActivity {
 				}
 			});
 
-		} else {
+//		} else {
 
-			botonVehiculos.setVisibility(View.INVISIBLE);
+	//		botonVehiculos.setVisibility(View.INVISIBLE);
 
-		}
+		//}
 
 	}
 
@@ -585,9 +585,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 					datosMapaCargadosVuelta = datos;
 					cargarMapa();
 
-					if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+					//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 						loadDatosVehiculos();
-					}
+					//}
 
 				} catch (Exception e) {
 
@@ -981,6 +981,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 			mapasOffline.loadDatosMapaTRAMOffline();
+			
+			loadDatosVehiculos();
+			
 		}
 
 	}
@@ -1275,6 +1278,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	private void loadDatosVehiculos() {
 
+		Log.d("mapas", "Inicia carga de vehiculos");
+		
 		ToggleButton toogleButton = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
 
 		if (!toogleButton.isChecked() || lineaSeleccionadaNum == null || lineaSeleccionadaNum.equals("")) {

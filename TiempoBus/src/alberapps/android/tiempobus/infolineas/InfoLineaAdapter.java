@@ -24,6 +24,9 @@ import java.util.List;
 import alberapps.android.tiempobus.R;
 import alberapps.java.tam.BusLinea;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +107,39 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 
 		} else {
 
-			informacionText.setVisibility(View.INVISIBLE);
+			//informacionText.setVisibility(View.INVISIBLE);
+			
+			
+			// Link informacion
+						informacionText.setOnClickListener(new OnClickListener() {
+
+							public void onClick(View view) {
+
+								String docs= "https://docs.google.com/gview?embedded=true&url=";
+								
+								String pdf = "";
+								
+								if(bus.getNumLinea().equals("L1") || bus.getNumLinea().equals("L3")){
+									pdf = "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf";
+									//http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf
+								}else if(bus.getNumLinea().equals("L2")){
+									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf";
+								}else if(bus.getNumLinea().equals("L4")){
+									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf";
+								}else if(bus.getNumLinea().equals("L9")){
+									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf";
+								}
+								
+								
+								Intent i = new Intent(Intent.ACTION_VIEW);
+								i.setData(Uri.parse(docs + pdf));
+								contexto.startActivity(i);
+
+							}
+
+						});
+			
+			
 
 		}
 

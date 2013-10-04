@@ -21,10 +21,15 @@ package alberapps.android.tiempobus.tasks;
 
 import java.util.List;
 
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.vehiculos.ProcesarVehiculosService;
 import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
+import alberapps.java.tram.vehiculos.ProcesarCochesService;
+import alberapps.java.tram.webservice.GetPasoParadaWebservice;
+import alberapps.java.util.Utilidades;
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Tarea para la carga de datos de los mapas
@@ -32,17 +37,18 @@ import android.os.AsyncTask;
  * 
  */
 public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMapa> {
-	
+
 	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar
-	 * Sirve como callback una vez termine la tarea asincrona
+	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
+	 * como callback una vez termine la tarea asincrona
 	 * 
 	 */
 	public interface LoadVehiculosMapaAsyncTaskResponder {
-	    public void vehiculosMapaLoaded(DatosMapa datosMapa);
-	  }
+		public void vehiculosMapaLoaded(DatosMapa datosMapa);
+	}
+
 	private LoadVehiculosMapaAsyncTaskResponder responder;
-	
+
 	/**
 	 * Constructor. Es necesario que nos pasen un objeto para el callback
 	 * 
@@ -51,24 +57,93 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 	public LoadVehiculosMapaAsyncTask(LoadVehiculosMapaAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
-	
+
 	/**
 	 * Ejecuta el proceso en segundo plano
 	 */
 	@Override
 	protected DatosMapa doInBackground(String... datos) {
 		DatosMapa datosMapa = null;
-		try {
-			List<InfoVehiculo> vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
-			
-			datosMapa = new DatosMapa();
-			
-			datosMapa.setVehiculosList(vehiculosList);
-			
-		} catch (Exception e) {
-			return null;
+
+		String parada = null;
+
+		int url1 = 1;
+		int url2 = 1;
+
+		parada = datos[0];
+
+		if (DatosPantallaPrincipal.esTram(parada)) {
+
+			// Ip a usar de forma aleatoria
+			boolean iprandom = Utilidades.ipRandom();
+
+			if (iprandom) {
+
+				url1 = GetPasoParadaWebservice.URL1;
+				url2 = GetPasoParadaWebservice.URL2;
+
+				Log.d("TIEMPOS", "Combinacion url 1");
+
+			} else {
+
+				url2 = GetPasoParadaWebservice.URL1;
+				url1 = GetPasoParadaWebservice.URL2;
+
+				Log.d("TIEMPOS", "Combinacion url 2");
+
+			}
+
 		}
-		
+
+		List<InfoVehiculo> vehiculosList = null;
+
+		try {
+
+			if (DatosPantallaPrincipal.esTram(parada)) {
+				
+				Log.d("mapas", "Procesar vehiculos tram: " + datos[0]);
+
+				vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url1);
+				
+				Log.d("mapas", "vehiculos recuperados: " +  vehiculosList.size());
+				
+
+			} else {
+				vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
+			}
+
+			datosMapa = new DatosMapa();
+
+			datosMapa.setVehiculosList(vehiculosList);
+
+		} catch (Exception e) {
+			// Probar con acceso secundario
+			if (DatosPantallaPrincipal.esTram(parada)) {
+
+				try {
+
+					Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
+
+					vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url2);
+
+					datosMapa = new DatosMapa();
+
+					datosMapa.setVehiculosList(vehiculosList);
+
+				} catch (Exception e1) {
+
+					e1.printStackTrace();
+
+					return null;
+
+				}
+			} else {
+
+				return null;
+
+			}
+		}
+
 		return datosMapa;
 	}
 
@@ -77,10 +152,9 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 	 */
 	@Override
 	protected void onPostExecute(DatosMapa result) {
-		if(responder != null) {
+		if (responder != null) {
 			responder.vehiculosMapaLoaded(result);
 		}
 	}
 
-	
 }

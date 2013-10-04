@@ -32,6 +32,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 
 import org.apache.http.HttpEntity;
@@ -49,6 +50,7 @@ import alberapps.android.tiempobus.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
  * 
@@ -506,6 +508,30 @@ public class Utilidades {
 		}
 
 		return null;
+
+	}
+	
+	/**
+	 * Aleatorio
+	 * 
+	 * @return int
+	 */
+	public static boolean ipRandom() {
+
+		int min = 0;
+		int max = 1;
+
+		Random rand = new Random();
+
+		int random = rand.nextInt((max - min) + 1) + min;
+
+		Log.d("RANDOM", "RANDOM: " + random);
+		
+		if (random == 0) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
