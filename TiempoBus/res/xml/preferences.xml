@@ -50,6 +50,15 @@
                 android:title="@string/preferencias_tiempos_auto"
                 android:summary="@string/preferencias_tiempos_desc" android:defaultValue="true"/>
 
+         <ListPreference
+                android:key="tiempo_recarga"
+                android:title="@string/conf_tiempo_recarga"
+                android:summary="@string/conf_tiempo_recarga_desc"
+                android:entries="@array/tiempos_recarga"
+                android:entryValues="@array/tiempos_recarga"
+                android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                android:defaultValue="60" />
+        
                 
     </PreferenceCategory>
     
@@ -138,6 +147,21 @@
              
         </PreferenceScreen>
         
+    </PreferenceCategory>
+    
+     <PreferenceCategory
+            android:title="@string/menu_mapa">
+          
+       <ListPreference
+                android:key="tiempo_recarga_vehiculos"
+                android:title="@string/conf_tiempo_recarga"
+                android:summary="@string/conf_tiempo_recarga_desc"
+                android:entries="@array/tiempos_recarga"
+                android:entryValues="@array/tiempos_recarga"
+                android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                android:defaultValue="30" />
+        
+                
     </PreferenceCategory>
     
      

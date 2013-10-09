@@ -354,8 +354,6 @@ public class DatosLineasDB {
 							// TRAM
 							cargarLineasTRAM();
 						}
-						
-						
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
@@ -370,7 +368,7 @@ public class DatosLineasDB {
 					} catch (Exception e) {
 
 						Log.d(TAG, "No se pueden precargar los datos");
-						
+
 						e.printStackTrace();
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
@@ -410,8 +408,12 @@ public class DatosLineasDB {
 						cargarLineas();
 
 						if (UtilidadesTRAM.ACTIVADO_TRAM) {
+
+							Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 30);
+							
 							// TRAM
 							cargarLineasTRAM();
+							
 						}
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
@@ -429,7 +431,7 @@ public class DatosLineasDB {
 						Log.d(TAG, "No se pueden precargar los datos");
 
 						e.printStackTrace();
-						
+
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
 
 					} finally {
@@ -578,7 +580,7 @@ public class DatosLineasDB {
 							transbordo.append("L9");
 						} else if (strings1[i].equals("41")) {
 							transbordo.append("4L");
-						}else if (strings1[i].equals("2")) {
+						} else if (strings1[i].equals("2")) {
 							transbordo.append("L2");
 						}
 
@@ -608,12 +610,11 @@ public class DatosLineasDB {
 						}
 
 						int posicion = UtilidadesTRAM.getIdLinea(strings[0]);
-						
+
 						Log.d("DB", "linea = " + strings[0] + " - " + strings1[i]);
 						Log.d("DB", "poscion = " + Integer.toString(posicion));
 						Log.d("DB", "poscion 2 = " + UtilidadesTRAM.TIPO[posicion]);
 						Log.d("DB", "poscion 3 = " + UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]]);
-						
 
 						strings[2] = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
 
@@ -627,19 +628,19 @@ public class DatosLineasDB {
 
 						strings[6] = transbordo.toString();
 
-						if(strings[0].equals("L9")){
+						if (strings[0].equals("L9")) {
 							strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
-						}else{
+						} else {
 							strings[7] = "";
 						}
-						
-						
-						if(strings[0].equals("L1")){
+
+						if (strings[0].equals("L1") || strings[0].equals("L3")) {
 							strings[7] = UtilidadesTRAM.getObservacionesL1(strings[3]);
-						}else{
+						} else if (strings[0].equals("L4")) {
+							strings[7] = UtilidadesTRAM.getObservacionesL1enL4(strings[3]);
+						} else {
 							strings[7] = "";
 						}
-						
 
 						strings[8] = "TRAM";
 

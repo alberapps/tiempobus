@@ -34,6 +34,8 @@ public class ProcesarTwitter {
 	public static final String tw_sanvi_ruta = "http://twitter.com/aytoraspeig";
 
 	public static final String tw_santjoan_ruta = "http://twitter.com/sant_joan";
+	
+	public static final String tw_tram_ruta = "http://twitter.com/tramdealicante";
 
 	public static final String TW_STATUS = "/status/";
 
@@ -75,6 +77,10 @@ public class ProcesarTwitter {
 			lista.addAll(procesar4j.recuperarTimeline("sant_joan", tw_santjoan_ruta, Integer.parseInt(cantidad)));
 
 		}
+		
+		//Tram
+		lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
+		
 
 		if (lista != null && !lista.isEmpty()) {
 

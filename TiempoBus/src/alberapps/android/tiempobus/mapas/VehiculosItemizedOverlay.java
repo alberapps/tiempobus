@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.mapas;
 import java.util.ArrayList;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -69,10 +70,21 @@ public class VehiculosItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-		dialog.setTitle(context.getString(R.string.mapas_vehiculo_titulo));
-		// dialog.setMessage(item.getSnippet());
-		dialog.setMessage(item.getTitle());
-		dialog.setIcon(R.drawable.bus);
+		if (((MapasActivity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			dialog.setTitle(context.getString(R.string.mapas_vehiculo_titulo_tram));
+			// dialog.setMessage(item.getSnippet());
+			dialog.setMessage(item.getTitle());
+			dialog.setIcon(R.drawable.tramway_2);
+
+		} else {
+
+			dialog.setTitle(context.getString(R.string.mapas_vehiculo_titulo));
+			// dialog.setMessage(item.getSnippet());
+			dialog.setMessage(item.getTitle());
+			dialog.setIcon(R.drawable.bus);
+
+		}
 
 		dialog.show();
 

@@ -11,7 +11,14 @@
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
     <string name="untitled">sin título</string>
-    <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de la red TAM.
+    <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
+        \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
+	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
+	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) y TRAM(www.tramalicante.es, www.fgv.es)
+		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
+	
+	<string name="legal_sin_tram">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de la red TAM.
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
@@ -217,7 +224,7 @@
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Tweets más recientes de:</string>
-    <string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
+    <string name="tw1">\@alberapps \@TramdeAlicante \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
    
     
     <string name="error_codigo">El código de parada no es valido</string>
@@ -283,5 +290,14 @@
     <string name="mapas_vehiculo_on">Bus ON</string>
     <string name="mapas_vehiculo_off">Bus OFF</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
+    
+    <string name="conf_tiempo_recarga">Frecuencia</string>
+    <string name="conf_tiempo_recarga_desc">Frecuencia con la que se realizan las recargas</string>
+    <string name="conf_tiempo_recarga_titulo">Frecuencia (En segundos)</string>
+    
+    <string name="aviso_buscador_offline_tram">Recorridos precargados con datos obtenidos de tramalicante.es</string>
+    <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
+    <string name="notification_title_tram">¡Alerta de Tram!</string>
+    <string name="mapas_vehiculo_titulo_tram">TRAM</string>
     
 </resources>

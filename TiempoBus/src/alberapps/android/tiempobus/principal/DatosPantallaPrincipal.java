@@ -472,6 +472,20 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	public static boolean esLineaTram(String lineaActual) {
+
+		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+			return false;
+		}
+
+		if (UtilidadesTRAM.esLineaTram(lineaActual)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	/**
 	 * Formatea la salida por idioma
 	 * 
@@ -542,6 +556,21 @@ public class DatosPantallaPrincipal {
 		sendIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
 		sendIntent.setType("text/plain");
 		context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.menu_share)));
+
+	}
+
+	/**
+	 * Frecuencia configurable
+	 * 
+	 * @return frecuencia
+	 */
+	public long frecuenciaRecarga() {
+
+		String preFrec = preferencias.getString("tiempo_recarga", "60");
+				
+		long frecuencia = Long.parseLong(preFrec) * 1000;
+
+		return frecuencia;
 
 	}
 

@@ -76,6 +76,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -127,7 +128,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	MyLocationOverlay mMyLocationOverlay;
 
-	private ProgressDialog dialog;
+	ProgressDialog dialog;
 
 	SharedPreferences preferencias = null;
 
@@ -136,6 +137,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 	MapasOffline mapasOffline;
 
 	ParadasCercanas paradasCercanas;
+	SelectorLinea selectorLinea;
+	GestionVehiculos gestionVehiculos;
 
 	AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
 	AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
@@ -143,6 +146,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 	AsyncTask<String, Void, DatosMapa> taskVehiculosMapa = null;
 
 	Timer timer = null;
+
+	private TextView datosLinea;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -165,6 +170,10 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		mapasOffline = new MapasOffline(this, preferencias);
 		paradasCercanas = new ParadasCercanas(this, preferencias);
+		selectorLinea = new SelectorLinea(this, preferencias);
+		gestionVehiculos = new GestionVehiculos(this, preferencias);
+
+		datosLinea = (TextView) findViewById(R.id.datos_linea);
 
 		// Control de modo de red
 		modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
@@ -212,13 +221,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 				mapasOffline.loadDatosMapaOffline();
 
-				//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-					loadDatosVehiculos();
-				//}
+				// if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+				gestionVehiculos.loadDatosVehiculos();
+				// }
 
 			} else {
 				// launchBuses();
-				Toast.makeText(this, getResources().getText(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_LONG).show();
 
 			}
 
@@ -245,6 +254,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 			// Si se entra desde el menu
 			// launchBuses();
 			// miLocalizacion();
+
+			selectorLinea.cargarDatosLineasModal();
 
 		}
 
@@ -318,52 +329,52 @@ public class MapasActivity extends ActionBarMapaActivity {
 		// Control de boton vehiculos
 		final ToggleButton botonVehiculos = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
 
-		//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+		// if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
-			boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
+		boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
-			if (vehiculosPref) {
-				botonVehiculos.setChecked(true);
-			}
+		if (vehiculosPref) {
+			botonVehiculos.setChecked(true);
+		}
 
-			botonVehiculos.setOnClickListener(new OnClickListener() {
+		botonVehiculos.setOnClickListener(new OnClickListener() {
 
-				public void onClick(View v) {
+			public void onClick(View v) {
 
-					if (botonVehiculos.isChecked()) {
+				if (botonVehiculos.isChecked()) {
 
-						SharedPreferences.Editor editor = preferencias.edit();
-						editor.putBoolean("mapas_vehiculos", true);
-						editor.commit();
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("mapas_vehiculos", true);
+					editor.commit();
 
-						loadDatosVehiculos();
-					} else {
+					gestionVehiculos.loadDatosVehiculos();
+				} else {
 
-						SharedPreferences.Editor editor = preferencias.edit();
-						editor.putBoolean("mapas_vehiculos", false);
-						editor.commit();
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("mapas_vehiculos", false);
+					editor.commit();
 
-						if (itemizedOverlayVehiculos != null) {
-							mapOverlays.remove(itemizedOverlayVehiculos);
-							itemizedOverlayVehiculos = null;
+					if (itemizedOverlayVehiculos != null) {
+						mapOverlays.remove(itemizedOverlayVehiculos);
+						itemizedOverlayVehiculos = null;
 
-							if (timer != null) {
-								timer.cancel();
-							}
-
-							mapView.invalidate();
-
+						if (timer != null) {
+							timer.cancel();
 						}
+
+						mapView.invalidate();
+
 					}
-
 				}
-			});
 
-//		} else {
+			}
+		});
 
-	//		botonVehiculos.setVisibility(View.INVISIBLE);
+		// } else {
 
-		//}
+		// botonVehiculos.setVisibility(View.INVISIBLE);
+
+		// }
 
 	}
 
@@ -450,7 +461,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 		} else {
 
 			if (cercanas) {
-				setTitle(getString(R.string.cercanas));
+				// setTitle(getString(R.string.cercanas));
+				datosLinea.setText(getString(R.string.cercanas));
+
 			}
 
 			if (primeraCarga) {
@@ -510,7 +523,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	/**
 	 * kml de carga
 	 */
-	private void loadDatosMapa() {
+	public void loadDatosMapa() {
 
 		String url = UtilidadesTAM.getKMLParadasIda(lineaSeleccionada);
 
@@ -543,7 +556,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			} else {
 
-				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 				finish();
 
@@ -585,13 +598,14 @@ public class MapasActivity extends ActionBarMapaActivity {
 					datosMapaCargadosVuelta = datos;
 					cargarMapa();
 
-					//if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-						loadDatosVehiculos();
-					//}
+					// if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE)
+					// {
+					gestionVehiculos.loadDatosVehiculos();
+					// }
 
 				} catch (Exception e) {
 
-					Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 					toast.show();
 
 				}
@@ -600,7 +614,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			} else {
 
-				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 
 				dialog.dismiss();
@@ -620,7 +634,8 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 		// Cargar datos cabecera
 		String cabdatos = lineaSeleccionadaDesc;
-		setTitle(cabdatos);
+		// setTitle(cabdatos);
+		datosLinea.setText(cabdatos);
 
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
@@ -827,7 +842,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	}
 
-	private void avisoPosibleError() {
+	public void avisoPosibleError() {
 
 		Toast.makeText(this, getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
 
@@ -977,13 +992,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			mapasOffline.loadDatosMapaOffline();
 
-			loadDatosVehiculos();
+			gestionVehiculos.loadDatosVehiculos();
 
 		} else if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 			mapasOffline.loadDatosMapaTRAMOffline();
-			
-			loadDatosVehiculos();
-			
+
+			gestionVehiculos.loadDatosVehiculos();
+
 		}
 
 	}
@@ -1077,7 +1092,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			cargarMapa();
 
-			loadDatosVehiculos();
+			gestionVehiculos.loadDatosVehiculos();
 		}
 	}
 
@@ -1110,7 +1125,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 			cargarMapa();
 
-			loadDatosVehiculos();
+			gestionVehiculos.loadDatosVehiculos();
 
 		}
 	}
@@ -1118,7 +1133,12 @@ public class MapasActivity extends ActionBarMapaActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.mapa, menu);
+
+		if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+			menuInflater.inflate(R.menu.mapa, menu);
+		} else {
+			menuInflater.inflate(R.menu.mapa_tram, menu);
+		}
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -1161,8 +1181,19 @@ public class MapasActivity extends ActionBarMapaActivity {
 			miLocalizacion(false);
 			break;
 		case R.id.menu_search_online:
-			launchBuses();
+
+			// launchBuses();
+
+			selectorLinea.cargarDatosLineasModal();
+
 			break;
+
+		case R.id.menu_search:
+
+			selectorLinea.cargarDatosLineasModal();
+
+			break;
+
 		/*
 		 * case R.id.menu_search_offline: launchBusesOffline(); break;
 		 */
@@ -1267,174 +1298,6 @@ public class MapasActivity extends ActionBarMapaActivity {
 
 	public ProgressDialog getDialog() {
 		return dialog;
-	}
-
-	/*
-	 * VEHICULOS
-	 */
-
-	/**
-	 * Carga de vehiculos de la linea
-	 */
-	private void loadDatosVehiculos() {
-
-		Log.d("mapas", "Inicia carga de vehiculos");
-		
-		ToggleButton toogleButton = (ToggleButton) findViewById(R.id.mapasVehiculosButton);
-
-		if (!toogleButton.isChecked() || lineaSeleccionadaNum == null || lineaSeleccionadaNum.equals("")) {
-			return;
-		}
-
-		// dialog = ProgressDialog.show(MapasActivity.this, "",
-		// getString(R.string.dialogo_espera), true);
-
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-
-			if (timer != null) {
-				timer.cancel();
-			}
-
-			final Handler handler = new Handler();
-			timer = new Timer();
-			TimerTask timerTask = new TimerTask() {
-
-				@Override
-				public void run() {
-					handler.post(new Runnable() {
-
-						public void run() {
-
-							taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(lineaSeleccionadaNum);
-
-						}
-					});
-
-				}
-			};
-
-			timer.schedule(timerTask, 0, 30000);
-
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			if (dialog != null && dialog.isShowing()) {
-				dialog.dismiss();
-			}
-		}
-
-	}
-
-	/**
-	 * Carga de vehiculos de la linea
-	 */
-	LoadVehiculosMapaAsyncTaskResponder loadVehiculosMapaAsyncTaskResponder = new LoadVehiculosMapaAsyncTaskResponder() {
-
-		public void vehiculosMapaLoaded(DatosMapa datosMapa) {
-
-			if (datosMapa != null && datosMapa.getVehiculosList() != null && datosMapaCargadosIda != null) {
-				datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
-
-				cargarVehiculosMapa();
-
-				dialog.dismiss();
-
-			} else {
-
-				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
-				toast.show();
-				finish();
-
-				dialog.dismiss();
-
-			}
-
-		}
-	};
-
-	/**
-	 * Cargar el mapa con las paradas de la linea
-	 * 
-	 */
-	public void cargarVehiculosMapa() {
-
-		if (itemizedOverlayVehiculos != null) {
-			mapOverlays.remove(itemizedOverlayVehiculos);
-		}
-
-		drawableVehiculo = this.getResources().getDrawable(R.drawable.bus);
-
-		itemizedOverlayVehiculos = new VehiculosItemizedOverlay(drawableVehiculo, this);
-
-		GeoPoint point = null;
-
-		// Datos IDA
-		if (datosMapaCargadosIda != null && !datosMapaCargadosIda.getVehiculosList().isEmpty()) {
-
-			for (int i = 0; i < datosMapaCargadosIda.getVehiculosList().size(); i++) {
-
-				// if(!datosMapaCargadosIda.getVehiculosList().get(i).getEstado().equals("512")){
-				// continue;
-				// }
-
-				double y = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
-				double x = Double.parseDouble(datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
-
-				String coord = UtilidadesGeo.getLatLongUTMBus(y, x);
-
-				String[] coordenadas = coord.split(",");
-
-				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
-
-				// Desvio en el calculo
-				lat = lat - 0.001517;
-				lng = lng - 0.001517;
-
-				/*
-				 * prueba no: 0,002185
-				 * 
-				 * Erronea: 38.337297,-0.492949 correcta: 38.337625,-0.492155
-				 * desvio: +0,000328, +0,000794
-				 * 
-				 * Erronea: 38.338631,-0.490427 Correcta: 38.337114,-0.491668
-				 * desvio: 0,001517, −0,001241
-				 */
-
-				int glat = (int) (lat * 1E6);
-				int glng = (int) (lng * 1E6);
-
-				point = new GeoPoint(glat, glng);
-
-				String descripcionAlert = "";
-
-				OverlayItem overlayitem = new OverlayItem(point, datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim(), descripcionAlert);
-
-				itemizedOverlayVehiculos.addOverlay(overlayitem);
-
-				/*
-				 * // 19240000,-99120000
-				 * 
-				 * //UTM a geograficas geotools jcoord
-				 * 
-				 * long x: 715923 lat y: 4253901 30N 715923 4253901 -> 38.40728
-				 * -0.52710 geographiclib //lat:38337176 //long:-491890
-				 */
-
-			}
-
-			if (itemizedOverlayVehiculos != null && itemizedOverlayVehiculos.size() > 0) {
-				mapOverlays.add(itemizedOverlayVehiculos);
-			} else {
-				avisoPosibleError();
-			}
-
-			mapView.invalidate();
-
-		}
-
 	}
 
 }

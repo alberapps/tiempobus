@@ -58,9 +58,9 @@ public class UtilidadesTRAM {
 
 	public static String[] DESC_LINEA = { "", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente" };
 
-	public static String OBSERVACIONES_L9 = "** Actualmente la L9 no ofrece información de tiempos.";
+	public static String OBSERVACIONES_L9 = "L9: Actualmente en fase de implantación.";
 
-	public static String OBSERVACIONES_L1 = "** Parada solo fines de semana y festivos.";
+	public static String OBSERVACIONES_L1 = "L1: Realiza parada los fines de semana y festivos.";
 
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
 
@@ -194,5 +194,31 @@ public class UtilidadesTRAM {
 		return OBSERVACIONES_L1;
 
 	}
+	
+	public static String getObservacionesL1enL4(String parada) {
+
+		if(parada.equals("7")){
+			return OBSERVACIONES_L1;
+		}else{
+			return "";
+		}
+
+	}
+	
+	
+	public static boolean esLineaTram(String linea){
+		
+		for(int i = 0; i< LINEAS_NUM.length; i++){
+			
+			if(LINEAS_NUM[i].equals(linea)){
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
 
 }

@@ -65,14 +65,14 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 	protected DatosMapa doInBackground(String... datos) {
 		DatosMapa datosMapa = null;
 
-		String parada = null;
+		String linea = null;
 
 		int url1 = 1;
 		int url2 = 1;
 
-		parada = datos[0];
+		linea = datos[0];
 
-		if (DatosPantallaPrincipal.esTram(parada)) {
+		if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
 			// Ip a usar de forma aleatoria
 			boolean iprandom = Utilidades.ipRandom();
@@ -99,14 +99,13 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 
 		try {
 
-			if (DatosPantallaPrincipal.esTram(parada)) {
-				
+			if (DatosPantallaPrincipal.esLineaTram(linea)) {
+
 				Log.d("mapas", "Procesar vehiculos tram: " + datos[0]);
 
 				vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url1);
-				
-				Log.d("mapas", "vehiculos recuperados: " +  vehiculosList.size());
-				
+
+				Log.d("mapas", "vehiculos recuperados: " + vehiculosList.size());
 
 			} else {
 				vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
@@ -118,7 +117,7 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 
 		} catch (Exception e) {
 			// Probar con acceso secundario
-			if (DatosPantallaPrincipal.esTram(parada)) {
+			if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
 				try {
 

@@ -55,7 +55,7 @@
    <string-array name="spinner_datos">
         <item>Bus TAM (Web Subús)</item>
         <item>Bus TAM (offline)</item>
-        <item>Tranvía TRAM (offline)</item>            
+        <item>Tranvía TRAM</item>            
     </string-array> 
     
     <string-array name="spinner_datos_b">
@@ -74,5 +74,12 @@
         <item>Historial</item>
         <item>Exportar QR</item>
     </string-array>
+   
+   <string-array name="tiempos_recarga">
+   		<item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>                    
+    </string-array> 
    
 </resources>

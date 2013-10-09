@@ -23,6 +23,7 @@ import java.util.Date;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.tam.BusLlegada;
@@ -113,23 +114,24 @@ public class GestionarAlarmas {
 		long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
 		// Si es tram
-		/*if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-
-			et = theBus.getProximoMinutosTRAM();
+		/*
+		 * if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+		 * 
+		 * et = theBus.getProximoMinutosTRAM(); tiempo = 1;
+		 * 
+		 * } else {
+		 */
+		// Que tiempo usar
+		// Si el primer bus no cumple, se usa el segundo
+		if (theBus.getProximoMinutos() < mins) {
+			et = theBus.getSiguienteMinutos();
+			tiempo = 2;
+		} else {
+			et = theBus.getProximoMinutos();
 			tiempo = 1;
+		}
 
-		} else {*/
-			// Que tiempo usar
-			// Si el primer bus no cumple, se usa el segundo
-			if (theBus.getProximoMinutos() < mins) {
-				et = theBus.getSiguienteMinutos();
-				tiempo = 2;
-			} else {
-				et = theBus.getProximoMinutos();
-				tiempo = 1;
-			}
-
-		//}
+		// }
 
 		// Control de tiempo insuficiente o excesivo
 		if (et < mins) {
@@ -166,7 +168,15 @@ public class GestionarAlarmas {
 
 		// Iniciar receiver
 		Intent intent = new Intent(context, AlarmReceiver.class);
-		String txt = String.format(context.getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + paradaActual);
+
+		String texto = "";
+		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+			texto = context.getString(R.string.alarm_tram);
+		} else {
+			texto = context.getString(R.string.alarm_bus);
+		}
+
+		String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
 		intent.putExtra("alarmTxt", txt);
 		intent.putExtra("poste", paradaActual);
 
@@ -178,7 +188,7 @@ public class GestionarAlarmas {
 
 		String horaT = ft.format(milisegundos);
 
-		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" +theBus.getDestino();
+		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
 		PreferencesUtil.putAlertaInfo(context, alertaDialog);
 
@@ -250,7 +260,14 @@ public class GestionarAlarmas {
 	 */
 	public String prepararReceiver(BusLlegada theBus, int paradaActual) {
 
-		String txt = String.format(context.getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + paradaActual);
+		String texto = "";
+		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+			texto = context.getString(R.string.alarm_tram);
+		} else {
+			texto = context.getString(R.string.alarm_bus);
+		}
+
+		String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
 
 		return txt;
 
@@ -304,7 +321,9 @@ public class GestionarAlarmas {
 					intent.putExtra("PARADA", paradaActual);
 
 					boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-					//if (checkActivo && !context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+					// if (checkActivo &&
+					// !context.getDatosPantallaPrincipal().esTram(paradaActual))
+					// {
 					if (checkActivo) {
 						context.startService(intent);
 					}
@@ -369,9 +388,9 @@ public class GestionarAlarmas {
 
 			CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
 
-			//if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-				//check.setEnabled(false);
-			//}
+			// if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
+			// check.setEnabled(false);
+			// }
 
 			boolean checkActivo = preferencias.getBoolean("activarServicio", false);
 			check.setChecked(checkActivo);

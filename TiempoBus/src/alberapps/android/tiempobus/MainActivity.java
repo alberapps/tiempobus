@@ -19,6 +19,7 @@
  */
 package alberapps.android.tiempobus;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -123,7 +124,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	Calendar ahora = new GregorianCalendar();
 	private int paradaActual = 4450;
-	final ParadaActualHandler handler = new ParadaActualHandler();
+	final ParadaActualHandler handler = new ParadaActualHandler(this);
 
 	private TiemposUpdater posteUpdater = new TiemposUpdater();
 	AlarmManager alarmManager;
@@ -1205,27 +1206,39 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	/**
 	 * Manejar mensajes
 	 */
-	class ParadaActualHandler extends Handler {
+	static class ParadaActualHandler extends Handler {
+
+		private final WeakReference<MainActivity> mActividad;
+
+		ParadaActualHandler(MainActivity actividad) {
+
+			mActividad = new WeakReference<MainActivity>(actividad);
+
+		}
+
+		@Override
 		public void handleMessage(Message msg) {
+
+			MainActivity laActividad = mActividad.get();
 
 			switch (msg.what) {
 
 			case MSG_ERROR_TIEMPOS:
-				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.error_tiempos), Toast.LENGTH_LONG);
+				Toast toast = Toast.makeText(laActividad.getApplicationContext(), laActividad.getString(R.string.error_tiempos), Toast.LENGTH_LONG);
 				toast.show();
-				showProgressBar(false);
+				laActividad.showProgressBar(false);
 				break;
 
 			case MSG_CLOSE_CARGANDO:
-				showProgressBar(false);
+				laActividad.showProgressBar(false);
 				break;
 
 			case MSG_RECARGA:
 
-				removeCallbacks(posteUpdater);
+				removeCallbacks(laActividad.posteUpdater);
 				removeMessages(MSG_RECARGA);
-				post(posteUpdater);
-				sendEmptyMessageDelayed(MSG_RECARGA, 60 * 1000);
+				post(laActividad.posteUpdater);
+				sendEmptyMessageDelayed(MSG_RECARGA, laActividad.datosPantallaPrincipal.frecuenciaRecarga());
 				break;
 
 			case MSG_FRECUENCIAS_ACTUALIZADAS:
@@ -1233,9 +1246,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				String cabdatos = "";
 				String cabdatos2 = "";
 
-				cabdatos2 = datosPantallaPrincipal.cargarDescripcionBD(paradaActual);
+				cabdatos2 = laActividad.datosPantallaPrincipal.cargarDescripcionBD(laActividad.paradaActual);
 
-				cabdatos = datosPantallaPrincipal.cargarDescripcion(Integer.toString(paradaActual));
+				cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
 				if (cabdatos.equals("")) {
 
@@ -1244,17 +1257,17 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				}
 
 				if (cabdatos.equals("")) {
-					cabdatos = getString(R.string.share_0b) + " " + paradaActual;
+					cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
 				}
 
-				if (datosPantallaPrincipal.esTram(paradaActual)) {
+				if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
 					cabdatos = "TRAM " + cabdatos;
 				}
 
 				// Historial
-				datosPantallaPrincipal.gestionarHistorial(paradaActual);
+				laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual);
 
-				datosParada.setText(cabdatos);
+				laActividad.datosParada.setText(cabdatos);
 
 				final Calendar c = Calendar.getInstance();
 
@@ -1262,30 +1275,30 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				String updated = df.format(c.getTime()).toString();
 
-				guiHora.setText(updated);
+				laActividad.guiHora.setText(updated);
 
 				// Limpiamos la lista
-				posteAdapter.clear();
+				laActividad.posteAdapter.clear();
 
 				// La rellenamos con los nuevos datos
-				if (buses != null && buses.size() > 0) {
-					int n = buses.size();
+				if (laActividad.buses != null && laActividad.buses.size() > 0) {
+					int n = laActividad.buses.size();
 
 					for (int i = 0; i < n; i++) {
-						posteAdapter.add(buses.get(i));
+						laActividad.posteAdapter.add(laActividad.buses.get(i));
 					}
 				}
 
-				posteAdapter.notifyDataSetChanged();
+				laActividad.posteAdapter.notifyDataSetChanged();
 				break;
 
 			}
 
 			// Si no hay atuomatico, se cancela el mensaje
-			boolean auto = preferencias.getBoolean("checkbox_preference", true);
+			boolean auto = laActividad.preferencias.getBoolean("checkbox_preference", true);
 
 			if (!auto) {
-				handler.removeMessages(MSG_RECARGA);
+				laActividad.handler.removeMessages(MSG_RECARGA);
 			}
 
 		}

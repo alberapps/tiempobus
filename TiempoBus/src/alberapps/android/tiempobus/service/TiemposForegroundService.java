@@ -392,7 +392,15 @@ public class TiemposForegroundService extends Service {
 
 		cancelarAlarmas(false);
 
-		String txt = String.format(getString(R.string.alarm_bus), "" + theBus.getLinea(), "" + poste);
+		
+		String texto = "";
+		if(DatosPantallaPrincipal.esTram(poste)){
+			texto = context.getString(R.string.alarm_tram);
+		}else{
+			texto = context.getString(R.string.alarm_bus);
+		}
+		
+		String txt = String.format(texto, "" + theBus.getLinea(), "" + poste);
 		intent.putExtra("alarmTxt", txt);
 		intent.putExtra("poste", poste);
 

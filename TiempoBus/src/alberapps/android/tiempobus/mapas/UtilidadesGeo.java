@@ -55,7 +55,7 @@ public class UtilidadesGeo {
 			northing = 10000000 - northing;
 		}
 
-		int a = 6378137;
+		double a = 6378137;
 		double e = 0.081819191;
 		double e1sq = 0.006739497;
 		double k0 = 0.9996;

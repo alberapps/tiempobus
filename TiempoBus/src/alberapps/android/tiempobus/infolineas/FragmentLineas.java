@@ -112,6 +112,12 @@ public class FragmentLineas extends Fragment {
 
 			descrip.setText(R.string.aviso_offline);
 
+		}else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+			TextView descrip = (TextView) getActivity().findViewById(R.id.tituloAviso);
+
+			descrip.setText(R.string.aviso_buscador_offline_tram);
+
 		}
 
 		setupFondoAplicacion();
@@ -507,7 +513,7 @@ public class FragmentLineas extends Fragment {
 				loadDatosMapaIda(datos.getfIda());
 
 			} else {
-				Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 				dialog.dismiss();
 
@@ -544,7 +550,7 @@ public class FragmentLineas extends Fragment {
 				}
 
 			} else {
-				Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 				dialog.dismiss();
 

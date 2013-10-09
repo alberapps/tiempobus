@@ -495,7 +495,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 				datosHorarios = null;
 
-				Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos) + " www.subus.es", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 				dialog.dismiss();
 

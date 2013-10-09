@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.util;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -256,7 +257,14 @@ public class Notificaciones {
 
 		NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.notification_title)).setContentText(aviso);
+		String texto = "";
+		if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
+			texto = contexto.getString(R.string.notification_title);
+		} else {
+			texto = contexto.getString(R.string.notification_title_tram);
+		}
+
+		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(texto).setContentText(aviso);
 
 		// Led
 		int defaults = Notification.DEFAULT_LIGHTS;
