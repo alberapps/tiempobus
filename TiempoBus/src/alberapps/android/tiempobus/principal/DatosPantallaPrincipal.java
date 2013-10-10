@@ -142,6 +142,9 @@ public class DatosPantallaPrincipal {
 			Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
 		}
 
+		
+		
+		
 	}
 
 	/**
@@ -198,6 +201,16 @@ public class DatosPantallaPrincipal {
 	 */
 	public String cargarDescripcion(String parada) {
 
+		 FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet)context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+			
+		 if(detalleFrag != null){
+			 
+			 Log.d("Principal", "Actualizar fragmento secundario");
+			 
+			 detalleFrag.actualizarDatos();
+			 
+		 }
+		
 		try {
 			HashMap<String, String> datosFav = new HashMap<String, String>();
 

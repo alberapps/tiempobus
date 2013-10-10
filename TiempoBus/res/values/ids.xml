@@ -51,4 +51,5 @@
     <item type="id" name="contenedor_noticias_rss"/>
     <item name="menu_hist_borrar" type="id"/>
     <item type="id" name="menu_exportar_qr"/>
+    <item type="id" name="contenedor_secundario"/>
 </resources>

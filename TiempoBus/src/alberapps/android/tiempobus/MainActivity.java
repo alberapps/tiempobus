@@ -40,6 +40,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.principal.GestionarFondo;
 import alberapps.android.tiempobus.principal.GestionarWidget;
 import alberapps.android.tiempobus.principal.TiemposAdapter;
@@ -91,7 +92,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener {
+public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener{
 
 	// Novedades
 	// private int REV_ACTUAL = 27;
@@ -123,7 +124,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private TextView datosParada;
 
 	Calendar ahora = new GregorianCalendar();
-	private int paradaActual = 4450;
+	public int paradaActual = 4450;
 	final ParadaActualHandler handler = new ParadaActualHandler(this);
 
 	private TiemposUpdater posteUpdater = new TiemposUpdater();
@@ -1370,6 +1371,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	public DatosPantallaPrincipal getDatosPantallaPrincipal() {
 		return datosPantallaPrincipal;
+	}
+
+	public void onArticleSelected(int position) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
