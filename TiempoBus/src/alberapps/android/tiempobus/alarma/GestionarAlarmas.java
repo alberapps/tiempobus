@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -113,6 +114,8 @@ public class GestionarAlarmas {
 		// Obtener los minutos de la seleccion
 		long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
+		Log.d("ALARMA", "minutos: " + mins + " item: " + item);
+		
 		// Si es tram
 		/*
 		 * if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
@@ -121,14 +124,47 @@ public class GestionarAlarmas {
 		 * 
 		 * } else {
 		 */
-		// Que tiempo usar
-		// Si el primer bus no cumple, se usa el segundo
-		if (theBus.getProximoMinutos() < mins) {
-			et = theBus.getSiguienteMinutos();
-			tiempo = 2;
+
+		// TRAM
+		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+
+			// Que tiempo usar
+			// Si el primer bus no cumple, se usa el segundo
+			if (theBus.getProximoMinutos() < mins) {
+
+				if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoTram() != null) {
+
+					BusLlegada theBus2 = theBus.getSegundoTram();
+
+					if (theBus2.getProximoMinutos() < mins) {
+						et = theBus2.getSiguienteMinutos();
+						tiempo = 4;
+					} else {
+						et = theBus2.getProximoMinutos();
+						tiempo = 3;
+					}
+
+				} else {
+					et = theBus.getSiguienteMinutos();
+					tiempo = 2;
+				}
+			} else {
+				et = theBus.getProximoMinutos();
+				tiempo = 1;
+			}
+
 		} else {
-			et = theBus.getProximoMinutos();
-			tiempo = 1;
+
+			// Que tiempo usar
+			// Si el primer bus no cumple, se usa el segundo
+			if (theBus.getProximoMinutos() < mins) {
+				et = theBus.getSiguienteMinutos();
+				tiempo = 2;
+			} else {
+				et = theBus.getProximoMinutos();
+				tiempo = 1;
+			}
+
 		}
 
 		// }
@@ -372,7 +408,7 @@ public class GestionarAlarmas {
 
 			String alertaDialog = context.getString(R.string.alarma_establecida_linea) + ": " + datos[0] + "\n" + context.getString(R.string.alarma_establecida_parada) + ": " + datos[1] + "\n"
 					+ context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n"
-					+ context.getString(R.string.alarma_auto_aviso);
+					+ (context.getString(R.string.alarma_auto_aviso, new Object[] { preferencias.getString("servicio_recarga", "60") }));
 
 			// dialog.setMessage(alertaDialog);
 			dialog.setIcon(R.drawable.ic_alarm_modal);

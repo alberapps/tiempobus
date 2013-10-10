@@ -74,7 +74,7 @@ public class TiemposForegroundService extends Service {
 
 	private Handler manejador = new Handler();
 
-	String poste = "";
+	String parada = "";
 
 	PendingIntent alarmReceiver = null;
 
@@ -134,6 +134,12 @@ public class TiemposForegroundService extends Service {
 
 	@Override
 	public void onCreate() {
+
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+		
+		Log.d("SERVICIO", "Servicio creado");
+
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		try {
 			mStartForeground = getClass().getMethod("startForeground", mStartForegroundSignature);
@@ -155,6 +161,11 @@ public class TiemposForegroundService extends Service {
 
 	@Override
 	public void onDestroy() {
+
+		Log.d("SERVICIO", "Servicio destruido");
+
+		manejador.removeCallbacks(mRecarga);
+
 		// Make sure our notification is gone.
 		stopForegroundCompat(R.string.foreground_service_started);
 	}
@@ -164,11 +175,17 @@ public class TiemposForegroundService extends Service {
 	// method will not be called.
 	@Override
 	public void onStart(Intent intent, int startId) {
+
+		Log.d("SERVICIO", "Servicio iniciado");
+
 		handleCommand(intent);
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+
+		Log.d("SERVICIO", "Servicio iniciado");
+
 		handleCommand(intent);
 		// We want this service to continue running until it is explicitly
 		// stopped, so return sticky.
@@ -177,12 +194,17 @@ public class TiemposForegroundService extends Service {
 
 	void handleCommand(Intent intent) {
 
-		poste = Integer.toString(intent.getExtras().getInt("PARADA"));
+		Log.d("SERVICIO", "Manejar comando");
+
+		parada = Integer.toString(intent.getExtras().getInt("PARADA"));
 
 		if (ACTION_FOREGROUND.equals(intent.getAction())) {
 			// In this sample, we'll use the same text for the ticker and the
 			// expanded notification
-			CharSequence text = getText(R.string.foreground_service_started);
+			
+			CharSequence text = getString(R.string.foreground_service_started, new Object[] { preferencias.getString("servicio_recarga", "60")});
+			
+			//CharSequence text = getText(R.string.foreground_service_started);
 
 			// Set the icon, scrolling text and timestamp
 			Notification notification = new Notification(R.drawable.ic_stat_tiempobus_3, text, System.currentTimeMillis());
@@ -192,7 +214,7 @@ public class TiemposForegroundService extends Service {
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
 			// Set the info for the views that show in the notification panel.
-			notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + poste, text, contentIntent);
+			notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
 
 			startForegroundCompat(R.string.foreground_service_started, notification);
 
@@ -207,11 +229,14 @@ public class TiemposForegroundService extends Service {
 
 	private void recargaTimer() {
 
+		Log.d("SERVICIO", "Recargar Timer");
+
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		manejador.removeCallbacks(mRecarga);
-		manejador.postDelayed(mRecarga, 60000);
+		manejador.removeCallbacks(mRecarga);		
+		
+		manejador.postDelayed(mRecarga, frecuenciaRecarga());
 
 	}
 
@@ -221,7 +246,7 @@ public class TiemposForegroundService extends Service {
 
 			refrescarAlarma();
 			manejador.removeCallbacks(mRecarga);
-			manejador.postDelayed(this, 60000);
+			manejador.postDelayed(this, frecuenciaRecarga());
 
 		}
 	};
@@ -258,13 +283,26 @@ public class TiemposForegroundService extends Service {
 
 						long milisegundosAlarma = Long.parseLong(datos[5]);
 
-						//long mins = ((item + 1) * 5);
-						
+						// long mins = ((item + 1) * 5);
+
 						long mins = GestionarAlarmas.obtenerMinutos(item);
-						
+
 						Date actual = new Date();
 
 						boolean cambioTiempo = false;
+
+						if (DatosPantallaPrincipal.esTram(parada) && tiempos.getSegundoTram() != null) {
+							if (tiempo == 3 && tiempos.getSiguienteMinutos() >= mins && tiempos.getSegundoTram().getProximoMinutos() > mins) {
+								tiempo = 2;
+								cambioTiempo = true;
+							}
+
+							if (tiempo == 4 && tiempos.getSegundoTram().getProximoMinutos() >= mins && tiempos.getSegundoTram().getSiguienteMinutos() > mins) {
+								tiempo = 3;
+								cambioTiempo = true;
+							}
+
+						}
 
 						// Posible cambio de orden
 						// Si estamos en el segundo tiempo y el primero ya es
@@ -280,6 +318,16 @@ public class TiemposForegroundService extends Service {
 							milisegundosActuales = (actual.getTime() + (tiempos.getProximoMinutos() * 60000)) - (mins * 60000);
 						} else if (tiempo == 2) {
 							milisegundosActuales = (actual.getTime() + (tiempos.getSiguienteMinutos() * 60000)) - (mins * 60000);
+						}
+
+						if (DatosPantallaPrincipal.esTram(parada) && tiempos.getSegundoTram() != null) {
+
+							if (tiempo == 3) {
+								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoTram().getProximoMinutos() * 60000)) - (mins * 60000);
+							} else if (tiempo == 4) {
+								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoTram().getSiguienteMinutos() * 60000)) - (mins * 60000);
+							}
+
 						}
 
 						// Verificar si hay que restablecer o se mantiene
@@ -330,16 +378,16 @@ public class TiemposForegroundService extends Service {
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 				if (networkInfo != null && networkInfo.isConnected()) {
-				
-					if(DatosPantallaPrincipal.esTram(datos[0])){
-						
+
+					if (DatosPantallaPrincipal.esTram(datos[0])) {
+
 						Log.d("TiemposService", "Recalculando para TRAM");
-						
+
 						new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1], datos[6]);
-					}else{
+					} else {
 						new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1]);
 					}
-				
+
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 				}
@@ -371,14 +419,46 @@ public class TiemposForegroundService extends Service {
 
 		long mins = GestionarAlarmas.obtenerMinutos(item); // ((item + 1) * 5);
 
-		// Que tiempo usar
-		// Si el primer bus no cumple, se usa el segundo
-		if (theBus.getProximoMinutos() < mins) {
-			et = theBus.getSiguienteMinutos();
-			tiempo = 2;
+		// TRAM
+		if (DatosPantallaPrincipal.esTram(parada)) {
+
+			// Que tiempo usar
+			// Si el primer bus no cumple, se usa el segundo
+			if (theBus.getProximoMinutos() < mins) {
+
+				if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoTram() != null) {
+
+					BusLlegada theBus2 = theBus.getSegundoTram();
+
+					if (theBus.getProximoMinutos() < mins) {
+						et = theBus2.getSiguienteMinutos();
+						tiempo = 4;
+					} else {
+						et = theBus2.getProximoMinutos();
+						tiempo = 3;
+					}
+
+				} else {
+					et = theBus.getSiguienteMinutos();
+					tiempo = 2;
+				}
+			} else {
+				et = theBus.getProximoMinutos();
+				tiempo = 1;
+			}
+
 		} else {
-			et = theBus.getProximoMinutos();
-			tiempo = 1;
+
+			// Que tiempo usar
+			// Si el primer bus no cumple, se usa el segundo
+			if (theBus.getProximoMinutos() < mins) {
+				et = theBus.getSiguienteMinutos();
+				tiempo = 2;
+			} else {
+				et = theBus.getProximoMinutos();
+				tiempo = 1;
+			}
+
 		}
 
 		// Control de tiempo insuficiente o excesivo
@@ -392,17 +472,16 @@ public class TiemposForegroundService extends Service {
 
 		cancelarAlarmas(false);
 
-		
 		String texto = "";
-		if(DatosPantallaPrincipal.esTram(poste)){
+		if (DatosPantallaPrincipal.esTram(parada)) {
 			texto = context.getString(R.string.alarm_tram);
-		}else{
+		} else {
 			texto = context.getString(R.string.alarm_bus);
 		}
-		
-		String txt = String.format(texto, "" + theBus.getLinea(), "" + poste);
+
+		String txt = String.format(texto, "" + theBus.getLinea(), "" + parada);
 		intent.putExtra("alarmTxt", txt);
-		intent.putExtra("poste", poste);
+		intent.putExtra("poste", parada);
 
 		alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
 
@@ -418,7 +497,7 @@ public class TiemposForegroundService extends Service {
 
 		String horaT = ft.format(milisegundos);
 
-		String alertaDialog = theBus.getLinea() + ";" + poste + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" +theBus.getDestino();
+		String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
 		Log.d("TiemposService", "Tiempo actualizado a: " + horaT);
 
@@ -454,4 +533,20 @@ public class TiemposForegroundService extends Service {
 		}
 	}
 
+	
+	/**
+	 * Frecuencia configurable
+	 * 
+	 * @return frecuencia
+	 */
+	public long frecuenciaRecarga() {
+
+		String preFrec = preferencias.getString("servicio_recarga", "60");
+
+		long frecuencia = Long.parseLong(preFrec) * 1000;
+
+		return frecuencia;
+
+	}
+	
 }

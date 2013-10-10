@@ -19,6 +19,10 @@
  */
 package alberapps.java.tam;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -188,11 +192,14 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		} else if (proximoMinutosNuevo.equals(9999)) {
 			proximoNuevo.append("sinestimacion");
 		} else {
-			proximoNuevo.append(proximoMinutosNuevo);
-			proximoNuevo.append(" ");
-			int pos = procesa[0].indexOf("m");
+			proximoNuevo.append(getFormatoTiempoEspera(Integer.toString(proximoMinutosNuevo)));
+			//proximoNuevo.append(" ");
+			//int pos = procesa[0].indexOf("m");
 			
-			proximoNuevo.append(procesa[0].substring(pos));
+			//proximoNuevo.append(procesa[0].substring(pos));
+			
+			
+			
 			
 		}
 
@@ -237,13 +244,13 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		} else if (siguienteMinutosNuevo.equals(9999)) {
 			siguienteNuevo.append("sinestimacion");
 		} else {
-			siguienteNuevo.append(siguienteMinutosNuevo);
+			siguienteNuevo.append(getFormatoTiempoEspera(Integer.toString(siguienteMinutosNuevo)));
 			
-			siguienteNuevo.append(" ");
+			//siguienteNuevo.append(" ");
 			
-			int pos = procesa[1].indexOf("m");
+			//int pos = procesa[1].indexOf("m");
 			
-			siguienteNuevo.append(procesa[1].substring(pos));
+			//siguienteNuevo.append(procesa[1].substring(pos));
 						
 			
 		}
@@ -292,4 +299,28 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		this.segundoTram = segundoTram;
 	}
 
+	
+	/**
+	 * Forma string con los minutos faltantes y la hora aproximada de llegada
+	 * 
+	 * @param minutosLlegada
+	 * @return
+	 */
+	private String getFormatoTiempoEspera(String minutosLlegada) {
+
+		String formatoMinHora = "";
+
+		GregorianCalendar cl = new GregorianCalendar();
+		cl.setTimeInMillis((new Date()).getTime());
+		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
+
+		SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+		String horaString = sf.format(cl.getTime());
+
+		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
+
+		return formatoMinHora;
+
+	}
+	
 }

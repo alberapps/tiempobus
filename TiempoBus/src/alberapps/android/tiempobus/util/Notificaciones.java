@@ -259,9 +259,9 @@ public class Notificaciones {
 
 		String texto = "";
 		if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
-			texto = contexto.getString(R.string.notification_title);
-		} else {
 			texto = contexto.getString(R.string.notification_title_tram);
+		} else {
+			texto = contexto.getString(R.string.notification_title);
 		}
 
 		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(texto).setContentText(aviso);

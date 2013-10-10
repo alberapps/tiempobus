@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus.mapas;
 
+import java.math.BigDecimal;
+
 import android.util.Log;
 
 /**
@@ -109,10 +111,33 @@ public class UtilidadesGeo {
 			latitude = -latitude;
 		}
 
+		//Redondeo
+		//longitude = round(longitude, 6);
+		//latitude = round(latitude, 6);
+		
 		Log.d("GEOPOSICION", "lat: " + latitude + " long: " + longitude);
 
 		return longitude + "," + latitude;
 
 	}
+	
+	
+	public static double round(double value, int places){
+		
+		/*long factor = (long) Math.pow(10,  places);
+		value = value * factor;
+		long tmp = Math.round(value);
+		return (double) tmp / factor;*/
+		
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
+		
+		return bd.doubleValue();
+		
+		
+		
+	}
+	
+	
 
 }

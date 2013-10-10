@@ -194,7 +194,7 @@
     <string name="url_subus">http://www.subus.es/</string>
     <string name="hora_inicial">0:00</string>
     
-    <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada 60 segundos, para ajustarse a los cambios.</string>
+    <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
     
   
     <string name="alarma_auto_error">Problema al actualizar Alarma</string>
@@ -217,7 +217,7 @@
     
     <string name="error_red">El acceso a Internet no está disponible. Verifica tu conexión</string>
     
-    <string name="foreground_service_started">Verifica tiempo cada 60 segundos</string>
+    <string name="foreground_service_started">Verifica tiempo cada %s segundos</string>
     <string name="foreground_service">TiempoBus: Servicio Alertas</string>
     
     <string name="tab_noticias">Web Subús</string>

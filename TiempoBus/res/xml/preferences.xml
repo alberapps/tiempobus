@@ -83,6 +83,16 @@
     			android:ringtoneType="notification"
     			android:summary="@string/configuracion_alarmas_tono_desc"
     			android:defaultValue="content://settings/system/notification_sound"/>   
+    			
+        <ListPreference
+                android:key="servicio_recarga"
+                android:title="@string/conf_tiempo_recarga"
+                android:summary="@string/conf_tiempo_recarga_desc"
+                android:entries="@array/tiempos_recarga"
+                android:entryValues="@array/tiempos_recarga"
+                android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                android:defaultValue="60" />
+        
    	</PreferenceCategory>
     
     <PreferenceCategory
