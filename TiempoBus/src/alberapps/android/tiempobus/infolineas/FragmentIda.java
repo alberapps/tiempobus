@@ -59,29 +59,26 @@ public class FragmentIda extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		setupFondoAplicacion();
 
 		TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
 
-		
+		if (actividad.datosHorarios != null) {
 
-		if(actividad.datosHorarios != null){
-		
 			titIda.setText(actividad.datosHorarios.getTituloSalidaIda());
-			
-			
-		}else if (actividad.datosIda != null) {
-			
+
+		} else if (actividad.datosIda != null) {
+
 			actividad.limpiarHorariosIda();
-			
+
 			if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
 				titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
 			} else {
 				titIda.setText("-");
 			}
-			
+
 			cargarListado();
 		} else {
 			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
@@ -90,7 +87,7 @@ public class FragmentIda extends Fragment {
 			idaView.setEmptyView(vacio);
 		}
 
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewStateRestored(savedInstanceState);
 	}
 
 	@Override

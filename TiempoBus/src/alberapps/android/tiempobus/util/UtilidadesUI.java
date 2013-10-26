@@ -21,21 +21,25 @@ package alberapps.android.tiempobus.util;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 /**
  * Utilidades de uso en la interfaz
  * 
- *
+ * 
  */
 public class UtilidadesUI {
 
@@ -103,6 +107,8 @@ public class UtilidadesUI {
 			contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
 
 		}
+		
+		
 
 	}
 
@@ -125,6 +131,27 @@ public class UtilidadesUI {
 		}
 
 		return false;
+
+	}
+
+	/**
+	 * Verifica si se trata de una tablet y en horizontal y api >= v14
+	 * 
+	 * @param contexto
+	 * @return
+	 */
+	public static boolean pantallaTabletHorizontal(Context contexto) {
+
+		Configuration config = contexto.getResources().getConfiguration();
+
+		if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+			return true;
+
+		} else {
+
+			return false;
+		}
 
 	}
 

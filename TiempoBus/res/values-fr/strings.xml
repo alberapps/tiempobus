@@ -17,6 +17,14 @@
 	\nCette application n\'est PAS officiel et son développement est indépendant.
 	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil/index.aspx
 	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
+	
+	<string name="legal_sin_tram">Les temps sont obtenues du système ISAE, qui offre, en TEMP RÉEL, l\'APPROXIMATION des temps d\'arrive du réseau TAM.
+	\nLes temps peuvent varier en fonction de facteurs extérieures à l\'application, comme la circulation, changement de routes, etc.
+	\nLes fonctions qui utilisent la base de données locale peuvent ne pas disposer des dernières changements.
+	\nCette application n\'est PAS officiel et son développement est indépendant.
+	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil/index.aspx
+	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
+	
     <string name="tit_buses">Lignes&#8230;</string>
     <string name="tit_direccion">Adresse&#8230;</string>
     <string name="tit_paradas">Arrêt&#8230;</string>
@@ -187,7 +195,7 @@
     <string name="hora_inicial">0:00</string>
 
    
-    <string name="alarma_auto_aviso">* Avec cette option, les temps sont mises à jour tous les 60 secondes.</string>
+    <string name="alarma_auto_aviso">* Avec cette option, les temps sont mises à jour tous les %s secondes.</string>
     <string name="alarma_auto_error">Problem avec l\'Actualisation de l\'Alarme</string>
     <string name="alarma_auto_actualizada">Alarme actualisée</string>
     <string name="err_bus_sin">Impossible de fixer une alarme.\nPas d\'estimation disponible.</string>
@@ -205,13 +213,13 @@
     <string name="error_fichero">Incapable d\'accéder au sistème des fichiers</string>
 	
 	<string name="error_red">L\'access à Internet n\'est pas disponible. Vérifiez s.v.p. votre connexion</string>
-	<string name="foreground_service_started">Vérifier temps tous les 60 secondes</string>
+	<string name="foreground_service_started">Vérifier temps tous les %s secondes</string>
 	<string name="foreground_service">TiempoBus : Service d\'alarmes</string>
 	<string name="tab_noticias">Web Subús</string>
 	<string name="tab_tw">Twitter</string>
 	
 	<string name="dato_tw">Les tweets plus récentes du :</string>
-	<string name="tw1">\@alberapps \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
+	<string name="tw1">\@alberapps \@TramdeAlicante \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
 	
 	<string name="error_codigo">Le code d\'arrêt n\'est pas correct</string>
 	<string name="alarma_checkbox">Activer Service</string>
@@ -272,6 +280,15 @@
      <string name="mapas_vehiculo_on">Bus ON</string>
     <string name="mapas_vehiculo_off">Bus OFF</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
+    
+    <string name="conf_tiempo_recarga">Frecuencia</string>
+    <string name="conf_tiempo_recarga_desc">Frecuencia con la que se realizan las recargas</string>
+    <string name="conf_tiempo_recarga_titulo">Frecuencia (En segundos)</string>
+    
+    <string name="aviso_buscador_offline_tram">Recorridos precargados con datos obtenidos de tramalicante.es</string>
+    <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
+    <string name="notification_title_tram">¡Alerta de Tram!</string>
+    <string name="mapas_vehiculo_titulo_tram">TRAM</string>
     
 </resources>
 

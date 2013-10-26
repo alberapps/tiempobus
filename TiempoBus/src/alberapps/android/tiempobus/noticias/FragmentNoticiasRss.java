@@ -56,7 +56,7 @@ public class FragmentNoticiasRss extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		// TextView titVuelta = (TextView)
 		// actividad.findViewById(R.id.tituloVuelta);
@@ -82,7 +82,7 @@ public class FragmentNoticiasRss extends Fragment {
 
 		accederNoticia.setText(noticiasURL);
 
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewStateRestored(savedInstanceState);
 	}
 
 	@Override

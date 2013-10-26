@@ -35,6 +35,7 @@ import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
@@ -142,9 +143,6 @@ public class DatosPantallaPrincipal {
 			Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
 		}
 
-		
-		
-		
 	}
 
 	/**
@@ -201,16 +199,16 @@ public class DatosPantallaPrincipal {
 	 */
 	public String cargarDescripcion(String parada) {
 
-		 FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet)context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
-			
-		 if(detalleFrag != null){
-			 
-			 Log.d("Principal", "Actualizar fragmento secundario");
-			 
-			 detalleFrag.actualizarDatos();
-			 
-		 }
-		
+		FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+		if (detalleFrag != null && UtilidadesUI.pantallaTabletHorizontal(context)) {
+
+			Log.d("Principal", "Actualizar fragmento secundario");
+
+			detalleFrag.actualizarDatos();
+
+		}
+
 		try {
 			HashMap<String, String> datosFav = new HashMap<String, String>();
 
@@ -580,11 +578,13 @@ public class DatosPantallaPrincipal {
 	public long frecuenciaRecarga() {
 
 		String preFrec = preferencias.getString("tiempo_recarga", "60");
-				
+
 		long frecuencia = Long.parseLong(preFrec) * 1000;
 
 		return frecuencia;
 
 	}
+
+	
 
 }

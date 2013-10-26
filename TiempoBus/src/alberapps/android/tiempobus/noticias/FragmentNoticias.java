@@ -56,7 +56,7 @@ public class FragmentNoticias extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		setupFondoAplicacion();
 
@@ -79,7 +79,7 @@ public class FragmentNoticias extends Fragment {
 		lpb.setIndeterminate(true);
 		listNoticiasWiew.setEmptyView(lpb);
 
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewStateRestored(savedInstanceState);
 	}
 
 	@Override

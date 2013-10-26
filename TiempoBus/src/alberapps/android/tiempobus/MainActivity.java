@@ -427,6 +427,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			paradaActual = preferencias.getInt("parada_inicio", paradaActual);
 		}
 
+		Log.d("PRINCIPAL", "inicia: " + buses.size());
+		
 		handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
 		// Poner en campo de poste

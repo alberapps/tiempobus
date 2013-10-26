@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.FragmentVuelta;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -97,6 +98,19 @@ public class GestionarFondo {
 					Toast.makeText(context.getApplicationContext(), context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
 				}
 
+				
+
+				if(UtilidadesUI.pantallaTabletHorizontal(context)){
+					// Lanzar carga de vuelta
+					FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+					if (secundarioFrag != null) {
+
+						secundarioFrag.setupFondoAplicacion();
+
+					}
+				}
+				
 			}
 		});
 
@@ -183,6 +197,18 @@ public class GestionarFondo {
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, context);
 
+		if(UtilidadesUI.pantallaTabletHorizontal(context)){
+			// Lanzar carga de vuelta
+			FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+			if (secundarioFrag != null) {
+
+				secundarioFrag.setupFondoAplicacion();
+
+			}
+		}
+		
+		
 	}
 
 }

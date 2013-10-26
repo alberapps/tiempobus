@@ -53,7 +53,7 @@ public class FragmentTwitter extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		setupFondoAplicacion();
 
@@ -69,7 +69,7 @@ public class FragmentTwitter extends Fragment {
 		lpb.setIndeterminate(true);
 		listTwWiew.setEmptyView(lpb);
 
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewStateRestored(savedInstanceState);
 	}
 
 	

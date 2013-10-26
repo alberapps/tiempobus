@@ -61,10 +61,24 @@ public class FragmentVuelta extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		setupFondoAplicacion();
 
+		recargaInformacion();
+
+		super.onViewStateRestored(savedInstanceState);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		return inflater.inflate(R.layout.infolinea_vuelta, container, false);
+	}
+
+	
+	public void recargaInformacion(){
+		
 		TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
 
 		if (actividad.datosHorarios != null) {
@@ -77,32 +91,27 @@ public class FragmentVuelta extends Fragment {
 
 			actividad.limpiarHorariosVuelta();
 
-			if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
-				titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
-			} else {
-				titVuelta.setText("-");
-			}
-
 			cargarListado();
 		} else {
 
-						
 			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
 
 			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
 			idaView.setEmptyView(vacio);
 		}
-
-		super.onViewCreated(view, savedInstanceState);
+		
 	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.infolinea_vuelta, container, false);
-	}
-
+	
+	
 	public void cargarListado() {
+
+		TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
+
+		if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
+			titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
+		} else {
+			titVuelta.setText("-");
+		}
 
 		infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
 
@@ -146,14 +155,14 @@ public class FragmentVuelta extends Fragment {
 	 */
 	private void setupFondoAplicacion() {
 
-		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		PreferenceManager.setDefaultValues(actividad, R.xml.preferences, false);
+		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(actividad);
 
 		String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		View contenedor_principal = getActivity().findViewById(R.id.contenedor_infolinea_vuelta);
+		View contenedor_principal = actividad.findViewById(R.id.contenedor_infolinea_vuelta);
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
+		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, actividad);
 
 	}
 

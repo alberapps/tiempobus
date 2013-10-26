@@ -104,7 +104,7 @@ public class FragmentLineas extends Fragment {
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
@@ -112,7 +112,7 @@ public class FragmentLineas extends Fragment {
 
 			descrip.setText(R.string.aviso_offline);
 
-		}else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+		} else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
 			TextView descrip = (TextView) getActivity().findViewById(R.id.tituloAviso);
 
@@ -201,7 +201,7 @@ public class FragmentLineas extends Fragment {
 			cargarLineas();
 		}
 
-		super.onViewCreated(view, savedInstanceState);
+		super.onViewStateRestored(savedInstanceState);
 	}
 
 	@Override
@@ -310,10 +310,9 @@ public class FragmentLineas extends Fragment {
 
 			actividad.setTitle(linea.getLinea());
 
-			//Quitar de horarios
+			// Quitar de horarios
 			actividad.limpiarHorariosIda();
-			
-			
+
 			cargarParadas(position);
 
 		}

@@ -90,6 +90,8 @@ public class FragmentSecundarioTablet extends Fragment {
 
 		String parametros[] = { Integer.toString(actividad.paradaActual) };
 
+		try{
+		
 		Cursor cursor = actividad.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
 		// Uri data = Uri.withAppendedPath(BuscadorLineasProvider.CONTENT_URI,
@@ -133,6 +135,11 @@ public class FragmentSecundarioTablet extends Fragment {
 
 			observaciones.setText(cursor.getString(observacionesIndex));
 		}
+		
+		
+		}catch(Exception e){
+			
+		}
 
 	}
 
@@ -152,7 +159,7 @@ public class FragmentSecundarioTablet extends Fragment {
 	/**
 	 * Seleccion del fondo de la galeria en el arranque
 	 */
-	private void setupFondoAplicacion() {
+	public void setupFondoAplicacion() {
 
 		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
 		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());

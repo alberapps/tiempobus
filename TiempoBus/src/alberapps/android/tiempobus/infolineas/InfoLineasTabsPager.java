@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
+import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -39,6 +40,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -132,7 +134,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		}
 
-		setContentView(R.layout.fragment_tabs_pager);
+		setContentView(R.layout.infolinea_contenedor);
 
 		// Fondo
 		// setupFondoAplicacion();
@@ -142,25 +144,29 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-		mTabHost.setup();
+		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+			mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+			mTabHost.setup();
 
-		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
+			mViewPager = (ViewPager) findViewById(R.id.pager);
 
-		if (modoRed == MODO_RED_SUBUS_ONLINE || modoRed == MODO_RED_SUBUS_OFFLINE) {
-			mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
-			mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
-			mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
-		} else if (modoRed == MODO_RED_TRAM_OFFLINE) {
-			mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
-			mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
+			mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
-		}
+			if (modoRed == MODO_RED_SUBUS_ONLINE || modoRed == MODO_RED_SUBUS_OFFLINE) {
+				mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
+				mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
+				mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
+			} else if (modoRed == MODO_RED_TRAM_OFFLINE) {
+				mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
+				mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
 
-		if (savedInstanceState != null) {
-			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+			}
+
+			if (savedInstanceState != null) {
+				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+			}
+
 		}
 
 	}
@@ -212,12 +218,29 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putString("tab", mTabHost.getCurrentTabTag());
+		if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
+			outState.putString("tab", mTabHost.getCurrentTabTag());
+		}
 	}
 
 	public void cambiarTab() {
 
-		mTabHost.setCurrentTabByTag("ida");
+		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
+			mTabHost.setCurrentTabByTag("ida");
+		} else {
+
+			
+				// Lanzar carga de vuelta
+				FragmentVuelta vueltaFrag = (FragmentVuelta) getSupportFragmentManager().findFragmentById(R.id.infolinea_3_fragment);
+
+				if (vueltaFrag != null) {
+
+					vueltaFrag.recargaInformacion();
+
+				}
+			
+
+		}
 
 	}
 
@@ -668,5 +691,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
+
+	
 
 }

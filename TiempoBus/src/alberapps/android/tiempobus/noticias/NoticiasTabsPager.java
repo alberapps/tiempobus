@@ -33,6 +33,7 @@ import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRs
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask.LoadTwitterAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.noticias.tw.TwResultado;
@@ -138,39 +139,43 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		setContentView(R.layout.fragment_tabs_pager);
+		setContentView(R.layout.noticias_contenedor);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-		mTabHost.setup();
+		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+			mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+			mTabHost.setup();
 
-		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
+			mViewPager = (ViewPager) findViewById(R.id.pager);
 
-		mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
+			mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
-		if (UtilidadesTRAM.ACTIVADO_TRAM) {
-			mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
+			mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
+
+			if (UtilidadesTRAM.ACTIVADO_TRAM) {
+				mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
+			}
+
+			mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
+
+			if (savedInstanceState != null) {
+				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+			}
+
 		}
-
-		mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
-
-		if (savedInstanceState != null) {
-			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-		}
-
-		
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putString("tab", mTabHost.getCurrentTabTag());
+		if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
+			outState.putString("tab", mTabHost.getCurrentTabTag());
+		}
 	}
 
 	@Override
@@ -812,7 +817,6 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			
 		}
 	};
 
