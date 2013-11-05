@@ -287,8 +287,8 @@
     <string name="hist_info_borrar">Historial borrado</string>
     <string name="menu_export_qr">Exportar QR</string>
     
-    <string name="mapas_vehiculo_on">Bus ON</string>
-    <string name="mapas_vehiculo_off">Bus OFF</string>
+    <string name="mapas_vehiculo_on">Vehiculos</string>
+    <string name="mapas_vehiculo_off">Vehiculos</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
     
     <string name="conf_tiempo_recarga">Frecuencia</string>

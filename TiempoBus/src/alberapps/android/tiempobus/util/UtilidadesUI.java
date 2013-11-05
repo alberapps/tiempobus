@@ -107,8 +107,6 @@ public class UtilidadesUI {
 			contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
 
 		}
-		
-		
 
 	}
 
@@ -142,14 +140,19 @@ public class UtilidadesUI {
 	 */
 	public static boolean pantallaTabletHorizontal(Context contexto) {
 
-		Configuration config = contexto.getResources().getConfiguration();
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-		if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			Configuration config = contexto.getResources().getConfiguration();
 
-			return true;
+			if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
+				return true;
+
+			} else {
+
+				return false;
+			}
 		} else {
-
 			return false;
 		}
 

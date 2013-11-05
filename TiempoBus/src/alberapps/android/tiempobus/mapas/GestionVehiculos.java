@@ -96,9 +96,11 @@ public class GestionVehiculos {
 				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
 
 				// Desvio en el calculo
-				lat = lat - 0.001517;
-				lng = lng - 0.001517;
+				//lat = lat - 0.001517;
+				//lng = lng - 0.001517;
 
+				
+				
 				/*
 				 * prueba no: 0,002185
 				 * 
@@ -130,6 +132,15 @@ public class GestionVehiculos {
 				int glat = (int) (lat * 1E6);
 				int glng = (int) (lng * 1E6);
 
+				
+				//Calibrado
+				//https://github.com/Sloy/SeviBus
+				//Rafa Vazquez (Sloy)
+				glat = glat - 200 * 10;
+				glng = glng - 130 * 10;
+				//
+				
+				
 				point = new GeoPoint(glat, glng);
 
 				String descripcionAlert = "";
