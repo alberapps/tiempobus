@@ -647,7 +647,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// Pie para la lista de resultados
 		LayoutInflater li = LayoutInflater.from(this);
-		View v = li.inflate(R.layout.tiempos_aviso, null);
+		View v = li.inflate(R.layout.tiempos_aviso_3, null);
 
 		tiemposView = (ListView) findViewById(R.id.lista_tiempos);
 

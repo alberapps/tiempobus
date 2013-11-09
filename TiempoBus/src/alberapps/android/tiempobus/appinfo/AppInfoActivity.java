@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 /**
  * Informacion de la app
@@ -45,7 +46,7 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.infoapp);
+		setContentView(R.layout.infoapp_3);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
@@ -53,8 +54,8 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 		}
 		
 		
-		ImageButton botonGpl = (ImageButton) findViewById(R.id.boton_gpl);
-		botonGpl.setOnClickListener(new ImageButton.OnClickListener() {
+		ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
+		botonGpl.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View arg0) {
 
 				Uri uri = Uri.parse("http://www.gnu.org/licenses/gpl-3.0-standalone.html");
@@ -69,6 +70,28 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 			public void onClick(View arg0) {
 
 				links();
+
+			}
+		});
+		
+		ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
+		botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
+			public void onClick(View arg0) {
+
+				Uri uri = Uri.parse("http://www.fgv.es");
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+
+			}
+		});
+		
+		ImageView botonTram = (ImageView) findViewById(R.id.imageLogoTram);
+		botonTram.setOnClickListener(new ImageButton.OnClickListener() {
+			public void onClick(View arg0) {
+
+				Uri uri = Uri.parse("http://www.tramalicante.es");
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
 
 			}
 		});

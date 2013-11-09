@@ -300,4 +300,10 @@
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
     
+    
+    
+    <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
+	<string name="acercade_info_nuevo_2">Más información: alberapps.blogspot.com y twitter.com/alberapps</string>
+    
 </resources>
