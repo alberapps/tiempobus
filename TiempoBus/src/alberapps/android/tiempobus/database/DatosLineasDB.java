@@ -630,11 +630,7 @@ public class DatosLineasDB {
 
 						if (strings[0].equals("L9")) {
 							strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
-						} else {
-							strings[7] = "";
-						}
-
-						if (strings[0].equals("L1") || strings[0].equals("L3")) {
+						} else if (strings[0].equals("L1") || strings[0].equals("L3")) {
 							strings[7] = UtilidadesTRAM.getObservacionesL1(strings[3]);
 						} else if (strings[0].equals("L4")) {
 							strings[7] = UtilidadesTRAM.getObservacionesL1enL4(strings[3]);

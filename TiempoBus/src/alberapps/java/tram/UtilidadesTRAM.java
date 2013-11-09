@@ -30,12 +30,14 @@ import android.util.Log;
 public class UtilidadesTRAM {
 
 	public static boolean ACTIVADO_TRAM = true;
+	
+	public static boolean ACTIVADO_L9 = false;
 
 	//Para la carga en BD
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
 	
 	//Para el servicio de consultas
-	public static String[] LINEAS_A_CONSULTAR = { "L1", "L3", "L4", "L9", "L2" };
+	public static String[] LINEAS_A_CONSULTAR = { "L1", "L3", "L4", "L2" };
 
 	public static int[] L1_ORDEN_SIN_L3 = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
 
@@ -214,6 +216,20 @@ public class UtilidadesTRAM {
 				return true;
 			}
 			
+		}
+		
+		return false;
+		
+	}
+	
+	
+	public static boolean esParadaL9(String parada){
+		
+		for (int i = 0; i < L9_ORDEN.length; i++) {
+			if (parada.equals(L9_ORDEN[i])) {
+				return true;
+			}
+
 		}
 		
 		return false;

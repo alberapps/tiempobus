@@ -27,6 +27,7 @@ import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -104,37 +105,40 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 			conexiones.setText(datosParada.getLineas());
 			observaciones.setText(datosParada.getObservaciones());
 
-			
-			
-			
-			
-			// boton parada
-			
 			TextView botonPoste = (TextView) findViewById(R.id.buttonT);
-			botonPoste.setOnClickListener(new OnClickListener() {
-				public void onClick(View arg0) {
 
-					int codigo = -1;
+			if (!UtilidadesTRAM.ACTIVADO_L9 && lineaNum.equals("L9")) {
+				botonPoste.setVisibility(View.INVISIBLE);
+			} else {
 
-					try {
-						codigo = Integer.parseInt(paradaSel);
+				// boton parada
 
-					} catch (Exception e) {
+				botonPoste.setOnClickListener(new OnClickListener() {
+					public void onClick(View arg0) {
+
+						int codigo = -1;
+
+						try {
+							codigo = Integer.parseInt(paradaSel);
+
+						} catch (Exception e) {
+
+						}
+
+						if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
+
+							cargarTiempos(codigo);
+
+						} else {
+
+							Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+
+						}
 
 					}
+				});
 
-					if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
-
-						cargarTiempos(codigo);
-
-					} else {
-
-						Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
-
-					}
-
-				}
-			});
+			}
 
 			// boton mapa
 			TextView botonMapa = (TextView) findViewById(R.id.buttonM);

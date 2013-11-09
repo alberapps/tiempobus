@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -33,8 +32,8 @@ import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaAsyncTask.LoadDatosMapaAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask.LoadDatosMapaV3AsyncTaskResponder;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
@@ -59,7 +58,6 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
@@ -144,6 +142,7 @@ public class MapasActivity extends ActionBarMapaActivity {
 	AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
 	AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
 	AsyncTask<String, Void, DatosMapa> taskVehiculosMapa = null;
+	AsyncTask<String, Void, DatosMapa[]> taskDatosMapaV3 = null;
 
 	Timer timer = null;
 
@@ -243,7 +242,13 @@ public class MapasActivity extends ActionBarMapaActivity {
 			dialog = ProgressDialog.show(MapasActivity.this, "", getString(R.string.dialogo_espera), true);
 
 			if (this.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
-				loadDatosMapa();
+				
+				if(UtilidadesTAM.ACTIVAR_MAPS_V3){
+					loadDatosMapaV3();
+				}else{
+					loadDatosMapa();
+				}				
+				
 			} else {
 				mapasOffline.loadDatosMapaOffline();
 			}
@@ -523,6 +528,59 @@ public class MapasActivity extends ActionBarMapaActivity {
 	/**
 	 * kml de carga
 	 */
+	public void loadDatosMapaV3() {
+
+		String url = UtilidadesTAM.getKMLParadasIdaV3(lineaSeleccionada);
+
+		String urlRecorrido = UtilidadesTAM.getKMLRecorridoIdaV3(lineaSeleccionada);
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(url, urlRecorrido);
+		} else {
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+			if (dialog != null && dialog.isShowing()) {
+				dialog.dismiss();
+			}
+		}
+
+	}
+
+	/**
+	 * Se llama cuando las paradas hayan sido cargadas
+	 */
+	LoadDatosMapaV3AsyncTaskResponder loadDatosMapaV3AsyncTaskResponderIda = new LoadDatosMapaV3AsyncTaskResponder() {
+		public void datosMapaV3Loaded(DatosMapa[] datos) {
+
+			if (datos != null) {
+				datosMapaCargadosIda = datos[0];
+				datosMapaCargadosVuelta = datos[1];
+
+				cargarMapa();
+				
+				gestionVehiculos.loadDatosVehiculos();
+
+				dialog.dismiss();
+				
+			} else {
+
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+				toast.show();
+				finish();
+
+				dialog.dismiss();
+
+			}
+
+		}
+	};
+	
+	
+	/**
+	 * kml de carga
+	 */
 	public void loadDatosMapa() {
 
 		String url = UtilidadesTAM.getKMLParadasIda(lineaSeleccionada);
@@ -598,10 +656,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 					datosMapaCargadosVuelta = datos;
 					cargarMapa();
 
-					// if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE)
-					// {
+					
 					gestionVehiculos.loadDatosVehiculos();
-					// }
+					
 
 				} catch (Exception e) {
 

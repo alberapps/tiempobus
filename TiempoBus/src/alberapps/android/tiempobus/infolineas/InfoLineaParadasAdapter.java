@@ -24,7 +24,9 @@ import java.util.List;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
 import android.content.Context;
+import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -105,33 +107,39 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
 		TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
 
-		// Link cargar
-		cargarText.setOnClickListener(new OnClickListener() {
+		if (!UtilidadesTRAM.ACTIVADO_L9 && ((InfoLineasTabsPager) contexto).getLinea().getNumLinea().equals("L9")) {
+			cargarText.setVisibility(View.INVISIBLE);
+		} else {
 
-			public void onClick(View view) {
-				
-				int codigo = -1;
+			// Link cargar
+			cargarText.setOnClickListener(new OnClickListener() {
 
-				try {
-					codigo = Integer.parseInt(bus.getCodigoParada());
+				public void onClick(View view) {
 
-				} catch (Exception e) {
+					int codigo = -1;
+
+					try {
+						codigo = Integer.parseInt(bus.getCodigoParada());
+
+					} catch (Exception e) {
+
+					}
+
+					if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
+
+						((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
+
+					} else {
+
+						Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+
+					}
 
 				}
 
-				if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
+			});
 
-					((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
-
-				} else {
-
-					Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
-
-				}
-
-			}
-
-		});
+		}
 
 		return v;
 	}

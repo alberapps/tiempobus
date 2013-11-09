@@ -23,6 +23,7 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
@@ -213,6 +214,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			datosPantallaPrincipal.verificarNuevasNoticias();
 		}
 
+		Log.d("PRINCIPAL", Long.toString((new Date()).getTime()));
+		
 	}
 
 	/**

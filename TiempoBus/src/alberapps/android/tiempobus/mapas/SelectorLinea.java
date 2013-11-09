@@ -27,6 +27,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.util.Utilidades;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -245,7 +246,15 @@ public class SelectorLinea {
 		context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
 		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
-			context.loadDatosMapa();
+			
+			//context.loadDatosMapa();
+			
+			if(UtilidadesTAM.ACTIVAR_MAPS_V3){
+				context.loadDatosMapaV3();
+			}else{
+				context.loadDatosMapa();
+			}	
+			
 		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			context.mapasOffline.loadDatosMapaOffline();
 

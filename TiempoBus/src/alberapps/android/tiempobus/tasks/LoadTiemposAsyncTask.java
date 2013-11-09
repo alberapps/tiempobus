@@ -29,6 +29,7 @@ import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import alberapps.java.util.Utilidades;
 import android.os.AsyncTask;
@@ -81,6 +82,11 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 		if (DatosPantallaPrincipal.esTram(parada)) {
 
+			// Verificar linea 9
+			if (!UtilidadesTRAM.ACTIVADO_L9 && UtilidadesTRAM.esParadaL9(parada)) {
+				return null;
+			}
+
 			// Ip a usar de forma aleatoria
 			boolean iprandom = Utilidades.ipRandom();
 
@@ -112,8 +118,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 			if (DatosPantallaPrincipal.esTram(parada)) {
 				// llegadasBus =
 				// ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
-				
-								
+
 				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1);
 			} else {
 				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
