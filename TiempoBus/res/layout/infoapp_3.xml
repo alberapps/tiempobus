@@ -103,16 +103,16 @@
                 android:text="@string/acercade_info_nuevo"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/url_subus"
                 android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"/>
+                android:autoLink="web"/>-->
 
              <ImageView
-  			    android:id="@+id/imageView3"
+  			    android:id="@+id/imageLogoTam"
   			    android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -150,7 +150,8 @@
                 android:text="@string/legal"
                 android:textAppearance="?android:attr/textAppearanceSmall" 
                 android:autoLink="web"
-                android:padding="5dip"/>
+                android:padding="5dip"
+                android:textSize="9sp"/>
             
         </LinearLayout>
 

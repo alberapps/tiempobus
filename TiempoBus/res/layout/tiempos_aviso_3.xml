@@ -54,7 +54,7 @@
   			    >
 
   			    <ImageView
-  			    android:id="@+id/imageView3"
+  			    android:id="@+id/imgTam"
   			    android:layout_width="match_parent"
   			    android:layout_height="match_parent"
   			    android:src="@drawable/tamp" 
@@ -62,7 +62,7 @@
   			   />
   			    
   				<ImageView
-  				    android:id="@+id/imageView1"
+  				    android:id="@+id/imgTram"
   				    android:layout_width="match_parent"
   				    android:layout_height="match_parent"
   				    android:src="@drawable/logotram" 
@@ -70,7 +70,7 @@
   				    />
 
   				<ImageView
-  				    android:id="@+id/imageView2"
+  				    android:id="@+id/imgFgv"
   				    android:layout_width="match_parent"
   				    android:layout_height="match_parent"
   				    android:src="@drawable/logofgv" 
@@ -81,7 +81,7 @@
 
   			<TextView
   			    android:padding="2dip"
-  			    android:id="@+id/legal"
+  			    android:id="@+id/legal2"
   			    android:layout_width="fill_parent"
   			    android:layout_height="wrap_content"
   			    
@@ -92,6 +92,22 @@
   			    android:autoLink="web"
   			    android:textColorLink="@android:color/darker_gray"
   			    />
+  			
+  			<TextView
+  			    android:padding="2dip"
+  			    android:id="@+id/legal3"
+  			    android:layout_width="fill_parent"
+  			    android:layout_height="wrap_content"
+  			    
+  			    android:text="@string/aviso_infoapp"
+  			    android:textAppearance="?android:attr/textAppearanceSmall"
+  			    android:textColor="@android:color/black"
+  			    android:textSize="9sp"
+  			    android:autoLink="web"
+  			    android:textColorLink="@android:color/darker_gray"
+  			    android:textStyle="bold"
+  			    />
+  			
   			
   
 </LinearLayout>

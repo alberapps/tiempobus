@@ -225,7 +225,7 @@ public class UtilidadesTRAM {
 	
 	public static boolean esParadaL9(String parada){
 		
-		for (int i = 0; i < L9_ORDEN.length; i++) {
+		for (int i = 1; i < L9_ORDEN.length; i++) {
 			if (parada.equals(L9_ORDEN[i])) {
 				return true;
 			}

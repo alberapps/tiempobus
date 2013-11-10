@@ -25,6 +25,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.appinfo.AppInfoActivity;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
@@ -32,6 +33,7 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
@@ -51,6 +53,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -585,6 +593,77 @@ public class DatosPantallaPrincipal {
 
 	}
 
-	
+	/**
+	 * Cargar pie listado
+	 */
+	public void cargarPie() {
+
+		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+
+			LayoutInflater li = LayoutInflater.from(context);
+
+			View v = li.inflate(R.layout.tiempos_aviso, null);
+
+			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+
+			context.tiemposView.addFooterView(v);
+
+		} else {
+
+			LayoutInflater li = LayoutInflater.from(context);
+
+			View v = li.inflate(R.layout.tiempos_aviso_3, null);
+
+			ImageView imgTam = (ImageView) v.findViewById(R.id.imgTam);
+			imgTam.setOnClickListener(new TextView.OnClickListener() {
+				public void onClick(View arg0) {
+
+					Uri uri = Uri.parse("http://www.subus.es");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					context.startActivity(intent);
+
+				}
+			});
+
+			ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
+			imgTram.setOnClickListener(new TextView.OnClickListener() {
+				public void onClick(View arg0) {
+
+					Uri uri = Uri.parse("http://www.tramalicante.es");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					context.startActivity(intent);
+
+				}
+			});
+
+			ImageView imgFgv = (ImageView) v.findViewById(R.id.imgFgv);
+			imgFgv.setOnClickListener(new TextView.OnClickListener() {
+				public void onClick(View arg0) {
+
+					Uri uri = Uri.parse("http://www.fgv.es");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					context.startActivity(intent);
+
+				}
+			});
+			
+			TextView infoapp = (TextView) v.findViewById(R.id.legal3);
+			infoapp.setOnClickListener(new TextView.OnClickListener() {
+				public void onClick(View arg0) {
+					
+					context.startActivity(new Intent(context, AppInfoActivity.class));
+					
+
+				}
+			});
+			
+
+			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+
+			context.tiemposView.addFooterView(v);
+
+		}
+
+	}
 
 }

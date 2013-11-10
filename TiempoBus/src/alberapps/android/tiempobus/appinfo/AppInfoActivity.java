@@ -74,6 +74,17 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 			}
 		});
 		
+		ImageView imgTam = (ImageView) findViewById(R.id.imageLogoTam);
+		imgTam.setOnClickListener(new ImageButton.OnClickListener() {
+			public void onClick(View arg0) {
+
+				Uri uri = Uri.parse("http://www.subus.es");
+				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+				startActivity(intent);
+
+			}
+		});
+		
 		ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
 		botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
 			public void onClick(View arg0) {

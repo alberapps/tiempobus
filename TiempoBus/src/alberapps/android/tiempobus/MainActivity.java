@@ -149,7 +149,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	GestionarWidget gestionarWidget;
 
-	private ListView tiemposView;
+	public ListView tiemposView;
 
 	// drawer
 	private DrawerLayout mDrawerLayout;
@@ -646,12 +646,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// registerForContextMenu(getListView());
 
 		// Pie para la lista de resultados
-		LayoutInflater li = LayoutInflater.from(this);
-		View v = li.inflate(R.layout.tiempos_aviso_3, null);
-
-		tiemposView = (ListView) findViewById(R.id.lista_tiempos);
-
-		tiemposView.addFooterView(v);
+		datosPantallaPrincipal.cargarPie();
+		
+		
 
 		// Progreso inicial
 		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
