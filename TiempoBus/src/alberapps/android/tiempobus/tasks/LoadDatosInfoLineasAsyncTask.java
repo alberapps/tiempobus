@@ -19,7 +19,10 @@
 package alberapps.android.tiempobus.tasks;
 
 import alberapps.android.tiempobus.infolineas.DatosInfoLinea;
+import alberapps.java.tam.UtilidadesTAM;
+import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.ProcesarMapaService;
+import alberapps.java.tam.mapas.ProcesarMapaServiceV3;
 import android.os.AsyncTask;
 
 /**
@@ -44,9 +47,15 @@ public class LoadDatosInfoLineasAsyncTask extends AsyncTask<DatosInfoLinea, Void
 		DatosInfoLinea datosVuelta = new DatosInfoLinea();
 		try {
 
-			//datosVuelta.setfIda(datos[0].getfIda());
+			if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
+				datosVuelta.setResult(ProcesarMapaService.getDatosMapa(datos[0].getUrl()));
+			} else {
 
-			datosVuelta.setResult(ProcesarMapaService.getDatosMapa(datos[0].getUrl()));
+				DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
+
+				datosVuelta.setResultIda(paradas[0]);
+				datosVuelta.setResultVuelta(paradas[1]);
+			}
 
 		} catch (Exception e) {
 			return null;

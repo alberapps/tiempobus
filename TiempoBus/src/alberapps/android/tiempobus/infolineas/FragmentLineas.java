@@ -354,7 +354,13 @@ public class FragmentLineas extends Fragment {
 
 		// String url = "http://www.subus.es/Lineas/kml/ALC34ParadasVuelta.xml";
 
-		String url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
+		String url = "";
+
+		if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
+			url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
+		} else {
+			url = UtilidadesTAM.getKMLParadasV3(actividad.getLinea().getIdlinea());
+		}
 
 		DatosInfoLinea datos = new DatosInfoLinea();
 		datos.setUrl(url);
@@ -505,15 +511,53 @@ public class FragmentLineas extends Fragment {
 	LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponder = new LoadDatosInfoLineasAsyncTaskResponder() {
 		public void datosInfoLineasLoaded(DatosInfoLinea datos) {
 
-			if (datos != null && datos.getResult() != null) {
+			if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
 
-				actividad.datosVuelta = datos.getResult();
+				if (datos != null && datos.getResult() != null) {
 
-				loadDatosMapaIda(datos.getfIda());
+					actividad.datosVuelta = datos.getResult();
+
+					loadDatosMapaIda(datos.getfIda());
+
+				} else {
+					Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+					toast.show();
+					dialog.dismiss();
+
+				}
 
 			} else {
-				Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-				toast.show();
+
+				if (datos != null && datos.getResultIda() != null && datos.getResultVuelta() != null) {
+
+					actividad.datosVuelta = datos.getResultVuelta();
+					actividad.datosIda = datos.getResultIda();
+
+					TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
+
+					if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
+						titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
+					} else {
+						titIda.setText("-");
+					}
+
+					cargarListadoIda();
+
+					actividad.cambiarTab();
+
+					if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+
+						Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
+
+					}
+
+				} else {
+					Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+					toast.show();
+					dialog.dismiss();
+
+				}
+
 				dialog.dismiss();
 
 			}

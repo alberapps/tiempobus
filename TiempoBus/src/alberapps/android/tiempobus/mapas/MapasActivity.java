@@ -530,9 +530,9 @@ public class MapasActivity extends ActionBarMapaActivity {
 	 */
 	public void loadDatosMapaV3() {
 
-		String url = UtilidadesTAM.getKMLParadasIdaV3(lineaSeleccionada);
+		String url = UtilidadesTAM.getKMLParadasV3(lineaSeleccionada);
 
-		String urlRecorrido = UtilidadesTAM.getKMLRecorridoIdaV3(lineaSeleccionada);
+		String urlRecorrido = UtilidadesTAM.getKMLRecorridoV3(lineaSeleccionada);
 
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

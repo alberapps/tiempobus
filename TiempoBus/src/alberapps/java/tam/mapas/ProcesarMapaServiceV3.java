@@ -55,40 +55,49 @@ public class ProcesarMapaServiceV3 {
 
 		InputStream isZip = null;
 
-		ByteArrayInputStream is = null;
+		// ByteArrayInputStream is = null;
+		InputStream is = null;
 
 		DatosMapa[] datosMapa = { null, null };
 		try {
 
 			isZip = Utilidades.recuperarStreamConexionSimple(url);
 
-			ZipInputStream zis = new ZipInputStream(isZip);
+			//Provisional
+			if (url.equals("http://www.subus.es/K/TuribusP.xml")) {
 
-			ZipEntry ze;
-			while ((ze = zis.getNextEntry()) != null) {
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				byte[] buffer = new byte[1024];
-				int count;
-				while ((count = zis.read(buffer)) != -1) {
-					baos.write(buffer, 0, count);
+				ZipInputStream zis = new ZipInputStream(isZip);
+
+				ZipEntry ze;
+				while ((ze = zis.getNextEntry()) != null) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					byte[] buffer = new byte[1024];
+					int count;
+					while ((count = zis.read(buffer)) != -1) {
+						baos.write(buffer, 0, count);
+					}
+					String filename = ze.getName();
+
+					if (filename.equals("doc.kml")) {
+
+						byte[] bytes = baos.toByteArray();
+						// do something with 'filename' and 'bytes'...
+
+						is = new ByteArrayInputStream(bytes);
+
+					}
+
 				}
-				String filename = ze.getName();
 
-				if (filename.equals("doc.kml")) {
+			} else {
 
-					byte[] bytes = baos.toByteArray();
-					// do something with 'filename' and 'bytes'...
-
-					is = new ByteArrayInputStream(bytes);
-
-				}
-
+				is = isZip;
 			}
 
 			if (is != null) {
 
 				Datos parseado = parse(is);
-				
+
 				List<PlaceMark> listaIda = parseado.getPlaceMarksIda();
 
 				if (listaIda != null && !listaIda.isEmpty()) {
@@ -128,7 +137,7 @@ public class ProcesarMapaServiceV3 {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			
+
 			datosMapa = null;
 		} finally {
 			try {
