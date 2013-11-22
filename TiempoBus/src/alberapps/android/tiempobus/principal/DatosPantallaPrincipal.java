@@ -33,7 +33,6 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
-import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
@@ -55,7 +54,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -598,32 +596,29 @@ public class DatosPantallaPrincipal {
 	 */
 	public void cargarPie() {
 
-		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
-
+		if(context.avisoPie != null && context.tiemposView != null){
+			context.tiemposView.removeFooterView(context.avisoPie);
+		}
+		
+		if (!esTram(context.paradaActual)) {
+		
+			
 			LayoutInflater li = LayoutInflater.from(context);
-
+			
 			View v = li.inflate(R.layout.tiempos_aviso, null);
 
 			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 			context.tiemposView.addFooterView(v);
+			
+			context.avisoPie = v;
 
 		} else {
 
 			LayoutInflater li = LayoutInflater.from(context);
-
+						
+			
 			View v = li.inflate(R.layout.tiempos_aviso_3, null);
-
-			ImageView imgTam = (ImageView) v.findViewById(R.id.imgTam);
-			imgTam.setOnClickListener(new TextView.OnClickListener() {
-				public void onClick(View arg0) {
-
-					Uri uri = Uri.parse("http://www.subus.es");
-					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-					context.startActivity(intent);
-
-				}
-			});
 
 			ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
 			imgTram.setOnClickListener(new TextView.OnClickListener() {
@@ -646,22 +641,22 @@ public class DatosPantallaPrincipal {
 
 				}
 			});
-			
+
 			TextView infoapp = (TextView) v.findViewById(R.id.legal3);
 			infoapp.setOnClickListener(new TextView.OnClickListener() {
 				public void onClick(View arg0) {
-					
+
 					context.startActivity(new Intent(context, AppInfoActivity.class));
-					
 
 				}
 			});
-			
 
 			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 			context.tiemposView.addFooterView(v);
 
+			context.avisoPie = v;
+			
 		}
 
 	}

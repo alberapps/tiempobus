@@ -50,7 +50,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -167,6 +169,23 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 			}
 
+		} else {
+			if (modoRed == MODO_RED_TRAM_OFFLINE) {
+
+				FragmentManager fragmentManager = this.getSupportFragmentManager();
+
+				Fragment fragVuelta = fragmentManager.findFragmentById(R.id.infolinea_3_fragment);
+
+				FragmentTransaction ft = fragmentManager.beginTransaction();
+
+				ft.hide(fragVuelta);
+
+				ft.commit();
+				
+				Log.d("infolinea", "eliminar panel vuelta");
+				
+
+			}
 		}
 
 	}
@@ -229,16 +248,14 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			mTabHost.setCurrentTabByTag("ida");
 		} else {
 
-			
-				// Lanzar carga de vuelta
-				FragmentVuelta vueltaFrag = (FragmentVuelta) getSupportFragmentManager().findFragmentById(R.id.infolinea_3_fragment);
+			// Lanzar carga de vuelta
+			FragmentVuelta vueltaFrag = (FragmentVuelta) getSupportFragmentManager().findFragmentById(R.id.infolinea_3_fragment);
 
-				if (vueltaFrag != null) {
+			if (vueltaFrag != null) {
 
-					vueltaFrag.recargaInformacion();
+				vueltaFrag.recargaInformacion();
 
-				}
-			
+			}
 
 		}
 
@@ -691,7 +708,5 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-
-	
 
 }

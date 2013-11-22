@@ -33,7 +33,7 @@
   
   			<TextView
   			    android:padding="2dip"
-  			    android:id="@+id/legal"
+  			    android:id="@+id/legal_sin_tram"
   			    android:layout_width="fill_parent"
   			    android:layout_height="wrap_content"
   			    

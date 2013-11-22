@@ -142,7 +142,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	private boolean lecturaOK = true;
 	private boolean lecturaAlternativa = false;
 
-	DatosPantallaPrincipal datosPantallaPrincipal;
+	static DatosPantallaPrincipal datosPantallaPrincipal;
 
 	GestionarFondo gestionarFondo;
 
@@ -163,6 +163,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
 
+	
+	public View avisoPie = null;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -215,8 +218,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			datosPantallaPrincipal.verificarNuevasNoticias();
 		}
 
-		PrecargasV3.precargarDatosLineas(this);
-		PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 		
 	}
 
@@ -1294,6 +1297,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					}
 				}
 
+				// Pie para la lista de resultados
+				datosPantallaPrincipal.cargarPie();
+				
 				laActividad.posteAdapter.notifyDataSetChanged();
 				break;
 
