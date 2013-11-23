@@ -288,13 +288,13 @@ favorit per crear la teua llista.</string>
     
     
     
-    <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
-	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: traduccionesmfr.net - twitter.com/MFriasTrad</string>
+    <string name="acercade_info_nuevo">Esta aplicació NO és oficial i es desenvolupa de forma independent.
+		\nDades de línies i temps oferits i mantinguts per:</string>
+	<string name="acercade_info_nuevo_bus">Esta aplicació NO és oficial i es desenvolupa de forma independent.
+		\nDades de línies i temps oferits i mantinguts per: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_2">Desenvolupament: alberapps.blogspot.com - twitter.com/alberapps \nTraduccions: traduccionesmfr.net - twitter.com/MFriasTrad</string>
     <string name="aviso_infoapp">>InfoApp</string>
-    <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
+    <string name="infoapp_trad">Traduccions: traduccionesmfr.net</string>
     
     
     
@@ -306,12 +306,30 @@ favorit per crear la teua llista.</string>
 		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
 		
 	<string name="legal_b">
-		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
+		Els noms d\'empreses i logotips d\'estes o els seus productes, així com les dades obtingudes de les pàgines web, són propietat dels seus respectius titulars i són reconeguts per esta aplicació.
 	</string>
 	
 	<string name="aviso_header_listado">
-		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
+		Les funcions de BUS i TRAM es poden utilitzar simultàniament. En el cercador i en els mapes, selecciona la xarxa que vols consultar en eixe moment. 
 	</string>  
+	
+	<string name="error_pdf">El PDF no es pot carregar</string>
+    <string name="infolinea_horarios_pdf">Horaris(PDF)</string>
+    
+    <string name="nuevas_noticias_bus">BUS: Hi ha nous Avisos</string>
+    <string name="nuevas_noticias_tram">TRAM: Hi ha nous Avisos</string>
+    <string name="nuevas_tram">TRAM</string>
+    <string name="preferencias_noticias_auto_tram">Comprovar Notícies TRAM</string>
+    
+    <string name="probar">Provar TRAM</string>
+    
+    <string name="info_tram_inicio">El TRAM arriba a TiempoBus \ n-Ja pots accedir a la informació i els temps de pas del TRAM.
+\ n-Canvia entre TRAM i BUS en la selecció que veuràs al peu del cercador i els mapes.
+\ n-Els teus preferits funcionaran simultàniament en els dos modes.
+\ n-Accedeix a la secció de notícies per consultar les notícies i el twitter del TRAM.
+\ n-El GPS t\'indicarà les parades pròximes d\'ambdós sistemes.
+\ n-Rebràs notificacions de nous avisos del TRAM provinents del seu Twitter oficial. (Pots modificar-lo en preferències).
+    </string>
 				
     <!-- fin nuevos -->
     
