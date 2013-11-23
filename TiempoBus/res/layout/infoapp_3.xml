@@ -11,13 +11,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent" 
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical" 
+            android:background="@android:color/white">
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -78,6 +80,14 @@
                 android:text="@string/app_autor_web"
                 android:textAppearance="?android:attr/textAppearanceSmall" 
                 android:autoLink="web"/>
+            
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/infoapp_trad"
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:autoLink="web"/>
 
             <TextView
                 android:id="@+id/textView4"
@@ -103,23 +113,15 @@
                 android:text="@string/acercade_info_nuevo"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <!-- <TextView
+            <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/url_subus"
                 android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"/>-->
+                android:autoLink="web"/>
 
-             <ImageView
-  			    android:id="@+id/imageLogoTam"
-  			    android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-  			    android:src="@drawable/tamp" 
-  			   
-  			   />
-            
+                        
             <ImageView
                 android:id="@+id/imageLogoTram"
                 android:layout_width="wrap_content"
@@ -135,13 +137,12 @@
                 android:src="@drawable/logofgv" 
                 />
 
-            
-
             <Button
                 android:id="@+id/buttonLinks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/referencias" />
+                android:text="@string/referencias" 
+                android:layout_marginTop="10dp"/>
 
              <TextView
                 android:id="@+id/textViewLegal"
@@ -153,6 +154,18 @@
                 android:padding="5dip"
                 android:textSize="9sp"/>
             
+            <TextView
+                android:id="@+id/textViewLegal_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/legal_b"
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:autoLink="web"
+                android:padding="5dip"
+                android:textSize="9sp"/>
+             
+             
+             
         </LinearLayout>
 
     </LinearLayout>

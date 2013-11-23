@@ -591,6 +591,23 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	
+	/**
+	 * Cargar cabecera listado
+	 */
+	public void cargarHeader(){
+		
+		LayoutInflater li2 = LayoutInflater.from(context);
+		
+		View vheader = li2.inflate(R.layout.tiempos_aviso_header, null);
+		
+		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+
+		context.tiemposView.addHeaderView(vheader);
+		
+	}
+	
+	
 	/**
 	 * Cargar pie listado
 	 */
@@ -600,13 +617,27 @@ public class DatosPantallaPrincipal {
 			context.tiemposView.removeFooterView(context.avisoPie);
 		}
 		
+		
+		
+		
+		
 		if (!esTram(context.paradaActual)) {
 		
 			
 			LayoutInflater li = LayoutInflater.from(context);
 			
-			View v = li.inflate(R.layout.tiempos_aviso, null);
+			View v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
 
+			
+			TextView infoapp = (TextView) v.findViewById(R.id.legal3);
+			infoapp.setOnClickListener(new TextView.OnClickListener() {
+				public void onClick(View arg0) {
+
+					context.startActivity(new Intent(context, AppInfoActivity.class));
+
+				}
+			});
+			
 			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 			context.tiemposView.addFooterView(v);

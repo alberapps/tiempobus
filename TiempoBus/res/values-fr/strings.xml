@@ -11,19 +11,7 @@
     <string name="main_no_items">Pas d\'information</string>
     <string name="ok">ok</string>
     <string name="untitled">sans titre</string>
-    <string name="legal">Les temps sont obtenues du système ISAE, qui offre, en TEMP RÉEL, l\'APPROXIMATION des temps d\'arrive du réseau TAM.
-	\nLes temps peuvent varier en fonction de facteurs extérieures à l\'application, comme la circulation, changement de routes, etc.
-	\nLes fonctions qui utilisent la base de données locale peuvent ne pas disposer des dernières changements.
-	\nCette application n\'est PAS officiel et son développement est indépendant.
-	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil/index.aspx
-	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
-	
-	<string name="legal_sin_tram">Les temps sont obtenues du système ISAE, qui offre, en TEMP RÉEL, l\'APPROXIMATION des temps d\'arrive du réseau TAM.
-	\nLes temps peuvent varier en fonction de facteurs extérieures à l\'application, comme la circulation, changement de routes, etc.
-	\nLes fonctions qui utilisent la base de données locale peuvent ne pas disposer des dernières changements.
-	\nCette application n\'est PAS officiel et son développement est indépendant.
-	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil/index.aspx
-	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
+    
 	
     <string name="tit_buses">Lignes&#8230;</string>
     <string name="tit_direccion">Adresse&#8230;</string>
@@ -191,7 +179,7 @@
     <string name="streetview_ko">Incapable d\'accéder à Street View. S.v.p., vérifiez s\'il est installé.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es/</string>
+    <string name="url_subus">http://www.subus.es</string>
     <string name="hora_inicial">0:00</string>
 
    
@@ -203,7 +191,7 @@
     <string name="alarma_preferencias_refrescar">Actualiser avec Recharge</string>
     <string name="alarma_preferencias_refrescar_desc">Vérifie s\'il faut actualiser l\'alarme en rechargeant les temps</string>
     <string name="error_generico_1">En ce moment l\'information ne peut pas être montrée</string>
-    <string name="error_tiempos">Incapable de récupérer les données. Réessayez s.v.p. en quelques minutes. Si ça ne marche pas, vérifiez s.v.p. la disponibilité du service: isaealicante.subus.es/movil</string>
+    <string name="error_tiempos">Incapable de récupérer les données. Réessayez s.v.p. en quelques minutes.</string>
    
     <string name="error_gcode">Chargement de la liste des lignes locale</string>
    
@@ -226,7 +214,7 @@
 	<string name="carga_noticias_msg">Chargement des Nouvelles Web en cours</string>
 	<string name="carga_tw_msg">Chargement de Twitter en cours</string>
    
-	<!-- Nuevo -->
+	<!-- NUEVOS TEXTOS -->
     <string name="recarga_bd">TiempoBus</string>
     <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>
     
@@ -264,21 +252,20 @@
      <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
    
    
-   <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
    
     <string name="error_status">El servicio no ha devuelto resultados</string>
     
     <string name="infolinea_horarios">Horaires</string>
     <string name="infolinea_paradas">Arrêt</string>
     
-    <!-- nuevo -->
+    
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
     <string name="menu_export_qr">Exportar QR</string>
     
-     <string name="mapas_vehiculo_on">Bus ON</string>
-    <string name="mapas_vehiculo_off">Bus OFF</string>
+     <string name="mapas_vehiculo_on">Vehículos</string>
+    <string name="mapas_vehiculo_off">Vehículos</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
     
     <string name="conf_tiempo_recarga">Frecuencia</string>
@@ -289,6 +276,31 @@
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
+    
+    <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
+	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: traduccionesmfr.net - twitter.com/MFriasTrad</string>
+    <string name="aviso_infoapp">>InfoApp</string>
+    <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
+    
+    <string name="legal">Les temps sont obtenues du système ISAE, qui offre, en TEMP RÉEL, l\'APPROXIMATION des temps d\'arrive du réseau TAM.
+	\nLes temps peuvent varier en fonction de facteurs extérieures à l\'application, comme la circulation, changement de routes, etc.
+	\nLes fonctions qui utilisent la base de données locale peuvent ne pas disposer des dernières changements.
+	\nCette application n\'est PAS officiel et son développement est indépendant.
+	\nLes données des lignes et du temps sont obtenues à www.subus.es et isaealicante.subus.es/movil/index.aspx
+	\nPlus d\'information: alberapps.blogspot.com et sur Twitter: @alberapps</string>
+	
+	<string name="legal_b">
+		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
+	</string>	 
+    
+    <string name="aviso_header_listado">
+		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
+	</string>  
+    
+    <!-- fin nuevos -->
     
 </resources>
 

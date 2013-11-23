@@ -11,19 +11,7 @@
     <string name="main_no_items">Keine Information</string>
     <string name="ok">OK</string>
     <string name="untitled">Keine Titel</string>
-    <string name="legal">Zeiten erlangt von dem System ISAE, dass die Ankunftezeitenannäherungen vom Netz TAM in ECHTZEIT bietet.
-	\nDiese Angaben können auf fremde Grunde sich ändern, wie Verkehr, Veränderungen im Verläufe, etc.
-	\nEs ist möglich, dass die Funktionen, die die Datenbank benutzen, nicht über die letzte Aktualisierung verfügen.
-	\nDiese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
-	\nDaten von Linien und Zeiten erlangt von: www.subus.es und isaealicante.subus.es/movil/index.aspx
-	\nMehr Information: alberapps.blogspot.com und auf Twitter: @alberapps</string>
-	
-	<string name="legal_sin_tram">Zeiten erlangt von dem System ISAE, dass die Ankunftezeitenannäherungen vom Netz TAM in ECHTZEIT bietet.
-	\nDiese Angaben können auf fremde Grunde sich ändern, wie Verkehr, Veränderungen im Verläufe, etc.
-	\nEs ist möglich, dass die Funktionen, die die Datenbank benutzen, nicht über die letzte Aktualisierung verfügen.
-	\nDiese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
-	\nDaten von Linien und Zeiten erlangt von: www.subus.es und isaealicante.subus.es/movil/index.aspx
-	\nMehr Information: alberapps.blogspot.com und auf Twitter: @alberapps</string>
+    
 	
     <string name="tit_buses">Linien&#8230;</string>
     <string name="tit_direccion">Richtung&#8230;</string>
@@ -191,7 +179,7 @@
     <string name="streetview_ko">Fehler beim Zugreifen auf Street View. Bitte überprüfen Sie, wenn es installiert ist.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es/</string>
+    <string name="url_subus">http://www.subus.es</string>
     <string name="hora_inicial">0:00</string>
     
    
@@ -203,7 +191,7 @@
     <string name="alarma_preferencias_refrescar">Mit Aufladen aktualisieren</string>
     <string name="alarma_preferencias_refrescar_desc">Es prüft über, wenn die Alarm muss aktualisiert werden, wann eine Zeitwiederaufladung gemacht wird.</string>
     <string name="error_generico_1">Information kann jetzt nicht gezeigt werden.</string>
-    <string name="error_tiempos">Es war nicht möglich, Daten zu erlangen. Versuchen Sie bitte in einige Minuten. Wenn es weitermacht, übermachen Sie bitte die Dienstverfügbarkeit bei: isaealicante.subus.es/movil</string>
+    <string name="error_tiempos">Es war nicht möglich, Daten zu erlangen. Versuchen Sie bitte in einige Minuten.</string>
     
     <string name="error_gcode">Lokale Linienliste wird geladen</string>
     
@@ -226,12 +214,15 @@
 	<string name="carga_noticias_msg">Web Meldungen werden geladen</string>
 	<string name="carga_tw_msg">Twitter wird geladen</string>
     
-	<!-- Nuevo -->
+    
+    
+    
+    
+    
+	<!-- NUEVOS TEXTOS -->
     <string name="recarga_bd">TiempoBus</string>
-    <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>
-    
-    <string name="recarga_bd_desc_final">Base de Datos Actualizada Correctamente</string>
-    
+    <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>    
+    <string name="recarga_bd_desc_final">Base de Datos Actualizada Correctamente</string>    
     <string name="recarga_bd_desc_error">Error en la recarga de la Base de Datos</string>
     
     <string name="traducciones">Traslations</string>
@@ -257,28 +248,25 @@
     <string name="rss_tram">TRAM(rss)</string>
     <string name="carga_rss_tram_msg">RSS wird geladen</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
-    
-    
-     <string name="drawer_open">Open navigation drawer</string>
+        
+    <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     
-     <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
-   
-   <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
-   
+    <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
+      
     <string name="error_status">El servicio no ha devuelto resultados</string>
     
     <string name="infolinea_horarios">Busfahrpläne</string>
     <string name="infolinea_paradas">Haltestelle</string>
     
-    <!-- nuevo -->
+    
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
     <string name="menu_export_qr">Exportar QR</string>
     
-     <string name="mapas_vehiculo_on">Bus ON</string>
-    <string name="mapas_vehiculo_off">Bus OFF</string>
+    <string name="mapas_vehiculo_on">Vehículos</string>
+    <string name="mapas_vehiculo_off">Vehículos</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
     
     <string name="conf_tiempo_recarga">Frecuencia</string>
@@ -289,5 +277,32 @@
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
+    
+    
+    <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
+	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: traduccionesmfr.net - twitter.com/MFriasTrad</string>
+    <string name="aviso_infoapp">>InfoApp</string>
+    <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
+    
+    
+    <string name="legal">Zeiten erlangt von dem System ISAE, dass die Ankunftezeitenannäherungen vom Netz TAM in ECHTZEIT bietet.
+	\nDiese Angaben können auf fremde Grunde sich ändern, wie Verkehr, Veränderungen im Verläufe, etc.
+	\nEs ist möglich, dass die Funktionen, die die Datenbank benutzen, nicht über die letzte Aktualisierung verfügen.
+	\nDiese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
+	\nDaten von Linien und Zeiten erlangt von: www.subus.es und isaealicante.subus.es/movil/index.aspx
+	\nMehr Information: alberapps.blogspot.com und auf Twitter: @alberapps</string>
+	
+	<string name="legal_b">
+		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
+	</string>		    
+    
+    <string name="aviso_header_listado">
+		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
+	</string>  
+    
+    <!-- FIN NUEVOS -->
     
 </resources>

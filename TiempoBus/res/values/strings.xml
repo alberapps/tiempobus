@@ -11,19 +11,7 @@
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
     <string name="untitled">sin título</string>
-    <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
-        \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
-	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
-	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) y TRAM(www.tramalicante.es, www.fgv.es)
-		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
-	
-	<string name="legal_sin_tram">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de la red TAM.
-        \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
-	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
-	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos obtenidos de: www.subus.es y isaealicante.subus.es/movil/index.aspx
-		\nMás información: alberapps.blogspot.com y en Twitter: @alberapps</string>
+    
     <string name="tit_buses">Líneas&#8230;</string>
     <string name="tit_direccion">Dirección&#8230;</string>
     <string name="tit_paradas">Parada&#8230;</string>
@@ -191,7 +179,7 @@
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es/</string>
+    <string name="url_subus">http://www.subus.es</string>
     <string name="hora_inicial">0:00</string>
     
     <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
@@ -204,7 +192,7 @@
     <string name="alarma_preferencias_refrescar">Actualizar con la Recarga</string>
     <string name="alarma_preferencias_refrescar_desc">Comprueba si hay que actualizar la alarma, cuando se realiza una recarga de tiempos</string>
     <string name="error_generico_1">En este momento no se puede mostrar la información</string>
-    <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos. Si sigue sin funcionar, comprueba la disponibilidad del servicio en: isaealicante.subus.es/movil</string>
+    <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos.</string>
     
     <string name="error_gcode">Cargando lista de líneas local</string>
     
@@ -235,7 +223,7 @@
     <string name="carga_tw_msg">Cargando Twitter</string>
     
     
-    <!-- Nuevo -->
+    <!-- NUEVOS TEXTOS -->
     <string name="recarga_bd">TiempoBus</string>
     <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>
     
@@ -274,14 +262,13 @@
     
     <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
     
-    <string name="debug">ATENCIÓN: APLICACIÓN EN MODO DEBUG. SE ENVIAN INFORMES DE USO AL DESARROLLADOR</string>
     
     <string name="error_status">El servicio no ha devuelto resultados</string>
     
     <string name="infolinea_horarios">Horarios</string>
     <string name="infolinea_paradas">Paradas</string>
     
-    <!-- nuevo -->
+    
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
@@ -299,12 +286,30 @@
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
-    
-    
-    
+        
     <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos del TRAM ofrecidos y mantenidos por:</string>
-	<string name="acercade_info_nuevo_2">Más información: alberapps.blogspot.com y twitter.com/alberapps</string>
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
+	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: traduccionesmfr.net - twitter.com/MFriasTrad</string>
     <string name="aviso_infoapp">>InfoApp</string>
+    <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
+    
+    <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
+        \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
+	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
+	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
+		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) y TRAM(www.tramalicante.es, www.fgv.es)
+		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
+	
+	<string name="legal_b">
+		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
+	</string>	
+	
+	<string name="aviso_header_listado">
+		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
+	</string>    
+    
+     <!-- fin nuevos -->
     
 </resources>

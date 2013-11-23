@@ -650,8 +650,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// registerForContextMenu(getListView());
 
+		
+		
 		// Pie para la lista de resultados
-		datosPantallaPrincipal.cargarPie();
+		datosPantallaPrincipal.cargarHeader();
 		
 		
 
