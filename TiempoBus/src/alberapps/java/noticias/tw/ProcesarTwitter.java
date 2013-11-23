@@ -18,6 +18,7 @@
  */
 package alberapps.java.noticias.tw;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class ProcesarTwitter {
 	public static final String tw_sanvi_ruta = "http://twitter.com/aytoraspeig";
 
 	public static final String tw_santjoan_ruta = "http://twitter.com/sant_joan";
-	
+
 	public static final String tw_tram_ruta = "http://twitter.com/tramdealicante";
 
 	public static final String TW_STATUS = "/status/";
@@ -77,10 +78,51 @@ public class ProcesarTwitter {
 			lista.addAll(procesar4j.recuperarTimeline("sant_joan", tw_santjoan_ruta, Integer.parseInt(cantidad)));
 
 		}
-		
-		//Tram
+
+		// Tram
 		lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
-		
+
+		if (lista != null && !lista.isEmpty()) {
+
+			// Ordenar por fecha
+			Collections.sort(lista);
+
+		} else {
+
+			return null;
+
+		}
+
+		return lista;
+
+	}
+
+	/**
+	 * listado tram
+	 * 
+	 * @return listado
+	 */
+	public static List<TwResultado> procesarTram() {
+
+		List<TwResultado> lista = new ArrayList<TwResultado>();
+
+		List<TwResultado> listaInicial;
+
+		// Iniciar
+		ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
+		procesar4j.setUp();
+
+		// Tram
+		listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 5);
+
+		// Eliminar las que sean de conversacion
+		for (int i = 0; i < listaInicial.size(); i++) {
+
+			if (listaInicial.get(i).getRespuestaId() == -1) {
+				lista.add(listaInicial.get(i));
+			}
+
+		}
 
 		if (lista != null && !lista.isEmpty()) {
 

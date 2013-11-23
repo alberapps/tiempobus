@@ -24,13 +24,10 @@ import java.util.List;
 import alberapps.android.tiempobus.R;
 import alberapps.java.tam.BusLinea;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.sax.StartElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -39,7 +36,7 @@ import android.widget.TextView;
  */
 public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 
-	private Context contexto;
+	private InfoLineasTabsPager contexto;
 
 	/**
 	 * Constructor
@@ -50,7 +47,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 	public InfoLineaAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
 
-		this.contexto = context;
+		this.contexto = ((InfoLineasTabsPager) context);
 
 	}
 
@@ -89,57 +86,37 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 		TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
 
 		if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-
+			// Carga de horarios bus
 			// Link informacion
 			informacionText.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View view) {
 
-					((InfoLineasTabsPager) contexto).setLinea(bus);
+					contexto.setLinea(bus);
 
-					((InfoLineasTabsPager) contexto).setTitle(bus.getLinea());
+					contexto.setTitle(bus.getLinea());
 
-					((InfoLineasTabsPager) contexto).cargarHorarios(bus, position);
+					contexto.cargarHorarios(bus, position);
 
 				}
 
 			});
 
 		} else {
-
-			//informacionText.setVisibility(View.INVISIBLE);
 			
+			informacionText.setText(R.string.infolinea_horarios_pdf);
 			
+			// Carga de horarios tram
 			// Link informacion
-						informacionText.setOnClickListener(new OnClickListener() {
+			informacionText.setOnClickListener(new OnClickListener() {
 
-							public void onClick(View view) {
+				public void onClick(View view) {
 
-								String docs= "https://docs.google.com/gview?embedded=true&url=";
-								
-								String pdf = "";
-								
-								if(bus.getNumLinea().equals("L1") || bus.getNumLinea().equals("L3")){
-									pdf = "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf";
-									//http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf
-								}else if(bus.getNumLinea().equals("L2")){
-									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf";
-								}else if(bus.getNumLinea().equals("L4")){
-									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf";
-								}else if(bus.getNumLinea().equals("L9")){
-									pdf="http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf";
-								}
-								
-								
-								Intent i = new Intent(Intent.ACTION_VIEW);
-								i.setData(Uri.parse(docs + pdf));
-								contexto.startActivity(i);
+					contexto.gestionTram.seleccionarPdf(bus);
 
-							}
+				}
 
-						});
-			
-			
+			});
 
 		}
 

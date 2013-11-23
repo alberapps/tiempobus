@@ -43,6 +43,7 @@ import alberapps.java.noticias.tw.v11.Constantes;
 import alberapps.java.util.Utilidades;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 /**
  * Acceso a la api de twitter mediante la libreria twitter4j
@@ -191,6 +192,10 @@ public class ProcesarTwitter4j {
 				resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
 				resultado.setUrl(url);
+				
+				resultado.setRespuestaId(timeline.get(i).getInReplyToUserId());
+				
+				Log.d("twitter", "resp: " + resultado.getRespuestaId());
 
 				listaResultados.add(resultado);
 

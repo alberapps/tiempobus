@@ -310,6 +310,24 @@
 		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
 	</string>    
     
+    <string name="error_pdf">El PDF no se puede cargar</string>
+    <string name="infolinea_horarios_pdf">Horarios(PDF)</string>
+    
+    <string name="nuevas_noticias_bus">BUS: Hay nuevos Avisos</string>
+    <string name="nuevas_noticias_tram">TRAM: Hay nuevos Avisos</string>
+    <string name="nuevas_tram">TRAM</string>
+    <string name="preferencias_noticias_auto_tram">Comprobar Noticias TRAM</string>
+    
+    <string name="probar">Probar TRAM</string>
+    
+    <string name="info_tram_inicio">El TRAM llega a TiempoBus\n- Ya puedes acceder a la información y los tiempos de paso del TRAM.
+    \n- Cambia entre TRAM y BUS en la selección que verás al pie del buscador y los mapas.
+    \n- Tus favoritos funcionarán simultaneamente en ambos modos.
+    \n- Accede a las sección de noticias para consultar las noticias y el twitter del TRAM.
+    \n- El GPS te indicará las paradas próximas de ambos sistemas.
+    \n- Recibirás notificaciones de nuevos avisos del TRAM provenientes de su Twitter oficial.(Puedes modificarlo en preferencias).
+    </string>
+    
      <!-- fin nuevos -->
     
 </resources>

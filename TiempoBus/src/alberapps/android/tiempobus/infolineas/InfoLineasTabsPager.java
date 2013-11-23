@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
-import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -40,7 +39,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -112,6 +110,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
 	AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
 
+	public GestionTram gestionTram;
+
 	public BusLinea getLinea() {
 		return linea;
 	}
@@ -126,6 +126,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+		gestionTram = new GestionTram(this, preferencias);
 
 		// Control de modo de red
 		modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
@@ -181,9 +183,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 				ft.hide(fragVuelta);
 
 				ft.commit();
-				
+
 				Log.d("infolinea", "eliminar panel vuelta");
-				
 
 			}
 		}

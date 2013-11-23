@@ -33,11 +33,14 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
@@ -45,6 +48,7 @@ import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -54,6 +58,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -461,6 +466,103 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	/**
+	 * Verifica si hay nuevas noticias y muestra un aviso
+	 * 
+	 */
+	public void verificarNuevasNoticiasTram() {
+
+		/**
+		 * Sera llamado cuando la tarea de cargar las noticias
+		 */
+		LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
+			public void AvisosTramLoaded(List<TwResultado> noticias) {
+
+				if (noticias != null && !noticias.isEmpty()) {
+
+					int nuevas = 0;
+
+					String fecha_ultima = "";
+					boolean lanzarAviso = false;
+
+					// Ver si se guardo la fecha de la ultima noticia
+					if (preferencias.contains("ultima_noticia_tram")) {
+						fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
+
+						if (fecha_ultima != null) {
+
+							// Date fechaUltima =
+							// Utilidades.getFechaDate(fecha_ultima);
+
+							// Contar nuevas noticias
+
+							/*
+							 * for (int i = 0; i < noticias.size(); i++) {
+							 * 
+							 * if (noticias.get(i).getFechaDate() != null) { if
+							 * (
+							 * noticias.get(i).getFechaDate().after(fechaUltima)
+							 * ) { nuevas++; } }
+							 * 
+							 * }
+							 */
+
+						}
+
+						if (!fecha_ultima.equals(noticias.get(0).getFecha())) {
+
+							lanzarAviso = true;
+
+							SharedPreferences.Editor editor = preferencias.edit();
+							editor.putString("ultima_noticia_tram", noticias.get(0).getFecha());
+							editor.commit();
+
+						}
+
+					} else {
+
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putString("ultima_noticia_tram", noticias.get(0).getFecha());
+						editor.commit();
+
+					}
+
+					// Si se guardo la fecha y no coincide con la ultima, lanzar
+					// aviso
+					if (lanzarAviso) {
+
+						// Extendido
+
+						String[] extendido = new String[2];
+
+						extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje();
+
+						if (noticias.size() > 1) {
+							extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje();
+						} else {
+							extendido[1] = "";
+						}
+
+						Notificaciones.notificacionAvisosTram(context.getApplicationContext(), extendido);
+
+					}
+				} else {
+
+				}
+			}
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+		}
+
+	}
+
 	public boolean esTram(int paradaActual) {
 
 		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
@@ -591,44 +693,36 @@ public class DatosPantallaPrincipal {
 
 	}
 
-	
 	/**
 	 * Cargar cabecera listado
 	 */
-	public void cargarHeader(){
-		
+	public void cargarHeader() {
+
 		LayoutInflater li2 = LayoutInflater.from(context);
-		
+
 		View vheader = li2.inflate(R.layout.tiempos_aviso_header, null);
-		
+
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 		context.tiemposView.addHeaderView(vheader);
-		
+
 	}
-	
-	
+
 	/**
 	 * Cargar pie listado
 	 */
 	public void cargarPie() {
 
-		if(context.avisoPie != null && context.tiemposView != null){
+		if (context.avisoPie != null && context.tiemposView != null) {
 			context.tiemposView.removeFooterView(context.avisoPie);
 		}
-		
-		
-		
-		
-		
+
 		if (!esTram(context.paradaActual)) {
-		
-			
+
 			LayoutInflater li = LayoutInflater.from(context);
-			
+
 			View v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
 
-			
 			TextView infoapp = (TextView) v.findViewById(R.id.legal3);
 			infoapp.setOnClickListener(new TextView.OnClickListener() {
 				public void onClick(View arg0) {
@@ -637,18 +731,17 @@ public class DatosPantallaPrincipal {
 
 				}
 			});
-			
+
 			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 			context.tiemposView.addFooterView(v);
-			
+
 			context.avisoPie = v;
 
 		} else {
 
 			LayoutInflater li = LayoutInflater.from(context);
-						
-			
+
 			View v = li.inflate(R.layout.tiempos_aviso_3, null);
 
 			ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
@@ -687,7 +780,72 @@ public class DatosPantallaPrincipal {
 			context.tiemposView.addFooterView(v);
 
 			context.avisoPie = v;
-			
+
+		}
+
+	}
+
+	// Novedades
+	private int REV_ACTUAL = 35;
+
+	// Fin novedades
+
+	/**
+	 * Dialogo con las novedades de la version
+	 * 
+	 */
+	public void controlMostrarNovedades() {
+		// Mostrar novedades
+
+		int revAviso = preferencias.getInt("revAviso", 0);
+
+		if (revAviso < REV_ACTUAL) {
+
+			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+			dialog.setTitle(context.getString(R.string.novedades_titulo));
+
+			dialog.setMessage(context.getString(R.string.info_tram_inicio));
+			dialog.setIcon(R.drawable.ic_tiempobus_3);
+
+			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.setNegativeButton(R.string.probar, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					context.paradaActual = 2;
+
+					EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+
+					txtPoste.setText("2");
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putInt("parada_inicio", context.paradaActual);
+					editor.commit();
+
+					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.show();
+
+			SharedPreferences.Editor editor = preferencias.edit();
+			editor.putInt("revAviso", REV_ACTUAL);
+			editor.commit();
+
 		}
 
 	}

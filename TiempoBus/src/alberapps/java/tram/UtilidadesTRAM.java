@@ -24,19 +24,19 @@ import alberapps.java.tam.mapas.PlaceMark;
 import android.util.Log;
 
 /**
- * Informacion constante para las funciones del tram 
- *
+ * Informacion constante para las funciones del tram
+ * 
  */
 public class UtilidadesTRAM {
 
 	public static boolean ACTIVADO_TRAM = true;
-	
+
 	public static boolean ACTIVADO_L9 = false;
 
-	//Para la carga en BD
+	// Para la carga en BD
 	public static String[] LINEAS_NUM = { "L1", "L3", "L4", "L9", "4L", "L2" };
-	
-	//Para el servicio de consultas
+
+	// Para el servicio de consultas
 	public static String[] LINEAS_A_CONSULTAR = { "L1", "L3", "L4", "L2" };
 
 	public static int[] L1_ORDEN_SIN_L3 = { 2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33 };
@@ -66,6 +66,18 @@ public class UtilidadesTRAM {
 
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
 
+	public static final String URL_DOCS = "https://docs.google.com/gview?embedded=true&url=";
+	public static final String[] PDF_L1_L3_BENIDORM = { "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf",
+			"http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf",
+			"http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf" };
+
+	/**
+	 * Ordena las posiciones del recorrido del tram
+	 * 
+	 * @param linea
+	 * @param recorrido
+	 * @return lista
+	 */
 	public static List<PlaceMark> posicionesRecorrido(String linea, List<PlaceMark> recorrido) {
 
 		if (linea.equals("L1")) {
@@ -196,45 +208,60 @@ public class UtilidadesTRAM {
 		return OBSERVACIONES_L1;
 
 	}
-	
+
+	/**
+	 * Observaciones fijas
+	 * 
+	 * @param parada
+	 * @return string
+	 */
 	public static String getObservacionesL1enL4(String parada) {
 
-		if(parada.equals("7")){
+		if (parada.equals("7")) {
 			return OBSERVACIONES_L1;
-		}else{
+		} else {
 			return "";
 		}
 
 	}
-	
-	
-	public static boolean esLineaTram(String linea){
-		
-		for(int i = 0; i< LINEAS_NUM.length; i++){
-			
-			if(LINEAS_NUM[i].equals(linea)){
+
+	/**
+	 * La linea pertenece al tram
+	 * 
+	 * @param linea
+	 * @return boolean
+	 */
+	public static boolean esLineaTram(String linea) {
+
+		for (int i = 0; i < LINEAS_NUM.length; i++) {
+
+			if (LINEAS_NUM[i].equals(linea)) {
 				return true;
 			}
-			
+
 		}
-		
+
 		return false;
-		
+
 	}
-	
-	
-	public static boolean esParadaL9(String parada){
-		
+
+	/**
+	 * Es una parada de la L9
+	 * 
+	 * @param parada
+	 * @return boolean
+	 */
+	public static boolean esParadaL9(String parada) {
+
 		for (int i = 1; i < L9_ORDEN.length; i++) {
 			if (parada.equals(L9_ORDEN[i])) {
 				return true;
 			}
 
 		}
-		
+
 		return false;
-		
+
 	}
-	
 
 }

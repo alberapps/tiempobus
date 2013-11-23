@@ -40,6 +40,8 @@ public class TwResultado implements Comparable<TwResultado> {
 
 	private String id;
 	
+	private long respuestaId;
+	
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
@@ -128,6 +130,14 @@ public class TwResultado implements Comparable<TwResultado> {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public long getRespuestaId() {
+		return respuestaId;
+	}
+
+	public void setRespuestaId(long respuestaId) {
+		this.respuestaId = respuestaId;
 	}
 
 }

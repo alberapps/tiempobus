@@ -353,6 +353,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(ns);
 		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS);
+		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS_TRAM);
 
 		recargarNoticias(false);
 

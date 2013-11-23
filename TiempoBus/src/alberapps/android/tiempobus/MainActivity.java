@@ -94,12 +94,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener{
-
-	// Novedades
-	// private int REV_ACTUAL = 27;
-	// private String NOVEDADES = "";
-	// Fin novedades
+public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener {
 
 	protected static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
 	public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -117,8 +112,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	protected static final int MSG_CLOSE_CARGANDO = 200;
 	protected static final int MSG_ERROR_TIEMPOS = 201;
 	protected static final int MSG_FRECUENCIAS_ACTUALIZADAS = 202;
-	protected static final int MSG_RECARGA = 203;
-	private static final long DELAY_RECARGA = 750;
+	public static final int MSG_RECARGA = 203;
+	public static final long DELAY_RECARGA = 750;
 
 	private ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 	private TiemposAdapter posteAdapter;
@@ -127,7 +122,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	Calendar ahora = new GregorianCalendar();
 	public int paradaActual = 4450;
-	final ParadaActualHandler handler = new ParadaActualHandler(this);
+	public final ParadaActualHandler handler = new ParadaActualHandler(this);
 
 	private TiemposUpdater posteUpdater = new TiemposUpdater();
 	AlarmManager alarmManager;
@@ -163,9 +158,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
 
-	
 	public View avisoPie = null;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -213,14 +207,23 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// NOTICIAS
 		boolean verificaNoticias = preferencias.getBoolean("aviso_noticias", true);
+		boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", true);
 
 		if (verificaNoticias) {
+
 			datosPantallaPrincipal.verificarNuevasNoticias();
+
 		}
 
-		//PrecargasV3.precargarDatosLineas(this);
-		//PrecargasV3.precargarDatosLineasRecorrido(this);
-		
+		if (verificaNoticiasTram) {
+
+			datosPantallaPrincipal.verificarNuevasNoticiasTram();
+
+		}
+
+		// PrecargasV3.precargarDatosLineas(this);
+		// PrecargasV3.precargarDatosLineasRecorrido(this);
+
 	}
 
 	/**
@@ -436,7 +439,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		}
 
 		Log.d("PRINCIPAL", "inicia: " + buses.size());
-		
+
 		handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
 		// Poner en campo de poste
@@ -503,7 +506,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// Una vez cargado todo... recargamos datos
 		handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
-		controlMostrarNovedades();
+		datosPantallaPrincipal.controlMostrarNovedades();
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			mDrawerToggle.syncState();
@@ -650,12 +653,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// registerForContextMenu(getListView());
 
-		
-		
 		// Pie para la lista de resultados
 		datosPantallaPrincipal.cargarHeader();
-		
-		
 
 		// Progreso inicial
 		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
@@ -702,8 +701,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		botonCargaTiempos = (ImageButton) findViewById(R.id.boton_subposte);
 		botonCargaTiempos.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
-				// A peticion de los usuarios volvemos a sacar el buscador aquí
-				// launchPoste();
+				
 				EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
 
 				try {
@@ -867,46 +865,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			Toast.makeText(this, getString(R.string.leer_ko), Toast.LENGTH_SHORT).show();
 
 		}
-
-	}
-
-	/**
-	 * Dialogo con las novedades de la version
-	 * 
-	 */
-	private void controlMostrarNovedades() {
-		// Mostrar novedades
-
-		/*
-		 * int revAviso = preferencias.getInt("revAviso", 0);
-		 * 
-		 * if (revAviso < REV_ACTUAL) {
-		 * 
-		 * AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-		 * 
-		 * dialog.setTitle(getString(R.string.novedades_titulo));
-		 * 
-		 * dialog.setMessage(NOVEDADES);
-		 * dialog.setIcon(R.drawable.ic_tiempobus_3);
-		 * 
-		 * dialog.setPositiveButton(R.string.ok, new
-		 * DialogInterface.OnClickListener() {
-		 * 
-		 * public void onClick(DialogInterface dialog, int id) {
-		 * 
-		 * dialog.dismiss();
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * dialog.show();
-		 * 
-		 * SharedPreferences.Editor editor = preferencias.edit();
-		 * editor.putInt("revAviso", REV_ACTUAL); editor.commit();
-		 * 
-		 * }
-		 */
 
 	}
 
@@ -1216,7 +1174,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	/**
 	 * Manejar mensajes
 	 */
-	static class ParadaActualHandler extends Handler {
+	public static class ParadaActualHandler extends Handler {
 
 		private final WeakReference<MainActivity> mActividad;
 
@@ -1301,7 +1259,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				// Pie para la lista de resultados
 				datosPantallaPrincipal.cargarPie();
-				
+
 				laActividad.posteAdapter.notifyDataSetChanged();
 				break;
 
@@ -1387,7 +1345,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	public void onArticleSelected(int position) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
