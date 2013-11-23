@@ -323,12 +323,12 @@ favorit per crear la teua llista.</string>
     
     <string name="probar">Provar TRAM</string>
     
-    <string name="info_tram_inicio">El TRAM arriba a TiempoBus \ n-Ja pots accedir a la informació i els temps de pas del TRAM.
-\ n-Canvia entre TRAM i BUS en la selecció que veuràs al peu del cercador i els mapes.
-\ n-Els teus preferits funcionaran simultàniament en els dos modes.
-\ n-Accedeix a la secció de notícies per consultar les notícies i el twitter del TRAM.
-\ n-El GPS t\'indicarà les parades pròximes d\'ambdós sistemes.
-\ n-Rebràs notificacions de nous avisos del TRAM provinents del seu Twitter oficial. (Pots modificar-lo en preferències).
+    <string name="info_tram_inicio">El TRAM arriba a TiempoBus\n- Ja pots accedir a la informació i els temps de pas del TRAM.
+	\n- Canvia entre TRAM i BUS en la selecció que veuràs al peu del cercador i els mapes.
+	\n- Els teus preferits funcionaran simultàniament en els dos modes.
+	\n- Accedeix a la secció de notícies per consultar les notícies i el twitter del TRAM.
+	\n- El GPS t\'indicarà les parades pròximes d\'ambdós sistemes.
+	\n- Rebràs notificacions de nous avisos del TRAM provinents del seu Twitter oficial. (Pots modificar-lo en preferències).
     </string>
 				
     <!-- fin nuevos -->
