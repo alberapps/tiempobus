@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 public class GestionTram {
@@ -59,11 +60,11 @@ public class GestionTram {
 			public void onClick(DialogInterface dialog, int item) {
 				if (item == 0) {
 
-					abrirPdf(0);
+					abrirPdfGDocs(0);
 
 				} else if (item == 1) {
 
-					abrirPdf(1);
+					abrirPdfGDocs(1);
 
 				}
 
@@ -89,11 +90,11 @@ public class GestionTram {
 			seleccionHorarioTramL1L3();
 
 		} else if (bus.getNumLinea().equals("L2")) {
-			abrirPdf(2);
+			abrirPdfGDocs(2);
 		} else if (bus.getNumLinea().equals("L4")) {
-			abrirPdf(3);
+			abrirPdfGDocs(3);
 		} else if (bus.getNumLinea().equals("L9")) {
-			abrirPdf(4);
+			abrirPdfGDocs(4);
 		}
 
 	}
@@ -105,7 +106,7 @@ public class GestionTram {
 	 */
 	public void abrirPdfGDocs(int idPdf) {
 
-		String pdf = UtilidadesTRAM.PDF_L1_L3_BENIDORM[idPdf];
+		String pdf = UtilidadesTRAM.PDF_URL[idPdf];
 
 		Intent i = new Intent(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(UtilidadesTRAM.URL_DOCS + pdf));
@@ -121,7 +122,13 @@ public class GestionTram {
 	public void abrirPdf(int idPdf) {
 
 		try {
-			String pdf = UtilidadesTRAM.PDF_L1_L3_BENIDORM[idPdf];
+			
+			Log.d("PDF", "pdf ID: " + idPdf); 
+			
+			String pdf = UtilidadesTRAM.PDF_URL[idPdf];
+			
+			Log.d("PDF", "pdf: " + pdf); 
+			
 			Intent i = new Intent(Intent.ACTION_VIEW);
 
 			i.setDataAndType(Uri.parse(pdf), "application/pdf");
@@ -129,6 +136,8 @@ public class GestionTram {
 			context.startActivity(i);
 		} catch (Exception e) {
 
+			e.printStackTrace();
+			
 			Toast.makeText(context, context.getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
 
 		}

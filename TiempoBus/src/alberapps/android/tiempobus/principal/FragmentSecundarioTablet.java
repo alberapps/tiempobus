@@ -106,8 +106,8 @@ public class FragmentSecundarioTablet extends Fragment {
 			cursor.moveToFirst();
 
 			TextView parada = (TextView) actividad.findViewById(R.id.parada);
-			TextView linea = (TextView) actividad.findViewById(R.id.linea);
-			TextView destino = (TextView) actividad.findViewById(R.id.destino);
+			//TextView linea = (TextView) actividad.findViewById(R.id.linea);
+			//TextView destino = (TextView) actividad.findViewById(R.id.destino);
 			TextView localizacion = (TextView) actividad.findViewById(R.id.localizacion);
 			TextView conexiones = (TextView) actividad.findViewById(R.id.conexiones);
 
@@ -128,8 +128,8 @@ public class FragmentSecundarioTablet extends Fragment {
 			// paradaSel = cursor.getString(paradaIndex);
 			// lineaSel = cursor.getString(numLineaIndex);
 
-			linea.setText(cursor.getString(lineaIndex));
-			destino.setText(cursor.getString(destinoIndex));
+			//linea.setText(cursor.getString(lineaIndex));
+			//destino.setText(cursor.getString(destinoIndex));
 			localizacion.setText(cursor.getString(direccionIndex));
 			conexiones.setText(cursor.getString(conexionesIndex));
 

@@ -286,12 +286,13 @@
     <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
     
-    <string name="legal_sin_tram">Tempi ottenuti del sistema ISAE, che offre, in TEMPO REALE, la PREVISIONE dei tempi di arrivo della rete TAM.
+    <string name="legal">Tempi ottenuti del sistema ISAE, che offre, in TEMPO REALE, la PREVISIONE dei tempi di arrivo della rete TAM.
 	Questi tempi possono variare per motivi diversi aliene dalla applicazione, come il traffico, modifiche nel percorso, etc.
 	\nLe funzione che usano il database, possono non essere aggiornate.
 	\nQuesta applicazione NON è ufficiale e si sviluppa in modo indipendente.
 	\nDati di linee e tempi ottenuti da: www.subus.es ed isaealicante.subus.es/movil/index.aspx
 	\nPiù informazione: alberapps.blogspot.com e su Twitter: @alberapps</string>
+	
 	
 	 <string name="legal_b">
 		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.

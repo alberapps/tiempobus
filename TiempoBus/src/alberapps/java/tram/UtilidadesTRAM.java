@@ -67,7 +67,7 @@ public class UtilidadesTRAM {
 	public static int[] TIPO = { 1, 2, 3, 4, 5, 6 };
 
 	public static final String URL_DOCS = "https://docs.google.com/gview?embedded=true&url=";
-	public static final String[] PDF_L1_L3_BENIDORM = { "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf",
+	public static final String[] PDF_URL = { "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf",
 			"http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf",
 			"http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf" };
 
