@@ -320,6 +320,8 @@
     \n- Recibirás notificaciones de nuevos avisos del TRAM provenientes de su Twitter oficial.(Puedes modificarlo en preferencias).
     </string>
     
+    <string name="leer_1_tram">El tranvía de la línea</string>
+    
     <!-- fin nuevos -->
     
 </resources>

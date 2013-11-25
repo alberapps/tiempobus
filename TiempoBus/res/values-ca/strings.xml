@@ -330,6 +330,8 @@ favorit per crear la teua llista.</string>
 	\n- El GPS t\'indicarà les parades pròximes d\'ambdós sistemes.
 	\n- Rebràs notificacions de nous avisos del TRAM provinents del seu Twitter oficial. (Pots modificar-lo en preferències).
     </string>
+	
+	<string name="leer_1_tram">El tramvia de la línia</string>
 				
     <!-- fin nuevos -->
     

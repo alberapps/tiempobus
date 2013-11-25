@@ -850,4 +850,56 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	/**
+	 * Prepara la linea a leer
+	 * 
+	 */
+	public void cantarLinea() {
+
+		if (context.lecturaOK) {
+
+			String lineaALeer = "";
+
+			if (esTram(context.paradaActual)) {
+
+				lineaALeer = context.getString(R.string.leer_1_tram) + " " + context.busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + context.busSeleccionado.getDestino() + " "
+						+ context.getString(R.string.leer_3) + " " + context.busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+
+			} else {
+
+				lineaALeer = context.getString(R.string.leer_1) + " " + context.busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + context.busSeleccionado.getDestino() + " "
+						+ context.getString(R.string.leer_3) + " " + context.busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+
+			}
+
+			context.textToSpeech(lineaALeer);
+
+		} else if (context.lecturaAlternativa) {
+
+			Toast.makeText(context, context.getString(R.string.leer_ko_2), Toast.LENGTH_SHORT).show();
+
+			String lineaALeer = "";
+
+			if (esTram(context.paradaActual)) {
+
+				lineaALeer = "El tranvía de la línea " + context.busSeleccionado.getLinea() + " con destino " + context.busSeleccionado.getDestino() + " llegará en "
+						+ context.busSeleccionado.getProximoMinutos().toString() + " minutos";
+
+			} else {
+
+				lineaALeer = "El autobús de la línea " + context.busSeleccionado.getLinea() + " con destino " + context.busSeleccionado.getDestino() + " llegará en "
+						+ context.busSeleccionado.getProximoMinutos().toString() + " minutos";
+
+			}
+
+			context.textToSpeech(lineaALeer);
+
+		} else {
+
+			Toast.makeText(context, context.getString(R.string.leer_ko), Toast.LENGTH_SHORT).show();
+
+		}
+
+	}
+
 }

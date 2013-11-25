@@ -128,14 +128,14 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	AlarmManager alarmManager;
 	private ImageButton botonCargaTiempos;
 
-	BusLlegada busSeleccionado = null;
+	public BusLlegada busSeleccionado = null;
 
 	SharedPreferences preferencias = null;
 
 	private TextToSpeech mTts;
 
-	private boolean lecturaOK = true;
-	private boolean lecturaAlternativa = false;
+	public boolean lecturaOK = true;
+	public boolean lecturaAlternativa = false;
 
 	static DatosPantallaPrincipal datosPantallaPrincipal;
 
@@ -701,7 +701,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		botonCargaTiempos = (ImageButton) findViewById(R.id.boton_subposte);
 		botonCargaTiempos.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
-				
+
 				EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
 
 				try {
@@ -820,7 +820,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					break;
 
 				case 3:
-					cantarLinea();
+					datosPantallaPrincipal.cantarLinea();
 					busSeleccionado = null;
 					break;
 
@@ -837,35 +837,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		AlertDialog alert = builder.create();
 
 		alert.show();
-	}
-
-	/**
-	 * Prepara la linea a leer
-	 * 
-	 */
-	private void cantarLinea() {
-
-		if (lecturaOK) {
-
-			String lineaALeer = getString(R.string.leer_1) + " " + busSeleccionado.getLinea() + " " + getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " " + getString(R.string.leer_3) + " "
-					+ busSeleccionado.getProximoMinutos().toString() + " " + getString(R.string.leer_4);
-
-			textToSpeech(lineaALeer);
-
-		} else if (lecturaAlternativa) {
-
-			Toast.makeText(this, getString(R.string.leer_ko_2), Toast.LENGTH_SHORT).show();
-
-			String lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
-
-			textToSpeech(lineaALeer);
-
-		} else {
-
-			Toast.makeText(this, getString(R.string.leer_ko), Toast.LENGTH_SHORT).show();
-
-		}
-
 	}
 
 	public void alertaServiceClick(View view) {
@@ -1329,7 +1300,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	 * 
 	 * @param texto
 	 */
-	private void textToSpeech(String texto) {
+	public void textToSpeech(String texto) {
 
 		if (texto != null && !texto.equals("")) {
 			mTts.speak(texto, TextToSpeech.QUEUE_FLUSH, // Drop all pending
