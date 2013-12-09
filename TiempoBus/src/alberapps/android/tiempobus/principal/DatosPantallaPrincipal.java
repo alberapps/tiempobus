@@ -830,6 +830,7 @@ public class DatosPantallaPrincipal {
 
 					SharedPreferences.Editor editor = preferencias.edit();
 					editor.putInt("parada_inicio", context.paradaActual);
+					editor.putInt("infolinea_modo", 2);
 					editor.commit();
 
 					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);

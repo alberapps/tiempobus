@@ -25,7 +25,6 @@ import alberapps.android.tiempobus.actionbar.ActionBarActivity;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -70,7 +69,7 @@ public class HistorialActivity extends ActionBarActivity {
 
 	String orden = "";
 
-	private ProgressDialog dialog;
+	// private ProgressDialog dialog;
 
 	/**
 	 * On Create
@@ -93,12 +92,17 @@ public class HistorialActivity extends ActionBarActivity {
 		// Fondo
 		setupFondoAplicacion();
 
-		// Orden de favoritos
-		orden = preferencias.getString("orden_favoritos", HistorialDB.Historial.DEFAULT_SORT_ORDER);
+		// Orden de historico
+		orden = HistorialDB.Historial.DEFAULT_SORT_ORDER;
 		consultarDatos(orden);
 
 	}
 
+	/**
+	 * Consulta de datos de historial
+	 * 
+	 * @param orden
+	 */
 	private void consultarDatos(String orden) {
 
 		/*

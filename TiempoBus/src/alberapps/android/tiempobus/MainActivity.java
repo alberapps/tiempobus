@@ -23,7 +23,6 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
@@ -76,7 +75,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -207,7 +205,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// NOTICIAS
 		boolean verificaNoticias = preferencias.getBoolean("aviso_noticias", true);
-		boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", true);
+		boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", false);
 
 		if (verificaNoticias) {
 
@@ -221,8 +219,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		// PrecargasV3.precargarDatosLineas(this);
-		// PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 

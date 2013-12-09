@@ -69,7 +69,7 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 54; // 50
+	private static final int DATABASE_VERSION = 56; // 50
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -630,10 +630,10 @@ public class DatosLineasDB {
 
 						if (strings[0].equals("L9")) {
 							strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
-						} else if (strings[0].equals("L1") || strings[0].equals("L3")) {
-							strings[7] = UtilidadesTRAM.getObservacionesL1(strings[3]);
-						} else if (strings[0].equals("L4")) {
-							strings[7] = UtilidadesTRAM.getObservacionesL1enL4(strings[3]);
+						//} else if (strings[0].equals("L1") || strings[0].equals("L3")) {
+							//strings[7] = UtilidadesTRAM.getObservacionesL1(strings[3]);} 
+						//else if (strings[0].equals("L4")) {
+							//strings[7] = UtilidadesTRAM.getObservacionesL1enL4(strings[3]);
 						} else {
 							strings[7] = "";
 						}
