@@ -50,7 +50,6 @@ import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTa
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
-import alberapps.java.tam.PrecargasV3;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -205,7 +204,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		// NOTICIAS
 		boolean verificaNoticias = preferencias.getBoolean("aviso_noticias", true);
-		boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", false);
+		boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", true);
 
 		if (verificaNoticias) {
 

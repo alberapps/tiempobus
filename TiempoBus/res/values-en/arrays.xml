@@ -37,14 +37,14 @@
     </string-array> 
     
    <string-array name="spinner_minutos">
-   		<item>3 minuten</item>
+   		<item>3 minutes</item>
         <item>5 minutes</item>
         <item>10 minutes</item>
         <item>15 minutes</item>
-        <item>20 minuten</item>            
+        <item>20 minutes</item>            
     </string-array> 
    
-    <string-array name="cantidad_tw">
+   <string-array name="cantidad_tw">
         <item>1</item>
         <item>3</item>
         <item>5</item>            
@@ -52,26 +52,27 @@
         <item>15</item>
     </string-array> 
    
-  <string-array name="spinner_datos">
-        <item>Bus TAM (Web Subús)</item>
-        <item>Bus TAM (offline)</item>
-        <item>Tranvía TRAM</item>            
+   <string-array name="spinner_datos">
+        <item>TAM Bus (Subús web)</item>
+        <item>TAM Bus (offline)</item>
+        <item>TRAM</item>            
+    </string-array> 
+    
+    <string-array name="spinner_datos_b">
+        <item>TAM Bus (Subús web)</item>
+        <item>TAM Bus (offline)</item>                 
     </string-array> 
    
-    <string-array name="spinner_datos_b">
-        <item>Bus TAM (Web Subús)</item>
-        <item>Bus TAM (offline)</item>                 
-    </string-array> 
    
    <string-array name="menu_array">
         <item>Maps</item>
         <item>Notices and News</item>
-        <item>Favorites</item>
+        <item>Favourites</item>
         <item>Save</item>
         <item>Settings</item>
-        <item>Wallpaper</item>  
+        <item>Wallpaper</item>        
         <item>History</item>
-        <item>QR Export</item>      
+        <item>QR Export</item>
     </string-array>
    
    <string-array name="tiempos_recarga">
@@ -79,6 +80,6 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>                    
-    </string-array>
+    </string-array> 
    
 </resources>

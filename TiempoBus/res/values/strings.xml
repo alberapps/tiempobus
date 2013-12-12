@@ -25,7 +25,7 @@
     <string name="no_poste">Debes cargar primero la parada a guardar</string>
     <string name="notification_title">¡Alerta de Bus!</string>
     <string name="updated_at">Actualizado a las</string>
-    <string name="err_bus_cerca">No se puede fijar una alarma.\nEl autobús llega a la parada en %1$d minutos.</string>
+    <string name="err_bus_cerca">No se puede fijar una alarma.\nEl autobús/tram llega a la parada en %1$d minutos.</string>
 
     <!-- PARA ICS -->
 
@@ -291,9 +291,9 @@
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
 	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: traduccionesmfr.net - twitter.com/MFriasTrad</string>
+	<string name="acercade_info_nuevo_2">Desarrollo: alberapps.blogspot.com - twitter.com/alberapps \nTraducciones: orchestra-solutions.com - twitter.com/OrchestraTrad</string>
     <string name="aviso_infoapp">>InfoApp</string>
-    <string name="infoapp_trad">Traducciones: traduccionesmfr.net</string>
+    <string name="infoapp_trad">Traducciones: orchestra-solutions.com</string>
     
     <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.

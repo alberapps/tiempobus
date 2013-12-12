@@ -165,6 +165,11 @@ public class SelectorLinea {
 
 		context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
+		// Limpiar
+		if (listaSpinner != null && !listaSpinner.isEmpty()) {
+			listaSpinner.clear();
+		}
+
 		// Carga local de lineas
 		String datosOffline = null;
 		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
@@ -246,15 +251,15 @@ public class SelectorLinea {
 		context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
 		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
-			
-			//context.loadDatosMapa();
-			
-			if(UtilidadesTAM.ACTIVAR_MAPS_V3){
+
+			// context.loadDatosMapa();
+
+			if (UtilidadesTAM.ACTIVAR_MAPS_V3) {
 				context.loadDatosMapaV3();
-			}else{
+			} else {
 				context.loadDatosMapa();
-			}	
-			
+			}
+
 		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			context.mapasOffline.loadDatosMapaOffline();
 
