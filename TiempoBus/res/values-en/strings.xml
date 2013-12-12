@@ -23,7 +23,7 @@
     <string name="no_favs">There are no stops saved. \nUse the Add button to create your favorite list.</string>
     <string name="no_poste">Before saving, the stop must be loaded</string>
     <string name="notification_title">Bus Alert!</string>
-    <string name="updated_at">Updated at %1$s</string>
+    <string name="updated_at">Updated at</string>
     <string name="err_bus_cerca">Alarm setting not possible. The bus/tram arrives in only %1$d minutes.</string>
 
     <!-- PARA ICS -->
