@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+   Copyright (C) 2012 Alberto Montiel
+         
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+--> 
+
+<LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
+
+ <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_android" >
+
+        <TextView
+            android:id="@+id/datos_linea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:maxLines="1"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+       
+    </LinearLayout>   
+    
+<RelativeLayout
+    android:id="@+id/mainlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+     android:layout_marginBottom="45dip"
+    android:orientation="vertical" >
+
+    
+    <fragment 
+  android:id="@+id/map"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  class="com.google.android.gms.maps.SupportMapFragment"/>
+    
+</RelativeLayout>
+
+<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="-46dip"
+        android:background="@drawable/fondo_linea"
+        >
+
+         <Spinner
+             android:id="@+id/spinner_datos"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_marginLeft="5dp"
+             android:layout_marginRight="5dp"
+             android:layout_weight="1"
+             android:gravity="center" />
+
+         <ToggleButton
+             android:id="@+id/mapasVehiculosButton"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"             
+             android:textOff="@string/mapas_vehiculo_off"
+             android:textOn="@string/mapas_vehiculo_on" />
+
+     </LinearLayout>
+
+</LinearLayout>
+
+
+
+

@@ -24,7 +24,7 @@ favorit per crear la teua llista.</string>
     <string name="no_poste">Has de carregar primer la parada a guardar</string>
     <string name="notification_title">Alerta de Bus!</string>
     <string name="updated_at">Actualitzat a les</string>
-    <string name="err_bus_cerca">No es pot fixar una alarma.\nL\'autobús arriba a la parada en %1$d minuts.</string>
+    <string name="err_bus_cerca">No es pot fixar una alarma.\nl\'autobús/tram arriba a la parada en %1$d minuts.</string>
 
     <!-- PARA ICS -->
 

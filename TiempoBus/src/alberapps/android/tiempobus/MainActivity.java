@@ -38,6 +38,7 @@ import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.MapasActivity;
+import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
@@ -311,7 +312,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case 0:
 
 			detenerTareaTiempos();
-			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+			startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
