@@ -37,7 +37,6 @@ import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -595,7 +594,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case R.id.menu_mapas:
 
 			detenerTareaTiempos();
-			startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+			startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
@@ -809,7 +808,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				case 2:
 
 					if (busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
-						Intent i = new Intent(MainActivity.this, MapasActivity.class);
+						Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
 						i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
 						startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
 					}

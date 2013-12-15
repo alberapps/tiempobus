@@ -7,12 +7,8 @@
     <issue id="InvalidPackage">
         <ignore path="libs/twitter4j-core-3.0.4-SNAPSHOT.jar" />
     </issue>
-    <issue id="MissingRegistered" severity="ignore" />
-    <issue id="NewApi" severity="ignore" />
     <issue id="Override">
         <ignore path="src/alberapps/android/tiempobus/database/BuscadorLineasObserver.java" />
     </issue>
     <issue id="ParserError" severity="ignore" />
-    <issue id="ResourceAsColor" severity="ignore" />
-    <issue id="Typos" severity="ignore" />
 </lint>

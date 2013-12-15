@@ -325,4 +325,6 @@
     
     <!-- FIN NUEVOS -->
     
+     <string name="error_gps">ERROR GPS</string>
+    
 </resources>
