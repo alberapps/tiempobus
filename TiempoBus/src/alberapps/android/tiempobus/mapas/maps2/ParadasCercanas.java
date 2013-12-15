@@ -216,76 +216,112 @@ public class ParadasCercanas {
 	 */
 	public void miLocalizacion(final boolean cercanas) {
 
-		if (cercanas) {
-			// setTitle(getString(R.string.cercanas));
-			context.datosLinea.setText(context.getString(R.string.cercanas));
+		try {
 
-		}
+			if (cercanas) {
+				// setTitle(getString(R.string.cercanas));
+				context.datosLinea.setText(context.getString(R.string.cercanas));
 
-		if (context.mLocationClient != null && context.mLocationClient.isConnected()) {
-			String msg = "Location = " + context.mLocationClient.getLastLocation();
-			Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-		}
+			}
 
-		// if (context.primeraCarga) {
+			if (context.mLocationClient != null && context.mLocationClient.isConnected()) {
+				// String msg = "Location = " +
+				// context.mLocationClient.getLastLocation();
+				// Toast.makeText(context.getApplicationContext(), msg,
+				// Toast.LENGTH_SHORT).show();
+			} else {
 
-		Toast.makeText(context, context.getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage(context.getString(R.string.gps_on)).setCancelable(false).setPositiveButton(context.getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
 
-		Location location = context.mLocationClient.getLastLocation();
+						context.enableLocationSettings();
 
-		double latitud = location.getLatitude();
-		double longitud = location.getLongitude();
+					}
+				}).setNegativeButton(context.getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
 
-		LatLng lt = new LatLng(latitud, longitud);
+					}
+				});
+				AlertDialog alert = builder.create();
 
-		context.mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
+				alert.show();
 
-		context.mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+				return;
 
-		if (cercanas) {
+			}
 
-			int glat = (int) (latitud * 1E6);
-			int glng = (int) (longitud * 1E6);
+			// if (context.primeraCarga) {
 
-			final List<LatLng> listaPuntos = cargarParadasCercanas(glat, glng);
+			Toast.makeText(context, context.getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
 
-			listaPuntos.add(lt);
+			Location location = context.mLocationClient.getLastLocation();
 
-			context.mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)));
+			double latitud = location.getLatitude();
+			double longitud = location.getLongitude();
 
-			if (listaPuntos != null && !listaPuntos.isEmpty()) {
+			LatLng lt = new LatLng(latitud, longitud);
 
-				// Pan to see all markers in view.
-				// Cannot zoom to bounds until the map has a size.
-				final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
-				if (mapView.getViewTreeObserver().isAlive()) {
-					mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-						@SuppressWarnings("deprecation")
-						// We use the new method when supported
-						@SuppressLint("NewApi")
-						// We check which build version we are using.
-						public void onGlobalLayout() {
+			context.mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
 
-							Builder ltb = new LatLngBounds.Builder();
+			context.mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
 
-							for (int i = 0; i < listaPuntos.size(); i++) {
-								ltb.include(listaPuntos.get(i));
+			if (cercanas) {
+
+				int glat = (int) (latitud * 1E6);
+				int glng = (int) (longitud * 1E6);
+
+				final List<LatLng> listaPuntos = cargarParadasCercanas(glat, glng);
+
+				listaPuntos.add(lt);
+
+				context.mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)));
+
+				if (listaPuntos != null && !listaPuntos.isEmpty()) {
+
+					// Pan to see all markers in view.
+					// Cannot zoom to bounds until the map has a size.
+					final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
+					if (mapView.getViewTreeObserver().isAlive()) {
+						mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+							@SuppressWarnings("deprecation")
+							// We use the new method when supported
+							@SuppressLint("NewApi")
+							// We check which build version we are using.
+							public void onGlobalLayout() {
+
+								Builder ltb = new LatLngBounds.Builder();
+
+								for (int i = 0; i < listaPuntos.size(); i++) {
+									ltb.include(listaPuntos.get(i));
+								}
+
+								LatLngBounds bounds = ltb.build();
+
+								if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+									mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+								} else {
+									mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+								}
+								context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
 							}
+						});
+					}
 
-							LatLngBounds bounds = ltb.build();
-
-							if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-								mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-							} else {
-								mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-							}
-							context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-						}
-					});
 				}
 
 			}
 
+		} catch (Exception e) {
+
+			Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+			
+			e.printStackTrace();
+			
+			
+			
+			
 		}
 
 	}

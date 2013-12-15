@@ -261,12 +261,12 @@ public class SelectorLinea {
 		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			context.mapasOffline.loadDatosMapaOffline();
 
-			//context.gestionarLineas.gestionVehiculos.loadDatosVehiculos();
+			context.gestionVehiculos.loadDatosVehiculos();
 
 		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 			context.mapasOffline.loadDatosMapaTRAMOffline();
 
-			//context.gestionarLineas.gestionVehiculos.loadDatosVehiculos();
+			context.gestionVehiculos.loadDatosVehiculos();
 
 		}
 

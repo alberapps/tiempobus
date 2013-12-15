@@ -264,4 +264,25 @@ public class UtilidadesTRAM {
 
 	}
 
+	
+	/**
+	 * Es una parada de la L2
+	 * 
+	 * @param parada
+	 * @return boolean
+	 */
+	public static boolean esParadaL2(String parada) {
+
+		for (int i = 0; i < L2_ORDEN.length; i++) {
+			if (parada.equals(L2_ORDEN[i])) {
+				return true;
+			}
+
+		}
+
+		return false;
+
+	}
+
+	
 }

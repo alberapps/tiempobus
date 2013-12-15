@@ -26,23 +26,33 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.mapas.MapasActivity;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +64,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
@@ -62,6 +73,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.maps.OverlayItem;
 
 public class MapasMaps2Activity extends ActionBarActivityFragments implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
 		OnMyLocationButtonClickListener {
@@ -121,6 +133,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	public LocationClient mLocationClient;
 
 	public String distancia = ParadasCercanas.DISTACIA_CERCANA;
+
+	String paradaSeleccionada;
 
 	// These settings are the same as the settings for the map. They will in
 	// fact give you updates
@@ -197,11 +211,17 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		// Hide the zoom controls as the button panel will cover it.
 		mMap.getUiSettings().setZoomControlsEnabled(true);
 
+		// Setting an info window adapter allows us to change the both the
+		// contents and look of the
+		// info window.
+		mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+
 		// Set listeners for marker events. See the bottom of this class for
 		// their behavior.
 		mMap.setOnMarkerClickListener(this);
+		mMap.setOnInfoWindowClickListener(this);
 
-		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.386058, -0.51001810), 10));
+		mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(38.386058, -0.51001810), 15));
 
 	}
 
@@ -261,23 +281,162 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		 * marker is centered and for the marker's info window to open, if it
 		 * has one).
 		 */
+
+		// Toast.makeText(getBaseContext(), "Click Marker",
+		// Toast.LENGTH_SHORT).show();
+
 		return false;
 	}
 
 	public void onInfoWindowClick(Marker marker) {
-		Toast.makeText(getBaseContext(), "Click Info Window", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getBaseContext(), "Click Info Window",
+		// Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getBaseContext(), "Click info window",
+		// Toast.LENGTH_SHORT).show();
+
+		if (marker.getSnippet() != null && !marker.getSnippet().trim().equals("")) {
+			seleccionInfoParada(marker);
+		}
+
+		/*
+		 * AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		 * 
+		 * if (modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+		 * 
+		 * dialog.setTitle(getString(R.string.mapas_vehiculo_titulo_tram));
+		 * dialog.setMessage(marker.getTitle());
+		 * dialog.setIcon(R.drawable.tramway_2);
+		 * 
+		 * } else {
+		 * 
+		 * dialog.setTitle(getString(R.string.mapas_vehiculo_titulo));
+		 * dialog.setMessage(marker.getTitle()); dialog.setIcon(R.drawable.bus);
+		 * 
+		 * }
+		 * 
+		 * dialog.show();
+		 */
+
 	}
 
 	public void onMarkerDragStart(Marker marker) {
-		mTopText.setText("onMarkerDragStart");
+		// mTopText.setText("onMarkerDragStart");
 	}
 
 	public void onMarkerDragEnd(Marker marker) {
-		mTopText.setText("onMarkerDragEnd");
+		// mTopText.setText("onMarkerDragEnd");
 	}
 
 	public void onMarkerDrag(Marker marker) {
-		mTopText.setText("onMarkerDrag.  Current Position: " + marker.getPosition());
+		// mTopText.setText("onMarkerDrag.  Current Position: " +
+		// marker.getPosition());
+	}
+
+	protected void seleccionInfoParada(Marker marker) {
+
+		final LatLng posicion = marker.getPosition();
+
+		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+		dialog.setTitle(marker.getTitle());
+		dialog.setMessage(marker.getSnippet());
+
+		int codigo;
+
+		try {
+			codigo = Integer.parseInt(marker.getTitle().substring(1, 5));
+		} catch (Exception e) {
+
+			// Por si es tram
+			int c1 = marker.getTitle().indexOf("[");
+			int c2 = marker.getTitle().indexOf("]");
+
+			codigo = Integer.parseInt(marker.getTitle().substring(c1 + 1, c2));
+
+		}
+
+		if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
+			dialog.setIcon(R.drawable.tramway_2);
+		} else {
+			dialog.setIcon(R.drawable.bus);
+		}
+
+		setParadaSeleccionada(marker.getTitle());
+
+		dialog.setPositiveButton(R.string.mapa_ir_parada, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int id) {
+				irParadaSeleccionada();
+			}
+
+		});
+
+		dialog.setNeutralButton(R.string.streetview_boton, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int id) {
+
+				try {
+
+					String latitud = Double.toString(posicion.latitude);
+					String longitud = Double.toString(posicion.longitude);
+
+					Intent streetView = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.streetview:cbll=" + latitud + "," + longitud + "&cbp=1,180,,0,1.0"));
+					// streetView.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+					startActivity(streetView);
+
+				} catch (Exception ex) {
+
+					Toast.makeText(getApplicationContext(), getString(R.string.streetview_ko), Toast.LENGTH_LONG).show();
+
+				}
+
+			}
+
+		});
+
+		dialog.show();
+
+	}
+
+	/**
+	 * Ir a la parada seleccionada y cerra mapa
+	 * 
+	 */
+	public void irParadaSeleccionada() {
+
+		int codigo;
+
+		if (paradaSeleccionada != null) {
+			try {
+				codigo = Integer.parseInt(paradaSeleccionada.substring(1, 5));
+			} catch (Exception e) {
+
+				// Por si es tram
+				int c1 = paradaSeleccionada.indexOf("[");
+				int c2 = paradaSeleccionada.indexOf("]");
+
+				codigo = Integer.parseInt(paradaSeleccionada.substring(c1 + 1, c2));
+
+				Log.d("", "mapa:" + codigo);
+
+			}
+
+			Intent intent = new Intent(this, MainActivity.class);
+			Bundle b = new Bundle();
+			b.putInt("poste", codigo);
+			intent.putExtras(b);
+
+			SharedPreferences.Editor editor = preferencias.edit();
+			editor.putInt("parada_inicio", codigo);
+			editor.commit();
+
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+			startActivity(intent);
+
+		}
+		super.finish();
+
 	}
 
 	/**
@@ -419,12 +578,13 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	 * Button to get current Location. This demonstrates how to get the current
 	 * Location as required without needing to register a LocationListener.
 	 */
-	public void showMyLocation(View view) {
-		if (mLocationClient != null && mLocationClient.isConnected()) {
-			String msg = "Location = " + mLocationClient.getLastLocation();
-			Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-		}
-	}
+	/*
+	 * public void showMyLocation(View view) { if (mLocationClient != null &&
+	 * mLocationClient.isConnected()) { String msg = "Location = " +
+	 * mLocationClient.getLastLocation();
+	 * Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+	 * } }
+	 */
 
 	/**
 	 * Implementation of {@link LocationListener}.
@@ -461,11 +621,126 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	}
 
 	public boolean onMyLocationButtonClick() {
-		Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(this, "MyLocation button clicked",
+		// Toast.LENGTH_SHORT).show();
 		// Return false so that we don't consume the event and the default
 		// behavior still occurs
 		// (the camera animates to the user's current position).
 		return false;
+	}
+
+	/** Demonstrates customizing the info window and/or its contents. */
+	class CustomInfoWindowAdapter implements InfoWindowAdapter {
+		// private final RadioGroup mOptions;
+
+		// These a both viewgroups containing an ImageView with id "badge" and
+		// two TextViews with id
+		// "title" and "snippet".
+		// private final View mWindow;
+		private final View mContents;
+
+		CustomInfoWindowAdapter() {
+			// mWindow =
+			// getLayoutInflater().inflate(R.layout.custom_info_window, null);
+			mContents = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
+			// mOptions = (RadioGroup)
+			// findViewById(R.id.custom_info_window_options);
+		}
+
+		public View getInfoWindow(Marker marker) {
+			// if (mOptions.getCheckedRadioButtonId() !=
+			// R.id.custom_info_window) {
+			// This means that getInfoContents will be called.
+			// return null;
+			// }
+			// render(marker, mWindow);
+			// return mWindow;
+
+			return null;
+		}
+
+		public View getInfoContents(Marker marker) {
+			// if (mOptions.getCheckedRadioButtonId() !=
+			// R.id.custom_info_contents) {
+			// This means that the default info contents will be used.
+			// return null;
+			// }
+			render(marker, mContents);
+			return mContents;
+		}
+
+		private void render(Marker marker, View view) {
+			int badge;
+			// Use the equals() method on a Marker to check for equals. Do not
+			// use ==.
+
+			int codigo;
+
+			if (marker.getSnippet() != null && !marker.getSnippet().equals("")) {
+
+				try {
+					codigo = Integer.parseInt(marker.getTitle().substring(1, 5));
+				} catch (Exception e) {
+
+					// Por si es tram
+					int c1 = marker.getTitle().indexOf("[");
+					int c2 = marker.getTitle().indexOf("]");
+
+					codigo = Integer.parseInt(marker.getTitle().substring(c1 + 1, c2));
+
+				}
+
+				if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
+					badge = R.drawable.tramway_2;
+				} else {
+					badge = R.drawable.bus;
+				}
+
+			} else {
+				badge = R.drawable.bus;
+			}
+
+			((ImageView) view.findViewById(R.id.badge)).setImageResource(badge);
+
+			String title = marker.getTitle();
+			TextView titleUi = ((TextView) view.findViewById(R.id.title));
+			if (title != null) {
+				// Spannable string allows us to edit the formatting of the
+				// text.
+				SpannableString titleText = new SpannableString(title);
+				// titleText.setSpan(new ForegroundColorSpan(Color.BLACK), 0,
+				// titleText.length(), 0);
+				titleUi.setText(titleText);
+			} else {
+				titleUi.setText("");
+			}
+
+			String snippet = marker.getSnippet();
+			TextView snippetUi = ((TextView) view.findViewById(R.id.snippet));
+			if (snippet != null && snippet.length() > 12) {
+				SpannableString snippetText = new SpannableString(snippet);
+				// snippetText.setSpan(new ForegroundColorSpan(Color.MAGENTA),
+				// 0, 10, 0);
+				// snippetText.setSpan(new ForegroundColorSpan(Color.BLUE), 12,
+				// snippet.length(), 0);
+				snippetUi.setText(snippetText);
+			} else {
+				snippetUi.setText("");
+			}
+		}
+	}
+
+	public String getParadaSeleccionada() {
+		return paradaSeleccionada;
+	}
+
+	public void setParadaSeleccionada(String paradaSeleccionada) {
+		this.paradaSeleccionada = paradaSeleccionada;
+	}
+	
+	public void enableLocationSettings() {
+		Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+		startActivity(settingsIntent);
 	}
 
 }

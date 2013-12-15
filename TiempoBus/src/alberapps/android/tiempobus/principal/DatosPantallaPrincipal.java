@@ -571,6 +571,8 @@ public class DatosPantallaPrincipal {
 
 		if (Integer.toString(paradaActual).length() < 4 || Integer.toString(paradaActual).charAt(0) == '1') {
 			return true;
+		} else if (UtilidadesTRAM.esParadaL2(Integer.toString(paradaActual))) {
+			return true;
 		} else {
 			return false;
 		}
@@ -584,6 +586,8 @@ public class DatosPantallaPrincipal {
 		}
 
 		if (paradaActual.length() < 4 || paradaActual.charAt(0) == '1') {
+			return true;
+		} else if (UtilidadesTRAM.esParadaL2(paradaActual)) {
 			return true;
 		} else {
 			return false;
