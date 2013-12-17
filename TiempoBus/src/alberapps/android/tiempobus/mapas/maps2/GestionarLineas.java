@@ -23,6 +23,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask.LoadDatosMapaV3AsyncTaskResponder;
 import alberapps.java.tam.UtilidadesTAM;
@@ -409,20 +410,47 @@ public class GestionarLineas {
 		// Si viene de la seleccion de la lista
 		if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA")) {
 
-			int lineaPos = UtilidadesTAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
+			int lineaPos = -1;
+
+			// tram
+			if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
+				lineaPos = UtilidadesTRAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
+			} else {
+				lineaPos = UtilidadesTAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
+			}
 
 			Log.d("mapas", "linea: " + lineaPos + "l: " + context.getIntent().getExtras().getString("LINEA_MAPA"));
 
 			if (lineaPos > -1) {
 
-				context.lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
-				context.lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
+				if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
 
-				context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
+					// context.lineaSeleccionada =
+					// UtilidadesTRAM.LINEAS_CODIGO_KML[lineaPos];
+					context.lineaSeleccionadaDesc = UtilidadesTRAM.DESC_LINEA[lineaPos];
+
+					context.lineaSeleccionadaNum = UtilidadesTRAM.LINEAS_NUM[lineaPos];
+
+				} else {
+
+					context.lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
+					context.lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
+
+					context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
+
+				}
 
 				context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-				context.mapasOffline.loadDatosMapaOffline();
+				if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+					context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
+					context.mapasOffline.loadDatosMapaTRAMOffline();
+				} else {
+					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
+					context.mapasOffline.loadDatosMapaOffline();
+				}
+
+				
 
 				context.gestionVehiculos.loadDatosVehiculos();
 
@@ -443,13 +471,22 @@ public class GestionarLineas {
 
 			context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-			if (context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
-
-				loadDatosMapaV3();
-
-			} else {
-				context.mapasOffline.loadDatosMapaOffline();
+			if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+				context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
+				context.mapasOffline.loadDatosMapaTRAMOffline();
+			}else{
+			
+				if (context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
+					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE;
+					loadDatosMapaV3();
+	
+				} else {
+					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
+					context.mapasOffline.loadDatosMapaOffline();
+				}
 			}
+			
+			context.gestionVehiculos.loadDatosVehiculos();
 
 		}
 
@@ -558,6 +595,10 @@ public class GestionarLineas {
 							context.timer.cancel();
 						}
 
+						if (context.gestionVehiculos.markersVehiculos != null && !context.gestionVehiculos.markersVehiculos.isEmpty()) {
+							context.gestionarLineas.quitarMarkers(context.gestionVehiculos.markersVehiculos);
+						}
+
 					}
 				}
 
@@ -614,6 +655,8 @@ public class GestionarLineas {
 				markers.get(i).remove();
 
 			}
+
+			markers.clear();
 		}
 
 	}

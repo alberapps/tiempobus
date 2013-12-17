@@ -163,6 +163,9 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 				return null;
 
 			}
+			
+			e.printStackTrace();
+			
 		}
 
 		return datosRespuesta;

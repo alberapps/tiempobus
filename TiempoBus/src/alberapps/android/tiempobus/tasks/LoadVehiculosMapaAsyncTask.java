@@ -141,6 +141,9 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 				return null;
 
 			}
+			
+			e.printStackTrace();
+			
 		}
 
 		return datosMapa;

@@ -22,12 +22,13 @@ package alberapps.android.tiempobus.infolineas;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
-import alberapps.android.tiempobus.mapas.MapasActivity;
+import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tram.UtilidadesTRAM;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,13 +40,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 /**
  * Informacion de la linea
  */
+@SuppressLint("NewApi")
 public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 
 	String paradaSel = "";
@@ -180,7 +181,7 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 	private void launchMapasSeleccion(String linea, BusLinea datosLinea) {
 
 		if (linea != null && !linea.equals("")) {
-			Intent i = new Intent(this, MapasActivity.class);
+			Intent i = new Intent(this, MapasMaps2Activity.class);
 			i.putExtra("LINEA_MAPA_FICHA", linea);
 			i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
 			i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
