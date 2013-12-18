@@ -16,7 +16,7 @@
     <string name="tit_direccion">Address&#8230;</string>
     <string name="tit_paradas">Stop&#8230;</string>
     <string name="tit_guardar">Save stop %1$s</string>
-    <string name="tit_choose_alarm">Alert me before&#8230;</string>
+    <string name="tit_choose_alarm">Alert me before arrival&#8230;</string>
     <string name="menu_alarma">Set alarm</string>
     
     <string name="alarm_bus">Bus %1$s arrives at the stop %2$s</string>
@@ -332,5 +332,6 @@
      <!-- fin nuevos -->
     
      <string name="error_gps">ERROR GPS</string>
+     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
 </resources>

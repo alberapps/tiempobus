@@ -706,6 +706,33 @@ public class DatosPantallaPrincipal {
 
 		View vheader = li2.inflate(R.layout.tiempos_aviso_header, null);
 
+		TextView texto = (TextView) vheader.findViewById(R.id.txt_aviso_header);
+
+		boolean avisoBus = preferencias.getBoolean("aviso_noticias", true);
+
+		boolean avisoTram = preferencias.getBoolean("aviso_noticias_tram", true);
+
+		StringBuffer estadoAvisos = new StringBuffer();
+
+		if (avisoBus) {
+			estadoAvisos.append("bus");
+		}
+
+		if (avisoTram) {
+
+			if (avisoBus) {
+				estadoAvisos.append(" " + context.getString(R.string.tiempo_m_3) + " ");
+			}
+
+			estadoAvisos.append("tram");
+		}
+
+		if (!avisoBus && !avisoTram) {
+			estadoAvisos.append("off");
+		}
+
+		texto.setText(texto.getText() + "\n- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
+
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 		context.tiemposView.addHeaderView(vheader);

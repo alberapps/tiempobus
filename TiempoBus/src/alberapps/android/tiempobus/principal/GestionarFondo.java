@@ -98,9 +98,7 @@ public class GestionarFondo {
 					Toast.makeText(context.getApplicationContext(), context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
 				}
 
-				
-
-				if(UtilidadesUI.pantallaTabletHorizontal(context)){
+				if (UtilidadesUI.pantallaTabletHorizontal(context)) {
 					// Lanzar carga de vuelta
 					FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
 
@@ -110,7 +108,7 @@ public class GestionarFondo {
 
 					}
 				}
-				
+
 			}
 		});
 
@@ -143,7 +141,7 @@ public class GestionarFondo {
 				f.createNewFile();
 			} catch (IOException e) {
 
-				//int i = 1;
+				// int i = 1;
 
 			}
 			return f;
@@ -191,24 +189,52 @@ public class GestionarFondo {
 	 */
 	public void setupFondoAplicacion() {
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+		try {
 
-		View contenedor_principal = context.findViewById(R.id.contenedor_principal);
+			String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, context);
+			View contenedor_principal = context.findViewById(R.id.contenedor_principal);
 
-		if(UtilidadesUI.pantallaTabletHorizontal(context)){
-			// Lanzar carga de vuelta
-			FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+			UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, context);
 
-			if (secundarioFrag != null) {
+			if (UtilidadesUI.pantallaTabletHorizontal(context)) {
+				// Lanzar carga de vuelta
+				FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
 
-				secundarioFrag.setupFondoAplicacion();
+				if (secundarioFrag != null) {
 
+					secundarioFrag.setupFondoAplicacion();
+
+				}
 			}
+
+		} catch (Exception e) {
+
+			SharedPreferences.Editor editor = preferencias.edit();
+			editor.putString("image_galeria", "");
+			editor.commit();
+
+			View contenedor_principal = context.findViewById(R.id.contenedor_principal);
+
+			String fondo_galeria = preferencias.getString("image_galeria", "");
+
+			UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, context);
+
+			if (UtilidadesUI.pantallaTabletHorizontal(context)) {
+				// Lanzar carga de vuelta
+				FragmentSecundarioTablet secundarioFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+				if (secundarioFrag != null) {
+
+					secundarioFrag.setupFondoAplicacion();
+
+				}
+			}
+
+			Toast.makeText(context, context.getResources().getText(R.string.error_fondo), Toast.LENGTH_SHORT).show();
+
 		}
-		
-		
+
 	}
 
 }

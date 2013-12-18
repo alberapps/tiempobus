@@ -44,7 +44,7 @@
         <item>20 minuti</item>            
     </string-array> 
    
-    <string-array name="cantidad_tw">
+   <string-array name="cantidad_tw">
         <item>1</item>
         <item>3</item>
         <item>5</item>            
@@ -52,16 +52,17 @@
         <item>15</item>
     </string-array> 
    
-  <string-array name="spinner_datos">
+   <string-array name="spinner_datos">
         <item>Bus TAM (Web Subús)</item>
         <item>Bus TAM (offline)</item>
-        <item>Tranvía TRAM</item>            
+        <item>TRAM</item>            
     </string-array> 
-   
+    
     <string-array name="spinner_datos_b">
         <item>Bus TAM (Web Subús)</item>
         <item>Bus TAM (offline)</item>                 
     </string-array> 
+   
    
    <string-array name="menu_array">
         <item>Mappe</item>
@@ -69,9 +70,9 @@
         <item>Favoriti</item>
         <item>Salva</item>
         <item>Preferenze</item>
-        <item>Sfondo</item> 
-        <item>Historial</item>
-        <item>Exportar QR</item>       
+        <item>Sfondo</item>        
+        <item>Cronologia</item>
+        <item>Esportare QR</item>
     </string-array>
    
    <string-array name="tiempos_recarga">
@@ -79,6 +80,6 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>                    
-    </string-array>
+    </string-array> 
    
 </resources>

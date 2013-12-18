@@ -37,14 +37,14 @@
     </string-array> 
     
    <string-array name="spinner_minutos">
-   		<item>3 minuten</item>
-        <item>5 minuten</item>
-        <item>10 minuten</item>
-        <item>15 minuten</item>     
-        <item>20 minuten</item>       
+   		<item>3 Minuten</item>
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+        <item>15 Minuten</item>
+        <item>20 Minuten</item>            
     </string-array> 
    
-    <string-array name="cantidad_tw">
+   <string-array name="cantidad_tw">
         <item>1</item>
         <item>3</item>
         <item>5</item>            
@@ -52,16 +52,17 @@
         <item>15</item>
     </string-array> 
    
-  <string-array name="spinner_datos">
+   <string-array name="spinner_datos">
         <item>Bus TAM (Web Subús)</item>
         <item>Bus TAM (offline)</item>
-        <item>Tranvía TRAM</item>            
+        <item>Straßenbahn TRAM</item>            
     </string-array> 
-   
+    
     <string-array name="spinner_datos_b">
         <item>Bus TAM (Web Subús)</item>
         <item>Bus TAM (offline)</item>                 
     </string-array> 
+   
    
    <string-array name="menu_array">
         <item>Karten</item>
@@ -69,9 +70,9 @@
         <item>Favoriten</item>
         <item>Speichern</item>
         <item>Einstellungen</item>
-        <item>Grund</item>
-        <item>Historial</item>
-        <item>Exportar QR</item>        
+        <item>Grund</item>        
+        <item>Chronik</item>
+        <item>QR Exportieren</item>
     </string-array>
    
    <string-array name="tiempos_recarga">
@@ -79,6 +80,6 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>                    
-    </string-array>
+    </string-array> 
    
 </resources>

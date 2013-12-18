@@ -12,9 +12,7 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-
-<resources>
+--><resources>
    
    <string-array name="entries_locale">
         <item>no</item>
@@ -27,7 +25,7 @@
     </string-array> 
     
    <string-array name="entries_locale_desc">
-        <item>default</item>
+        <item>défaut</item>
         <item>es</item>
         <item>ca</item>
         <item>en</item>
@@ -44,7 +42,7 @@
         <item>20 minutes</item>            
     </string-array> 
    
-    <string-array name="cantidad_tw">
+   <string-array name="cantidad_tw">
         <item>1</item>
         <item>3</item>
         <item>5</item>            
@@ -52,26 +50,27 @@
         <item>15</item>
     </string-array> 
    
- <string-array name="spinner_datos">
+   <string-array name="spinner_datos">
         <item>Bus TAM (Web Subús)</item>
-        <item>Bus TAM (offline)</item>
-        <item>Tranvía TRAM</item>            
+        <item>Bus TAM (hors connexion)</item>
+        <item>TRAM</item>            
     </string-array> 
-   
+    
     <string-array name="spinner_datos_b">
         <item>Bus TAM (Web Subús)</item>
-        <item>Bus TAM (offline)</item>                 
+        <item>Bus TAM (hors connexion)</item>                 
     </string-array> 
+   
    
    <string-array name="menu_array">
         <item>Cartes</item>
-        <item>Nouvelles et Annonces</item>
+        <item>Nouvelles et avis</item>
         <item>Favoris</item>
-        <item>Garder</item>
+        <item>Enregistrer</item>
         <item>Paramètres</item>
-        <item>Found d\'écran</item> 
-        <item>Historial</item>
-        <item>Exportar QR</item>       
+        <item>Papier peint</item>        
+        <item>Historique</item>
+        <item>Exportateur QR</item>
     </string-array>
    
    <string-array name="tiempos_recarga">
@@ -79,6 +78,6 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>                    
-    </string-array>
+    </string-array> 
    
 </resources>
