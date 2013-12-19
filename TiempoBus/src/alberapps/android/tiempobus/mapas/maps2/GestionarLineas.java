@@ -535,6 +535,14 @@ public class GestionarLineas {
 						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
 							intent2.getExtras().remove("LINEA_MAPA");
 							intent2.removeExtra("LINEA_MAPA");
+
+						}
+
+						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+							intent2.getExtras().remove("LINEA_MAPA_FICHA");
+							intent2.removeExtra("LINEA_MAPA_FICHA");
+
 						}
 
 						context.finish();
@@ -548,6 +556,14 @@ public class GestionarLineas {
 						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
 							intent2.getExtras().remove("LINEA_MAPA");
 							intent2.removeExtra("LINEA_MAPA");
+
+						}
+
+						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+							intent2.getExtras().remove("LINEA_MAPA_FICHA");
+							intent2.removeExtra("LINEA_MAPA_FICHA");
+
 						}
 
 						context.finish();
@@ -561,6 +577,14 @@ public class GestionarLineas {
 						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
 							intent2.getExtras().remove("LINEA_MAPA");
 							intent2.removeExtra("LINEA_MAPA");
+
+						}
+
+						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+							intent2.getExtras().remove("LINEA_MAPA_FICHA");
+							intent2.removeExtra("LINEA_MAPA_FICHA");
+
 						}
 
 						context.finish();

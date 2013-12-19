@@ -98,7 +98,7 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:autoLink="web"
-                 android:text="http://www.traduccionesmfr.net"
+                 android:text="orchestra-solutions.com"
                  android:textAppearance="?android:attr/textAppearanceSmall" />
             
              <TextView

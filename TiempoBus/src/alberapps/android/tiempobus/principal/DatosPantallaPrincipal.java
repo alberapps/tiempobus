@@ -714,24 +714,38 @@ public class DatosPantallaPrincipal {
 
 		StringBuffer estadoAvisos = new StringBuffer();
 
-		if (avisoBus) {
-			estadoAvisos.append("bus");
-		}
-
-		if (avisoTram) {
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
 			if (avisoBus) {
-				estadoAvisos.append(" " + context.getString(R.string.tiempo_m_3) + " ");
+				estadoAvisos.append("bus");
 			}
 
-			estadoAvisos.append("tram");
-		}
+			if (avisoTram) {
 
-		if (!avisoBus && !avisoTram) {
-			estadoAvisos.append("off");
-		}
+				if (avisoBus) {
+					estadoAvisos.append(" " + context.getString(R.string.tiempo_m_3) + " ");
+				}
 
-		texto.setText(texto.getText() + "\n- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
+				estadoAvisos.append("tram");
+			}
+
+			if (!avisoBus && !avisoTram) {
+				estadoAvisos.append("off");
+			}
+
+			texto.setText(texto.getText() + "\n- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
+
+		} else {
+
+			if (avisoBus) {
+				estadoAvisos.append("on");
+			} else {
+				estadoAvisos.append("off");
+			}
+
+			texto.setText("- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
+
+		}
 
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
@@ -828,55 +842,59 @@ public class DatosPantallaPrincipal {
 	public void controlMostrarNovedades() {
 		// Mostrar novedades
 
-		int revAviso = preferencias.getInt("revAviso", 0);
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
-		if (revAviso < REV_ACTUAL) {
+			int revAviso = preferencias.getInt("revAviso", 0);
 
-			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+			if (revAviso < REV_ACTUAL) {
 
-			dialog.setTitle(context.getString(R.string.novedades_titulo));
+				AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-			dialog.setMessage(context.getString(R.string.info_tram_inicio));
-			dialog.setIcon(R.drawable.ic_tiempobus_3);
+				dialog.setTitle(context.getString(R.string.novedades_titulo));
 
-			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				dialog.setMessage(context.getString(R.string.info_tram_inicio));
+				dialog.setIcon(R.drawable.ic_tiempobus_3);
 
-				public void onClick(DialogInterface dialog, int id) {
+				dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-					dialog.dismiss();
+					public void onClick(DialogInterface dialog, int id) {
 
-				}
+						dialog.dismiss();
 
-			});
+					}
 
-			dialog.setNegativeButton(R.string.probar, new DialogInterface.OnClickListener() {
+				});
 
-				public void onClick(DialogInterface dialog, int id) {
+				dialog.setNegativeButton(R.string.probar, new DialogInterface.OnClickListener() {
 
-					context.paradaActual = 2;
+					public void onClick(DialogInterface dialog, int id) {
 
-					EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+						context.paradaActual = 2;
 
-					txtPoste.setText("2");
+						EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putInt("parada_inicio", context.paradaActual);
-					editor.putInt("infolinea_modo", 2);
-					editor.commit();
+						txtPoste.setText("2");
 
-					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putInt("parada_inicio", context.paradaActual);
+						editor.putInt("infolinea_modo", 2);
+						editor.commit();
 
-					dialog.dismiss();
+						context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 
-				}
+						dialog.dismiss();
 
-			});
+					}
 
-			dialog.show();
+				});
 
-			SharedPreferences.Editor editor = preferencias.edit();
-			editor.putInt("revAviso", REV_ACTUAL);
-			editor.commit();
+				dialog.show();
+
+				SharedPreferences.Editor editor = preferencias.edit();
+				editor.putInt("revAviso", REV_ACTUAL);
+				editor.commit();
+
+			}
 
 		}
 

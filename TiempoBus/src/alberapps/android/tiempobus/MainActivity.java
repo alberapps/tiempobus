@@ -50,6 +50,8 @@ import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTa
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
+import alberapps.java.tram.UtilidadesTRAM;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -212,7 +214,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		if (verificaNoticiasTram) {
+		if (UtilidadesTRAM.ACTIVADO_TRAM && verificaNoticiasTram) {
 
 			datosPantallaPrincipal.verificarNuevasNoticiasTram();
 
@@ -228,6 +230,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	 * 
 	 * @param savedInstanceState
 	 */
+	@SuppressLint("NewApi")
 	private void iniciarDrawer(Bundle savedInstanceState) {
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerTitles = getResources().getStringArray(R.array.menu_array);

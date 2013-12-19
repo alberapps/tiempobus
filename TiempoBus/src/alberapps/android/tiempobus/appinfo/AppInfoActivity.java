@@ -21,6 +21,8 @@ package alberapps.android.tiempobus.appinfo;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
+import alberapps.java.tram.UtilidadesTRAM;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,21 +41,24 @@ import android.widget.ImageView;
 /**
  * Informacion de la app
  */
+@SuppressLint("NewApi")
 public class AppInfoActivity extends ActionBarBuscadorActivity {
-
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.infoapp_3);
+
+		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+			setContentView(R.layout.infoapp_3_bus);
+		} else {
+			setContentView(R.layout.infoapp_3);
+		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
-		
-		
+
 		ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
 		botonGpl.setOnClickListener(new ImageView.OnClickListener() {
 			public void onClick(View arg0) {
@@ -64,7 +69,7 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 
 			}
 		});
-		
+
 		Button botonLink = (Button) findViewById(R.id.buttonLinks);
 		botonLink.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
@@ -73,64 +78,52 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 
 			}
 		});
+
 		
-		/*
-		ImageView imgTam = (ImageView) findViewById(R.id.imageLogoTam);
-		imgTam.setOnClickListener(new ImageButton.OnClickListener() {
-			public void onClick(View arg0) {
 
-				Uri uri = Uri.parse("http://www.subus.es");
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
+			ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
+			botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
+				public void onClick(View arg0) {
 
-			}
-		});
-		*/
-		
-		ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
-		botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
-			public void onClick(View arg0) {
+					Uri uri = Uri.parse("http://www.fgv.es");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(intent);
 
-				Uri uri = Uri.parse("http://www.fgv.es");
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
+				}
+			});
 
-			}
-		});
-		
-		ImageView botonTram = (ImageView) findViewById(R.id.imageLogoTram);
-		botonTram.setOnClickListener(new ImageButton.OnClickListener() {
-			public void onClick(View arg0) {
+			ImageView botonTram = (ImageView) findViewById(R.id.imageLogoTram);
+			botonTram.setOnClickListener(new ImageButton.OnClickListener() {
+				public void onClick(View arg0) {
 
-				Uri uri = Uri.parse("http://www.tramalicante.es");
-				Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-				startActivity(intent);
+					Uri uri = Uri.parse("http://www.tramalicante.es");
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(intent);
 
-			}
-		});
+				}
+			});
+
+		}
 
 	}
 
-	
 	private void links() {
 
-		final CharSequence[] items = { "zgzBus\nhttp://code.google.com/p/zgzbus","ksoap2-android\nhttp://code.google.com/p/ksoap2-android/","ZXing Team\nhttp://code.google.com/p/zxing","Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa","Mapicons\nhttp://mapicons.nicolasmollet.com","JSoup\nhttp://jsoup.org","google-gson\nhttp://code.google.com/p/google-gson","twitter4j\nhttp://twitter4j.org"};
+		final CharSequence[] items = { "zgzBus\nhttp://code.google.com/p/zgzbus", "ksoap2-android\nhttp://code.google.com/p/ksoap2-android/", "ZXing Team\nhttp://code.google.com/p/zxing",
+				"Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa", "Mapicons\nhttp://mapicons.nicolasmollet.com", "JSoup\nhttp://jsoup.org", "google-gson\nhttp://code.google.com/p/google-gson",
+				"twitter4j\nhttp://twitter4j.org" };
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.referencias);
 
-		
-		
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 
 				if (item == 0) {
-					
 
 				} else if (item == 1) {
-					
-					
-					
+
 				}
 
 			}
@@ -141,20 +134,19 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 		alert.show();
 
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.sin_menu, menu);
 
-		
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		
+
 		case android.R.id.home:
 			Intent intent = new Intent(this, MainActivity.class);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -166,7 +158,5 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 		return super.onOptionsItemSelected(item);
 
 	}
-	
-	
-	
+
 }
