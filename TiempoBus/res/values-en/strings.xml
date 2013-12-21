@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.5.3.1</string>
+    <string name="app_version">2.8</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2013)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -333,5 +333,12 @@
     
      <string name="error_gps">ERROR GPS</string>
      <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+    
+    <string name="legal">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM networks.
+        \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
+	    \nFeatures using the local database may not show the latest route changes.
+	    \nThis application is UNofficial and its development is independent.
+		\nLines data and times obtained from:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx)
+		\nLearn more: alberapps.blogspot.com and twitter.com/alberapps</string>
     
 </resources>

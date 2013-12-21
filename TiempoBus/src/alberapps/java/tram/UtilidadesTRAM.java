@@ -29,7 +29,7 @@ import android.util.Log;
  */
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = true;
+	public static boolean ACTIVADO_TRAM = false;
 
 	public static boolean ACTIVADO_L9 = false;
 

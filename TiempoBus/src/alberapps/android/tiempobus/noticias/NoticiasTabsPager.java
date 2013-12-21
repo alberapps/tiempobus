@@ -41,6 +41,7 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -81,6 +82,7 @@ import android.widget.Toast;
  * switches between tabs and also allows the user to perform horizontal flicks
  * to move between the tabs.
  */
+@SuppressLint("NewApi")
 public class NoticiasTabsPager extends ActionBarActivityFragments {
 	TabHost mTabHost;
 	ViewPager mViewPager;
@@ -139,8 +141,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		setContentView(R.layout.noticias_contenedor);
-
+		if(UtilidadesTRAM.ACTIVADO_TRAM){
+			setContentView(R.layout.noticias_contenedor);
+		}else{
+			setContentView(R.layout.noticias_contenedor_2);
+		}
+		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);

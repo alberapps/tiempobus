@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.5.3.1</string>
+    <string name="app_version">2.8</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel</string>
+    <string name="app_autor">Alberto Montiel (2013)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
     <string name="app_autor_web">http://alberapps.blogspot.com</string>
     <string name="poste">Nº de parada&#8230;</string>
@@ -337,5 +337,12 @@ favorit per crear la teua llista.</string>
     
      <string name="error_gps">ERROR GPS</string>
      <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+    
+     <string name="legal_sin_tram">Temps obtinguts del sistema ISAE, que oferix, en TEMPS REAL, la ESTIMACIÓ de temps de pas de la xarxa TAM.
+        Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
+	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
+	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
+		\nDades de línies i temps obtinguts de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx)
+		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
     
 </resources>
