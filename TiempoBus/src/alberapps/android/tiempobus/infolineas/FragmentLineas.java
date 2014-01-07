@@ -46,7 +46,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -667,7 +666,17 @@ public class FragmentLineas extends Fragment {
 
 		String parametros[] = { lineaSeleccionadaNum };
 
-		Cursor cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		Cursor cursorParadas = null;
+
+		try {
+			cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		} catch (Exception e) {
+
+			cursorParadas = null;
+
+			e.printStackTrace();
+
+		}
 
 		if (cursorParadas != null) {
 			List<Parada> listaParadasIda = new ArrayList<Parada>();
@@ -739,12 +748,12 @@ public class FragmentLineas extends Fragment {
 				datosInfoLinea.add(datoVuelta);
 
 			} else {
-				Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(getActivity(), getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
 				toast.show();
 			}
 
 		} else {
-			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getActivity(), getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
 			toast.show();
 		}
 
@@ -763,7 +772,17 @@ public class FragmentLineas extends Fragment {
 
 		String parametros[] = { lineaSeleccionadaNum };
 
-		Cursor cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		Cursor cursorParadas = null;
+
+		try {
+			cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		} catch (Exception e) {
+
+			cursorParadas = null;
+
+			e.printStackTrace();
+
+		}
 
 		if (cursorParadas != null) {
 			List<Parada> listaParadasIda = new ArrayList<Parada>();
@@ -800,7 +819,7 @@ public class FragmentLineas extends Fragment {
 			datosInfoLinea.add(datoVuelta);
 
 		} else {
-			Toast toast = Toast.makeText(getActivity(), getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getActivity(), getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
 			toast.show();
 		}
 

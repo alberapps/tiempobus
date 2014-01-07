@@ -60,7 +60,18 @@ public class MapasOffline {
 
 		String parametros[] = { context.lineaSeleccionadaNum };
 
-		Cursor cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		Cursor cursorParadas = null;
+
+		try {
+			cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+
+		} catch (Exception e) {
+
+			cursorParadas = null;
+
+			e.printStackTrace();
+
+		}
 
 		if (cursorParadas != null) {
 			List<Parada> listaParadasIda = new ArrayList<Parada>();
@@ -114,7 +125,15 @@ public class MapasOffline {
 
 				// Recorrido
 
-				Cursor cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+				Cursor cursorRecorrido = null;
+
+				try {
+					cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+				} catch (Exception e) {
+					cursorRecorrido = null;
+					e.printStackTrace();
+				}
+
 				if (cursorRecorrido != null) {
 					cursorRecorrido.moveToFirst();
 
@@ -124,19 +143,19 @@ public class MapasOffline {
 
 					context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
+					// Cargar datos en el mapa
+					context.gestionarLineas.cargarMapa();
+
+				} else {
+					Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
 				}
 
-				// Cargar datos en el mapa
-				context.gestionarLineas.cargarMapa();
-
 			} else {
-				Toast toast = Toast.makeText(context, context.getResources().getText(R.string.error_datos_offline), Toast.LENGTH_SHORT);
-				toast.show();
+				Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
 			}
 
 		} else {
-			Toast toast = Toast.makeText(context, context.getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-			toast.show();
+			Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
 		}
 
 		context.dialog.dismiss();
@@ -152,7 +171,17 @@ public class MapasOffline {
 
 		String parametros[] = { context.lineaSeleccionadaNum };
 
-		Cursor cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		Cursor cursorParadas = null;
+
+		try {
+			cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+		} catch (Exception e) {
+
+			cursorParadas = null;
+
+			e.printStackTrace();
+
+		}
 
 		if (cursorParadas != null) {
 			List<Parada> listaParadasIda = new ArrayList<Parada>();
@@ -184,7 +213,7 @@ public class MapasOffline {
 			context.gestionarLineas.cargarMapa();
 
 		} else {
-			Toast toast = Toast.makeText(context, context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
 			toast.show();
 		}
 

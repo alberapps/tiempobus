@@ -108,7 +108,17 @@ public class ParadasCercanas {
 
 		String selection = Integer.toString(BuscadorLineasProvider.GET_PARADAS_PROXIMAS);
 
-		Cursor cursor = context.managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
+		Cursor cursor = null;
+
+		try {
+			cursor = context.managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
+
+		} catch (Exception e) {
+
+			cursor = null;
+
+			e.printStackTrace();
+		}
 
 		if (cursor != null) {
 			List<Parada> listaParadas = new ArrayList<Parada>();
@@ -316,12 +326,9 @@ public class ParadasCercanas {
 		} catch (Exception e) {
 
 			Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
-			
+
 			e.printStackTrace();
-			
-			
-			
-			
+
 		}
 
 	}

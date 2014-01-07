@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public int paradaActual = 4450;
 	public final ParadaActualHandler handler = new ParadaActualHandler(this);
 
-	private TiemposUpdater posteUpdater = new TiemposUpdater();
+	public TiemposUpdater posteUpdater = new TiemposUpdater();
 	AlarmManager alarmManager;
 	private ImageButton botonCargaTiempos;
 
@@ -136,7 +136,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public boolean lecturaOK = true;
 	public boolean lecturaAlternativa = false;
 
-	static DatosPantallaPrincipal datosPantallaPrincipal;
+	DatosPantallaPrincipal datosPantallaPrincipal;
 
 	GestionarFondo gestionarFondo;
 
@@ -220,8 +220,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		//PrecargasV3.precargarDatosLineas(this);
-		//PrecargasV3.precargarDatosLineasRecorrido(this);
+		// PrecargasV3.precargarDatosLineas(this);
+		// PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
@@ -1174,7 +1174,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			case MSG_RECARGA:
 
-				removeCallbacks(laActividad.posteUpdater);
+				if (laActividad.posteUpdater != null) {
+					removeCallbacks(laActividad.posteUpdater);
+				}
 				removeMessages(MSG_RECARGA);
 				post(laActividad.posteUpdater);
 				sendEmptyMessageDelayed(MSG_RECARGA, laActividad.datosPantallaPrincipal.frecuenciaRecarga());
@@ -1229,7 +1231,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				}
 
 				// Pie para la lista de resultados
-				datosPantallaPrincipal.cargarPie();
+				laActividad.datosPantallaPrincipal.cargarPie();
 
 				laActividad.posteAdapter.notifyDataSetChanged();
 				break;
@@ -1261,14 +1263,21 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				lecturaOK = false;
 
-				Locale loc = new Locale("spa", "ES");
+				try {
 
-				result = mTts.setLanguage(loc);
+					Locale loc = new Locale("spa", "ES");
 
-				if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+					result = mTts.setLanguage(loc);
+
+					if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+						lecturaAlternativa = false;
+					} else {
+						lecturaAlternativa = true;
+					}
+
+				} catch (Exception e) {
 					lecturaAlternativa = false;
-				} else {
-					lecturaAlternativa = true;
+					e.printStackTrace();
 				}
 
 			} else {

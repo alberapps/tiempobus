@@ -174,20 +174,20 @@ public class GestionVehiculos {
 
 		Log.d("mapas", "Inicia carga de vehiculos");
 
-		//ToggleButton toogleButton = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
+		// ToggleButton toogleButton = (ToggleButton)
+		// context.findViewById(R.id.mapasVehiculosButton);
 
-		//if (!toogleButton.isChecked() || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("")) {
-			//return;
-		//}
+		// if (!toogleButton.isChecked() || context.lineaSeleccionadaNum == null
+		// || context.lineaSeleccionadaNum.equals("")) {
+		// return;
+		// }
 
 		boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
 		if (!vehiculosPref || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("")) {
 			return;
 		}
-		
-		
-		
+
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -238,15 +238,18 @@ public class GestionVehiculos {
 
 				cargarVehiculosMapa();
 
-				context.dialog.dismiss();
+				if (context.dialog != null && context.dialog.isShowing()) {
+					context.dialog.dismiss();
+				}
 
 			} else {
 
-				Toast toast = Toast.makeText(context.getApplicationContext(), context.getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-				toast.show();
-				context.finish();
+				Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+				// context.finish();
 
-				context.dialog.dismiss();
+				if (context.dialog != null && context.dialog.isShowing()) {
+					context.dialog.dismiss();
+				}
 
 			}
 

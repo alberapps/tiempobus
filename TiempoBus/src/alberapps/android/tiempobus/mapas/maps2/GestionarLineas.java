@@ -709,6 +709,10 @@ public class GestionarLineas {
 	 */
 	public void drawPath(DatosMapa navSet, int color) {
 
+		if (context.mMap == null) {
+			return;
+		}
+
 		// color correction for dining, make it darker
 		if (color == Color.parseColor("#add331"))
 			color = Color.parseColor("#6C8715");
@@ -741,7 +745,7 @@ public class GestionarLineas {
 
 					gp1 = gp2;
 
-					if (lngLat.length >= 2) {
+					if (gp1 != null && gp2 != null && lngLat.length >= 2) {
 						gp2 = new LatLng(Double.parseDouble(lngLat[1]), Double.parseDouble(lngLat[0]));
 
 						context.mMap.addPolyline(new PolylineOptions().add(gp1, gp2).width(5).color(color));
@@ -752,7 +756,9 @@ public class GestionarLineas {
 
 				context.mMap.addPolyline(new PolylineOptions().add(gp2, gp2).width(5).color(color));
 
-			} catch (NumberFormatException e) {
+			} catch (Exception e) {
+
+				e.printStackTrace();
 
 			}
 		}

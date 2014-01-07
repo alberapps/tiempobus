@@ -27,7 +27,6 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.util.Utilidades;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -212,20 +211,16 @@ public class SelectorLinea {
 					listaSpinner.add(new SpinnerItem(i, buses.get(i).getLinea()));
 
 				}
-
-				// context.lineasAdapterSp.clear();
-				// context.lineasAdapterSp.addAll(context.lineasBus);
-				// context.lineasAdapterSp.notifyDataSetChanged();
-
+				
 				context.dialog.dismiss();
-
-				// abrirDialogoLineas();
 
 				mostrarModalSelectorLinea();
 
 			} else {
 
 				context.dialog.dismiss();
+
+				Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
 
 			}
 
@@ -237,10 +232,9 @@ public class SelectorLinea {
 		context.detenerTareas();
 
 		// Limpiar lista anterior para nuevas busquedas
-		if(context.mMap != null){
+		if (context.mMap != null) {
 			context.mMap.clear();
 		}
-		
 
 		context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
 		context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
@@ -253,10 +247,7 @@ public class SelectorLinea {
 
 		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 
-			
-
 			context.gestionarLineas.loadDatosMapaV3();
-			
 
 		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 			context.mapasOffline.loadDatosMapaOffline();
