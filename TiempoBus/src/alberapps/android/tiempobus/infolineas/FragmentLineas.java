@@ -49,6 +49,8 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -199,6 +201,26 @@ public class FragmentLineas extends Fragment {
 
 			cargarLineas();
 		}
+
+		// Filtrar resultados
+		final TextView textoBuscar = (TextView) actividad.findViewById(R.id.texto_buscar);
+
+		textoBuscar.addTextChangedListener(new TextWatcher() {
+
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+				infoLineaAdapter.getFilter().filter(s);
+
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 
 		super.onViewStateRestored(savedInstanceState);
 	}

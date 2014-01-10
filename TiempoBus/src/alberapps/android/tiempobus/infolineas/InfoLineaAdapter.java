@@ -19,6 +19,7 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
@@ -29,14 +30,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 /**
  * Adaptador Tiempos
  */
-public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
+public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterable {
 
 	private InfoLineasTabsPager contexto;
+
+	List<BusLinea> listaOriginal;
 
 	/**
 	 * Constructor
@@ -103,9 +108,9 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 			});
 
 		} else {
-			
+
 			informacionText.setText(R.string.infolinea_horarios_pdf);
-			
+
 			// Carga de horarios tram
 			// Link informacion
 			informacionText.setOnClickListener(new OnClickListener() {
@@ -136,6 +141,64 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> {
 		for (int i = 0; i < busLinea.size(); i++) {
 			add(busLinea.get(i));
 		}
+
+		listaOriginal = new ArrayList<BusLinea>(busLinea);
+	}
+
+	@Override
+	public Filter getFilter() {
+
+		Filter filter = new Filter() {
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+
+				FilterResults results = new FilterResults();
+
+				List<BusLinea> filtrada = new ArrayList<BusLinea>();
+
+				if (constraint != null && !constraint.toString().equals("")) {
+
+					for (int i = 0; i < listaOriginal.size(); i++) {
+
+						if (listaOriginal.get(i).getLinea().toLowerCase().contains(constraint.toString().toLowerCase())) {
+							filtrada.add(listaOriginal.get(i));
+						}
+
+					}
+
+					results.count = filtrada.size();
+					results.values = filtrada;
+
+				} else {
+
+					results.count = listaOriginal.size();
+					results.values = listaOriginal;
+
+				}
+
+				return results;
+			}
+
+			@Override
+			protected void publishResults(CharSequence constraint, FilterResults results) {
+
+				List<BusLinea> lista = (List<BusLinea>) results.values;
+
+				notifyDataSetChanged();
+				clear();
+
+				for (int i = 0; i < lista.size(); i++) {
+					add(lista.get(i));
+				}
+
+				notifyDataSetInvalidated();
+
+			}
+
+		};
+
+		return filter;
 	}
 
 }

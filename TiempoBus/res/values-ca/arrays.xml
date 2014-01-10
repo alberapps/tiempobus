@@ -23,7 +23,8 @@
         <item>en</item>
         <item>it</item>
         <item>fr</item>
-        <item>de</item>         
+        <item>de</item> 
+        <item>ru</item>          
     </string-array> 
     
    <string-array name="entries_locale_desc">
@@ -33,7 +34,8 @@
         <item>en</item>
         <item>it</item>
         <item>fr</item>
-        <item>de</item>       
+        <item>de</item>  
+        <item>ru</item>       
     </string-array> 
     
    <string-array name="spinner_minutos">
