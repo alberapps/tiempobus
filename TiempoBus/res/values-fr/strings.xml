@@ -320,5 +320,7 @@
     
      <string name="legal_sin_tram">Temps obtenues par le système ISAE, qui offre, en TEMP RÉEL, le temps d\'arrivée ESTIMÉ des réseaux TAM. \nLes temps peuvent varier en fonction des facteurs non liés à l\'application, comme la circulation, le changement d\'itinéraire, etc. \nLes fonctionnalités utilisées par la base de données locale peuvent ne pas montrer les dernières changements d\'itinéraire. \nCette application n\'est PAS officiel et son développement est indépendant. \nLes données de lignes et le temps sont offerts et obtenues de : TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx) \nPlus d\'information : alberapps.blogspot.com et twitter.com/alberapps</string>
     
+    <string name="literal_min">min.</string>
+    
 </resources>
 

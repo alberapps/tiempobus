@@ -137,7 +137,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 		traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
 
-		return traducido;
+		
+		//min.
+		String nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));
+				
+		
+		return nuevoLiteral;
 
 	}
 

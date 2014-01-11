@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <string name="app_name">TiempoBus</string>
+    <string name="app_version">2.5.3.1</string>
+    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="app_autor">Alberto Montiel (2012)</string>
+    <string name="app_autor_mail">alberapps@gmail.com</string>
+    <string name="app_autor_web">http://alberapps.blogspot.com</string>
+    <string name="poste">Код автобусной остановки…</string>
+    <string name="main_no_items">Без информации</string>
+    <string name="ok">ОК</string>
+    <string name="untitled">без названия</string>
+    
+	
+    <string name="tit_buses">Автобусные линии…</string>
+    <string name="tit_direccion">Адрес…</string>
+    <string name="tit_paradas">Автобусная остановка…</string>
+    <string name="tit_guardar">Сохранить автобусную остановку %1$s</string>
+    <string name="tit_choose_alarm">Предупредить меня, прежде, чем прибудет автобус</string>
+    <string name="menu_alarma">Установить сигнал</string>
+   
+    <string name="alarm_bus">Автобус номер %1$s приближается к остановке %2$s</string>
+    <string name="no_favs">Нет сохраненных автобусных остановок. \nС помощью кнопки «Добавить» Вы можете создать список избранных остановок.</string>
+    <string name="no_poste">Вы должны загрузить остановку прежде, чем сохранить ее.</string>
+    <string name="notification_title">Предупреждение: Автобус!</string>
+    <string name="updated_at">Обновлено</string>
+    <string name="err_bus_cerca">Невозможно настроить сигнал. Автобус прибудет всего через %1$d минут.</string>
+
+    <!-- PARA ICS -->
+
+    <string name="menu_refresh">Обновить</string>
+    <string name="menu_search">Поиск</string>
+    <string name="menu_share">Поделиться</string>
+    <string name="menu_save">Сохранить</string>
+    <string name="menu_favoritos">Избранное</string>
+    <string name="app_licencia_desc">Лицензия GNU GPLv3</string>
+
+    <!-- ============================== -->
+    <!-- app/menu examples strings -->
+    <!-- ============================== -->
+    <string name="preferences">Настройки</string>
+    <string name="preferences_from_xml">Настройки</string>
+    <string name="launch_preferences">Информация</string>
+    <string name="title_screen_preference">О TiempoBus</string>
+    <string name="summary_screen_preference">Об авторе и лицензии</string>
+    <string name="nuevo_titulo">Название</string>
+    <string name="nuevo_descripcion">Описание</string>
+    <string name="nuevo_guardar">Сохранить</string>
+    <string name="aviso_recarga">Перезагрузка данных…</string>
+    <string name="aviso_error_datos">Ошибка связи при получение данных</string>
+    <string name="tit_noticias">Объявления и новости</string>
+    <string name="dialogo_espera">Получение данных. Пожалуйста, подождите…</string>
+    <string name="aviso_noticias">Информация, полученная из:</string>
+    <string name="menu_contextual">Применяемые функции</string>
+    <string name="share_0">TiempoBus:</string>
+    <string name="share_0b">Автобусная остановка:</string>
+    <string name="share_1">Линия:</string>
+    <string name="share_2">Направление:</string>
+    <string name="share_3">Время:</string>
+    <string name="tiempo_m_1">На автобусной остановки</string>
+    <string name="tiempo_m_2">Данных нет</string>
+    <string name="tiempo_m_3">и</string>
+    <string name="alarma_cancelada">Сигнал выкл.</string>
+    <string name="menu_cancelar_alarma">Сигнал выкл.</string>
+    <string name="acercade_info">НЕ официальное приложение. Информация получена из:</string>
+    <string name="barcode_titulo">Установить сканер штрих-кода?</string>
+    <string name="barcode_mensaje">Для использования этого компонента, мы рекомендуем ZXing Barcode Scanner. Установить приложение с Google Play?</string>
+    <string name="barcode_si">Да</string>
+    <string name="barcode_no">Нет</string>
+    <string name="mapa_ir_parada">Посмотреть расписание</string>
+    <string name="menu_mapa">Карты</string>
+    <string name="lineas">Автобусные линии:</string>
+    <string name="nuevas_noticias">Есть новые объявления</string>
+    <string name="nuevas_noticias_b">Перейти в раздел «Объявления и новости»</string>
+    <string name="conf_noticias">Новости</string>
+    <string name="conf_noticias_a">Проверить есть ли новые новости при запуске приложения</string>
+    <string name="barcode_error">Невозможно получить QR-код</string>
+    <string name="alarma_modal">Сигнал вкл.</string>
+    <string name="alarma_activa_no">Сигнал отключен.</string>
+    <string name="alarma_establecida">Сигнал установлен на</string>
+    <string name="alarma_establecida_linea">Автобусная линия</string>
+    <string name="alarma_establecida_parada">Автобусная остановка</string>
+    <string name="alarma_establecida_hora">Время сигнала</string>
+    <string name="configuracion_alarmas">Сигнал</string>
+    <string name="configuracion_alarmas_vibrar_titulo">Вибросигнал при извещение</string>
+    <string name="configuracion_alarmas_vibrar_desc">Использовать вибросигнал при извещение</string>
+    <string name="configuracion_alarmas_tono_titulo">Рингтон извещения</string>
+    <string name="configuracion_alarmas_tono_desc">Выберите рингтон для извещений</string>
+    <string name="mapa_lineas">Изменить автобусную линии</string>
+    
+    <string name="mapa_ida">Туда (вкл/выкл)</string>
+    <string name="mapa_vuelta">Обратно (вкл/выкл)</string>
+    <string name="mapa_aviso_vacio">Карта будет пустая</string>
+    <string name="menu_ver_en_mapa">Открыть карту</string>
+    <string name="preferencias_tiempos">Расписание</string>
+    <string name="preferencias_tiempos_auto">Обновить</string>
+    <string name="preferencias_tiempos_desc">Обновление автоматическое или вручную</string>
+    <string name="preferencias_noticias_auto">Просмотреть новости</string>
+    <string name="novedades_titulo">Что нового?</string>
+    <string name="menu_leer">Читать</string>
+    <string name="leer_1">Автобус линии</string>
+    <string name="leer_2">с направлением в</string>
+    <string name="leer_3">прибудет через</string>
+    <string name="leer_4">минут</string>
+    <string name="leer_ko">Языковые данные не доступны</string>
+    <string name="leer_ko_2">Языковые данные не доступны. Использование языка по умолчанию.</string>
+    <string name="tit_modificar">Изменить автобусную остановку %1$s</string>
+    <string name="menu_borrar">Удалить</string>
+    <string name="menu_modificar">Изменить</string>
+    <string name="info_borrar">Избранный файл удален</string>
+    <string name="info_modificar">Избранный файл изменен</string>
+    <string name="pagina_play">TiempoBus в Google Play</string>
+    <string name="pagina_play_valora">Напишите ваше мнение, и если Вы хотите, дайте нам +1</string>
+    <string name="pagina_blog">Блог TiempoBus</string>
+    <string name="pagina_blog_detalle">Информация и новости</string>
+    <string name="preferencias_imagen">Обои</string>
+    <string name="seleccion_fondo_1">Галерея</string>
+    <string name="seleccion_fondo_2">Ничего</string>
+    <string name="seleccion_fondo_3">Отменить</string>
+    <string name="seleccion_ok">Выбор обоев</string>
+    <string name="fondo_pantall">Обои</string>
+
+    <!-- The label for use as a searchable item -->
+    <string name="search_label">TiempoBus</string>
+
+    <!-- The hint text that appears in the search box. -->
+    <string name="search_hint">Автобусная остановка, линия, адрес</string>
+
+    <!-- The description that will show up in the search settings for this source. -->
+    <string name="settings_description">Найти автобусные линии</string>
+
+    <!-- General instructions in the main activity. -->
+    <string name="search_instructions">С помощью лупы, на верхней панели, Вы можете выполнить новый поиск</string>
+
+    <!-- Shown above search results when we receive a search request. -->
+    <plurals name="search_results">
+        <item quantity="one">%1$d результат для \&quot;%2$s\&quot;:</item>
+        <item quantity="other">%1$d результаты для \&quot;%2$s\&quot;:</item>
+    </plurals>
+
+    <!-- Search failure message. -->
+    <string name="no_results">Нет результатов для \&quot;%s\&quot;</string>
+    <string name="linea">Автобусная линия</string>
+    <string name="conexiones">Соединения</string>
+    <string name="cercanas">Ближайшие автобусные остановки (GPS)</string>
+    <string name="busqueda">Поиск</string>
+    <string name="datos_parada">Данные автобусной остановке</string>
+    <string name="favoritosN">Избранное</string>
+    <string name="ordenar_parada">Сортировать по автобусным остановкам</string>
+    <string name="ordenar_nombre">Сортировать по названиям</string>
+    <string name="exportar">Экспортировать (SD)</string>
+    <string name="importar">Импортировать (SD)</string>
+    <string name="error_importar">ОШИБКА: Невозможно импортировать. Экспортированный файл должен быть доступен по маршруту SD карты: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="dialog_procesando">Обработка данных</string>
+    <string name="ok_importar">Избранное импортировано успешно</string>
+    <string name="error_exportar">ОШИБКА: Не удалось экспортировать избранное на карту SD</string>
+    <string name="ok_exportar">Избранное было успешно экспортировано на маршрут SD карты: /Android/data/alberapps.android.tiempobus/backup/tiempoBusDB.db</string>
+    <string name="gps_on">Хотите ли Вы включить геоданные GPS?</string>
+    <string name="gps_recuperando">Получение текущего местоположения</string>
+    <string name="gps_no_paradas">Не удалось найти ближайшие автобусные остановки</string>
+    <string name="favoritos_pregunta">Нынешний список избранного будут перезаписан, продолжить?</string>
+    <string name="referencias">Ссылки</string>
+    <string name="mapa_posible_error">ВНИМАНИЕ: Данные этой линии, полученные с веб-сайта, могут быть неполными</string>
+    <string name="proximidad_1">Закрыть</string>
+    <string name="proximidad_2">Среднее расстояние</string>
+    <string name="proximidad_3">Далеко</string>
+    <string name="proximidad">Близость автобусных остановок</string>
+    <string name="destino">Направление</string>
+    <string name="localizacion">Местонахождение</string>
+    <string name="buscador_online">Поиск</string>
+    <string name="ida">Туда</string>
+    <string name="vuelta">Обратно</string>
+    <string name="ko_noticia">Невозможно отобразить правильно. Пожалуйста, войдите на сайт.</string>
+    <string name="aviso_noticia">Если содержание отображается неправильно, пожалуйста, нажмите на ссылку для доступа на сайт</string>
+    <string name="noticias_links">Возможные ссылки</string>
+    <string name="noticias_instrucciones">Нажмите на объявление, чтобы открыть детальную информацию.</string>
+    <string name="aviso_buscador_online">Маршруты получены непосредственно из сайта subus.es.</string>
+    <string name="streetview_ko">Ошибка при доступе к Street View. Пожалуйста, проверьте, если приложение установлено.</string>
+    <string name="streetview_boton">Street View</string>
+    <string name="guion">-</string>
+    <string name="url_subus">http://www.subus.es</string>
+    <string name="hora_inicial">0:00</string>
+   
+    
+    <string name="alarma_auto_aviso">* Если этот параметр включен, время будет автоматически обновляться каждые %s секунд.</string>
+    <string name="alarma_auto_error">Ошибка при обновление сигнала</string>
+    <string name="alarma_auto_actualizada">Сигнал обновлен</string>
+    <string name="err_bus_sin">Невозможно настроить сигнал.\nНет доступных данных.</string>
+    <string name="alarma_que_tiempo">Расписание</string>
+    <string name="alarma_preferencias_refrescar">Обновить при перезагрузке</string>
+    <string name="alarma_preferencias_refrescar_desc">Проверка для обновления сигнала, при перезагрузке расписания</string>
+    <string name="error_generico_1">Невозможно отобразить информацию в данный момент</string>
+    <string name="error_tiempos">Не удалось получить данные. Пожалуйста, повторите попытку через несколько минут.</string>
+   
+    <string name="error_gcode">Загрузка местного списка линий</string>
+   
+    <string name="error_tabs">Невозможно загрузить данные. Пожалуйста, повторите попытку.</string>
+    <string name="error_datos_offline">Невозможно загрузить данные. Пожалуйста, повторите попытку или используйте доступ-онлайн.</string>
+   
+    <string name="error_fichero">Ошибка при доступе к файловой системе</string>
+	
+	<string name="error_red">Доступ в Интернет не доступен. Пожалуйста, проверьте ваше соединение</string>
+	<string name="foreground_service_started">Проверять время каждые %s секунд.</string>
+	<string name="foreground_service">TiempoBus: Услуги сигнала</string>
+	
+	
+	<string name="tab_noticias">Subús веб-сайт</string>
+	
+	<string name="tab_tw">Twitter</string>
+	
+	<string name="dato_tw">Самые последние твиты от:</string>
+	<string name="tw1">\@alberapps \@TramdeAlicante \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Вы можете настроить в Настройках</string>
+	
+	
+	<string name="error_codigo">Код автобусной остановки неправильный</string>
+	<string name="alarma_checkbox">Активировать сервис</string>
+	<string name="carga_noticias_msg">Загрузка веб-новостей</string>
+	<string name="carga_tw_msg">Загрузка Twitter</string>
+	
+	
+	
+	
+	
+	<!-- NUEVOS TEXTOS -->
+    <string name="recarga_bd">TiempoBus</string>
+    <string name="recarga_bd_desc">Обновление базы данных. Пожалуйста, подождите…</string>
+    
+    <string name="recarga_bd_desc_final">База данных обновлена успешно</string>
+    
+    <string name="recarga_bd_desc_error">Ошибка базы данных</string>
+    
+   	
+    <string name="traducciones">Перевод</string>
+    <string name="traducciones_tit">Языковая поддержка</string>
+    <string name="traducciones_cambiar">Изменить &quot;locale&quot;</string>
+    <string name="traducciones_locale">locale</string>
+    <string name="traducciones_desc">Информация и авторы</string>
+    
+    <string name="menu_widget">&gt;&gt;Виджет TiempoBus</string>
+    <string name="widget_instalar">Хотите ли Вы установить виджет TiempoBus с Google Play?</string>
+    <string name="widget_market">Google Play не установлен на устройстве</string>
+    
+    <string name="ir_tw">&gt;&gt;Twitter</string>
+    
+    <string name="observaciones">Замечания:</string>
+    
+    <string name="tw_maximo">Твиты</string>
+    <string name="tw_maximo_desc">Максимальное количество каждого элемента</string>
+    
+     <string name="parada_tram">Автобусная остановка</string>
+    
+    <string name="rss_tram">TRAM(rss)</string>
+    <string name="carga_rss_tram_msg">Загрузка RSS</string>
+    <!-- cambiar aviso_buscador_online buscador_online-->
+    
+    
+     <string name="drawer_open">Открыть ящик навигации</string>
+    <string name="drawer_close">Закрыть ящик навигации</string>
+    
+    <string name="aviso_offline">*В автономном режиме (вне сети), могут отображаться линии без служб или устарелые данные</string>
+    
+    
+     <string name="error_status">Служба не возвращает результаты</string>
+    
+    <string name="infolinea_horarios">Расписание</string>
+    <string name="infolinea_paradas">Автобусные остановки</string>
+    
+    
+    <string name="historial_titulo">Журнал</string>
+    <string name="historial_borrar_todo">Удалить все</string>
+    <string name="hist_info_borrar">Журнал удален</string>
+    <string name="menu_export_qr">Экспорт QR</string>
+    
+     <string name="mapas_vehiculo_on">Транспортные средства</string>
+    <string name="mapas_vehiculo_off">Транспортные средства</string>
+    <string name="mapas_vehiculo_titulo">Автобус</string>
+    
+    <string name="conf_tiempo_recarga">Регулярность</string>
+    <string name="conf_tiempo_recarga_desc">Регулярность перезарядок</string>
+    <string name="conf_tiempo_recarga_titulo">Регулярность (в секундах)</string>
+    
+    <string name="aviso_buscador_offline_tram">Загруженные маршруты, данные которых были получены из tramalicante.es</string>
+    <string name="alarm_tram">Tram %1$s приближается к остановке %2$s</string>
+    <string name="notification_title_tram">Внимание Tram!</string>
+    <string name="mapas_vehiculo_titulo_tram">TRAM</string>
+    
+    
+    <string name="acercade_info_nuevo">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны:</string>
+	<string name="acercade_info_nuevo_bus">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_2">Разработка: alberapps.blogspot.com - twitter.com/alberapps \nПеревод: orchestra-solutions.com - twitter.com/OrchestraTrad</string>
+    <string name="aviso_infoapp">&gt;InfoApp</string>
+    <string name="infoapp_trad">Перевод: orchestra-solutions.com</string>
+    
+    <string name="legal">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM и TRAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
+	
+	<string name="legal_b">Названия компаний и их логотипы или их продукции, а также данные, полученные с веб-сайта, являются собственностью их соответствующих владельцев и признаются этим приложением.</string>	  
+    
+    <string name="aviso_header_listado">Функции BUS и TRAM можно использовать одновременно. В поисковике и на картах, выберите ту сеть транспорта, которую Вы хотите просмотреть в настоящий момент.</string>  
+    
+    <string name="error_pdf">Невозможно загрузить PDF</string>
+    <string name="infolinea_horarios_pdf">Расписания (PDF)</string>
+    
+    <string name="nuevas_noticias_bus">BUS: Есть новые объявления</string>
+    <string name="nuevas_noticias_tram">TRAM: Есть новые объявления</string>
+    <string name="nuevas_tram">TRAM</string>
+    <string name="preferencias_noticias_auto_tram">Проверить новости TRAM</string>
+    
+    <string name="probar">Попробовать TRAM</string>
+    
+    <string name="info_tram_inicio">TRAM прибывает в TiempoBus\n- Теперь вы можете получить доступ к информации и расписанию TRAM. \n- Просто измените на TRAM или на BUS, в списке под поисковиком и картами. \n- Избранное будет работать одновременно в обоих режимах. \n- Войдите в раздел новостей, чтобы просмотреть новости и твитер TRAM. \n- Навигатор GPS укажет Вам ближайшие остановки обоих сетей. \n- Вы будите получать уведомления о новых объявлениях TRAM из официального Twitter компании. (Вы можете изменить это в настройках).</string>
+   
+    <string name="leer_1_tram">Трамвай линии</string>
+    
+    <!-- fin nuevos -->
+    
+    <string name="error_gps">ERROR GPS</string>
+    <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+    
+	
+    <string name="legal_sin_tram">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
+	
+    
+    <string name="literal_min">мин.</string>
+    
+    
+</resources>

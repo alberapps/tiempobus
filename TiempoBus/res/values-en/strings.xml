@@ -341,4 +341,6 @@
 		\nLines data and times obtained from:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx)
 		\nLearn more: alberapps.blogspot.com and twitter.com/alberapps</string>
     
+    <string name="literal_min">min.</string>
+    
 </resources>
