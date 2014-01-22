@@ -35,6 +35,12 @@ public class UtilidadesTAM {
 	 */
 	
 	/*
+	 * Eliminar: 34
+	 * Problemas: 30P, 
+	 * 
+	 */
+	
+	/*
 	 * 1: ALICANTE URBANO TAM: TODO EL AÑO
 	 * 2: ALICANTE INTERURBANO TAM: TODO EL AÑO
 	 * 3: ALICANTE URBANO TAM: ESPECIALES MERCADILLO

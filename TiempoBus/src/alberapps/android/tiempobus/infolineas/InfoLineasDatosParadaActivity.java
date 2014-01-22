@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
@@ -224,6 +226,28 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 		View contenedor_principal = findViewById(R.id.datos_contenedor);
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

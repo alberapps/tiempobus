@@ -19,12 +19,15 @@
  */
 package alberapps.android.tiempobus.buscador;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +57,7 @@ import android.widget.Toast;
  * The main activity for the dictionary. Displays search results triggered by
  * the search dialog and handles actions from search suggestions.
  */
+@SuppressLint("NewApi")
 public class BuscadorLineas extends ActionBarBuscadorActivity {
 
 	private TextView mTextView;
@@ -204,6 +208,28 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 		View contenedor_principal = findViewById(R.id.contenedor_resultado_offline);
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

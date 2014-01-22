@@ -344,4 +344,11 @@
 	
     <string name="literal_min">min.</string>
     
+    <string name="error_maps_gpservices">No se puede acceder a los mapas. Problema al inicializar Google Play Services</string>
+    
+    <string name="analytics_on">Google Analytics</string>
+    <string name="analytics_on_desc">Permitir el envio de estadísticas anónimas de uso y control de errores</string>
+    <string name="analytics_on_desc_inicial">¿Quieres ayudar al desarrollo de TiempoBus, permitiendo el envio de estadísticas anónimas, mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para mejorar la aplicación, y como información extra para la gestión de errores.
+    \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.</string>
+    
 </resources>

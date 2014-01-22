@@ -898,6 +898,110 @@ public class DatosPantallaPrincipal {
 
 		}
 
+		// Control Analytics
+
+		boolean avisoEstadisticas = preferencias.getBoolean("pregunta_estadisticas", false);
+
+		if (!avisoEstadisticas) {
+
+			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+			dialog.setTitle(context.getString(R.string.analytics_on));
+
+			dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
+			dialog.setIcon(R.drawable.ic_tiempobus_3);
+
+			dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("analytics_on", true);
+					editor.commit();
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("analytics_on", false);
+					editor.commit();
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.show();
+
+			SharedPreferences.Editor editor = preferencias.edit();
+			editor.putBoolean("pregunta_estadisticas", true);
+			editor.commit();
+
+		}
+
+	}
+
+	public void controlMostrarAnalytics() {
+
+		// Control Analytics
+
+		boolean avisoEstadisticas = preferencias.getBoolean("pregunta_estadisticas", false);
+
+		if (!avisoEstadisticas) {
+
+			AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+			dialog.setTitle(context.getString(R.string.analytics_on));
+
+			dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
+			dialog.setIcon(R.drawable.ic_tiempobus_3);
+
+			dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("analytics_on", true);
+					editor.commit();
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("analytics_on", false);
+					editor.commit();
+
+					dialog.dismiss();
+
+				}
+
+			});
+
+			dialog.setCancelable(false);
+
+			dialog.show();
+
+			SharedPreferences.Editor editor = preferencias.edit();
+			editor.putBoolean("pregunta_estadisticas", true);
+			editor.commit();
+
+		}
+
 	}
 
 	/**

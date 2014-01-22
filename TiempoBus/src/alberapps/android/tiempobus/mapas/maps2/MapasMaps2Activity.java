@@ -54,14 +54,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -146,6 +149,18 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapas_maps2);
+
+		try {
+			MapsInitializer.initialize(getApplicationContext());
+		} catch (GooglePlayServicesNotAvailableException e) {
+
+			Toast.makeText(getApplicationContext(), getString(R.string.error_maps_gpservices), Toast.LENGTH_LONG).show();
+
+			e.printStackTrace();
+
+			finish();
+
+		}
 
 		setUpMapIfNeeded();
 
@@ -735,10 +750,32 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	public void setParadaSeleccionada(String paradaSeleccionada) {
 		this.paradaSeleccionada = paradaSeleccionada;
 	}
-	
+
 	public void enableLocationSettings() {
 		Intent settingsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 		startActivity(settingsIntent);
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
+
 	}
 
 }

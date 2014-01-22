@@ -18,6 +18,8 @@
  */
 package alberapps.android.tiempobus.appinfo;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
@@ -27,9 +29,11 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,9 +48,14 @@ import android.widget.ImageView;
 @SuppressLint("NewApi")
 public class AppInfoActivity extends ActionBarBuscadorActivity {
 
+	SharedPreferences preferencias = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (!UtilidadesTRAM.ACTIVADO_TRAM) {
 			setContentView(R.layout.infoapp_3_bus);
@@ -78,8 +87,6 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 
 			}
 		});
-
-		
 
 		if (UtilidadesTRAM.ACTIVADO_TRAM) {
 			ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
@@ -156,6 +163,28 @@ public class AppInfoActivity extends ActionBarBuscadorActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

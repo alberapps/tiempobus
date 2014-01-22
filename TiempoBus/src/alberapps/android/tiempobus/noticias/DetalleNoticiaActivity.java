@@ -18,22 +18,27 @@
  */
 package alberapps.android.tiempobus.noticias;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
 import alberapps.java.noticias.Noticias;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.AsyncTask.Status;
+import android.preference.PreferenceManager;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +51,7 @@ import android.widget.Toast;
 /**
  * Detalle de la noticia
  */
+@SuppressLint("NewApi")
 public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 
 	private ProgressDialog dialog;
@@ -58,10 +64,15 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 
 	AsyncTask<String, Void, Noticias> taskDetalle = null;
 
+	SharedPreferences preferencias = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detalle_noticia);
+
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
@@ -164,7 +175,7 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 			mWebView = (WebView) findViewById(R.id.webViewDetalle);
 
 			mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
-					
+
 		}
 
 	}
@@ -212,6 +223,28 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

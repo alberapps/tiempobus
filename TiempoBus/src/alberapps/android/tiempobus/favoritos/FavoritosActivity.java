@@ -19,13 +19,17 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
 import alberapps.android.tiempobus.data.TiempoBusDb;
+import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask.BackupAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -34,10 +38,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -60,8 +60,8 @@ import android.widget.Toast;
  * 
  * 
  */
+@SuppressLint("NewApi")
 public class FavoritosActivity extends ActionBarActivity {
-	
 
 	public static final String[] PROJECTION = new String[] { TiempoBusDb.Favoritos._ID, // 0
 			TiempoBusDb.Favoritos.POSTE, // 1
@@ -367,7 +367,11 @@ public class FavoritosActivity extends ActionBarActivity {
 
 		case R.id.menu_exportar:
 
-			exportarDB();
+			// exportarDB();
+
+			Intent intent2 = new Intent(this, FavoritoDriveActivity.class);
+
+			startActivity(intent2);
 
 			break;
 
@@ -467,6 +471,28 @@ public class FavoritosActivity extends ActionBarActivity {
 		};
 
 		new BackupAsyncTask(backupAsyncTaskResponder).execute("importar");
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

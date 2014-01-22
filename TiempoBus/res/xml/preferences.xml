@@ -231,6 +231,11 @@
     <PreferenceCategory
             android:title="@string/launch_preferences">
 
+        <CheckBoxPreference
+                android:key="analytics_on"
+                android:title="@string/analytics_on"
+                android:summary="@string/analytics_on_desc" android:defaultValue="true"/>
+        
         
         <PreferenceScreen
                 android:title="@string/pagina_play"

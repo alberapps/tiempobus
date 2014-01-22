@@ -93,6 +93,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener {
 
 	protected static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
@@ -424,6 +426,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
+	
+	private boolean controlInicialAnalytics = false;
+	
 	/**
 	 * Una vez este creada la actividad obtenemos el servicio para fijar las
 	 * alarmas
@@ -446,6 +451,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
 		txtPoste.setText(Integer.toString(paradaActual));
 
+		datosPantallaPrincipal.controlMostrarAnalytics();
+
+		if (preferencias.getBoolean("analytics_on", true)) {			
+			controlInicialAnalytics = true;			
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
 	}
 
 	@Override
@@ -454,6 +466,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		handler.removeMessages(MSG_RECARGA);
 
 		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true) || controlInicialAnalytics) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

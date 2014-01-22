@@ -22,6 +22,8 @@ package alberapps.android.tiempobus.noticias;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
@@ -141,12 +143,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if(UtilidadesTRAM.ACTIVADO_TRAM){
+		if (UtilidadesTRAM.ACTIVADO_TRAM) {
 			setContentView(R.layout.noticias_contenedor);
-		}else{
+		} else {
 			setContentView(R.layout.noticias_contenedor_2);
 		}
-		
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
 			actionBar.setDisplayHomeAsUpEnabled(true);
@@ -826,5 +828,27 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		}
 	};
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
+
+	}
 
 }

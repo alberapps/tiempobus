@@ -21,6 +21,8 @@ package alberapps.android.tiempobus.infolineas;
 
 import java.util.ArrayList;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
@@ -33,6 +35,7 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -72,6 +75,7 @@ import android.widget.Toast;
  * switches between tabs and also allows the user to perform horizontal flicks
  * to move between the tabs.
  */
+@SuppressLint("NewApi")
 public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	TabHost mTabHost;
 	ViewPager mViewPager;
@@ -706,6 +710,28 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 			vueltaView.removeFooterView(vistaPieHorarioVuelta);
 			vueltaView.removeFooterView(vistaPieAvisoVuelta);
 			vistaPieHorarioVuelta = null;
+		}
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
 		}
 
 	}

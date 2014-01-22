@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus.buscador;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
@@ -86,7 +88,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			TextView destino = (TextView) findViewById(R.id.destino);
 			TextView localizacion = (TextView) findViewById(R.id.localizacion);
 			TextView conexiones = (TextView) findViewById(R.id.conexiones);
-			
+
 			TextView observaciones = (TextView) findViewById(R.id.observaciones);
 
 			int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
@@ -96,7 +98,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
 
 			int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
-			
+
 			int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
 
 			parada.setText(cursor.getString(paradaIndex));
@@ -108,7 +110,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 			destino.setText(cursor.getString(destinoIndex));
 			localizacion.setText(cursor.getString(direccionIndex));
 			conexiones.setText(cursor.getString(conexionesIndex));
-			
+
 			observaciones.setText(cursor.getString(observacionesIndex));
 		}
 
@@ -226,6 +228,28 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		View contenedor_principal = findViewById(R.id.datos_contenedor);
 
 		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
 
 	}
 

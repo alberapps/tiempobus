@@ -22,6 +22,8 @@ package alberapps.android.tiempobus.favoritos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
@@ -30,6 +32,7 @@ import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -52,6 +55,7 @@ import android.widget.Toast;
  * 
  * 
  */
+@SuppressLint("NewApi")
 public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 	private EditText guiDescripcion;
 	private EditText guiTitulo;
@@ -268,6 +272,28 @@ public class FavoritoNuevoActivity extends ActionBarBuscadorActivity {
 
 		} catch (Exception e) {
 			return null;
+		}
+
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
 		}
 
 	}

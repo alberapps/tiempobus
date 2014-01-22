@@ -19,11 +19,14 @@
  */
 package alberapps.android.tiempobus.historial;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.ContentUris;
 import android.content.Intent;
@@ -50,6 +53,7 @@ import android.widget.Toast;
  * Historial
  * 
  */
+@SuppressLint("NewApi")
 public class HistorialActivity extends ActionBarActivity {
 
 	public static final String[] PROJECTION = new String[] { HistorialDB.Historial._ID, // 0
@@ -255,6 +259,28 @@ public class HistorialActivity extends ActionBarActivity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onStart() {
+
+		super.onStart();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStart(this);
+		}
+
+	}
+
+	@Override
+	protected void onStop() {
+
+		super.onStop();
+
+		if (preferencias.getBoolean("analytics_on", true)) {
+			EasyTracker.getInstance(this).activityStop(this);
+		}
+
 	}
 
 }
