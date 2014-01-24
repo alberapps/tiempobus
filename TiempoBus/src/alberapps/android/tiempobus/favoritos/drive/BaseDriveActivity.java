@@ -71,7 +71,7 @@ public class BaseDriveActivity extends ActionBarActivity implements GoogleApiCli
 	@Override
 	protected void onPause() {
 		if (mGoogleApiClient != null) {
-			mGoogleApiClient.disconnect();
+			//mGoogleApiClient.disconnect();
 		}
 		super.onPause();
 	}
