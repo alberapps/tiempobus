@@ -222,8 +222,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		// PrecargasV3.precargarDatosLineas(this);
-		// PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
