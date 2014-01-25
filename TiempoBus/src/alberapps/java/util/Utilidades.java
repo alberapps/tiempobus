@@ -47,6 +47,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.Comunes;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -76,8 +77,8 @@ public class Utilidades {
 			URLConnection con = url.openConnection();
 
 			// timeout
-			con.setReadTimeout(15000);
-			con.setConnectTimeout(10000);
+			con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
+			con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
 
 			is = con.getInputStream();
 
@@ -244,7 +245,7 @@ public class Utilidades {
 			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
 			// Timeout para recibir datos
-			int timeoutSocket = 15000;
+			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
 			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
 			DefaultHttpClient client = new DefaultHttpClient(httpParam);
@@ -283,12 +284,12 @@ public class Utilidades {
 		try {
 
 			// Timeout para establecer conexion
-			int timeout = 10000;
+			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
 			HttpParams httpParam = new BasicHttpParams();
 			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
 			// Timeout para recibir datos
-			int timeoutSocket = 15000;
+			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
 			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
 			DefaultHttpClient client = new DefaultHttpClient(httpParam);
@@ -327,8 +328,8 @@ public class Utilidades {
 		try {
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(10000 /* milliseconds */);
-			conn.setConnectTimeout(15000 /* milliseconds */);
+			conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+			conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 			// Starts the query
@@ -372,8 +373,8 @@ public class Utilidades {
 		try {
 			URL url = new URL(myurl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(10000 /* milliseconds */);
-			conn.setConnectTimeout(15000 /* milliseconds */);
+			conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+			conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 			// Starts the query
@@ -510,7 +511,7 @@ public class Utilidades {
 		return null;
 
 	}
-	
+
 	/**
 	 * Aleatorio
 	 * 
@@ -526,7 +527,7 @@ public class Utilidades {
 		int random = rand.nextInt((max - min) + 1) + min;
 
 		Log.d("RANDOM", "RANDOM: " + random);
-		
+
 		if (random == 0) {
 			return true;
 		} else {

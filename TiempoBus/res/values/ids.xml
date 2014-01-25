@@ -52,4 +52,6 @@
     <item name="menu_hist_borrar" type="id"/>
     <item type="id" name="menu_exportar_qr"/>
     <item type="id" name="contenedor_secundario"/>
+    <item type="id" name="menu_exportar_drive"/>
+    <item type="id" name="menu_importar_drive"/>
 </resources>

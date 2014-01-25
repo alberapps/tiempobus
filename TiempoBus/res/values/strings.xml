@@ -330,7 +330,7 @@
     
     <string name="leer_1_tram">El tranvía de la línea</string>
     
-     <!-- fin nuevos -->
+     
     
      <string name="error_gps">ERROR GPS</string>
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
@@ -344,12 +344,15 @@
 	
     <string name="literal_min">min.</string>
     
+    <!-- fin nuevos -->
+    
     <string name="error_maps_gpservices">No se puede acceder a los mapas. Problema al inicializar Google Play Services</string>
     
     <string name="analytics_on">Google Analytics</string>
-    <string name="analytics_on_desc">Permitir el envio de estadísticas anónimas de uso y control de errores</string>
-    <string name="analytics_on_desc_inicial">¿Quieres ayudar al desarrollo de TiempoBus, permitiendo el envio de estadísticas anónimas, mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para mejorar la aplicación, y como información extra para la gestión de errores.
-    \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.</string>
+    <string name="analytics_on_desc">Permitir el envío de estadísticas anónimas de uso y control de errores</string>
+    <string name="analytics_on_desc_inicial">¿Quieres ayudar a mejorar TiempoBus, permitiendo el envio de estadísticas(anónimas), mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para ver las funciones más usadas, y para mejorar la información sobre errores y problemas.
+    \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.
+    \nPuedes consultar el aviso legal en Preferencias</string>
     
     <string name="error_exportar_drive">ERROR: No se han podido exportar los favoritos a Google Drive</string>
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
@@ -357,6 +360,18 @@
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
     
     <string name="drive_modal">Google Drive</string>
+    
+    <string name="exportar_drive">Exportar(Google Drive)</string>
+    <string name="importar_drive">Importar(Google Drive)</string>
+    
+    <string name="aviso_legal_analytics">    
+    Aviso legal de Google Analytics 
+    \nEsta aplicación utiliza Google Analytics, un servicio analítico de web prestado por Google, Inc., una compañía de Delaware cuya oficina principal esta en 1600 Amphitheatre Parkway, Mountain View (California), CA 94043, Estados Unidos (\"Google\").
+	La información que genera acerca de su uso de la aplicación (incluyendo su dirección IP) será directamente transmitida y archivada por Google en los servidores de Estados Unidos. Google usará esta información por cuenta nuestra con el propósito de seguir la pista de su uso de la aplicación, recopilando informes de la actividad de la aplicación y prestando otros servicios relacionados con la actividad de la aplicación y el uso de Internet. Google podrá transmitir dicha información a terceros cuando así se lo requiera la legislación, o cuando dichos terceros procesen la información por cuenta de Google. Google no asociará su dirección IP con ningún otro dato del que disponga Google.
+	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
+    </string>
+    
+    
     
     
 </resources>

@@ -333,7 +333,7 @@ favorit per crear la teua llista.</string>
 	
 	<string name="leer_1_tram">El tramvia de la línia</string>
 				
-    <!-- fin nuevos -->
+   
     
      <string name="error_gps">ERROR GPS</string>
      <string name="error_fondo">Error estableciendo la imagen de fondo</string>
@@ -346,5 +346,34 @@ favorit per crear la teua llista.</string>
 		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
     
     <string name="literal_min">min.</string>
+    
+     <!-- fin nuevos -->
+    
+    <string name="error_maps_gpservices">No es pot accedir als mapes. Problema al inicialitzar Google Play Services</string>
+    
+    <string name="analytics_on">Google Analytics</string>
+    <string name="analytics_on_desc">Permetre l\'enviament d\'estadístiques anònimes d\'ús i control d\'errors</string>
+    <string name="analytics_on_desc_inicial">ols ajudar a millorar TiempoBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
+     \nEn qualsevol moment pots canviar la teva decisió a la pantalla de preferències.
+     \nPots consultar l\'avís legal a Preferències</string>
+    
+    <string name="error_exportar_drive">ERROR: No s\'han pogut exportar els favorits a Google Drive</string>
+    <string name="ok_exportar_drive">Els favorits s\'han exportat correctament a Google Drive</string>
+    <string name="error_importar_drive">ERROR: No s\'ha pogut importar des de Google Drive</string>
+    <string name="ok_importar_drive">Favorits importats correctament des de Google Drive</string>
+    
+    <string name="drive_modal">Google Drive</string>
+    
+    <string name="exportar_drive">Exportar(Google Drive)</string>
+    <string name="importar_drive">Importar(Google Drive)</string>
+    
+    <string name="aviso_legal_analytics">    
+    Avís legal de Google Analytics    
+	\nEsta aplicació utilitza Google Analytics, un servei analític de web prestat per Google, Inc, una companyia de Delaware l\'oficina principal està a 1600 Amphitheatre Parkway, Mountain View (Califòrnia), CA 94043, Estats Units (\"Google\").
+	 La informació que genera sobre el seu ús de l\'aplicació (incloent la seua adreça IP) serà directament transmesa i arxivada per Google en els servidors d\'Estats Units. Google utilitzarà aquesta informació per compte nostre amb el propòsit de seguir la pista del seu ús de l\'aplicació, recopilant informes de l\'activitat de l\'aplicació i prestant altres serveis relacionats amb l\'activitat de l\'aplicació i l\'ús d\'Internet. Google podrà transmetre aquesta informació a tercers quan així ho requereixi la legislació, o quan aquests tercers processin la informació per compte de Google. Google no associarà la seva adreça IP amb cap altra dada de què disposi Google.
+    Vostè pot rebutjar el tractament de les dades o la informació rebutjant l\'ús d\'aquesta funció mitjançant la selecció de la configuració apropiada en les preferències de l\'aplicació, però, això dificultarà el desenvolupador l\'estudi de noves funcions i l\'anàlisi d\'errors. En utilitzar aquesta aplicació vostè consent el tractament d\'informació sobre vostè per Google en la forma i per als fins dalt indicats.
+    </string>
+    
+    
     
 </resources>

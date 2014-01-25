@@ -19,8 +19,6 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
@@ -55,6 +53,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * Muestra los favoritos guardados
  * 
@@ -64,7 +64,7 @@ import android.widget.Toast;
 public class FavoritosActivity extends ActionBarActivity {
 
 	public static final int SUB_ACTIVITY_REQUEST_DRIVE = 1100;
-	
+
 	public static final String[] PROJECTION = new String[] { TiempoBusDb.Favoritos._ID, // 0
 			TiempoBusDb.Favoritos.POSTE, // 1
 			TiempoBusDb.Favoritos.TITULO, // 2
@@ -369,18 +369,31 @@ public class FavoritosActivity extends ActionBarActivity {
 
 		case R.id.menu_exportar:
 
-			// exportarDB();
-						
-
-			Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
-
-			startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
+			exportarDB();
 
 			break;
 
 		case R.id.menu_importar:
 
 			importarDB();
+
+			break;
+
+		case R.id.menu_importar_drive:
+
+			importarDriveDB();
+
+			break;
+
+		case R.id.menu_exportar_drive:
+
+			Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+
+			Bundle b2 = new Bundle();
+			b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
+			intent2.putExtras(b2);
+
+			startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
 
 			break;
 
@@ -407,11 +420,15 @@ public class FavoritosActivity extends ActionBarActivity {
 
 				if (resultado != null && resultado) {
 
-					dialog.dismiss();
+					if (dialog != null && dialog.isShowing()) {
+						dialog.dismiss();
+					}
 					Toast.makeText(FavoritosActivity.this, getString(R.string.ok_exportar), Toast.LENGTH_LONG).show();
 
 				} else {
-					dialog.dismiss();
+					if (dialog != null && dialog.isShowing()) {
+						dialog.dismiss();
+					}
 					Toast.makeText(FavoritosActivity.this, getString(R.string.error_exportar), Toast.LENGTH_SHORT).show();
 
 				}
@@ -447,6 +464,36 @@ public class FavoritosActivity extends ActionBarActivity {
 	}
 
 	/**
+	 * Importar la base de datos
+	 */
+	private void importarDriveDB() {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+
+				Intent intent1 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+
+				Bundle b = new Bundle();
+				b.putString("MODO", FavoritoDriveActivity.MODO_IMPORTAR);
+				intent1.putExtras(b);
+
+				startActivityForResult(intent1, SUB_ACTIVITY_REQUEST_DRIVE);
+
+			}
+		}).setNegativeButton(getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+
+			}
+		});
+		AlertDialog alert = builder.create();
+
+		alert.show();
+
+	}
+
+	/**
 	 * Recuperar
 	 */
 	private void procederImportacionBD() {
@@ -459,13 +506,17 @@ public class FavoritosActivity extends ActionBarActivity {
 				if (resultado != null && resultado) {
 
 					consultarDatos(orden);
-					dialog.dismiss();
+					if (dialog != null && dialog.isShowing()) {
+						dialog.dismiss();
+					}
 					Toast.makeText(FavoritosActivity.this, getString(R.string.ok_importar), Toast.LENGTH_SHORT).show();
 
 				} else {
 					// Error al recuperar datos
 
-					dialog.dismiss();
+					if (dialog != null && dialog.isShowing()) {
+						dialog.dismiss();
+					}
 
 					Toast.makeText(FavoritosActivity.this, getString(R.string.error_importar), Toast.LENGTH_LONG).show();
 
@@ -497,6 +548,24 @@ public class FavoritosActivity extends ActionBarActivity {
 			EasyTracker.getInstance(this).activityStop(this);
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case SUB_ACTIVITY_REQUEST_DRIVE:
+			if (resultCode == RESULT_OK) {
+
+				consultarDatos(orden);
+
+			}
+
+			break;
+
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}
 	}
 
 }

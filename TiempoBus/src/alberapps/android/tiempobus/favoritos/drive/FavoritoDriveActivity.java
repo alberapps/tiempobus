@@ -17,16 +17,23 @@
  */
 package alberapps.android.tiempobus.favoritos.drive;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask.BackupDriveAsyncTaskResponder;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.drive.Drive;
@@ -45,11 +52,18 @@ import com.google.android.gms.drive.OpenFileActivityBuilder;
 @SuppressLint("NewApi")
 public class FavoritoDriveActivity extends BaseDriveActivity {
 
-	private static final String TAG = "CreateFileWithCreatorActivity";
+	private static final String TAG = "FavoritoDriveActivity";
 
 	protected static final int REQUEST_CODE_CREATOR = 1;
 
 	protected static final int REQUEST_CODE_OPENER = 2;
+
+	public static final String MODO_EXPORTAR = "exportar";
+	public static final String MODO_IMPORTAR = "importar";
+
+	private String modo = MODO_EXPORTAR;
+
+	private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +78,30 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 		setContentView(R.layout.favoritos_drive);
 
+		if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("MODO")) {
+
+			modo = this.getIntent().getExtras().getString("MODO");
+		}
+
+	}
+
+	private void activarProgreso() {
+		//dialog = ProgressDialog.show(this, "", getString(R.string.dialog_procesando), true);
 	}
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
 		super.onConnected(connectionHint);
 
-		// nuevoArchivoDrive();
+		if (modo.equals(MODO_EXPORTAR)) {
 
-		cargarFicheroDrive();
+			nuevoArchivoDrive();
+
+		} else if (modo.equals(MODO_IMPORTAR)) {
+
+			cargarFicheroDrive();
+
+		}
 
 	}
 
@@ -82,19 +111,28 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 		case REQUEST_CODE_CREATOR:
 			if (resultCode == RESULT_OK) {
 				DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-				showMessage("File created with ID: " + driveId);
+				// showMessage("File created with ID: " + driveId);
 
 				if (driveId != null) {
+
+					activarProgreso();
 
 					guardarDatos(driveId);
 
 				} else {
 
-					getGoogleApiClient().disconnect();
+					if (dialog != null && dialog.isShowing()) {
+						dialog.dismiss();
+					}
 
-					finish();
+					// Relanzar
+					// relanzar();
 
 				}
+
+			} else {
+
+				terminar(null);
 
 			}
 
@@ -103,23 +141,22 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 		case REQUEST_CODE_OPENER:
 			if (resultCode == RESULT_OK) {
 				DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-				showMessage("Selected file's ID: " + driveId);
+				// showMessage("Selected file's ID: " + driveId);
 
 				if (driveId != null) {
+
+					activarProgreso();
+
 					cargarDatos(driveId);
 				} else {
 
-					getGoogleApiClient().disconnect();
-
-					finish();
+					// terminar(null);
 
 				}
 
 			} else {
 
-				getGoogleApiClient().disconnect();
-
-				finish();
+				terminar(null);
 
 			}
 
@@ -131,12 +168,22 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 		}
 	}
 
+	/**
+	 * Crear archivo en drive
+	 */
 	private void nuevoArchivoDrive() {
 
 		OnNewContentsCallback onContentsCallback = new OnNewContentsCallback() {
 
 			public void onNewContents(ContentsResult result) {
-				MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/octet-stream").setTitle("tiempobus.db").build();
+
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm");
+
+				String fecha = sdf.format(new Date());
+
+				String nombre = "tiempobus_" + fecha + ".db";
+
+				MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/octet-stream").setTitle(nombre).build();
 				IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialContents(result.getContents()).build(getGoogleApiClient());
 				try {
 					startIntentSenderForResult(intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
@@ -145,11 +192,23 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 				}
 			}
 		};
+
+		if (dialog != null && dialog.isShowing()) {
+			dialog.dismiss();
+		}
+
 		Drive.DriveApi.newContents(getGoogleApiClient()).addResultCallback(onContentsCallback);
 
 	}
 
+	/**
+	 * Guardar datos en el archivo
+	 * 
+	 * @param id
+	 */
 	private void guardarDatos(DriveId id) {
+
+		activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
@@ -158,18 +217,15 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 				if (resultado != null && resultado) {
 
-					// dialog.dismiss();
 					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_exportar_drive), Toast.LENGTH_LONG).show();
 
 				} else {
-					// dialog.dismiss();
+
 					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_exportar_drive), Toast.LENGTH_SHORT).show();
 
 				}
 
-				getGoogleApiClient().disconnect();
-
-				finish();
+				terminar(null);
 
 			}
 		};
@@ -178,6 +234,9 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 	}
 
+	/**
+	 * Cargar el fichero desde drive
+	 */
 	private void cargarFicheroDrive() {
 
 		IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder().setMimeType(new String[] { "application/octet-stream" }).build(getGoogleApiClient());
@@ -189,7 +248,14 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 	}
 
+	/**
+	 * Cargar los datos del archivo
+	 * 
+	 * @param id
+	 */
 	private void cargarDatos(DriveId id) {
+
+		activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
@@ -198,22 +264,15 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 				if (resultado != null && resultado) {
 
-					// consultarDatos(orden);
-					// dialog.dismiss();
 					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_importar_drive), Toast.LENGTH_SHORT).show();
 
 				} else {
 					// Error al recuperar datos
-
-					// dialog.dismiss();
-
 					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_importar_drive), Toast.LENGTH_LONG).show();
 
 				}
 
-				getGoogleApiClient().disconnect();
-
-				finish();
+				terminar(RESULT_OK);
 
 			}
 		};
@@ -221,5 +280,45 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 		new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");
 
 	}
+
+	private void terminar(Integer resultado) {
+		getGoogleApiClient().disconnect();
+
+		if (resultado != null) {
+			setResult(resultado);
+		}
+
+		if (dialog != null && dialog.isShowing()) {
+			dialog.dismiss();
+		}
+
+		finish();
+	}
+
+	/*
+	 * private void relanzar() {
+	 * 
+	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	 * builder.setMessage
+	 * (getString(R.string.favoritos_pregunta)).setCancelable(false
+	 * ).setPositiveButton(getString(R.string.barcode_si), new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) {
+	 * 
+	 * finish(); startActivity(getIntent());
+	 * 
+	 * 
+	 * } }).setNegativeButton(getString(R.string.barcode_no), new
+	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
+	 * dialog, int id) { dialog.cancel();
+	 * 
+	 * terminar(null);
+	 * 
+	 * } }); AlertDialog alert = builder.create();
+	 * 
+	 * alert.show();
+	 * 
+	 * }
+	 */
 
 }

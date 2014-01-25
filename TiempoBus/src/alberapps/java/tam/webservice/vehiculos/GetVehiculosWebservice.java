@@ -29,6 +29,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import alberapps.android.tiempobus.util.Comunes;
 import android.util.Log;
 
 public class GetVehiculosWebservice {
@@ -38,7 +39,7 @@ public class GetVehiculosWebservice {
 	private String NAMESPACE = "http://tempuri.org/";
 	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
-	private int timeout = 15 * 1000; // 15 segundos
+	private int timeout = Comunes.TIMEOUT_WEBSERVICE;
 
 	public GetVehiculosWebservice() {
 	}
