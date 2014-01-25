@@ -2,7 +2,7 @@
 
 package alberapps.android.tiempobus.favoritos.drive;
 
-import alberapps.android.tiempobus.actionbar.ActionBarActivity;
+import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 
-public class BaseDriveActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class BaseDriveActivity extends ActionBarActivityFragments implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 	private static final String TAG = "BaseDriveActivity";
 

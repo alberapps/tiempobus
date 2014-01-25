@@ -63,6 +63,8 @@ import android.widget.Toast;
 @SuppressLint("NewApi")
 public class FavoritosActivity extends ActionBarActivity {
 
+	public static final int SUB_ACTIVITY_REQUEST_DRIVE = 1100;
+	
 	public static final String[] PROJECTION = new String[] { TiempoBusDb.Favoritos._ID, // 0
 			TiempoBusDb.Favoritos.POSTE, // 1
 			TiempoBusDb.Favoritos.TITULO, // 2
@@ -368,10 +370,11 @@ public class FavoritosActivity extends ActionBarActivity {
 		case R.id.menu_exportar:
 
 			// exportarDB();
+						
 
-			Intent intent2 = new Intent(this, FavoritoDriveActivity.class);
+			Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
 
-			startActivity(intent2);
+			startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
 
 			break;
 

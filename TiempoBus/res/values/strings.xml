@@ -351,4 +351,12 @@
     <string name="analytics_on_desc_inicial">¿Quieres ayudar al desarrollo de TiempoBus, permitiendo el envio de estadísticas anónimas, mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para mejorar la aplicación, y como información extra para la gestión de errores.
     \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.</string>
     
+    <string name="error_exportar_drive">ERROR: No se han podido exportar los favoritos a Google Drive</string>
+    <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
+    <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
+    <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
+    
+    <string name="drive_modal">Google Drive</string>
+    
+    
 </resources>

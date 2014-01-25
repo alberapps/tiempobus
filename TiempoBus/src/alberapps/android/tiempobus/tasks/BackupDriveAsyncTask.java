@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ *  Copyright (C) 2014 Alberto Montiel
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,8 +17,6 @@
  */
 package alberapps.android.tiempobus.tasks;
 
-import java.io.OutputStream;
-
 import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
 import alberapps.java.data.backup.DatosDriveBackup;
 import android.os.AsyncTask;
@@ -29,17 +25,12 @@ import com.google.android.gms.drive.DriveApi.ContentsResult;
 import com.google.android.gms.drive.DriveFile;
 
 /**
- * Tarea asincrona copia de seguridad
+ * Tarea asincrona copia de seguridad en drive
  * 
  * 
  */
 public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
 	public interface BackupDriveAsyncTaskResponder {
 		public void backupLoaded(Boolean result);
 	}
@@ -56,59 +47,60 @@ public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 	}
 
 	/**
-	 * Ejecuta el proceso en segundo plano
+	 * Procesado
 	 */
 	@Override
 	protected Boolean doInBackground(Object... datos) {
 		Boolean resultado = null;
-		
-		DriveFile file = (DriveFile) datos[0];
-		
-		FavoritoDriveActivity context = (FavoritoDriveActivity) datos[1];
-		
-		try {
-			// noticiasList = TamNews.getTamNews();
 
-			/*String entrada = (String) datos[0];
+		try {
+
+			DriveFile file = (DriveFile) datos[0];
+
+			FavoritoDriveActivity context = (FavoritoDriveActivity) datos[1];
+
+			String entrada = (String) datos[2];
 
 			if (entrada.equals("importar")) {
-				resultado = DatosBackup.recuperar(false);
+
+				ContentsResult contentsResult = file.openContents(context.getGoogleApiClient(), DriveFile.MODE_READ_ONLY, null).await();
+				if (!contentsResult.getStatus().isSuccess()) {
+					return false;
+				}
+
+				resultado = DatosDriveBackup.recuperar(contentsResult);
+
+				file.discardContents(context.getGoogleApiClient(), contentsResult.getContents()).await();
+
+				return resultado;
+
 			} else {
-				resultado = DatosBackup.exportar(false);
-			}*/
-			
-			
-			
-			 ContentsResult contentsResult = file.openContents(
-                     context.getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
-             if (!contentsResult.getStatus().isSuccess()) {
-                 return false;
-             }
-             //OutputStream outputStream = contentsResult.getContents().getOutputStream();
-             
-             
-             //outputStream.write("Hello world".getBytes());
-             
-             DatosDriveBackup.exportar(contentsResult);
-             
-             
-             com.google.android.gms.common.api.Status status = file.commitAndCloseContents(
-                     context.getGoogleApiClient(), contentsResult.getContents()).await();
-             
-             
-             return status.getStatus().isSuccess();
-			
-			
-			
+
+				ContentsResult contentsResult = file.openContents(context.getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
+				if (!contentsResult.getStatus().isSuccess()) {
+					return false;
+				}
+
+				resultado = DatosDriveBackup.exportar(contentsResult);
+
+				com.google.android.gms.common.api.Status status = file.commitAndCloseContents(context.getGoogleApiClient(), contentsResult.getContents()).await();
+
+				if (resultado && status.getStatus().isSuccess()) {
+					return true;
+				} else {
+					return false;
+				}
+
+			}
+
 		} catch (Exception e) {
 			return false;
 		}
 
-		//return resultado;
 	}
 
 	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
+	 * Resultado
 	 */
 	@Override
 	protected void onPostExecute(Boolean result) {

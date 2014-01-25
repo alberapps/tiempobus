@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
+import android.util.Log;
 
 import com.google.android.gms.drive.DriveApi.ContentsResult;
 
@@ -87,26 +88,41 @@ public class DatosDriveBackup {
 	 * 
 	 * @return boolean
 	 */
-	/*public static boolean recuperar(boolean respaldo) {
+	public static boolean recuperar(ContentsResult contentsResult) {
 		if (isSDCARDMounted()) {
 
 			// Copia de respaldo para posible fallo
-			exportar(true);
+			DatosBackup.exportar(true);
 
-			FileInputStream fileEXIE = null;
+			InputStream fileDriveStream = null;
 			FileOutputStream baseDatosE = null;
+			FileInputStream fileEXIE = null;
 
 			boolean control = false;
 
-			try {
-				File fileEx = null;
+			FileOutputStream fileExport = null;
 
-				// Copia de recuperacion
-				if (!respaldo) {
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.db");
-				} else {
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
-				}
+			try {
+
+				// Copiar fichero de drive a la sd para procesar
+				// directorio de sd
+				File directorio = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/");
+				directorio.mkdirs();
+
+				File fileEx = null;
+				fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.drive.db");
+
+				fileEx.createNewFile();
+
+				fileExport = new FileOutputStream(fileEx);
+
+				// Copiar desde drive a sd
+
+				fileDriveStream = contentsResult.getContents().getInputStream();
+
+				copyFileI(fileDriveStream, fileExport);
+				
+				fileExport.flush();
 
 				if (!fileEx.exists()) {
 					return false;
@@ -116,28 +132,32 @@ public class DatosDriveBackup {
 					return false;
 				}
 
-				fileEXIE = new FileInputStream(fileEx);
-
+				// Copiar de SD a la base de datos
 				File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
 
 				baseDatos.createNewFile();
 
 				baseDatosE = new FileOutputStream(baseDatos);
 
-				copyFile(fileEXIE, baseDatosE);
+				fileEXIE = new FileInputStream(fileEx);
+				
+				copyFileI(fileEXIE, baseDatosE);
+				
+				baseDatosE.flush();
 
 				control = true;
-			} catch (IOException e) {
+
+			} catch (Exception e) {
 
 				// Recuperar respaldo
-				recuperar(true);
+				DatosBackup.recuperar(true);
 
 				control = false;
 			} finally {
-				if (fileEXIE != null) {
+				if (fileDriveStream != null) {
 					try {
-						fileEXIE.close();
-						fileEXIE = null;
+						fileDriveStream.close();
+						fileDriveStream = null;
 					} catch (IOException e) {
 
 					}
@@ -152,6 +172,27 @@ public class DatosDriveBackup {
 					}
 				}
 
+				if (fileExport != null) {
+					try {
+
+						fileExport.close();
+
+						fileExport = null;
+
+					} catch (IOException e) {
+
+					}
+				}
+				
+				if (fileEXIE != null) {
+					try {
+						fileEXIE.close();
+						fileEXIE = null;
+					} catch (IOException e) {
+
+					}
+				}
+
 			}
 
 			return control;
@@ -161,7 +202,7 @@ public class DatosDriveBackup {
 		}
 
 	}
-*/
+
 	/**
 	 * Comprobaciones
 	 * 
@@ -187,12 +228,19 @@ public class DatosDriveBackup {
 			}
 
 		} catch (Exception e) {
+
+			Log.e("drive", "Error al verificar la base de datos");
+
+			e.printStackTrace();
+
 			// No valida
 			return false;
 		} finally {
 			sqlDb.close();
 			cursor.close();
 		}
+
+		Log.d("drive", "Base de datos OK");
 
 		return true;
 	}
