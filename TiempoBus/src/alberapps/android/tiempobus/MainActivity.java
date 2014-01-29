@@ -222,8 +222,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		//PrecargasV3.precargarDatosLineas(this);
-		//PrecargasV3.precargarDatosLineasRecorrido(this);
+		// PrecargasV3.precargarDatosLineas(this);
+		// PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
@@ -315,8 +315,12 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case 0:
 
-			detenerTareaTiempos();
-			startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
+			if (datosPantallaPrincipal.servicesConnected()) {
+
+				detenerTareaTiempos();
+				startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
+
+			}
 
 			break;
 
@@ -426,9 +430,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
-	
 	private boolean controlInicialAnalytics = false;
-	
+
 	/**
 	 * Una vez este creada la actividad obtenemos el servicio para fijar las
 	 * alarmas
@@ -453,8 +456,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		datosPantallaPrincipal.controlMostrarAnalytics();
 
-		if (preferencias.getBoolean("analytics_on", true)) {			
-			controlInicialAnalytics = true;			
+		if (preferencias.getBoolean("analytics_on", true)) {
+			controlInicialAnalytics = true;
 			EasyTracker.getInstance(this).activityStart(this);
 		}
 
@@ -612,9 +615,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			break;
 		case R.id.menu_mapas:
 
+			if (datosPantallaPrincipal.servicesConnected()) {
 			detenerTareaTiempos();
 			startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
-
+			}
+			
 			break;
 
 		case R.id.menu_fondo:
@@ -826,13 +831,18 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				case 2:
 
-					if (busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
+					if (datosPantallaPrincipal.servicesConnected()) {
+					
+					if (busSeleccionado != null && busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
 						Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
 						i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
 						startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
-					}
+					}				
 
 					busSeleccionado = null;
+					
+					}
+					
 					break;
 
 				case 3:

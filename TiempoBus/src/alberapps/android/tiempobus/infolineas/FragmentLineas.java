@@ -209,7 +209,11 @@ public class FragmentLineas extends Fragment {
 
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-				infoLineaAdapter.getFilter().filter(s);
+				if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty()) {
+
+					infoLineaAdapter.getFilter().filter(s);
+
+				}
 
 			}
 
