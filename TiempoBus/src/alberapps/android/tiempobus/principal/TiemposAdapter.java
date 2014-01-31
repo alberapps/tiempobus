@@ -19,12 +19,14 @@
  */
 package alberapps.android.tiempobus.principal;
 
+import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.java.tam.BusLlegada;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -53,34 +55,70 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 	 */
 	@Override
 	public View getView(int position, View v, ViewGroup parent) {
-		// Si no tenemos la vista de la fila creada componemos una
-		if (v == null) {
+
+		final BusLlegada bus = getItem(position);
+
+		if (!bus.isSinDatos()) {
+
+			// Si no tenemos la vista de la fila creada componemos una
+			//if (v == null) {
+				Context ctx = this.getContext().getApplicationContext();
+				LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+				v = vi.inflate(R.layout.tiempos_item, null);
+
+				v.setTag(new ViewHolder(v));
+			//}
+
+			// Accedemos a la vista cacheada y la rellenamos
+			ViewHolder tag = (ViewHolder) v.getTag();
+
+			// BusLlegada bus = getItem(position);
+			if (bus != null) {
+				tag.busLinea.setText(bus.getLinea().trim());
+				tag.busDestino.setText(bus.getDestino().trim());
+
+				// tag.busProximo.setText(bus.getProximo());
+
+				if (bus.getSegundoTram() != null) {
+
+					tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo()).trim());
+
+				} else {
+
+					tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
+				}
+
+			}
+
+			//Botones
+			TextView alertaText = (TextView) v.findViewById(R.id.tiempos_alerta);
+			
+			alertaText.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View view) {
+
+					MainActivity actividad = (MainActivity) contexto;
+					
+					
+					// Texto para receiver
+					String textoReceiver = actividad.gestionarAlarmas.prepararReceiver(bus, actividad.paradaActual);
+
+					// Activar alarma y mostrar modal
+					actividad.gestionarAlarmas.mostrarModalTiemposAlerta(bus, actividad.paradaActual, textoReceiver);
+					
+
+				}
+
+			});
+			
+			
+		} else {
+
 			Context ctx = this.getContext().getApplicationContext();
 			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-			v = vi.inflate(R.layout.tiempos_item, null);
-
-			v.setTag(new ViewHolder(v));
-		}
-
-		// Accedemos a la vista cacheada y la rellenamos
-		ViewHolder tag = (ViewHolder) v.getTag();
-
-		BusLlegada bus = getItem(position);
-		if (bus != null) {
-			tag.busLinea.setText(bus.getLinea().trim());
-			tag.busDestino.setText(bus.getDestino().trim());
-
-			// tag.busProximo.setText(bus.getProximo());
-
-			if (bus.getSegundoTram() != null) {
-
-				tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo()).trim());
-
-			} else {
-
-				tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
-			}
+			v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+			// v.setTag(new ViewHolder(v));
 
 		}
 
@@ -137,11 +175,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 		traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
 
-		
-		//min.
+		// min.
 		String nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));
-				
-		
+
 		return nuevoLiteral;
 
 	}

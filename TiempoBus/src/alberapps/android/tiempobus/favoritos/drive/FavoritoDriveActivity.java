@@ -82,9 +82,20 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 			modo = this.getIntent().getExtras().getString("MODO");
 		}
+		
+		
 
 	}
 
+@Override
+protected void onResume() {
+
+	activarProgreso();
+	
+	super.onResume();
+}
+	
+	
 	private void activarProgreso() {
 		//dialog = ProgressDialog.show(this, "", getString(R.string.dialog_procesando), true);
 	}
@@ -115,7 +126,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 				if (driveId != null) {
 
-					activarProgreso();
+					//activarProgreso();
 
 					guardarDatos(driveId);
 
@@ -145,7 +156,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 				if (driveId != null) {
 
-					activarProgreso();
+					//activarProgreso();
 
 					cargarDatos(driveId);
 				} else {
@@ -208,7 +219,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 	 */
 	private void guardarDatos(DriveId id) {
 
-		activarProgreso();
+		//activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
@@ -255,7 +266,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 	 */
 	private void cargarDatos(DriveId id) {
 
-		activarProgreso();
+		//activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 

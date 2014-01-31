@@ -142,7 +142,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	GestionarFondo gestionarFondo;
 
-	GestionarAlarmas gestionarAlarmas;
+	public GestionarAlarmas gestionarAlarmas;
 
 	GestionarWidget gestionarWidget;
 
@@ -689,7 +689,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
 				BusLlegada bus = (BusLlegada) view.getItemAtPosition(position);
 
-				if (bus != null) {
+				if (bus != null && !bus.isSinDatos()) {
 					// setAlarm(bus);
 					busSeleccionado = bus;
 					// openContextMenu(getListView());
@@ -825,8 +825,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					break;
 
 				case 1:
-					datosPantallaPrincipal.shareBus(busSeleccionado, paradaActual);
-					busSeleccionado = null;
+					if(busSeleccionado != null){
+						datosPantallaPrincipal.shareBus(busSeleccionado, paradaActual);
+						busSeleccionado = null;
+					}
 					break;
 
 				case 2:
@@ -1254,6 +1256,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					for (int i = 0; i < n; i++) {
 						laActividad.posteAdapter.add(laActividad.buses.get(i));
 					}
+				}else{
+					
+					//Control de sin datos
+					BusLlegada sinDatos = new BusLlegada();
+					sinDatos.setSinDatos(true);					
+					laActividad.posteAdapter.add(sinDatos);
+					
 				}
 
 				// Pie para la lista de resultados

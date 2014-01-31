@@ -21,7 +21,7 @@ package alberapps.android.tiempobus.util;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -33,8 +33,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
+
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.MapBuilder;
 
 /**
  * Utilidades de uso en la interfaz
@@ -138,6 +140,7 @@ public class UtilidadesUI {
 	 * @param contexto
 	 * @return
 	 */
+	@SuppressLint("NewApi")
 	public static boolean pantallaTabletHorizontal(Context contexto) {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -155,6 +158,24 @@ public class UtilidadesUI {
 		} else {
 			return false;
 		}
+
+	}
+
+	public static void enviarEventoAnalytics(Context context, String evento) {
+
+		// May return null if a EasyTracker has not yet been initialized with a
+		// property ID.
+		EasyTracker easyTracker = EasyTracker.getInstance(context);
+
+		// MapBuilder.createEvent().build() returns a Map of event fields and
+		// values
+		// that are set and sent with the hit.
+		easyTracker.send(MapBuilder.createEvent("Eventos", // Event category
+															// (required)
+				"funcionalidad", // Event action (required)
+				evento, // Event label
+				null) // Event value
+				.build());
 
 	}
 

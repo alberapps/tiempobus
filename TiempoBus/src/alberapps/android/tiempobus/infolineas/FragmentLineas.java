@@ -297,18 +297,22 @@ public class FragmentLineas extends Fragment {
 	 */
 	private void cargarListado() {
 
-		infoLineaAdapter = new InfoLineaAdapter(getActivity(), R.layout.infolineas_item);
+		if (lineasBus != null) {
 
-		infoLineaAdapter.addAll(lineasBus);
+			infoLineaAdapter = new InfoLineaAdapter(getActivity(), R.layout.infolineas_item);
 
-		// Controlar pulsacion
-		lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
-		lineasView.setOnItemClickListener(lineasClickedHandler);
+			infoLineaAdapter.addAll(lineasBus);
 
-		TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
-		lineasView.setEmptyView(vacio);
+			// Controlar pulsacion
+			lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+			lineasView.setOnItemClickListener(lineasClickedHandler);
 
-		lineasView.setAdapter(infoLineaAdapter);
+			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
+			lineasView.setEmptyView(vacio);
+
+			lineasView.setAdapter(infoLineaAdapter);
+
+		}
 
 	}
 

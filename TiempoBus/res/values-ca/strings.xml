@@ -353,7 +353,7 @@ favorit per crear la teua llista.</string>
     
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permetre l\'enviament d\'estadístiques anònimes d\'ús i control d\'errors</string>
-    <string name="analytics_on_desc_inicial">ols ajudar a millorar TiempoBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
+    <string name="analytics_on_desc_inicial">Vols ajudar a millorar TiempoBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
      \nEn qualsevol moment pots canviar la teva decisió a la pantalla de preferències.
      \nPots consultar l\'avís legal a Preferències</string>
     

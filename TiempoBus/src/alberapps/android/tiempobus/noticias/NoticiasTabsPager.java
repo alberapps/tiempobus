@@ -411,9 +411,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				// Quitar barra progreso inicial
 				ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
-				lpb.clearAnimation();
-				lpb.setVisibility(View.INVISIBLE);
-
+				if(lpb != null){
+					lpb.clearAnimation();
+					lpb.setVisibility(View.INVISIBLE);
+				}
+				
+				
 				if (noticias == null || noticias.isEmpty()) {
 					TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
 					noticiasView.setEmptyView(vacio);

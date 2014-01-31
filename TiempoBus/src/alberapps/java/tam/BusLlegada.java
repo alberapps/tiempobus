@@ -48,6 +48,9 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 	private BusLlegada segundoTram;
 
+	
+	private boolean sinDatos = false;
+	
 	public BusLlegada() {
 
 	}
@@ -321,6 +324,14 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		return formatoMinHora;
 
+	}
+
+	public boolean isSinDatos() {
+		return sinDatos;
+	}
+
+	public void setSinDatos(boolean sinDatos) {
+		this.sinDatos = sinDatos;
 	}
 	
 }
