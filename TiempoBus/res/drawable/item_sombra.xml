@@ -25,13 +25,13 @@
         <shape android:shape="rectangle" android:dither="true">
             <solid android:color="#ccc" />
 
-            <corners android:radius="2dp" />
+            <corners android:radius="0dp" />
         </shape>
     </item>
-    <item android:bottom="2dp">
+    <item android:bottom="1.5dp">
         <shape android:shape="rectangle" android:dither="true">
             
-            <corners android:radius="2dp" />
+            <corners android:radius="0dp" />
 
             <solid android:color="@android:color/white" />
             
