@@ -28,7 +28,7 @@ import java.util.List;
 import org.apache.http.protocol.HTTP;
 
 import alberapps.java.tam.BusLinea;
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 
 /**
  * 
@@ -54,7 +54,7 @@ public class ProcesarLineasService {
 
 		try {
 
-			is = Utilidades.recuperarStreamConexionSimple(url);
+			is = Conectividad.conexionGetIsoStream(url);
 
 			if (is != null) {
 

@@ -27,7 +27,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 import android.util.Log;
 
 /**
@@ -45,7 +45,7 @@ public class ProcesarDetalleNoticia {
 
 		try {
 
-			st = Utilidades.recuperarStreamConexionSimple(url);
+			st = Conectividad.conexionGetIsoStream(url);
 
 			Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 

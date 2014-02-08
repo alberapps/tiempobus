@@ -25,6 +25,7 @@ import java.util.Collections;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.webservice.GetPasoParadaResult;
 import alberapps.java.tam.webservice.GetPasoParadaWebservice;
+import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
 
 /**
  * Consulta de tiempos
@@ -44,7 +45,7 @@ public class ProcesarTiemposService {
 
 		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
-		GetPasoParadaWebservice service = new GetPasoParadaWebservice();
+		GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
 		GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada));
 

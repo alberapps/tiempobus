@@ -2,8 +2,6 @@ package alberapps.java.noticias.rss;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -15,7 +13,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 
 public class ParserXML {
 
@@ -31,7 +29,7 @@ public class ParserXML {
 		InputStream st = null;
 		try {
 
-			st = Utilidades.recuperarStreamConexionSimple(urlEntrada);
+			st = Conectividad.conexionGetIsoStream(urlEntrada);
 
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			Document dom = builder.parse(st);

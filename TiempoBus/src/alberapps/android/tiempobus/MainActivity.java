@@ -51,6 +51,7 @@ import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Conectividad;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -163,6 +164,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		Conectividad.activarCache(this);
 
 		setContentView(R.layout.pantalla_principal);
 
@@ -466,6 +469,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	@Override
 	protected void onStop() {
 
+		Conectividad.flushCache();
+
 		handler.removeMessages(MSG_RECARGA);
 
 		super.onStop();
@@ -616,10 +621,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case R.id.menu_mapas:
 
 			if (datosPantallaPrincipal.servicesConnected()) {
-			detenerTareaTiempos();
-			startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
+				detenerTareaTiempos();
+				startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			}
-			
+
 			break;
 
 		case R.id.menu_fondo:
@@ -825,7 +830,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					break;
 
 				case 1:
-					if(busSeleccionado != null){
+					if (busSeleccionado != null) {
 						datosPantallaPrincipal.shareBus(busSeleccionado, paradaActual);
 						busSeleccionado = null;
 					}
@@ -834,17 +839,17 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				case 2:
 
 					if (datosPantallaPrincipal.servicesConnected()) {
-					
-					if (busSeleccionado != null && busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
-						Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
-						i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
-						startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
-					}				
 
-					busSeleccionado = null;
-					
+						if (busSeleccionado != null && busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
+							Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
+							i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
+							startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
+						}
+
+						busSeleccionado = null;
+
 					}
-					
+
 					break;
 
 				case 3:
@@ -1256,13 +1261,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					for (int i = 0; i < n; i++) {
 						laActividad.posteAdapter.add(laActividad.buses.get(i));
 					}
-				}else{
-					
-					//Control de sin datos
+				} else {
+
+					// Control de sin datos
 					BusLlegada sinDatos = new BusLlegada();
-					sinDatos.setSinDatos(true);					
+					sinDatos.setSinDatos(true);
 					laActividad.posteAdapter.add(sinDatos);
-					
+
 				}
 
 				// Pie para la lista de resultados

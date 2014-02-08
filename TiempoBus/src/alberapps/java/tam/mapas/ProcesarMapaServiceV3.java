@@ -35,7 +35,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 import android.os.Build;
 import android.text.Html;
 
@@ -61,7 +61,7 @@ public class ProcesarMapaServiceV3 {
 		DatosMapa[] datosMapa = { null, null };
 		try {
 
-			isZip = Utilidades.recuperarStreamConexionSimple(url);
+			isZip = Conectividad.conexionGetIsoStream(url);
 
 			//Provisional
 			if (url.equals("http://www.subus.es/K/TuribusP.xml")) {
@@ -334,7 +334,7 @@ public class ProcesarMapaServiceV3 {
 		String coordenadas[] = { null, null };
 
 		try {
-			is = Utilidades.recuperarStreamConexionSimple(url);
+			is = Conectividad.conexionGetIsoStream(url);
 
 			if (is != null) {
 

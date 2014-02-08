@@ -32,7 +32,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import alberapps.java.noticias.rss.NoticiaRss;
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 import android.text.Html;
 
 /**
@@ -53,7 +53,7 @@ public class ParserXML {
 
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			st = Utilidades.recuperarStreamConexionSimple(urlEntrada);
+			st = Conectividad.conexionGetIsoStream(urlEntrada);
 			Document dom = builder.parse(st);
 			Element root = dom.getDocumentElement();
 			NodeList items = root.getElementsByTagName("item");

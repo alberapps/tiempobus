@@ -28,7 +28,7 @@ import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import alberapps.java.tam.BusLinea;
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 import android.text.Html;
 import android.util.Log;
 
@@ -65,7 +65,7 @@ public class ProcesarHorarios {
 
 				String url = URL_SUBUS + datosHorario.getHorariosIda().get(i).getLinkHorario();
 
-				st = Utilidades.recuperarStreamConexionSimple(url);
+				st = Conectividad.conexionGetIsoStream(url);
 
 				Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 
@@ -246,7 +246,7 @@ public class ProcesarHorarios {
 
 		try {
 
-			st = Utilidades.recuperarStreamConexionSimple(url);
+			st = Conectividad.conexionGetIsoStream(url);
 
 			Document doc = Jsoup.parse(st, "ISO-8859-1", url);
 

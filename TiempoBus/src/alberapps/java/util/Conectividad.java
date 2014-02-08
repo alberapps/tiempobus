@@ -1,24 +1,81 @@
+/**
+ *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ *  Copyright (C) 2014 Alberto Montiel
+ * 
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package alberapps.java.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
+import alberapps.android.tiempobus.util.Comunes;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.http.HttpResponseCache;
+import android.os.Build;
+import android.util.Log;
+
+/**
+ * Acceso a la red. Conexiones para distintas versiones de Android 
+ *
+ */
 public class Conectividad {
 
-	public static String postContenido(String urlPost, String post) {
+	/**
+	 * Conexion con post y codificacion UTF-8
+	 * 
+	 * Sin cache
+	 * 
+	 * @param urlPost
+	 * @param post
+	 * @return
+	 */
+	public static String conexionPostUtf8(String urlPost, String post) {
+
+		// Para Froyo
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+
+			return conexionPostUtf8Froyo(urlPost, post);
+
+		}
 
 		// Abrir Conexion
 		HttpURLConnection urlConnection = null;
-		
+
 		String datos = null;
 
 		try {
@@ -29,21 +86,23 @@ public class Conectividad {
 			urlConnection = (HttpURLConnection) url.openConnection();
 
 			urlConnection.setDoOutput(true);
-			urlConnection.setChunkedStreamingMode(0);
-			// urlConnection.setFixedLengthStreamingMode(int)
+			// urlConnection.setChunkedStreamingMode(0);
+			urlConnection.setFixedLengthStreamingMode(post.length());
 
-			// urlConnection.setReadTimeout(10000 /* milliseconds */);
-			// urlConnection.setConnectTimeout(15000 /* milliseconds */);
+			urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+			urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
 			urlConnection.setRequestMethod("POST");
 			urlConnection.setDoInput(true);
-			
+
 			urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
+			urlConnection.addRequestProperty("Cache-Control", "no-cache");
+
 			OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-			writeIt(out, post);
+			Utilidades.writeIt(out, post);
 
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			datos = readIt(in);
+			datos = Utilidades.obtenerStringDeStreamUTF8(in);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,40 +116,244 @@ public class Conectividad {
 
 	}
 
-	// Reads an InputStream and converts it to a String.
-	public static String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
+	/**
+	 * Conexion con get y codificacion ISO
+	 * 
+	 * @param urlPost
+	 * @param post
+	 * @return string
+	 */
+	public static String conexionGetIso(String urlGet) {
 
-		int len = 1000000;
+		// Para Froyo
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
-		Reader reader = null;
-		reader = new InputStreamReader(stream, "UTF-8");
-		char[] buffer = new char[len];
-		reader.read(buffer);
-		return new String(buffer);
-	}
+			return conexionGetIsoFroyo(urlGet);
 
-	public static void writeIt(OutputStream out, String str) throws IOException {
+		}
 
-		out.write(str.getBytes("UTF-8"));
-		
-		out.flush();
+		// Abrir Conexion
+		HttpURLConnection urlConnection = null;
 
-	}
+		String datos = null;
 
-	
-	public static InputStream stringToStream(String str){
-		
-		
-		InputStream stream = null;
 		try {
-			stream = new ByteArrayInputStream(str.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
+
+			// Crear url
+			URL url = new URL(urlGet);
+
+			urlConnection = (HttpURLConnection) url.openConnection();
+
+			urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+			urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+
+			urlConnection.setRequestMethod("GET");
+			urlConnection.setDoInput(true);
+
+			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+			datos = Utilidades.obtenerStringDeStream(in);
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if (urlConnection != null) {
+				urlConnection.disconnect();
+			}
 		}
-		
-		return stream;
-		
+
+		return datos;
+
 	}
-	
+
+	/**
+	 * Devuelve inputstream
+	 * 
+	 * @param urlGet
+	 * @return stream
+	 */
+	public static InputStream conexionGetIsoStream(String urlGet) {
+
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet));
+
+	}
+
+	/**
+	 * Conexion sencilla con urlconnection
+	 * 
+	 * @param urlEntrada
+	 * @return stream
+	 */
+	public static InputStream recuperarStreamConexionSimple(String urlEntrada) {
+
+		InputStream is = null;
+
+		try {
+
+			URL url = new URL(urlEntrada);
+
+			URLConnection con = url.openConnection();
+
+			// timeout
+			con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
+			con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+
+			is = con.getInputStream();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+		return is;
+
+	}
+
+	/**
+	 * Conexion con Apache para Froyo
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static String conexionGetIsoFroyo(String url) {
+
+		HttpGet request = new HttpGet(url);
+
+		try {
+
+			// Timeout para establecer conexion
+			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+			HttpParams httpParam = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+
+			// Timeout para recibir datos
+			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+
+			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+
+			HttpResponse response = client.execute(request);
+
+			final int statusCode = response.getStatusLine().getStatusCode();
+
+			if (statusCode != HttpStatus.SC_OK) {
+
+				return null;
+			}
+
+			HttpEntity responseEntity = response.getEntity();
+
+			return EntityUtils.toString(responseEntity, HTTP.ISO_8859_1);
+
+		} catch (IOException e) {
+			request.abort();
+
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Conexion con Apache para Froyo
+	 * 
+	 * @param url
+	 * @return
+	 */
+	public static String conexionPostUtf8Froyo(String url, String post) {
+
+		HttpPost request = new HttpPost(url);
+
+		try {
+
+			// Timeout para establecer conexion
+			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+			HttpParams httpParam = new BasicHttpParams();
+			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+
+			// Timeout para recibir datos
+			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+
+			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+
+			// Datos
+			StringEntity ent = new StringEntity(post, HTTP.UTF_8);
+			ent.setContentType("text/xml; charset=utf-8");
+
+			request.setEntity(ent);
+
+			HttpResponse response = client.execute(request);
+
+			final int statusCode = response.getStatusLine().getStatusCode();
+
+			if (statusCode != HttpStatus.SC_OK) {
+
+				return null;
+			}
+
+			HttpEntity responseEntity = response.getEntity();
+
+			return EntityUtils.toString(responseEntity, HTTP.UTF_8);
+
+		} catch (IOException e) {
+			request.abort();
+
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Activar el uso de cache si la plataforma lo permite
+	 * 
+	 * @param context
+	 */
+	@SuppressLint("NewApi")
+	public static void activarCache(Context context) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+			try {
+				File httpCacheDir = new File(context.getCacheDir(), "http");
+				long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
+				HttpResponseCache.install(httpCacheDir, httpCacheSize);
+				Log.i("Conectividad", "Cache activa");
+
+				Log.d("Conectividad", "Request count: " + HttpResponseCache.getInstalled().getRequestCount());
+				Log.d("Conectividad", "Network count: " + HttpResponseCache.getInstalled().getNetworkCount());
+				Log.d("Conectividad", "Hit count: " + HttpResponseCache.getInstalled().getHitCount());
+
+			} catch (IOException e) {
+				Log.i("Conectividad", "HTTP response cache installation failed:" + e);
+			}
+
+		}
+
+	}
+
+	/**
+	 * Asegurar guardado de la cache al salir
+	 */
+	@SuppressLint("NewApi")
+	public static void flushCache() {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+			HttpResponseCache cache = HttpResponseCache.getInstalled();
+			if (cache != null) {
+				cache.flush();
+
+				Log.i("Conectividad", "flush de cache");
+
+			}
+		}
+
+	}
+
 }

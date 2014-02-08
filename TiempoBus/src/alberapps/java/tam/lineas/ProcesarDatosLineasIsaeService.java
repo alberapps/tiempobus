@@ -30,7 +30,7 @@ import org.jsoup.select.Elements;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 import android.util.Log;
 
 /**
@@ -54,7 +54,7 @@ public class ProcesarDatosLineasIsaeService {
 
 			// Carga desde internet o desde fichero local
 			if (offline == null) {
-				st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS_LINEAS);
+				st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
 				doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
 			} else {
 

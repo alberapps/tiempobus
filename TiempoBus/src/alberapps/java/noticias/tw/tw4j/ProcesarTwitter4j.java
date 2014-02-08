@@ -40,6 +40,7 @@ import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.noticias.tw.v11.Constantes;
+import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -224,7 +225,7 @@ public class ProcesarTwitter4j {
 
 		try {
 
-			st = Utilidades.recuperarStreamConexionSimple(urlParam);
+			st = Conectividad.conexionGetIsoStream(urlParam);
 
 			bm = BitmapFactory.decodeStream(st);
 

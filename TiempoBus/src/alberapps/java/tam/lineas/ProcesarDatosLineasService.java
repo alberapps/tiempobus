@@ -27,7 +27,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import alberapps.java.util.Utilidades;
+import alberapps.java.util.Conectividad;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class ProcesarDatosLineasService {
 
 		// List<Noticias> noticias = new ArrayList<Noticias>();
 
-		InputStream st = Utilidades.recuperarStreamConexionSimple(URL_SUBUS_LINEAS);
+		InputStream st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
 		
 		Document doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
 
