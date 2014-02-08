@@ -180,6 +180,20 @@
     </PreferenceCategory>
     
      
+     <PreferenceCategory
+            android:title="@string/conf_conectividad_titulo">
+            
+        <CheckBoxPreference
+                android:key="conectividad_cache"
+                android:title="@string/conf_conectividad_titulo_check"
+                android:summary="@string/conf_conectividad_titulo_desc" android:defaultValue="true"/>
+        
+        
+                
+    </PreferenceCategory>
+    
+     
+     
     <PreferenceCategory
             android:title="@string/traducciones_tit">
         

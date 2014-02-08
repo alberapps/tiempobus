@@ -19,7 +19,7 @@ package alberapps.java.tam.vehiculos;
 
 import java.util.List;
 
-import alberapps.java.tam.webservice.vehiculos.GetVehiculosWebservice;
+import alberapps.java.tam.webservice.vehiculos.GetVehiculosXmlWebservice;
 import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
 
 /**
@@ -38,25 +38,11 @@ public class ProcesarVehiculosService {
 
 	public static List<InfoVehiculo> procesaVehiculos(String linea) throws Exception {
 
-		GetVehiculosWebservice service = new GetVehiculosWebservice();
+		GetVehiculosXmlWebservice service = new GetVehiculosXmlWebservice();
 
 		List<InfoVehiculo> vehiculosList = null;
 
-	
 		vehiculosList = service.consultarServicio(linea).getInfoVehiculoList();
-
-	
-		// Control errores del status
-		/*
-		 * if(serviceResult != null && (serviceResult.getPasoParadaList() ==
-		 * null || serviceResult.getPasoParadaList().isEmpty()) &&
-		 * serviceResult.getStatus().equals("-1")){
-		 * 
-		 * throw new
-		 * TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
-		 * 
-		 * }
-		 */
 
 		return vehiculosList;
 	}

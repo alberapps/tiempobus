@@ -165,7 +165,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Conectividad.activarCache(this);
+		
 
 		setContentView(R.layout.pantalla_principal);
 
@@ -176,6 +176,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
+		Conectividad.activarCache(this, preferencias);
+		
 		// Delegate gestion
 		datosPantallaPrincipal = new DatosPantallaPrincipal(this, preferencias);
 		gestionarFondo = new GestionarFondo(this, preferencias);

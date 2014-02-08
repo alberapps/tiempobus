@@ -45,13 +45,14 @@ import org.apache.http.util.EntityUtils;
 import alberapps.android.tiempobus.util.Comunes;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
 
 /**
- * Acceso a la red. Conexiones para distintas versiones de Android 
- *
+ * Acceso a la red. Conexiones para distintas versiones de Android
+ * 
  */
 public class Conectividad {
 
@@ -315,22 +316,60 @@ public class Conectividad {
 	 * @param context
 	 */
 	@SuppressLint("NewApi")
-	public static void activarCache(Context context) {
+	public static void activarCache(Context context, SharedPreferences preferencias) {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-			try {
-				File httpCacheDir = new File(context.getCacheDir(), "http");
-				long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
-				HttpResponseCache.install(httpCacheDir, httpCacheSize);
-				Log.i("Conectividad", "Cache activa");
+			boolean cacheActiva = preferencias.getBoolean("conectividad_cache", true);
 
-				Log.d("Conectividad", "Request count: " + HttpResponseCache.getInstalled().getRequestCount());
-				Log.d("Conectividad", "Network count: " + HttpResponseCache.getInstalled().getNetworkCount());
-				Log.d("Conectividad", "Hit count: " + HttpResponseCache.getInstalled().getHitCount());
+			boolean cacheEliminada = preferencias.getBoolean("conectividad_cache_eliminada", false);
 
-			} catch (IOException e) {
-				Log.i("Conectividad", "HTTP response cache installation failed:" + e);
+			if (cacheActiva) {
+
+				// Activar la cache
+
+				try {
+					File httpCacheDir = new File(context.getCacheDir(), "http");
+					long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
+					HttpResponseCache.install(httpCacheDir, httpCacheSize);
+					Log.i("Conectividad", "Cache activa");
+
+					Log.d("Conectividad", "Request count: " + HttpResponseCache.getInstalled().getRequestCount());
+					Log.d("Conectividad", "Network count: " + HttpResponseCache.getInstalled().getNetworkCount());
+					Log.d("Conectividad", "Hit count: " + HttpResponseCache.getInstalled().getHitCount());
+
+					SharedPreferences.Editor editor = preferencias.edit();
+					editor.putBoolean("cache_eliminada", false);
+					editor.commit();
+
+				} catch (IOException e) {
+					Log.i("Conectividad", "HTTP response cache installation failed:" + e);
+				}
+
+			} else if (!cacheEliminada) {
+
+				// Si se ha decidido eliminar la cache
+
+				HttpResponseCache cache = HttpResponseCache.getInstalled();
+
+				if (cache != null) {
+
+					try {
+						cache.delete();
+
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putBoolean("cache_eliminada", true);
+						editor.commit();
+
+						Log.i("Conectividad", "Cache eliminada");
+
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
+
 			}
 
 		}
