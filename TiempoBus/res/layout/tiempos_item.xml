@@ -84,13 +84,36 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp" >
 
+                <ImageView
+                    android:id="@+id/tiempos_alerta_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:src="@drawable/device_access_alarms" />
+
+                <ImageView
+                    android:id="@+id/compartir_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:src="@drawable/social_share" />
+
+                <ImageView
+                    android:id="@+id/audio_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:src="@drawable/device_access_volume_on" />
+
                 <TextView
                     android:id="@+id/tiempos_alerta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:background="@drawable/actionbar_compat_item"
-                    android:text="@string/menu_alarma"
+                    android:text=""
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="12sp"
@@ -99,6 +122,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
                     android:orientation="vertical" >
 
                     <TextView

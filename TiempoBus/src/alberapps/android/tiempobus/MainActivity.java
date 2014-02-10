@@ -62,6 +62,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -89,6 +90,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -139,7 +141,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public boolean lecturaOK = true;
 	public boolean lecturaAlternativa = false;
 
-	DatosPantallaPrincipal datosPantallaPrincipal;
+	public DatosPantallaPrincipal datosPantallaPrincipal;
 
 	GestionarFondo gestionarFondo;
 
@@ -165,8 +167,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		
-
 		setContentView(R.layout.pantalla_principal);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -177,7 +177,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
 		Conectividad.activarCache(this, preferencias);
-		
+
 		// Delegate gestion
 		datosPantallaPrincipal = new DatosPantallaPrincipal(this, preferencias);
 		gestionarFondo = new GestionarFondo(this, preferencias);
@@ -855,7 +855,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 					break;
 
 				case 3:
-					datosPantallaPrincipal.cantarLinea();
+					datosPantallaPrincipal.cantarLinea(busSeleccionado);
 					busSeleccionado = null;
 					break;
 
@@ -1226,9 +1226,19 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
-				if (cabdatos.equals("")) {
+				ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
 
+				if (cabdatos.equals("")) {
+					// Si no hay favorito, descripcion de la base de datos
 					cabdatos = cabdatos2;
+
+					// Si no es favorito
+					imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_not_important));
+
+				} else {
+
+					// Si hay favorito cambiar indicador favorito
+					imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_important));
 
 				}
 

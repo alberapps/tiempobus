@@ -1013,7 +1013,7 @@ public class DatosPantallaPrincipal {
 	 * Prepara la linea a leer
 	 * 
 	 */
-	public void cantarLinea() {
+	public void cantarLinea(BusLlegada busSeleccionado) {
 
 		if (context.lecturaOK) {
 
@@ -1021,13 +1021,13 @@ public class DatosPantallaPrincipal {
 
 			if (esTram(context.paradaActual)) {
 
-				lineaALeer = context.getString(R.string.leer_1_tram) + " " + context.busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + context.busSeleccionado.getDestino() + " "
-						+ context.getString(R.string.leer_3) + " " + context.busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+				lineaALeer = context.getString(R.string.leer_1_tram) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
+						+ context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
 
 			} else {
 
-				lineaALeer = context.getString(R.string.leer_1) + " " + context.busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + context.busSeleccionado.getDestino() + " "
-						+ context.getString(R.string.leer_3) + " " + context.busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+				lineaALeer = context.getString(R.string.leer_1) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
+						+ context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
 
 			}
 
@@ -1041,13 +1041,13 @@ public class DatosPantallaPrincipal {
 
 			if (esTram(context.paradaActual)) {
 
-				lineaALeer = "El tranvía de la línea " + context.busSeleccionado.getLinea() + " con destino " + context.busSeleccionado.getDestino() + " llegará en "
-						+ context.busSeleccionado.getProximoMinutos().toString() + " minutos";
+				lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en "
+						+ busSeleccionado.getProximoMinutos().toString() + " minutos";
 
 			} else {
 
-				lineaALeer = "El autobús de la línea " + context.busSeleccionado.getLinea() + " con destino " + context.busSeleccionado.getDestino() + " llegará en "
-						+ context.busSeleccionado.getProximoMinutos().toString() + " minutos";
+				lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en "
+						+ busSeleccionado.getProximoMinutos().toString() + " minutos";
 
 			}
 

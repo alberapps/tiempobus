@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -61,14 +62,14 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 		if (!bus.isSinDatos()) {
 
 			// Si no tenemos la vista de la fila creada componemos una
-			//if (v == null) {
-				Context ctx = this.getContext().getApplicationContext();
-				LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			// if (v == null) {
+			Context ctx = this.getContext().getApplicationContext();
+			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-				v = vi.inflate(R.layout.tiempos_item, null);
+			v = vi.inflate(R.layout.tiempos_item, null);
 
-				v.setTag(new ViewHolder(v));
-			//}
+			v.setTag(new ViewHolder(v));
+			// }
 
 			// Accedemos a la vista cacheada y la rellenamos
 			ViewHolder tag = (ViewHolder) v.getTag();
@@ -91,28 +92,53 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 			}
 
-			//Botones
-			TextView alertaText = (TextView) v.findViewById(R.id.tiempos_alerta);
-			
+			// Botones
+			ImageView alertaText = (ImageView) v.findViewById(R.id.tiempos_alerta_img);
+
 			alertaText.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View view) {
 
 					MainActivity actividad = (MainActivity) contexto;
-					
-					
+
 					// Texto para receiver
 					String textoReceiver = actividad.gestionarAlarmas.prepararReceiver(bus, actividad.paradaActual);
 
 					// Activar alarma y mostrar modal
 					actividad.gestionarAlarmas.mostrarModalTiemposAlerta(bus, actividad.paradaActual, textoReceiver);
-					
 
 				}
 
 			});
-			
-			
+
+			ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
+
+			compartir.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View view) {
+
+					MainActivity actividad = (MainActivity) contexto;
+
+					actividad.datosPantallaPrincipal.shareBus(bus, actividad.paradaActual);
+
+				}
+
+			});
+
+			ImageView leer = (ImageView) v.findViewById(R.id.audio_img);
+
+			leer.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View view) {
+
+					MainActivity actividad = (MainActivity) contexto;
+
+					actividad.datosPantallaPrincipal.cantarLinea(bus);
+
+				}
+
+			});
+
 		} else {
 
 			Context ctx = this.getContext().getApplicationContext();
