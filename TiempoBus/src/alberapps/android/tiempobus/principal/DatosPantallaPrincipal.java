@@ -23,9 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.appinfo.AppInfoActivity;
@@ -47,6 +44,7 @@ import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
@@ -67,6 +65,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * Gestion de tiempos principal
@@ -1069,6 +1070,41 @@ public class DatosPantallaPrincipal {
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
 	public boolean servicesConnected() {
+		// Check that Google Play services is available
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
+		// If Google Play services is available
+		if (ConnectionResult.SUCCESS == resultCode) {
+			// In debug mode, log the status
+			Log.d("Activity Recognition", "Google Play services is available.");
+			// Continue
+			return true;
+			// Google Play services was not available for some reason
+		} else {
+			// Get the error dialog from Google Play services
+			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, context, CONNECTION_FAILURE_RESOLUTION_REQUEST);
+
+			// If Google Play services can provide an error dialog
+			if (errorDialog != null) {
+
+				errorDialog.show();
+
+			} else {
+
+				Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_maps_gpservices), Toast.LENGTH_LONG).show();
+
+			}
+
+			return false;
+		}
+	}
+	
+	/**
+	 * Para acceder desde otras actividades
+	 * 
+	 * @param context
+	 * @return boolean
+	 */
+	public static boolean servicesConnectedActivity(Activity context) {
 		// Check that Google Play services is available
 		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
 		// If Google Play services is available

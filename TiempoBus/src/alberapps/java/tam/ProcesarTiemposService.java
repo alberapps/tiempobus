@@ -24,7 +24,6 @@ import java.util.Collections;
 
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.webservice.GetPasoParadaResult;
-import alberapps.java.tam.webservice.GetPasoParadaWebservice;
 import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
 
 /**
@@ -37,10 +36,9 @@ public class ProcesarTiemposService {
 	 * Procesa tiempos
 	 * 
 	 * @param parada
-	 * @return
+	 * @return lista bus
 	 * @throws Exception
 	 */
-
 	public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
 
 		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
@@ -49,14 +47,13 @@ public class ProcesarTiemposService {
 
 		GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada));
 
-		//Control errores del status
-		if(serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus().equals("-1")){
-			
+		// Control errores del status
+		if (serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus().equals("-1")) {
+
 			throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
-			
+
 		}
-		
-		
+
 		for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 
 			String infoSalidas = "";
@@ -98,14 +95,14 @@ public class ProcesarTiemposService {
 	 * 
 	 * @param linea
 	 * @param poste
-	 * @return
+	 * @return bus
 	 * @throws Exception
 	 */
 	public static BusLlegada getPosteConLinea(String linea, String poste) throws Exception {
 
 		BusLlegada buses = null;
 
-		GetPasoParadaWebservice service = new GetPasoParadaWebservice();
+		GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
 		GetPasoParadaResult serviceResult = service.consultarServicio(linea, poste);
 

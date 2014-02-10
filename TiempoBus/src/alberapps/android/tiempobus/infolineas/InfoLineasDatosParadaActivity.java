@@ -163,6 +163,11 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 
 	}
 
+	/**
+	 * Cargar tiempos
+	 * 
+	 * @param codigo
+	 */
 	private void cargarTiempos(int codigo) {
 
 		Intent intent = new Intent(this, MainActivity.class);
@@ -180,15 +185,25 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 
 	}
 
+	/**
+	 * Abrir mapa de linea seleccionada
+	 * 
+	 * @param linea
+	 * @param datosLinea
+	 */
 	private void launchMapasSeleccion(String linea, BusLinea datosLinea) {
 
-		if (linea != null && !linea.equals("")) {
-			Intent i = new Intent(this, MapasMaps2Activity.class);
-			i.putExtra("LINEA_MAPA_FICHA", linea);
-			i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
-			i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
-			i.putExtra("LINEA_MAPA_FICHA_DESC", datosLinea.getLinea());
-			startActivity(i);
+		if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
+
+			if (linea != null && !linea.equals("")) {
+				Intent i = new Intent(this, MapasMaps2Activity.class);
+				i.putExtra("LINEA_MAPA_FICHA", linea);
+				i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
+				i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
+				i.putExtra("LINEA_MAPA_FICHA_DESC", datosLinea.getLinea());
+				startActivity(i);
+			}
+
 		}
 	}
 

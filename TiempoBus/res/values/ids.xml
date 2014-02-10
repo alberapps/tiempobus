@@ -54,4 +54,5 @@
     <item type="id" name="contenedor_secundario"/>
     <item type="id" name="menu_exportar_drive"/>
     <item type="id" name="menu_importar_drive"/>
+    <item type="id" name="menu_cercanas_img"/>
 </resources>

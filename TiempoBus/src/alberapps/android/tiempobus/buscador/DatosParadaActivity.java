@@ -19,13 +19,12 @@
  */
 package alberapps.android.tiempobus.buscador;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.UtilidadesTAM;
 import android.annotation.SuppressLint;
@@ -47,6 +46,8 @@ import android.view.View.OnClickListener;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * Displays a word and its definition.
@@ -153,6 +154,10 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 	}
 
+	/**
+	 * Cargar los tiempos
+	 * @param codigo
+	 */
 	private void cargarTiempos(int codigo) {
 
 		Intent intent = new Intent(this, MainActivity.class);
@@ -170,19 +175,28 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 	}
 
+	/**
+	 * Acceder al mapa de la linea seleccionada
+	 * @param linea
+	 */
 	private void launchMapasSeleccion(String linea) {
 
-		if (linea != null && !linea.equals("")) {
-			Intent i = new Intent(this, MapasMaps2Activity.class);
-			i.putExtra("LINEA_MAPA_FICHA", linea);
+		if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
-			int pos = UtilidadesTAM.getIdLinea(linea);
+			if (linea != null && !linea.equals("")) {
+				Intent i = new Intent(this, MapasMaps2Activity.class);
+				i.putExtra("LINEA_MAPA_FICHA", linea);
 
-			i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
-			i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
+				int pos = UtilidadesTAM.getIdLinea(linea);
 
-			startActivity(i);
+				i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
+				i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
+
+				startActivity(i);
+			}
+
 		}
+
 	}
 
 	@Override

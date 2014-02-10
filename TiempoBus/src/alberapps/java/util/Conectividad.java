@@ -124,7 +124,7 @@ public class Conectividad {
 	 * @param post
 	 * @return string
 	 */
-	public static String conexionGetIso(String urlGet) {
+	public static String conexionGetIso(String urlGet, boolean usarCache) {
 
 		// Para Froyo
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
@@ -151,6 +151,10 @@ public class Conectividad {
 			urlConnection.setRequestMethod("GET");
 			urlConnection.setDoInput(true);
 
+			if (!usarCache) {
+				urlConnection.addRequestProperty("Cache-Control", "no-cache");
+			}
+
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 			datos = Utilidades.obtenerStringDeStream(in);
 
@@ -175,7 +179,19 @@ public class Conectividad {
 	 */
 	public static InputStream conexionGetIsoStream(String urlGet) {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet));
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true));
+
+	}
+
+	/**
+	 * Devuelve inputstream sin usar cache en conexion
+	 * 
+	 * @param urlGet
+	 * @return stream
+	 */
+	public static InputStream conexionGetIsoStreamNoCache(String urlGet) {
+
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false));
 
 	}
 

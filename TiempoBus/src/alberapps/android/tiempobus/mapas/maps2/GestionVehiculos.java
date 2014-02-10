@@ -18,7 +18,9 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +37,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -241,6 +244,18 @@ public class GestionVehiculos {
 				if (context.dialog != null && context.dialog.isShowing()) {
 					context.dialog.dismiss();
 				}
+				
+				//Actualizar hora
+				ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
+				
+				final Calendar c = Calendar.getInstance();
+
+				SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+
+				String updated = df.format(c.getTime()).toString();
+				
+				botonVehiculos.setText("("+updated+")");
+				
 
 			} else {
 
