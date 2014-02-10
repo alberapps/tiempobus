@@ -88,7 +88,7 @@
                     android:id="@+id/tiempos_alerta_img"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/actionbar_compat_item"
                     android:src="@drawable/device_access_alarms" />
 
@@ -96,9 +96,17 @@
                     android:id="@+id/compartir_img"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/actionbar_compat_item"
                     android:src="@drawable/social_share" />
+
+                <ImageView
+                    android:id="@+id/mapa_tarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:src="@drawable/location_map_2" />
 
                 <ImageView
                     android:id="@+id/audio_img"

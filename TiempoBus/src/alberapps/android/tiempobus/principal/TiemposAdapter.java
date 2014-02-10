@@ -21,8 +21,10 @@ package alberapps.android.tiempobus.principal;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.java.tam.BusLlegada;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,6 +136,27 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 					MainActivity actividad = (MainActivity) contexto;
 
 					actividad.datosPantallaPrincipal.cantarLinea(bus);
+
+				}
+
+			});
+
+			ImageView mapa = (ImageView) v.findViewById(R.id.mapa_tarjeta);
+
+			mapa.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View view) {
+
+					MainActivity actividad = (MainActivity) contexto;
+
+					if (actividad.datosPantallaPrincipal.servicesConnected()) {
+
+						Intent i = new Intent(actividad, MapasMaps2Activity.class);
+						i.putExtra("LINEA_MAPA", bus.getLinea());
+						i.putExtra("LINEA_MAPA_PARADA", Integer.toString(actividad.paradaActual));
+						actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+
+					}
 
 				}
 

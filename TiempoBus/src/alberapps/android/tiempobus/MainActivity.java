@@ -100,7 +100,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener {
 
-	protected static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
+	public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
 	public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
 	public static final int SUB_ACTIVITY_RESULT_OK = 1002;
 	public static final int SUB_ACTIVITY_RESULT_CANCEL = 1003;
@@ -845,6 +845,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 						if (busSeleccionado != null && busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
 							Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
 							i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
+							i.putExtra("LINEA_MAPA_PARADA", Integer.toString(paradaActual));
 							startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
 						}
 

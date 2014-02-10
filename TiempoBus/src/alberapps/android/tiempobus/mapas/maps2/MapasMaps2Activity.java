@@ -82,6 +82,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	public String lineaSeleccionada;
 	public String lineaSeleccionadaDesc;
 	public String lineaSeleccionadaNum;
+	
+	public String paradaSeleccionadaEntrada;
 
 	public AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
 	public AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;

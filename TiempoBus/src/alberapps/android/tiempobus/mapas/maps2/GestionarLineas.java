@@ -179,6 +179,8 @@ public class GestionarLineas {
 
 		}
 
+		MarkerOptions posicionSelecionada = null;
+
 		// Datos IDA
 		if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
@@ -229,11 +231,18 @@ public class GestionarLineas {
 
 				listaPuntos.add(point);
 
+				
+				if (context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim())) {
+
+					posicionSelecionada = context.markersIda.get(context.markersIda.size()-1);
+
+				}
+
 			}
 
 			if (context.markersIda != null && context.markersIda.size() > 0) {
 
-				cargarMarkers(context.markersIda);
+				cargarMarkers(context.markersIda, posicionSelecionada);
 
 			} else {
 				avisoPosibleError();
@@ -330,17 +339,24 @@ public class GestionarLineas {
 
 				listaPuntos.add(point);
 
+				// Si hay seleccion pero no estaba en la ida
+				if (posicionSelecionada == null && context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim())) {
+
+					posicionSelecionada = context.markersVuelta.get(context.markersVuelta.size()-1);
+
+				}
+
 			}
 
 			if (context.markersMedio != null && context.markersMedio.size() > 0 && context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
-				cargarMarkers(context.markersMedio);
+				cargarMarkers(context.markersMedio, posicionSelecionada);
 
 			}
 
 			if (context.markersVuelta.size() > 0) {
 
-				cargarMarkers(context.markersVuelta);
+				cargarMarkers(context.markersVuelta, posicionSelecionada);
 
 			} else {
 				avisoPosibleError();
@@ -380,6 +396,10 @@ public class GestionarLineas {
 			}
 
 		}
+
+		// Limpiar para modo normal
+		posicionSelecionada = null;
+		context.paradaSeleccionadaEntrada = null;
 
 	}
 
@@ -439,6 +459,10 @@ public class GestionarLineas {
 					context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
 
 				}
+				
+				// Control parada seleccionada al entrar
+				context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
+				
 
 				context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
@@ -458,6 +482,8 @@ public class GestionarLineas {
 
 			}
 
+			
+
 		} else if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
 			String lineaPos = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA");
@@ -467,6 +493,9 @@ public class GestionarLineas {
 
 			context.lineaSeleccionadaNum = lineaPos;
 
+			// Control parada seleccionada al entrar
+			context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
+			
 			context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
 			if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
@@ -652,11 +681,22 @@ public class GestionarLineas {
 	 * 
 	 * @param markers
 	 */
-	public void cargarMarkers(List<MarkerOptions> markers) {
+	public void cargarMarkers(List<MarkerOptions> markers, MarkerOptions posicionSeleccionada) {
 
+		Log.d("mapas", "selecciondada: " + posicionSeleccionada);
+		
 		if (markers != null) {
 			for (int i = 0; i < markers.size(); i++) {
-				context.mMap.addMarker(markers.get(i));
+
+				Marker marker = context.mMap.addMarker(markers.get(i));
+
+				// Mostrar informacion de la seleccionada
+				if (posicionSeleccionada != null && markers.get(i).equals(posicionSeleccionada)) {
+
+					marker.showInfoWindow();
+
+				}
+
 			}
 		}
 

@@ -164,7 +164,7 @@ public class ParadasCercanas {
 				context.markersIda.add(new MarkerOptions().position(point).title("[" + listaParadas.get(i).getParada().trim() + "] " + listaParadas.get(i).getDireccion().trim()).snippet(descripcionAlert)
 						.icon(BitmapDescriptorFactory.fromResource(context.drawableIda)));
 
-				context.gestionarLineas.cargarMarkers(context.markersIda);
+				context.gestionarLineas.cargarMarkers(context.markersIda, null);
 
 				listaPuntos.add(point);
 

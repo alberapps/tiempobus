@@ -192,6 +192,8 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 				i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
 				i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
 
+				i.putExtra("LINEA_MAPA_PARADA", paradaSel);
+				
 				startActivity(i);
 			}
 

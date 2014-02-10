@@ -201,6 +201,10 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 				i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
 				i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
 				i.putExtra("LINEA_MAPA_FICHA_DESC", datosLinea.getLinea());
+				
+				i.putExtra("LINEA_MAPA_PARADA", paradaSel);
+				
+				
 				startActivity(i);
 			}
 
