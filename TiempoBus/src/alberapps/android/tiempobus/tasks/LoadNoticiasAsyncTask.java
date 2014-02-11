@@ -61,7 +61,15 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 		List<Noticias> noticiasList = null;
 		try {
 
-			noticiasList = ProcesarNoticias.getTamNews();
+			Boolean usarCache = true;
+
+			if (datos.length > 0) {
+
+				usarCache = (Boolean) datos[0];
+
+			}
+
+			noticiasList = ProcesarNoticias.getTamNews(usarCache);
 
 		} catch (Exception e) {
 			return null;

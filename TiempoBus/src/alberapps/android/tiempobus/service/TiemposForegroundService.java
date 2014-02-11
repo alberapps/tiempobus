@@ -137,7 +137,7 @@ public class TiemposForegroundService extends Service {
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		Log.d("SERVICIO", "Servicio creado");
 
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -201,10 +201,10 @@ public class TiemposForegroundService extends Service {
 		if (ACTION_FOREGROUND.equals(intent.getAction())) {
 			// In this sample, we'll use the same text for the ticker and the
 			// expanded notification
-			
-			CharSequence text = getString(R.string.foreground_service_started, new Object[] { preferencias.getString("servicio_recarga", "60")});
-			
-			//CharSequence text = getText(R.string.foreground_service_started);
+
+			CharSequence text = getString(R.string.foreground_service_started, new Object[] { preferencias.getString("servicio_recarga", "60") });
+
+			// CharSequence text = getText(R.string.foreground_service_started);
 
 			// Set the icon, scrolling text and timestamp
 			Notification notification = new Notification(R.drawable.ic_stat_tiempobus_3, text, System.currentTimeMillis());
@@ -234,8 +234,8 @@ public class TiemposForegroundService extends Service {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		manejador.removeCallbacks(mRecarga);		
-		
+		manejador.removeCallbacks(mRecarga);
+
 		manejador.postDelayed(mRecarga, frecuenciaRecarga());
 
 	}
@@ -302,6 +302,17 @@ public class TiemposForegroundService extends Service {
 								cambioTiempo = true;
 							}
 
+						} else if (!DatosPantallaPrincipal.esTram(parada) && tiempos.getSegundoBus() != null) {
+							if (tiempo == 3 && tiempos.getSiguienteMinutos() >= mins && tiempos.getSegundoBus().getProximoMinutos() > mins) {
+								tiempo = 2;
+								cambioTiempo = true;
+							}
+
+							if (tiempo == 4 && tiempos.getSegundoBus().getProximoMinutos() >= mins && tiempos.getSegundoBus().getSiguienteMinutos() > mins) {
+								tiempo = 3;
+								cambioTiempo = true;
+							}
+
 						}
 
 						// Posible cambio de orden
@@ -326,6 +337,14 @@ public class TiemposForegroundService extends Service {
 								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoTram().getProximoMinutos() * 60000)) - (mins * 60000);
 							} else if (tiempo == 4) {
 								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoTram().getSiguienteMinutos() * 60000)) - (mins * 60000);
+							}
+
+						} else if (!DatosPantallaPrincipal.esTram(parada) && tiempos.getSegundoBus() != null) {
+
+							if (tiempo == 3) {
+								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoBus().getProximoMinutos() * 60000)) - (mins * 60000);
+							} else if (tiempo == 4) {
+								milisegundosActuales = (actual.getTime() + (tiempos.getSegundoBus().getSiguienteMinutos() * 60000)) - (mins * 60000);
 							}
 
 						}
@@ -438,6 +457,18 @@ public class TiemposForegroundService extends Service {
 						tiempo = 3;
 					}
 
+				} else if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoBus() != null) {
+
+					BusLlegada theBus2 = theBus.getSegundoBus();
+
+					if (theBus.getProximoMinutos() < mins) {
+						et = theBus2.getSiguienteMinutos();
+						tiempo = 4;
+					} else {
+						et = theBus2.getProximoMinutos();
+						tiempo = 3;
+					}
+
 				} else {
 					et = theBus.getSiguienteMinutos();
 					tiempo = 2;
@@ -533,7 +564,6 @@ public class TiemposForegroundService extends Service {
 		}
 	}
 
-	
 	/**
 	 * Frecuencia configurable
 	 * 
@@ -548,5 +578,5 @@ public class TiemposForegroundService extends Service {
 		return frecuencia;
 
 	}
-	
+
 }

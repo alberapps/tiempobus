@@ -115,7 +115,7 @@ public class GestionarAlarmas {
 		long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
 		Log.d("ALARMA", "minutos: " + mins + " item: " + item);
-		
+
 		// Si es tram
 		/*
 		 * if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
@@ -132,9 +132,22 @@ public class GestionarAlarmas {
 			// Si el primer bus no cumple, se usa el segundo
 			if (theBus.getProximoMinutos() < mins) {
 
+				//Controlar si hay tiempos combinados
 				if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoTram() != null) {
 
 					BusLlegada theBus2 = theBus.getSegundoTram();
+
+					if (theBus2.getProximoMinutos() < mins) {
+						et = theBus2.getSiguienteMinutos();
+						tiempo = 4;
+					} else {
+						et = theBus2.getProximoMinutos();
+						tiempo = 3;
+					}
+
+				} else if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoBus() != null) {
+
+					BusLlegada theBus2 = theBus.getSegundoBus();
 
 					if (theBus2.getProximoMinutos() < mins) {
 						et = theBus2.getSiguienteMinutos();
@@ -224,7 +237,7 @@ public class GestionarAlarmas {
 
 		String horaT = ft.format(milisegundos);
 
-		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
+		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + " (" + mins + " " + context.getString(R.string.literal_min)  + ")" + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
 		PreferencesUtil.putAlertaInfo(context, alertaDialog);
 
@@ -357,9 +370,7 @@ public class GestionarAlarmas {
 					intent.putExtra("PARADA", paradaActual);
 
 					boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-					// if (checkActivo &&
-					// !context.getDatosPantallaPrincipal().esTram(paradaActual))
-					// {
+					
 					if (checkActivo) {
 						context.startService(intent);
 					}
@@ -410,7 +421,7 @@ public class GestionarAlarmas {
 					+ context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n"
 					+ (context.getString(R.string.alarma_auto_aviso, new Object[] { preferencias.getString("servicio_recarga", "60") }));
 
-			// dialog.setMessage(alertaDialog);
+			
 			dialog.setIcon(R.drawable.ic_alarm_modal);
 
 			LayoutInflater li = context.getLayoutInflater();
@@ -424,9 +435,7 @@ public class GestionarAlarmas {
 
 			CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
 
-			// if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-			// check.setEnabled(false);
-			// }
+			
 
 			boolean checkActivo = preferencias.getBoolean("activarServicio", false);
 			check.setChecked(checkActivo);

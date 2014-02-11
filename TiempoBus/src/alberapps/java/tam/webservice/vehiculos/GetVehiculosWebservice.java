@@ -18,19 +18,11 @@
 package alberapps.java.tam.webservice.vehiculos;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 import alberapps.android.tiempobus.util.Comunes;
-import android.util.Log;
 
 public class GetVehiculosWebservice {
 
@@ -52,7 +44,7 @@ public class GetVehiculosWebservice {
 	 * @return
 	 * @throws Exception
 	 */
-	public GetVehiculosResult consultarServicio(String linea) throws Exception {
+/*	public GetVehiculosResult consultarServicio(String linea) throws Exception {
 
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
@@ -130,7 +122,7 @@ public class GetVehiculosWebservice {
 
 		}
 
-	}
+	}*/
 
 	/**
 	 * Forma string con los minutos faltantes y la hora aproximada de llegada

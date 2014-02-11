@@ -87,7 +87,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 					tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo()).trim());
 
-				} else {
+				} else if (bus.getSegundoBus() != null) {
+
+					tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo()).trim());
+
+				}else {
 
 					tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
 				}

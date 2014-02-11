@@ -153,6 +153,9 @@ public class Conectividad {
 
 			if (!usarCache) {
 				urlConnection.addRequestProperty("Cache-Control", "no-cache");
+				Log.d("CONEXION", "Sin cache");
+			}else{
+				Log.d("CONEXION", "Con cache");
 			}
 
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -180,6 +183,19 @@ public class Conectividad {
 	public static InputStream conexionGetIsoStream(String urlGet) {
 
 		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true));
+
+	}
+
+	/**
+	 * Conexion indicando si hay que usar cache
+	 * 
+	 * @param urlGet
+	 * @param usarCache
+	 * @return stream
+	 */
+	public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache) {
+
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache));
 
 	}
 

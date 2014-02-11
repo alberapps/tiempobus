@@ -338,7 +338,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		case R.id.menu_refresh:
 
-			recargarNoticias(false);
+			recargarNoticias(false, false);
 
 			break;
 
@@ -363,7 +363,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS);
 		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS_TRAM);
 
-		recargarNoticias(false);
+		recargarNoticias(false, true);
 
 	}
 
@@ -380,7 +380,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	/**
 	 * Recarga de noticias
 	 */
-	private void recargarNoticias(boolean bloqueo) {
+	private void recargarNoticias(boolean bloqueo, boolean usarCache) {
 
 		if (bloqueo) {
 			dialog.show();
@@ -432,7 +432,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute();
+			loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(usarCache);
 
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();

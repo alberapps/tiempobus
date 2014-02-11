@@ -20,11 +20,14 @@
 package alberapps.java.tam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.webservice.GetPasoParadaResult;
 import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
+import android.util.Log;
 
 /**
  * Consulta de tiempos
@@ -86,8 +89,72 @@ public class ProcesarTiemposService {
 
 		}
 
+		// Filtrar repetidos
+		combinarRegistros(buses);
+
 		Collections.sort(buses);
 		return buses;
+	}
+
+	/**
+	 * Combinar los registros cuando llegan duplicados
+	 * 
+	 * @param busesList
+	 */
+	public static void combinarRegistros(List<BusLlegada> busesList) {
+
+		if (busesList == null) {
+			return;
+		}
+
+		for (int i = 0; i < busesList.size(); i++) {
+			for (int j = 0; j < busesList.size(); j++) {
+				if (i != j && busesList.get(i).getLinea().equals(busesList.get(j).getLinea()) && busesList.get(i).getDestino().equals(busesList.get(j).getDestino())) {
+
+					// Añadir como repetido
+					busesList.get(i).setSegundoBus(busesList.remove(j));
+
+					Log.d("TRAM", "Unificados registros: " + busesList.get(i).getLinea() + " - " + busesList.get(i).getSegundoBus().getLinea());
+
+					j = 0;
+
+					ordenarTiempos(busesList.get(i));
+
+					continue;
+
+				}
+			}
+
+		}
+
+	}
+
+	/**
+	 * Ordenar duplicados por tiempos
+	 * 
+	 * @param bus
+	 */
+	private static void ordenarTiempos(BusLlegada bus) {
+
+		Log.d("TRAM", "REORDENAR");
+
+		Integer tiempo1 = bus.getProximoMinutos();
+		Integer tiempo2 = bus.getSiguienteMinutos();
+		Integer tiempo3 = bus.getSegundoBus().getProximoMinutos();
+		Integer tiempo4 = bus.getSegundoBus().getSiguienteMinutos();
+
+		List<Integer> lista = Arrays.asList(tiempo1, tiempo2, tiempo3, tiempo4);
+
+		Collections.sort(lista);
+
+		bus.cambiarProximo(lista.get(0));
+		bus.cambiarSiguiente(lista.get(1));
+		bus.getSegundoBus().cambiarProximo(lista.get(2));
+		bus.getSegundoBus().cambiarSiguiente(lista.get(3));
+
+		Log.d("TRAM", "REORDENAR: " + bus.getProximo());
+		Log.d("TRAM", "REORDENAR2: " + bus.getSegundoBus().getProximo());
+
 	}
 
 	/**
@@ -100,7 +167,7 @@ public class ProcesarTiemposService {
 	 */
 	public static BusLlegada getPosteConLinea(String linea, String poste) throws Exception {
 
-		BusLlegada buses = null;
+		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
 		GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
@@ -134,11 +201,19 @@ public class ProcesarTiemposService {
 
 			BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
 
-			buses = bus;
+			buses.add(bus);
 
 		}
 
-		return buses;
+		// Filtrar repetidos
+		combinarRegistros(buses);
+
+		if (buses == null || buses.isEmpty()) {
+			return null;
+		}
+
+		return buses.get(0);
+
 	}
 
 }

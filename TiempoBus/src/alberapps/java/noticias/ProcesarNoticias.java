@@ -37,11 +37,11 @@ public class ProcesarNoticias {
 
 	public static String URL_SUBUS_NOTICIAS = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
-	public static List<Noticias> getTamNews() throws Exception {
+	public static List<Noticias> getTamNews(Boolean usarCache) throws Exception {
 
 		List<Noticias> noticias = new ArrayList<Noticias>();
 
-		Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS), "ISO-8859-1", URL_SUBUS_NOTICIAS);
+		Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache), "ISO-8859-1", URL_SUBUS_NOTICIAS);
 
 		String title = doc.title();
 

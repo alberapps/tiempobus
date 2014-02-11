@@ -48,9 +48,10 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 	private BusLlegada segundoTram;
 
-	
+	private BusLlegada segundoBus;
+
 	private boolean sinDatos = false;
-	
+
 	public BusLlegada() {
 
 	}
@@ -196,14 +197,11 @@ public class BusLlegada implements Comparable<BusLlegada> {
 			proximoNuevo.append("sinestimacion");
 		} else {
 			proximoNuevo.append(getFormatoTiempoEspera(Integer.toString(proximoMinutosNuevo)));
-			//proximoNuevo.append(" ");
-			//int pos = procesa[0].indexOf("m");
-			
-			//proximoNuevo.append(procesa[0].substring(pos));
-			
-			
-			
-			
+			// proximoNuevo.append(" ");
+			// int pos = procesa[0].indexOf("m");
+
+			// proximoNuevo.append(procesa[0].substring(pos));
+
 		}
 
 		proximoNuevo.append(";");
@@ -248,14 +246,13 @@ public class BusLlegada implements Comparable<BusLlegada> {
 			siguienteNuevo.append("sinestimacion");
 		} else {
 			siguienteNuevo.append(getFormatoTiempoEspera(Integer.toString(siguienteMinutosNuevo)));
-			
-			//siguienteNuevo.append(" ");
-			
-			//int pos = procesa[1].indexOf("m");
-			
-			//siguienteNuevo.append(procesa[1].substring(pos));
-						
-			
+
+			// siguienteNuevo.append(" ");
+
+			// int pos = procesa[1].indexOf("m");
+
+			// siguienteNuevo.append(procesa[1].substring(pos));
+
 		}
 
 		proximo = siguienteNuevo.toString();
@@ -302,7 +299,6 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		this.segundoTram = segundoTram;
 	}
 
-	
 	/**
 	 * Forma string con los minutos faltantes y la hora aproximada de llegada
 	 * 
@@ -333,5 +329,13 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	public void setSinDatos(boolean sinDatos) {
 		this.sinDatos = sinDatos;
 	}
-	
+
+	public BusLlegada getSegundoBus() {
+		return segundoBus;
+	}
+
+	public void setSegundoBus(BusLlegada segundoBus) {
+		this.segundoBus = segundoBus;
+	}
+
 }
