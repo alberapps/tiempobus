@@ -18,27 +18,19 @@
 package alberapps.java.tam.webservice;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Vector;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 public class GetPasoParadaWebservice {
 
-	private String SOAP_ACTION = "http://tempuri.org/GetPasoParada";
+	/*private String SOAP_ACTION = "http://tempuri.org/GetPasoParada";
 	private String METHOD_NAME = "GetPasoParada";
 	private String NAMESPACE = "http://tempuri.org/";
 	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
 	private int timeout = 15 * 1000; //15 segundos
-	
+	*/
 	public GetPasoParadaWebservice() {
 	}
 
@@ -50,7 +42,7 @@ public class GetPasoParadaWebservice {
 	 * @return
 	 * @throws Exception 
 	 */
-	public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
+	/*public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
 
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
@@ -116,7 +108,7 @@ public class GetPasoParadaWebservice {
 			
 		}
 
-	}
+	}*/
 
 	/**
 	 * Forma string con los minutos faltantes y la hora aproximada de llegada

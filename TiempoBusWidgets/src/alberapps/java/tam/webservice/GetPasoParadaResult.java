@@ -21,25 +21,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetPasoParadaResult implements Serializable{
+public class GetPasoParadaResult implements Serializable {
 
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8238534853834758312L;
-	
 
 	private List<PasoParada> pasoParadaList;
-	
-	private int status;
 
-	public GetPasoParadaResult(){
-		
+	private String status;
+
+	public GetPasoParadaResult() {
+
 		pasoParadaList = new ArrayList<PasoParada>();
-		
+
 	}
-	
+
 	public List<PasoParada> getPasoParadaList() {
 		return pasoParadaList;
 	}
@@ -48,12 +46,12 @@ public class GetPasoParadaResult implements Serializable{
 		this.pasoParadaList = pasoParadaList;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 }

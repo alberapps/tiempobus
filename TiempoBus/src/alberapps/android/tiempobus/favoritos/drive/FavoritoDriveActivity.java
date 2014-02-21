@@ -25,20 +25,17 @@ import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask.BackupDriveAsyncTaskResponder;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.IntentSender.SendIntentException;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.ContentsResult;
-import com.google.android.gms.drive.DriveApi.OnNewContentsCallback;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
@@ -82,22 +79,20 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 			modo = this.getIntent().getExtras().getString("MODO");
 		}
-		
-		
 
 	}
 
-@Override
-protected void onResume() {
+	@Override
+	protected void onResume() {
 
-	activarProgreso();
-	
-	super.onResume();
-}
-	
-	
+		activarProgreso();
+
+		super.onResume();
+	}
+
 	private void activarProgreso() {
-		//dialog = ProgressDialog.show(this, "", getString(R.string.dialog_procesando), true);
+		// dialog = ProgressDialog.show(this, "",
+		// getString(R.string.dialog_procesando), true);
 	}
 
 	@Override
@@ -126,7 +121,7 @@ protected void onResume() {
 
 				if (driveId != null) {
 
-					//activarProgreso();
+					// activarProgreso();
 
 					guardarDatos(driveId);
 
@@ -156,7 +151,7 @@ protected void onResume() {
 
 				if (driveId != null) {
 
-					//activarProgreso();
+					// activarProgreso();
 
 					cargarDatos(driveId);
 				} else {
@@ -184,9 +179,9 @@ protected void onResume() {
 	 */
 	private void nuevoArchivoDrive() {
 
-		OnNewContentsCallback onContentsCallback = new OnNewContentsCallback() {
+		final ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
 
-			public void onNewContents(ContentsResult result) {
+			public void onResult(ContentsResult result) {
 
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm");
 
@@ -208,7 +203,7 @@ protected void onResume() {
 			dialog.dismiss();
 		}
 
-		Drive.DriveApi.newContents(getGoogleApiClient()).addResultCallback(onContentsCallback);
+		Drive.DriveApi.newContents(getGoogleApiClient()).setResultCallback(contentsCallback);
 
 	}
 
@@ -219,7 +214,7 @@ protected void onResume() {
 	 */
 	private void guardarDatos(DriveId id) {
 
-		//activarProgreso();
+		// activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
@@ -266,7 +261,7 @@ protected void onResume() {
 	 */
 	private void cargarDatos(DriveId id) {
 
-		//activarProgreso();
+		// activarProgreso();
 
 		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 

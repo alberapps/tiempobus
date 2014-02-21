@@ -42,6 +42,7 @@ import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.principal.GestionarFondo;
+import alberapps.android.tiempobus.principal.GestionarVoz;
 import alberapps.android.tiempobus.principal.GestionarWidget;
 import alberapps.android.tiempobus.principal.TiemposAdapter;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
@@ -62,7 +63,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -73,6 +73,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -148,6 +149,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public GestionarAlarmas gestionarAlarmas;
 
 	GestionarWidget gestionarWidget;
+	
+	GestionarVoz gestionarVoz;
 
 	public ListView tiemposView;
 
@@ -182,6 +185,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		datosPantallaPrincipal = new DatosPantallaPrincipal(this, preferencias);
 		gestionarFondo = new GestionarFondo(this, preferencias);
 		gestionarWidget = new GestionarWidget(this, preferencias);
+		gestionarVoz = new GestionarVoz(this, preferencias);
 
 		cambiarLocale(false);
 
@@ -643,18 +647,22 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case R.id.menu_exportar_qr:
 			// detenerTareaTiempos();
 
-			IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+			/*
+			 * IntentIntegrator integrator = new
+			 * IntentIntegrator(MainActivity.this);
+			 * 
+			 * // configurar integrator.setTitleByID(R.string.barcode_titulo);
+			 * integrator.setMessageByID(R.string.barcode_mensaje);
+			 * integrator.setButtonYesByID(R.string.barcode_si);
+			 * integrator.setButtonNoByID(R.string.barcode_no);
+			 * 
+			 * String paradaCodificada =
+			 * Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
+			 * 
+			 * integrator.shareText(paradaCodificada);
+			 */
 
-			// configurar
-			integrator.setTitleByID(R.string.barcode_titulo);
-			integrator.setMessageByID(R.string.barcode_mensaje);
-			integrator.setButtonYesByID(R.string.barcode_si);
-			integrator.setButtonNoByID(R.string.barcode_no);
-
-			String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
-
-			integrator.shareText(paradaCodificada);
-
+			gestionarVoz.reconocerVoz();
 			break;
 
 		}
@@ -1070,6 +1078,22 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			}
 
+		if (requestCode == GestionarVoz.VOICE_REQUEST_CODE) {
+			if (resultCode == RESULT_OK) {
+
+				ArrayList<String> resultados = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+				for (int i = 0; i < resultados.size(); i++) {
+					Log.d("VOZ", "datos: " + resultados.get(i));
+				}
+				
+				gestionarVoz.seleccionarPosibleOpcion(resultados);
+				
+
+			} else {
+			}
+		}
+
 	}
 
 	/**
@@ -1380,5 +1404,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// TODO Auto-generated method stub
 
 	}
+
+	
 
 }

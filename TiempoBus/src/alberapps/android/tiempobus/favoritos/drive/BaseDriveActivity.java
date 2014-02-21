@@ -126,4 +126,9 @@ public class BaseDriveActivity extends ActionBarActivityFragments implements Goo
 		return mGoogleApiClient;
 	}
 
+	public void onConnectionSuspended(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

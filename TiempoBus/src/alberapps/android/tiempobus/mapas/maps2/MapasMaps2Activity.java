@@ -152,9 +152,9 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapas_maps2);
 
-		try {
+		//try {
 			MapsInitializer.initialize(getApplicationContext());
-		} catch (GooglePlayServicesNotAvailableException e) {
+		/*} catch (GooglePlayServicesNotAvailableException e) {
 
 			Toast.makeText(getApplicationContext(), getString(R.string.error_maps_gpservices), Toast.LENGTH_LONG).show();
 
@@ -162,7 +162,7 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 
 			finish();
 
-		}
+		}*/
 
 		setUpMapIfNeeded();
 
