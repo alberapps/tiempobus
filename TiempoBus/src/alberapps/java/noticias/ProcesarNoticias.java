@@ -41,7 +41,7 @@ public class ProcesarNoticias {
 
 		List<Noticias> noticias = new ArrayList<Noticias>();
 
-		Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache), "ISO-8859-1", URL_SUBUS_NOTICIAS);
+		Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache, false), "ISO-8859-1", URL_SUBUS_NOTICIAS);
 
 		String title = doc.title();
 

@@ -380,4 +380,6 @@
     <string name="reconocimiento_voz_no">Reconocimiento de voz no disponible en tu dispositivo</string>
     <string name="reconocimiento_voz_titulo">Posibilidades</string>
     
+    <string name="wikipedia">Wikipedia</string>
+    
 </resources>

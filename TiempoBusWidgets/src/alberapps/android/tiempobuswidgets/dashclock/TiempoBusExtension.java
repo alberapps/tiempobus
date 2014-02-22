@@ -71,9 +71,21 @@ public class TiempoBusExtension extends DashClockExtension {
 		// Intent para iniciar tiempobus al hacer click
 		Intent intentTiempoBus = intentTiempoBus();
 
-		ExtensionData extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status(getStatus()).expandedTitle(getTitle()).expandedBody(getBody())
+		ExtensionData extData = null;
+		
+		if(listaTiempos != null && !listaTiempos.isEmpty()){
+		
+			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status(getStatus()).expandedTitle(getTitle()).expandedBody(getBody())
 				.contentDescription("Información de tiempos de paso.");
 
+		}else{
+			
+			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status("No info").expandedTitle(getTitle()).expandedBody("Sin datos")
+					.contentDescription("Información de tiempos de paso.");
+
+			
+		}
+		
 		if (intentTiempoBus != null) {
 
 			extData.clickIntent(intentTiempoBus);

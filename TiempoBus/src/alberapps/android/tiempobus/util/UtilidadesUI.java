@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.util;
 
 import java.util.List;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.R;
 import android.annotation.SuppressLint;
@@ -176,6 +177,29 @@ public class UtilidadesUI {
 				evento, // Event label
 				null) // Event value
 				.build());
+
+	}
+
+	/**
+	 * Idioma para la wikipedia
+	 * 
+	 * @return idioma
+	 */
+	public static String getIdiomaWiki() {
+
+		String locale = Locale.getDefault().getDisplayLanguage();
+
+		String idiomaWiki = null;
+
+		if (locale.substring(0, 2).equals("ca")) {
+			idiomaWiki = "ca";
+		} else if (locale.substring(0, 2).equals("en")) {
+			idiomaWiki = "en";
+		} else {
+			idiomaWiki = "es";
+		}
+
+		return idiomaWiki;
 
 	}
 

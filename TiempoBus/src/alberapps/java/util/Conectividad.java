@@ -56,6 +56,8 @@ import android.util.Log;
  */
 public class Conectividad {
 
+	public static final String USER_AGENT = "TiempoBus/2.8 (http://alberapps.blogspot.com; alberapps@gmail.com)";
+	
 	/**
 	 * Conexion con post y codificacion UTF-8
 	 * 
@@ -124,12 +126,12 @@ public class Conectividad {
 	 * @param post
 	 * @return string
 	 */
-	public static String conexionGetIso(String urlGet, boolean usarCache) {
+	public static String conexionGetIso(String urlGet, boolean usarCache, boolean userAgent, boolean utf8) {
 
 		// Para Froyo
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
-			return conexionGetIsoFroyo(urlGet);
+			return conexionGetIsoFroyo(urlGet, userAgent);
 
 		}
 
@@ -151,6 +153,11 @@ public class Conectividad {
 			urlConnection.setRequestMethod("GET");
 			urlConnection.setDoInput(true);
 
+			if(userAgent){
+				urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+			}
+			
+			
 			if (!usarCache) {
 				urlConnection.addRequestProperty("Cache-Control", "no-cache");
 				Log.d("CONEXION", "Sin cache");
@@ -159,7 +166,12 @@ public class Conectividad {
 			}
 
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			datos = Utilidades.obtenerStringDeStream(in);
+			
+			if(utf8){
+				datos = Utilidades.obtenerStringDeStreamUTF8(in);
+			}else{	
+				datos = Utilidades.obtenerStringDeStream(in);
+			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -182,7 +194,7 @@ public class Conectividad {
 	 */
 	public static InputStream conexionGetIsoStream(String urlGet) {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true));
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, false));
 
 	}
 
@@ -193,9 +205,9 @@ public class Conectividad {
 	 * @param usarCache
 	 * @return stream
 	 */
-	public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache) {
+	public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, Boolean userAgent) {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache));
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
 
 	}
 
@@ -207,7 +219,7 @@ public class Conectividad {
 	 */
 	public static InputStream conexionGetIsoStreamNoCache(String urlGet) {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false));
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, false, false));
 
 	}
 
@@ -252,7 +264,7 @@ public class Conectividad {
 	 * @param url
 	 * @return
 	 */
-	public static String conexionGetIsoFroyo(String url) {
+	public static String conexionGetIsoFroyo(String url, boolean userAgent) {
 
 		HttpGet request = new HttpGet(url);
 
@@ -266,7 +278,11 @@ public class Conectividad {
 			// Timeout para recibir datos
 			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
 			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-
+			
+			if(userAgent){				
+				request.setHeader("User-Agent", USER_AGENT);
+			}
+			
 			DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
 			HttpResponse response = client.execute(request);

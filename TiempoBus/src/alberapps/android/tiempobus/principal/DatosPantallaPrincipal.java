@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -37,6 +38,8 @@ import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
@@ -44,6 +47,7 @@ import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
+import alberapps.java.wikipedia.WikiQuery;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -57,6 +61,8 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -835,12 +841,15 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	/**
+	 * Tarjeta con informacion de la parada
+	 */
 	public void cargarTarjetaInfo() {
 
 		if (context.avisoTarjetaInfo != null && context.tiemposView != null) {
 			context.tiemposView.removeFooterView(context.avisoTarjetaInfo);
 		}
-		
+
 		LayoutInflater li = LayoutInflater.from(context);
 
 		View v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
@@ -853,17 +862,15 @@ public class DatosPantallaPrincipal {
 
 			if (cursor == null) {
 
+				return;
+
 			} else {
 				cursor.moveToFirst();
 
 				TextView parada = (TextView) v.findViewById(R.id.parada);
 				TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
-				
-				
-				
-				TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
 
-				
+				TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
 
 				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
 				int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
@@ -875,42 +882,42 @@ public class DatosPantallaPrincipal {
 
 				int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
 
+				int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
+				int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
+
 				parada.setText(cursor.getString(paradaIndex));
 
 				localizacion.setText(cursor.getString(direccionIndex));
-				
-				
-				
+
 				datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
 
 				String observa = cursor.getString(observacionesIndex);
-				
-				
+
 				if (observa != null && !observa.trim().equals("")) {
 
 					datosParada.setText(datosParada.getText() + "\ni: " + observa);
 
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+
+				String lat = cursor.getString(latIndex);
+				String lon = cursor.getString(lonIndex);
+
+				if (lat != null && !lat.equals("") && !lon.equals("")) {
+					cargarInfoWikipedia(lat, lon);
+				}
+
 			}
 
 		} catch (Exception e) {
+
+			return;
 
 		}
 
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
 		context.tiemposView.addFooterView(v);
-		
+
 		context.avisoTarjetaInfo = v;
 
 	}
@@ -1209,6 +1216,69 @@ public class DatosPantallaPrincipal {
 
 			return false;
 		}
+	}
+
+	/**
+	 * Cargar la informacion de la wikipedia para la parada
+	 */
+	public void cargarInfoWikipedia(String lat, String lon) {
+
+		LoadWikipediaAsyncTaskResponder loadWikipediaAsyncTaskResponder = new LoadWikipediaAsyncTaskResponder() {
+			public void WikipediaLoaded(WikiQuery wiki) {
+
+				if (wiki != null) {
+
+					StringBuffer sb = new StringBuffer();
+
+					// Preparar titulos
+					for (int i = 0; i < wiki.getListaDatos().size(); i++) {
+
+						if (sb.length() > 0) {
+							sb.append(", ");
+						}
+
+						sb.append("<a href=\"http://");
+						sb.append(UtilidadesUI.getIdiomaWiki());
+						sb.append(".wikipedia.org/?curid=");
+						sb.append(wiki.getListaDatos().get(i).getPageId());
+						sb.append("\">");
+
+						sb.append(wiki.getListaDatos().get(i).getTitle());
+						sb.append("</a>");
+
+					}
+
+					// Cargar titulos en textView
+					if (sb.length() > 0) {
+
+						try {
+							TextView textoWiki = (TextView) context.findViewById(R.id.datos_wiki);
+
+							textoWiki.setText(Html.fromHtml(sb.toString()));
+							textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+						} catch (Exception e) {
+
+						}
+
+					}
+
+				} else {
+
+				}
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new LoadWikipediaAsyncTask(loadWikipediaAsyncTaskResponder).execute(lat, lon);
+		} else {
+			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+		}
+
 	}
 
 }
