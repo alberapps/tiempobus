@@ -835,6 +835,86 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	public void cargarTarjetaInfo() {
+
+		if (context.avisoTarjetaInfo != null && context.tiemposView != null) {
+			context.tiemposView.removeFooterView(context.avisoTarjetaInfo);
+		}
+		
+		LayoutInflater li = LayoutInflater.from(context);
+
+		View v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
+
+		String parametros[] = { Integer.toString(context.paradaActual) };
+
+		try {
+
+			Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+
+			if (cursor == null) {
+
+			} else {
+				cursor.moveToFirst();
+
+				TextView parada = (TextView) v.findViewById(R.id.parada);
+				TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
+				
+				
+				
+				TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
+
+				
+
+				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
+				int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
+				int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
+				int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
+				int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
+
+				int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+
+				int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+
+				parada.setText(cursor.getString(paradaIndex));
+
+				localizacion.setText(cursor.getString(direccionIndex));
+				
+				
+				
+				datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
+
+				String observa = cursor.getString(observacionesIndex);
+				
+				
+				if (observa != null && !observa.trim().equals("")) {
+
+					datosParada.setText(datosParada.getText() + "\ni: " + observa);
+
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			}
+
+		} catch (Exception e) {
+
+		}
+
+		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+
+		context.tiemposView.addFooterView(v);
+		
+		context.avisoTarjetaInfo = v;
+
+	}
+
 	// Novedades
 	private int REV_ACTUAL = 35;
 
@@ -1041,13 +1121,11 @@ public class DatosPantallaPrincipal {
 
 			if (esTram(context.paradaActual)) {
 
-				lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en "
-						+ busSeleccionado.getProximoMinutos().toString() + " minutos";
+				lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
 
 			} else {
 
-				lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en "
-						+ busSeleccionado.getProximoMinutos().toString() + " minutos";
+				lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
 
 			}
 
@@ -1097,7 +1175,7 @@ public class DatosPantallaPrincipal {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Para acceder desde otras actividades
 	 * 

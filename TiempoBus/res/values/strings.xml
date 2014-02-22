@@ -375,5 +375,9 @@
     <string name="conf_conectividad_titulo_check">Activar Cache</string>
     <string name="conf_conectividad_titulo_desc">Cache de acceso a Internet.No aplica en tiempos.(Android 4.0+)</string>
     
+    <string name="reconocimiento_voz_sin_datos">No se han encotrado coincidencias</string>
+    <string name="reconocimiento_voz_error">Error en el reconocimiento de voz</string>
+    <string name="reconocimiento_voz_no">Reconocimiento de voz no disponible en tu dispositivo</string>
+    <string name="reconocimiento_voz_titulo">Posibilidades</string>
     
 </resources>

@@ -149,7 +149,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public GestionarAlarmas gestionarAlarmas;
 
 	GestionarWidget gestionarWidget;
-	
+
 	GestionarVoz gestionarVoz;
 
 	public ListView tiemposView;
@@ -166,6 +166,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
 
 	public View avisoPie = null;
+
+	public View avisoTarjetaInfo = null;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -647,22 +649,17 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		case R.id.menu_exportar_qr:
 			// detenerTareaTiempos();
 
-			/*
-			 * IntentIntegrator integrator = new
-			 * IntentIntegrator(MainActivity.this);
-			 * 
-			 * // configurar integrator.setTitleByID(R.string.barcode_titulo);
-			 * integrator.setMessageByID(R.string.barcode_mensaje);
-			 * integrator.setButtonYesByID(R.string.barcode_si);
-			 * integrator.setButtonNoByID(R.string.barcode_no);
-			 * 
-			 * String paradaCodificada =
-			 * Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
-			 * 
-			 * integrator.shareText(paradaCodificada);
-			 */
+			IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 
-			gestionarVoz.reconocerVoz();
+			// configurar integrator.setTitleByID(R.string.barcode_titulo);
+			integrator.setMessageByID(R.string.barcode_mensaje);
+			integrator.setButtonYesByID(R.string.barcode_si);
+			integrator.setButtonNoByID(R.string.barcode_no);
+
+			String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
+
+			integrator.shareText(paradaCodificada);
+
 			break;
 
 		}
@@ -795,7 +792,14 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		botonInfo.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 
-				datosPantallaPrincipal.cargarModalInfo(paradaActual);
+				//datosPantallaPrincipal.cargarModalInfo(paradaActual);
+				
+				boolean resultado = gestionarVoz.reconocerVoz();
+				
+				if(!resultado){
+					Toast.makeText(getApplicationContext(), getString(R.string.reconocimiento_voz_no), Toast.LENGTH_SHORT).show();
+				}
+				
 
 			}
 		});
@@ -1086,11 +1090,15 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				for (int i = 0; i < resultados.size(); i++) {
 					Log.d("VOZ", "datos: " + resultados.get(i));
 				}
-				
-				gestionarVoz.seleccionarPosibleOpcion(resultados);
-				
+
+				boolean datosEncontrados = gestionarVoz.seleccionarPosibleOpcion(resultados);
+
+				if (!datosEncontrados) {
+					Toast.makeText(this, getString(R.string.reconocimiento_voz_sin_datos), Toast.LENGTH_SHORT).show();
+				}
 
 			} else {
+				Toast.makeText(this, getString(R.string.reconocimiento_voz_error), Toast.LENGTH_SHORT).show();
 			}
 		}
 
@@ -1308,6 +1316,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				}
 
 				// Pie para la lista de resultados
+				laActividad.datosPantallaPrincipal.cargarTarjetaInfo();
 				laActividad.datosPantallaPrincipal.cargarPie();
 
 				laActividad.posteAdapter.notifyDataSetChanged();
@@ -1404,7 +1413,5 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }

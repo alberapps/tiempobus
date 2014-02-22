@@ -187,7 +187,7 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
             android:scaleType="centerInside"
-            android:src="@drawable/action_info" />
+            android:src="@drawable/device_access_mic" />
 
         <FrameLayout
             android:id="@+id/frameLayout1"
