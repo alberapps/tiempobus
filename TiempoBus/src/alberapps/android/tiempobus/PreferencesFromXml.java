@@ -19,6 +19,7 @@
  */
 package alberapps.android.tiempobus;
 
+import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -61,6 +62,12 @@ public class PreferencesFromXml extends PreferenceActivity {
 	@Deprecated
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
+		if (preference.getKey().equals("reiniciar_db")) {
+
+			reiniciarDB();
+
+		}
+
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
 			super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -81,6 +88,12 @@ public class PreferencesFromXml extends PreferenceActivity {
 		} else {
 			return super.onPreferenceTreeClick(preferenceScreen, preference);
 		}
+	}
+
+	public void reiniciarDB() {
+
+		getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+
 	}
 
 }

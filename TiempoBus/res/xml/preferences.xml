@@ -188,7 +188,13 @@
                 android:title="@string/conf_conectividad_titulo_check"
                 android:summary="@string/conf_conectividad_titulo_desc" android:defaultValue="true"/>
         
-        
+        <PreferenceScreen
+                android:key="reiniciar_db"
+                android:title="@string/conf_db_recargar"
+                android:summary="@string/conf_db_recargar_desc"
+                >
+                
+        </PreferenceScreen>
                 
     </PreferenceCategory>
     

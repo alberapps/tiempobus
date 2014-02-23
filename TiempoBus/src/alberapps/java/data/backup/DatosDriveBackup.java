@@ -1,6 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
+ *  Copyright (C) 2014 Alberto Montiel
  * 
  *  
  *  This program is free software: you can redistribute it and/or modify
@@ -34,14 +34,14 @@ import com.google.android.gms.drive.DriveApi.ContentsResult;
 
 /**
  * 
- * Gestion de copias de seguridad
+ * Gestion de copias de seguridad en Drive
  * 
  * 
  */
 public class DatosDriveBackup {
 
 	/**
-	 * Exportar la base de datos
+	 * Exportar la base de datos a Drive
 	 * 
 	 * @return boolean
 	 */
@@ -89,117 +89,112 @@ public class DatosDriveBackup {
 	 * @return boolean
 	 */
 	public static boolean recuperar(ContentsResult contentsResult) {
-		if (isSDCARDMounted()) {
 
-			// Copia de respaldo para posible fallo
-			DatosBackup.exportar(true);
+		// Copia de respaldo para posible fallo
+		exportarRespaldo();
 
-			InputStream fileDriveStream = null;
-			FileOutputStream baseDatosE = null;
-			FileInputStream fileEXIE = null;
+		InputStream fileDriveStream = null;
+		FileOutputStream baseDatosE = null;
+		FileInputStream fileEXIE = null;
 
-			boolean control = false;
+		boolean control = false;
 
-			FileOutputStream fileExport = null;
+		FileOutputStream fileExport = null;
 
-			try {
+		try {
 
-				// Copiar fichero de drive a la sd para procesar
-				// directorio de sd
-				File directorio = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/");
-				directorio.mkdirs();
+			// Copiar fichero de drive a la memoria para procesar
+			// directorio de memoria interna
+			File directorio = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/");
+			directorio.mkdirs();
 
-				File fileEx = null;
-				fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.drive.db");
+			File fileEx = null;
+			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.drive.db");
 
-				fileEx.createNewFile();
+			fileEx.createNewFile();
 
-				fileExport = new FileOutputStream(fileEx);
+			fileExport = new FileOutputStream(fileEx);
 
-				// Copiar desde drive a sd
+			// Copiar desde drive a sd
 
-				fileDriveStream = contentsResult.getContents().getInputStream();
+			fileDriveStream = contentsResult.getContents().getInputStream();
 
-				copyFileI(fileDriveStream, fileExport);
-				
-				fileExport.flush();
+			copyFileI(fileDriveStream, fileExport);
 
-				if (!fileEx.exists()) {
-					return false;
-				}
+			fileExport.flush();
 
-				if (!verificarArchivoBD(fileEx)) {
-					return false;
-				}
-
-				// Copiar de SD a la base de datos
-				File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
-
-				baseDatos.createNewFile();
-
-				baseDatosE = new FileOutputStream(baseDatos);
-
-				fileEXIE = new FileInputStream(fileEx);
-				
-				copyFileI(fileEXIE, baseDatosE);
-				
-				baseDatosE.flush();
-
-				control = true;
-
-			} catch (Exception e) {
-
-				// Recuperar respaldo
-				DatosBackup.recuperar(true);
-
-				control = false;
-			} finally {
-				if (fileDriveStream != null) {
-					try {
-						fileDriveStream.close();
-						fileDriveStream = null;
-					} catch (IOException e) {
-
-					}
-				}
-
-				if (baseDatosE != null) {
-					try {
-						baseDatosE.close();
-						baseDatosE = null;
-					} catch (IOException e) {
-
-					}
-				}
-
-				if (fileExport != null) {
-					try {
-
-						fileExport.close();
-
-						fileExport = null;
-
-					} catch (IOException e) {
-
-					}
-				}
-				
-				if (fileEXIE != null) {
-					try {
-						fileEXIE.close();
-						fileEXIE = null;
-					} catch (IOException e) {
-
-					}
-				}
-
+			if (!fileEx.exists()) {
+				return false;
 			}
 
-			return control;
+			if (!verificarArchivoBD(fileEx)) {
+				return false;
+			}
 
-		} else {
-			return false;
+			// Copiar de SD a la base de datos
+			File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+
+			baseDatos.createNewFile();
+
+			baseDatosE = new FileOutputStream(baseDatos);
+
+			fileEXIE = new FileInputStream(fileEx);
+
+			copyFileI(fileEXIE, baseDatosE);
+
+			baseDatosE.flush();
+
+			control = true;
+
+		} catch (Exception e) {
+
+			// Recuperar respaldo
+			recuperarRespaldo();
+
+			control = false;
+		} finally {
+			if (fileDriveStream != null) {
+				try {
+					fileDriveStream.close();
+					fileDriveStream = null;
+				} catch (IOException e) {
+
+				}
+			}
+
+			if (baseDatosE != null) {
+				try {
+					baseDatosE.close();
+					baseDatosE = null;
+				} catch (IOException e) {
+
+				}
+			}
+
+			if (fileExport != null) {
+				try {
+
+					fileExport.close();
+
+					fileExport = null;
+
+				} catch (IOException e) {
+
+				}
+			}
+
+			if (fileEXIE != null) {
+				try {
+					fileEXIE.close();
+					fileEXIE = null;
+				} catch (IOException e) {
+
+				}
+			}
+
 		}
+
+		return control;
 
 	}
 
@@ -263,6 +258,13 @@ public class DatosDriveBackup {
 
 	}
 
+	/**
+	 * Copiar archivo
+	 * 
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
 
 		byte[] buffer = new byte[1024];
@@ -274,6 +276,13 @@ public class DatosDriveBackup {
 
 	}
 
+	/**
+	 * Copiar archivo
+	 * 
+	 * @param in
+	 * @param out
+	 * @throws IOException
+	 */
 	private static void copyFileDrive(FileInputStream in, OutputStream out) throws IOException {
 
 		byte[] buffer = new byte[1024];
@@ -286,15 +295,133 @@ public class DatosDriveBackup {
 	}
 
 	/**
-	 * tarjeta SD disponible
+	 * Copia de respaldo por si hay error en el proceso
 	 * 
 	 * @return boolean
 	 */
-	private static boolean isSDCARDMounted() {
-		String status = Environment.getExternalStorageState();
-		if (status.equals(Environment.MEDIA_MOUNTED))
-			return true;
-		return false;
+	public static boolean exportarRespaldo() {
+
+		boolean control = false;
+
+		// directorio al que copiar respaldo
+		File directorio = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/");
+		directorio.mkdirs();
+
+		FileInputStream baseDatos = null;
+		FileOutputStream fileExport = null;
+
+		try {
+
+			// fichero de db
+			File fileEx = null;
+
+			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+
+			fileEx.createNewFile();
+
+			fileExport = new FileOutputStream(fileEx);
+
+			// base de datos
+			baseDatos = new FileInputStream(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+
+			copyFile(baseDatos, fileExport);
+
+			fileExport.flush();
+
+			control = true;
+
+		} catch (IOException e) {
+			control = false;
+		} finally {
+
+			if (baseDatos != null) {
+				try {
+					baseDatos.close();
+					baseDatos = null;
+				} catch (IOException e) {
+
+				}
+			}
+			if (fileExport != null) {
+				try {
+
+					fileExport.close();
+
+					fileExport = null;
+
+				} catch (IOException e) {
+
+				}
+			}
+
+		}
+
+		return control;
+
+	}
+
+	/**
+	 * Recuperar la copia de respaldo
+	 * 
+	 * @return boolean
+	 */
+	public static boolean recuperarRespaldo() {
+
+		FileInputStream fileEXIE = null;
+		FileOutputStream baseDatosE = null;
+
+		boolean control = false;
+
+		try {
+			File fileEx = null;
+
+			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+
+			if (!fileEx.exists()) {
+				return false;
+			}
+
+			if (!verificarArchivoBD(fileEx)) {
+				return false;
+			}
+
+			fileEXIE = new FileInputStream(fileEx);
+
+			File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+
+			baseDatos.createNewFile();
+
+			baseDatosE = new FileOutputStream(baseDatos);
+
+			copyFile(fileEXIE, baseDatosE);
+
+			control = true;
+		} catch (IOException e) {
+
+			control = false;
+		} finally {
+			if (fileEXIE != null) {
+				try {
+					fileEXIE.close();
+					fileEXIE = null;
+				} catch (IOException e) {
+
+				}
+			}
+
+			if (baseDatosE != null) {
+				try {
+					baseDatosE.close();
+					baseDatosE = null;
+				} catch (IOException e) {
+
+				}
+			}
+
+		}
+
+		return control;
+
 	}
 
 }

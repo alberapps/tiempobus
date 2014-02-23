@@ -371,9 +371,12 @@
 	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
     </string>
     
-    <string name="conf_conectividad_titulo">Conectividad</string>
+    <string name="conf_conectividad_titulo">Avanzado</string>
     <string name="conf_conectividad_titulo_check">Activar Cache</string>
     <string name="conf_conectividad_titulo_desc">Cache de acceso a Internet.No aplica en tiempos.(Android 4.0+)</string>
+    <string name="conf_db_recargar">Reiniciar BD lineas</string>
+    <string name="conf_db_recargar_desc">Reinicia la base de datos de lineas. Usar en caso de problemas tras actualizar la app</string>
+    
     
     <string name="reconocimiento_voz_sin_datos">No se han encotrado coincidencias</string>
     <string name="reconocimiento_voz_error">Error en el reconocimiento de voz</string>

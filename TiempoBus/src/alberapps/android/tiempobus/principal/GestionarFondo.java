@@ -23,7 +23,6 @@ import java.io.IOException;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.FragmentVuelta;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
