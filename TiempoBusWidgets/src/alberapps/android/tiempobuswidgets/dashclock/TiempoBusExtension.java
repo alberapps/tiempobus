@@ -46,7 +46,9 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 public class TiempoBusExtension extends DashClockExtension {
 	private static final String TAG = "TiempoBusExtension";
 
-	public static final String PREF_NAME = "pref_name";
+	//public static final String PREF_NAME = "pref_name";
+	
+	public static final String PREF_NAME_1 = "actualizar_desb";
 
 	List<BusLlegada> listaTiempos = null;
 
@@ -54,13 +56,15 @@ public class TiempoBusExtension extends DashClockExtension {
 	protected void onUpdateData(int reason) {
 		// Get preference value.
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		String name = sp.getString(PREF_NAME, getString(R.string.pref_name_default));
+		//String name = sp.getString(PREF_NAME, getString(R.string.pref_name_default));
+		
+		boolean actualizar = sp.getBoolean(PREF_NAME_1, true);
 
 		// Iniciar actualizacion de los datos
 		actualizar();
 
 		// Para que actualice al desbloquear la pantalla
-		setUpdateWhenScreenOn(true);
+		setUpdateWhenScreenOn(actualizar);
 	}
 
 	/**
@@ -72,20 +76,13 @@ public class TiempoBusExtension extends DashClockExtension {
 		Intent intentTiempoBus = intentTiempoBus();
 
 		ExtensionData extData = null;
-		
-		if(listaTiempos != null && !listaTiempos.isEmpty()){
-		
-			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status(getStatus()).expandedTitle(getTitle()).expandedBody(getBody())
-				.contentDescription("Información de tiempos de paso.");
 
-		}else{
-			
-			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status("No info").expandedTitle(getTitle()).expandedBody("Sin datos")
-					.contentDescription("Información de tiempos de paso.");
+		if (listaTiempos != null && !listaTiempos.isEmpty()) {
 
-			
+			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status(getStatus()).expandedTitle(getTitle()).expandedBody(getBody()).contentDescription("Información de tiempos de paso.");
+
 		}
-		
+
 		if (intentTiempoBus != null) {
 
 			extData.clickIntent(intentTiempoBus);
@@ -114,10 +111,8 @@ public class TiempoBusExtension extends DashClockExtension {
 				body.append("-");
 				body.append(listaTiempos.get(i).getLinea());
 				body.append(": ");
-				body.append(listaTiempos.get(i).getProximoMinutos());
-				body.append(" min - ");
-				body.append(listaTiempos.get(i).getSiguienteMinutos());
-				body.append(" min");
+
+				body.append(controlAviso(listaTiempos.get(i)));
 
 				body.append("\n");
 
@@ -125,11 +120,71 @@ public class TiempoBusExtension extends DashClockExtension {
 
 		}
 
-		if (body.length() == 0) {
-			body.append("Sin información");
+		return body.toString();
+
+	}
+
+	private String controlAviso(BusLlegada bus) {
+
+		String traducido = "";
+
+		if (bus.getProximo() != null && !bus.getProximo().equals("")) {
+
+			String[] procesa = bus.getProximo().split(";");
+
+			String tiempo1 = "";
+			String tiempo2 = "";
+
+			if (procesa[0].equals("enlaparada")) {
+
+				tiempo1 = getString(R.string.tiempo_m_1_d);
+
+			} else if (procesa[0].equals("sinestimacion")) {
+
+				tiempo1 = getString(R.string.tiempo_m_2_d);
+
+			} else {
+
+				tiempo1 = procesa[0];
+
+				//tiempo1 = bus.getProximoMinutos() + " " + getString(R.string.literal_min);
+
+			}
+
+			/*if (procesa[1].equals("enlaparada")) {
+
+				tiempo2 = getString(R.string.tiempo_m_1_d);
+
+			} else if (procesa[1].equals("sinestimacion")) {
+
+				tiempo2 = getString(R.string.tiempo_m_2_d);
+
+			} else {
+
+				// tiempo2 = procesa[1];
+
+				tiempo2 = bus.getSiguienteMinutos() + " " + getString(R.string.literal_min);
+
+			}*/
+
+			//traducido = tiempo1 + " " + getString(R.string.tiempo_m_3) + " " + tiempo2;
+			
+			traducido = tiempo1.replaceAll("min.", getString(R.string.literal_min));
+
+		} else {
+
+			// Sin informacion para mostrar
+
+			traducido = getString(R.string.empty_view_text);
+
 		}
 
-		return body.toString();
+		// min.
+		// traducido = traducido.replaceAll("min.",
+		// getString(R.string.literal_min));
+		// traducido = traducido.replaceAll("min.", "");
+
+		return traducido;
 
 	}
 
@@ -146,7 +201,13 @@ public class TiempoBusExtension extends DashClockExtension {
 
 		if (listaTiempos != null && !listaTiempos.isEmpty()) {
 
-			status = listaTiempos.get(0).getProximoMinutos() + " min";
+			if (listaTiempos.get(0).getProximo() != null && !listaTiempos.get(0).getProximo().equals("")) {
+
+				status = listaTiempos.get(0).getProximoMinutos() + " min";
+
+			} else {
+				status = "-";
+			}
 
 		}
 
@@ -168,7 +229,7 @@ public class TiempoBusExtension extends DashClockExtension {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 		String updated = df.format(c.getTime()).toString();
 
-		title = "Tiempos " + updated;
+		title = getString(R.string.hora) + ": " + updated;
 
 		return title;
 

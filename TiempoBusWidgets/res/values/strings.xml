@@ -52,12 +52,20 @@
     
     <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \'Actualizar\'. En caso contrario accede a TiempoBus y seleccionalas en la lista de tiempos.</string>
     
+    <string name="literal_min">min</string>
+    
     <!-- DashClock -->
     <string name="extension_title">TiempoBus</string>
-    <string name="extension_description">Tiempos de paso de autobuses Alicante. Spain</string>
+    <string name="extension_description">Tiempos de paso de autobuses Alicante(Spain). Los tiempos se añaden desde la pantalla principal de la aplicación TiempoBus.</string>
     <string name="pref_name_title">Your name</string>
     <string name="pref_name_default">John Smith</string>
-    <string name="title_settings">TiempoBus Settings</string>
+    <string name="title_settings">TiempoBus Preferencias</string>
     
+    <string name="tiempo_m_1_d">Parada</string>
+    <string name="tiempo_m_2_d">Sin Datos</string>
+    
+    <string name="preferencias_actualizar_des">Actualizar datos</string>
+    <string name="preferencias_actualizar_des_sum">Actualizar los tiempos al desbloquear el dispositivo</string>
+    <string name="hora">Hora</string>
     
 </resources>

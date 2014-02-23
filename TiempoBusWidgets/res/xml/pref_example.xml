@@ -18,7 +18,7 @@
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-    <EditTextPreference
+    <!-- <EditTextPreference
         android:key="pref_name"
         android:title="@string/pref_name_title"
         android:defaultValue="@string/pref_name_default"
@@ -26,6 +26,11 @@
         android:inputType="textCapWords"
         android:capitalize="words"
         android:singleLine="true"
-        android:maxLines="1" />
+        android:maxLines="1" />-->
+    
+    <CheckBoxPreference
+                android:key="actualizar_desb"
+                android:title="@string/preferencias_actualizar_des"
+                android:summary="@string/preferencias_actualizar_des_sum" android:defaultValue="true"/>
 
 </PreferenceScreen>
