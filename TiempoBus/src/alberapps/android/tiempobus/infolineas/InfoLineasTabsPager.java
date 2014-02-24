@@ -429,10 +429,18 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		inflater.inflate(R.menu.infolineas, menu);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-			searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-			searchView.setIconifiedByDefault(false);
+			try {
+				SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+				SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+				searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+				searchView.setIconifiedByDefault(false);
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+
+			}
+
 		}
 
 		return super.onCreateOptionsMenu(menu);

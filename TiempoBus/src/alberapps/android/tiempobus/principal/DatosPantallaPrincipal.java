@@ -902,7 +902,7 @@ public class DatosPantallaPrincipal {
 				String lon = cursor.getString(lonIndex);
 
 				if (lat != null && !lat.equals("") && !lon.equals("")) {
-					cargarInfoWikipedia(lat, lon);
+					cargarInfoWikipedia(lat, lon, v);
 				}
 
 			}
@@ -1217,10 +1217,33 @@ public class DatosPantallaPrincipal {
 		}
 	}
 
+	private String paradaWiki = null;
+	private String datosWiki = null;
+
 	/**
 	 * Cargar la informacion de la wikipedia para la parada
 	 */
-	public void cargarInfoWikipedia(String lat, String lon) {
+	public void cargarInfoWikipedia(String lat, String lon, final View v) {
+
+		// Verificar si ya disponemos de los datos
+		if (paradaWiki != null && datosWiki != null && paradaWiki.equals(Integer.toString(context.paradaActual))) {
+
+			try {
+				TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+
+				textoWiki.setText(Html.fromHtml(datosWiki));
+				textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return;
+
+		} else {
+			paradaWiki = Integer.toString(context.paradaActual);
+			datosWiki = null;
+		}
 
 		LoadWikipediaAsyncTaskResponder loadWikipediaAsyncTaskResponder = new LoadWikipediaAsyncTaskResponder() {
 			public void WikipediaLoaded(WikiQuery wiki) {
@@ -1251,10 +1274,13 @@ public class DatosPantallaPrincipal {
 					if (sb.length() > 0) {
 
 						try {
-							TextView textoWiki = (TextView) context.findViewById(R.id.datos_wiki);
+							TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
 
 							textoWiki.setText(Html.fromHtml(sb.toString()));
 							textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+							// Datos para siguiente pasada
+							datosWiki = sb.toString();
 
 						} catch (Exception e) {
 
