@@ -18,6 +18,7 @@
  */
 package alberapps.android.tiempobus.principal;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask.LoadWeatherAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
@@ -46,6 +49,7 @@ import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
+import alberapps.java.weather.WeatherQuery;
 import alberapps.java.wikipedia.WikiQuery;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -904,6 +908,8 @@ public class DatosPantallaPrincipal {
 				if (lat != null && !lat.equals("") && !lon.equals("")) {
 					cargarInfoWikipedia(lat, lon, v);
 				}
+				
+				cargarInfoWeather(v);
 
 			}
 
@@ -1305,5 +1311,135 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
+	
+	
+	private WeatherQuery datosWeather = null;
+	
+	/**
+	 * Cargar la informacion de la wikipedia para la parada
+	 */
+	public void cargarInfoWeather(final View v) {
 
+		// Verificar si ya disponemos de los datos
+		if (datosWeather != null) {
+
+			try {
+				//TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+				//textoWeather.setText();
+				//textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return;
+
+		} else {
+			//paradaWiki = Integer.toString(context.paradaActual);
+			//datosWiki = null;
+		}
+
+		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
+			public void WeatherLoaded(WeatherQuery weather) {
+
+				if (weather != null) {
+
+					StringBuffer sb = new StringBuffer();
+
+					
+					for(int i =0;i< weather.getListaDatos().size();i++){
+						
+						
+						for(int j=0;j<weather.getListaDatos().get(i).getEstadoCielo().size();j++){
+						
+							if(weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())){
+								
+								sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+								
+							}
+							
+							
+						 
+						 
+						}
+						
+					}
+					
+					
+					// Preparar titulos
+					/*for (int i = 0; i < wiki.getListaDatos().size(); i++) {
+
+						if (sb.length() > 0) {
+							sb.append(", ");
+						}
+
+						sb.append("<a href=\"http://");
+						sb.append(UtilidadesUI.getIdiomaWiki());
+						sb.append(".wikipedia.org/?curid=");
+						sb.append(wiki.getListaDatos().get(i).getPageId());
+						sb.append("\">");
+
+						sb.append(wiki.getListaDatos().get(i).getTitle());
+						sb.append("</a>");
+
+					}*/
+
+					// Cargar titulos en textView
+					if (sb.length() > 0) {
+
+						try {
+							TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+							textoWeather.setText(sb.toString());
+							//textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+							// Datos para siguiente pasada
+							//datosWeather = sb.toString();
+
+						} catch (Exception e) {
+
+						}
+
+					}
+
+				} else {
+
+				}
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+		}
+
+	}
+	
+
+	private String getPeriodoWheather(){
+		
+		SimpleDateFormat ft = new SimpleDateFormat("HH");
+
+		int horaT = Integer.parseInt(ft.format(new Date()));
+		
+		if(horaT > 0 && horaT < 6){
+			return "00-06";
+		}else if(horaT >= 6 && horaT < 12){
+			return "06-12";
+		}else if(horaT >= 12 && horaT < 18){
+			return "12-18";
+		}else if(horaT >= 18 ){
+			return "18-24";
+		}else{
+			return null;
+		}
+		
+	}
+	
 }
