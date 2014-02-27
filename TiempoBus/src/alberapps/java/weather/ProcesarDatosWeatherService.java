@@ -180,6 +180,16 @@ public class ProcesarDatosWeatherService {
 						
 						data.getEstadoCielo().add(estadoCielo);
 						
+					}else if(gs.getChildNodes().item(j).getNodeName() != null && gs.getChildNodes().item(j).getNodeName().equals("temperatura")){
+						
+						
+						String max = gs.getChildNodes().item(j).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+						String min = gs.getChildNodes().item(j).getChildNodes().item(3).getChildNodes().item(0).getNodeValue();
+						
+						data.setTempMaxima(max);
+						data.setTempMinima(min);
+						
+						
 					}
 				
 					

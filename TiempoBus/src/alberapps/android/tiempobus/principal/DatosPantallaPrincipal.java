@@ -49,6 +49,8 @@ import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
+import alberapps.java.weather.EstadoCielo;
+import alberapps.java.weather.WeatherData;
 import alberapps.java.weather.WeatherQuery;
 import alberapps.java.wikipedia.WikiQuery;
 import android.app.Activity;
@@ -1340,9 +1342,15 @@ public class DatosPantallaPrincipal {
 			//datosWiki = null;
 		}
 
+		
+		
 		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
 			public void WeatherLoaded(WeatherQuery weather) {
 
+				ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
+				
+				
+				
 				if (weather != null) {
 
 					StringBuffer sb = new StringBuffer();
@@ -1354,6 +1362,8 @@ public class DatosPantallaPrincipal {
 						for(int j=0;j<weather.getListaDatos().get(i).getEstadoCielo().size();j++){
 						
 							if(weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())){
+							
+								//if(weather.getListaDatos().get(i).getEstadoCielo().get(j).get)
 								
 								sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
 								
@@ -1363,6 +1373,12 @@ public class DatosPantallaPrincipal {
 						 
 						 
 						}
+						
+						sb.append(" min/máx: ");
+						sb.append(weather.getListaDatos().get(i).getTempMinima());
+						sb.append("/");
+						sb.append(weather.getListaDatos().get(i).getTempMaxima());
+						
 						
 					}
 					
@@ -1405,6 +1421,8 @@ public class DatosPantallaPrincipal {
 
 				} else {
 
+					iv.setVisibility(ImageView.INVISIBLE);
+					
 				}
 			}
 
@@ -1439,6 +1457,56 @@ public class DatosPantallaPrincipal {
 		}else{
 			return null;
 		}
+		
+	}
+	
+	
+	
+	private void imgTiempo(EstadoCielo data){
+		
+		/*
+		 * 11: sol
+		 * 
+		 * 
+		 * 12: nube-sol
+		 * 13: nube-sol+ 
+		 * 14: nube-sol++
+		 * 17: niebla
+		 * 
+		 * 
+		 * 15: nubes
+		 *  
+		 * 
+		 * 43: lluvia suave
+		 * 44: lluvia suave+
+		 * 45: lluvia suave++
+		 * 46: lluvia suave+++
+		 * 23: intervalos nubosos lluvia
+		 * 25: muy nuboso lluvia
+		 * 26: nuboso lluvia+
+		 * 
+		 * 71: nieve
+		 * 72: nieve+
+		 * 73: nieve++
+		 * 33: intervalos nubosos nieve
+		 * 34: intervalos nubosos nieve+
+		 * 35: nuboso con nieve
+		 * 36: nuboso con nieve+
+		 * 
+		 * 52: tormenta
+		 * 53: tormenta+
+		 * 54: tormenta++
+		 * 62: nuboso tormenta
+		 * 63: nuboso tormenta+
+		 * 64: nuboso tormenta++
+		 * 
+		 */
+		
+		if(data.getValor().equals("11")){
+			
+		}
+		
+		
 		
 	}
 	
