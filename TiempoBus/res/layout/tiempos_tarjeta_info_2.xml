@@ -152,7 +152,7 @@
                     android:id="@+id/TextView01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wikipedia"
+                    android:text="@string/eltiempo"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/color_android"
                     android:textSize="12sp"
@@ -160,7 +160,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="2dp" >
 
                     <ImageView
                         android:id="@+id/imageWeather"

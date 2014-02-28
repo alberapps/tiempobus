@@ -910,7 +910,7 @@ public class DatosPantallaPrincipal {
 				if (lat != null && !lat.equals("") && !lon.equals("")) {
 					cargarInfoWikipedia(lat, lon, v);
 				}
-				
+
 				cargarInfoWeather(v);
 
 			}
@@ -1313,23 +1313,22 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-	
-	
+
 	private WeatherQuery datosWeather = null;
-	
+
 	/**
 	 * Cargar la informacion de la wikipedia para la parada
 	 */
 	public void cargarInfoWeather(final View v) {
 
+		final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
+		
 		// Verificar si ya disponemos de los datos
 		if (datosWeather != null) {
 
 			try {
-				//TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
-				//textoWeather.setText();
-				//textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+				mostrarElTiempo(datosWeather, iv, v);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1338,91 +1337,24 @@ public class DatosPantallaPrincipal {
 			return;
 
 		} else {
-			//paradaWiki = Integer.toString(context.paradaActual);
-			//datosWiki = null;
+			// datosWeather =;
+			// datosWiki = null;
 		}
 
-		
-		
 		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
 			public void WeatherLoaded(WeatherQuery weather) {
 
-				ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 				
-				
-				
+				iv.setVisibility(ImageView.INVISIBLE);
+
 				if (weather != null) {
 
-					StringBuffer sb = new StringBuffer();
-
-					
-					for(int i =0;i< weather.getListaDatos().size();i++){
-						
-						
-						for(int j=0;j<weather.getListaDatos().get(i).getEstadoCielo().size();j++){
-						
-							if(weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())){
-							
-								//if(weather.getListaDatos().get(i).getEstadoCielo().get(j).get)
-								
-								sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
-								
-							}
-							
-							
-						 
-						 
-						}
-						
-						sb.append(" min/máx: ");
-						sb.append(weather.getListaDatos().get(i).getTempMinima());
-						sb.append("/");
-						sb.append(weather.getListaDatos().get(i).getTempMaxima());
-						
-						
-					}
-					
-					
-					// Preparar titulos
-					/*for (int i = 0; i < wiki.getListaDatos().size(); i++) {
-
-						if (sb.length() > 0) {
-							sb.append(", ");
-						}
-
-						sb.append("<a href=\"http://");
-						sb.append(UtilidadesUI.getIdiomaWiki());
-						sb.append(".wikipedia.org/?curid=");
-						sb.append(wiki.getListaDatos().get(i).getPageId());
-						sb.append("\">");
-
-						sb.append(wiki.getListaDatos().get(i).getTitle());
-						sb.append("</a>");
-
-					}*/
-
-					// Cargar titulos en textView
-					if (sb.length() > 0) {
-
-						try {
-							TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
-
-							textoWeather.setText(sb.toString());
-							//textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
-
-							// Datos para siguiente pasada
-							//datosWeather = sb.toString();
-
-						} catch (Exception e) {
-
-						}
-
-					}
+					mostrarElTiempo(weather, iv, v);
 
 				} else {
 
 					iv.setVisibility(ImageView.INVISIBLE);
-					
+
 				}
 			}
 
@@ -1438,76 +1370,118 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-	
 
-	private String getPeriodoWheather(){
-		
+	private void mostrarElTiempo(WeatherQuery weather, ImageView iv, View v) {
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int i = 0; i < weather.getListaDatos().size(); i++) {
+
+			for (int j = 0; j < weather.getListaDatos().get(i).getEstadoCielo().size(); j++) {
+
+				if (weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())) {
+
+					imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
+
+					sb.append("(");
+
+					sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+
+					sb.append(") ");
+
+				}
+
+			}
+
+			sb.append(" min/máx: ");
+			sb.append(weather.getListaDatos().get(i).getTempMinima());
+			sb.append("/");
+			sb.append(weather.getListaDatos().get(i).getTempMaxima());
+
+		}
+
+		// Cargar titulos en textView
+		if (sb.length() > 0) {
+
+			try {
+				TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+				textoWeather.setText(sb.toString());
+				// textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+				// Datos para siguiente pasada
+				datosWeather = weather;
+
+			} catch (Exception e) {
+
+			}
+
+		}
+
+	}
+
+	private String getPeriodoWheather() {
+
 		SimpleDateFormat ft = new SimpleDateFormat("HH");
 
 		int horaT = Integer.parseInt(ft.format(new Date()));
-		
-		if(horaT > 0 && horaT < 6){
+
+		if (horaT > 0 && horaT < 6) {
 			return "00-06";
-		}else if(horaT >= 6 && horaT < 12){
+		} else if (horaT >= 6 && horaT < 12) {
 			return "06-12";
-		}else if(horaT >= 12 && horaT < 18){
+		} else if (horaT >= 12 && horaT < 18) {
 			return "12-18";
-		}else if(horaT >= 18 ){
+		} else if (horaT >= 18) {
 			return "18-24";
-		}else{
+		} else {
 			return null;
 		}
-		
+
 	}
-	
-	
-	
-	private void imgTiempo(EstadoCielo data){
-		
+
+	private void imgTiempo(EstadoCielo data, ImageView iv) {
+
 		/*
 		 * 11: sol
 		 * 
 		 * 
-		 * 12: nube-sol
-		 * 13: nube-sol+ 
-		 * 14: nube-sol++
-		 * 17: niebla
+		 * 12: nube-sol 13: nube-sol+ 14: nube-sol++ 17: niebla
 		 * 
 		 * 
 		 * 15: nubes
-		 *  
 		 * 
-		 * 43: lluvia suave
-		 * 44: lluvia suave+
-		 * 45: lluvia suave++
-		 * 46: lluvia suave+++
-		 * 23: intervalos nubosos lluvia
-		 * 25: muy nuboso lluvia
-		 * 26: nuboso lluvia+
 		 * 
-		 * 71: nieve
-		 * 72: nieve+
-		 * 73: nieve++
-		 * 33: intervalos nubosos nieve
-		 * 34: intervalos nubosos nieve+
-		 * 35: nuboso con nieve
-		 * 36: nuboso con nieve+
+		 * 43: lluvia suave 44: lluvia suave+ 45: lluvia suave++ 46: lluvia
+		 * suave+++ 23: intervalos nubosos lluvia 25: muy nuboso lluvia 26:
+		 * nuboso lluvia+
 		 * 
-		 * 52: tormenta
-		 * 53: tormenta+
-		 * 54: tormenta++
-		 * 62: nuboso tormenta
-		 * 63: nuboso tormenta+
-		 * 64: nuboso tormenta++
+		 * 71: nieve 72: nieve+ 73: nieve++ 33: intervalos nubosos nieve 34:
+		 * intervalos nubosos nieve+ 35: nuboso con nieve 36: nuboso con nieve+
 		 * 
+		 * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
+		 * nuboso tormenta+ 64: nuboso tormenta++
 		 */
-		
-		if(data.getValor().equals("11")){
-			
+
+		if (data.getValor().substring(0, 2).equals("11")) {
+			iv.setImageResource(R.drawable.weather_sun_blue_48);
+		} else if (data.getValor().substring(0, 2).equals("15")) {
+			iv.setImageResource(R.drawable.weather_clouds_blue_48);
+		} else if (data.getValor().substring(0, 1).equals("1")) {
+			iv.setImageResource(R.drawable.weather_cloudy_blue_48);
+		} else if (data.getValor().substring(0, 1).equals("4") || data.getValor().substring(0, 1).equals("2")) {
+			iv.setImageResource(R.drawable.weather_rain_blue_48);
+		} else if (data.getValor().substring(0, 1).equals("7") || data.getValor().substring(0, 1).equals("3")) {
+			iv.setImageResource(R.drawable.weather_snow_blue_48);
+		} else if (data.getValor().substring(0, 1).equals("5") || data.getValor().substring(0, 1).equals("6")) {
+			iv.setImageResource(R.drawable.weather_thunder_blue_48);
+		} else {
+			iv.setVisibility(ImageView.INVISIBLE);
+			return;
 		}
-		
-		
-		
+
+		iv.setVisibility(ImageView.VISIBLE);
+
 	}
-	
+
 }
