@@ -57,7 +57,7 @@ import android.util.Log;
 public class Conectividad {
 
 	public static final String USER_AGENT = "TiempoBus/2.8 (http://alberapps.blogspot.com; alberapps@gmail.com)";
-	
+
 	/**
 	 * Conexion con post y codificacion UTF-8
 	 * 
@@ -153,23 +153,22 @@ public class Conectividad {
 			urlConnection.setRequestMethod("GET");
 			urlConnection.setDoInput(true);
 
-			if(userAgent){
+			if (userAgent) {
 				urlConnection.setRequestProperty("User-Agent", USER_AGENT);
 			}
-			
-			
+
 			if (!usarCache) {
 				urlConnection.addRequestProperty("Cache-Control", "no-cache");
 				Log.d("CONEXION", "Sin cache");
-			}else{
+			} else {
 				Log.d("CONEXION", "Con cache");
 			}
 
 			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			
-			if(utf8){
+
+			if (utf8) {
 				datos = Utilidades.obtenerStringDeStreamUTF8(in);
-			}else{	
+			} else {
 				datos = Utilidades.obtenerStringDeStream(in);
 			}
 
@@ -195,6 +194,12 @@ public class Conectividad {
 	public static InputStream conexionGetIsoStream(String urlGet) {
 
 		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, false));
+
+	}
+
+	public static InputStream conexionGetUtf8Stream(String urlGet) {
+
+		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
 
 	}
 
@@ -278,11 +283,11 @@ public class Conectividad {
 			// Timeout para recibir datos
 			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
 			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-			
-			if(userAgent){				
+
+			if (userAgent) {
 				request.setHeader("User-Agent", USER_AGENT);
 			}
-			
+
 			DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
 			HttpResponse response = client.execute(request);

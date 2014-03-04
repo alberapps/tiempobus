@@ -193,6 +193,12 @@
                 android:title="@string/conf_db_recargar"
                 android:summary="@string/conf_db_recargar_desc"
                 >
+        </PreferenceScreen>
+        <PreferenceScreen
+                android:key="actualizar_db"
+                android:title="@string/conf_db_recargar"
+                android:summary="@string/conf_db_recargar_desc"
+                >
                 
         </PreferenceScreen>
                 

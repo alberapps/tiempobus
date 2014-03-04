@@ -20,12 +20,18 @@
 package alberapps.android.tiempobus;
 
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.widget.Toast;
 
 /**
  * 
@@ -66,7 +72,12 @@ public class PreferencesFromXml extends PreferenceActivity {
 
 			reiniciarDB();
 
+		}else if (preference.getKey().equals("actualizar_db")) {
+
+			actualizarDB();
+
 		}
+
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
@@ -95,5 +106,32 @@ public class PreferencesFromXml extends PreferenceActivity {
 		getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
 
 	}
+	
+	public void actualizarDB(){
+		
+		
+		
+		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+			public void ActualizarBDLoaded(Boolean respuesta) {
+
+				
+				
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+		}
+
+		
+		
+	}
+	
 
 }
