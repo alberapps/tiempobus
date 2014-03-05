@@ -27,6 +27,7 @@ import java.util.HashMap;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.java.actualizador.DescargarActualizaBD;
 import alberapps.java.tram.UtilidadesTRAM;
 import android.app.SearchManager;
 import android.content.ContentValues;
@@ -295,9 +296,22 @@ public class DatosLineasDB {
 		return cursor;
 	}
 
+	/**
+	 * Recarga de la base datos de la version
+	 */
 	public void recargaManual() {
 
-		mDatabaseOpenHelper.reCargarBaseDatos();
+		mDatabaseOpenHelper.reCargarBaseDatos(null);
+
+	}
+
+	/**
+	 * Actualizacion a partir de los archivos descargados
+	 * 
+	 */
+	public void actualizarDescarga() {
+
+		mDatabaseOpenHelper.reCargarBaseDatos(DescargarActualizaBD.BD_DESCARGA);
 
 	}
 
@@ -360,7 +374,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
-						cargarLineas();
+						cargarLineas(null);
 
 						if (UtilidadesTRAM.ACTIVADO_TRAM) {
 							// TRAM
@@ -369,7 +383,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
-						cargarRecorridos();
+						cargarRecorridos(null);
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 100);
 
@@ -398,7 +412,7 @@ public class DatosLineasDB {
 		/**
 		 * Recarga de la base de datos
 		 */
-		private void reCargarBaseDatos() {
+		private void reCargarBaseDatos(final String origen) {
 
 			new Thread(new Runnable() {
 				public void run() {
@@ -417,7 +431,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 20);
 
-						cargarLineas();
+						cargarLineas(origen);
 
 						if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
@@ -430,7 +444,7 @@ public class DatosLineasDB {
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
-						cargarRecorridos();
+						cargarRecorridos(origen);
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 100);
 
@@ -456,10 +470,26 @@ public class DatosLineasDB {
 			}).start();
 		}
 
-		private void cargarLineas() throws IOException {
+		/**
+		 * Carga de lineas desde archivo
+		 * 
+		 * @param origen
+		 * @throws IOException
+		 */
+		private void cargarLineas(String origen) throws IOException {
 			Log.d(TAG, "Loading database LINEA...");
 			Resources resources = mHelperContext.getResources();
-			InputStream inputStream = resources.openRawResource(R.raw.precargainfolineas);
+
+			InputStream inputStream = null;
+
+			if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				inputStream = DescargarActualizaBD.inputStreamInfolineas();
+
+			} else {
+				inputStream = resources.openRawResource(R.raw.precargainfolineas);
+			}
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
 			try {
@@ -487,15 +517,38 @@ public class DatosLineasDB {
 			Log.d(TAG, "DONE loading database LINEA.");
 		}
 
-		private void cargarRecorridos() throws IOException {
+		/**
+		 * Carga de recorridos desde archivo
+		 * 
+		 * @param origen
+		 * @throws IOException
+		 */
+		private void cargarRecorridos(String origen) throws IOException {
 			Log.d(TAG, "Loading database RECORRIDO...");
 			Resources resources = mHelperContext.getResources();
 
-			InputStream inputStreamR = resources.openRawResource(R.raw.precargainfolineasrecorrido);
-			BufferedReader readerR = new BufferedReader(new InputStreamReader(inputStreamR));
+			InputStream inputStreamR = null;
+			BufferedReader readerR = null;
+			InputStream inputStreamR2 = null;
+			BufferedReader readerR2 = null;
 
-			InputStream inputStreamR2 = resources.openRawResource(R.raw.precargainfolineasrecorrido2);
-			BufferedReader readerR2 = new BufferedReader(new InputStreamReader(inputStreamR2));
+			if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				inputStreamR = DescargarActualizaBD.inputStreamInfolineasRecorrido1();
+				readerR = new BufferedReader(new InputStreamReader(inputStreamR));
+
+				inputStreamR2 = DescargarActualizaBD.inputStreamInfolineasRecorrido2();
+				readerR2 = new BufferedReader(new InputStreamReader(inputStreamR2));
+
+			} else {
+
+				inputStreamR = resources.openRawResource(R.raw.precargainfolineasrecorrido);
+				readerR = new BufferedReader(new InputStreamReader(inputStreamR));
+
+				inputStreamR2 = resources.openRawResource(R.raw.precargainfolineasrecorrido2);
+				readerR2 = new BufferedReader(new InputStreamReader(inputStreamR2));
+
+			}
 
 			try {
 				String line;
@@ -745,7 +798,7 @@ public class DatosLineasDB {
 
 			mDatabase = db;
 
-			reCargarBaseDatos();
+			reCargarBaseDatos(null);
 
 		}
 

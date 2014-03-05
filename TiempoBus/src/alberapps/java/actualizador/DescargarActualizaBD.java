@@ -18,92 +18,127 @@
  */
 package alberapps.java.actualizador;
 
-import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.protocol.HTTP;
-
-import alberapps.java.tam.lineas.DatosLinea;
 import alberapps.java.util.Conectividad;
-import android.app.DownloadManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-
 
 /**
  * 
- * Procesa los datos recuperados de las lineas
+ * Descarga de actualizaciones de la base de datos
  * 
  */
 public class DescargarActualizaBD {
 
-	public static final String URL_DATOS = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineas";
+	public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineas";
+	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido";
+	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido2";
 
-	
+	public static final String PRECARGA_INFOLINEAS = "precargainfolineas_dw";
+	public static final String PRECARGA_INFOLINEAS_RECORRIDO_1 = "precargainfolineasrecorrido_dw";
+	public static final String PRECARGA_INFOLINEAS_RECORRIDO_2 = "precargainfolineasrecorrido2_dw";
+
+	public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
+
+	public static final String BD_DESCARGA = "descarga";
+
 	/**
-	 * Parsear datos lineas
+	 * Iniciar el proceso de actualizacion
+	 * 
+	 * @return boolean
+	 */
+	public static boolean iniciarActualizacion() {
+
+		boolean resultado = descargarArchivos();
+
+		return resultado;
+
+	}
+
+	/**
+	 * Descargar todos los archivos de actualizacion
+	 * 
+	 * @return boolean
+	 */
+	public static boolean descargarArchivos() {
+
+		// precargainfolineas
+		if (descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS, PRECARGA_INFOLINEAS) &&
+		// precargainfolineasrecorrido
+				descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_1, PRECARGA_INFOLINEAS_RECORRIDO_1) &&
+				// precargainfolineasrecorrido2
+				descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_2, PRECARGA_INFOLINEAS_RECORRIDO_2)) {
+
+			return true;
+
+		} else {
+			return false;
+		}
+
+	}
+
+	/**
+	 * Descargar archivo
 	 * 
 	 * @param url
-	 * @return
+	 * @param archivo
+	 * @return boolean
 	 */
-	public static void descargarArchivo() {
+	public static boolean descargarArchivoActualizacion(String url, String archivo) {
 
-		
-		
+		boolean resultado = false;
 
 		InputStream is = null;
 
 		FileOutputStream fileExport = null;
-		
+
 		try {
 
-			is = Conectividad.conexionGetUtf8Stream(URL_DATOS);
+			is = Conectividad.conexionGetUtf8Stream(url);
 
 			if (is != null) {
 
-				
-				
 				// Copiar fichero al sistema de archivos
 				// directorio de memoria interna
-				File directorio = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/");
+				File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
 				directorio.mkdirs();
-				
+
 				File fileEx = null;
-				fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "precargainfolineas_dw");
+				fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, archivo);
 
 				fileEx.createNewFile();
 
 				fileExport = new FileOutputStream(fileEx);
-				
+
 				copyFileI(is, fileExport);
 
 				fileExport.flush();
-				
+
+				resultado = true;
 
 			} else {
-				
+
+				resultado = false;
+
 			}
 
 		} catch (Exception e) {
 
-			
-			
+			resultado = false;
+
 		} finally {
 			try {
-				if(is != null){
+				if (is != null) {
 					is.close();
 				}
 			} catch (IOException e) {
 
 			}
-			
+
 			if (fileExport != null) {
 				try {
 
@@ -115,13 +150,12 @@ public class DescargarActualizaBD {
 
 				}
 			}
-			
-		}
-		
-		
-	}
 
-	
+		}
+
+		return resultado;
+
+	}
 
 	/**
 	 * Copiar archivo
@@ -140,5 +174,81 @@ public class DescargarActualizaBD {
 		}
 
 	}
-	
+
+	/**
+	 * 
+	 * inputStream infolineas
+	 * 
+	 * @return is
+	 */
+	public static InputStream inputStreamInfolineas() {
+
+		FileInputStream fileEXIE = null;
+
+		File fileEx = null;
+
+		try {
+
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
+
+			fileEXIE = new FileInputStream(fileEx);
+
+		} catch (IOException e) {
+
+		}
+
+		return fileEXIE;
+
+	}
+
+	/**
+	 * inputStream infolineasrecorrido1
+	 * 
+	 * @return is
+	 */
+	public static InputStream inputStreamInfolineasRecorrido1() {
+
+		FileInputStream fileEXIE = null;
+
+		File fileEx = null;
+
+		try {
+
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
+
+			fileEXIE = new FileInputStream(fileEx);
+
+		} catch (IOException e) {
+
+		}
+
+		return fileEXIE;
+
+	}
+
+	/**
+	 * nputStream infolineasrecorrido2
+	 * 
+	 * @return is
+	 */
+	public static InputStream inputStreamInfolineasRecorrido2() {
+
+		FileInputStream fileEXIE = null;
+
+		File fileEx = null;
+
+		try {
+
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
+
+			fileEXIE = new FileInputStream(fileEx);
+
+		} catch (IOException e) {
+
+		}
+
+		return fileEXIE;
+
+	}
+
 }

@@ -53,21 +53,22 @@ public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, Boolean> {
 	 */
 	@Override
 	protected Boolean doInBackground(Object... datos) {
-		
+
+		Boolean respuesta = false;
+
 		try {
 
-			
-			DescargarActualizaBD.descargarArchivo();
+			respuesta = DescargarActualizaBD.iniciarActualizacion();
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
-			return null;
+			respuesta = false;
 
 		}
 
-		return true;
+		return respuesta;
 	}
 
 	/**

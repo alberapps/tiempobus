@@ -262,15 +262,22 @@ public class BuscadorLineasProvider extends ContentProvider {
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		throw new UnsupportedOperationException();
+
+		Log.d("DATOS", "Recarga manual de la base de datos");
+
+		mDictionary.recargaManual();
+
+		return 0;
+
+		// throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
-		Log.d("DATOS", "Actualizacion manual de la base de datos");
+		Log.d("DATOS", "Actualizacion remota de la base de datos");
 
-		mDictionary.recargaManual();
+		mDictionary.actualizarDescarga();
 
 		return 0;
 

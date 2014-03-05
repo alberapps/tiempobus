@@ -22,6 +22,7 @@ package alberapps.android.tiempobus;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -31,6 +32,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.widget.Toast;
 
 /**
@@ -72,12 +74,11 @@ public class PreferencesFromXml extends PreferenceActivity {
 
 			reiniciarDB();
 
-		}else if (preference.getKey().equals("actualizar_db")) {
+		} else if (preference.getKey().equals("actualizar_db")) {
 
 			actualizarDB();
 
 		}
-
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
@@ -103,19 +104,25 @@ public class PreferencesFromXml extends PreferenceActivity {
 
 	public void reiniciarDB() {
 
-		getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+		getContentResolver().delete(BuscadorLineasProvider.CONTENT_URI, null, null);
 
 	}
-	
-	public void actualizarDB(){
-		
-		
-		
+
+	public void actualizarDB() {
+
+		final Builder mBuilder = Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
+
 		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
 			public void ActualizarBDLoaded(Boolean respuesta) {
 
-				
-				
+				if (respuesta) {
+					getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+				} else {
+					Toast.makeText(getApplicationContext(), getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
+
+					Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+				}
+
 			}
 
 		};
@@ -124,14 +131,15 @@ public class PreferencesFromXml extends PreferenceActivity {
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
+
 			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+			Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+
 		}
 
-		
-		
 	}
-	
 
 }
