@@ -113,9 +113,9 @@ public class PreferencesFromXml extends PreferenceActivity {
 		final Builder mBuilder = Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
 
 		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
-			public void ActualizarBDLoaded(Boolean respuesta) {
+			public void ActualizarBDLoaded(String respuesta) {
 
-				if (respuesta) {
+				if (respuesta.equals("true")) {
 					getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();

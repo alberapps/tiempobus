@@ -34,7 +34,9 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
@@ -43,6 +45,7 @@ import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask.LoadWeatherAsyncTa
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.tw.TwResultado;
@@ -66,6 +69,7 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -762,6 +766,13 @@ public class DatosPantallaPrincipal {
 			texto.setText("- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
 
 		}
+		
+		
+		//Actualzaciones
+		
+		controlActualizarDB(texto);
+		
+		
 
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
@@ -1484,4 +1495,108 @@ public class DatosPantallaPrincipal {
 
 	}
 
+	
+	
+	public void controlActualizarDB(final TextView tw) {
+
+		
+		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+			public void ActualizarBDLoaded(String respuesta) {
+
+				boolean mostrarAviso = false;
+				
+				if (respuesta != null && !respuesta.equals("false")) {
+					
+					
+					Log.d("ACTUALIZA", "respuesta: " + respuesta);
+					
+					//01012014
+					
+					if(respuesta.length() == 8){
+						
+						if(PreferencesUtil.getUpdateInfo(context).equals("")){
+							
+							PreferencesUtil.putUpdateInfo(context, respuesta, "");
+							
+							mostrarAviso = true;
+							
+							Log.d("ACTUALIZA", "no hay anterior");
+							
+							
+						}else if(!PreferencesUtil.getUpdateInfo(context).equals("")){
+							
+							String control = PreferencesUtil.getUpdateInfo(context);
+							String ignorar = PreferencesUtil.getUpdateIgnorarInfo(context);
+							
+							if(!ignorar.equals("")){
+								
+								if(control.equals(ignorar)){
+									mostrarAviso = false;
+									
+									Log.d("ACTUALIZA", "ingnorar");
+									
+								}else{
+									
+									//Si la actualizacion es posterior a la actual
+									if(Utilidades.isFechaControl(respuesta, control)){
+										
+										mostrarAviso = true;
+										
+										Log.d("ACTUALIZA", "mostrar");
+										
+									}
+									
+								}
+								
+							}
+							
+							
+							
+						}
+						
+					}
+					
+					
+				} else {
+					
+				
+					mostrarAviso = false;
+					
+				}
+				
+				
+				if(mostrarAviso){
+					
+					tw.setText(tw.getText() + "\n" + "Hay actualizacion" );
+					
+					
+				}
+				
+
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+
+			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
+		} else {
+			
+			
+			
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

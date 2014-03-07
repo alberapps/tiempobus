@@ -18,12 +18,19 @@
  */
 package alberapps.java.actualizador;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.protocol.HTTP;
+
+import alberapps.java.tam.lineas.DatosLinea;
 import alberapps.java.util.Conectividad;
 import android.os.Environment;
 
@@ -34,9 +41,11 @@ import android.os.Environment;
  */
 public class DescargarActualizaBD {
 
-	public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineas";
-	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido";
-	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido2";
+	public static final String URL_CONTROL_ACTUALIZA = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/infoupdate.txt";
+	
+	public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineas";
+	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido";
+	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido2";
 
 	public static final String PRECARGA_INFOLINEAS = "precargainfolineas_dw";
 	public static final String PRECARGA_INFOLINEAS_RECORRIDO_1 = "precargainfolineasrecorrido_dw";
@@ -251,4 +260,65 @@ public class DescargarActualizaBD {
 
 	}
 
+	
+	
+	public static String controlActualizacion() {
+
+		String actualizar = null;
+
+		InputStream is = null;
+
+		try {
+
+			is = Conectividad.conexionGetUtf8Stream(URL_CONTROL_ACTUALIZA);
+			
+			if (is != null) {
+
+				BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
+
+				String l = "";
+
+				
+				int linea = 0;
+
+				while ((l = input.readLine()) != null) {
+
+					//Si actualizar
+					if(linea == 0 && !l.equals("true")){
+						break;						
+					}else if(linea == 1){
+						
+						actualizar = l;
+						
+					}else if(linea > 1){
+						break;
+					}
+					
+					linea++;
+
+				}
+
+				
+
+			} else {
+				actualizar = null;
+			}
+
+		} catch (Exception e) {
+
+			actualizar = null;
+			
+		} finally {
+			try {
+				if(is != null){
+					is.close();
+				}
+			} catch (IOException e) {
+
+			}
+		}
+
+		return actualizar;
+	}
+	
 }

@@ -146,6 +146,42 @@ public class Utilidades {
 	}
 
 	/**
+	 * String desde date
+	 * 
+	 * @param fecha
+	 * @return
+	 */
+	public static boolean isFechaControl(String fechaControl, String fechaPreferencias) {
+
+		Date fechaDateControl = null;
+		Date fechaDatePref = null;
+		
+
+		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+
+		
+		
+		if (fechaControl != null && !fechaControl.equals("") && fechaPreferencias != null && !fechaPreferencias.equals("")) {
+			try {
+				fechaDateControl = df.parse(fechaControl);
+				fechaDatePref = df.parse(fechaPreferencias);
+
+				if(fechaDateControl.before(fechaDatePref)){
+					return true;
+				}
+
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		return false;
+		
+
+	}
+
+	/**
 	 * Aleatorio
 	 * 
 	 * @return int

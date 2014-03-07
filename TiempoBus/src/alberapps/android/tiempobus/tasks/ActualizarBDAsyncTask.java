@@ -27,14 +27,14 @@ import android.os.AsyncTask;
  * 
  * 
  */
-public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, Boolean> {
+public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, String> {
 
 	/**
 	 * 
 	 *
 	 */
 	public interface LoadActualizarBDAsyncTaskResponder {
-		public void ActualizarBDLoaded(Boolean resultado);
+		public void ActualizarBDLoaded(String resultado);
 	}
 
 	private LoadActualizarBDAsyncTaskResponder responder;
@@ -52,19 +52,41 @@ public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, Boolean> {
 	 * 
 	 */
 	@Override
-	protected Boolean doInBackground(Object... datos) {
+	protected String doInBackground(Object... datos) {
 
-		Boolean respuesta = false;
+		String respuesta = "false";
+
+		boolean control = true;
+
+		if (datos != null && datos.length > 0 && datos[0] != null && ((Boolean) datos[0]).equals(true)) {
+
+			control = true;
+
+		} else {
+			control = false;
+		}
 
 		try {
 
-			respuesta = DescargarActualizaBD.iniciarActualizacion();
+			if (control) {
+
+				respuesta = DescargarActualizaBD.controlActualizacion();
+
+			} else {
+
+				if (DescargarActualizaBD.iniciarActualizacion()) {
+					respuesta = "true";
+				} else {
+					respuesta = "false";
+				}
+
+			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
-			respuesta = false;
+			respuesta = "false";
 
 		}
 
@@ -75,7 +97,7 @@ public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, Boolean> {
 	 * 
 	 */
 	@Override
-	protected void onPostExecute(Boolean result) {
+	protected void onPostExecute(String result) {
 		if (responder != null) {
 			responder.ActualizarBDLoaded(result);
 		}
