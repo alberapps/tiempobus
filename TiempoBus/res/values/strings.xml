@@ -371,11 +371,17 @@
 	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
     </string>
     
-    <string name="conf_conectividad_titulo">Avanzado</string>
+    <string name="conf_conectividad_titulo">Conectividad</string>
+    <string name="conf_bd_titulo">Base de Datos</string>
+    <string name="conf_avanzado_titulo">Avanzado</string>
+    <string name="conf_avanzado_desc">Opciones avanzadas. Usar con precaución.</string>
     <string name="conf_conectividad_titulo_check">Activar Cache</string>
     <string name="conf_conectividad_titulo_desc">Cache de acceso a Internet.No aplica en tiempos.(Android 4.0+)</string>
     <string name="conf_db_recargar">Reiniciar BD lineas</string>
     <string name="conf_db_recargar_desc">Reinicia la base de datos de lineas. Usar en caso de problemas tras actualizar la app</string>
+    <string name="conf_db_actualizar">Actualizar BD lineas</string>
+    <string name="conf_db_actualizar_desc">Descarga de la Base de Datos desde GitHub y se actualiza.</string>
+    
     
     
     <string name="reconocimiento_voz_sin_datos">No se han encotrado coincidencias</string>
@@ -388,6 +394,10 @@
     
     <string name="error_descarga_actualizacion">Se ha producido un error en la descarga de la actualización</string>
     
+    <string name="actualizacion_aviso">* Hay disponible una actualización de la base de datos. Selecciona para aceptar o descartar.</string>
     
+    <string name="actualizacion_titulo">Actualización Base de Datos</string>
+    
+    <string name="actualizacion_desc">Si aceptas se descargará desde GitHub y se actualizará la base de datos local. Si descartas se ocultará el aviso.</string>
     
 </resources>

@@ -23,6 +23,7 @@ import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -102,12 +103,18 @@ public class PreferencesFromXml extends PreferenceActivity {
 		}
 	}
 
+	/**
+	 * Reinicia la base de datos
+	 */
 	public void reiniciarDB() {
 
 		getContentResolver().delete(BuscadorLineasProvider.CONTENT_URI, null, null);
 
 	}
 
+	/**
+	 * Actualiza la base de datos
+	 */
 	public void actualizarDB() {
 
 		final Builder mBuilder = Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
@@ -117,6 +124,9 @@ public class PreferencesFromXml extends PreferenceActivity {
 
 				if (respuesta.equals("true")) {
 					getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+
+					PreferencesUtil.putUpdateInfo(getApplicationContext(), respuesta, "");
+
 				} else {
 					Toast.makeText(getApplicationContext(), getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
 

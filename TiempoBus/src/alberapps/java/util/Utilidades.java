@@ -166,7 +166,7 @@ public class Utilidades {
 				fechaDateControl = df.parse(fechaControl);
 				fechaDatePref = df.parse(fechaPreferencias);
 
-				if(fechaDateControl.before(fechaDatePref)){
+				if(fechaDateControl.after(fechaDatePref)){
 					return true;
 				}
 

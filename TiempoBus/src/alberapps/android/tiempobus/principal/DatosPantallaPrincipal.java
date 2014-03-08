@@ -766,13 +766,10 @@ public class DatosPantallaPrincipal {
 			texto.setText("- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
 
 		}
-		
-		
-		//Actualzaciones
-		
+
+		// Actualzaciones
+
 		controlActualizarDB(texto);
-		
-		
 
 		context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
@@ -1333,7 +1330,7 @@ public class DatosPantallaPrincipal {
 	public void cargarInfoWeather(final View v) {
 
 		final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
-		
+
 		// Verificar si ya disponemos de los datos
 		if (datosWeather != null) {
 
@@ -1355,7 +1352,6 @@ public class DatosPantallaPrincipal {
 		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
 			public void WeatherLoaded(WeatherQuery weather) {
 
-				
 				iv.setVisibility(ImageView.INVISIBLE);
 
 				if (weather != null) {
@@ -1495,83 +1491,94 @@ public class DatosPantallaPrincipal {
 
 	}
 
-	
-	
+	/**
+	 * Control de estado de actualizaciones
+	 * 
+	 * @param tw
+	 */
 	public void controlActualizarDB(final TextView tw) {
 
-		
 		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
-			public void ActualizarBDLoaded(String respuesta) {
+			public void ActualizarBDLoaded(final String respuesta) {
 
 				boolean mostrarAviso = false;
-				
+
 				if (respuesta != null && !respuesta.equals("false")) {
-					
-					
+
 					Log.d("ACTUALIZA", "respuesta: " + respuesta);
-					
-					//01012014
-					
-					if(respuesta.length() == 8){
-						
-						if(PreferencesUtil.getUpdateInfo(context).equals("")){
-							
-							PreferencesUtil.putUpdateInfo(context, respuesta, "");
-							
-							mostrarAviso = true;
-							
-							Log.d("ACTUALIZA", "no hay anterior");
-							
-							
-						}else if(!PreferencesUtil.getUpdateInfo(context).equals("")){
-							
+
+					// 01012014
+
+					if (respuesta.length() == 8) {
+
+						// Si es la primera actualizacion
+						if (PreferencesUtil.getUpdateInfo(context).equals("")) {
+
+							// Si es mas actual que la instalada
+							if (Utilidades.isFechaControl(respuesta, DatosLineasDB.DATABASE_VERSION_FECHA)) {
+								Log.d("ACTUALIZA", "aviso comparado copia local");
+								mostrarAviso = true;
+							} else {
+
+								Log.d("ACTUALIZA", "aviso comparado copia local - no actualizar");
+								mostrarAviso = false;
+
+							}
+
+						} else if (!PreferencesUtil.getUpdateInfo(context).equals("")) {
+
 							String control = PreferencesUtil.getUpdateInfo(context);
 							String ignorar = PreferencesUtil.getUpdateIgnorarInfo(context);
-							
-							if(!ignorar.equals("")){
-								
-								if(control.equals(ignorar)){
+
+							// Si opcion de ignorar
+							if (!ignorar.equals("")) {
+
+								if (control.equals(ignorar)) {
 									mostrarAviso = false;
-									
+
 									Log.d("ACTUALIZA", "ingnorar");
-									
-								}else{
-									
-									//Si la actualizacion es posterior a la actual
-									if(Utilidades.isFechaControl(respuesta, control)){
-										
+
+								} else {
+
+									// Si la actualizacion es posterior a la
+									// actual
+									if (Utilidades.isFechaControl(respuesta, control)) {
+
 										mostrarAviso = true;
-										
+
 										Log.d("ACTUALIZA", "mostrar");
-										
+
 									}
-									
+
 								}
-								
+
 							}
-							
-							
-							
+
 						}
-						
+
 					}
-					
-					
+
 				} else {
-					
-				
+
 					mostrarAviso = false;
-					
+
 				}
-				
-				
-				if(mostrarAviso){
-					
-					tw.setText(tw.getText() + "\n" + "Hay actualizacion" );
-					
-					
+
+				if (mostrarAviso) {
+
+					final CharSequence textoAnterior = tw.getText();
+
+					tw.setText(tw.getText() + "\n" + context.getString(R.string.actualizacion_aviso));
+
+					tw.setOnClickListener(new TextView.OnClickListener() {
+						public void onClick(View arg0) {
+
+							modalActualizar(respuesta, textoAnterior, tw);
+
+						}
+					});
+
 				}
-				
 
 			}
 
@@ -1584,19 +1591,109 @@ public class DatosPantallaPrincipal {
 
 			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
 		} else {
-			
-			
-			
+
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/**
+	 * Modal de confirmacion de actualizar
+	 * 
+	 * @param respuesta
+	 * @param textoAnterior
+	 * @param tw
+	 */
+	private void modalActualizar(final String respuesta, final CharSequence textoAnterior, final TextView tw) {
+
+		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+
+		dialog.setTitle(context.getString(R.string.actualizacion_titulo));
+
+		dialog.setMessage(context.getString(R.string.actualizacion_desc));
+		dialog.setIcon(R.drawable.ic_tiempobus_3);
+
+		dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int id) {
+
+				// PreferencesUtil.putUpdateInfo(context, respuesta, "");
+
+				tw.setText(textoAnterior);
+				tw.setOnClickListener(new TextView.OnClickListener() {
+					public void onClick(View arg0) {
+
+					}
+				});
+				actualizarDB(respuesta);
+
+				dialog.dismiss();
+
+			}
+
+		});
+
+		dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int id) {
+
+				PreferencesUtil.putUpdateInfo(context, respuesta, respuesta);
+				tw.setText(textoAnterior);
+				tw.setOnClickListener(new TextView.OnClickListener() {
+					public void onClick(View arg0) {
+
+					}
+				});
+
+				dialog.dismiss();
+
+			}
+
+		});
+
+		dialog.show();
+
+	}
+
+	/**
+	 * Actualizar la base de datos
+	 * 
+	 * @param respuesta
+	 */
+	public void actualizarDB(String respuesta) {
+
+		final Builder mBuilder = Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
+
+		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+			public void ActualizarBDLoaded(String respuesta) {
+
+				if (respuesta.equals("true")) {
+					context.getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+
+					PreferencesUtil.putUpdateInfo(context, respuesta, "");
+
+				} else {
+					Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
+
+					Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+				}
+
+			}
+
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+
+			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+			Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+
+		}
+
+	}
+
 }

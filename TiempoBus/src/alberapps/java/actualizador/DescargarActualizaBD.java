@@ -167,6 +167,35 @@ public class DescargarActualizaBD {
 	}
 
 	/**
+	 * Borrar archivos de actualizacion
+	 */
+	public static void borrarArchivosLineas(){
+		
+		File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
+		
+		//Borrar
+		file1.delete();
+		
+	}
+	
+	
+	/**
+	 * Borrar archivos de actualizacion
+	 */
+	public static void borrarArchivosRecorridos(){
+		
+		File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
+		File file3 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
+		
+		//Borrar
+		file2.delete();
+		file3.delete();
+		
+	}
+	
+	
+	
+	/**
 	 * Copiar archivo
 	 * 
 	 * @param in

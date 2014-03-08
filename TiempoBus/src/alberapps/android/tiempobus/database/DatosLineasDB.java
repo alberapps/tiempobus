@@ -72,6 +72,8 @@ public class DatosLineasDB {
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
 	private static final int DATABASE_VERSION = 57; // 50
 
+	public static final String DATABASE_VERSION_FECHA = "06032014";
+
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();
 
@@ -514,6 +516,14 @@ public class DatosLineasDB {
 				reader.close();
 
 			}
+
+			// Borrar archivos de la actualizacion
+			if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				DescargarActualizaBD.borrarArchivosLineas();
+
+			}
+
 			Log.d(TAG, "DONE loading database LINEA.");
 		}
 
@@ -590,6 +600,14 @@ public class DatosLineasDB {
 				inputStreamR2.close();
 				readerR2.close();
 			}
+
+			// Borrar archivos de la actualizacion
+			if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				DescargarActualizaBD.borrarArchivosRecorridos();
+
+			}
+
 			Log.d(TAG, "DONE loading database RECORRIDO.");
 		}
 
