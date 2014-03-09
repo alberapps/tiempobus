@@ -40,6 +40,11 @@ import com.google.android.gms.drive.DriveApi.ContentsResult;
  */
 public class DatosDriveBackup {
 
+	public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
+	public static final String RUTA_DATABASE = "/data/alberapps.android.tiempobus/databases/zgzbus.db";
+	public static final String FICHERO_DB_RESTORE = "tiempoBusDB.restore.db";
+	public static final String FICHERO_DB_DRIVE = "tiempoBusDB.drive.db";
+
 	/**
 	 * Exportar la base de datos a Drive
 	 * 
@@ -55,10 +60,8 @@ public class DatosDriveBackup {
 
 			OutputStream outputStream = contentsResult.getContents().getOutputStream();
 
-			// outputStream.write("Hello world".getBytes());
-
 			// base de datos
-			baseDatos = new FileInputStream(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+			baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
 
 			copyFileDrive(baseDatos, outputStream);
 
@@ -105,11 +108,11 @@ public class DatosDriveBackup {
 
 			// Copiar fichero de drive a la memoria para procesar
 			// directorio de memoria interna
-			File directorio = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/");
+			File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
 			directorio.mkdirs();
 
 			File fileEx = null;
-			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.drive.db");
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
 
 			fileEx.createNewFile();
 
@@ -132,7 +135,7 @@ public class DatosDriveBackup {
 			}
 
 			// Copiar de SD a la base de datos
-			File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+			File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
 
 			baseDatos.createNewFile();
 
@@ -304,7 +307,7 @@ public class DatosDriveBackup {
 		boolean control = false;
 
 		// directorio al que copiar respaldo
-		File directorio = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/");
+		File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
 		directorio.mkdirs();
 
 		FileInputStream baseDatos = null;
@@ -315,14 +318,14 @@ public class DatosDriveBackup {
 			// fichero de db
 			File fileEx = null;
 
-			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
 
 			fileEx.createNewFile();
 
 			fileExport = new FileOutputStream(fileEx);
 
 			// base de datos
-			baseDatos = new FileInputStream(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+			baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
 
 			copyFile(baseDatos, fileExport);
 
@@ -375,7 +378,7 @@ public class DatosDriveBackup {
 		try {
 			File fileEx = null;
 
-			fileEx = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
 
 			if (!fileEx.exists()) {
 				return false;
@@ -387,7 +390,7 @@ public class DatosDriveBackup {
 
 			fileEXIE = new FileInputStream(fileEx);
 
-			File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+			File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
 
 			baseDatos.createNewFile();
 
@@ -421,6 +424,20 @@ public class DatosDriveBackup {
 		}
 
 		return control;
+
+	}
+
+	/**
+	 * Borrar archivos de backup
+	 */
+	public static void borrarArchivosBackup() {
+
+		File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
+		File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
+
+		// Borrar
+		file1.delete();
+		file2.delete();
 
 	}
 

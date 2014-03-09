@@ -42,6 +42,7 @@ import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.principal.GestionarFondo;
+import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
 import alberapps.android.tiempobus.principal.GestionarVoz;
 import alberapps.android.tiempobus.principal.GestionarWidget;
 import alberapps.android.tiempobus.principal.TiemposAdapter;
@@ -151,6 +152,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	GestionarWidget gestionarWidget;
 
 	GestionarVoz gestionarVoz;
+	
+	public GestionarTarjetaInfo gestionarTarjetaInfo;
 
 	public ListView tiemposView;
 
@@ -188,6 +191,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		gestionarFondo = new GestionarFondo(this, preferencias);
 		gestionarWidget = new GestionarWidget(this, preferencias);
 		gestionarVoz = new GestionarVoz(this, preferencias);
+		gestionarTarjetaInfo = new GestionarTarjetaInfo(this, preferencias);
 
 		cambiarLocale(false);
 

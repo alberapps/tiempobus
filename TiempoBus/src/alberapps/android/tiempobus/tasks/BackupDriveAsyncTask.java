@@ -72,6 +72,9 @@ public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
 				file.discardContents(context.getGoogleApiClient(), contentsResult.getContents()).await();
 
+				// Limpiar archivos temporales y backup
+				DatosDriveBackup.borrarArchivosBackup();
+
 				return resultado;
 
 			} else {
