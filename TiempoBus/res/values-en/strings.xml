@@ -334,7 +334,7 @@
      <string name="error_gps">ERROR GPS</string>
      <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
-    <string name="legal">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM networks.
+    <string name="legal_sin_tram">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM networks.
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
 	    \nFeatures using the local database may not show the latest route changes.
 	    \nThis application is UNofficial and its development is independent.

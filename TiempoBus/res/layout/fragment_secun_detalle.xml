@@ -210,7 +210,8 @@
                                 android:id="@+id/imageWeather"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:src="@drawable/weather_sun_blue_48" />
+                                android:src="@drawable/weather_sun_blue_48" 
+                                android:contentDescription="Imagen clima"/>
 
                             <TextView
                                 android:id="@+id/textoWeather"

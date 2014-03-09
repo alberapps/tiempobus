@@ -33,7 +33,8 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_margin="5dp"
-             android:src="@drawable/ic_tiempobus_3" />
+             android:src="@drawable/ic_tiempobus_3" 
+             android:contentDescription="Imagen twitter"/>
         
          <LinearLayout
              android:id="@+id/linearLayout2"

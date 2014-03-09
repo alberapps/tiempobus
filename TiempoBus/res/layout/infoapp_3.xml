@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
+        android:layout_height="wrap_content" 
         android:background="@android:color/white">
 
         <LinearLayout
@@ -127,7 +127,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_weight="1"
-                android:src="@drawable/tram2_val" />
+                android:src="@drawable/tram2_val" 
+                android:contentDescription="Link Tram"/>
             
             <ImageView
                 android:id="@+id/imageLogoFGV"
@@ -135,6 +136,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:src="@drawable/logofgv" 
+                android:contentDescription="Logo FGV"
                 />
 
             <Button

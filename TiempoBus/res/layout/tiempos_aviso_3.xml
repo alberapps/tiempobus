@@ -60,6 +60,7 @@
   				    android:layout_height="match_parent"
   				    android:src="@drawable/logotram" 
   				    android:layout_weight="1"
+  				    android:contentDescription="Link TRAM"
   				    />
 
   				<ImageView
@@ -68,6 +69,7 @@
   				    android:layout_height="30dp"
   				    android:src="@drawable/logofgv" 
   				    android:layout_weight="1"
+  				    android:contentDescription="Link fgv"
   				    
   				   />
 

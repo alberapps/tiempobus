@@ -27,7 +27,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_sombra" >
+        android:background="@drawable/item_sombra" 
+        android:baselineAligned="false">
 
        <LinearLayout
             android:id="@+id/linearLayout2"

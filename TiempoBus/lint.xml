@@ -6,9 +6,23 @@
     </issue>
     <issue id="InvalidPackage">
         <ignore path="libs/twitter4j-core-3.0.4-SNAPSHOT.jar" />
+        <ignore path="libs/twitter4j-core-3.0.5.jar" />
+    </issue>
+    <issue id="MissingQuantity" severity="ignore" />
+    <issue id="MissingRegistered" severity="ignore" />
+    <issue id="MissingTranslation">
+        <ignore path="res/values/arrays.xml" />
+        <ignore path="res/values/strings.xml" />
+    </issue>
+    <issue id="NewApi" severity="ignore">
+        <ignore path="src/alberapps/android/tiempobus/actionbar/ActionBarHelperHoneycomb.java" />
+        <ignore path="src/alberapps/android/tiempobus/actionbar/ActionBarHelperICS.java" />
+        <ignore path="src/alberapps/android/tiempobus/mapas/MapasActivity.java" />
+        <ignore path="src/alberapps/android/tiempobus/principal/FragmentPrincipalDrawer.java" />
     </issue>
     <issue id="Override">
         <ignore path="src/alberapps/android/tiempobus/database/BuscadorLineasObserver.java" />
     </issue>
     <issue id="ParserError" severity="ignore" />
+    <issue id="Registered" severity="ignore" />
 </lint>

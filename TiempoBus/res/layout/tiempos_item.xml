@@ -90,7 +90,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/device_access_alarms" />
+                    android:src="@drawable/device_access_alarms" 
+                    android:contentDescription="Establecer alerta"/>
 
                 <ImageView
                     android:id="@+id/compartir_img"
@@ -98,7 +99,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/social_share" />
+                    android:src="@drawable/social_share" 
+                    android:contentDescription="Compartir parada"/>
 
                 <ImageView
                     android:id="@+id/mapa_tarjeta"
@@ -106,14 +108,16 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/location_map_2" />
+                    android:src="@drawable/location_map_2" 
+                    android:contentDescription="Mapa parada"/>
 
                 <ImageView
                     android:id="@+id/audio_img"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/device_access_volume_on" />
+                    android:src="@drawable/device_access_volume_on" 
+                    android:contentDescription="Leer tiempo"/>
 
                 <TextView
                     android:id="@+id/tiempos_alerta"

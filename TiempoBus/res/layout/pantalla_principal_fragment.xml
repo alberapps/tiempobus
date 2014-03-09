@@ -36,7 +36,8 @@
             android:id="@+id/indicador_favorito"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/rating_not_important" />
+            android:src="@drawable/rating_not_important" 
+            android:contentDescription="Favorito"/>
 
         <TextView
             android:id="@+id/datos_parada"
@@ -162,7 +163,8 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
             android:scaleType="centerInside"
-            android:src="@drawable/images_slideshow" />
+            android:src="@drawable/images_slideshow" 
+            android:contentDescription="Cargar tiempo entrada"/>
 
         <FrameLayout
             android:id="@+id/FrameLayout01"
@@ -178,7 +180,8 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
             android:scaleType="centerInside"
-            android:src="@drawable/access_alarms" />
+            android:src="@drawable/access_alarms" 
+            android:contentDescription="Estado alertas"/>
 
         <ImageButton
             android:id="@+id/boton_info"
@@ -187,7 +190,8 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
             android:scaleType="centerInside"
-            android:src="@drawable/device_access_mic" />
+            android:src="@drawable/device_access_mic" 
+            android:contentDescription="Entrada voz"/>
 
         <FrameLayout
             android:id="@+id/frameLayout1"
