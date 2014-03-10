@@ -370,5 +370,7 @@
 	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
     </string>
     
+    <string name="foreground_service_started_2">Verifica tempo ogni 60 secondi.</string>
+    
     
 </resources>

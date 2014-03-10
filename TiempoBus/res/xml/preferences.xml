@@ -31,7 +31,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="activarServicio"
-            android:summary="@string/foreground_service_started"
+            android:summary="@string/foreground_service_started_2"
             android:title="@string/alarma_checkbox" />
         <CheckBoxPreference
             android:defaultValue="true"

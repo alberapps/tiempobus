@@ -124,15 +124,14 @@
                 <TextView
                     android:id="@+id/datos_wiki"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"                    
-                    android:gravity="top"                    
-                    android:maxLines="4"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:maxLines="3"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/color_android"
-                    android:textStyle="italic" 
                     android:textColorLink="@android:color/darker_gray"
-                    />
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
@@ -168,8 +167,9 @@
                         android:id="@+id/imageWeather"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:src="@drawable/weather_sun_blue_48" 
-                        android:contentDescription="Imagen clima"/>
+                        android:contentDescription="Imagen clima"
+                        android:src="@drawable/weather_sun_blue_48"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/textoWeather"

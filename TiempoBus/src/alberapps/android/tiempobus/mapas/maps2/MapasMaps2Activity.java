@@ -82,7 +82,7 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	public String lineaSeleccionada;
 	public String lineaSeleccionadaDesc;
 	public String lineaSeleccionadaNum;
-	
+
 	public String paradaSeleccionadaEntrada;
 
 	public AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
@@ -152,17 +152,20 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.mapas_maps2);
 
-		//try {
-			MapsInitializer.initialize(getApplicationContext());
-		/*} catch (GooglePlayServicesNotAvailableException e) {
-
-			Toast.makeText(getApplicationContext(), getString(R.string.error_maps_gpservices), Toast.LENGTH_LONG).show();
-
-			e.printStackTrace();
-
-			finish();
-
-		}*/
+		// try {
+		MapsInitializer.initialize(getApplicationContext());
+		/*
+		 * } catch (GooglePlayServicesNotAvailableException e) {
+		 * 
+		 * Toast.makeText(getApplicationContext(),
+		 * getString(R.string.error_maps_gpservices), Toast.LENGTH_LONG).show();
+		 * 
+		 * e.printStackTrace();
+		 * 
+		 * finish();
+		 * 
+		 * }
+		 */
 
 		setUpMapIfNeeded();
 
@@ -558,6 +561,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 			break;
 		case R.id.menu_cercanas:
 
+			detenerTareas();
+
 			paradasCercanas.seleccionarProximidad();
 
 			break;
@@ -577,6 +582,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 			break;
 
 		case R.id.menu_cercanas_img:
+
+			detenerTareas();
 
 			paradasCercanas.seleccionarProximidad();
 

@@ -376,4 +376,7 @@ favorit per crear la teua llista.</string>
     
     
     
+    <string name="foreground_service_started_2">Verifica temps cada 60 segons</string>
+    
+    
 </resources>

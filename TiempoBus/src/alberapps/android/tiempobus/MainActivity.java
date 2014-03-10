@@ -152,7 +152,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	GestionarWidget gestionarWidget;
 
 	GestionarVoz gestionarVoz;
-	
+
 	public GestionarTarjetaInfo gestionarTarjetaInfo;
 
 	public ListView tiemposView;
@@ -506,6 +506,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		super.onDestroy();
 	}
 
+	/**
+	 * Detener tareas asincronas
+	 */
 	public void detenerTareaTiempos() {
 
 		if (loadTiemposTask != null && loadTiemposTask.getStatus() == Status.RUNNING) {
@@ -515,6 +518,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			Log.d("tiempos", "Cancelada task tiempos");
 
 		}
+
+		gestionarTarjetaInfo.detenerTareas();
 
 	}
 
@@ -796,14 +801,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		botonInfo.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 
-				//datosPantallaPrincipal.cargarModalInfo(paradaActual);
-				
+				// datosPantallaPrincipal.cargarModalInfo(paradaActual);
+
 				boolean resultado = gestionarVoz.reconocerVoz();
-				
-				if(!resultado){
+
+				if (!resultado) {
 					Toast.makeText(getApplicationContext(), getString(R.string.reconocimiento_voz_no), Toast.LENGTH_SHORT).show();
 				}
-				
 
 			}
 		});

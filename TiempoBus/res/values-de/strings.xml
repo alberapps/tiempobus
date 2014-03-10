@@ -372,4 +372,7 @@
     </string>
     
     
+    
+    <string name="foreground_service_started_2">Es beweist Zeit alle 60 Sekunden.</string>
+    
 </resources>

@@ -350,5 +350,8 @@
     </string>
     
     
+    <string name="foreground_service_started_2">Vérifier le temps tous les 60 secondes</string>
+    
+    
 </resources>
 

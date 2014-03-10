@@ -44,6 +44,8 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -78,6 +80,11 @@ public class GestionarTarjetaInfo {
 	private String paradaWiki = null;
 	private String datosWiki = null;
 
+	AsyncTask<Object, Void, WeatherQuery> weatherTask = null;
+	AsyncTask<Object, Void, String> actualizarTask = null;
+	AsyncTask<Object, Void, String> actualizarNumTask = null;
+	AsyncTask<Object, Void, WikiQuery> wikiTask = null;
+
 	/**
 	 * Cargar la informacion de la wikipedia para la parada
 	 */
@@ -110,21 +117,29 @@ public class GestionarTarjetaInfo {
 
 					StringBuffer sb = new StringBuffer();
 
-					// Preparar titulos
-					for (int i = 0; i < wiki.getListaDatos().size(); i++) {
+					try {
 
-						if (sb.length() > 0) {
-							sb.append(", ");
+						// Preparar titulos
+						for (int i = 0; i < wiki.getListaDatos().size(); i++) {
+
+							if (sb.length() > 0) {
+								sb.append(", ");
+							}
+
+							sb.append("<a href=\"http://");
+							sb.append(UtilidadesUI.getIdiomaWiki());
+							sb.append(".wikipedia.org/?curid=");
+							sb.append(wiki.getListaDatos().get(i).getPageId());
+							sb.append("\">");
+
+							sb.append(wiki.getListaDatos().get(i).getTitle());
+							sb.append("</a>");
+
 						}
 
-						sb.append("<a href=\"http://");
-						sb.append(UtilidadesUI.getIdiomaWiki());
-						sb.append(".wikipedia.org/?curid=");
-						sb.append(wiki.getListaDatos().get(i).getPageId());
-						sb.append("\">");
+					} catch (Exception e) {
 
-						sb.append(wiki.getListaDatos().get(i).getTitle());
-						sb.append("</a>");
+						sb.setLength(0);
 
 					}
 
@@ -144,6 +159,14 @@ public class GestionarTarjetaInfo {
 
 						}
 
+					} else {
+
+						sb.append(context.getString(R.string.main_no_items));
+
+						TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+
+						textoWiki.setText(sb.toString());
+
 					}
 
 				} else {
@@ -157,7 +180,11 @@ public class GestionarTarjetaInfo {
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadWikipediaAsyncTask(loadWikipediaAsyncTaskResponder).execute(lat, lon);
+
+			TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+			textoWiki.setText(context.getString(R.string.aviso_recarga));
+
+			wikiTask = new LoadWikipediaAsyncTask(loadWikipediaAsyncTaskResponder).execute(lat, lon);
 		} else {
 			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 		}
@@ -213,7 +240,11 @@ public class GestionarTarjetaInfo {
 		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute();
+
+			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+			textoWeather.setText(context.getString(R.string.aviso_recarga));
+
+			weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 		}
@@ -231,28 +262,36 @@ public class GestionarTarjetaInfo {
 
 		StringBuffer sb = new StringBuffer();
 
-		for (int i = 0; i < weather.getListaDatos().size(); i++) {
+		try {
 
-			for (int j = 0; j < weather.getListaDatos().get(i).getEstadoCielo().size(); j++) {
+			for (int i = 0; i < weather.getListaDatos().size(); i++) {
 
-				if (weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())) {
+				for (int j = 0; j < weather.getListaDatos().get(i).getEstadoCielo().size(); j++) {
 
-					imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
+					if (weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())) {
 
-					sb.append("(");
+						imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
 
-					sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+						sb.append("(");
 
-					sb.append(") ");
+						sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+
+						sb.append(") ");
+
+					}
 
 				}
 
+				sb.append(" min/máx: ");
+				sb.append(weather.getListaDatos().get(i).getTempMinima());
+				sb.append("/");
+				sb.append(weather.getListaDatos().get(i).getTempMaxima());
+
 			}
 
-			sb.append(" min/máx: ");
-			sb.append(weather.getListaDatos().get(i).getTempMinima());
-			sb.append("/");
-			sb.append(weather.getListaDatos().get(i).getTempMaxima());
+		} catch (Exception e) {
+
+			sb.setLength(0);
 
 		}
 
@@ -271,6 +310,14 @@ public class GestionarTarjetaInfo {
 			} catch (Exception e) {
 
 			}
+
+		} else {
+
+			sb.append(context.getString(R.string.main_no_items));
+
+			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+			textoWeather.setText(sb.toString());
 
 		}
 
@@ -449,7 +496,7 @@ public class GestionarTarjetaInfo {
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
 
-			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
+			actualizarNumTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
 		} else {
 
 		}
@@ -546,11 +593,42 @@ public class GestionarTarjetaInfo {
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		if (networkInfo != null && networkInfo.isConnected()) {
 
-			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
+			actualizarTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
 		} else {
 			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
 			Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+
+		}
+
+	}
+
+	/**
+	 * Detener tareas
+	 */
+	public void detenerTareas() {
+
+		if (weatherTask != null && weatherTask.getStatus() == Status.RUNNING) {
+
+			weatherTask.cancel(true);
+
+		}
+
+		if (actualizarTask != null && actualizarTask.getStatus() == Status.RUNNING) {
+
+			actualizarTask.cancel(true);
+
+		}
+
+		if (actualizarNumTask != null && actualizarNumTask.getStatus() == Status.RUNNING) {
+
+			actualizarNumTask.cancel(true);
+
+		}
+
+		if (wikiTask != null && wikiTask.getStatus() == Status.RUNNING) {
+
+			wikiTask.cancel(true);
 
 		}
 

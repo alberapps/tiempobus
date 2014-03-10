@@ -73,7 +73,7 @@ public class GestionarVoz {
 
 			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Número de parada");
+			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voz_texto));
 			intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
 			context.startActivityForResult(intent, VOICE_REQUEST_CODE);
 
@@ -125,9 +125,8 @@ public class GestionarVoz {
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
 
-				
-				if(datosVoz.get(item).isPosibleParada()){
-					
+				if (datosVoz.get(item).isPosibleParada()) {
+
 					context.paradaActual = Integer.parseInt(datosVoz.get(item).getResultado());
 
 					// Poner en campo de poste
@@ -139,9 +138,9 @@ public class GestionarVoz {
 					editor.commit();
 
 					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
-					
-				}else if(datosVoz.get(item).getFavoritoParada() != null){
-					
+
+				} else if (datosVoz.get(item).getFavoritoParada() != null) {
+
 					context.paradaActual = Integer.parseInt(datosVoz.get(item).getFavoritoParada());
 
 					// Poner en campo de poste
@@ -153,11 +152,9 @@ public class GestionarVoz {
 					editor.commit();
 
 					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
-					
-					
+
 				}
-				
-				
+
 			}
 		});
 

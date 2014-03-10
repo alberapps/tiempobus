@@ -400,4 +400,8 @@
     
     <string name="actualizacion_desc">Si aceptas se descargará desde GitHub y se actualizará la base de datos local. Si descartas se ocultará el aviso.</string>
     
+    <string name="voz_texto">Favorito o número de parada</string>
+    
+    <string name="foreground_service_started_2">Verifica tiempo cada 60 segundos</string>
+    
 </resources>

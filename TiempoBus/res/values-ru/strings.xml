@@ -351,5 +351,7 @@
     </string>
     
     
+    <string name="foreground_service_started_2">Проверять время каждые 60 секунд.</string>
+    
     
 </resources>
