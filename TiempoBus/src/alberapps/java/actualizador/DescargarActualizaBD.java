@@ -107,7 +107,7 @@ public class DescargarActualizaBD {
 
 		try {
 
-			is = Conectividad.conexionGetUtf8Stream(url);
+			is = Conectividad.conexionGetIsoStream(url);
 
 			if (is != null) {
 

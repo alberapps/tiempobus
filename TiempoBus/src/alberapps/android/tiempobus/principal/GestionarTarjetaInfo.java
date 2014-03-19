@@ -194,7 +194,7 @@ public class GestionarTarjetaInfo {
 	private WeatherQuery datosWeather = null;
 
 	/**
-	 * Cargar la informacion de la wikipedia para la parada
+	 * Cargar la informacion del clima
 	 */
 	public void cargarInfoWeather(final View v) {
 
@@ -205,7 +205,7 @@ public class GestionarTarjetaInfo {
 
 			try {
 
-				mostrarElTiempo(datosWeather, iv, v);
+				mostrarElTiempoYW(datosWeather, iv, v);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -225,7 +225,7 @@ public class GestionarTarjetaInfo {
 
 				if (weather != null) {
 
-					mostrarElTiempo(weather, iv, v);
+					mostrarElTiempoYW(weather, iv, v);
 
 				} else {
 
@@ -252,7 +252,7 @@ public class GestionarTarjetaInfo {
 	}
 
 	/**
-	 * Mostrar el tiempo
+	 * Mostrar el tiempo aemet
 	 * 
 	 * @param weather
 	 * @param iv
@@ -273,6 +273,8 @@ public class GestionarTarjetaInfo {
 						imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
 
 						sb.append("(");
+
+						// sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
 
 						sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
 
@@ -303,6 +305,79 @@ public class GestionarTarjetaInfo {
 
 				textoWeather.setText(sb.toString());
 				// textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+				// Datos para siguiente pasada
+				datosWeather = weather;
+
+			} catch (Exception e) {
+
+			}
+
+		} else {
+
+			sb.append(context.getString(R.string.main_no_items));
+
+			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+			textoWeather.setText(sb.toString());
+
+		}
+
+	}
+
+	/**
+	 * Informacion del tiempo de yahoo
+	 * 
+	 * @param weather
+	 * @param iv
+	 * @param v
+	 */
+	private void mostrarElTiempoYW(WeatherQuery weather, ImageView iv, View v) {
+
+		StringBuffer sb = new StringBuffer();
+
+		StringBuffer temp = new StringBuffer();
+
+		try {
+
+			if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty()) {
+
+				// Imagen
+				if (weather.getListaDatos().get(0).getImagen() != null) {
+					iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
+					iv.setVisibility(ImageView.VISIBLE);
+				} else {
+					iv.setVisibility(ImageView.INVISIBLE);
+				}
+
+				sb.append("(");
+				sb.append(weather.getListaDatos().get(0).getContitionText());
+				sb.append(") ");
+
+				temp.append(weather.getListaDatos().get(0).getContitionTemp());
+				temp.append("º");
+
+			}
+
+		} catch (Exception e) {
+
+			sb.setLength(0);
+			temp.setLength(0);
+
+		}
+
+		// Cargar titulos en textView
+		if (sb.length() > 0 && temp.length() > 0) {
+
+			try {
+				TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+				textoWeather.setText(sb.toString());
+				// textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+
+				TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
+
+				textoTemperatura.setText(temp.toString());
 
 				// Datos para siguiente pasada
 				datosWeather = weather;
@@ -397,6 +472,41 @@ public class GestionarTarjetaInfo {
 		iv.setVisibility(ImageView.VISIBLE);
 
 	}
+
+	/*
+	 * private void imgTiempoYW(String condionCode, ImageView iv){
+	 * 
+	 * 
+	 * // http://developer.yahoo.com/weather/ switch (conditionCode) { case 19:
+	 * // dust or sand case 20: // foggy case 21: // haze case 22: // smoky
+	 * //niebla iv.setImageResource(R.drawable.weather_clouds_blue_48); break;
+	 * case 23: // blustery case 24: // windy return
+	 * R.drawable.ic_weather_windy; case 25: // cold case 26: // cloudy case 27:
+	 * // mostly cloudy (night) case 28: // mostly cloudy (day) return
+	 * R.drawable.ic_weather_cloudy; case 29: // partly cloudy (night) case 30:
+	 * // partly cloudy (day) case 44: // partly cloudy return
+	 * R.drawable.ic_weather_partly_cloudy; case 31: // clear (night) case 33:
+	 * // fair (night) case 34: // fair (day) return
+	 * R.drawable.ic_weather_clear; case 32: // sunny case 36: // hot return
+	 * R.drawable.ic_weather_sunny; case 0: // tornado case 1: // tropical storm
+	 * case 2: // hurricane case 3: // severe thunderstorms case 4: //
+	 * thunderstorms case 5: // mixed rain and snow case 6: // mixed rain and
+	 * sleet case 7: // mixed snow and sleet case 8: // freezing drizzle case 9:
+	 * // drizzle case 10: // freezing rain case 11: // showers case 12: //
+	 * showers case 17: // hail case 18: // sleet case 35: // mixed rain and
+	 * hail case 37: // isolated thunderstorms case 38: // scattered
+	 * thunderstorms case 39: // scattered thunderstorms case 40: // scattered
+	 * showers case 45: // thundershowers case 47: // isolated thundershowers
+	 * return R.drawable.ic_weather_raining; case 13: // snow flurries case 14:
+	 * // light snow showers case 15: // blowing snow case 16: // snow case 41:
+	 * // heavy snow case 42: // scattered snow showers case 43: // heavy snow
+	 * case 46: // snow showers return R.drawable.ic_weather_snow;
+	 * 
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 
 	/**
 	 * Control de estado de actualizaciones

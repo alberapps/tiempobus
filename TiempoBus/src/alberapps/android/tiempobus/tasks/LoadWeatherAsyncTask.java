@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.tasks;
 
 import alberapps.java.weather.ProcesarDatosWeatherService;
+import alberapps.java.weather.ProcesarYWRSS;
 import alberapps.java.weather.WeatherQuery;
 import android.os.AsyncTask;
 
@@ -56,8 +57,10 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
 		try {
 
 			
-			weather = ProcesarDatosWeatherService.getDatosClima();
+			//weather = ProcesarDatosWeatherService.getDatosClima();
 
+			weather = ProcesarYWRSS.getDatosClima();
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
