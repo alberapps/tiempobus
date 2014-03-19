@@ -38,6 +38,7 @@ import org.w3c.dom.NodeList;
 import alberapps.java.util.Conectividad;
 import android.os.Build;
 import android.text.Html;
+import android.util.Log;
 
 public class ProcesarMapaServiceV3 {
 
@@ -45,6 +46,8 @@ public class ProcesarMapaServiceV3 {
 	public static final int MODE_CAR = 1;
 	public static final int MODE_WALKING = 2;
 
+	public static final String LOG_NAME = "ProcesarMapaServiceV3";
+	
 	/**
 	 * Parsear fichero kml
 	 * 
@@ -53,6 +56,8 @@ public class ProcesarMapaServiceV3 {
 	 */
 	public static DatosMapa[] getDatosMapa(String url) {
 
+		
+		
 		InputStream isZip = null;
 
 		// ByteArrayInputStream is = null;
@@ -176,9 +181,24 @@ public class ProcesarMapaServiceV3 {
 
 			// Folder principal
 			NodeList folderPrincipalList = root.getElementsByTagName("Folder");
-			Element folderIda = (Element) folderPrincipalList.item(1);
-			Element folderVuelta = (Element) folderPrincipalList.item(2);
+			
+			//Control para determinar ida y vuelta
+			Element folderIda = null;
+			Element folderVuelta = null;
 
+			
+			String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+			String folderName2 = ((Element) folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+			
+			if(folderName1.equals("Ida")){
+				folderIda = (Element) folderPrincipalList.item(1);
+				folderVuelta = (Element) folderPrincipalList.item(2);
+			}else{
+				folderIda = (Element) folderPrincipalList.item(2);
+				folderVuelta = (Element) folderPrincipalList.item(1);
+			}	
+			
+			
 			// Localizamos todos los elementos <Placemark>
 			NodeList items = folderIda.getElementsByTagName("Placemark");
 
@@ -209,7 +229,7 @@ public class ProcesarMapaServiceV3 {
 			// Obtenemos la lista de datos de la parada actual
 			NodeList datosPlaceMark = item.getChildNodes();
 
-			// Procesamos cada dato de la noticia
+			// Procesamos cada dato del recorrido
 			for (int j = 0; j < datosPlaceMark.getLength(); j++) {
 				Node dato = datosPlaceMark.item(j);
 				String etiqueta = dato.getNodeName();

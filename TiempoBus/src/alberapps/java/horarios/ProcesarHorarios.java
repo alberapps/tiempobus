@@ -61,7 +61,7 @@ public class ProcesarHorarios {
 
 			for (int i = 0; i < datosHorario.getHorariosIda().size(); i++) {
 
-				int posicionTabla = 5;
+				int posicionTabla = 6;
 
 				String url = URL_SUBUS + datosHorario.getHorariosIda().get(i).getLinkHorario();
 
