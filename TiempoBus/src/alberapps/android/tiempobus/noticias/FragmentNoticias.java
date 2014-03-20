@@ -39,7 +39,7 @@ import android.widget.TextView;
  */
 public class FragmentNoticias extends Fragment {
 
-	private static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
+	public static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
 	private NoticiasTabsPager actividad;
 
@@ -60,13 +60,15 @@ public class FragmentNoticias extends Fragment {
 
 		setupFondoAplicacion();
 
-		TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticiaL);
+		/*TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticiaL);
 
 		accederNoticia.setLinksClickable(true);
 		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
 
 		accederNoticia.setText(noticiasURL);
-
+		 */
+		
+		
 		if (actividad.noticiasRecuperadas != null) {
 			actividad.cargarListado(actividad.noticiasRecuperadas, true);
 		}

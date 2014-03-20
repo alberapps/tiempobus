@@ -64,7 +64,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.util.Linkify;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -411,12 +413,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				// Quitar barra progreso inicial
 				ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
-				if(lpb != null){
+				if (lpb != null) {
 					lpb.clearAnimation();
 					lpb.setVisibility(View.INVISIBLE);
 				}
-				
-				
+
 				if (noticias == null || noticias.isEmpty()) {
 					TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
 					noticiasView.setEmptyView(vacio);
@@ -461,6 +462,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			noticiasAdapter = new NoticiasAdapter(this, R.layout.noticias_item);
 
+			
+			
 			if (ok) {
 
 				noticiasAdapter.addAll(noticiasList);
@@ -475,6 +478,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			View emptyView = findViewById(R.id.vacio_noticias);
 			noticiasView.setEmptyView(emptyView);
 
+			cargarHeaderNoticias();
+			
 		} catch (Exception e) {
 
 			// Para evitar fallos si se intenta volver antes de terminar
@@ -485,6 +490,41 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 	}
 
+	
+	/**
+	 * Cargar cabecera listado
+	 */
+	public void cargarHeaderNoticias() {
+
+		if (noticiasView != null && noticiasView.getHeaderViewsCount() == 0) {
+
+			LayoutInflater li2 = LayoutInflater.from(this);
+
+			View vheader = li2.inflate(R.layout.noticias_header, null);
+
+			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+			StringBuffer textoHeader = new StringBuffer();
+
+			textoHeader.append(getString(R.string.aviso_noticias));
+			textoHeader.append("\n");
+			textoHeader.append(FragmentNoticias.noticiasURL);
+			textoHeader.append("\n");
+			textoHeader.append(getString(R.string.noticias_instrucciones));
+
+			texto.setLinksClickable(true);
+			texto.setAutoLinkMask(Linkify.WEB_URLS);
+			
+			texto.setText(textoHeader.toString());
+
+			noticiasView = (ListView) findViewById(R.id.lista_noticias);
+
+			noticiasView.addHeaderView(vheader);
+
+		}
+
+	}
+	
 	/**
 	 * Listener encargado de gestionar las pulsaciones sobre los items
 	 */
@@ -646,6 +686,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			listTwWiew = (ListView) findViewById(R.id.listatw);
 
 			if (listTwWiew != null) {
+				
+				cargarHeaderTwitter();
 
 				twAdapter = new TwAdapter(this, R.layout.avisostw_item);
 
@@ -672,6 +714,37 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			// Para evitar fallos en caso de volver antes de terminar
 
 			e.printStackTrace();
+
+		}
+
+	}
+
+	/**
+	 * Cargar cabecera listado
+	 */
+	public void cargarHeaderTwitter() {
+
+		if (listTwWiew != null && listTwWiew.getHeaderViewsCount() == 0) {
+
+			LayoutInflater li2 = LayoutInflater.from(this);
+
+			View vheader = li2.inflate(R.layout.noticias_header, null);
+
+			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+			StringBuffer textoHeader = new StringBuffer();
+
+			textoHeader.append(getString(R.string.dato_tw));
+			textoHeader.append("\n");
+			textoHeader.append(getString(R.string.tw1));
+			textoHeader.append("\n");
+			textoHeader.append(getString(R.string.twitter4j));
+
+			texto.setText(textoHeader.toString());
+
+			listTwWiew = (ListView) findViewById(R.id.listatw);
+
+			listTwWiew.addHeaderView(vheader);
 
 		}
 

@@ -33,18 +33,16 @@
   >
   
   			<TextView
-  			    android:padding="2dip"
-  			    android:id="@+id/txt_aviso_header"
+  			    android:id="@+id/txt_noticias_header"
   			    android:layout_width="fill_parent"
   			    android:layout_height="wrap_content"
-  			    
-  			    android:text="@string/aviso_header_listado"
+  			    android:autoLink="web"
+  			    android:padding="2dip"
+  			    android:text="@string/guion"
   			    android:textAppearance="?android:attr/textAppearanceSmall"
   			    android:textColor="@android:color/black"
-  			    android:textSize="10sp"
-  			    android:autoLink="web"
   			    android:textColorLink="@android:color/darker_gray"
-  			    />
+  			    android:textStyle="italic" />
   
 </LinearLayout>
 

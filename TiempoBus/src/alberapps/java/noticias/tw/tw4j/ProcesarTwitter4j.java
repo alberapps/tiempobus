@@ -41,7 +41,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.noticias.tw.v11.Constantes;
 import alberapps.java.util.Conectividad;
-import alberapps.java.util.Utilidades;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -62,7 +61,7 @@ public class ProcesarTwitter4j {
 	public void setUp() {
 
 		builder = new ConfigurationBuilder();
-		builder.setUseSSL(true);
+		//builder.setUseSSL(true);
 		builder.setApplicationOnlyAuthEnabled(true);
 
 		try {

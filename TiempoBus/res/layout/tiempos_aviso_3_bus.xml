@@ -41,7 +41,7 @@
   			    android:text="@string/acercade_info_nuevo_bus"
   			    android:textAppearance="?android:attr/textAppearanceSmall"
   			    android:textColor="@android:color/black"
-  			    android:textSize="9sp"
+  			    android:textSize="10sp"
   			    android:autoLink="web"
   			    android:textColorLink="@android:color/darker_gray"
   			    />
@@ -57,7 +57,7 @@
   			    android:text="@string/acercade_info_nuevo_2"
   			    android:textAppearance="?android:attr/textAppearanceSmall"
   			    android:textColor="@android:color/black"
-  			    android:textSize="9sp"
+  			    android:textSize="10sp"
   			    android:autoLink="web"
   			    android:textColorLink="@android:color/darker_gray"
   			    />
@@ -71,7 +71,7 @@
   			    android:text="@string/aviso_infoapp"
   			    android:textAppearance="?android:attr/textAppearanceSmall"
   			    android:textColor="@android:color/black"
-  			    android:textSize="9sp"
+  			    android:textSize="10sp"
   			    android:autoLink="web"
   			    android:textColorLink="@android:color/darker_gray"
   			    android:textStyle="bold"

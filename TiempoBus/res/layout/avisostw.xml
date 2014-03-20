@@ -24,28 +24,6 @@
     android:orientation="vertical" android:background="@color/gris_blog"
     android:id="@id/contenedor_tw">
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_android"
-        android:gravity="left"
-        android:text="@string/dato_tw"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:textStyle="italic" />
-
-    <TextView
-        android:id="@+id/accederNoticia"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:background="@color/color_android"
-        android:gravity="left"
-        android:text="@string/tw1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white" />
-
      <RelativeLayout
          android:id="@+id/scroll"
          android:layout_width="fill_parent"

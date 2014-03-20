@@ -409,6 +409,7 @@
     
     <string name="error_horarios_modal">No se han podido cargar los horarios. ¿Quieres verlo en el navegador?</string>
     
+    <string name="twitter4j">Powered by Twitter4J</string>
     
     
 </resources>

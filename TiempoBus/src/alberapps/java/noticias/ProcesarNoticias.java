@@ -47,7 +47,7 @@ public class ProcesarNoticias {
 
 		Elements tables = doc.select("table"); // a with href
 
-		Element tabla = tables.get(4);
+		Element tabla = tables.get(5);
 
 		Elements filas = tabla.select("tr");
 
