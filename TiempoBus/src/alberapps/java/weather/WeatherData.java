@@ -26,11 +26,11 @@ import android.graphics.Bitmap;
  * 
  * Datos del tiempo
  * 
- *
+ * 
  */
 public class WeatherData {
 
-	//Aemet
+	// Aemet
 	private String enlace;
 	private String dia;
 	private List<EstadoCielo> estadoCielo;
@@ -48,6 +48,9 @@ public class WeatherData {
 	private String contitionCode;
 	private String contitionTemp;
 	private Bitmap imagen;
+
+	private String low;
+	private String high;
 
 	public String getEnlace() {
 		return enlace;
@@ -167,6 +170,22 @@ public class WeatherData {
 
 	public void setImagen(Bitmap imagen) {
 		this.imagen = imagen;
+	}
+
+	public String getLow() {
+		return low;
+	}
+
+	public void setLow(String low) {
+		this.low = low;
+	}
+
+	public String getHigh() {
+		return high;
+	}
+
+	public void setHigh(String high) {
+		this.high = high;
 	}
 
 }

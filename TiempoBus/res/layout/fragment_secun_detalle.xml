@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:contentDescription="Imagen clima"
-                        android:src="@drawable/weather_sun_blue_48"
+                        android:src="@drawable/ic_info_modal"
                         android:visibility="invisible" />
 
                     <TextView
@@ -226,7 +226,6 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="1"
-                        android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/color_android"
                         android:textStyle="bold" />

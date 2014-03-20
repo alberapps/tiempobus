@@ -350,10 +350,14 @@ public class GestionarTarjetaInfo {
 					iv.setVisibility(ImageView.INVISIBLE);
 				}
 
-				sb.append("(");
-				sb.append(weather.getListaDatos().get(0).getContitionText());
-				sb.append(") ");
+				
+				sb.append(weather.getListaDatos().get(0).getLow());
+				sb.append("º/");
+				sb.append(weather.getListaDatos().get(0).getHigh());
+				sb.append("º");
 
+				
+				
 				temp.append(weather.getListaDatos().get(0).getContitionTemp());
 				temp.append("º");
 
@@ -451,7 +455,7 @@ public class GestionarTarjetaInfo {
 		 * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
 		 * nuboso tormenta+ 64: nuboso tormenta++
 		 */
-
+/*
 		if (data.getValor().substring(0, 2).equals("11")) {
 			iv.setImageResource(R.drawable.weather_sun_blue_48);
 		} else if (data.getValor().substring(0, 2).equals("15")) {
@@ -468,7 +472,7 @@ public class GestionarTarjetaInfo {
 			iv.setVisibility(ImageView.INVISIBLE);
 			return;
 		}
-
+*/
 		iv.setVisibility(ImageView.VISIBLE);
 
 	}

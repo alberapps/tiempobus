@@ -156,6 +156,27 @@ public class ProcesarYWRSS {
 
 						}
 
+					} else if (name.equalsIgnoreCase("yweather:forecast")) {
+
+						for (int k = 0; k < property.getAttributes().getLength(); k++) {
+
+							if (property.getAttributes().item(k).getNodeName().equals("low")) {
+
+								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+
+								data.setLow(textoProc);
+
+							} else if (property.getAttributes().item(k).getNodeName().equals("high")) {
+
+								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+
+								data.setHigh(textoProc);
+
+							}
+						}
+
+						break;
+
 					}
 
 				}

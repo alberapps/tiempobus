@@ -84,6 +84,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -1275,6 +1276,29 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 					// Si no es favorito
 					imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_not_important));
+
+					final MainActivity activ = mActividad.get();
+
+					// Para acceder a guardar favorito
+					imgFavorito.setOnClickListener(new OnClickListener() {
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+
+							Bundle extras = new Bundle();
+							extras.putInt("POSTE", activ.paradaActual);
+							// Preparamos una descripcion automatica para el
+							// favorito
+							HashSet<String> h = new HashSet<String>();
+							for (BusLlegada bus : activ.buses) {
+								h.add(bus.getLinea() + " a " + bus.getDestino());
+							}
+							extras.putString("DESCRIPCION", h.toString());
+
+							i.putExtras(extras);
+							activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+						}
+					});
 
 				} else {
 

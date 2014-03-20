@@ -110,7 +110,7 @@
         <PreferenceScreen
             android:key="conf_avanzada"
             android:summary="@string/conf_avanzado_desc"
-            android:title="@string/conf_avanzado_titulo" >
+            android:title="@string/conf_avanzado_opciones" >
             <PreferenceCategory android:title="@string/conf_conectividad_titulo" >
                 <CheckBoxPreference
                     android:defaultValue="true"

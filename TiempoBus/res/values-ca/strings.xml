@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TiempoBus</string>
+    <string name="app_name">TempsBus</string>
     <string name="app_version">2.8.4</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
@@ -41,7 +41,7 @@ favorit per crear la teua llista.</string>
     <string name="preferences">Preferències</string>
     <string name="preferences_from_xml">Preferències</string>
     <string name="launch_preferences">Informació</string>
-    <string name="title_screen_preference">Sobre TiempoBus</string>
+    <string name="title_screen_preference">Sobre TempsBus</string>
     <string name="summary_screen_preference">Informació sobre l\'autor i llicència</string>
     <string name="nuevo_titulo">Títol</string>
     <string name="nuevo_descripcion">Descripció</string>
@@ -52,7 +52,7 @@ favorit per crear la teua llista.</string>
     <string name="dialogo_espera">Recuperant dades. Espera&#8230;</string>
     <string name="aviso_noticias">Informació recuperada de:</string>
     <string name="menu_contextual">Funcions Aplicables</string>
-    <string name="share_0">TiempoBus:</string>
+    <string name="share_0">TempsBus:</string>
     <string name="share_0b">Parada:</string>
     <string name="share_1">Línia:</string>
     <string name="share_2">Destinació:</string>
@@ -108,9 +108,9 @@ favorit per crear la teua llista.</string>
     <string name="menu_modificar">Modificar</string>
     <string name="info_borrar">Favorit esborrat</string>
     <string name="info_modificar">Favorit modificat</string>
-    <string name="pagina_play">TiempoBus al Google Play</string>
+    <string name="pagina_play">TempsBus al Google Play</string>
     <string name="pagina_play_valora">Espere la teva valoració i si vols el teu +1</string>
-    <string name="pagina_blog">Bloc de TiempoBus</string>
+    <string name="pagina_blog">Bloc de TempsBus</string>
     <string name="pagina_blog_detalle">Informació i Novetats</string>
     <string name="preferencias_imagen">Fons de pantalla</string>
     <string name="seleccion_fondo_1">Galeria</string>
@@ -120,7 +120,7 @@ favorit per crear la teua llista.</string>
     <string name="fondo_pantall">Fons</string>
 
     <!-- The label for use as a searchable item -->
-    <string name="search_label">TiempoBus</string>
+    <string name="search_label">TempsBus</string>
 
     <!-- The hint text that appears in the search box. -->
     <string name="search_hint">Parada, línia, adreça</string>
@@ -204,7 +204,7 @@ favorit per crear la teua llista.</string>
     <string name="error_red">L\'accés a Internet no està disponible. Verifica la teua connexió</string>
     
     <string name="foreground_service_started">Verifica temps cada %s segons</string>
-    <string name="foreground_service">TiempoBus: Servei Alertes</string>
+    <string name="foreground_service">TempsBus: Servei Alertes</string>
     
     <string name="tab_noticias">Web Subús</string>
     <string name="tab_tw">Twitter</string>
@@ -223,7 +223,7 @@ favorit per crear la teua llista.</string>
     
     
     <!-- NUEVOS TEXTOS -->
-    <string name="recarga_bd">TiempoBus</string>
+    <string name="recarga_bd">TempsBus</string>
     <string name="recarga_bd_desc">Actualitzant base de dades. Espera&#8230;</string>
     
     <string name="recarga_bd_desc_final">Base de Dades Actualitzada Correctament</string>
@@ -323,7 +323,7 @@ favorit per crear la teua llista.</string>
     
     <string name="probar">Provar TRAM</string>
     
-    <string name="info_tram_inicio">El TRAM arriba a TiempoBus\n- Ja pots accedir a la informació i els temps de pas del TRAM.
+    <string name="info_tram_inicio">El TRAM arriba a TempsBus\n- Ja pots accedir a la informació i els temps de pas del TRAM.
 	\n- Canvia entre TRAM i BUS en la selecció que veuràs al peu del cercador i els mapes.
 	\n- Els teus preferits funcionaran simultàniament en els dos modes.
 	\n- Accedeix a la secció de notícies per consultar les notícies i el twitter del TRAM.
@@ -343,7 +343,7 @@ favorit per crear la teua llista.</string>
 	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
 	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
 		\nDades de línies i temps obtinguts de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx)
-		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
+		\nMés informació: alberapps.blogspot.com i twitter.com/alberapps</string>
     
     <string name="literal_min">min</string>
     
@@ -353,7 +353,7 @@ favorit per crear la teua llista.</string>
     
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permetre l\'enviament d\'estadístiques anònimes d\'ús i control d\'errors</string>
-    <string name="analytics_on_desc_inicial">Vols ajudar a millorar TiempoBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
+    <string name="analytics_on_desc_inicial">Vols ajudar a millorar TempsBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
      \nEn qualsevol moment pots canviar la teva decisió a la pantalla de preferències.
      \nPots consultar l\'avís legal a Preferències</string>
     
@@ -374,9 +374,40 @@ favorit per crear la teua llista.</string>
     Vostè pot rebutjar el tractament de les dades o la informació rebutjant l\'ús d\'aquesta funció mitjançant la selecció de la configuració apropiada en les preferències de l\'aplicació, però, això dificultarà el desenvolupador l\'estudi de noves funcions i l\'anàlisi d\'errors. En utilitzar aquesta aplicació vostè consent el tractament d\'informació sobre vostè per Google en la forma i per als fins dalt indicats.
     </string>
     
+    <string name="conf_conectividad_titulo">Connectivitat</string>
+    <string name="conf_bd_titulo">Base de Dades</string>
+    <string name="conf_avanzado_titulo">Avançat</string>
+    <string name="conf_avanzado_opciones">Opcions Avançades</string>
+    <string name="conf_avanzado_desc">Configuració avançada. Usar amb precaució.</string>
+    <string name="conf_conectividad_titulo_check">Activar Memòria cau</string>
+    <string name="conf_conectividad_titulo_desc">Memòria cau d\'accés a Internet. No s\'aplica en temps.(Android 4.0+)</string>
+    <string name="conf_db_recargar">Reiniciar BD línies</string>
+    <string name="conf_db_recargar_desc">Reinicia la base de dades de línies. Utilitza en cas de problemes després d\'actualitzar l\'app</string>
+    <string name="conf_db_actualizar">Actualitzar BD línies</string>
+    <string name="conf_db_actualizar_desc">Descàrrega de la base de dades des de GitHub i s\'actualitza.</string>
     
+    
+    
+    <string name="reconocimiento_voz_sin_datos">No s\'ha trobat cap coincidència</string>
+    <string name="reconocimiento_voz_error">Error en el reconeixement de veu</string>
+    <string name="reconocimiento_voz_no">Reconeixement de veu no està disponible al dispositiu</string>
+    <string name="reconocimiento_voz_titulo">Possibilitats</string>
+    
+    <string name="wikipedia">Viquipèdia</string>
+    <string name="eltiempo">Yahoo! Weather.</string>
+    
+    <string name="error_descarga_actualizacion">S\'ha produït un error en la descàrrega de l\'actualització</string>
+    
+    <string name="actualizacion_aviso">* Hi ha disponible una actualització de la base de dades. Selecciona per acceptar o descartar.</string>
+    
+    <string name="actualizacion_titulo">Actualització base de dades</string>
+    
+    <string name="actualizacion_desc">Si acceptes es descarregarà des de GitHub i s\'actualitzarà la base de dades local. Si descartes s\'ocultarà l\'avís.</string>
+    
+    <string name="voz_texto">Favorit o número de parada</string>
     
     <string name="foreground_service_started_2">Verifica temps cada 60 segons</string>
     
+    <string name="app_name_b">TempsBus(TiempoBus)</string>
     
 </resources>

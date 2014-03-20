@@ -115,16 +115,21 @@ public class ProcesarDatosLineasIsaeService {
 
 				// 11H
 				if (datosLinea.getLineaNum().equals("11")) {
-
+					
 					DatosLinea datosLineaH = new DatosLinea();
 					datosLineaH.setLineaNum("11H");
 					int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
 					datosLineaH.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicionH]);
-					datosLineaH.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicionH]);
+					datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
 
 					datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
 
 					lineas.add(datosLineaH);
+					
+					//Cambiar descripcion 11
+					int posicion11 = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
+					datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
+					
 				}
 
 			}
