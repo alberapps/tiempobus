@@ -94,7 +94,7 @@
                     android:text="@string/launch_preferences"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
+                    
                     android:textStyle="italic|bold" 
                     android:background="@drawable/actionbar_compat_item"/>
 
@@ -112,7 +112,7 @@
                         android:text="@string/mapa_ir_parada"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="12sp"
+                        
                         android:textStyle="italic|bold" 
                         android:background="@drawable/actionbar_compat_item"/>
 

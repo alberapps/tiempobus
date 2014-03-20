@@ -94,7 +94,7 @@
                     android:text="@string/infolinea_horarios"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
+                    
                     android:textStyle="italic|bold" 
                     android:background="@drawable/actionbar_compat_item"/>
 
@@ -112,7 +112,7 @@
                         android:text="@string/infolinea_paradas"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@android:color/darker_gray"
-                        android:textSize="12sp"
+                       
                         android:textStyle="italic|bold" 
                         android:background="@drawable/actionbar_compat_item"/>
 

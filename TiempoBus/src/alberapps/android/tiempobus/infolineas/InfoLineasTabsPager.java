@@ -28,6 +28,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.horarios.DatosHorarios;
 import alberapps.java.horarios.ProcesarHorarios;
@@ -37,13 +38,16 @@ import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
@@ -92,6 +96,8 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	DatosMapa datosVuelta = null;
 
 	DatosHorarios datosHorarios = null;
+
+	String linkHorario;
 
 	ProgressDialog dialog = null;
 
@@ -490,6 +496,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		sentidoIda = null;
 		sentidoVuelta = null;
 		datosHorarios = null;
+		linkHorario = ProcesarHorarios.LINEA_URL + linea.getIdlinea();
 
 		dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
 
@@ -546,11 +553,17 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 			} else {
 
-				datosHorarios = null;
+				//datosHorarios = null;
+				
+				datosHorarios = new DatosHorarios();
+				
+				cargarListadoHorarioIda();
 
 				Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
 				toast.show();
 				dialog.dismiss();
+
+				modalErrorHorario();
 
 			}
 
@@ -558,6 +571,57 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 		}
 	};
+
+	/**
+	 * En caso de no poder cargar los horarios
+	 * 
+	 */
+	private void modalErrorHorario() {
+
+		if (linkHorario != null) {
+
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+			dialog.setTitle(getString(R.string.infolinea_horarios));
+
+			dialog.setMessage(getString(R.string.error_horarios_modal));
+			dialog.setIcon(R.drawable.ic_tiempobus_3);
+
+			dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					dialog.dismiss();
+
+					Uri uri = Uri.parse(linkHorario);
+					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+					startActivity(intent);
+
+					linkHorario = null;
+					
+				}
+
+			});
+
+			dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+
+					dialog.dismiss();
+					
+					linkHorario = null;
+
+				}
+
+			});
+
+			dialog.show();
+
+		}
+		
+		
+		
+	}
 
 	/**
 	 * Carga lista con los horarios de ida
@@ -617,8 +681,10 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		TextView datosHorario2 = (TextView) vistaPieAvisoIda.findViewById(R.id.datos_horario);
 		datosHorario2.setAutoLinkMask(Linkify.ALL);
 		datosHorario2.setLinksClickable(true);
-		datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
-
+		if(datosHorarios.getHorariosIda() != null && !datosHorarios.getHorariosIda().isEmpty()){
+			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+		}
+		
 		idaView.setAdapter(infoLineaHorariosAdapter);
 
 		infoLineaHorariosAdapter.notifyDataSetChanged();
@@ -678,7 +744,9 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		TextView datosHorario2 = (TextView) vistaPieAvisoVuelta.findViewById(R.id.datos_horario);
 		datosHorario2.setAutoLinkMask(Linkify.ALL);
 		datosHorario2.setLinksClickable(true);
-		datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+		if(datosHorarios.getHorariosIda() != null && !datosHorarios.getHorariosIda().isEmpty()){
+			datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
+		}
 
 		vueltaView.setAdapter(infoLineaHorariosAdapter);
 

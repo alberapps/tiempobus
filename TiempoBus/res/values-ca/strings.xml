@@ -410,4 +410,7 @@ favorit per crear la teua llista.</string>
     
     <string name="app_name_b">TempsBus(TiempoBus)</string>
     
+    <string name="error_horarios_modal">No s\'han pogut carregar els horaris. Vols veure-ho al navegador?</string>
+    
+    
 </resources>

@@ -407,4 +407,8 @@
     
     <string name="app_name_b">TiempoBus</string>
     
+    <string name="error_horarios_modal">No se han podido cargar los horarios. ¿Quieres verlo en el navegador?</string>
+    
+    
+    
 </resources>
