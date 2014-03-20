@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">2.8.4</string>
+    <string name="app_version">3.0</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -350,9 +350,9 @@
     
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permitir el envío de estadísticas anónimas de uso y control de errores</string>
-    <string name="analytics_on_desc_inicial">¿Quieres ayudar a mejorar TiempoBus, permitiendo el envio de estadísticas(anónimas), mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para ver las funciones más usadas, y para mejorar la información sobre errores y problemas.
+    <string name="analytics_on_desc_inicial">¿Quieres ayudar a mejorar TiempoBus?, permite el envio de estadísticas(anónimas), mediante Google Analytics.\nEstos datos \"anónimos de uso de la app\" se emplearán para mejorar las funciones más usadas, y para aumentar la información sobre errores y problemas.
     \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.
-    \nPuedes consultar el aviso legal en Preferencias</string>
+    \nAviso legal en Preferencias</string>
     
     <string name="error_exportar_drive">ERROR: No se han podido exportar los favoritos a Google Drive</string>
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>

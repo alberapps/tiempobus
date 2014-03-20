@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TempsBus</string>
-    <string name="app_version">2.8.4</string>
+    <string name="app_version">3.0</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -353,7 +353,7 @@ favorit per crear la teua llista.</string>
     
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permetre l\'enviament d\'estadístiques anònimes d\'ús i control d\'errors</string>
-    <string name="analytics_on_desc_inicial">Vols ajudar a millorar TempsBus, permetent l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics? Aquestes dades "anònimes d\'ús de l\'app" s\'utilitzaran per veure les funcions més usades, i per millorar la informació sobre errors i problemes.
+    <string name="analytics_on_desc_inicial">Vols ajudar a millorar TempsBus?, Permet l\'enviament d\'estadístiques (anònimes), mitjançant Google Analytics.\nEstes dades \"anònimes d\'ús de l\'app\" s\'utilitzaran per millorar les funcions més usades, i per augmentar la informació sobre errors i problemes.
      \nEn qualsevol moment pots canviar la teva decisió a la pantalla de preferències.
      \nPots consultar l\'avís legal a Preferències</string>
     
