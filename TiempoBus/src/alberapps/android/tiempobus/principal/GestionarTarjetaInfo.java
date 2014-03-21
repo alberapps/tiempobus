@@ -20,6 +20,7 @@ package alberapps.android.tiempobus.principal;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -409,7 +410,7 @@ public class GestionarTarjetaInfo {
 	 */
 	private String getPeriodoWheather() {
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH");
+		SimpleDateFormat ft = new SimpleDateFormat("HH", Locale.getDefault());
 
 		int horaT = Integer.parseInt(ft.format(new Date()));
 

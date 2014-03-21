@@ -20,6 +20,7 @@ package alberapps.android.tiempobus.alarma;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -233,7 +234,7 @@ public class GestionarAlarmas {
 
 		alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat ft = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
 		String horaT = ft.format(milisegundos);
 

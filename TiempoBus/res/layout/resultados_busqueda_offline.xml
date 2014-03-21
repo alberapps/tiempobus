@@ -31,7 +31,7 @@
     <TextView
             android:id="@+id/text"
             android:textColor="?android:textColorPrimary"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:text="@string/search_instructions"
             android:background="@android:drawable/title_bar"
             android:layout_width="fill_parent"

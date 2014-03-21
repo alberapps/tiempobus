@@ -4,7 +4,7 @@
         <ignore path="src/alberapps/android/tiempobus/actionbar/ActionBarHelperBase.java" />
         <ignore path="src/alberapps/android/tiempobus/util/PreferencesUtil.java" />
     </issue>
-    <issue id="InvalidPackage">
+    <issue id="InvalidPackage" severity="ignore">
         <ignore path="libs/twitter4j-core-3.0.4-SNAPSHOT.jar" />
         <ignore path="libs/twitter4j-core-3.0.5.jar" />
     </issue>
@@ -25,4 +25,5 @@
     </issue>
     <issue id="ParserError" severity="ignore" />
     <issue id="Registered" severity="ignore" />
+    <issue id="UnusedResources" severity="ignore" />
 </lint>

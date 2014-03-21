@@ -19,6 +19,7 @@ package alberapps.android.tiempobus.favoritos.drive;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
@@ -183,7 +184,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 			public void onResult(ContentsResult result) {
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.getDefault());
 
 				String fecha = sdf.format(new Date());
 

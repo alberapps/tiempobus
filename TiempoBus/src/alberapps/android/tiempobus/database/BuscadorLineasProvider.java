@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus.database;
 
+import java.util.Locale;
+
 import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -159,7 +161,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 	}
 
 	private Cursor getSuggestions(String query) {
-		query = query.toLowerCase();
+		query = query.toLowerCase(Locale.getDefault());
 		String[] columns = new String[] { BaseColumns._ID, DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION,
 		/*
 		 * SearchManager.SUGGEST_COLUMN_SHORTCUT_ID, (only if you want to
@@ -171,7 +173,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 	}
 
 	private Cursor search(String query) {
-		query = query.toLowerCase();
+		query = query.toLowerCase(Locale.getDefault());
 		String[] columns = new String[] { BaseColumns._ID, DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION };
 
 		return mDictionary.getWordMatches(query, columns);

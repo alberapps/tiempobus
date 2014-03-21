@@ -23,7 +23,6 @@ import java.util.List;
 
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.ProcesarNoticias;
-import alberapps.java.noticias.rss.ParserXML;
 import android.os.AsyncTask;
 
 /**

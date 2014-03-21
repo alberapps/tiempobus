@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -313,7 +314,7 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		cl.setTimeInMillis((new Date()).getTime());
 		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
 
-		SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		String horaString = sf.format(cl.getTime());
 
 		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";

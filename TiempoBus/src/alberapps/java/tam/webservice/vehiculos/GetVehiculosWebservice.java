@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import alberapps.android.tiempobus.util.Comunes;
 
@@ -138,7 +139,7 @@ public class GetVehiculosWebservice {
 		cl.setTimeInMillis((new Date()).getTime());
 		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
 
-		SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.getDefault());
 		String horaString = sf.format(cl.getTime());
 
 		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
