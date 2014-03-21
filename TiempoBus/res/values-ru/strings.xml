@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus</string>
-    <string name="app_version">3.0</string>
+    <string name="app_version">3.0.1</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
