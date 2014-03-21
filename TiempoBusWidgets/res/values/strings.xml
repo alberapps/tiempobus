@@ -20,6 +20,8 @@
     
     <string name="app_name">TiempoBus Widgets</string>
     
+    <string name="app_name_title">TiempoBus</string>
+    
     <string name="configura">Configurar</string>
     
     <string name="alta_1">El bus de la parada actual ha sido añadido a TiempoBus Widgets.</string>
@@ -42,7 +44,7 @@
      
     <string name="error_red">El acceso a Internet no está disponible. Verifica tu conexión</string>
     
-    <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos. Si sigue sin funcionar, comprueba la disponibilidad del servicio en: isaealicante.subus.es/movil</string>
+    <string name="error_tiempos">Error al recuperar datos</string>
     
     <string name="texto_carga">Actualizando&#8230;</string>
     
@@ -56,7 +58,7 @@
     
     <!-- DashClock -->
     <string name="extension_title">TiempoBus</string>
-    <string name="extension_description">Tiempos de paso de autobuses Alicante(Spain). Los tiempos se añaden desde la pantalla principal de la aplicación TiempoBus.</string>
+    <string name="extension_description">Tiempos de paso de autobuses en Alicante(Spain). Los tiempos se añaden desde la pantalla principal de la aplicación TiempoBus.</string>
     <string name="pref_name_title">Your name</string>
     <string name="pref_name_default">John Smith</string>
     <string name="title_settings">TiempoBus Preferencias</string>

@@ -402,7 +402,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			rv.setOnClickPendingIntent(R.id.refresh, refreshPendingIntent);
 
 			// Restore the minimal header
-			rv.setTextViewText(R.id.titulo, context.getString(R.string.app_name));
+			rv.setTextViewText(R.id.titulo, context.getString(R.string.app_name_title));
 
 		} else {
 			rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout_small);

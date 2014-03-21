@@ -26,4 +26,8 @@
     <color name="gris_blog_b">#848284</color>
     <color name="gris_holo_l">#eaeaea</color>
     
+    <color name="fondo_g">#eeeeee</color>
+    
+    <color name="color_tarjeta_1">#efefef</color>
+    
 </resources>

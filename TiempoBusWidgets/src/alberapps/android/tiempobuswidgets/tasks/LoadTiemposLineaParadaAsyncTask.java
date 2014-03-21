@@ -78,7 +78,7 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 
 				if (llegadaBus == null) {
 
-					//Sin datos
+					// Sin datos
 					llegadaBus = new BusLlegada(lineasParadaList.get(i).getLinea(), "", "", lineasParadaList.get(i).getParada());
 
 				}

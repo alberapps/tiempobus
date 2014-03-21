@@ -46,8 +46,8 @@ import com.google.android.apps.dashclock.api.ExtensionData;
 public class TiempoBusExtension extends DashClockExtension {
 	private static final String TAG = "TiempoBusExtension";
 
-	//public static final String PREF_NAME = "pref_name";
-	
+	// public static final String PREF_NAME = "pref_name";
+
 	public static final String PREF_NAME_1 = "actualizar_desb";
 
 	List<BusLlegada> listaTiempos = null;
@@ -56,8 +56,9 @@ public class TiempoBusExtension extends DashClockExtension {
 	protected void onUpdateData(int reason) {
 		// Get preference value.
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-		//String name = sp.getString(PREF_NAME, getString(R.string.pref_name_default));
-		
+		// String name = sp.getString(PREF_NAME,
+		// getString(R.string.pref_name_default));
+
 		boolean actualizar = sp.getBoolean(PREF_NAME_1, true);
 
 		// Iniciar actualizacion de los datos
@@ -70,7 +71,7 @@ public class TiempoBusExtension extends DashClockExtension {
 	/**
 	 * Pulicar datos
 	 */
-	private void publicar() {
+	private void publicar(boolean sinParadas) {
 
 		// Intent para iniciar tiempobus al hacer click
 		Intent intentTiempoBus = intentTiempoBus();
@@ -81,11 +82,33 @@ public class TiempoBusExtension extends DashClockExtension {
 
 			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status(getStatus()).expandedTitle(getTitle()).expandedBody(getBody()).contentDescription("Información de tiempos de paso.");
 
-		}
+			if (intentTiempoBus != null) {
 
-		if (intentTiempoBus != null) {
+				extData.clickIntent(intentTiempoBus);
 
-			extData.clickIntent(intentTiempoBus);
+			}
+
+		} else if (sinParadas) {
+
+			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status("-").expandedTitle(getTitle()).expandedBody(getString(R.string.texto_nuevo))
+					.contentDescription("Información de tiempos de paso.");
+
+			if (intentTiempoBus != null) {
+
+				extData.clickIntent(intentTiempoBus);
+
+			}
+
+		} else {
+
+			extData = new ExtensionData().visible(true).icon(R.drawable.tiempobus_dashclock).status("ERROR").expandedTitle(getTitle()).expandedBody(getString(R.string.error_tiempos))
+					.contentDescription("Información de tiempos de paso.");
+
+			if (intentTiempoBus != null) {
+
+				extData.clickIntent(intentTiempoBus);
+
+			}
 
 		}
 
@@ -147,28 +170,8 @@ public class TiempoBusExtension extends DashClockExtension {
 
 				tiempo1 = procesa[0];
 
-				//tiempo1 = bus.getProximoMinutos() + " " + getString(R.string.literal_min);
-
 			}
 
-			/*if (procesa[1].equals("enlaparada")) {
-
-				tiempo2 = getString(R.string.tiempo_m_1_d);
-
-			} else if (procesa[1].equals("sinestimacion")) {
-
-				tiempo2 = getString(R.string.tiempo_m_2_d);
-
-			} else {
-
-				// tiempo2 = procesa[1];
-
-				tiempo2 = bus.getSiguienteMinutos() + " " + getString(R.string.literal_min);
-
-			}*/
-
-			//traducido = tiempo1 + " " + getString(R.string.tiempo_m_3) + " " + tiempo2;
-			
 			traducido = tiempo1.replaceAll("min.", getString(R.string.literal_min));
 
 		} else {
@@ -178,11 +181,6 @@ public class TiempoBusExtension extends DashClockExtension {
 			traducido = getString(R.string.empty_view_text);
 
 		}
-
-		// min.
-		// traducido = traducido.replaceAll("min.",
-		// getString(R.string.literal_min));
-		// traducido = traducido.replaceAll("min.", "");
 
 		return traducido;
 
@@ -260,23 +258,9 @@ public class TiempoBusExtension extends DashClockExtension {
 
 					listaTiempos = tiempos;
 
-				} else {
+				} 
 
-					if (!sinParadas) {
-
-						// Toast.makeText(context,
-						// context.getString(R.string.error_tiempos),
-						// Toast.LENGTH_LONG).show();
-
-					}
-
-				}
-
-				if (sinParadas) {
-
-				}
-
-				publicar();
+				publicar(sinParadas);
 
 			}
 
