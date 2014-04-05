@@ -38,7 +38,7 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/bus_destino"
+                android:id="@+id/txt_sin_datos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

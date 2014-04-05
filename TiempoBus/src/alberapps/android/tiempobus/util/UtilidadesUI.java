@@ -36,9 +36,6 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.MapBuilder;
-
 /**
  * Utilidades de uso en la interfaz
  * 
@@ -161,7 +158,7 @@ public class UtilidadesUI {
 		}
 
 	}
-
+/*
 	public static void enviarEventoAnalytics(Context context, String evento) {
 
 		// May return null if a EasyTracker has not yet been initialized with a
@@ -179,7 +176,7 @@ public class UtilidadesUI {
 				.build());
 
 	}
-
+*/
 	/**
 	 * Idioma para la wikipedia
 	 * 

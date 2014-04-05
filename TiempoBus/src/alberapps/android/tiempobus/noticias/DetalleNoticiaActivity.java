@@ -18,7 +18,7 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -35,9 +35,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.AsyncTask.Status;
 import android.preference.PreferenceManager;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -232,7 +232,8 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStart(this);
+			//EasyTracker.getInstance(this).activityStart(this);
+			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
 	}
@@ -240,11 +241,13 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 	@Override
 	protected void onStop() {
 
-		super.onStop();
-
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStop(this);
+			//EasyTracker.getInstance(this).activityStop(this);
+			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
+		
+		super.onStop();
+		
 
 	}
 

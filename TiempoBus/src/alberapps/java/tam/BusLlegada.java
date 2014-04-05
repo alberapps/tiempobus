@@ -52,6 +52,8 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	private BusLlegada segundoBus;
 
 	private boolean sinDatos = false;
+	
+	private boolean consultaInicial = false;
 
 	public BusLlegada() {
 
@@ -337,6 +339,14 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 	public void setSegundoBus(BusLlegada segundoBus) {
 		this.segundoBus = segundoBus;
+	}
+
+	public boolean isConsultaInicial() {
+		return consultaInicial;
+	}
+
+	public void setConsultaInicial(boolean consultaInicial) {
+		this.consultaInicial = consultaInicial;
 	}
 
 }

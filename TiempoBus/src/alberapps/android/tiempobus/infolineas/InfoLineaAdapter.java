@@ -202,4 +202,23 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 		return filter;
 	}
 
+	/**
+	 * Lista con el filtro
+	 * 
+	 * @return
+	 */
+	public List<BusLinea> getListaFiltrada(){
+		
+		List<BusLinea> lista = new ArrayList<BusLinea>();
+		
+		for(int i = 0; i< getCount(); i++){
+			
+			lista.add(getItem(i));
+			
+		}
+		
+		return lista;
+		
+	}
+	
 }

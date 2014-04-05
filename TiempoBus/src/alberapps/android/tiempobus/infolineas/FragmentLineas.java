@@ -333,7 +333,9 @@ public class FragmentLineas extends Fragment {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			linea = lineasBus.get(position);
+			//linea = lineasBus.get(position);
+			
+			linea = infoLineaAdapter.getListaFiltrada().get(position);
 
 			actividad.setLinea(linea);
 

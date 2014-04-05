@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
@@ -52,8 +54,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
-
-import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * Muestra los favoritos guardados
@@ -534,7 +534,8 @@ public class FavoritosActivity extends ActionBarActivity {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStart(this);
+			//EasyTracker.getInstance(this).activityStart(this);
+			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
 	}
@@ -542,11 +543,13 @@ public class FavoritosActivity extends ActionBarActivity {
 	@Override
 	protected void onStop() {
 
-		super.onStop();
-
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStop(this);
+			//EasyTracker.getInstance(this).activityStop(this);
+			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
+		
+		super.onStop();
+		
 
 	}
 

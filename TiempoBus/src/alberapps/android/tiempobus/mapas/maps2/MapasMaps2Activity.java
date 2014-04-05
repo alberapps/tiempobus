@@ -54,11 +54,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -777,7 +776,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStart(this);
+			//EasyTracker.getInstance(this).activityStart(this);
+			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
 	}
@@ -785,11 +785,13 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	@Override
 	protected void onStop() {
 
-		super.onStop();
-
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStop(this);
+			//EasyTracker.getInstance(this).activityStop(this);
+			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
+		
+		super.onStop();
+		
 
 	}
 

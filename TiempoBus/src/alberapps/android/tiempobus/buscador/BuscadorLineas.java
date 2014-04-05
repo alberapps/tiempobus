@@ -19,7 +19,7 @@
  */
 package alberapps.android.tiempobus.buscador;
 
-import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -33,10 +33,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -217,7 +213,8 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStart(this);
+			//EasyTracker.getInstance(this).activityStart(this);
+			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
 	}
@@ -225,11 +222,13 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 	@Override
 	protected void onStop() {
 
-		super.onStop();
-
 		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStop(this);
+			//EasyTracker.getInstance(this).activityStop(this);
+			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
+		
+		super.onStop();
+		
 
 	}
 

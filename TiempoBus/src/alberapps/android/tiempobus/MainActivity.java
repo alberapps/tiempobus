@@ -28,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
@@ -79,6 +80,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -95,13 +97,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 
-public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener {
+public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
 	public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
 	public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -173,6 +175,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	public View avisoTarjetaInfo = null;
 
+	SwipeRefreshLayout swipeRefresh = null;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -238,8 +242,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		// PrecargasV3.precargarDatosLineas(this);
-		// PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
@@ -446,6 +450,20 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
+	/*
+	 * @Override public View onCreateView(String name, Context context,
+	 * AttributeSet attrs) { // TODO Auto-generated method stub
+	 * 
+	 * final String path = "principal";//getString(R.string.pr);
+	 * 
+	 * Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(
+	 * TrackerName.GLOBAL_TRACKER); t.setScreenName(path); t.send(new
+	 * HitBuilders.AppViewBuilder().build());
+	 * 
+	 * 
+	 * return super.onCreateView(name, context, attrs); }
+	 */
+
 	private boolean controlInicialAnalytics = false;
 
 	/**
@@ -472,9 +490,26 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		datosPantallaPrincipal.controlMostrarAnalytics();
 
-		if (preferencias.getBoolean("analytics_on", true)) {
+		if (preferencias.getBoolean("analytics_on", false)) {
 			controlInicialAnalytics = true;
-			EasyTracker.getInstance(this).activityStart(this);
+			// EasyTracker.getInstance(this).activityStart(this);
+
+			// Activar
+			GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
+
+			// Inicia tracker
+			Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+			// Envia inicio actividad
+			GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+			Log.d("PRINCIPAL", "Analytics activo");
+
+		} else {
+			GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
+
+			Log.d("PRINCIPAL", "Analytics inactivo");
+
 		}
 
 	}
@@ -486,11 +521,14 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		handler.removeMessages(MSG_RECARGA);
 
-		super.onStop();
-
 		if (preferencias.getBoolean("analytics_on", true) || controlInicialAnalytics) {
-			EasyTracker.getInstance(this).activityStop(this);
+			// EasyTracker.getInstance(this).activityStop(this);
+
+			GoogleAnalytics.getInstance(this).reportActivityStop(this);
+
 		}
+
+		super.onStop();
 
 	}
 
@@ -593,19 +631,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case R.id.menu_refresh:
 
-			EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
-
-			try {
-				int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
-				if (tmpPoste > 0 && tmpPoste < 9999) {
-					paradaActual = tmpPoste;
-					handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-
-				}
-			} catch (NumberFormatException e) {
-				// No hay numero. Recargar con el ultimo usado
-				handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-			}
+			recargarTiempos();
 
 			break;
 
@@ -700,12 +726,21 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		datosPantallaPrincipal.cargarHeader();
 
 		// Progreso inicial
-		TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+		/*TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 		vacio.setVisibility(View.INVISIBLE);
 		ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
 		lpb.setIndeterminate(true);
 		tiemposView.setEmptyView(lpb);
-
+*/
+		// Control de sin datos
+		BusLlegada sinDatos = new BusLlegada();
+		sinDatos.setSinDatos(true);
+		sinDatos.setConsultaInicial(true);
+		posteAdapter.add(sinDatos);
+		
+		datosPantallaPrincipal.cargarPie();
+		
+		
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
 		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
@@ -812,6 +847,32 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			}
 		});
+
+		// Swipe para recargar
+		swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
+		swipeRefresh.setOnRefreshListener(this);
+		swipeRefresh.setColorScheme(android.R.color.black, android.R.color.darker_gray, android.R.color.black, android.R.color.darker_gray);
+
+	}
+
+	/**
+	 * Pulsar recarga de tiempos
+	 */
+	private void recargarTiempos() {
+
+		EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+
+		try {
+			int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
+			if (tmpPoste > 0 && tmpPoste < 9999) {
+				paradaActual = tmpPoste;
+				handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+			}
+		} catch (NumberFormatException e) {
+			// No hay numero. Recargar con el ultimo usado
+			handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+		}
 
 	}
 
@@ -1141,11 +1202,18 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public void showProgressBar(Boolean show) {
 		if (show) {
 
+			swipeRefresh.setRefreshing(true);
+			
 			Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 			getActionBarHelper().setRefreshActionItemState(true);
 
 		} else {
+
+			// Finalizar refresh
+			if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+				swipeRefresh.setRefreshing(false);
+			}
 
 			getActionBarHelper().setRefreshActionItemState(false);
 
@@ -1182,7 +1250,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							showProgressBar(false);
 							handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
 						}
-
+/*
 						// Quitar barra progreso inicial
 						ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
 						lpb.clearAnimation();
@@ -1192,7 +1260,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 							tiemposView.setEmptyView(vacio);
 						}
-
+*/
 						if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
 
 							Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
@@ -1366,6 +1434,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		}
 	}
 
+	/**
+	 * init
+	 */
 	public void onInit(int status) {
 
 		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
@@ -1443,6 +1514,19 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	public void onArticleSelected(int position) {
 		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Para la recarga con swipe vertical
+	 */
+	public void onRefresh() {
+		// TODO Auto-generated method stub
+
+		recargarTiempos();
+
+		// Finalizar
+		//swipeRefresh.setRefreshing(false);
 
 	}
 

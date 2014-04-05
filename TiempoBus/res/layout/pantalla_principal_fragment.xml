@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -15,8 +15,7 @@
  
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
---> 
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/contenedor_principal"
@@ -36,8 +35,8 @@
             android:id="@+id/indicador_favorito"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/rating_not_important" 
-            android:contentDescription="Favorito"/>
+            android:contentDescription="Favorito"
+            android:src="@drawable/rating_not_important" />
 
         <TextView
             android:id="@+id/datos_parada"
@@ -50,41 +49,49 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/scroll"
+        android:id="@+id/scroll_b"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dip" >
 
-        <ListView
-            android:id="@+id/lista_tiempos"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="#00000000"
-            android:fastScrollEnabled="true"
-            android:scrollingCache="true" />
+        <!-- Swipe wertical para recargar -->
 
-        <TextView
-            android:id="@+id/tiempos_vacio"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/lista_tiempos"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="@string/main_no_items"
-            android:textColor="@color/color_android"
-            android:textStyle="bold" />
-        
-                
-        <ProgressBar
-            android:id="@+id/tiempos_progreso"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"             
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/lista_tiempos" />
-        
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshPrincipal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <ListView
+                    android:id="@+id/lista_tiempos"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:cacheColorHint="#00000000"
+                    android:divider="#00000000"
+                    android:fastScrollEnabled="true"
+                    android:scrollingCache="true" />
+
+<!--                 <TextView
+                    android:id="@+id/tiempos_vacio"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/lista_tiempos"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/main_no_items"
+                    android:textColor="@color/color_android"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/tiempos_progreso"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lista_tiempos"
+                    android:layout_centerInParent="true" />
+                    
+-->
+   
+        </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
-
 
     <!-- Pie -->
 
@@ -162,9 +169,9 @@
             android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
+            android:contentDescription="Cargar tiempo entrada"
             android:scaleType="centerInside"
-            android:src="@drawable/images_slideshow" 
-            android:contentDescription="Cargar tiempo entrada"/>
+            android:src="@drawable/images_slideshow" />
 
         <FrameLayout
             android:id="@+id/FrameLayout01"
@@ -179,9 +186,9 @@
             android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
+            android:contentDescription="Estado alertas"
             android:scaleType="centerInside"
-            android:src="@drawable/access_alarms" 
-            android:contentDescription="Estado alertas"/>
+            android:src="@drawable/access_alarms" />
 
         <ImageButton
             android:id="@+id/boton_info"
@@ -189,9 +196,9 @@
             android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/actionbar_compat_item"
+            android:contentDescription="Entrada voz"
             android:scaleType="centerInside"
-            android:src="@drawable/device_access_mic" 
-            android:contentDescription="Entrada voz"/>
+            android:src="@drawable/device_access_mic" />
 
         <FrameLayout
             android:id="@+id/frameLayout1"

@@ -19,8 +19,6 @@
  */
 package alberapps.android.tiempobus.historial;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivity;
@@ -265,22 +263,22 @@ public class HistorialActivity extends ActionBarActivity {
 	protected void onStart() {
 
 		super.onStart();
-
+/*
 		if (preferencias.getBoolean("analytics_on", true)) {
 			EasyTracker.getInstance(this).activityStart(this);
 		}
-
+*/
 	}
 
 	@Override
 	protected void onStop() {
 
 		super.onStop();
-
+/*
 		if (preferencias.getBoolean("analytics_on", true)) {
 			EasyTracker.getInstance(this).activityStop(this);
 		}
-
+*/
 	}
 
 }

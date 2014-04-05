@@ -166,7 +166,18 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 			});
 
-		} else {
+		}else if(bus.isConsultaInicial()){ 
+		
+			Context ctx = this.getContext().getApplicationContext();
+			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+			
+			TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+			
+			text.setText(ctx.getString(R.string.aviso_recarga));
+			
+			
+		}else {
 
 			Context ctx = this.getContext().getApplicationContext();
 			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

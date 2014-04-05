@@ -71,13 +71,17 @@ public class PreferencesFromXml extends PreferenceActivity {
 	@Deprecated
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
-		if (preference.getKey().equals("reiniciar_db")) {
+		if (preference != null && preference.getKey() != null) {
 
-			reiniciarDB();
+			if (preference.getKey().equals("reiniciar_db")) {
 
-		} else if (preference.getKey().equals("actualizar_db")) {
+				reiniciarDB();
 
-			actualizarDB();
+			} else if (preference.getKey().equals("actualizar_db")) {
+
+				actualizarDB();
+
+			}
 
 		}
 
