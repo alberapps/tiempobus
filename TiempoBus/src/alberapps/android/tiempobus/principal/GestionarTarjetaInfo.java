@@ -351,14 +351,11 @@ public class GestionarTarjetaInfo {
 					iv.setVisibility(ImageView.INVISIBLE);
 				}
 
-				
 				sb.append(weather.getListaDatos().get(0).getLow());
 				sb.append("º/");
 				sb.append(weather.getListaDatos().get(0).getHigh());
 				sb.append("º");
 
-				
-				
 				temp.append(weather.getListaDatos().get(0).getContitionTemp());
 				temp.append("º");
 
@@ -456,24 +453,24 @@ public class GestionarTarjetaInfo {
 		 * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
 		 * nuboso tormenta+ 64: nuboso tormenta++
 		 */
-/*
-		if (data.getValor().substring(0, 2).equals("11")) {
-			iv.setImageResource(R.drawable.weather_sun_blue_48);
-		} else if (data.getValor().substring(0, 2).equals("15")) {
-			iv.setImageResource(R.drawable.weather_clouds_blue_48);
-		} else if (data.getValor().substring(0, 1).equals("1")) {
-			iv.setImageResource(R.drawable.weather_cloudy_blue_48);
-		} else if (data.getValor().substring(0, 1).equals("4") || data.getValor().substring(0, 1).equals("2")) {
-			iv.setImageResource(R.drawable.weather_rain_blue_48);
-		} else if (data.getValor().substring(0, 1).equals("7") || data.getValor().substring(0, 1).equals("3")) {
-			iv.setImageResource(R.drawable.weather_snow_blue_48);
-		} else if (data.getValor().substring(0, 1).equals("5") || data.getValor().substring(0, 1).equals("6")) {
-			iv.setImageResource(R.drawable.weather_thunder_blue_48);
-		} else {
-			iv.setVisibility(ImageView.INVISIBLE);
-			return;
-		}
-*/
+		/*
+		 * if (data.getValor().substring(0, 2).equals("11")) {
+		 * iv.setImageResource(R.drawable.weather_sun_blue_48); } else if
+		 * (data.getValor().substring(0, 2).equals("15")) {
+		 * iv.setImageResource(R.drawable.weather_clouds_blue_48); } else if
+		 * (data.getValor().substring(0, 1).equals("1")) {
+		 * iv.setImageResource(R.drawable.weather_cloudy_blue_48); } else if
+		 * (data.getValor().substring(0, 1).equals("4") ||
+		 * data.getValor().substring(0, 1).equals("2")) {
+		 * iv.setImageResource(R.drawable.weather_rain_blue_48); } else if
+		 * (data.getValor().substring(0, 1).equals("7") ||
+		 * data.getValor().substring(0, 1).equals("3")) {
+		 * iv.setImageResource(R.drawable.weather_snow_blue_48); } else if
+		 * (data.getValor().substring(0, 1).equals("5") ||
+		 * data.getValor().substring(0, 1).equals("6")) {
+		 * iv.setImageResource(R.drawable.weather_thunder_blue_48); } else {
+		 * iv.setVisibility(ImageView.INVISIBLE); return; }
+		 */
 		iv.setVisibility(ImageView.VISIBLE);
 
 	}
@@ -519,6 +516,12 @@ public class GestionarTarjetaInfo {
 	 * @param tw
 	 */
 	public void controlActualizarDB(final TextView tw) {
+
+		// Verificar si hay que consultar la version
+		boolean verificar = preferencias.getBoolean("control_verificar_actualiza", true);
+		if (!verificar) {
+			return;
+		}
 
 		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
 			public void ActualizarBDLoaded(final String respuesta) {

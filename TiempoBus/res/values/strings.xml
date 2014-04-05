@@ -411,5 +411,8 @@
     
     <string name="twitter4j">Powered by Twitter4J</string>
     
+    <string name="pref_control_actualizar_titulo">Verificar Actualizaciones</string>
+    <string name="pref_control_actualizar_desc">Al iniciar la aplicación, verificar si hay actualizaciones de la base de datos</string>
+    
     
 </resources>
