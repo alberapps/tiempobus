@@ -145,6 +145,27 @@ public class Utilidades {
 
 	}
 
+	public static String getFechaControl() {
+
+		Date fecha = new Date();
+		
+		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+
+		String fechaString = null;
+
+		if (fecha != null) {
+
+			fechaString = df.format(fecha);
+
+			return fechaString;
+
+		}
+
+		return null;
+
+	}
+	
+	
 	/**
 	 * String desde date
 	 * 

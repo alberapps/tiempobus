@@ -1,5 +1,7 @@
 package alberapps.android.tiempobus.util;
 
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.java.util.Utilidades;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -95,6 +97,10 @@ public class PreferencesUtil {
 		
 		String aviso = preferenciasAlertas.getString("update", "");
 	
+		if(aviso.equals("true")){
+			return "";
+		}
+		
 		
 		return aviso;
 		
@@ -161,7 +167,15 @@ public class PreferencesUtil {
 		
 		//Quitar info de la alarma
 	    SharedPreferences.Editor editor = preferenciasAlertas.edit();
+	    
+	    if(info.equals("true")){
+	    	info = Utilidades.getFechaControl();
+	    }
+	    
 	    editor.putString("update", info);
+	    
+	    
+	    
 	    editor.putString("ignorar", ignorar);
 		editor.commit();
 		
