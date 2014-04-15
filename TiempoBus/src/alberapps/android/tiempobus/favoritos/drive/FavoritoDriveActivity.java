@@ -184,7 +184,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
 			public void onResult(ContentsResult result) {
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.getDefault());
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.US);
 
 				String fecha = sdf.format(new Date());
 

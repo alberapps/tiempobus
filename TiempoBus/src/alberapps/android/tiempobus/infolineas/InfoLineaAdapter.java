@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -162,7 +163,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
 					for (int i = 0; i < listaOriginal.size(); i++) {
 
-						if (listaOriginal.get(i).getLinea().toLowerCase(Locale.getDefault()).contains(constraint.toString().toLowerCase(Locale.getDefault()))) {
+						if (listaOriginal.get(i).getLinea().toLowerCase(UtilidadesUI.getLocale()).contains(constraint.toString().toLowerCase(UtilidadesUI.getLocale()))) {
 							filtrada.add(listaOriginal.get(i));
 						}
 

@@ -407,7 +407,7 @@ public class GestionarTarjetaInfo {
 	 */
 	private String getPeriodoWheather() {
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH", Locale.getDefault());
+		SimpleDateFormat ft = new SimpleDateFormat("HH", Locale.US);
 
 		int horaT = Integer.parseInt(ft.format(new Date()));
 

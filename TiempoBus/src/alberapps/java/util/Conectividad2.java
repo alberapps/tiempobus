@@ -461,7 +461,7 @@ public class Conectividad2 {
 	 */
 	public static Date getFechaDate(String fecha) {
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
 		Date fechaDate = null;
 
@@ -488,7 +488,7 @@ public class Conectividad2 {
 	 */
 	public static String getFechaString(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.US);
 
 		String fechaString = null;
 
@@ -512,7 +512,7 @@ public class Conectividad2 {
 	 */
 	public static String getFechaSQL(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
 		String fechaString = null;
 

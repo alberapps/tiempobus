@@ -78,7 +78,7 @@ public class Utilidades {
 	 */
 	public static Date getFechaDate(String fecha) {
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
 		Date fechaDate = null;
 
@@ -105,7 +105,7 @@ public class Utilidades {
 	 */
 	public static String getFechaString(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.US);
 
 		String fechaString = null;
 
@@ -129,7 +129,7 @@ public class Utilidades {
 	 */
 	public static String getFechaSQL(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
 		String fechaString = null;
 
@@ -149,7 +149,7 @@ public class Utilidades {
 
 		Date fecha = new Date();
 		
-		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.US);
 
 		String fechaString = null;
 
@@ -178,7 +178,7 @@ public class Utilidades {
 		Date fechaDatePref = null;
 		
 
-		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.US);
 
 		
 		

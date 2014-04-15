@@ -158,25 +158,23 @@ public class UtilidadesUI {
 		}
 
 	}
-/*
-	public static void enviarEventoAnalytics(Context context, String evento) {
 
-		// May return null if a EasyTracker has not yet been initialized with a
-		// property ID.
-		EasyTracker easyTracker = EasyTracker.getInstance(context);
-
-		// MapBuilder.createEvent().build() returns a Map of event fields and
-		// values
-		// that are set and sent with the hit.
-		easyTracker.send(MapBuilder.createEvent("Eventos", // Event category
-															// (required)
-				"funcionalidad", // Event action (required)
-				evento, // Event label
-				null) // Event value
-				.build());
-
-	}
-*/
+	/*
+	 * public static void enviarEventoAnalytics(Context context, String evento)
+	 * {
+	 * 
+	 * // May return null if a EasyTracker has not yet been initialized with a
+	 * // property ID. EasyTracker easyTracker =
+	 * EasyTracker.getInstance(context);
+	 * 
+	 * // MapBuilder.createEvent().build() returns a Map of event fields and //
+	 * values // that are set and sent with the hit.
+	 * easyTracker.send(MapBuilder.createEvent("Eventos", // Event category //
+	 * (required) "funcionalidad", // Event action (required) evento, // Event
+	 * label null) // Event value .build());
+	 * 
+	 * }
+	 */
 	/**
 	 * Idioma para la wikipedia
 	 * 
@@ -184,19 +182,47 @@ public class UtilidadesUI {
 	 */
 	public static String getIdiomaWiki() {
 
-		String locale = Locale.getDefault().getDisplayLanguage();
-
 		String idiomaWiki = null;
 
-		if (locale.substring(0, 2).equals("ca")) {
-			idiomaWiki = "ca";
-		} else if (locale.substring(0, 2).equals("en")) {
-			idiomaWiki = "en";
-		} else {
+		try {
+			String locale = Locale.getDefault().getDisplayLanguage();
+
+			if (locale.substring(0, 2).equals("ca")) {
+				idiomaWiki = "ca";
+			} else if (locale.substring(0, 2).equals("en")) {
+				idiomaWiki = "en";
+			} else {
+				idiomaWiki = "es";
+			}
+
+		} catch (Exception e) {
 			idiomaWiki = "es";
 		}
 
 		return idiomaWiki;
+
+	}
+
+	/**
+	 * Locale adecuado
+	 * 
+	 * @return
+	 */
+	public static Locale getLocale() {
+
+		Locale loc = null;
+
+		try {
+			loc = new Locale("spa", "ES");
+		} catch (Exception e) {
+
+		}
+
+		if (loc == null) {
+			loc = Locale.US;
+		}
+
+		return loc;
 
 	}
 

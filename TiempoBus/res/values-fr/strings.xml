@@ -289,9 +289,9 @@
         
     <string name="acercade_info_nuevo">Cette application n\'est PAS officiel et son développement est indépendant. \nDonnées de lignes et temps offerts et maintenues par :</string>
 	<string name="acercade_info_nuevo_bus">Cette application n\'est PAS officiel et son développement est indépendant. \nDonnées de lignes et temps offerts et maintenues par : subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Développement : alberapps.blogspot.com - twitter.com/alberapps  \nTraductions : orchestra-solutions.com - twitter.com/MagnoliaTraduce</string>
+	<string name="acercade_info_nuevo_2">Développement : alberapps.blogspot.com - twitter.com/alberapps  \nTraductions : magnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
-    <string name="infoapp_trad">Traductions : orchestra-solutions.com</string>
+    <string name="infoapp_trad">Traductions : magnoling.com</string>
     
     <string name="legal">Temps obtenues par le système ISAE, qui offre, en TEMP RÉEL, le temps d\'arrivée ESTIMÉ des réseaux TAM et TRAM. \nLes temps peuvent varier en fonction des facteurs non liés à l\'application, comme la circulation, le changement d\'itinéraire, etc. \nLes fonctionnalités utilisées par la base de données locale peuvent ne pas montrer les dernières changements d\'itinéraire. \nCette application n\'est PAS officiel et son développement est indépendant. \nLes données de lignes et le temps sont offerts et obtenues de : TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx) et TRAM (www.tramalicante.es, www.fgv.es) \nPlus d\'information : alberapps.blogspot.com et twitter.com/alberapps</string>
 	

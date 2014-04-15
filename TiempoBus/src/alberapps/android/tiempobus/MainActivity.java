@@ -1390,7 +1390,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				final Calendar c = Calendar.getInstance();
 
-				SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.getDefault());
+				SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
 
 				String updated = df.format(c.getTime()).toString();
 

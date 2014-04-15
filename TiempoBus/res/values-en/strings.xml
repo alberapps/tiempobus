@@ -290,9 +290,9 @@
 		\nLines and times data offered and maintained by:</string>
 	<string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.
 		\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Development: alberapps.blogspot.com - twitter.com/alberapps \nTranslations: orchestra-solutions.com - twitter.com/MagnoliaTraduce</string>
+	<string name="acercade_info_nuevo_2">Development: alberapps.blogspot.com - twitter.com/alberapps \nTranslations: magnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
-    <string name="infoapp_trad">Translations: orchestra-solutions.com</string>
+    <string name="infoapp_trad">Translations: magnoling.com</string>
     
     <string name="legal">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TRAM and TAM networks.
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.

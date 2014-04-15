@@ -687,6 +687,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			if (listTwWiew != null) {
 				
+				//listTwWiew.setDrawingCacheEnabled(false);
+				
 				cargarHeaderTwitter();
 
 				twAdapter = new TwAdapter(this, R.layout.avisostw_item);

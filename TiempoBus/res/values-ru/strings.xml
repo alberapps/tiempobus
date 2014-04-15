@@ -288,9 +288,9 @@
     
     <string name="acercade_info_nuevo">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны:</string>
 	<string name="acercade_info_nuevo_bus">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Разработка: alberapps.blogspot.com - twitter.com/alberapps \nПеревод: orchestra-solutions.com - twitter.com/MagnoliaTraduce</string>
+	<string name="acercade_info_nuevo_2">Разработка: alberapps.blogspot.com - twitter.com/alberapps \nПеревод: magnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">&gt;InfoApp</string>
-    <string name="infoapp_trad">Перевод: orchestra-solutions.com</string>
+    <string name="infoapp_trad">Перевод: magnoling.com</string>
     
     <string name="legal">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM и TRAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
 	

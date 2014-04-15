@@ -189,7 +189,7 @@ public class ProcesarTwitter4j {
 				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
 				// Imagen de perfil
-				resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
+				//resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
 				resultado.setUrl(url);
 				
@@ -216,7 +216,7 @@ public class ProcesarTwitter4j {
 	 * @param urlParam
 	 * @return imagen
 	 */
-	private static Bitmap recuperaImagen(String urlParam) {
+	public static Bitmap recuperaImagen(String urlParam) {
 
 		InputStream st = null;
 
@@ -260,7 +260,7 @@ public class ProcesarTwitter4j {
 
 			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
 
-			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.getDefault());
+			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.US);
 
 			return sfNueva.format(fecha);
 

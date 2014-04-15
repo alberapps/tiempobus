@@ -525,7 +525,7 @@ public class TiemposForegroundService extends Service {
 
 		alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		SimpleDateFormat ft = new SimpleDateFormat("HH:mm", Locale.US);
 
 		String horaT = ft.format(milisegundos);
 

@@ -139,7 +139,7 @@ public class GetVehiculosWebservice {
 		cl.setTimeInMillis((new Date()).getTime());
 		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
 
-		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.US);
 		String horaString = sf.format(cl.getTime());
 
 		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";

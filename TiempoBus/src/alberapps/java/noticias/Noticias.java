@@ -114,7 +114,7 @@ public class Noticias implements Serializable {
 
 	public Date getFechaDate() {
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
 		Date fechaDate = null;
 
