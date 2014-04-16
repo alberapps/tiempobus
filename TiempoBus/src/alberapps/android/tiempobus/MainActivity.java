@@ -242,8 +242,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		//PrecargasV3.precargarDatosLineas(this);
-		//PrecargasV3.precargarDatosLineasRecorrido(this);
+		// PrecargasV3.precargarDatosLineas(this);
+		// PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
@@ -726,21 +726,20 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		datosPantallaPrincipal.cargarHeader();
 
 		// Progreso inicial
-		/*TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
-		vacio.setVisibility(View.INVISIBLE);
-		ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
-		lpb.setIndeterminate(true);
-		tiemposView.setEmptyView(lpb);
-*/
+		/*
+		 * TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+		 * vacio.setVisibility(View.INVISIBLE); ProgressBar lpb = (ProgressBar)
+		 * findViewById(R.id.tiempos_progreso); lpb.setIndeterminate(true);
+		 * tiemposView.setEmptyView(lpb);
+		 */
 		// Control de sin datos
 		BusLlegada sinDatos = new BusLlegada();
 		sinDatos.setSinDatos(true);
 		sinDatos.setConsultaInicial(true);
 		posteAdapter.add(sinDatos);
-		
+
 		datosPantallaPrincipal.cargarPie();
-		
-		
+
 		// Al pulsar sobre un item abriremos el dialogo de poner alarma
 		tiemposView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> view, View arg1, int position, long arg3) {
@@ -1203,7 +1202,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		if (show) {
 
 			swipeRefresh.setRefreshing(true);
-			
+
 			Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 			getActionBarHelper().setRefreshActionItemState(true);
@@ -1250,17 +1249,16 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 							showProgressBar(false);
 							handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
 						}
-/*
-						// Quitar barra progreso inicial
-						ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso);
-						lpb.clearAnimation();
-						lpb.setVisibility(View.INVISIBLE);
-
-						if (tiempos == null || tiempos.isEmpty()) {
-							TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
-							tiemposView.setEmptyView(vacio);
-						}
-*/
+						/*
+						 * // Quitar barra progreso inicial ProgressBar lpb =
+						 * (ProgressBar) findViewById(R.id.tiempos_progreso);
+						 * lpb.clearAnimation();
+						 * lpb.setVisibility(View.INVISIBLE);
+						 * 
+						 * if (tiempos == null || tiempos.isEmpty()) { TextView
+						 * vacio = (TextView) findViewById(R.id.tiempos_vacio);
+						 * tiemposView.setEmptyView(vacio); }
+						 */
 						if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
 
 							Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
@@ -1526,7 +1524,29 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		recargarTiempos();
 
 		// Finalizar
-		//swipeRefresh.setRefreshing(false);
+		// swipeRefresh.setRefreshing(false);
+
+	}
+
+	public Tracker getTracker() {
+
+		// Get tracker.
+		Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+		return t;
+
+		/*
+		 * try { Tracker t = activity.getTracker();
+		 * 
+		 * t.send(new HitBuilders.ExceptionBuilder().setDescription(new
+		 * StandardExceptionParser(activity,
+		 * null).getDescription(Thread.currentThread().getName(),
+		 * e)).setFatal(false).build());
+		 * 
+		 * } catch (Exception ex) {
+		 * 
+		 * }
+		 */
 
 	}
 

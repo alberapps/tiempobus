@@ -90,6 +90,10 @@
 
             <CheckBoxPreference
                 android:defaultValue="true"
+                android:key="tw_activar"
+                android:title="@string/twitter_activar" />
+            <CheckBoxPreference
+                android:defaultValue="true"
                 android:key="tw_2"
                 android:title="\@Alicante_City" />
             <CheckBoxPreference
@@ -104,6 +108,10 @@
                 android:defaultValue="true"
                 android:key="tw_5"
                 android:title="\@sant_joan" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_6"
+                android:title="\@TramdeAlicante" />
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/conf_avanzado_titulo" >

@@ -21,7 +21,6 @@ package alberapps.android.tiempobus.infolineas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -208,18 +207,18 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 	 * 
 	 * @return
 	 */
-	public List<BusLinea> getListaFiltrada(){
-		
+	public List<BusLinea> getListaFiltrada() {
+
 		List<BusLinea> lista = new ArrayList<BusLinea>();
-		
-		for(int i = 0; i< getCount(); i++){
-			
+
+		for (int i = 0; i < getCount(); i++) {
+
 			lista.add(getItem(i));
-			
+
 		}
-		
+
 		return lista;
-		
+
 	}
-	
+
 }

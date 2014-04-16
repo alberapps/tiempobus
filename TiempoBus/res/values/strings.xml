@@ -6,7 +6,7 @@
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">http://alberapps.blogspot.com</string>
+    <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Nº de parada&#8230;</string>
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
@@ -414,5 +414,25 @@
     <string name="pref_control_actualizar_titulo">Verificar Actualizaciones</string>
     <string name="pref_control_actualizar_desc">Al iniciar la aplicación, verificar si hay actualizaciones de la base de datos</string>
     
+    <string name="twitter_activar">Twitter Activo</string>
+    
+    <string name="detalle_licencia">    
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante\n
+   Copyright (C) 2014 Alberto Montiel\n\n
+ 
+   This program is free software: you can redistribute it and/or modify\n
+   it under the terms of the GNU General Public License as published by\n
+   the Free Software Foundation, either version 3 of the License, or\n
+   (at your option) any later version.\n\n
+ 
+   This program is distributed in the hope that it will be useful,\n
+   but WITHOUT ANY WARRANTY; without even the implied warranty of\n
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n
+   GNU General Public License for more details.\n\n
+ 
+   You should have received a copy of the GNU General Public License\n
+   along with this program.  If not, see http://www.gnu.org/licenses.\n
+ 
+   </string> 
     
 </resources>

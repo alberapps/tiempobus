@@ -646,6 +646,37 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			}
 		};
 
+		//Opcion de desactivar twitter
+		if(!preferencias.getBoolean("tw_activar", true)){
+			
+			getActionBarHelper().setRefreshActionItemState(false);
+
+			if (dialog != null && dialog.isShowing()) {
+
+				dialog.dismiss();
+
+			}
+			
+			listTwWiew = (ListView) findViewById(R.id.listatw);
+			
+			if (listTwWiew != null) {
+				// Quitar barra progreso inicial
+				ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
+				lpb.clearAnimation();
+				lpb.setVisibility(View.INVISIBLE);
+				
+				TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+				listTwWiew.setEmptyView(vacio);
+				
+			}
+			avisosRecuperados = null;
+			
+			cargarListadoTw();
+			
+			return;
+		}
+		
+		
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -658,6 +689,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			listaTW.add(preferencias.getBoolean("tw_3", true));
 			listaTW.add(preferencias.getBoolean("tw_4", true));
 			listaTW.add(preferencias.getBoolean("tw_5", true));
+			listaTW.add(preferencias.getBoolean("tw_6", true));
 
 			String cantidad = preferencias.getString("tweets_maximos_v11", "3");
 

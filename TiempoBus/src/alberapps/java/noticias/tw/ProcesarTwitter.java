@@ -79,9 +79,11 @@ public class ProcesarTwitter {
 
 		}
 
-		// Tram
-		lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
-
+		if (cargar.get(4)) {
+			// Tram
+			lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
+		}
+		
 		if (lista != null && !lista.isEmpty()) {
 
 			// Ordenar por fecha

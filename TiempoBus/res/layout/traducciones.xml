@@ -97,7 +97,15 @@
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:autoLink="web"
-                 android:text="orchestra-solutions.com"
+                 android:text="magnoling.com"
+                 android:textAppearance="?android:attr/textAppearanceSmall" />
+             
+             <TextView
+                 android:id="@+id/textView3e"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:autoLink="email"
+                 android:text="info@magnoling.com"
                  android:textAppearance="?android:attr/textAppearanceSmall" />
             
              <TextView

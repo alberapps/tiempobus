@@ -192,7 +192,7 @@ public class FragmentLineas extends Fragment {
 
 		// Consultar si es necesario, si ya lo tiene carga la lista
 		if (lineasBus != null) {
-			cargarListado();
+			recargarListado();
 		} else {
 
 			ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
@@ -305,12 +305,41 @@ public class FragmentLineas extends Fragment {
 
 			// Controlar pulsacion
 			lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
-			lineasView.setOnItemClickListener(lineasClickedHandler);
 
-			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
-			lineasView.setEmptyView(vacio);
+			if (lineasView != null) {
+				lineasView.setOnItemClickListener(lineasClickedHandler);
 
-			lineasView.setAdapter(infoLineaAdapter);
+				TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
+				lineasView.setEmptyView(vacio);
+
+				lineasView.setAdapter(infoLineaAdapter);
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Recarga al restaurar la vista
+	 */
+	private void recargarListado() {
+
+		if (infoLineaAdapter != null) {
+
+			// Controlar pulsacion
+			lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+
+			if (lineasView != null) {
+
+				lineasView.setOnItemClickListener(lineasClickedHandler);
+
+				TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
+				lineasView.setEmptyView(vacio);
+
+				lineasView.setAdapter(infoLineaAdapter);
+
+			}
 
 		}
 
@@ -333,8 +362,8 @@ public class FragmentLineas extends Fragment {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			//linea = lineasBus.get(position);
-			
+			// linea = lineasBus.get(position);
+
 			linea = infoLineaAdapter.getListaFiltrada().get(position);
 
 			actividad.setLinea(linea);

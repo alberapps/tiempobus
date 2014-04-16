@@ -21,7 +21,6 @@ package alberapps.android.tiempobus.tasks;
 
 import java.io.EOFException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
