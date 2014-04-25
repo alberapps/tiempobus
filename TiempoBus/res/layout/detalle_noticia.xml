@@ -17,10 +17,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
 --> 
-<ViewFlipper android:id="@+id/main" 
+<LinearLayout android:id="@+id/main" 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" 
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/gris_blog">
 
 <ScrollView
     android:id="@+id/scrollView1"
@@ -32,61 +33,165 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/cabeceraLinea"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_android"
-            android:gravity="left"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-         <TextView
-             android:id="@+id/cabeceraFecha"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:background="@color/color_android"
-             android:gravity="left"
-             android:textAppearance="?android:attr/textAppearanceSmall"
-             android:textColor="@color/white" />
-         
-          <TextView
-              android:id="@+id/cabeceraTitulo"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/color_android"
-              android:gravity="left"
-              android:textAppearance="?android:attr/textAppearanceSmall"
-              android:textColor="@color/white" />
-
-          <TextView
-              android:id="@+id/accederNoticia"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/color_android"
-              android:gravity="left"
-              android:textAppearance="?android:attr/textAppearanceSmall"
-              android:textColor="@color/white" />
+        <LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:padding="6dip">
+		
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/item_sombra" 
+		        android:baselineAligned="false">
+		
+		        <LinearLayout
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="5dp"
+		            android:layout_marginTop="5dp"
+		            android:layout_weight="1"
+		            android:orientation="vertical" >
+		
+		            
+		            <TextView
+			            android:id="@+id/cabeceraLinea"
+			            android:layout_width="fill_parent"
+			            android:layout_height="wrap_content"
+			            
+			            android:gravity="left"
+			            android:textAppearance="?android:attr/textAppearanceSmall"
+			            android:textColor="@color/color_android"
+			            android:textStyle="bold" />
+			
+			         <TextView
+			             android:id="@+id/cabeceraFecha"
+			             android:layout_width="fill_parent"
+			             android:layout_height="wrap_content"
+			             
+			             android:gravity="left"
+			             android:textAppearance="?android:attr/textAppearanceSmall"
+			             android:textColor="@color/color_android" />
+			         
+			          <TextView
+			              android:id="@+id/cabeceraTitulo"
+			              android:layout_width="fill_parent"
+			              android:layout_height="wrap_content"
+			              
+			              android:gravity="left"
+			              android:textAppearance="?android:attr/textAppearanceSmall"
+			              android:textColor="@color/color_android" />
+			
+			          <TextView
+			              android:id="@+id/accederNoticia"
+			              android:layout_width="fill_parent"
+			              android:layout_height="wrap_content"
+			              
+			              android:gravity="left"
+			              android:textAppearance="?android:attr/textAppearanceSmall"
+			              android:textColor="@color/color_android" />
         
-        <WebView
-            android:id="@+id/webViewDetalle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+		            
+		           
+		            
+		
+		        </LinearLayout>
+		
+		    </LinearLayout>
+			
+		</LinearLayout>
+        
+        
+        
+        
+        
+        
+        
+        
 
-        <TextView
-            android:id="@+id/TextView01"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_android"
-            android:gravity="left"
-            android:text="@string/aviso_noticia"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/white"
-            android:textStyle="italic" />
+        
+        
+        
+        <LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:padding="6dip">
+		
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/item_sombra" 
+		        android:baselineAligned="false">
+		
+		        <LinearLayout
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="5dp"
+		            android:layout_marginTop="5dp"
+		            android:layout_weight="1"
+		            android:orientation="vertical" >
+		
+		           <WebView
+			            android:id="@+id/webViewDetalle"
+			            android:layout_width="match_parent"
+			            android:layout_height="wrap_content" />
+		
+		        </LinearLayout>
+		
+		    </LinearLayout>
+	
+</LinearLayout>
+        
+        
+        <LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:padding="6dip">
+		
+		    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/item_sombra" 
+		        android:baselineAligned="false">
+		
+		        <LinearLayout
+		            android:layout_width="0dp"
+		            android:layout_height="wrap_content"
+		            android:layout_marginBottom="5dp"
+		            android:layout_marginTop="5dp"
+		            android:layout_weight="1"
+		            android:orientation="vertical" >
+		
+		            
+		            
+		            
+		            <TextView
+		            android:id="@+id/TextView01"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center"
+		            android:gravity="center_vertical|center_horizontal"
+		            
+		            android:text="@string/aviso_noticia"
+		            android:textAppearance="?android:attr/textAppearanceSmall"
+		            android:textColor="@color/color_android"
+		             />
+		            
+		
+		        </LinearLayout>
+		
+		    </LinearLayout>
+			
+		</LinearLayout>
+        
+        
+        
+        
 
     </LinearLayout>
 
 </ScrollView>
 
-</ViewFlipper>
+</LinearLayout>

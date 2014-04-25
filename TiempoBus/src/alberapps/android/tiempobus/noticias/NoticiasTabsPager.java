@@ -540,8 +540,15 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 * @param id
 		 *            The row id of the item that was clicked
 		 */
-		public void onItemClick(AdapterView<?> l, View v, final int position, long id) {
+		public void onItemClick(AdapterView<?> l, View v, final int position_inicial, long id) {
 
+			if(position_inicial == 0){
+				return;
+			}
+			
+			//Para descartar la cabecera
+			final int position = position_inicial-1;
+			
 			if (noticiasRecuperadas.get(position).getLinks() != null && !noticiasRecuperadas.get(position).getLinks().isEmpty()) {
 
 				if (noticiasRecuperadas.get(position).getLinks().size() > 1) {

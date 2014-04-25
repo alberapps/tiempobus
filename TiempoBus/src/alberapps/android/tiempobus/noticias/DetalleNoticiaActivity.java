@@ -25,6 +25,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -44,6 +45,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +73,8 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detalle_noticia);
 
+		
+
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -92,6 +96,9 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 
 		}
 
+		// Fondo
+		setupFondoAplicacion();
+		
 		/**
 		 * Sera llamado cuando la tarea de cargar las noticias
 		 */
@@ -127,6 +134,9 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 			}
 		}
 
+		
+		
+		
 	}
 
 	@Override
@@ -232,7 +242,7 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
+			// EasyTracker.getInstance(this).activityStart(this);
 			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
@@ -242,12 +252,24 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 	protected void onStop() {
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
+			// EasyTracker.getInstance(this).activityStop(this);
 			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
-		
+
 		super.onStop();
-		
+
+	}
+
+	/**
+	 * Seleccion del fondo de la galeria en el arranque
+	 */
+	private void setupFondoAplicacion() {
+
+		String fondo_galeria = preferencias.getString("image_galeria", "");
+
+		View contenedor_principal = findViewById(R.id.main);
+
+		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 
 	}
 
