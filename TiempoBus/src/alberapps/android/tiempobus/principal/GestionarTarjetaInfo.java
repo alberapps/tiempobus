@@ -43,6 +43,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -51,8 +52,10 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,6 +88,143 @@ public class GestionarTarjetaInfo {
 	AsyncTask<Object, Void, String> actualizarTask = null;
 	AsyncTask<Object, Void, String> actualizarNumTask = null;
 	AsyncTask<Object, Void, WikiQuery> wikiTask = null;
+
+	/**
+	 * Tarjeta con informacion de la parada
+	 */
+	public void cargarTarjetaInfo() {
+
+		View v = null;
+
+		boolean tablet = false;
+
+		if (context.avisoTarjetaInfo != null && context.tiemposView != null) {
+			context.tiemposView.removeFooterView(context.avisoTarjetaInfo);
+		}
+
+		// Si es una tablet en horizontal
+		FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+		if (detalleFrag != null && UtilidadesUI.pantallaTabletHorizontal(context)) {
+
+			v = detalleFrag.getView().findViewById(R.id.contenedor_secundario);
+
+			tablet = true;
+
+		} else {
+
+			tablet = false;
+
+			LayoutInflater li = LayoutInflater.from(context);
+
+			v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
+
+		}
+
+		String parametros[] = { Integer.toString(context.paradaActual) };
+
+		try {
+
+			Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+
+			if (cursor == null) {
+
+				return;
+
+			} else {
+
+				StringBuffer observaciones = new StringBuffer();
+
+				// Observaciones
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+					int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+					int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+
+					String observa = cursor.getString(observacionesIndex);
+					String linea = cursor.getString(numLineaIndex);
+
+					if (observa != null && !observa.trim().equals("")) {
+
+						if (observaciones.length() > 0) {
+							observaciones.append(", ");
+						}
+
+						observaciones.append("(");
+						observaciones.append(linea);
+						observaciones.append(") ");
+						observaciones.append(observa);
+					}
+
+				}
+
+				// Primera posicion
+				cursor.moveToFirst();
+
+				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
+				int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
+				int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
+				int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
+				int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
+
+				int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+
+				int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+
+				int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
+				int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
+
+				if (!tablet) {
+
+					TextView parada = (TextView) v.findViewById(R.id.parada);
+					TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
+
+					TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
+
+					parada.setText(cursor.getString(paradaIndex));
+
+					localizacion.setText(cursor.getString(direccionIndex));
+
+					datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
+
+					String observa = observaciones.toString();
+
+					if (observa != null && !observa.trim().equals("")) {
+
+						datosParada.setText(datosParada.getText() + "\ni: " + observa);
+
+					}
+
+				}
+
+				String lat = cursor.getString(latIndex);
+				String lon = cursor.getString(lonIndex);
+
+				// Cargar info wikipedia
+				if (lat != null && !lat.equals("") && !lon.equals("")) {
+					context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
+				}
+
+				// Cargar informacion del tiempo
+				context.gestionarTarjetaInfo.cargarInfoWeather(v);
+
+			}
+
+		} catch (Exception e) {
+
+			return;
+
+		}
+
+		if (!tablet) {
+			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+
+			context.tiemposView.addFooterView(v);
+
+			context.avisoTarjetaInfo = v;
+
+		}
+
+	}
 
 	/**
 	 * Cargar la informacion de la wikipedia para la parada

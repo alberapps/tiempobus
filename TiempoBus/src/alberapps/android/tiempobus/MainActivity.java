@@ -1414,7 +1414,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				}
 
 				// Pie para la lista de resultados
-				laActividad.datosPantallaPrincipal.cargarTarjetaInfo();
+				laActividad.gestionarTarjetaInfo.cargarTarjetaInfo();
 				laActividad.datosPantallaPrincipal.cargarPie();
 
 				laActividad.posteAdapter.notifyDataSetChanged();

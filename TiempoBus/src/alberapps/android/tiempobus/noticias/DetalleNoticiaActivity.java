@@ -183,6 +183,11 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 
 		if (noticia.getContenidoHtml() != null) {
 			mWebView = (WebView) findViewById(R.id.webViewDetalle);
+			
+			mWebView.getSettings().setLoadWithOverviewMode(true);
+			mWebView.getSettings().setUseWideViewPort(true);
+			//mWebView.getSettings().setBuiltInZoomControls(true);
+			//mWebView.getSettings().setDisplayZoomControls(true);
 
 			mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
 

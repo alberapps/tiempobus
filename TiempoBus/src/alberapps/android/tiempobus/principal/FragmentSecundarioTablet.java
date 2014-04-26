@@ -35,7 +35,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Fragmento principal
+ * Fragmento secundario tablet
  * 
  * 
  */
@@ -57,8 +57,6 @@ public class FragmentSecundarioTablet extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		
-
 		super.onViewCreated(view, savedInstanceState);
 
 	}
@@ -67,7 +65,7 @@ public class FragmentSecundarioTablet extends Fragment {
 	public void onViewStateRestored(Bundle savedInstanceState) {
 
 		setupFondoAplicacion();
-		
+
 		actualizarDatos();
 
 		super.onViewStateRestored(savedInstanceState);
@@ -93,55 +91,60 @@ public class FragmentSecundarioTablet extends Fragment {
 
 		String parametros[] = { Integer.toString(actividad.paradaActual) };
 
-		try{
-		
-		Cursor cursor = actividad.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+		try {
 
-		// Uri data = Uri.withAppendedPath(BuscadorLineasProvider.CONTENT_URI,
-		// String.valueOf(id));
+			Cursor cursor = actividad.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
-		// Uri uri = getIntent().getData();
-		// Cursor cursor = actividad.managedQuery(uri, null, null, null, null);
+			if (cursor == null) {
 
-		if (cursor == null) {
+			} else {
 
-		} else {
-			cursor.moveToFirst();
+				StringBuffer observaciones = new StringBuffer();
 
-			TextView parada = (TextView) actividad.findViewById(R.id.parada);
-			//TextView linea = (TextView) actividad.findViewById(R.id.linea);
-			//TextView destino = (TextView) actividad.findViewById(R.id.destino);
-			TextView localizacion = (TextView) actividad.findViewById(R.id.localizacion);
-			TextView conexiones = (TextView) actividad.findViewById(R.id.conexiones);
+				// Observaciones
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+					int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+					int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
 
-			TextView observaciones = (TextView) actividad.findViewById(R.id.observaciones);
+					String observa = cursor.getString(observacionesIndex);
+					String linea = cursor.getString(numLineaIndex);
 
-			int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
-			int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
-			int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
-			int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
-			int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
+					if (observa != null && !observa.trim().equals("")) {
 
-			int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+						if (observaciones.length() > 0) {
+							observaciones.append("\n");
+						}
 
-			int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+						observaciones.append(linea);
+						observaciones.append(": ");
+						observaciones.append(observa);
+					}
 
-			parada.setText(cursor.getString(paradaIndex));
+				}
 
-			// paradaSel = cursor.getString(paradaIndex);
-			// lineaSel = cursor.getString(numLineaIndex);
+				cursor.moveToFirst();
 
-			//linea.setText(cursor.getString(lineaIndex));
-			//destino.setText(cursor.getString(destinoIndex));
-			localizacion.setText(cursor.getString(direccionIndex));
-			conexiones.setText(cursor.getString(conexionesIndex));
+				TextView parada = (TextView) actividad.findViewById(R.id.parada);
+				TextView localizacion = (TextView) actividad.findViewById(R.id.localizacion);
+				TextView conexiones = (TextView) actividad.findViewById(R.id.conexiones);
 
-			observaciones.setText(cursor.getString(observacionesIndex));
-		}
-		
-		
-		}catch(Exception e){
-			
+				TextView observac = (TextView) actividad.findViewById(R.id.observaciones);
+
+				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
+
+				int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
+				int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
+
+				parada.setText(cursor.getString(paradaIndex));
+
+				localizacion.setText(cursor.getString(direccionIndex));
+				conexiones.setText(cursor.getString(conexionesIndex));
+
+				observac.setText(observaciones);
+			}
+
+		} catch (Exception e) {
+
 		}
 
 	}
