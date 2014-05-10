@@ -39,19 +39,17 @@ public class ProcesarDetalleNoticia {
 
 	public static Noticias getDetalleNoticia(String url) throws Exception {
 
-		//Distinguir distintos tipos de noticias
-		if(url.contains("/Lineas/Horario.asp")){
-			//Tipo horario
+		// Distinguir distintos tipos de noticias
+		if (url.contains("/Lineas/Horario.asp")) {
+			// Tipo horario
 			return getDetalleNoticiaHorarios(url);
-		}else{
-			//Para el resto
+		} else {
+			// Para el resto
 			return getDetalleNoticiaAvisoModificacion(url);
 		}
 
-		
 	}
 
-	
 	/**
 	 * Noticias de tipo Aviso y Modificacion
 	 * 
@@ -73,7 +71,7 @@ public class ProcesarDetalleNoticia {
 
 			noticias = new Noticias();
 
-			String title = doc.title();
+			// String title = doc.title();
 
 			Elements tables = doc.select("table"); // a with href
 
@@ -83,12 +81,20 @@ public class ProcesarDetalleNoticia {
 
 			Element filaDetalle = filas.get(7);
 
+			// Por si hay lineas extra
+			for (int i = 7; i < filas.size(); i++) {
+				if (filas.get(i).select("td").size() > 1) {
+					filaDetalle = filas.get(i);
+					break;
+				}
+			}
+
 			Elements cont1 = filaDetalle.select("td");
 
 			Element cont2 = cont1.get(1);
 
 			// Limpiar resultado
-			String safe = Jsoup.clean(cont2.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td","rowspan", "align", "colspan"));
+			String safe = Jsoup.clean(cont2.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan"));
 
 			// Problema caracteres
 			String limpiar = safe.replace("", "-").replace("", "&euro;");
@@ -131,9 +137,7 @@ public class ProcesarDetalleNoticia {
 
 		return noticias;
 	}
-	
-	
-	
+
 	/**
 	 * Noticias del tipo horario
 	 * 
@@ -155,22 +159,22 @@ public class ProcesarDetalleNoticia {
 
 			noticias = new Noticias();
 
-			String title = doc.title();
+			// String title = doc.title();
 
 			Elements tables = doc.select("table"); // a with href
 
 			Element tabla = tables.get(3);
 
 			Elements filas = tables.get(4).select("tr");
-			
-			//Element filaDetalle = filas.get(7);
 
-			//Elements cont1 = filaDetalle.select("td");
+			// Element filaDetalle = filas.get(7);
 
-			//Element cont2 = cont1.get(1);
+			// Elements cont1 = filaDetalle.select("td");
+
+			// Element cont2 = cont1.get(1);
 
 			// Limpiar resultado
-			String safe = Jsoup.clean(tabla.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td","rowspan", "align", "colspan"));
+			String safe = Jsoup.clean(tabla.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan"));
 
 			// Problema caracteres
 			String limpiar = safe.replace("", "-").replace("", "&euro;");
@@ -180,8 +184,8 @@ public class ProcesarDetalleNoticia {
 			noticias.setContenidoHtml(limpiar);
 
 			// Cabecera
-			//Element filaCabecera2 = filas.get(5);
-			//Elements contCabecera2 = filaCabecera2.select("td");
+			// Element filaCabecera2 = filas.get(5);
+			// Elements contCabecera2 = filaCabecera2.select("td");
 			noticias.setFechaCabecera("");
 			noticias.setTituloCabecera("");
 
@@ -213,12 +217,5 @@ public class ProcesarDetalleNoticia {
 
 		return noticias;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

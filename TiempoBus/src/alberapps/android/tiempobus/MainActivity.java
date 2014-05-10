@@ -1437,56 +1437,72 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	 */
 	public void onInit(int status) {
 
-		// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
-		if (status == TextToSpeech.SUCCESS) {
-			// Set preferred language to US english.
-			// Note that a language may not be available, and the result will
-			// indicate this.
-			int result = mTts.setLanguage(Locale.getDefault());
-			// Try this someday for some interesting results.
-			// int result mTts.setLanguage(Locale.FRANCE);
-			if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-				// Lanuage data is missing or the language is not supported.
+		try {
 
-				lecturaOK = false;
+			// status can be either TextToSpeech.SUCCESS or TextToSpeech.ERROR.
+			if (status == TextToSpeech.SUCCESS) {
+				// Set preferred language to US english.
+				// Note that a language may not be available, and the result
+				// will
+				// indicate this.
+				int result = mTts.setLanguage(Locale.getDefault());
+				// Try this someday for some interesting results.
+				// int result mTts.setLanguage(Locale.FRANCE);
+				if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+					// Lanuage data is missing or the language is not supported.
 
-				try {
+					lecturaOK = false;
 
-					Locale loc = new Locale("spa", "ES");
+					try {
 
-					result = mTts.setLanguage(loc);
+						Locale loc = new Locale("spa", "ES");
 
-					if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+						result = mTts.setLanguage(loc);
+
+						if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+							lecturaAlternativa = false;
+						} else {
+							lecturaAlternativa = true;
+						}
+
+					} catch (Exception e) {
 						lecturaAlternativa = false;
-					} else {
-						lecturaAlternativa = true;
+						e.printStackTrace();
 					}
 
-				} catch (Exception e) {
+				} else {
+					// Check the documentation for other possible result codes.
+					// For example, the language may be available for the
+					// locale,
+					// but not for the specified country and variant.
+
+					// The TTS engine has been successfully initialized.
+					// Allow the user to press the button for the app to speak
+					// again.
+					// mAgainButton.setEnabled(true);
+					// Greet the user.
+					// textToSpeech();
+
+					lecturaOK = true;
 					lecturaAlternativa = false;
-					e.printStackTrace();
+
 				}
-
 			} else {
-				// Check the documentation for other possible result codes.
-				// For example, the language may be available for the locale,
-				// but not for the specified country and variant.
-
-				// The TTS engine has been successfully initialized.
-				// Allow the user to press the button for the app to speak
-				// again.
-				// mAgainButton.setEnabled(true);
-				// Greet the user.
-				// textToSpeech();
-
-				lecturaOK = true;
+				// Initialization failed.
+				lecturaOK = false;
 				lecturaAlternativa = false;
-
 			}
-		} else {
+
+		} catch (Exception e) {
+
+			Toast.makeText(this, getString(R.string.error_voz), Toast.LENGTH_SHORT).show();
+
 			// Initialization failed.
 			lecturaOK = false;
 			lecturaAlternativa = false;
+
+			e.printStackTrace();
+
 		}
 
 	}

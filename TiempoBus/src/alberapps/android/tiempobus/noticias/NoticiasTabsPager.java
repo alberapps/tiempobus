@@ -460,26 +460,28 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		try {
 
-			noticiasAdapter = new NoticiasAdapter(this, R.layout.noticias_item);
+			noticiasView = (ListView) findViewById(R.id.lista_noticias);
 
-			
-			
-			if (ok) {
+			if (noticiasView != null) {
 
-				noticiasAdapter.addAll(noticiasList);
+				cargarHeaderNoticias();
 
-				noticiasAdapter.notifyDataSetChanged();
+				noticiasAdapter = new NoticiasAdapter(this, R.layout.noticias_item);
+
+				if (ok) {
+
+					noticiasAdapter.addAll(noticiasList);
+
+					noticiasAdapter.notifyDataSetChanged();
+				}
+
+				noticiasView.setOnItemClickListener(noticiasClickedHandler);
+				noticiasView.setAdapter(noticiasAdapter);
+				View emptyView = findViewById(R.id.vacio_noticias);
+				noticiasView.setEmptyView(emptyView);
+
 			}
 
-			// Listado noticias
-			noticiasView = (ListView) findViewById(R.id.lista_noticias);
-			noticiasView.setOnItemClickListener(noticiasClickedHandler);
-			noticiasView.setAdapter(noticiasAdapter);
-			View emptyView = findViewById(R.id.vacio_noticias);
-			noticiasView.setEmptyView(emptyView);
-
-			cargarHeaderNoticias();
-			
 		} catch (Exception e) {
 
 			// Para evitar fallos si se intenta volver antes de terminar
@@ -490,7 +492,6 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 	}
 
-	
 	/**
 	 * Cargar cabecera listado
 	 */
@@ -514,7 +515,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			texto.setLinksClickable(true);
 			texto.setAutoLinkMask(Linkify.WEB_URLS);
-			
+
 			texto.setText(textoHeader.toString());
 
 			noticiasView = (ListView) findViewById(R.id.lista_noticias);
@@ -524,7 +525,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-	
+
 	/**
 	 * Listener encargado de gestionar las pulsaciones sobre los items
 	 */
@@ -542,13 +543,13 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 */
 		public void onItemClick(AdapterView<?> l, View v, final int position_inicial, long id) {
 
-			if(position_inicial == 0){
+			if (position_inicial == 0) {
 				return;
 			}
-			
-			//Para descartar la cabecera
-			final int position = position_inicial-1;
-			
+
+			// Para descartar la cabecera
+			final int position = position_inicial - 1;
+
 			if (noticiasRecuperadas.get(position).getLinks() != null && !noticiasRecuperadas.get(position).getLinks().isEmpty()) {
 
 				if (noticiasRecuperadas.get(position).getLinks().size() > 1) {
@@ -653,9 +654,9 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			}
 		};
 
-		//Opcion de desactivar twitter
-		if(!preferencias.getBoolean("tw_activar", true)){
-			
+		// Opcion de desactivar twitter
+		if (!preferencias.getBoolean("tw_activar", true)) {
+
 			getActionBarHelper().setRefreshActionItemState(false);
 
 			if (dialog != null && dialog.isShowing()) {
@@ -663,27 +664,26 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 				dialog.dismiss();
 
 			}
-			
+
 			listTwWiew = (ListView) findViewById(R.id.listatw);
-			
+
 			if (listTwWiew != null) {
 				// Quitar barra progreso inicial
 				ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
 				lpb.clearAnimation();
 				lpb.setVisibility(View.INVISIBLE);
-				
+
 				TextView vacio = (TextView) findViewById(R.id.vacio_tw);
 				listTwWiew.setEmptyView(vacio);
-				
+
 			}
 			avisosRecuperados = null;
-			
+
 			cargarListadoTw();
-			
+
 			return;
 		}
-		
-		
+
 		// Control de disponibilidad de conexion
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -725,9 +725,9 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			listTwWiew = (ListView) findViewById(R.id.listatw);
 
 			if (listTwWiew != null) {
-				
-				//listTwWiew.setDrawingCacheEnabled(false);
-				
+
+				// listTwWiew.setDrawingCacheEnabled(false);
+
 				cargarHeaderTwitter();
 
 				twAdapter = new TwAdapter(this, R.layout.avisostw_item);
@@ -952,7 +952,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
+			// EasyTracker.getInstance(this).activityStart(this);
 			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
@@ -962,12 +962,11 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	protected void onStop() {
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
+			// EasyTracker.getInstance(this).activityStop(this);
 			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
-		
+
 		super.onStop();
-		
 
 	}
 

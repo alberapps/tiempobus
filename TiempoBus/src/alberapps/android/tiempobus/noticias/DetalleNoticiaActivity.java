@@ -46,6 +46,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -135,6 +137,80 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		}
 
 		
+		TextView zoomMas = (TextView) findViewById(R.id.noticia_zoom_aumenta);
+		
+		zoomMas.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View view) {
+				
+				if(mWebView != null){
+				
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+				
+						mWebView.getSettings().setLoadWithOverviewMode(false);
+						mWebView.getSettings().setUseWideViewPort(false);
+						
+						if(mWebView.getSettings().getTextZoom() < 200){
+						
+							mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() + 10);
+						
+						}
+					
+					}else{
+						
+						mWebView.getSettings().setLoadWithOverviewMode(false);
+						mWebView.getSettings().setUseWideViewPort(false);
+						
+						mWebView.getSettings().setTextSize(TextSize.LARGEST);
+						
+						//mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+						
+					}
+				
+
+				}
+				
+			}
+
+		});
+		
+		
+		TextView zoomMenos = (TextView) findViewById(R.id.noticia_zoom_reduc);
+		
+		zoomMenos.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View view) {
+				
+				if(mWebView != null){
+				
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+				
+						mWebView.getSettings().setLoadWithOverviewMode(false);
+						mWebView.getSettings().setUseWideViewPort(false);
+						
+						if(mWebView.getSettings().getTextZoom() > 10){
+						
+							mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() - 10);
+						
+						}
+					
+					}else{
+						
+						mWebView.getSettings().setLoadWithOverviewMode(true);
+						mWebView.getSettings().setUseWideViewPort(true);
+						
+						mWebView.getSettings().setTextSize(TextSize.NORMAL);
+						
+						//mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+						
+					}
+				
+
+				}
+				
+			}
+
+		});
 		
 		
 	}

@@ -434,5 +434,10 @@
    along with this program.  If not, see http://www.gnu.org/licenses.\n
  
    </string> 
+   
+    <string name="error_voz">No se ha podido inicializar TextToSpeech</string>
+    
+    <string name="noticia_zoom_aumenta">Zoom(+)</string>
+    <string name="noticia_zoom_reducir">Zoom(-)</string>
     
 </resources>
