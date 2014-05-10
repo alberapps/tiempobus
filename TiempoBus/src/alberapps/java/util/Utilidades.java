@@ -19,6 +19,7 @@
 package alberapps.java.util;
 
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -280,5 +281,49 @@ public class Utilidades {
 		return stream;
 
 	}
+	
+	
+	/**
+	 * Verificar si se recibe un archivo comprimido en zip
+	 * 
+	 * @param is
+	 * @return boolean
+	 */
+	public static boolean isZipFile(InputStream is){
+		
+		boolean esZip = false;
+		
+		DataInputStream entrada = new DataInputStream(is);
+		
+		try {
+			int verificar = entrada.readInt();
+			
+			//if(verificar == 0x504b0304){
+			if(verificar == 1347093252){
+				esZip = true;
+			}
+			
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}finally{
+			
+			try {
+				entrada.close();
+				
+				is.reset();
+				
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
+		
+		
+		return esZip;
+	}
+	
+	
 
 }

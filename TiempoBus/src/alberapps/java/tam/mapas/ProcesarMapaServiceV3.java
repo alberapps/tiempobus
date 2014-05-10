@@ -36,6 +36,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import alberapps.java.util.Conectividad;
+import alberapps.java.util.Utilidades;
 import android.os.Build;
 import android.text.Html;
 import android.util.Log;
@@ -47,7 +48,7 @@ public class ProcesarMapaServiceV3 {
 	public static final int MODE_WALKING = 2;
 
 	public static final String LOG_NAME = "ProcesarMapaServiceV3";
-	
+
 	/**
 	 * Parsear fichero kml
 	 * 
@@ -56,8 +57,6 @@ public class ProcesarMapaServiceV3 {
 	 */
 	public static DatosMapa[] getDatosMapa(String url) {
 
-		
-		
 		InputStream isZip = null;
 
 		// ByteArrayInputStream is = null;
@@ -68,8 +67,12 @@ public class ProcesarMapaServiceV3 {
 
 			isZip = Conectividad.conexionGetIsoStream(url);
 
-			//Provisional
-			if (url.equals("http://www.subus.es/K/TuribusP.xml")) {
+			// Verificar si kml llega comprimido en zip
+			boolean esZip = Utilidades.isZipFile(isZip);
+
+			// Provisional
+			// if (url.equals("http://www.subus.es/K/TuribusP.xml")) {
+			if (esZip) {
 
 				ZipInputStream zis = new ZipInputStream(isZip);
 
@@ -181,24 +184,22 @@ public class ProcesarMapaServiceV3 {
 
 			// Folder principal
 			NodeList folderPrincipalList = root.getElementsByTagName("Folder");
-			
-			//Control para determinar ida y vuelta
+
+			// Control para determinar ida y vuelta
 			Element folderIda = null;
 			Element folderVuelta = null;
 
-			
 			String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
 			String folderName2 = ((Element) folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
-			
-			if(folderName1.equals("Ida")){
+
+			if (folderName1.equals("Ida")) {
 				folderIda = (Element) folderPrincipalList.item(1);
 				folderVuelta = (Element) folderPrincipalList.item(2);
-			}else{
+			} else {
 				folderIda = (Element) folderPrincipalList.item(2);
 				folderVuelta = (Element) folderPrincipalList.item(1);
-			}	
-			
-			
+			}
+
 			// Localizamos todos los elementos <Placemark>
 			NodeList items = folderIda.getElementsByTagName("Placemark");
 

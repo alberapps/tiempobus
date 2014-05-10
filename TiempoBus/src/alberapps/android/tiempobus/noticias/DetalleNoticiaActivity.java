@@ -18,8 +18,6 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
@@ -52,9 +50,12 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 /**
  * Detalle de la noticia
  */
+@SuppressWarnings("deprecation")
 @SuppressLint("NewApi")
 public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 
@@ -147,8 +148,8 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 				
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 				
-						mWebView.getSettings().setLoadWithOverviewMode(false);
-						mWebView.getSettings().setUseWideViewPort(false);
+						//mWebView.getSettings().setLoadWithOverviewMode(false);
+						//mWebView.getSettings().setUseWideViewPort(false);
 						
 						if(mWebView.getSettings().getTextZoom() < 200){
 						
@@ -158,12 +159,22 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 					
 					}else{
 						
-						mWebView.getSettings().setLoadWithOverviewMode(false);
-						mWebView.getSettings().setUseWideViewPort(false);
+						//mWebView.getSettings().setLoadWithOverviewMode(false);
+						//mWebView.getSettings().setUseWideViewPort(false);
 						
-						mWebView.getSettings().setTextSize(TextSize.LARGEST);
 						
-						//mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+						
+						
+						if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLEST)){
+							mWebView.getSettings().setTextSize(TextSize.SMALLER);
+						} else if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)){
+							mWebView.getSettings().setTextSize(TextSize.NORMAL);
+						} else if(mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)){
+							mWebView.getSettings().setTextSize(TextSize.LARGER);
+						}else if(mWebView.getSettings().getTextSize().equals(TextSize.LARGER)){
+							mWebView.getSettings().setTextSize(TextSize.LARGEST);
+						}
+						
 						
 					}
 				
@@ -185,10 +196,12 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 				
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 				
-						mWebView.getSettings().setLoadWithOverviewMode(false);
-						mWebView.getSettings().setUseWideViewPort(false);
+						//mWebView.getSettings().setLoadWithOverviewMode(false);
+						//mWebView.getSettings().setUseWideViewPort(false);
 						
-						if(mWebView.getSettings().getTextZoom() > 10){
+						Log.d("Detalle Noticias", "Zoom: " + mWebView.getSettings().getTextZoom());
+						
+						if(mWebView.getSettings().getTextZoom() > 50){
 						
 							mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() - 10);
 						
@@ -196,12 +209,18 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 					
 					}else{
 						
-						mWebView.getSettings().setLoadWithOverviewMode(true);
-						mWebView.getSettings().setUseWideViewPort(true);
+						//mWebView.getSettings().setLoadWithOverviewMode(true);
+						//mWebView.getSettings().setUseWideViewPort(true);
 						
-						mWebView.getSettings().setTextSize(TextSize.NORMAL);
-						
-						//mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+						if(mWebView.getSettings().getTextSize().equals(TextSize.LARGEST)){
+							mWebView.getSettings().setTextSize(TextSize.LARGER);
+						} else if(mWebView.getSettings().getTextSize().equals(TextSize.LARGER)){
+							mWebView.getSettings().setTextSize(TextSize.NORMAL);
+						} else if(mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)){
+							mWebView.getSettings().setTextSize(TextSize.SMALLER);
+						}else if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)){
+							mWebView.getSettings().setTextSize(TextSize.SMALLEST);
+						}
 						
 					}
 				
@@ -260,8 +279,8 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		if (noticia.getContenidoHtml() != null) {
 			mWebView = (WebView) findViewById(R.id.webViewDetalle);
 			
-			mWebView.getSettings().setLoadWithOverviewMode(true);
-			mWebView.getSettings().setUseWideViewPort(true);
+			//mWebView.getSettings().setLoadWithOverviewMode(true);
+			//mWebView.getSettings().setUseWideViewPort(true);
 			//mWebView.getSettings().setBuiltInZoomControls(true);
 			//mWebView.getSettings().setDisplayZoomControls(true);
 
