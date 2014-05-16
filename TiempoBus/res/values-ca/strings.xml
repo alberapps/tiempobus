@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TempsBus</string>
-    <string name="app_version">3.0.3</string>
+    <string name="app_version">3.0.4</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -418,5 +418,29 @@ favorit per crear la teua llista.</string>
     <string name="pref_control_actualizar_desc">En iniciar l\'aplicació, verificar si hi ha actualitzacions de la base de dades</string>
     
     <string name="twitter_activar">Twitter Actiu</string>
+    
+    <string name="detalle_licencia">    
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante\n
+   Copyright (C) 2014 Alberto Montiel\n\n
+ 
+   This program is free software: you can redistribute it and/or modify\n
+   it under the terms of the GNU General Public License as published by\n
+   the Free Software Foundation, either version 3 of the License, or\n
+   (at your option) any later version.\n\n
+ 
+   This program is distributed in the hope that it will be useful,\n
+   but WITHOUT ANY WARRANTY; without even the implied warranty of\n
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n
+   GNU General Public License for more details.\n\n
+ 
+   You should have received a copy of the GNU General Public License\n
+   along with this program.  If not, see http://www.gnu.org/licenses.\n
+ 
+   </string> 
+   
+    <string name="error_voz">No se ha podido inicializar TextToSpeech</string>
+    
+    <string name="noticia_zoom_aumenta">Zoom(+)</string>
+    <string name="noticia_zoom_reducir">Zoom(-)</string>
     
 </resources>
