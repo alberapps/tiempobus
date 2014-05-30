@@ -899,9 +899,14 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		try {
 
+			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+			
 			noticiasRssAdapter = new NoticiasRssAdapter(this, R.layout.noticias_rss_item);
 
 			if (noticiasRss != null) {
+				
+				cargarHeaderNoticiasRss();
+				
 
 				noticiasRssAdapter.addAll(noticiasRss);
 				noticiasRssAdapter.notifyDataSetChanged();
@@ -925,6 +930,40 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
+	
+	
+	/**
+	 * Cargar cabecera listado
+	 */
+	public void cargarHeaderNoticiasRss() {
+
+		if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 0) {
+
+			LayoutInflater li2 = LayoutInflater.from(this);
+
+			View vheader = li2.inflate(R.layout.noticias_header, null);
+
+			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+			StringBuffer textoHeader = new StringBuffer();
+
+			textoHeader.append(getString(R.string.aviso_noticias));
+			textoHeader.append("\n");
+			textoHeader.append(FragmentNoticiasRss.noticiasURL);
+			
+			texto.setLinksClickable(true);
+			texto.setAutoLinkMask(Linkify.WEB_URLS);
+
+			texto.setText(textoHeader.toString());
+
+			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+
+			noticiasRssView.addHeaderView(vheader);
+
+		}
+
+	}
+	
 
 	/**
 	 * Listener encargado de gestionar las pulsaciones sobre los items

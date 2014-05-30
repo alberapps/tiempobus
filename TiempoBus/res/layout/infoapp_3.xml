@@ -38,7 +38,7 @@
                     android:id="@+id/TextView02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
+                    android:text="@string/app_name_b"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -146,7 +146,17 @@
                 android:text="@string/referencias" 
                 android:layout_marginTop="10dp"/>
 
-             <TextView
+            <TextView
+                android:id="@+id/textViewLegal_d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detalle_licencia"
+                android:textAppearance="?android:attr/textAppearanceSmall" 
+                android:autoLink="web"
+                android:padding="5dip"
+                android:textSize="9sp"/>
+            
+            <TextView
                 android:id="@+id/textViewLegal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,8 +175,10 @@
                 android:autoLink="web"
                 android:padding="5dip"
                 android:textSize="9sp"/>
-             
-             <TextView
+            
+            
+            
+            <TextView
                 android:id="@+id/textViewLegal_c"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -175,6 +187,7 @@
                 android:autoLink="web"
                 android:padding="5dip"
                 android:textSize="9sp"/>
+             
              
              
         </LinearLayout>
