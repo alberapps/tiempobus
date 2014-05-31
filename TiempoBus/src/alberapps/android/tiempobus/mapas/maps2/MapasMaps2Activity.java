@@ -37,7 +37,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
@@ -352,6 +351,8 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	protected void seleccionInfoParada(Marker marker) {
 
 		final LatLng posicion = marker.getPosition();
+		final String titulo = marker.getTitle();
+		final String mensaje = marker.getSnippet();
 
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
@@ -394,12 +395,26 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 
 				try {
 
-					String latitud = Double.toString(posicion.latitude);
-					String longitud = Double.toString(posicion.longitude);
+					// String latitud = Double.toString(posicion.latitude);
+					// String longitud = Double.toString(posicion.longitude);
 
-					Intent streetView = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse("google.streetview:cbll=" + latitud + "," + longitud + "&cbp=1,180,,0,1.0"));
+					// Intent streetView = new
+					// Intent(android.content.Intent.ACTION_VIEW,
+					// Uri.parse("google.streetview:cbll=" + latitud + "," +
+					// longitud + "&cbp=1,180,,0,1.0"));
+					// /////
 					// streetView.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-					startActivity(streetView);
+					// startActivity(streetView);
+
+					Intent i = new Intent(MapasMaps2Activity.this, StreetViewActivity.class);
+					i.putExtra("LATITUD", posicion.latitude);
+					i.putExtra("LONGITUD", posicion.longitude);
+
+					i.putExtra("DATOS_LINEA", lineaSeleccionadaDesc);
+					i.putExtra("DATOS_TITULO", titulo);
+					i.putExtra("DATOS_MENSAJE", mensaje);
+
+					startActivity(i);
 
 				} catch (Exception ex) {
 
@@ -776,7 +791,7 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
+			// EasyTracker.getInstance(this).activityStart(this);
 			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
@@ -786,12 +801,11 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 	protected void onStop() {
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
+			// EasyTracker.getInstance(this).activityStop(this);
 			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
-		
+
 		super.onStop();
-		
 
 	}
 
