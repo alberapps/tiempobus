@@ -209,8 +209,47 @@ public class MapasOffline {
 
 			context.datosMapaCargadosIda = datosIda;
 
+			
+			
+			// Recorrido
+
+			Cursor cursorRecorrido = null;
+
+			try {
+				cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+			} catch (Exception e) {
+				cursorRecorrido = null;
+				e.printStackTrace();
+			}
+
+			if (cursorRecorrido != null) {
+				cursorRecorrido.moveToFirst();
+
+				context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+				//cursorRecorrido.moveToNext();
+
+				//context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+				// Cargar datos en el mapa
+				context.gestionarLineas.cargarMapa();
+
+			} else {
+				Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			// Cargar datos en el mapa
-			context.gestionarLineas.cargarMapa();
+			//context.gestionarLineas.cargarMapa();
 
 		} else {
 			Toast toast = Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);

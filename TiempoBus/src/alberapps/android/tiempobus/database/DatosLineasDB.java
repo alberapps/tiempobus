@@ -447,6 +447,18 @@ public class DatosLineasDB {
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 50);
 
 						cargarRecorridos(origen);
+						
+						if (UtilidadesTRAM.ACTIVADO_TRAM) {
+
+							Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 70);
+
+							// TRAM
+							cargarRecorridosTram(origen);
+
+						}
+						
+						
+						
 
 						Notificaciones.notificacionBaseDatos(contexto, Notificaciones.NOTIFICACION_BD_INCREMENTA, mBuilder, 100);
 
@@ -757,6 +769,137 @@ public class DatosLineasDB {
 			Log.d(TAG, "DONE loading database LINEA TRAM.");
 		}
 
+		
+		/**
+		 * Carga de recorridos desde archivo
+		 * 
+		 * @param origen
+		 * @throws IOException
+		 */
+		private void cargarRecorridosTram(String origen) throws IOException {
+			Log.d(TAG, "Loading database RECORRIDO TRAM...");
+			Resources resources = mHelperContext.getResources();
+
+			InputStream inputStreamR = null;
+			BufferedReader readerR = null;
+			//InputStream inputStreamR2 = null;
+			//BufferedReader readerR2 = null;
+
+			//if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				//inputStreamR = DescargarActualizaBD.inputStreamInfolineasRecorrido1();
+				//readerR = new BufferedReader(new InputStreamReader(inputStreamR));
+
+				//inputStreamR2 = DescargarActualizaBD.inputStreamInfolineasRecorrido2();
+				//readerR2 = new BufferedReader(new InputStreamReader(inputStreamR2));
+
+			//} else {
+
+				inputStreamR = resources.openRawResource(R.raw.preinforecorridotram);
+				readerR = new BufferedReader(new InputStreamReader(inputStreamR));
+
+				//inputStreamR2 = resources.openRawResource(R.raw.precargainfolineasrecorrido2);
+				//readerR2 = new BufferedReader(new InputStreamReader(inputStreamR2));
+
+			//}
+
+			try {
+				String line;
+
+				StringBuffer componerLinea = new StringBuffer();
+				
+				// Recorridos
+				line = null;
+				while ((line = readerR.readLine()) != null) {
+
+					if(line.contains("LINEA:")){
+						
+						String lin = line.substring(line.lastIndexOf(":") + 1);
+						
+						if(componerLinea.length() > 0){
+							componerLinea.append(";;TRAM\n");
+						}
+						componerLinea.append(lin);
+						componerLinea.append(";;IDA;;");
+					}else if(line.startsWith(",[") || line.startsWith("]]")){
+						continue;
+					}else{
+						
+						String[] punto = TextUtils.split(line, ",");
+						
+						componerLinea.append(punto[2]);
+						componerLinea.append(",");
+						componerLinea.append(punto[1]);
+						componerLinea.append(",0 ");
+						
+					}
+				}
+				
+				if(componerLinea.length() > 0){
+					componerLinea.append(";;TRAM\n");
+				}
+
+				
+				//Almacenar datos ya formateados
+				
+				String[] lineas = TextUtils.split(componerLinea.toString(), "\n");
+				
+				
+				
+				for(int i = 0;i<lineas.length;i++){
+					
+					if(lineas[i].trim().equals("")){
+						continue;
+					}
+					
+					String[] strings = TextUtils.split(lineas[i], ";;");
+					
+					long id = addRecorrido(strings);
+					
+					if (id < 0) {
+						Log.e(TAG, "unable to add line: " + strings[0].trim());
+					}
+					
+				}
+				
+				
+				
+				
+				/*while ((line = readerR2.readLine()) != null) {
+
+					// Para TAM
+					line = line.concat(";;TAM");
+
+					String[] strings = TextUtils.split(line, ";;");
+					// if (strings.length < 2) continue;
+
+					long id = addRecorrido(strings);
+					if (id < 0) {
+						Log.e(TAG, "unable to add line: " + strings[0].trim());
+					}
+				}*/
+
+			} finally {
+
+				inputStreamR.close();
+				readerR.close();
+				//inputStreamR2.close();
+				//readerR2.close();
+			}
+
+			// Borrar archivos de la actualizacion
+			/*if (origen != null && origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
+
+				DescargarActualizaBD.borrarArchivosRecorridos();
+
+			}*/
+
+			Log.d(TAG, "DONE loading database RECORRIDO TRAM.");
+		}
+		
+		
+		
+		
 		/**
 		 * Add a word to the dictionary.
 		 * 
