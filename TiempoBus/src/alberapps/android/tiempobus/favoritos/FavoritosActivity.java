@@ -94,7 +94,9 @@ public class FavoritosActivity extends ActionBarActivity {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
+			if(actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
 		}
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);

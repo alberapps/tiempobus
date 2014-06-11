@@ -73,7 +73,9 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
+			if(actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
 		}
 
 		Uri uri = getIntent().getData();

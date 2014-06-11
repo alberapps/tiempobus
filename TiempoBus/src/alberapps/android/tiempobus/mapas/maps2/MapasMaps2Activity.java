@@ -169,7 +169,9 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
+			if(actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
 		}
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);

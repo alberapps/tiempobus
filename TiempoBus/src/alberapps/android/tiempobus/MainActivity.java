@@ -101,6 +101,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
@@ -568,6 +570,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// Guardar ultima parada seleccionada
 		SharedPreferences.Editor editor = preferencias.edit();
 		editor.putInt("parada_inicio", paradaActual);
+		editor.commit();		
+		
+		editor.remove("parada_tram");
 		editor.commit();
 
 		handler.removeMessages(MSG_RECARGA);
@@ -1379,6 +1384,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 				if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
 					cabdatos = "TRAM " + cabdatos;
+
+					// Estadisticas tram
+					analyticsTram(laActividad);
+
 				}
 
 				// Historial
@@ -1563,6 +1572,39 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		 * 
 		 * }
 		 */
+
+	}
+
+	/**
+	 * Estadistica uso de tram
+	 * 
+	 * @param actividad
+	 */
+	public static void analyticsTram(MainActivity actividad) {
+
+		try {
+
+			int parada = actividad.preferencias.getInt("parada_tram", 0);
+
+			if (parada != actividad.paradaActual) {
+
+				SharedPreferences.Editor editor = actividad.preferencias.edit();
+				editor.putInt("parada_tram", actividad.paradaActual);
+				editor.commit();
+
+				// Get tracker.
+				Tracker t = ((ApplicationTiempoBus) actividad.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+				// Build and send an Event.
+				t.send(new HitBuilders.EventBuilder().setCategory("EVENTOS").setAction("TRAM").setLabel("TIEMPO_TRAM").build());
+
+				Log.d("PRINCIPAL", "Enviado tram a analytics");
+				
+			}
+
+		} catch (Exception e) {
+
+		}
 
 	}
 

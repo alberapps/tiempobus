@@ -94,7 +94,7 @@ public class ProcesarDetalleNoticia {
 			Element cont2 = cont1.get(1);
 
 			// Limpiar resultado
-			String safe = Jsoup.clean(cont2.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan"));
+			String safe = Jsoup.clean(cont2.html(), "http://www.subus.es/Lineas/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
 
 			// Problema caracteres
 			String limpiar = safe.replace("", "-").replace("", "&euro;");
