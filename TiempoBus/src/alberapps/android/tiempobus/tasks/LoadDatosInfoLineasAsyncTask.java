@@ -47,17 +47,26 @@ public class LoadDatosInfoLineasAsyncTask extends AsyncTask<DatosInfoLinea, Void
 		DatosInfoLinea datosVuelta = new DatosInfoLinea();
 		try {
 
-			if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
-				datosVuelta.setResult(ProcesarMapaService.getDatosMapa(datos[0].getUrl()));
+			if (datos != null && datos.length > 0 && datos[0].getUrl() != null) {
+
+				if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
+					datosVuelta.setResult(ProcesarMapaService.getDatosMapa(datos[0].getUrl()));
+				} else {
+
+					DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
+
+					datosVuelta.setResultIda(paradas[0]);
+					datosVuelta.setResultVuelta(paradas[1]);
+				}
+
 			} else {
-
-				DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
-
-				datosVuelta.setResultIda(paradas[0]);
-				datosVuelta.setResultVuelta(paradas[1]);
+				return null;
 			}
 
 		} catch (Exception e) {
+
+			e.printStackTrace();
+
 			return null;
 		}
 

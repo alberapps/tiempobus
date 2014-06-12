@@ -164,8 +164,9 @@ public class ProcesarMapaServiceV3 {
 	 * 
 	 * @param is
 	 * @return
+	 * @throws Exception
 	 */
-	public static Datos parse(InputStream is) {
+	public static Datos parse(InputStream is) throws Exception {
 		// Instanciamos la fábrica para DOM
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
@@ -185,19 +186,42 @@ public class ProcesarMapaServiceV3 {
 			// Folder principal
 			NodeList folderPrincipalList = root.getElementsByTagName("Folder");
 
-			// Control para determinar ida y vuelta
 			Element folderIda = null;
 			Element folderVuelta = null;
 
-			String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
-			String folderName2 = ((Element) folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+			// Control cambio en la estructura de Folder en el kml
+			if (folderPrincipalList.getLength() == 2) {
 
-			if (folderName1.equals("Ida")) {
-				folderIda = (Element) folderPrincipalList.item(1);
-				folderVuelta = (Element) folderPrincipalList.item(2);
+				// Caso de 2 folder sin anidar
+
+				// Control para determinar ida y vuelta
+				String folderName1 = ((Element) folderPrincipalList.item(0)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+				// String folderName2 = ((Element)
+				// folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+
+				if (folderName1.equals("Ida")) {
+					folderIda = (Element) folderPrincipalList.item(0);
+					folderVuelta = (Element) folderPrincipalList.item(1);
+				} else {
+					folderIda = (Element) folderPrincipalList.item(1);
+					folderVuelta = (Element) folderPrincipalList.item(0);
+				}
+
 			} else {
-				folderIda = (Element) folderPrincipalList.item(2);
-				folderVuelta = (Element) folderPrincipalList.item(1);
+
+				// Caso normal. 3 folder anidados
+
+				// Control para determinar ida y vuelta
+				String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+				
+				if (folderName1.equals("Ida")) {
+					folderIda = (Element) folderPrincipalList.item(1);
+					folderVuelta = (Element) folderPrincipalList.item(2);
+				} else {
+					folderIda = (Element) folderPrincipalList.item(2);
+					folderVuelta = (Element) folderPrincipalList.item(1);
+				}
+
 			}
 
 			// Localizamos todos los elementos <Placemark>
@@ -210,7 +234,10 @@ public class ProcesarMapaServiceV3 {
 			datos.setPlaceMarksVuelta(parsePlacemarks(itemsVuelta));
 
 		} catch (Exception ex) {
-			throw new RuntimeException(ex);
+
+			Log.d("MAPA", "Error en parseado");
+
+			throw ex;
 		}
 
 		return datos;

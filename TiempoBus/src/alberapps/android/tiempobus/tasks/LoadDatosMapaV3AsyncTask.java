@@ -59,25 +59,31 @@ public class LoadDatosMapaV3AsyncTask extends AsyncTask<String, Void, DatosMapa[
 		DatosMapa[] datosMapa = { null, null };
 		try {
 
-			DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0]);
+			if (datos != null && datos.length > 0 && datos[0] != null) {
 
-			datosMapa[0] = paradas[0];
-			datosMapa[1] = paradas[1];
+				DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0]);
 
-			if (datos.length == 2) {
+				datosMapa[0] = paradas[0];
+				datosMapa[1] = paradas[1];
 
-				String[] recorridos = ProcesarMapaServiceV3.getDatosMapaRecorrido(datos[1]);
+				if (datos.length == 2) {
 
-				datosMapa[0].setRecorrido(recorridos[0]);
-				datosMapa[1].setRecorrido(recorridos[1]);
+					String[] recorridos = ProcesarMapaServiceV3.getDatosMapaRecorrido(datos[1]);
 
+					datosMapa[0].setRecorrido(recorridos[0]);
+					datosMapa[1].setRecorrido(recorridos[1]);
+
+				}
+
+			} else {
+				return datosMapa;
 			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 
-			return null;
+			return datosMapa;
 		}
 
 		return datosMapa;
