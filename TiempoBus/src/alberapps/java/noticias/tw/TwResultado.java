@@ -35,13 +35,15 @@ public class TwResultado implements Comparable<TwResultado> {
 	private String fecha;
 
 	private Date fechaDate;
-	
+
 	private String url;
 
 	private String id;
-	
+
 	private long respuestaId;
-	
+
+	private boolean retweet;
+
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
@@ -138,6 +140,14 @@ public class TwResultado implements Comparable<TwResultado> {
 
 	public void setRespuestaId(long respuestaId) {
 		this.respuestaId = respuestaId;
+	}
+
+	public boolean isRetweet() {
+		return retweet;
+	}
+
+	public void setRetweet(boolean retweet) {
+		this.retweet = retweet;
 	}
 
 }

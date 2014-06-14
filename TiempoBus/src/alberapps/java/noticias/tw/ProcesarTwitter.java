@@ -83,7 +83,7 @@ public class ProcesarTwitter {
 			// Tram
 			lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
 		}
-		
+
 		if (lista != null && !lista.isEmpty()) {
 
 			// Ordenar por fecha
@@ -117,11 +117,28 @@ public class ProcesarTwitter {
 		// Tram
 		listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 5);
 
-		// Eliminar las que sean de conversacion
+		// Eliminar las que sean de conversacion y retweet
 		for (int i = 0; i < listaInicial.size(); i++) {
 
-			if (listaInicial.get(i).getRespuestaId() == -1) {
+			if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
 				lista.add(listaInicial.get(i));
+			}
+
+		}
+
+		if (lista.size() < 2) {
+
+			lista.clear();
+
+			listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 15);
+
+			// Eliminar las que sean de conversacion y retweet
+			for (int i = 0; i < listaInicial.size(); i++) {
+
+				if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
+					lista.add(listaInicial.get(i));
+				}
+
 			}
 
 		}

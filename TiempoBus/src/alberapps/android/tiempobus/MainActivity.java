@@ -184,9 +184,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		setContentView(R.layout.pantalla_principal);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-			iniciarDrawer(savedInstanceState);
-		}
+		
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
@@ -202,6 +200,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		cambiarLocale(false);
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+			iniciarDrawer(savedInstanceState);
+		}
+		
 		setupView();
 
 		showProgressBar(true);

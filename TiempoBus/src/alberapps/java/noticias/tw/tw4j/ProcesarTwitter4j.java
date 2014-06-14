@@ -189,6 +189,8 @@ public class ProcesarTwitter4j {
 				resultado.setMensaje(timeline.get(i).getText());
 				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
+				resultado.setRetweet(timeline.get(i).isRetweet());
+
 				// Imagen de perfil
 				// resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 

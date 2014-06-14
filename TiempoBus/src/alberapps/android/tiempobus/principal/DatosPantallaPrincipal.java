@@ -514,12 +514,12 @@ public class DatosPantallaPrincipal {
 
 						}
 
-						if (!fecha_ultima.equals(noticias.get(0).getFecha())) {
+						if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
 
 							lanzarAviso = true;
 
 							SharedPreferences.Editor editor = preferencias.edit();
-							editor.putString("ultima_noticia_tram", noticias.get(0).getFecha());
+							editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
 							editor.commit();
 
 						}
@@ -527,14 +527,14 @@ public class DatosPantallaPrincipal {
 					} else {
 
 						SharedPreferences.Editor editor = preferencias.edit();
-						editor.putString("ultima_noticia_tram", noticias.get(0).getFecha());
+						editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
 						editor.commit();
 
 					}
 
 					// Si se guardo la fecha y no coincide con la ultima, lanzar
 					// aviso
-					//if (lanzarAviso) {
+					if (lanzarAviso) {
 
 						// Extendido
 
@@ -550,7 +550,7 @@ public class DatosPantallaPrincipal {
 
 						Notificaciones.notificacionAvisosTram(context.getApplicationContext(), extendido);
 
-					//}
+					}
 				} else {
 
 				}

@@ -28,7 +28,9 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRssAsyncTaskResponder;
@@ -38,6 +40,7 @@ import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.rss.NoticiaRss;
+import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
@@ -153,7 +156,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
-			if(actionBar != null){
+			if (actionBar != null) {
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
 		}
@@ -902,13 +905,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		try {
 
 			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
-			
+
 			noticiasRssAdapter = new NoticiasRssAdapter(this, R.layout.noticias_rss_item);
 
 			if (noticiasRss != null) {
-				
+
 				cargarHeaderNoticiasRss();
-				
 
 				noticiasRssAdapter.addAll(noticiasRss);
 				noticiasRssAdapter.notifyDataSetChanged();
@@ -932,8 +934,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		}
 
 	}
-	
-	
+
 	/**
 	 * Cargar cabecera listado
 	 */
@@ -952,7 +953,9 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			textoHeader.append(getString(R.string.aviso_noticias));
 			textoHeader.append("\n");
 			textoHeader.append(FragmentNoticiasRss.noticiasURL);
-			
+			textoHeader.append("\n");
+			textoHeader.append(ProcesarTwitter.tw_tram_ruta);
+
 			texto.setLinksClickable(true);
 			texto.setAutoLinkMask(Linkify.WEB_URLS);
 
@@ -962,10 +965,169 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 			noticiasRssView.addHeaderView(vheader);
 
+			verificarNuevasNoticiasTram();
+
 		}
 
 	}
-	
+
+	/**
+	 * Ultimas noticias tram
+	 */
+	public void cargarHeaderUltimasNoticiasTram(List<TwResultado> noticias) {
+
+		if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 1 && noticias == null) {
+
+			// Cargar layout para noticias tram tw
+
+			LayoutInflater li2 = LayoutInflater.from(this);
+
+			View vheader = li2.inflate(R.layout.noticias_tram_ultimas_item, null);
+
+			TextView titulo = (TextView) vheader.findViewById(R.id.titulo);
+
+			titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
+
+			TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+
+			StringBuffer textoHeader = new StringBuffer();
+
+			textoHeader.append(getString(R.string.aviso_recarga));
+
+			descripcion.setLinksClickable(true);
+			descripcion.setAutoLinkMask(Linkify.WEB_URLS);
+
+			descripcion.setText(textoHeader.toString());
+
+			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+
+			noticiasRssView.addHeaderView(vheader);
+
+		} else if (noticias != null && !noticias.isEmpty()) {
+
+			// Carga el contenido de la noticia de tram tw
+
+			View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
+
+			TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+
+			StringBuffer textoHeader = new StringBuffer();
+
+			textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
+
+			if (noticias.size() > 1) {
+				textoHeader.append("\n");
+				textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
+			}
+
+			descripcion.setText(textoHeader.toString());
+
+		}
+
+	}
+
+	/**
+	 * Verifica si hay nuevas noticias y muestra un aviso
+	 * 
+	 */
+	public void verificarNuevasNoticiasTram() {
+
+		// Cargar noticias tw
+		cargarHeaderUltimasNoticiasTram(null);
+
+		/**
+		 * Sera llamado cuando la tarea de cargar las noticias
+		 */
+		LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
+			public void AvisosTramLoaded(List<TwResultado> noticias) {
+
+				if (noticias != null && !noticias.isEmpty()) {
+
+					// Cargar noticias tw
+					cargarHeaderUltimasNoticiasTram(noticias);
+
+					int nuevas = 0;
+
+					String fecha_ultima = "";
+					boolean lanzarAviso = false;
+
+					// Ver si se guardo la fecha de la ultima noticia
+					if (preferencias.contains("ultima_noticia_tram")) {
+						fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
+
+						if (fecha_ultima != null) {
+
+							// Date fechaUltima =
+							// Utilidades.getFechaDate(fecha_ultima);
+
+							// Contar nuevas noticias
+
+							/*
+							 * for (int i = 0; i < noticias.size(); i++) {
+							 * 
+							 * if (noticias.get(i).getFechaDate() != null) { if
+							 * (
+							 * noticias.get(i).getFechaDate().after(fechaUltima)
+							 * ) { nuevas++; } }
+							 * 
+							 * }
+							 */
+
+						}
+
+						if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
+
+							lanzarAviso = true;
+
+							SharedPreferences.Editor editor = preferencias.edit();
+							editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
+							editor.commit();
+
+						}
+
+					} else {
+
+						SharedPreferences.Editor editor = preferencias.edit();
+						editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
+						editor.commit();
+
+					}
+
+					// Si se guardo la fecha y no coincide con la ultima, lanzar
+					// aviso
+					if (lanzarAviso) {
+
+						// Extendido
+
+						String[] extendido = new String[2];
+
+						extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje();
+
+						if (noticias.size() > 1) {
+							extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje();
+						} else {
+							extendido[1] = "";
+						}
+
+						Notificaciones.notificacionAvisosTram(getApplicationContext(), extendido);
+
+					}
+				} else {
+
+				}
+			}
+		};
+
+		// Control de disponibilidad de conexion
+		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		if (networkInfo != null && networkInfo.isConnected()) {
+			new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
+		} else {
+			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+		}
+
+	}
 
 	/**
 	 * Listener encargado de gestionar las pulsaciones sobre los items
