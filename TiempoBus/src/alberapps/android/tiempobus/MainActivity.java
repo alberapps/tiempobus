@@ -102,7 +102,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
@@ -246,8 +245,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		// PrecargasV3.precargarDatosLineas(this);
-		// PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
