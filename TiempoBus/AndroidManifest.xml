@@ -2,8 +2,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="alberapps.android.tiempobus"
-    android:versionCode="35"
-    android:versionName="2.8"
+    android:versionCode="43"
+    android:versionName="3.0.4"
     android:installLocation="auto">
 
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
@@ -21,10 +21,11 @@
 	<!-- MAPS 2 -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     
+    <!-- 
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="false"/>
-    
+    -->
     
     <!--  --> 
 	
@@ -32,21 +33,28 @@
     <application android:label="@string/app_name"
         android:icon="@drawable/ic_tiempobus_3"
         android:theme="@style/AppTheme"
-        android:allowBackup="false">
-        <activity android:name=".MainActivity" android:label="@string/app_name" android:launchMode="singleTop" android:configChanges="keyboardHidden|locale">
+        android:allowBackup="false"
+        android:name=".ApplicationTiempoBus">
+        
+        
+        
+        <activity android:name=".MainActivity" android:label="@string/app_name" android:launchMode="singleTop" android:configChanges="keyboardHidden|locale" android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-
+		
+        
+        
 		
 		<activity android:name=".favoritos.FavoritosActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
 		
 		<activity android:name=".favoritos.FavoritoNuevoActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
 		<activity android:name=".favoritos.FavoritoModificarActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme"  android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
 		
+		<activity android:name=".favoritos.drive.FavoritoDriveActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@android:style/Theme.Dialog"/>
 		
 		
 		<activity android:name="PreferencesFromXml" android:label="@string/preferences_from_xml" android:theme="@style/Theme.Mapa">
@@ -102,7 +110,7 @@
 
         <!-- Provides search suggestions for words and their definitions. -->
         <provider android:name="alberapps.android.tiempobus.database.BuscadorLineasProvider"
-                  android:authorities="alberapps.android.tiempobus.buscador.BuscadorLineasProvider" />
+                  android:authorities="alberapps.android.tiempobus.buscador.BuscadorLineasProvider" android:exported="false"/>
 
         <!-- Points to searchable activity so the whole app can invoke search. -->
         <meta-data android:name="android.app.default_searchable"
@@ -126,7 +134,7 @@
              
          </activity>
         
-        <activity android:name=".infolineas.InfoLineasTabsPager" android:label="@string/buscador_online" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|locale"/>
+        <activity android:name=".infolineas.InfoLineasTabsPager" android:label="@string/buscador_online" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|locale" android:windowSoftInputMode="stateHidden"/>
          
         <activity android:name=".infolineas.InfoLineasDatosParadaActivity" android:label="@string/datos_parada" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
         
@@ -150,9 +158,16 @@
         
         <activity android:name=".mapas.maps2.MapasMaps2Activity" android:label="@string/menu_mapa" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
         
+        <activity android:name=".mapas.maps2.StreetViewActivity" android:label="@string/menu_mapa" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
         
         
         <!-- FIN MAPS 2 -->
+        
+        
+        <meta-data
+     		android:name="com.google.android.gms.analytics.globalConfigResource"
+     		android:resource="@xml/analytics_global_config" />
+        
         
     </application>
     
