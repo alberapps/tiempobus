@@ -162,7 +162,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
 					for (int i = 0; i < listaOriginal.size(); i++) {
 
-						if (listaOriginal.get(i).getLinea().toLowerCase(UtilidadesUI.getLocale()).contains(constraint.toString().toLowerCase(UtilidadesUI.getLocale()))) {
+						if (listaOriginal.get(i).getLinea().toLowerCase(UtilidadesUI.getLocaleInt()).contains(constraint.toString().toLowerCase(UtilidadesUI.getLocaleInt()))) {
 							filtrada.add(listaOriginal.get(i));
 						}
 

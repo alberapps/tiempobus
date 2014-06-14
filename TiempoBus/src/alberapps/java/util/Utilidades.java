@@ -32,6 +32,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.util.Log;
 
 /**
@@ -106,7 +107,7 @@ public class Utilidades {
 	 */
 	public static String getFechaString(Date fecha) {
 
-		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.US);
+		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", UtilidadesUI.getLocaleUsuario());
 
 		String fechaString = null;
 

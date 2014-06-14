@@ -38,6 +38,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.tw.Constantes;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.util.Conectividad;
@@ -61,7 +62,7 @@ public class ProcesarTwitter4j {
 	public void setUp() {
 
 		builder = new ConfigurationBuilder();
-		//builder.setUseSSL(true);
+		// builder.setUseSSL(true);
 		builder.setApplicationOnlyAuthEnabled(true);
 
 		try {
@@ -189,12 +190,12 @@ public class ProcesarTwitter4j {
 				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
 				// Imagen de perfil
-				//resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
+				// resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
 				resultado.setUrl(url);
-				
+
 				resultado.setRespuestaId(timeline.get(i).getInReplyToUserId());
-				
+
 				Log.d("twitter", "resp: " + resultado.getRespuestaId());
 
 				listaResultados.add(resultado);
@@ -260,7 +261,7 @@ public class ProcesarTwitter4j {
 
 			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
 
-			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, Locale.US);
+			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, UtilidadesUI.getLocaleUsuario());
 
 			return sfNueva.format(fecha);
 

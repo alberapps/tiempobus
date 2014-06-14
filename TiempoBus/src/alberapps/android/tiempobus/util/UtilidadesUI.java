@@ -208,7 +208,7 @@ public class UtilidadesUI {
 	 * 
 	 * @return
 	 */
-	public static Locale getLocale() {
+	public static Locale getLocaleInt() {
 
 		Locale loc = null;
 
@@ -218,6 +218,41 @@ public class UtilidadesUI {
 
 		}
 
+		if (loc == null) {
+			loc = Locale.US;
+		}
+
+		return loc;
+
+	}
+
+	/**
+	 * Locale adecuado intentando primero el por defecto
+	 * 
+	 * @return
+	 */
+	public static Locale getLocaleUsuario() {
+
+		Locale loc = null;
+
+		// Por defecto
+		try {
+			loc = Locale.getDefault();
+
+		} catch (Exception e) {
+
+		}
+
+		// Intanta el ES
+		if (loc == null) {
+			try {
+				loc = new Locale("spa", "ES");
+			} catch (Exception ex) {
+
+			}
+		}
+
+		// Como ultimo intento
 		if (loc == null) {
 			loc = Locale.US;
 		}

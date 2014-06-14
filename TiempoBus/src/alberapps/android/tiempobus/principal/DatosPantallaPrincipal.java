@@ -534,7 +534,7 @@ public class DatosPantallaPrincipal {
 
 					// Si se guardo la fecha y no coincide con la ultima, lanzar
 					// aviso
-					if (lanzarAviso) {
+					//if (lanzarAviso) {
 
 						// Extendido
 
@@ -550,7 +550,7 @@ public class DatosPantallaPrincipal {
 
 						Notificaciones.notificacionAvisosTram(context.getApplicationContext(), extendido);
 
-					}
+					//}
 				} else {
 
 				}

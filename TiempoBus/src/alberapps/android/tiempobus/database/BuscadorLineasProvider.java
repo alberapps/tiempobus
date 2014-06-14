@@ -162,7 +162,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 	}
 
 	private Cursor getSuggestions(String query) {
-		query = query.toLowerCase(UtilidadesUI.getLocale());
+		query = query.toLowerCase(UtilidadesUI.getLocaleInt());
 		String[] columns = new String[] { BaseColumns._ID, DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION,
 		/*
 		 * SearchManager.SUGGEST_COLUMN_SHORTCUT_ID, (only if you want to
@@ -174,7 +174,7 @@ public class BuscadorLineasProvider extends ContentProvider {
 	}
 
 	private Cursor search(String query) {
-		query = query.toLowerCase(UtilidadesUI.getLocale());
+		query = query.toLowerCase(UtilidadesUI.getLocaleInt());
 		String[] columns = new String[] { BaseColumns._ID, DatosLineasDB.KEY_WORD, DatosLineasDB.KEY_DEFINITION };
 
 		return mDictionary.getWordMatches(query, columns);
