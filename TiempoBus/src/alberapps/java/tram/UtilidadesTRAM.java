@@ -1,7 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- * 
+ *  Copyright (C) 2014 Alberto Montiel
  *  
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +28,7 @@ import android.util.Log;
  */
 public class UtilidadesTRAM {
 
-	public static boolean ACTIVADO_TRAM = false;
+	public static boolean ACTIVADO_TRAM = true;
 
 	public static boolean ACTIVADO_L9 = false;
 

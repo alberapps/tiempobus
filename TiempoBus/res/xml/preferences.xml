@@ -54,12 +54,12 @@
             android:key="aviso_noticias"
             android:summary="@string/conf_noticias_a"
             android:title="@string/preferencias_noticias_auto" />
-        <!--
+        
         <CheckBoxPreference
                 android:key="aviso_noticias_tram"
                 android:title="@string/preferencias_noticias_auto_tram"
                 android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
-        -->
+        
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="noticias_vibrar"
