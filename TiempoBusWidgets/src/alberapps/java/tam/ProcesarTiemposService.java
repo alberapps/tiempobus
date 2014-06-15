@@ -19,9 +19,6 @@
  */
 package alberapps.java.tam;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import alberapps.java.tam.webservice.GetPasoParadaResult;
 import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
 
@@ -30,58 +27,6 @@ import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
  * 
  */
 public class ProcesarTiemposService {
-
-	/**
-	 * Procesa tiempos
-	 * 
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
-
-	public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
-
-		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
-
-		GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
-
-		GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada));
-
-		for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
-
-			String infoSalidas = "";
-
-			if (serviceResult.getPasoParadaList().get(i).getE1().getMinutos().substring(0, 1).equals("0")) {
-
-				infoSalidas += "enlaparada";
-
-			} else {
-
-				infoSalidas += serviceResult.getPasoParadaList().get(i).getE1().getMinutos();
-
-			}
-
-			infoSalidas += ";";
-
-			if (serviceResult.getPasoParadaList().get(i).getE2().getMinutos().substring(0, 2).equals("-1")) {
-
-				infoSalidas += "sinestimacion";
-
-			} else {
-
-				infoSalidas += serviceResult.getPasoParadaList().get(i).getE2().getMinutos();
-
-			}
-
-			BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas, Integer.toString(parada));
-
-			buses.add(bus);
-
-		}
-
-		Collections.sort(buses);
-		return buses;
-	}
 
 	/**
 	 * Recupera tiempos para una parada y linea indicadas

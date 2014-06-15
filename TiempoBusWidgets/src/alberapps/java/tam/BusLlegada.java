@@ -19,6 +19,11 @@
  */
 package alberapps.java.tam;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,8 +46,19 @@ public class BusLlegada implements Comparable<BusLlegada> {
 	 * Próximo bus en...
 	 */
 	private String proximo;
-	
-	
+
+	private BusLlegada segundoTram;
+
+	private BusLlegada segundoBus;
+
+	private boolean sinDatos = false;
+
+	private boolean consultaInicial = false;
+
+	public BusLlegada() {
+
+	}
+
 	private String parada;
 
 	/**
@@ -174,7 +190,33 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		return minutos;
 	}
-	
+
+	public void cambiarProximo(Integer proximoMinutosNuevo) {
+
+		String[] procesa = this.proximo.split(";");
+
+		StringBuffer proximoNuevo = new StringBuffer();
+
+		if (proximoMinutosNuevo.equals(0)) {
+			proximoNuevo.append("enlaparada");
+		} else if (proximoMinutosNuevo.equals(9999)) {
+			proximoNuevo.append("sinestimacion");
+		} else {
+			proximoNuevo.append(getFormatoTiempoEspera(Integer.toString(proximoMinutosNuevo)));
+			// proximoNuevo.append(" ");
+			// int pos = procesa[0].indexOf("m");
+
+			// proximoNuevo.append(procesa[0].substring(pos));
+
+		}
+
+		proximoNuevo.append(";");
+		proximoNuevo.append(procesa[1]);
+
+		proximo = proximoNuevo.toString();
+
+	}
+
 	public Integer getSiguienteMinutos() {
 		Integer minutos = 1000;
 
@@ -193,6 +235,121 @@ public class BusLlegada implements Comparable<BusLlegada> {
 		}
 
 		return minutos;
+	}
+
+	public void cambiarSiguiente(Integer siguienteMinutosNuevo) {
+
+		String[] procesa = this.proximo.split(";");
+
+		StringBuffer siguienteNuevo = new StringBuffer();
+
+		siguienteNuevo.append(procesa[0]);
+		siguienteNuevo.append(";");
+
+		if (siguienteMinutosNuevo.equals(0)) {
+			siguienteNuevo.append("enlaparada");
+		} else if (siguienteMinutosNuevo.equals(9999)) {
+			siguienteNuevo.append("sinestimacion");
+		} else {
+			siguienteNuevo.append(getFormatoTiempoEspera(Integer.toString(siguienteMinutosNuevo)));
+
+			// siguienteNuevo.append(" ");
+
+			// int pos = procesa[1].indexOf("m");
+
+			// siguienteNuevo.append(procesa[1].substring(pos));
+
+		}
+
+		proximo = siguienteNuevo.toString();
+
+	}
+
+	/**
+	 * Tiempos con formato tram
+	 * 
+	 * @return tiempo
+	 */
+	public Integer getProximoMinutosTRAM() {
+		Integer minutos = 1000;
+
+		String[] procesa = this.proximo.split(";");
+
+		if (procesa[1].trim().charAt(0) == '<') {
+			minutos = 0;
+		} else if (procesa[1].trim().charAt(0) == '>') {
+			minutos = 9999;
+		} else if (procesa[1].trim().charAt(0) == '-') {
+			return 9999;
+		} else if (procesa[1].trim().charAt(0) == 'E') {
+			return 9999;
+
+		} else {
+			Pattern p = Pattern.compile("([0-9]+) min.");
+			Matcher m = p.matcher(procesa[1]);
+			if (m.find()) {
+				minutos = Integer.valueOf(m.group(1));
+			} else {
+				minutos = 9999;
+			}
+		}
+
+		return minutos;
+	}
+
+	public BusLlegada getSegundoTram() {
+		return segundoTram;
+	}
+
+	public void setSegundoTram(BusLlegada segundoTram) {
+		this.segundoTram = segundoTram;
+	}
+
+	/**
+	 * Forma string con los minutos faltantes y la hora aproximada de llegada
+	 * 
+	 * @param minutosLlegada
+	 * @return
+	 */
+	private String getFormatoTiempoEspera(String minutosLlegada) {
+
+		String formatoMinHora = "";
+
+		GregorianCalendar cl = new GregorianCalendar();
+		cl.setTimeInMillis((new Date()).getTime());
+		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
+
+		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.US);
+		String horaString = sf.format(cl.getTime());
+
+		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
+
+		return formatoMinHora;
+
+	}
+
+	public boolean isSinDatos() {
+		return sinDatos;
+	}
+
+	public void setSinDatos(boolean sinDatos) {
+		this.sinDatos = sinDatos;
+	}
+
+	public BusLlegada getSegundoBus() {
+		return segundoBus;
+	}
+
+	public void setSegundoBus(BusLlegada segundoBus) {
+		this.segundoBus = segundoBus;
+	}
+
+	public boolean isConsultaInicial() {
+		return consultaInicial;
+	}
+
+	public void setConsultaInicial(boolean consultaInicial) {
+		this.consultaInicial = consultaInicial;
 	}
 
 	public String getParada() {
