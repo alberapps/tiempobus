@@ -203,10 +203,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			iniciarDrawer(savedInstanceState);
 		}
 		
-		setupView();
-
-		showProgressBar(true);
-
 		// Verificar si hay parada por defecto
 		if (preferencias.contains("parada_inicio")) {
 			paradaActual = preferencias.getInt("parada_inicio", paradaActual);
@@ -220,6 +216,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			editor.commit();
 		}
 
+		setupView();
+
+		showProgressBar(true);
+		
+		
 		mTts = new TextToSpeech(this, this // TextToSpeech.OnInitListener
 		);
 
@@ -893,7 +894,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		itemsL.add(getString(R.string.menu_ver_en_mapa));
 		itemsL.add(getString(R.string.menu_leer));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && !datosPantallaPrincipal.esTram(paradaActual)) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
 
 			itemsL.add(getString(R.string.menu_widget));
 

@@ -194,7 +194,11 @@ public class DatosPantallaPrincipal {
 					listaParadas.add(par);
 				}
 
-				return listaParadas.get(0).getDireccion();
+				if (listaParadas.get(0).getDireccion() != null) {
+					return listaParadas.get(0).getDireccion();
+				} else {
+					return "";
+				}
 
 			} else {
 				return "";
@@ -838,8 +842,6 @@ public class DatosPantallaPrincipal {
 		}
 
 	}
-
-	
 
 	// Novedades
 	private int REV_ACTUAL = 35;

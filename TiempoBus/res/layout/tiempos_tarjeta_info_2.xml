@@ -121,17 +121,26 @@
                     android:textSize="12sp"
                     android:textStyle="italic|bold" />
 
-                <TextView
-                    android:id="@+id/datos_wiki"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:maxLines="3"
-                    android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/color_android"
-                    android:textColorLink="@android:color/darker_gray"
-                    android:textStyle="italic" />
+                <HorizontalScrollView android:layout_width="fill_parent" android:layout_height="fill_parent"
+                    android:fadeScrollbars="false">
+                
+	                <TextView
+	                    android:id="@+id/datos_wiki"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:gravity="top"
+	                    android:lines="3"
+	                    android:scrollHorizontally="true"
+	                    android:scrollbars="horizontal"
+	                    android:text="@string/guion"
+	                    android:textAppearance="?android:attr/textAppearanceSmall"
+	                    android:textColor="@color/color_android"
+	                    android:textColorLink="@android:color/darker_gray"
+	                    android:textStyle="italic" 
+	                    android:fadeScrollbars="false"/>
+                
+                </HorizontalScrollView>
+                
 
             </LinearLayout>
 

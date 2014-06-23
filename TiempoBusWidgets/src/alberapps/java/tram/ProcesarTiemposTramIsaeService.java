@@ -161,7 +161,10 @@ public class ProcesarTiemposTramIsaeService {
 
 		try {
 
-			busesList = getParadaConLineaTRAM(linea, parada, GetPasoParadaXmlWebservice.URL1);
+			//busesList = getParadaConLineaTRAM(linea, parada, GetPasoParadaXmlWebservice.URL1);
+			
+			//Cambio de metodo por discrepancias en cabeceras
+			busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1);
 
 			if (destino == null) {
 				buses = busesList.get(0);
@@ -169,15 +172,15 @@ public class ProcesarTiemposTramIsaeService {
 
 			for (int i = 0; i < busesList.size(); i++) {
 
-				if (busesList.get(i).getDestino().equals(destino)) {
+				if (busesList.get(i).getLinea().equals(linea) && busesList.get(i).getDestino().equals(destino)) {
 
-					if (busesList.get(i).getProximoMinutos() > -1 && busesList.get(i).getProximoMinutos() < 60) {
+					//if (busesList.get(i).getProximoMinutos() > -1 && busesList.get(i).getProximoMinutos() < 60) {
 
 						buses = busesList.get(i);
 
 						Log.d("TIEMPOS TRAM", "tiempo valido: " + buses.getProximo());
 
-					}
+					//}
 
 				}
 

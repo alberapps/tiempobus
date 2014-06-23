@@ -57,20 +57,32 @@ public class GetPasoParadaXmlWebservice {
 		InputStream is = null;
 
 		GetPasoParadaResult resultados = new GetPasoParadaResult();
-		
-		String url = null;
 
+		String url = null;
+		String urlAux = null;
+
+		// En caso de error o timeout intentar con la segunda url
 		if (consulta == 1) {
 			url = DatosTRAM.URL_1_DINAMICA;
+			urlAux = DatosTRAM.URL_2_DINAMICA;
 		} else {
 			url = DatosTRAM.URL_2_DINAMICA;
+			urlAux = DatosTRAM.URL_1_DINAMICA;
 		}
-		
+
 		try {
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(url, datosPost(linea, parada)));
+			String datos = Conectividad.conexionPostUtf8(url, datosPost(linea, parada));
 
-			if (is != null) {
+			if (datos == null) {
+				datos = Conectividad.conexionPostUtf8(urlAux, datosPost(linea, parada));
+			}
+
+			if (datos != null) {
+				is = Utilidades.stringToStream(datos);
+			}
+
+			if (datos != null && is != null) {
 
 				resultados = parse(is);
 
@@ -171,12 +183,13 @@ public class GetPasoParadaXmlWebservice {
 
 			}
 
-			//NodeList statusList = root.getElementsByTagName("status");
+			// NodeList statusList = root.getElementsByTagName("status");
 
 			// Status
-			//String status = statusList.item(0).getChildNodes().item(0).getNodeValue();
+			// String status =
+			// statusList.item(0).getChildNodes().item(0).getNodeValue();
 
-			//resultados.setStatus(status);
+			// resultados.setStatus(status);
 
 			resultados.setPasoParadaList(pasoParadaList);
 

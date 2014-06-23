@@ -174,8 +174,16 @@ public class GestionarLineas {
 		// Recorrido ida
 		if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
 
+			String colorRecorrido = "#157087";
+
+			// if
+			// (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum))
+			// {
+			// colorRecorrido = "#ed7408";
+			// }
+
 			// Recorrido
-			drawPath(context.datosMapaCargadosIda, Color.parseColor("#157087"));
+			drawPath(context.datosMapaCargadosIda, Color.parseColor(colorRecorrido));
 
 		}
 
@@ -231,10 +239,9 @@ public class GestionarLineas {
 
 				listaPuntos.add(point);
 
-				
 				if (context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim())) {
 
-					posicionSelecionada = context.markersIda.get(context.markersIda.size()-1);
+					posicionSelecionada = context.markersIda.get(context.markersIda.size() - 1);
 
 				}
 
@@ -342,7 +349,7 @@ public class GestionarLineas {
 				// Si hay seleccion pero no estaba en la ida
 				if (posicionSelecionada == null && context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim())) {
 
-					posicionSelecionada = context.markersVuelta.get(context.markersVuelta.size()-1);
+					posicionSelecionada = context.markersVuelta.get(context.markersVuelta.size() - 1);
 
 				}
 
@@ -459,10 +466,9 @@ public class GestionarLineas {
 					context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
 
 				}
-				
+
 				// Control parada seleccionada al entrar
 				context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
-				
 
 				context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
@@ -482,8 +488,6 @@ public class GestionarLineas {
 
 			}
 
-			
-
 		} else if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
 			String lineaPos = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA");
@@ -495,7 +499,7 @@ public class GestionarLineas {
 
 			// Control parada seleccionada al entrar
 			context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
-			
+
 			context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
 			if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
@@ -684,7 +688,7 @@ public class GestionarLineas {
 	public void cargarMarkers(List<MarkerOptions> markers, MarkerOptions posicionSeleccionada) {
 
 		Log.d("mapas", "selecciondada: " + posicionSeleccionada);
-		
+
 		if (markers != null) {
 			for (int i = 0; i < markers.size(); i++) {
 

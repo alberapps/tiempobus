@@ -22,8 +22,8 @@ public class Comunes {
 
 	public static final int TIMEOUT_WEBSERVICE = 30 * 1000;
 
-	public static final int TIMEOUT_HTTP_READ = 30 * 1000;
+	public static final int TIMEOUT_HTTP_READ = 15 * 1000;
 
-	public static final int TIMEOUT_HTTP_CONNECT = 15 * 1000;
+	public static final int TIMEOUT_HTTP_CONNECT = 10 * 1000;
 
 }

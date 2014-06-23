@@ -20,11 +20,11 @@
     
     <string name="app_name">TiempoBus Widgets</string>
     
-    <string name="app_name_title">TiempoBus</string>
+    <string name="app_name_title">TiempoBus Tranvía-TRAM</string>
     
     <string name="configura">Configurar</string>
     
-    <string name="alta_1">El bus de la parada actual ha sido añadido a TiempoBus Widgets.</string>
+    <string name="alta_1">El bus/tram de la parada actual ha sido añadido a TiempoBus Widgets.</string>
     
     <string name="alta_2">Seleccione "Actualizar" en el widget para visualizar los nuevos datos.</string>
     
@@ -32,9 +32,9 @@
     <string name="tiempo_m_2">Sin Estimación</string>
     <string name="tiempo_m_3">y</string>
     
-    <string name="eliminar_ok">Se ha eliminado el bus del widget</string>
+    <string name="eliminar_ok">Se ha eliminado el bus/tram del widget</string>
     
-    <string name="eliminar_pregunta">¿Quieres eliminar el bus del widget?</string>
+    <string name="eliminar_pregunta">¿Quieres eliminar el bus/tram del widget?</string>
     
     <string name="texto_tiempo">Actualizado: </string>
     
@@ -58,7 +58,7 @@
     
     <!-- DashClock -->
     <string name="extension_title">TiempoBus</string>
-    <string name="extension_description">Tiempos de paso de autobuses en Alicante(Spain). Los tiempos se añaden desde la pantalla principal de la aplicación TiempoBus.</string>
+    <string name="extension_description">Tiempos de paso de autobuses y tranvías en Alicante(Spain). Los tiempos se añaden desde la pantalla principal de la aplicación TiempoBus.</string>
     <string name="pref_name_title">Your name</string>
     <string name="pref_name_default">John Smith</string>
     <string name="title_settings">TiempoBus Preferencias</string>

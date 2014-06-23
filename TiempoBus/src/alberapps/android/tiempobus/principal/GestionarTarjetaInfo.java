@@ -263,7 +263,9 @@ public class GestionarTarjetaInfo {
 						// Preparar titulos
 						for (int i = 0; i < wiki.getListaDatos().size(); i++) {
 
-							if (sb.length() > 0) {
+							if(i == (wiki.getListaDatos().size() / 2)){
+								sb.append("<br/>");
+							}else if (sb.length() > 0) {
 								sb.append(", ");
 							}
 
@@ -275,6 +277,8 @@ public class GestionarTarjetaInfo {
 
 							sb.append(wiki.getListaDatos().get(i).getTitle());
 							sb.append("</a>");
+							
+							
 
 						}
 
