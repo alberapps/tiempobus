@@ -130,7 +130,7 @@ public class HistorialActivity extends ActionBarActivity {
 		String[] camposDb = new String[] { HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION };
 		int[] camposView = new int[] { R.id.poste, R.id.titulo, R.id.descripcion };
 
-		adapter = new SimpleCursorAdapter(this, R.layout.favoritos_item, cursor, camposDb, camposView);
+		adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
 
 		setListAdapter(adapter);
 

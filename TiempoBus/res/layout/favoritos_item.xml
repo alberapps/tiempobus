@@ -80,6 +80,69 @@
                 android:textStyle="italic" 
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" >
+
+                <ImageView
+                    android:id="@+id/compartir_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Compartir"
+                    android:src="@drawable/social_share" />
+
+                <ImageView
+                    android:id="@+id/favorito_editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Modificar"
+                    android:src="@drawable/content_edit" />
+
+                <ImageView
+                    android:id="@+id/favorito_borrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Borrar"
+                    android:src="@drawable/content_discard" />
+
+                <TextView
+                    android:id="@+id/tiempos_alerta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tiempos_opciones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:gravity="right"
+                        android:text=">>"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

@@ -440,4 +440,8 @@
     <string name="noticia_zoom_aumenta">Zoom(+)</string>
     <string name="noticia_zoom_reducir">Zoom(-)</string>
     
+    <string name="error_no_definido">Error!</string>
+    
+    <string name="mensaje_borrar_pregunta">¿Borrar el dato?</string>
+    
 </resources>
