@@ -25,7 +25,6 @@ import java.util.List;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.webservice.GetPasoParadaResult;
-import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import alberapps.java.tram.webservice.GetPasoParadaXmlWebservice;
 import android.util.Log;
 
@@ -35,9 +34,8 @@ import android.util.Log;
  */
 public class ProcesarTiemposTramIsaeService {
 
-	
 	private static GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
-	
+
 	/**
 	 * Procesa tiempos
 	 * 
@@ -55,32 +53,34 @@ public class ProcesarTiemposTramIsaeService {
 		// ProcesarTiemposTramService.enviarDebug("Inicia proceso para parada= "
 		// + parada);
 
-		//for (int i = 0; i < UtilidadesTRAM.LINEAS_A_CONSULTAR.length; i++) {
+		// for (int i = 0; i < UtilidadesTRAM.LINEAS_A_CONSULTAR.length; i++) {
 
-			try {
+		try {
 
-				//busesList = getParadaConLineaTRAM(UtilidadesTRAM.LINEAS_A_CONSULTAR[i], Integer.toString(parada), consulta);
-				
-				//Nuevo modo de consulta. * recupera todas las lineas
-				busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta);
+			// busesList =
+			// getParadaConLineaTRAM(UtilidadesTRAM.LINEAS_A_CONSULTAR[i],
+			// Integer.toString(parada), consulta);
 
-			} catch (Exception e) {
+			// Nuevo modo de consulta. * recupera todas las lineas
+			busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta);
 
-				Log.d("TIEMPOS TRAM", "TRAM: " + e.getMessage());
+		} catch (Exception e) {
 
-				// ProcesarTiemposTramService.enviarDebug("Error procesado= " +
-				// e.getMessage() + " - " + e.getClass());
+			Log.d("TIEMPOS TRAM", "TRAM: " + e.getMessage());
 
-				busesList = null;
+			// ProcesarTiemposTramService.enviarDebug("Error procesado= " +
+			// e.getMessage() + " - " + e.getClass());
 
-				throw e;
-			}
+			busesList = null;
 
-			if (busesList != null) {
-				buses.addAll(busesList);
-			}
+			throw e;
+		}
 
-		//}
+		if (busesList != null) {
+			buses.addAll(busesList);
+		}
+
+		// }
 
 		// ProcesarTiemposTramService.enviarDebug("Proceso finalizado para: " +
 		// parada + " resultados= " + buses.size());
@@ -120,6 +120,11 @@ public class ProcesarTiemposTramIsaeService {
 
 	}
 
+	/**
+	 * Ordenacion de los tiempos en caso de repetirse
+	 * 
+	 * @param bus
+	 */
 	private static void ordenarTiempos(BusLlegada bus) {
 
 		Log.d("TRAM", "REORDENAR");
@@ -141,6 +146,16 @@ public class ProcesarTiemposTramIsaeService {
 		Log.d("TRAM", "REORDENAR: " + bus.getProximo());
 		Log.d("TRAM", "REORDENAR2: " + bus.getSegundoTram().getProximo());
 
+		// Si el tercero es mayor que el maximo
+		if (bus.getSegundoTram().getSiguienteMinutos() > 60) {
+			bus.getSegundoTram().cambiarSiguiente(-1);
+		}
+
+		// Eliminar si excede tiempo maximo
+		if (bus.getSegundoTram().getProximoMinutos() > 60 || bus.getSegundoTram().getProximoMinutos() < 0) {
+			bus.setSegundoTram(null);
+		}
+
 	}
 
 	/**
@@ -153,8 +168,6 @@ public class ProcesarTiemposTramIsaeService {
 	public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta) throws Exception {
 
 		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
-
-		
 
 		GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta);
 
@@ -191,11 +204,11 @@ public class ProcesarTiemposTramIsaeService {
 			BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
 
 			// >60min
-			//if (bus.getProximoMinutos() > 60) {
+			if (bus.getProximoMinutos() > 60) {
 				// Quitar
-			//} else {
+			} else {
 				buses.add(bus);
-			//}
+			}
 
 			// Filtrar repetidos
 			combinarRegistros(buses);
@@ -224,11 +237,12 @@ public class ProcesarTiemposTramIsaeService {
 
 		try {
 
-			//busesList = getParadaConLineaTRAM(linea, parada, GetPasoParadaWebservice.URL1);
-			
-			//Cambio de metodo por discrepancias en cabeceras
+			// busesList = getParadaConLineaTRAM(linea, parada,
+			// GetPasoParadaWebservice.URL1);
+
+			// Cambio de metodo por discrepancias en cabeceras
 			busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1);
-			
+
 			for (int i = 0; i < busesList.size(); i++) {
 
 				if (busesList.get(i).getLinea().equals(linea) && busesList.get(i).getDestino().equals(destino)) {

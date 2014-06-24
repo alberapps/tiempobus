@@ -183,8 +183,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		setContentView(R.layout.pantalla_principal);
 
-		
-
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -202,7 +200,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			iniciarDrawer(savedInstanceState);
 		}
-		
+
 		// Verificar si hay parada por defecto
 		if (preferencias.contains("parada_inicio")) {
 			paradaActual = preferencias.getInt("parada_inicio", paradaActual);
@@ -219,8 +217,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		setupView();
 
 		showProgressBar(true);
-		
-		
+
 		mTts = new TextToSpeech(this, this // TextToSpeech.OnInitListener
 		);
 
@@ -246,8 +243,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		//PrecargasV3.precargarDatosLineas(this);
-		//PrecargasV3.precargarDatosLineasRecorrido(this);
+		// PrecargasV3.precargarDatosLineas(this);
+		// PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 
@@ -341,7 +338,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			if (datosPantallaPrincipal.servicesConnected()) {
 
-				detenerTareaTiempos();
+				detenerTodasTareas();
 				startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			}
@@ -350,23 +347,23 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case 1:
 
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
 			break;
 
 		case 2:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
 		case 3:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			nuevoFavorito();
 			break;
 
 		case 4:
 
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 			break;
 
@@ -377,7 +374,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			break;
 
 		case 6:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
@@ -544,13 +541,24 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			mTts.shutdown();
 		}
 
-		detenerTareaTiempos();
+		detenerTodasTareas();
 
 		super.onDestroy();
 	}
 
 	/**
 	 * Detener tareas asincronas
+	 */
+	public void detenerTodasTareas() {
+
+		detenerTareaTiempos();
+
+		gestionarTarjetaInfo.detenerTareas();
+
+	}
+
+	/**
+	 * Detener tarea carga tiempos
 	 */
 	public void detenerTareaTiempos() {
 
@@ -562,8 +570,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		}
 
-		gestionarTarjetaInfo.detenerTareas();
-
 	}
 
 	@Override
@@ -572,8 +578,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		// Guardar ultima parada seleccionada
 		SharedPreferences.Editor editor = preferencias.edit();
 		editor.putInt("parada_inicio", paradaActual);
-		editor.commit();		
-		
+		editor.commit();
+
 		editor.remove("parada_tram");
 		editor.commit();
 
@@ -644,35 +650,35 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		case R.id.menu_search:
 
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, InfoLineasTabsPager.class), SUB_ACTIVITY_REQUEST_POSTE);
 
 			break;
 
 		case R.id.menu_preferencias:
 
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 			break;
 
 		case R.id.menu_guardar:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			nuevoFavorito();
 			break;
 
 		case R.id.menu_favoritos:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 		case R.id.menu_noticias:
 
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
 			break;
 		case R.id.menu_mapas:
 
 			if (datosPantallaPrincipal.servicesConnected()) {
-				detenerTareaTiempos();
+				detenerTodasTareas();
 				startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			}
 
@@ -685,7 +691,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			break;
 
 		case R.id.menu_hitorial:
-			detenerTareaTiempos();
+			detenerTodasTareas();
 			startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
 			break;
 
@@ -894,7 +900,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		itemsL.add(getString(R.string.menu_ver_en_mapa));
 		itemsL.add(getString(R.string.menu_leer));
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
 			itemsL.add(getString(R.string.menu_widget));
 
@@ -1234,6 +1240,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 			try {
 
 				showProgressBar(true);
+
+				detenerTareaTiempos();
 
 				/**
 				 * Sera llamado cuando la tarea de cargar tiempos termine
@@ -1601,7 +1609,7 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				t.send(new HitBuilders.EventBuilder().setCategory("EVENTOS").setAction("TRAM").setLabel("TIEMPO_TRAM").build());
 
 				Log.d("PRINCIPAL", "Enviado tram a analytics");
-				
+
 			}
 
 		} catch (Exception e) {
