@@ -28,7 +28,6 @@ import java.util.TimerTask;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.mapas.UtilidadesGeo;
 import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
 import alberapps.java.tam.mapas.DatosMapa;
@@ -38,7 +37,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 

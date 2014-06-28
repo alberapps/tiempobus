@@ -73,7 +73,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			ActionBar actionBar = getActionBar();
-			if(actionBar != null){
+			if (actionBar != null) {
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
 		}
@@ -158,6 +158,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 	/**
 	 * Cargar los tiempos
+	 * 
 	 * @param codigo
 	 */
 	private void cargarTiempos(int codigo) {
@@ -179,6 +180,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 	/**
 	 * Acceder al mapa de la linea seleccionada
+	 * 
 	 * @param linea
 	 */
 	private void launchMapasSeleccion(String linea) {
@@ -186,17 +188,26 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
 			if (linea != null && !linea.equals("")) {
-				Intent i = new Intent(this, MapasMaps2Activity.class);
-				i.putExtra("LINEA_MAPA_FICHA", linea);
 
-				int pos = UtilidadesTAM.getIdLinea(linea);
+				try {
+					Intent i = new Intent(this, MapasMaps2Activity.class);
+					i.putExtra("LINEA_MAPA_FICHA", linea);
 
-				i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
-				i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
+					int pos = UtilidadesTAM.getIdLinea(linea);
 
-				i.putExtra("LINEA_MAPA_PARADA", paradaSel);
-				
-				startActivity(i);
+					i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
+					i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
+
+					i.putExtra("LINEA_MAPA_PARADA", paradaSel);
+
+					startActivity(i);
+
+				} catch (Exception e) {
+
+					Toast.makeText(this, getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+
+				}
+
 			}
 
 		}
@@ -255,7 +266,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		super.onStart();
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
+			// EasyTracker.getInstance(this).activityStart(this);
 			GoogleAnalytics.getInstance(this).reportActivityStart(this);
 		}
 
@@ -265,12 +276,11 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 	protected void onStop() {
 
 		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
+			// EasyTracker.getInstance(this).activityStop(this);
 			GoogleAnalytics.getInstance(this).reportActivityStop(this);
 		}
-		
+
 		super.onStop();
-		
 
 	}
 

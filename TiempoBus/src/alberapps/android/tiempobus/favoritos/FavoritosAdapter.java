@@ -17,6 +17,8 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
+import java.util.List;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import android.content.Context;
@@ -56,81 +58,71 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
 		final Favorito favorito = getItem(position);
 
-		
+		// Si no tenemos la vista de la fila creada componemos una
+		// if (v == null) {
+		Context ctx = this.getContext().getApplicationContext();
+		LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			// Si no tenemos la vista de la fila creada componemos una
-			// if (v == null) {
-			Context ctx = this.getContext().getApplicationContext();
-			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		v = vi.inflate(R.layout.favoritos_item, null);
 
-			v = vi.inflate(R.layout.favoritos_item, null);
+		v.setTag(new ViewHolder(v));
+		// }
 
-			v.setTag(new ViewHolder(v));
-			// }
+		// Accedemos a la vista cacheada y la rellenamos
+		ViewHolder tag = (ViewHolder) v.getTag();
 
-			// Accedemos a la vista cacheada y la rellenamos
-			ViewHolder tag = (ViewHolder) v.getTag();
+		if (favorito != null) {
+			tag.numParada.setText(favorito.getNumParada().trim());
+			tag.titulo.setText(favorito.getTitulo().trim());
+			tag.descripcion.setText(favorito.getDescripcion().trim());
 
-			
-			if (favorito != null) {
-				tag.numParada.setText(favorito.getNumParada().trim());
-				tag.titulo.setText(favorito.getTitulo().trim());
-				tag.descripcion.setText(favorito.getDescripcion().trim());
+		}
+
+		// Botones
+		ImageView favoritoEditar = (ImageView) v.findViewById(R.id.favorito_editar);
+
+		favoritoEditar.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View view) {
+
+				FavoritosActivity actividad = (FavoritosActivity) contexto;
+
+				actividad.launchModificarFavorito(Integer.parseInt(favorito.getId()));
 
 			}
 
-			// Botones
-			ImageView favoritoEditar = (ImageView) v.findViewById(R.id.favorito_editar);
+		});
 
-			favoritoEditar.setOnClickListener(new OnClickListener() {
+		ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
 
-				public void onClick(View view) {
+		compartir.setOnClickListener(new OnClickListener() {
 
-					FavoritosActivity actividad = (FavoritosActivity) contexto;
+			public void onClick(View view) {
 
-					actividad.launchModificarFavorito(Integer.parseInt(favorito.getId()));
-					
+				FavoritosActivity actividad = (FavoritosActivity) contexto;
 
-				}
+				actividad.shareFavorito(favorito);
 
-			});
+			}
 
-			ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
+		});
 
-			compartir.setOnClickListener(new OnClickListener() {
+		ImageView favoritoBorrar = (ImageView) v.findViewById(R.id.favorito_borrar);
 
-				public void onClick(View view) {
+		favoritoBorrar.setOnClickListener(new OnClickListener() {
 
-					FavoritosActivity actividad = (FavoritosActivity) contexto;
+			public void onClick(View view) {
 
-					actividad.shareFavorito(favorito);
+				FavoritosActivity actividad = (FavoritosActivity) contexto;
 
-				}
+				actividad.launchBorrarFavorito(Integer.parseInt(favorito.getId()));
 
-			});
+			}
 
-			ImageView favoritoBorrar = (ImageView) v.findViewById(R.id.favorito_borrar);
-
-			favoritoBorrar.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View view) {
-
-					FavoritosActivity actividad = (FavoritosActivity) contexto;
-
-					actividad.launchBorrarFavorito(Integer.parseInt(favorito.getId()));
-
-				}
-
-			});
-
-			
-
-		
+		});
 
 		return v;
 	}
-
-	
 
 	/*
 	 * Clase contendora de los elementos de la vista de fila para agilizar su
@@ -147,6 +139,21 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 			descripcion = (TextView) v.findViewById(R.id.descripcion);
 		}
 
+	}
+
+	/**
+	 * favoritos al adapter
+	 * 
+	 * @param favorito
+	 */
+	public void addAll(List<Favorito> favorito) {
+		if (favorito == null) {
+			return;
+		}
+
+		for (int i = 0; i < favorito.size(); i++) {
+			add(favorito.get(i));
+		}
 	}
 
 }

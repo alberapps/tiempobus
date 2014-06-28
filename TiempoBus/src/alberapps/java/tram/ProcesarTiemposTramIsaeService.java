@@ -111,6 +111,16 @@ public class ProcesarTiemposTramIsaeService {
 
 					ordenarTiempos(busesList.get(i));
 
+					// Si el tercero es mayor que el maximo
+					if (busesList.get(i).getSegundoTram().getSiguienteMinutos() > 60) {
+						busesList.get(i).getSegundoTram().cambiarSiguiente(9999);
+					}
+
+					// Eliminar si excede tiempo maximo
+					if (busesList.get(i).getSegundoTram().getProximoMinutos() > 60 || busesList.get(i).getSegundoTram().getProximoMinutos() < 0) {
+						busesList.get(i).setSegundoTram(null);
+					}
+					
 					continue;
 
 				}
@@ -146,15 +156,7 @@ public class ProcesarTiemposTramIsaeService {
 		Log.d("TRAM", "REORDENAR: " + bus.getProximo());
 		Log.d("TRAM", "REORDENAR2: " + bus.getSegundoTram().getProximo());
 
-		// Si el tercero es mayor que el maximo
-		if (bus.getSegundoTram().getSiguienteMinutos() > 60) {
-			bus.getSegundoTram().cambiarSiguiente(-1);
-		}
-
-		// Eliminar si excede tiempo maximo
-		if (bus.getSegundoTram().getProximoMinutos() > 60 || bus.getSegundoTram().getProximoMinutos() < 0) {
-			bus.setSegundoTram(null);
-		}
+		
 
 	}
 
@@ -203,12 +205,18 @@ public class ProcesarTiemposTramIsaeService {
 
 			BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
 
+			if(bus.getSiguienteMinutos() > 60){
+				bus.cambiarSiguiente(9999);
+			}
+			
 			// >60min
 			if (bus.getProximoMinutos() > 60) {
 				// Quitar
 			} else {
 				buses.add(bus);
 			}
+			
+			
 
 			// Filtrar repetidos
 			combinarRegistros(buses);
