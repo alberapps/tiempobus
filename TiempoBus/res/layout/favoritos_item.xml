@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/poste"
-            android:layout_width="wrap_content"
+            android:layout_width="55sp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5sp"
             android:layout_marginRight="5sp"

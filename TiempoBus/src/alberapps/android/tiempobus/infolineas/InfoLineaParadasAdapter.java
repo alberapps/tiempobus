@@ -19,14 +19,8 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import java.util.List;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tram.UtilidadesTRAM;
 import android.content.Context;
-import android.opengl.Visibility;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +28,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
 
 /**
  * Adaptador Tiempos
@@ -141,15 +142,33 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
 		}
 
-		return v;
-	}
 
-	/**
-	 * Anade todas las lineas al adapter
-	 * 
-	 * @param noticias
-	 */
-	public void addAll(List<PlaceMark> parada) {
+
+        TextView infoText = (TextView) v.findViewById(R.id.infoparada_info);
+
+        // Link informacion
+        infoText.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+
+                Intent i = new Intent(contexto, InfoLineasDatosParadaActivity.class);
+                i.putExtra("DATOS_PARADA", bus);
+                i.putExtra("DATOS_LINEA", ((InfoLineasTabsPager) contexto).linea);
+                contexto.startActivity(i);
+
+            }
+        });
+
+
+            return v;
+        }
+
+    /**
+    * Anade todas las lineas al adapter
+    *
+    * @param parada
+    */
+    public void addAll(List<PlaceMark> parada) {
 		if (parada == null) {
 			return;
 		}

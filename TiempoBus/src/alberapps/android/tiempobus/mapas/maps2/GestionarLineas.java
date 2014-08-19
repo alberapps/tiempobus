@@ -695,7 +695,7 @@ public class GestionarLineas {
 				Marker marker = context.mMap.addMarker(markers.get(i));
 
 				// Mostrar informacion de la seleccionada
-				if (posicionSeleccionada != null && markers.get(i).equals(posicionSeleccionada)) {
+				if ((posicionSeleccionada != null) && markers.get(i).equals(posicionSeleccionada)) {
 
 					marker.showInfoWindow();
 

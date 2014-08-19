@@ -19,22 +19,6 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import java.util.ArrayList;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
-import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.horarios.DatosHorarios;
-import alberapps.java.horarios.ProcesarHorarios;
-import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -72,6 +56,24 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import java.util.ArrayList;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.horarios.DatosHorarios;
+import alberapps.java.horarios.ProcesarHorarios;
+import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.mapas.DatosMapa;
+import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tam.webservice.estructura.GetLineasResult;
 
 /**
  * Demonstrates combining a TabHost with a ViewPager to implement a tab UI that
@@ -275,19 +277,59 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 
 	public void seleccionarParadaIda(int posicion) {
 
-		Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
+		/*Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
 		i.putExtra("DATOS_PARADA", datosIda.getPlacemarks().get(posicion));
 		i.putExtra("DATOS_LINEA", linea);
-		startActivity(i);
+		startActivity(i);*/
+
+        int codigo = -1;
+
+        try {
+            codigo = Integer.parseInt(datosIda.getPlacemarks().get(posicion).getCodigoParada());
+
+        } catch (Exception e) {
+
+        }
+
+        if (codigo != -1 && (datosIda.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(datosIda.getPlacemarks().get(posicion).getCodigoParada()))) {
+
+           cargarTiempos(codigo);
+
+        } else {
+
+            Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+
+        }
+
 
 	}
 
 	public void seleccionarParadaVuelta(int posicion) {
 
-		Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
+		/*Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
 		i.putExtra("DATOS_PARADA", datosVuelta.getPlacemarks().get(posicion));
 		i.putExtra("DATOS_LINEA", linea);
-		startActivity(i);
+		startActivity(i);*/
+
+        int codigo = -1;
+
+        try {
+            codigo = Integer.parseInt(datosVuelta.getPlacemarks().get(posicion).getCodigoParada());
+
+        } catch (Exception e) {
+
+        }
+
+        if (codigo != -1 && (datosVuelta.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(datosVuelta.getPlacemarks().get(posicion).getCodigoParada()))) {
+
+            cargarTiempos(codigo);
+
+        } else {
+
+            Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+
+        }
+
 
 	}
 

@@ -18,6 +18,8 @@
  */
 package alberapps.android.tiempobuswidgets.tasks;
 
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,6 @@ import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.UtilidadesTRAM;
-import android.os.AsyncTask;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos para una linea y
@@ -80,7 +81,7 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 
 				if (UtilidadesTRAM.esTram(lineasParadaList.get(i).getParada())) {
 
-					llegadaBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada(), null);
+					llegadaBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada(), lineasParadaList.get(i).getDestino());
 
 				} else {
 

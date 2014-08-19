@@ -18,10 +18,6 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.tam.BusLlegada;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -30,6 +26,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.tam.BusLlegada;
 
 public class GestionarWidget {
 
@@ -62,7 +63,7 @@ public class GestionarWidget {
 
 			// 24,2902;10,2902
 
-			intent.putExtra("datos_linea", busSeleccionado.getLinea() + "," + paradaActual);
+			intent.putExtra("datos_linea", busSeleccionado.getLinea() + "," + paradaActual + "," + busSeleccionado.getDestino());
 
 			context.startActivity(intent);
 

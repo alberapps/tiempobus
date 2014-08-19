@@ -52,6 +52,10 @@ public class GestionarDatos {
 			dato.setLinea(datos[0]);
 			dato.setParada(datos[1]);
 
+            if(datos.length > 2) {
+                dato.setDestino(datos[2]);
+            }
+
 			datosNuevo.add(dato);
 
 		}

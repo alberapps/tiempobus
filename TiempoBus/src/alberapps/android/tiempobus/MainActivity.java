@@ -19,42 +19,6 @@
  */
 package alberapps.android.tiempobus;
 
-import java.lang.ref.WeakReference;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
-import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
-import alberapps.android.tiempobus.alarma.GestionarAlarmas;
-import alberapps.android.tiempobus.barcode.IntentIntegrator;
-import alberapps.android.tiempobus.barcode.IntentResult;
-import alberapps.android.tiempobus.barcode.Utilidades;
-import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
-import alberapps.android.tiempobus.favoritos.FavoritosActivity;
-import alberapps.android.tiempobus.historial.HistorialActivity;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
-import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
-import alberapps.android.tiempobus.principal.GestionarFondo;
-import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
-import alberapps.android.tiempobus.principal.GestionarVoz;
-import alberapps.android.tiempobus.principal.GestionarWidget;
-import alberapps.android.tiempobus.principal.TiemposAdapter;
-import alberapps.android.tiempobus.service.TiemposForegroundService;
-import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
-import alberapps.java.exception.TiempoBusException;
-import alberapps.java.tam.BusLlegada;
-import alberapps.java.tam.DatosRespuesta;
-import alberapps.java.tram.UtilidadesTRAM;
-import alberapps.java.util.Conectividad;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -103,6 +67,43 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+
+import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+
+import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
+import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
+import alberapps.android.tiempobus.alarma.GestionarAlarmas;
+import alberapps.android.tiempobus.barcode.IntentIntegrator;
+import alberapps.android.tiempobus.barcode.IntentResult;
+import alberapps.android.tiempobus.barcode.Utilidades;
+import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
+import alberapps.android.tiempobus.favoritos.FavoritosActivity;
+import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
+import alberapps.android.tiempobus.principal.GestionarFondo;
+import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
+import alberapps.android.tiempobus.principal.GestionarVoz;
+import alberapps.android.tiempobus.principal.GestionarWidget;
+import alberapps.android.tiempobus.principal.TiemposAdapter;
+import alberapps.android.tiempobus.service.TiemposForegroundService;
+import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
+import alberapps.java.exception.TiempoBusException;
+import alberapps.java.tam.BusLlegada;
+import alberapps.java.tam.DatosRespuesta;
+import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Conectividad;
 
 public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -537,8 +538,20 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	public void onDestroy() {
 		// Don't forget to shutdown!
 		if (mTts != null) {
-			mTts.stop();
-			mTts.shutdown();
+
+            try {
+
+                mTts.stop();
+                mTts.shutdown();
+
+            }catch(Exception e){
+
+                Toast.makeText(this, getString(R.string.error_voz), Toast.LENGTH_SHORT).show();
+
+                e.printStackTrace();
+
+            }
+
 		}
 
 		detenerTodasTareas();
@@ -550,6 +563,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 	 * Detener tareas asincronas
 	 */
 	public void detenerTodasTareas() {
+
+        handler.removeMessages(MSG_RECARGA);
 
 		detenerTareaTiempos();
 
@@ -589,7 +604,26 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	}
 
-	/**
+
+    @Override
+    protected void onPause() {
+
+        // Guardar ultima parada seleccionada
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt("parada_inicio", paradaActual);
+        editor.commit();
+
+        editor.remove("parada_tram");
+        editor.commit();
+
+        handler.removeMessages(MSG_RECARGA);
+
+        detenerTodasTareas();
+
+        super.onPause();
+    }
+
+    /**
 	 * Despues de crear la actividad
 	 */
 	@Override

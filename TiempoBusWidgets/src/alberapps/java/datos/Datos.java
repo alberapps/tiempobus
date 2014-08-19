@@ -28,6 +28,8 @@ public class Datos {
 
 	private String parada;
 
+    private String destino;
+
 	public String getLinea() {
 		return linea;
 	}
@@ -44,4 +46,11 @@ public class Datos {
 		this.parada = parada;
 	}
 
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
 }

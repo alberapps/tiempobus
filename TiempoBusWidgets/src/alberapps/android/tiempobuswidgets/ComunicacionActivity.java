@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -43,6 +44,8 @@ public class ComunicacionActivity extends Activity {
 		Intent intent = getIntent();
 
 		String datos = intent.getExtras().getString("datos_linea");
+
+        Log.d("Widget", "Datos alta: " + datos);
 
 		SharedPreferences preferencias = getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
