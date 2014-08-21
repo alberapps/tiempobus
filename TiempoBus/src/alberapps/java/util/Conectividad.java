@@ -199,6 +199,18 @@ public class Conectividad {
 
 	}
 
+    /**
+     *
+     * @param urlGet
+     * @return
+     */
+    public static String conexionGetIsoString(String urlGet) {
+
+        return conexionGetIso(urlGet, true, false, false);
+
+    }
+
+
 	public static InputStream conexionGetUtf8Stream(String urlGet) {
 
 		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
@@ -217,6 +229,9 @@ public class Conectividad {
 		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
 
 	}
+
+
+
 
 	/**
 	 * Devuelve inputstream sin usar cache en conexion

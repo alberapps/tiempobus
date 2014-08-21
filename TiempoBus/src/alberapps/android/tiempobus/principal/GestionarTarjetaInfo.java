@@ -18,27 +18,6 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.database.BuscadorLineasProvider;
-import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
-import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask.LoadWeatherAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
-import alberapps.android.tiempobus.util.Notificaciones;
-import alberapps.android.tiempobus.util.PreferencesUtil;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.util.Utilidades;
-import alberapps.java.weather.EstadoCielo;
-import alberapps.java.weather.WeatherQuery;
-import alberapps.java.wikipedia.WikiQuery;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -58,6 +37,30 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.database.BuscadorLineasProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadLocationAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask.LoadWeatherAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.PreferencesUtil;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.localizacion.Localizacion;
+import alberapps.java.util.Utilidades;
+import alberapps.java.weather.EstadoCielo;
+import alberapps.java.weather.WeatherQuery;
+import alberapps.java.wikipedia.WikiQuery;
 
 /**
  * Gestion de la tarjeta de informacion
@@ -83,11 +86,14 @@ public class GestionarTarjetaInfo {
 
 	private String paradaWiki = null;
 	private String datosWiki = null;
+    private String datosLocalizacion = null;
+    private String paradaLocaliza = null;
 
 	AsyncTask<Object, Void, WeatherQuery> weatherTask = null;
 	AsyncTask<Object, Void, String> actualizarTask = null;
 	AsyncTask<Object, Void, String> actualizarNumTask = null;
 	AsyncTask<Object, Void, WikiQuery> wikiTask = null;
+    AsyncTask<Object, Void, Localizacion> localizacionTask = null;
 
 	/**
 	 * Tarjeta con informacion de la parada
@@ -199,13 +205,109 @@ public class GestionarTarjetaInfo {
 				String lat = cursor.getString(latIndex);
 				String lon = cursor.getString(lonIndex);
 
+
+                final View vista = v;
+
+
+                LoadLocationAsyncTask.LoadLocationAsyncTaskResponder loadLocationAsyncTaskResponder = new LoadLocationAsyncTask.LoadLocationAsyncTaskResponder() {
+                    public void LocationLoaded(Localizacion localizacion) {
+
+                        if (localizacion != null) {
+
+                            StringBuffer sb = new StringBuffer();
+
+
+                            sb.append(localizacion.getDireccion());
+                            sb.append(", ");
+                            sb.append(localizacion.getLocalidad());
+
+
+                            // Cargar titulos en textView
+                            if (sb.length() > 0) {
+
+                                try {
+                                    TextView textoLocation = (TextView) vista.findViewById(R.id.datos_location);
+
+                                    textoLocation.setText(sb.toString());
+
+                                    // Datos para siguiente pasada
+                                    datosLocalizacion = sb.toString();
+
+                                } catch (Exception e) {
+
+                                }
+
+                            } else {
+
+                                sb.append(context.getString(R.string.main_no_items));
+
+                                TextView textoLocaliza = (TextView) vista.findViewById(R.id.datos_location);
+
+                                textoLocaliza.setText(sb.toString());
+
+                            }
+
+                        } else {
+
+                            TextView textoLocation = (TextView) vista.findViewById(R.id.datos_location);
+                            textoLocation.setText("");
+
+                        }
+                    }
+
+                };
+
+                //Para usar datos anteriores si no ha cambiado
+                if (paradaLocaliza != null && datosLocalizacion != null && paradaLocaliza.equals(Integer.toString(context.paradaActual))) {
+
+
+                    TextView textoLocation = (TextView) v.findViewById(R.id.datos_location);
+
+                    textoLocation.setText(datosLocalizacion);
+
+
+
+                }else {
+                    paradaLocaliza = Integer.toString(context.paradaActual);
+                    datosLocalizacion = null;
+                }
+
+                //Cargar datos si no los tenemos
+                if(datosLocalizacion == null){
+
+                    // Control de disponibilidad de conexion
+                    ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+
+                        TextView textoLocation = (TextView) v.findViewById(R.id.datos_location);
+                        textoLocation.setText(context.getString(R.string.aviso_recarga));
+
+                        localizacionTask = new LoadLocationAsyncTask(loadLocationAsyncTaskResponder).execute(lat, lon, context);
+                    } else {
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+                    }
+
+
+                }
+
+
+
+
+
+
+
+
 				// Cargar info wikipedia
 				if (lat != null && !lat.equals("") && !lon.equals("")) {
 					context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
+
+                    // Cargar informacion del tiempo
+                    context.gestionarTarjetaInfo.cargarInfoWeather(lat, lon, v);
+
 				}
 
-				// Cargar informacion del tiempo
-				context.gestionarTarjetaInfo.cargarInfoWeather(v);
+
 
 			}
 
@@ -337,16 +439,17 @@ public class GestionarTarjetaInfo {
 	}
 
 	private WeatherQuery datosWeather = null;
+    private String paradaWeather = null;
 
 	/**
 	 * Cargar la informacion del clima
 	 */
-	public void cargarInfoWeather(final View v) {
+	public void cargarInfoWeather(String lat, String lon, final View v) {
 
 		final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 
 		// Verificar si ya disponemos de los datos
-		if (datosWeather != null) {
+        /*if (datosWeather != null) {
 
 			try {
 
@@ -361,7 +464,26 @@ public class GestionarTarjetaInfo {
 		} else {
 			// datosWeather =;
 			// datosWiki = null;
-		}
+		}*/
+
+        if (paradaWeather != null && datosWeather != null && paradaWeather.equals(Integer.toString(context.paradaActual))) {
+
+            try {
+
+                mostrarElTiempoOwm(datosWeather, iv, v);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return;
+
+        } else {
+            paradaWeather = Integer.toString(context.paradaActual);
+            datosWeather = null;
+        }
+
+
 
 		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
 			public void WeatherLoaded(WeatherQuery weather) {
@@ -370,7 +492,7 @@ public class GestionarTarjetaInfo {
 
 				if (weather != null) {
 
-					mostrarElTiempoYW(weather, iv, v);
+					mostrarElTiempoOwm(weather, iv, v);
 
 				} else {
 
@@ -389,7 +511,7 @@ public class GestionarTarjetaInfo {
 			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 			textoWeather.setText(context.getString(R.string.aviso_recarga));
 
-			weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute();
+			weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon);
 		} else {
 			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 		}
@@ -477,7 +599,7 @@ public class GestionarTarjetaInfo {
 	 * @param iv
 	 * @param v
 	 */
-	private void mostrarElTiempoYW(WeatherQuery weather, ImageView iv, View v) {
+	private void mostrarElTiempoOwm(WeatherQuery weather, ImageView iv, View v) {
 
 		StringBuffer sb = new StringBuffer();
 
@@ -495,10 +617,13 @@ public class GestionarTarjetaInfo {
 					iv.setVisibility(ImageView.INVISIBLE);
 				}
 
-				sb.append(weather.getListaDatos().get(0).getLow());
+                sb.append(weather.getListaDatos().get(0).getHumidity());
+				sb.append("%, ");
+                sb.append(weather.getListaDatos().get(0).getLow());
 				sb.append("º/");
 				sb.append(weather.getListaDatos().get(0).getHigh());
 				sb.append("º");
+
 
 				temp.append(weather.getListaDatos().get(0).getContitionTemp());
 				temp.append("º");
@@ -524,6 +649,12 @@ public class GestionarTarjetaInfo {
 				TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
 
 				textoTemperatura.setText(temp.toString());
+
+                //TextView textoLocalidad = (TextView) v.findViewById(R.id.TextLocalidad);
+                //textoLocalidad.setText(weather.getListaDatos().get(0).getTitle());
+
+                TextView textoWeatherTexto = (TextView) v.findViewById(R.id.textoWeatherTexto);
+                textoWeatherTexto.setText("* " + weather.getListaDatos().get(0).getDescription());
 
 				// Datos para siguiente pasada
 				datosWeather = weather;

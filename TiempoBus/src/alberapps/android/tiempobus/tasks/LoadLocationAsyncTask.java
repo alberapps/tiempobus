@@ -17,34 +17,35 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
-import alberapps.java.weather.WeatherQuery;
-import alberapps.java.weather.openweathermap.ProcesarOWMCurrect;
+import alberapps.java.localizacion.GeocoderInfo;
+import alberapps.java.localizacion.Localizacion;
 
 /**
- * Tarea asincrona para recuperar informacion de wikipedia
+ * Tarea asincrona para recuperar informacion de localizacion
  * 
  * 
  */
-public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> {
+public class LoadLocationAsyncTask extends AsyncTask<Object, Void, Localizacion> {
 
 	/**
-	 * 
+	 *
 	 *
 	 */
-	public interface LoadWeatherAsyncTaskResponder {
-		public void WeatherLoaded(WeatherQuery Wikipedia);
+	public interface LoadLocationAsyncTaskResponder {
+		public void LocationLoaded(Localizacion localizacion);
 	}
 
-	private LoadWeatherAsyncTaskResponder responder;
+	private LoadLocationAsyncTaskResponder responder;
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @param responder
 	 */
-	public LoadWeatherAsyncTask(LoadWeatherAsyncTaskResponder responder) {
+	public LoadLocationAsyncTask(LoadLocationAsyncTaskResponder responder) {
 		this.responder = responder;
 	}
 
@@ -52,22 +53,19 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
 	 * 
 	 */
 	@Override
-	protected WeatherQuery doInBackground(Object... datos) {
-		WeatherQuery weather = null;
+	protected Localizacion doInBackground(Object... datos) {
+		Localizacion localizacion = null;
 		try {
 
+			String lat = (String) datos[0];
+			String lon = (String) datos[1];
+
+            Context context = (Context) datos[2];
+
+            localizacion = GeocoderInfo.getDatosLocalizacion(lat, lon, context);
 
 
-            String lat = (String) datos[0];
-            String lon = (String) datos[1];
 
-			
-			//weather = ProcesarDatosWeatherService.getDatosClima();
-
-			//weather = ProcesarYWRSS.getDatosClima();
-
-            weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
-			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -76,16 +74,16 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
 
 		}
 
-		return weather;
+		return localizacion;
 	}
 
 	/**
 	 * 
 	 */
 	@Override
-	protected void onPostExecute(WeatherQuery result) {
+	protected void onPostExecute(Localizacion result) {
 		if (responder != null) {
-			responder.WeatherLoaded(result);
+			responder.LocationLoaded(result);
 		}
 
 	}

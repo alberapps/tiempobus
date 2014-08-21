@@ -18,9 +18,9 @@
  */
 package alberapps.java.weather;
 
-import java.util.List;
-
 import android.graphics.Bitmap;
+
+import java.util.List;
 
 /**
  * 
@@ -49,8 +49,38 @@ public class WeatherData {
 	private String contitionTemp;
 	private Bitmap imagen;
 
-	private String low;
+    public String getSunset() {
+        return sunset;
+    }
+
+    public void setSunset(String sunset) {
+        this.sunset = sunset;
+    }
+
+    private String low;
 	private String high;
+
+    private String humidity;
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public String getSunrise() {
+        return sunrise;
+    }
+
+    public void setSunrise(String sunrise) {
+        this.sunrise = sunrise;
+    }
+
+    public void setHumidity(String humidity) {
+
+        this.humidity = humidity;
+    }
+
+    private String sunrise;
+    private String sunset;
 
 	public String getEnlace() {
 		return enlace;

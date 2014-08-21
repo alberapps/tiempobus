@@ -133,7 +133,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 
 				}
 
-				if (codigo != -1 && paradaSel.length() == 4) {
+                if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
 
 					cargarTiempos(codigo);
 
