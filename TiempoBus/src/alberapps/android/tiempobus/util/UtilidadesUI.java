@@ -185,7 +185,7 @@ public class UtilidadesUI {
         String idiomaWiki = null;
 
         try {
-            String locale = Locale.getDefault().getDisplayLanguage();
+            String locale = Locale.getDefault().getLanguage();
 
             if (locale.substring(0, 2).equals("es")) {
                 idiomaWiki = "es";
@@ -215,7 +215,7 @@ public class UtilidadesUI {
         String idioma = null;
 
         try {
-            String locale = Locale.getDefault().getDisplayLanguage();
+            String locale = Locale.getDefault().getLanguage();
 
             if (locale.substring(0, 2).equals("es")) {
                 idioma = "es";

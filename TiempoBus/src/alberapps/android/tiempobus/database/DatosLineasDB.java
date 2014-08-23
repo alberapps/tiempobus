@@ -19,16 +19,6 @@
  */
 package alberapps.android.tiempobus.database;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.HashMap;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.util.Notificaciones;
-import alberapps.java.actualizador.DescargarActualizaBD;
-import alberapps.java.tram.UtilidadesTRAM;
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -41,6 +31,17 @@ import android.provider.BaseColumns;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.java.actualizador.DescargarActualizaBD;
+import alberapps.java.tram.UtilidadesTRAM;
 
 /**
  * Base de datos de lineas y recorridos
@@ -70,9 +71,9 @@ public class DatosLineasDB {
 	private static final String DATABASE_NAME = "tiempobuslineas";
 	private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
 	private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-	private static final int DATABASE_VERSION = 61;
+	private static final int DATABASE_VERSION = 62;
 
-	public static final String DATABASE_VERSION_FECHA = "14062014";
+	public static final String DATABASE_VERSION_FECHA = "23082014";
 
 	private final DatosLineasOpenHelper mDatabaseOpenHelper;
 	private static final HashMap<String, String> mColumnMap = buildColumnMap();

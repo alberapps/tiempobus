@@ -15,7 +15,7 @@
 	<option value="31">31 MUTXAMEL-ST.JOAN-PLAYA S. JUAN</option>
 	<option value="30P">30P SAN VICENTE-PLAYA SAN JUAN</option>
 	<option value="36">36 SAN GABRIEL-UNIVERSIDAD</option>
-	<option value="38">38 P.S.JUAN-H.ST.JOAN-UNIVERSIDAD</option>
+	<option value="38">38 ALBUFERET-H.S.JOAN-UNIVERSIDAD</option>
 	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
 	<option value="21N">21N ALICANTE-P.S.JUAN-EL CAMPELLO</option>
 	<option value="22N">22N ALICANTE- PLAYA SAN JUAN</option>
@@ -25,14 +25,14 @@
 	<option value="02">02 LA FLORIDA - SAGRADA FAMILIA</option>
 	<option value="03">03 CIUDAD AS&#205;S - COLONIA REQUENA</option>
 	<option value="04">04 CEMENTERIO - T&#211;MBOLA</option>
-	<option value="05">05 EXPLANADA - SAN BLAS - RABASA</option>
-	<option value="06">06 AV.&#211;SCAR ESPL&#193;-COLONIA REQUENA</option>
+	<option value="05">05 PZA. DEL MAR- S. BLAS - RABASA</option>
+	<option value="06">06 AUTOBUSES - JUAN XXIII (2&#186; S)</option>
 	<option value="07">07 AV.&#211;SCAR ESPL&#193; - EL REBOLLEDO</option>
 	<option value="8A">8A EXPLANADA -VIRGEN REMEDIO</option>
 	<option value="09">09 AV.&#211;SCAR ESPL&#193; - AV. NACIONES</option>
 	<option value="10">10 EXPLANADA - VIA PARQUE</option>
 	<option value="11">11 V.REMEDIO-AV.DENIA-HOSP.S.JOAN</option>
-	<option value="12">12 AV. CONSTITUCI&#211;N -S.BLAS(PAUI)</option>
+	<option value="12">12 PZA. LUCEROS - S.BLAS - PAU I</option>
 	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
 	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
 	<option value="8B">8B EXPLANADA - VIRGEN  REMEDIO</option>

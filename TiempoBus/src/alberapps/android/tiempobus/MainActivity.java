@@ -245,8 +245,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 		}
 
-		// PrecargasV3.precargarDatosLineas(this);
-		// PrecargasV3.precargarDatosLineasRecorrido(this);
+		//PrecargasV3.precargarDatosLineas(this);
+		//PrecargasV3.precargarDatosLineasRecorrido(this);
 
 	}
 

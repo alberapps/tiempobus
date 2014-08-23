@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,489 +18,480 @@
  */
 package alberapps.java.tam.mapas;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import android.os.Build;
+import android.text.Html;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
-import android.os.Build;
-import android.text.Html;
-import android.util.Log;
 
 public class ProcesarMapaServiceV3 {
 
-	public static final int MODE_ANY = 0;
-	public static final int MODE_CAR = 1;
-	public static final int MODE_WALKING = 2;
+    public static final int MODE_ANY = 0;
+    public static final int MODE_CAR = 1;
+    public static final int MODE_WALKING = 2;
 
-	public static final String LOG_NAME = "ProcesarMapaServiceV3";
+    public static final String LOG_NAME = "ProcesarMapaServiceV3";
 
-	/**
-	 * Parsear fichero kml
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static DatosMapa[] getDatosMapa(String url) {
+    /**
+     * Parsear fichero kml
+     *
+     * @param url
+     * @return
+     */
+    public static DatosMapa[] getDatosMapa(String url) {
 
-		InputStream isZip = null;
+        InputStream isZip = null;
 
-		// ByteArrayInputStream is = null;
-		InputStream is = null;
+        // ByteArrayInputStream is = null;
+        InputStream is = null;
 
-		DatosMapa[] datosMapa = { null, null };
-		try {
+        DatosMapa[] datosMapa = {null, null};
+        try {
 
-			isZip = Conectividad.conexionGetIsoStream(url);
+            isZip = Conectividad.conexionGetIsoStream(url);
 
-			// Verificar si kml llega comprimido en zip
-			boolean esZip = Utilidades.isZipFile(isZip);
+            // Verificar si kml llega comprimido en zip
+            boolean esZip = Utilidades.isZipFile(isZip);
 
-			// Provisional
-			// if (url.equals("http://www.subus.es/K/TuribusP.xml")) {
-			if (esZip) {
+            if (esZip) {
 
-				ZipInputStream zis = new ZipInputStream(isZip);
+                is = Utilidades.zipToInputStream(isZip);
 
-				ZipEntry ze;
-				while ((ze = zis.getNextEntry()) != null) {
-					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					byte[] buffer = new byte[1024];
-					int count;
-					while ((count = zis.read(buffer)) != -1) {
-						baos.write(buffer, 0, count);
-					}
-					String filename = ze.getName();
+            } else {
 
-					if (filename.equals("doc.kml")) {
+                is = isZip;
+            }
 
-						byte[] bytes = baos.toByteArray();
-						// do something with 'filename' and 'bytes'...
+            if (is != null) {
 
-						is = new ByteArrayInputStream(bytes);
+                Datos parseado = parse(is);
 
-					}
+                List<PlaceMark> listaIda = parseado.getPlaceMarksIda();
 
-				}
+                if (listaIda != null && !listaIda.isEmpty()) {
 
-			} else {
+                    datosMapa[0] = new DatosMapa();
 
-				is = isZip;
-			}
+                    datosMapa[0].setPlacemarks(listaIda);
 
-			if (is != null) {
+                    datosMapa[0].setCurrentPlacemark(listaIda.get(0));
 
-				Datos parseado = parse(is);
+                } else {
 
-				List<PlaceMark> listaIda = parseado.getPlaceMarksIda();
+                    datosMapa[0] = null;
 
-				if (listaIda != null && !listaIda.isEmpty()) {
+                }
 
-					datosMapa[0] = new DatosMapa();
+                List<PlaceMark> listaVuelta = parseado.getPlaceMarksVuelta();
 
-					datosMapa[0].setPlacemarks(listaIda);
+                if (listaVuelta != null && !listaVuelta.isEmpty()) {
 
-					datosMapa[0].setCurrentPlacemark(listaIda.get(0));
+                    datosMapa[1] = new DatosMapa();
 
-				} else {
+                    datosMapa[1].setPlacemarks(listaVuelta);
 
-					datosMapa[0] = null;
+                    datosMapa[1].setCurrentPlacemark(listaVuelta.get(0));
 
-				}
+                } else {
 
-				List<PlaceMark> listaVuelta = parseado.getPlaceMarksVuelta();
+                    datosMapa[1] = null;
 
-				if (listaVuelta != null && !listaVuelta.isEmpty()) {
+                }
 
-					datosMapa[1] = new DatosMapa();
+            } else {
+                datosMapa = null;
+            }
 
-					datosMapa[1].setPlacemarks(listaVuelta);
+        } catch (Exception e) {
 
-					datosMapa[1].setCurrentPlacemark(listaVuelta.get(0));
+            e.printStackTrace();
 
-				} else {
+            datosMapa = null;
+        } finally {
+            try {
+                isZip.close();
+                is.close();
+            } catch (Exception e) {
 
-					datosMapa[1] = null;
+            }
+        }
 
-				}
+        return datosMapa;
+    }
 
-			} else {
-				datosMapa = null;
-			}
+    /**
+     * Parsear entrada
+     *
+     * @param is
+     * @return
+     * @throws Exception
+     */
+    public static Datos parse(InputStream is) throws Exception {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
 
-		} catch (Exception e) {
+        Datos datos = new Datos();
 
-			e.printStackTrace();
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-			datosMapa = null;
-		} finally {
-			try {
-				isZip.close();
-				is.close();
-			} catch (Exception e) {
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-			}
-		}
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
 
-		return datosMapa;
-	}
+            // Folder principal
+            NodeList folderPrincipalList = root.getElementsByTagName("Folder");
 
-	/**
-	 * Parsear entrada
-	 * 
-	 * @param is
-	 * @return
-	 * @throws Exception
-	 */
-	public static Datos parse(InputStream is) throws Exception {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
+            Element folderIda = null;
+            Element folderVuelta = null;
 
-		Datos datos = new Datos();
+            // Control cambio en la estructura de Folder en el kml
+            if (folderPrincipalList.getLength() == 2) {
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+                // Caso de 2 folder sin anidar
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+                // Control para determinar ida y vuelta
+                String folderName1 = ((Element) folderPrincipalList.item(0)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+                // String folderName2 = ((Element)
+                // folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+                if (folderName1.equals("Ida")) {
+                    folderIda = (Element) folderPrincipalList.item(0);
+                    folderVuelta = (Element) folderPrincipalList.item(1);
+                } else {
+                    folderIda = (Element) folderPrincipalList.item(1);
+                    folderVuelta = (Element) folderPrincipalList.item(0);
+                }
 
-			// Folder principal
-			NodeList folderPrincipalList = root.getElementsByTagName("Folder");
+            } else {
 
-			Element folderIda = null;
-			Element folderVuelta = null;
+                // Caso normal. 3 folder anidados
 
-			// Control cambio en la estructura de Folder en el kml
-			if (folderPrincipalList.getLength() == 2) {
+                // Control para determinar ida y vuelta
+                String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
 
-				// Caso de 2 folder sin anidar
+                if (folderName1.equals("Ida")) {
+                    folderIda = (Element) folderPrincipalList.item(1);
+                    folderVuelta = (Element) folderPrincipalList.item(2);
+                } else {
+                    folderIda = (Element) folderPrincipalList.item(2);
+                    folderVuelta = (Element) folderPrincipalList.item(1);
+                }
 
-				// Control para determinar ida y vuelta
-				String folderName1 = ((Element) folderPrincipalList.item(0)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
-				// String folderName2 = ((Element)
-				// folderPrincipalList.item(2)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+            }
 
-				if (folderName1.equals("Ida")) {
-					folderIda = (Element) folderPrincipalList.item(0);
-					folderVuelta = (Element) folderPrincipalList.item(1);
-				} else {
-					folderIda = (Element) folderPrincipalList.item(1);
-					folderVuelta = (Element) folderPrincipalList.item(0);
-				}
+            // Localizamos todos los elementos <Placemark>
+            NodeList items = folderIda.getElementsByTagName("Placemark");
 
-			} else {
+            datos.setPlaceMarksIda(parsePlacemarks(items));
 
-				// Caso normal. 3 folder anidados
+            NodeList itemsVuelta = folderVuelta.getElementsByTagName("Placemark");
 
-				// Control para determinar ida y vuelta
-				String folderName1 = ((Element) folderPrincipalList.item(1)).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
-				
-				if (folderName1.equals("Ida")) {
-					folderIda = (Element) folderPrincipalList.item(1);
-					folderVuelta = (Element) folderPrincipalList.item(2);
-				} else {
-					folderIda = (Element) folderPrincipalList.item(2);
-					folderVuelta = (Element) folderPrincipalList.item(1);
-				}
+            datos.setPlaceMarksVuelta(parsePlacemarks(itemsVuelta));
 
-			}
+        } catch (Exception ex) {
 
-			// Localizamos todos los elementos <Placemark>
-			NodeList items = folderIda.getElementsByTagName("Placemark");
+            Log.d("MAPA", "Error en parseado");
 
-			datos.setPlaceMarksIda(parsePlacemarks(items));
+            throw ex;
+        }
 
-			NodeList itemsVuelta = folderVuelta.getElementsByTagName("Placemark");
+        return datos;
+    }
 
-			datos.setPlaceMarksVuelta(parsePlacemarks(itemsVuelta));
+    private static List<PlaceMark> parsePlacemarks(NodeList items) {
 
-		} catch (Exception ex) {
+        List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
 
-			Log.d("MAPA", "Error en parseado");
+        // Recorremos la lista de puntos
+        for (int i = 0; i < items.getLength(); i++) {
+            PlaceMark placeMark = new PlaceMark();
 
-			throw ex;
-		}
+            // Obtenemos la parada actual
+            Node item = items.item(i);
 
-		return datos;
-	}
+            // Obtenemos la lista de datos de la parada actual
+            NodeList datosPlaceMark = item.getChildNodes();
 
-	private static List<PlaceMark> parsePlacemarks(NodeList items) {
+            // Procesamos cada dato del recorrido
+            for (int j = 0; j < datosPlaceMark.getLength(); j++) {
+                Node dato = datosPlaceMark.item(j);
+                String etiqueta = dato.getNodeName();
 
-		List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
+                if (etiqueta.equals("description")) {
 
-		// Recorremos la lista de puntos
-		for (int i = 0; i < items.getLength(); i++) {
-			PlaceMark placeMark = new PlaceMark();
+                    String texto = textoSegunVersion(dato);
 
-			// Obtenemos la parada actual
-			Node item = items.item(i);
+                    placeMark.setDescription(Html.fromHtml(texto).toString());
 
-			// Obtenemos la lista de datos de la parada actual
-			NodeList datosPlaceMark = item.getChildNodes();
+                    // parsear datos
 
-			// Procesamos cada dato del recorrido
-			for (int j = 0; j < datosPlaceMark.getLength(); j++) {
-				Node dato = datosPlaceMark.item(j);
-				String etiqueta = dato.getNodeName();
+                    String desc = placeMark.getDescription();
+                    int pos = desc.indexOf("parada:");
 
-				if (etiqueta.equals("description")) {
+                    // Solucion a literal cambiado ejm: linea 23
+                    if (pos < 0) {
 
-					String texto = textoSegunVersion(dato);
+                        pos = desc.indexOf("Parada:");
 
-					placeMark.setDescription(Html.fromHtml(texto).toString());
+                        // Tipo especial
+                        if (pos >= 0)
+                            placeMark.setCodigoParada(desc.substring(pos + 7, pos + 7 + 5));
+                        else
+                            placeMark.setCodigoParada("");
 
-					// parsear datos
+                    } else {
 
-					String desc = placeMark.getDescription();
-					int pos = desc.indexOf("parada:");
+                        // Tipo normal
+                        if (pos >= 0)
+                            placeMark.setCodigoParada(desc.substring(pos + 8, pos + 8 + 5));
+                        else
+                            placeMark.setCodigoParada("");
 
-					// Solucion a literal cambiado ejm: linea 23
-					if (pos < 0) {
+                    }
 
-						pos = desc.indexOf("Parada:");
+                    if (placeMark.getCodigoParada() != null) {
+                        placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
+                    }
 
-						// Tipo especial
-						if (pos >= 0)
-							placeMark.setCodigoParada(desc.substring(pos + 7, pos + 7 + 5));
-						else
-							placeMark.setCodigoParada("");
+                    // Extraer sentido
+                    pos = desc.indexOf("Sentido");
+                    if (pos >= 0) {
 
-					} else {
+                        int posOb = desc.indexOf("Observaciones:");
 
-						// Tipo normal
-						if (pos >= 0)
-							placeMark.setCodigoParada(desc.substring(pos + 8, pos + 8 + 5));
-						else
-							placeMark.setCodigoParada("");
+                        if (posOb < 0)
+                            placeMark.setSentido(desc.substring(pos + 8));
+                        else {
 
-					}
+                            placeMark.setSentido(desc.substring(pos + 8, posOb));
 
-					if (placeMark.getCodigoParada() != null) {
-						placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
-					}
+                            placeMark.setObservaciones(desc.substring(posOb + 14));
 
-					// Extraer sentido
-					pos = desc.indexOf("Sentido");
-					if (pos >= 0) {
+                        }
 
-						int posOb = desc.indexOf("Observaciones:");
+                    } else {
+                        placeMark.setSentido("");
 
-						if (posOb < 0)
-							placeMark.setSentido(desc.substring(pos + 8));
-						else {
+                        placeMark.setObservaciones("");
+                    }
 
-							placeMark.setSentido(desc.substring(pos + 8, posOb));
+                    if (placeMark.getObservaciones() != null) {
+                        placeMark.setObservaciones(placeMark.getObservaciones().trim());
+                    }
 
-							placeMark.setObservaciones(desc.substring(posOb + 14));
+                    // Extraer lineas
+                    int pos2 = desc.indexOf("Líneas");
+                    if (pos >= 0 && pos2 >= 0) {
+                        placeMark.setLineas(desc.substring(pos2 + 7, pos));
+                    } else {
+                        placeMark.setLineas("");
+                    }
 
-						}
+                    if (placeMark.getLineas() != null) {
+                        placeMark.setLineas(placeMark.getLineas().trim());
+                    }
 
-					} else {
-						placeMark.setSentido("");
+                } else if (etiqueta.equals("name")) {
 
-						placeMark.setObservaciones("");
-					}
+                    placeMark.setTitle(textoSegunVersion(dato));
 
-					if (placeMark.getObservaciones() != null) {
-						placeMark.setObservaciones(placeMark.getObservaciones().trim());
-					}
+                } else if (etiqueta.equals("Point")) {
+                    NodeList points = dato.getChildNodes();
 
-					// Extraer lineas
-					int pos2 = desc.indexOf("Líneas");
-					if (pos >= 0 && pos2 >= 0) {
-						placeMark.setLineas(desc.substring(pos2 + 7, pos));
-					} else {
-						placeMark.setLineas("");
-					}
+                    for (int z = 0; z < points.getLength(); z++) {
 
-					if (placeMark.getLineas() != null) {
-						placeMark.setLineas(placeMark.getLineas().trim());
-					}
+                        Node dato2 = points.item(z);
+                        String etiqueta2 = dato2.getNodeName();
 
-				} else if (etiqueta.equals("name")) {
+                        if (etiqueta2.equals("coordinates")) {
 
-					placeMark.setTitle(textoSegunVersion(dato));
+                            String texto = textoSegunVersion(dato2);
 
-				} else if (etiqueta.equals("Point")) {
-					NodeList points = dato.getChildNodes();
+                            // String texto = dato2.getTextContent();
+                            placeMark.setCoordinates(texto);
+                        }
 
-					for (int z = 0; z < points.getLength(); z++) {
+                    }
 
-						Node dato2 = points.item(z);
-						String etiqueta2 = dato2.getNodeName();
+                }
 
-						if (etiqueta2.equals("coordinates")) {
+            }
 
-							String texto = textoSegunVersion(dato2);
+            placeMarks.add(placeMark);
+        }
 
-							// String texto = dato2.getTextContent();
-							placeMark.setCoordinates(texto);
-						}
+        return placeMarks;
 
-					}
+    }
 
-				}
+    /**
+     * Parsear fichero kml
+     *
+     * @param url
+     * @return
+     */
+    public static String[] getDatosMapaRecorrido(String url) {
 
-			}
+        InputStream isZip = null;
 
-			placeMarks.add(placeMark);
-		}
+        InputStream is = null;
 
-		return placeMarks;
+        String coordenadas[] = {null, null};
 
-	}
+        try {
 
-	/**
-	 * Parsear fichero kml
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String[] getDatosMapaRecorrido(String url) {
+            isZip = Conectividad.conexionGetIsoStream(url);
 
-		InputStream is = null;
+            // Verificar si kml llega comprimido en zip
+            boolean esZip = Utilidades.isZipFile(isZip);
 
-		String coordenadas[] = { null, null };
+            if (esZip) {
 
-		try {
-			is = Conectividad.conexionGetIsoStream(url);
+                is = Utilidades.zipToInputStream(isZip);
 
-			if (is != null) {
+            } else {
 
-				coordenadas = parseRecorrido(is);
+                is = isZip;
+            }
 
-			} else {
-				coordenadas = null;
-			}
 
-		} catch (Exception e) {
+            if (is != null) {
 
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
+                coordenadas = parseRecorrido(is);
 
-			}
-		}
+            } else {
+                coordenadas = null;
+            }
 
-		// if (coordenadas != null && !coordenadas.equals("")) {
+        } catch (Exception e) {
 
-		return coordenadas;
+        } finally {
+            try {
+                isZip.close();
+                is.close();
+            } catch (Exception e) {
 
-		// } else {
-		// return null;
-		// }
-	}
+            }
+        }
 
-	public static String[] parseRecorrido(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // if (coordenadas != null && !coordenadas.equals("")) {
 
-		String coordenadas[] = { null, null };
+        return coordenadas;
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+        // } else {
+        // return null;
+        // }
+    }
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+    public static String[] parseRecorrido(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+        String coordenadas[] = {null, null};
 
-			// Localizamos todos los elementos <Placemark>
-			NodeList items = root.getElementsByTagName("coordinates");
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-			Node item = items.item(0);
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-			coordenadas[0] = textoSegunVersion(item).trim();
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
 
-			Node item2 = items.item(1);
+            // Localizamos todos los elementos <Placemark>
+            NodeList items = root.getElementsByTagName("coordinates");
 
-			coordenadas[1] = textoSegunVersion(item2).trim();
+            Node item = items.item(0);
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+            coordenadas[0] = textoSegunVersion(item).trim();
 
-		return coordenadas;
-	}
+            Node item2 = items.item(1);
 
-	/**
-	 * Cotrol de version de android
-	 * 
-	 * @param node
-	 * @return
-	 */
-	private static String textoSegunVersion(Node node) {
+            coordenadas[1] = textoSegunVersion(item2).trim();
 
-		String texto = null;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-			texto = textAlternativo(node);
+        return coordenadas;
+    }
 
-			if (texto != null) {
+    /**
+     * Cotrol de version de android
+     *
+     * @param node
+     * @return
+     */
+    private static String textoSegunVersion(Node node) {
 
-				String textoProc = (Html.fromHtml(texto)).toString();
+        String texto = null;
 
-				texto = textoProc;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+            texto = textAlternativo(node);
 
-			}
+            if (texto != null) {
 
-		} else {
-			texto = (new VersionHelper().getTextContent(node));
-		}
+                String textoProc = (Html.fromHtml(texto)).toString();
 
-		return texto;
+                texto = textoProc;
 
-	}
+            }
 
-	/**
-	 * Funcion auxiliar para que funcione en la version 2.1 y anteriores
-	 * 
-	 * @param node
-	 * @return
-	 */
-	private static String textAlternativo(Node node) {
+        } else {
+            texto = (new VersionHelper().getTextContent(node));
+        }
 
-		Node child;
-		String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
+        return texto;
 
-		NodeList nodes = node.getChildNodes();
-		for (int i = 0; i < nodes.getLength(); i++) {
-			child = nodes.item(i);
+    }
 
-			if (child.getNodeValue() != null) {
-				sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
-			} else {
-				sContent += "&" + child.getNodeName();
-			}
+    /**
+     * Funcion auxiliar para que funcione en la version 2.1 y anteriores
+     *
+     * @param node
+     * @return
+     */
+    private static String textAlternativo(Node node) {
 
-			if (nodes.item(i).getChildNodes().getLength() > 0) {
-				sContent += textAlternativo(nodes.item(i));
-			}
-		}
+        Node child;
+        String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
 
-		return sContent;
-	}
+        NodeList nodes = node.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            child = nodes.item(i);
+
+            if (child.getNodeValue() != null) {
+                sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
+            } else {
+                sContent += "&" + child.getNodeName();
+            }
+
+            if (nodes.item(i).getChildNodes().getLength() > 0) {
+                sContent += textAlternativo(nodes.item(i));
+            }
+        }
+
+        return sContent;
+    }
 
 }
