@@ -1,98 +1,157 @@
-
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="alberapps.android.tiempobus"
-    android:versionCode="43"
-    android:versionName="3.0.4"
-    android:installLocation="auto">
+    android:installLocation="auto"
+    android:versionCode="47"
+    android:versionName="3.1.4">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
 
-    <supports-screens android:smallScreens="true" android:largeScreens="true" android:normalScreens="true" android:xlargeScreens="true"/>
-	 
-    <uses-permission android:name="android.permission.VIBRATE"  />
-	<uses-permission android:name="android.permission.INTERNET" />
-		
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"  />
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
-	<!-- MAPS 2 -->
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-    
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- MAPS 2 -->
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
     <!-- 
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="false"/>
     -->
-    
-    <!--  --> 
-	
-	
-    <application android:label="@string/app_name"
-        android:icon="@drawable/ic_tiempobus_3"
-        android:theme="@style/AppTheme"
+
+    <!--  -->
+
+
+    <application
+        android:name=".ApplicationTiempoBus"
         android:allowBackup="false"
-        android:name=".ApplicationTiempoBus">
-        
-        
-        
-        <activity android:name=".MainActivity" android:label="@string/app_name" android:launchMode="singleTop" android:configChanges="keyboardHidden|locale" android:windowSoftInputMode="stateHidden">
+        android:icon="@drawable/ic_tiempobus_3"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|locale"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-		
-        
-        
-		
-		<activity android:name=".favoritos.FavoritosActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-		
-		<activity android:name=".favoritos.FavoritoNuevoActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-		<activity android:name=".favoritos.FavoritoModificarActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@style/AppTheme"  android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-		
-		<activity android:name=".favoritos.drive.FavoritoDriveActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/favoritosN" android:theme="@android:style/Theme.Dialog"/>
-		
-		
-		<activity android:name="PreferencesFromXml" android:label="@string/preferences_from_xml" android:theme="@style/Theme.Mapa">
-        </activity>
-        
-        
-       
-        <activity android:name=".noticias.NoticiasTabsPager" android:label="@string/tit_noticias" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|locale"
+
+
+        <activity
+            android:name=".favoritos.FavoritosActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/favoritosN"
             android:parentActivityName=".MainActivity">
-    		<meta-data
-        		android:name="android.support.PARENT_ACTIVITY"
-        		android:value=".MainActivity"/>
-            
-        </activity>
-        
-        
-         <activity android:name=".noticias.DetalleNoticiaActivity" android:label="@string/tit_noticias" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale">
-        </activity>
-       
-         <!-- maps 1 
-        <activity android:name=".mapas.MapasActivity" android:label="@string/menu_mapa" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-        -->
 
-		<receiver android:name="alberapps.android.tiempobus.alarma.AlarmReceiver" android:process=":remote"
-			android:permission="android.permission.VIBRATE"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
-		<provider android:name=".data.FavoritosProvider" android:exported="false" android:authorities="alberapps.android.tiempobus" />
-        
-        <!-- MAPS 1
-        <uses-library android:name="com.google.android.maps" />
-        -->
-        
-        
-        
+        <activity
+            android:name=".favoritos.FavoritoNuevoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/favoritosN"
+            android:parentActivityName=".MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".favoritos.FavoritoModificarActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/favoritosN"
+            android:parentActivityName=".favoritos.FavoritosActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".favoritos.FavoritosActivity" />
+        </activity>
+
+        <activity
+            android:name=".favoritos.drive.FavoritoDriveActivity"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/favoritosN"
+            android:theme="@android:style/Theme.Dialog" />
+
+
+        <activity
+            android:name="PreferencesFromXml"
+            android:label="@string/preferences_from_xml"
+            android:theme="@style/Theme.Mapa"></activity>
+
+
+        <activity
+            android:name=".noticias.NoticiasTabsPager"
+            android:configChanges="keyboardHidden|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/tit_noticias"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+        </activity>
+
+
+        <activity
+            android:name=".noticias.DetalleNoticiaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/tit_noticias"
+            android:parentActivityName=".noticias.NoticiasTabsPager">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".noticias.NoticiasTabsPager" />
+
+
+        </activity>
+
+
+        <receiver
+            android:name="alberapps.android.tiempobus.alarma.AlarmReceiver"
+            android:permission="android.permission.VIBRATE"
+            android:process=":remote" />
+
+        <provider
+            android:name=".data.FavoritosProvider"
+            android:authorities="alberapps.android.tiempobus"
+            android:exported="false" />
+
+
         <!-- displays search results. -->
-        <activity android:name=".buscador.BuscadorLineas" android:label="@string/busqueda" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale">
+        <activity
+            android:name=".buscador.BuscadorLineas"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/busqueda"
+            android:parentActivityName=".infolineas.InfoLineasTabsPager">
 
-           
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".infolineas.InfoLineasTabsPager" />
+
+
             <!-- Receives the search request. -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -100,80 +159,161 @@
             </intent-filter>
 
             <!-- Points to searchable meta data. -->
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
 
         </activity>
-        
-         <!-- Displays the definition of a word. -->
-        <activity android:name=".buscador.DatosParadaActivity" android:label="@string/datos_parada" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
+
+        <!-- Displays the definition of a word. -->
+        <activity
+            android:name=".buscador.DatosParadaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/datos_parada"
+            android:parentActivityName=".buscador.BuscadorLineas">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".buscador.BuscadorLineas" />
+
+
+        </activity>
 
         <!-- Provides search suggestions for words and their definitions. -->
-        <provider android:name="alberapps.android.tiempobus.database.BuscadorLineasProvider"
-                  android:authorities="alberapps.android.tiempobus.buscador.BuscadorLineasProvider" android:exported="false"/>
+        <provider
+            android:name="alberapps.android.tiempobus.database.BuscadorLineasProvider"
+            android:authorities="alberapps.android.tiempobus.buscador.BuscadorLineasProvider"
+            android:exported="false" />
 
         <!-- Points to searchable activity so the whole app can invoke search. -->
-        <meta-data android:name="android.app.default_searchable"
-                   android:value=".buscador.BuscadorLineas" />
-        
-        
-        
-         <activity android:name=".appinfo.AppInfoActivity" android:exported="false" android:label="@string/app_name" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale">
-         	<intent-filter >
-         	    <action android:name=".appinfo.AppInfoActivity" />
-         	    <category android:name="android.intent.category.DEFAULT"/>         	    
-         	</intent-filter>    
-             
-         </activity>
-         
-          <activity android:name=".appinfo.TraduccionesActivity" android:exported="false" android:label="@string/app_name" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale">
-         	<intent-filter >
-         	    <action android:name=".appinfo.TraduccionesActivity" />
-         	    <category android:name="android.intent.category.DEFAULT"/>         	    
-         	</intent-filter>    
-             
-         </activity>
-        
-        <activity android:name=".infolineas.InfoLineasTabsPager" android:label="@string/buscador_online" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|locale" android:windowSoftInputMode="stateHidden"/>
-         
-        <activity android:name=".infolineas.InfoLineasDatosParadaActivity" android:label="@string/datos_parada" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-        
-       
-        <activity android:name=".historial.HistorialActivity" android:icon="@drawable/ic_tiempobus_3"  android:label="@string/historial_titulo" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-		
-		<provider android:name=".database.historial.HistorialProvider" android:exported="false" android:authorities="alberapps.android.tiempobus.historial.HistorialProvider" />
-        
-        
-        
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".buscador.BuscadorLineas" />
+
+
+        <activity
+            android:name=".appinfo.AppInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:exported="false"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name=".appinfo.AppInfoActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".appinfo.TraduccionesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:exported="false"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name=".appinfo.TraduccionesActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".infolineas.InfoLineasTabsPager"
+            android:configChanges="keyboardHidden|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/buscador_online"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateHidden">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".infolineas.InfoLineasDatosParadaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/datos_parada"
+            android:parentActivityName=".infolineas.InfoLineasTabsPager">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".infolineas.InfoLineasTabsPager" />
+
+        </activity>
+
+
+        <activity
+            android:name=".historial.HistorialActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/historial_titulo"
+            android:parentActivityName=".MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+        </activity>
+
+        <provider
+            android:name=".database.historial.HistorialProvider"
+            android:authorities="alberapps.android.tiempobus.historial.HistorialProvider"
+            android:exported="false" />
+
+
         <service android:name="alberapps.android.tiempobus.service.TiemposForegroundService" />
-        
-        
+
+
         <!-- MAPS 2 -->
-        <meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
-        
         <meta-data
-    		android:name="com.google.android.maps.v2.API_KEY"
-    		android:value="KEY"/>
-        
-        <activity android:name=".mapas.maps2.MapasMaps2Activity" android:label="@string/menu_mapa" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-        
-        <activity android:name=".mapas.maps2.StreetViewActivity" android:label="@string/menu_mapa" android:icon="@drawable/ic_tiempobus_3" android:theme="@style/AppTheme" android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"/>
-        
-        
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="KEY" />
+
+        <activity
+            android:name=".mapas.maps2.MapasMaps2Activity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/menu_mapa"
+            android:parentActivityName=".MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".mapas.maps2.StreetViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@drawable/ic_tiempobus_3"
+            android:label="@string/menu_mapa"
+            android:parentActivityName=".mapas.maps2.MapasMaps2Activity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".mapas.maps2.MapasMaps2Activity" />
+
+        </activity>
+
+
         <!-- FIN MAPS 2 -->
-        
-        
+
+
         <meta-data
-     		android:name="com.google.android.gms.analytics.globalConfigResource"
-     		android:resource="@xml/analytics_global_config" />
-        
-        
+            android:name="com.google.android.gms.analytics.globalConfigResource"
+            android:resource="@xml/analytics_global_config" />
+
+
     </application>
-    
-    
-    
-    
+
+
 </manifest>
 
 
