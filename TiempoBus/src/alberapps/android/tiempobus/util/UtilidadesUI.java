@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,10 +18,6 @@
  */
 package alberapps.android.tiempobus.util;
 
-import java.util.List;
-import java.util.Locale;
-
-import alberapps.android.tiempobus.R;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -36,131 +32,134 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 
+import java.util.List;
+import java.util.Locale;
+
+import alberapps.android.tiempobus.R;
+
 /**
  * Utilidades de uso en la interfaz
- * 
- * 
  */
 public class UtilidadesUI {
 
-	public static String WIDGET_PACKAGE = "alberapps.android.tiempobuswidgets";
-	public static String WIDGET_ACTIVITY = "alberapps.android.tiempobuswidgets.ComunicacionActivity";
+    public static String WIDGET_PACKAGE = "alberapps.android.tiempobuswidgets";
+    public static String WIDGET_ACTIVITY = "alberapps.android.tiempobuswidgets.ComunicacionActivity";
 
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-		// Raw height and width of image
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
 
-		if (height > reqHeight || width > reqWidth) {
-			if (width > height) {
-				inSampleSize = Math.round((float) height / (float) reqHeight);
-			} else {
-				inSampleSize = Math.round((float) width / (float) reqWidth);
-			}
-		}
-		return inSampleSize;
-	}
+        if (height > reqHeight || width > reqWidth) {
+            if (width > height) {
+                inSampleSize = Math.round((float) height / (float) reqHeight);
+            } else {
+                inSampleSize = Math.round((float) width / (float) reqWidth);
+            }
+        }
+        return inSampleSize;
+    }
 
-	public static Bitmap decodeBitmapFromFile(String res, int reqWidth, int reqHeight) {
+    public static Bitmap decodeBitmapFromFile(String res, int reqWidth, int reqHeight) {
 
-		// First decode with inJustDecodeBounds=true to check dimensions
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(res, options);
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(res, options);
 
-		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
 
-		// Decode bitmap with inSampleSize set
-		options.inJustDecodeBounds = false;
-		return BitmapFactory.decodeFile(res, options);
-	}
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(res, options);
+    }
 
-	public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
+    public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
 
-		if (!fondoGaleria.equals("")) {
+        if (!fondoGaleria.equals("")) {
 
-			Drawable dr = null;
+            Drawable dr = null;
 
-			// Bitmap bitmapCargado = BitmapFactory.decodeFile(fondo_galeria);
+            // Bitmap bitmapCargado = BitmapFactory.decodeFile(fondo_galeria);
 
-			DisplayMetrics displaymetrics = new DisplayMetrics();
-			actividad.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-			int height = displaymetrics.heightPixels;
-			int width = displaymetrics.widthPixels;
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            actividad.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            int height = displaymetrics.heightPixels;
+            int width = displaymetrics.widthPixels;
 
-			Bitmap bitmapCargado = UtilidadesUI.decodeBitmapFromFile(fondoGaleria, width, height);
+            Bitmap bitmapCargado = UtilidadesUI.decodeBitmapFromFile(fondoGaleria, width, height);
 
-			// Bitmap bitmapRecortado = recortarBitmap(bitmap);
-			if (bitmapCargado != null)
-				dr = new BitmapDrawable(bitmapCargado);
+            // Bitmap bitmapRecortado = recortarBitmap(bitmap);
+            if (bitmapCargado != null)
+                dr = new BitmapDrawable(bitmapCargado);
 
-			if (dr != null) {
-				contenedorPrincipal.setBackgroundDrawable(dr);
-			} else {
-				contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
-			}
+            if (dr != null) {
+                contenedorPrincipal.setBackgroundDrawable(dr);
+            } else {
+                contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
+            }
 
-		} else {
+        } else {
 
-			contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
+            contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Verifica la instalacion del widget
-	 * 
-	 * @param context
-	 * @return boolean
-	 */
-	public static boolean verificarWidgetInstalado(Context context) {
+    /**
+     * Verifica la instalacion del widget
+     *
+     * @param context
+     * @return boolean
+     */
+    public static boolean verificarWidgetInstalado(Context context) {
 
-		PackageManager manager = context.getPackageManager();
+        PackageManager manager = context.getPackageManager();
 
-		List<ApplicationInfo> packages = manager.getInstalledApplications(0);
+        List<ApplicationInfo> packages = manager.getInstalledApplications(0);
 
-		for (int i = 0; i < packages.size(); i++) {
-			if (packages.get(i).packageName.equals(WIDGET_PACKAGE)) {
-				return true;
-			}
-		}
+        for (int i = 0; i < packages.size(); i++) {
+            if (packages.get(i).packageName.equals(WIDGET_PACKAGE)) {
+                return true;
+            }
+        }
 
-		return false;
+        return false;
 
-	}
+    }
 
-	/**
-	 * Verifica si se trata de una tablet y en horizontal y api >= v14
-	 * 
-	 * @param contexto
-	 * @return
-	 */
-	@SuppressLint("NewApi")
-	public static boolean pantallaTabletHorizontal(Context contexto) {
+    /**
+     * Verifica si se trata de una tablet y en horizontal y api >= v14
+     *
+     * @param contexto
+     * @return
+     */
+    @SuppressLint("NewApi")
+    public static boolean pantallaTabletHorizontal(Context contexto) {
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-			Configuration config = contexto.getResources().getConfiguration();
+            Configuration config = contexto.getResources().getConfiguration();
 
-			if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
 
-				return true;
+                return true;
 
-			} else {
+            } else {
 
-				return false;
-			}
-		} else {
-			return false;
-		}
+                return false;
+            }
+        } else {
+            return false;
+        }
 
-	}
+    }
 
 	/*
-	 * public static void enviarEventoAnalytics(Context context, String evento)
+     * public static void enviarEventoAnalytics(Context context, String evento)
 	 * {
 	 * 
 	 * // May return null if a EasyTracker has not yet been initialized with a
@@ -175,90 +174,131 @@ public class UtilidadesUI {
 	 * 
 	 * }
 	 */
-	/**
-	 * Idioma para la wikipedia
-	 * 
-	 * @return idioma
-	 */
-	public static String getIdiomaWiki() {
 
-		String idiomaWiki = null;
+    /**
+     * Idioma para la wikipedia
+     *
+     * @return idioma
+     */
+    public static String getIdiomaWiki() {
 
-		try {
-			String locale = Locale.getDefault().getDisplayLanguage();
+        String idiomaWiki = null;
 
-			if (locale.substring(0, 2).equals("ca")) {
-				idiomaWiki = "ca";
-			} else if (locale.substring(0, 2).equals("en")) {
-				idiomaWiki = "en";
-			} else {
-				idiomaWiki = "es";
-			}
+        try {
+            String locale = Locale.getDefault().getDisplayLanguage();
 
-		} catch (Exception e) {
-			idiomaWiki = "es";
-		}
+            if (locale.substring(0, 2).equals("es")) {
+                idiomaWiki = "es";
+            } else if (locale.substring(0, 2).equals("ca")) {
+                idiomaWiki = "ca";
+            } else if (locale.substring(0, 2).equals("en")) {
+                idiomaWiki = "en";
+            } else {
+                idiomaWiki = "es";
+            }
 
-		return idiomaWiki;
+        } catch (Exception e) {
+            idiomaWiki = "es";
+        }
 
-	}
+        return idiomaWiki;
 
-	/**
-	 * Locale adecuado
-	 * 
-	 * @return
-	 */
-	public static Locale getLocaleInt() {
+    }
 
-		Locale loc = null;
+    /**
+     * Idioma para openweathermap
+     *
+     * @return idioma
+     */
+    public static String getIdiomaOWM() {
 
-		try {
-			loc = new Locale("spa", "ES");
-		} catch (Exception e) {
+        String idioma = null;
 
-		}
+        try {
+            String locale = Locale.getDefault().getDisplayLanguage();
 
-		if (loc == null) {
-			loc = Locale.US;
-		}
+            if (locale.substring(0, 2).equals("es")) {
+                idioma = "es";
+            } else if (locale.substring(0, 2).equals("ca")) {
+                idioma = "ca";
+            } else if (locale.substring(0, 2).equals("en")) {
+                idioma = "en";
+            } else if (locale.substring(0, 2).equals("fr")) {
+                idioma = "fr";
+            } else if (locale.substring(0, 2).equals("it")) {
+                idioma = "it";
+            } else if (locale.substring(0, 2).equals("de")) {
+                idioma = "de";
+            } else if (locale.substring(0, 2).equals("ru")) {
+                idioma = "ru";
+            } else {
+                idioma = "es";
+            }
 
-		return loc;
+        } catch (Exception e) {
+            idioma = "es";
+        }
 
-	}
+        return idioma;
 
-	/**
-	 * Locale adecuado intentando primero el por defecto
-	 * 
-	 * @return
-	 */
-	public static Locale getLocaleUsuario() {
+    }
 
-		Locale loc = null;
+    /**
+     * Locale adecuado
+     *
+     * @return
+     */
+    public static Locale getLocaleInt() {
 
-		// Por defecto
-		try {
-			loc = Locale.getDefault();
+        Locale loc = null;
 
-		} catch (Exception e) {
+        try {
+            loc = new Locale("spa", "ES");
+        } catch (Exception e) {
 
-		}
+        }
 
-		// Intanta el ES
-		if (loc == null) {
-			try {
-				loc = new Locale("spa", "ES");
-			} catch (Exception ex) {
+        if (loc == null) {
+            loc = Locale.US;
+        }
 
-			}
-		}
+        return loc;
 
-		// Como ultimo intento
-		if (loc == null) {
-			loc = Locale.US;
-		}
+    }
 
-		return loc;
+    /**
+     * Locale adecuado intentando primero el por defecto
+     *
+     * @return
+     */
+    public static Locale getLocaleUsuario() {
 
-	}
+        Locale loc = null;
+
+        // Por defecto
+        try {
+            loc = Locale.getDefault();
+
+        } catch (Exception e) {
+
+        }
+
+        // Intanta el ES
+        if (loc == null) {
+            try {
+                loc = new Locale("spa", "ES");
+            } catch (Exception ex) {
+
+            }
+        }
+
+        // Como ultimo intento
+        if (loc == null) {
+            loc = Locale.US;
+        }
+
+        return loc;
+
+    }
 
 }

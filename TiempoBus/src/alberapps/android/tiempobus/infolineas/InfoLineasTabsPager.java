@@ -20,7 +20,6 @@
 package alberapps.android.tiempobus.infolineas;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
@@ -42,6 +41,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,7 +64,6 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
@@ -81,7 +81,7 @@ import alberapps.java.tam.webservice.estructura.GetLineasResult;
  * to move between the tabs.
  */
 @SuppressLint("NewApi")
-public class InfoLineasTabsPager extends ActionBarActivityFragments {
+public class InfoLineasTabsPager extends ActionBarActivity {
 	TabHost mTabHost;
 	ViewPager mViewPager;
 	TabsAdapter mTabsAdapter;
@@ -154,12 +154,12 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 		// Fondo
 		// setupFondoAplicacion();
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
+
+			ActionBar actionBar = getSupportActionBar();
 			if(actionBar != null){
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
-		}
+
 
 		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
@@ -499,11 +499,7 @@ public class InfoLineasTabsPager extends ActionBarActivityFragments {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		case R.id.menu_search:
 

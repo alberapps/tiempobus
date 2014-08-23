@@ -14,8 +14,14 @@
   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"><item android:id="@id/menu_hist_borrar" android:orderInCategory="1" android:title="@string/historial_borrar_todo" android:showAsAction="never" android:icon="@drawable/ic_menu_vuelta"></item>
-        
-       
-        
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@id/menu_hist_borrar"
+        android:icon="@drawable/ic_menu_vuelta"
+        android:orderInCategory="1"
+        tiempobus:showAsAction="never"
+        android:title="@string/historial_borrar_todo"></item>
+
+
 </menu>

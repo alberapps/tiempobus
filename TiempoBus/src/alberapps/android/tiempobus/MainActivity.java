@@ -43,11 +43,12 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -78,7 +79,6 @@ import java.util.List;
 import java.util.Locale;
 
 import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
@@ -105,7 +105,7 @@ import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
 
-public class MainActivity extends ActionBarActivityFragments implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends ActionBarActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
 	public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
 	public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -179,6 +179,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	SwipeRefreshLayout swipeRefresh = null;
 
+    MenuItem refresh = null;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -217,7 +219,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 		setupView();
 
-		showProgressBar(true);
 
 		mTts = new TextToSpeech(this, this // TextToSpeech.OnInitListener
 		);
@@ -277,13 +278,13 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		R.string.drawer_close /* "close drawer" description for accessibility */
 		) {
 			public void onDrawerClosed(View view) {
-				getActionBar().setTitle(mTitle);
+				getSupportActionBar().setTitle(mTitle);
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle(mDrawerTitle);
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
@@ -291,8 +292,8 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
 		if (savedInstanceState == null) {
 			// selectItem(0);
@@ -643,8 +644,10 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.main, menu);
+
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        refresh = menu.findItem(R.id.menu_refresh);
 
 		// Calling super after populating the menu is necessary here to ensure
 		// that the
@@ -1252,7 +1255,11 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 
 			Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
-			getActionBarHelper().setRefreshActionItemState(true);
+
+            //Recarga en boton barra superior
+            if(refresh != null) {
+                MenuItemCompat.setActionView(refresh,R.layout.actionbar_indeterminate_progress);
+            }
 
 		} else {
 
@@ -1261,7 +1268,9 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 				swipeRefresh.setRefreshing(false);
 			}
 
-			getActionBarHelper().setRefreshActionItemState(false);
+            if(refresh != null) {
+                MenuItemCompat.setActionView(refresh,null);
+            }
 
 		}
 	}
@@ -1651,5 +1660,6 @@ public class MainActivity extends ActionBarActivityFragments implements TextToSp
 		}
 
 	}
+
 
 }

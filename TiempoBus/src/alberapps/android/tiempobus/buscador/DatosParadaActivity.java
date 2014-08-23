@@ -20,7 +20,6 @@
 package alberapps.android.tiempobus.buscador;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +29,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,7 +44,6 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -55,7 +55,7 @@ import alberapps.java.tram.UtilidadesTRAM;
  * Displays a word and its definition.
  */
 @SuppressLint("NewApi")
-public class DatosParadaActivity extends ActionBarBuscadorActivity {
+public class DatosParadaActivity extends ActionBarActivity {
 
 	String paradaSel = "";
 	String lineaSel = "";
@@ -73,12 +73,12 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		// Fondo
 		setupFondoAplicacion();
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
-			if (actionBar != null) {
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+
 
 		Uri uri = getIntent().getData();
 		Cursor cursor = managedQuery(uri, null, null, null, null);
@@ -248,11 +248,7 @@ public class DatosParadaActivity extends ActionBarBuscadorActivity {
 		case R.id.menu_search:
 			onSearchRequested();
 			break;
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		}
 

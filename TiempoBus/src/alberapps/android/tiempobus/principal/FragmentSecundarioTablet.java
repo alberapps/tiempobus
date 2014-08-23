@@ -18,21 +18,18 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.database.BuscadorLineasProvider;
-import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Fragmento secundario tablet
@@ -88,7 +85,7 @@ public class FragmentSecundarioTablet extends Fragment {
 	 * Actualizar datos ficha tablet
 	 */
 	public void actualizarDatos() {
-
+/*
 		String parametros[] = { Integer.toString(actividad.paradaActual) };
 
 		try {
@@ -146,7 +143,7 @@ public class FragmentSecundarioTablet extends Fragment {
 		} catch (Exception e) {
 
 		}
-
+*/
 	}
 
 	@Override

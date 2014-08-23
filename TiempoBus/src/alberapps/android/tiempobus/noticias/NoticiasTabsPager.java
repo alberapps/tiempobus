@@ -19,35 +19,7 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.PreferencesFromXml;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
-import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRssAsyncTaskResponder;
-import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask.LoadTwitterAsyncTaskResponder;
-import alberapps.android.tiempobus.util.Notificaciones;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.noticias.Noticias;
-import alberapps.java.noticias.rss.NoticiaRss;
-import alberapps.java.noticias.tw.ProcesarTwitter;
-import alberapps.java.noticias.tw.TwResultado;
-import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.webservice.estructura.GetLineasResult;
-import alberapps.java.tram.UtilidadesTRAM;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -60,13 +32,15 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,13 +58,39 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import alberapps.android.tiempobus.PreferencesFromXml;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadNoticiasRssAsyncTask.LoadNoticiasRssAsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadTwitterAsyncTask.LoadTwitterAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.rss.NoticiaRss;
+import alberapps.java.noticias.tw.ProcesarTwitter;
+import alberapps.java.noticias.tw.TwResultado;
+import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.mapas.DatosMapa;
+import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tram.UtilidadesTRAM;
+
 /**
  * Demonstrates combining a TabHost with a ViewPager to implement a tab UI that
  * switches between tabs and also allows the user to perform horizontal flicks
  * to move between the tabs.
  */
 @SuppressLint("NewApi")
-public class NoticiasTabsPager extends ActionBarActivityFragments {
+public class NoticiasTabsPager extends ActionBarActivity {
 	TabHost mTabHost;
 	ViewPager mViewPager;
 	TabsAdapter mTabsAdapter;
@@ -127,6 +127,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 	private ProgressDialog dialog;
 
+    MenuItem refresh = null;
+
 	AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
 
 	AsyncTask<Object, Void, List<TwResultado>> loadTwTask = null;
@@ -154,12 +156,12 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			setContentView(R.layout.noticias_contenedor_2);
 		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
-			if (actionBar != null) {
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
+
 
 		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
@@ -330,6 +332,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_noticias, menu);
 
+        refresh = menu.findItem(R.id.menu_refresh);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -337,11 +341,6 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
 
 		case R.id.menu_refresh:
 
@@ -395,7 +394,8 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 			dialog.setMessage(getString(R.string.carga_noticias_msg));
 
 		} else {
-			getActionBarHelper().setRefreshActionItemState(true);
+
+			setRefreshActionItemState(true);
 		}
 
 		/**
@@ -443,7 +443,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			getActionBarHelper().setRefreshActionItemState(false);
+			setRefreshActionItemState(false);
 
 			if (dialog != null && dialog.isShowing()) {
 
@@ -541,7 +541,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		 *            The ListView where the click happened
 		 * @param v
 		 *            The view that was clicked within the ListView
-		 * @param position
+		 * @param position_inicial
 		 *            The position of the view in the list
 		 * @param id
 		 *            The row id of the item that was clicked
@@ -634,7 +634,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				} else {
 
-					getActionBarHelper().setRefreshActionItemState(false);
+					setRefreshActionItemState(false);
 
 					if (dialog != null && dialog.isShowing()) {
 
@@ -662,7 +662,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		// Opcion de desactivar twitter
 		if (!preferencias.getBoolean("tw_activar", true)) {
 
-			getActionBarHelper().setRefreshActionItemState(false);
+			setRefreshActionItemState(false);
 
 			if (dialog != null && dialog.isShowing()) {
 
@@ -709,7 +709,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			getActionBarHelper().setRefreshActionItemState(false);
+			setRefreshActionItemState(false);
 
 			if (dialog != null && dialog.isShowing()) {
 
@@ -854,7 +854,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 
 				}
 
-				getActionBarHelper().setRefreshActionItemState(false);
+				setRefreshActionItemState(false);
 
 				if (dialog != null && dialog.isShowing()) {
 
@@ -886,7 +886,7 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		} else {
 			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			getActionBarHelper().setRefreshActionItemState(false);
+			setRefreshActionItemState(false);
 
 			if (dialog != null && dialog.isShowing()) {
 
@@ -1172,5 +1172,19 @@ public class NoticiasTabsPager extends ActionBarActivityFragments {
 		super.onStop();
 
 	}
+
+    /**
+     * Progreso en barra superior
+     * @param show
+     */
+    public void setRefreshActionItemState(boolean show) {
+
+        if (show && refresh != null) {
+            MenuItemCompat.setActionView(refresh, R.layout.actionbar_indeterminate_progress);
+        } else if(refresh != null){
+            MenuItemCompat.setActionView(refresh,null);
+        }
+
+    }
 
 }

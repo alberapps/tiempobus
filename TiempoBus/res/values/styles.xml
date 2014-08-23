@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
+
+
+    <style name="AppThemeCompat" parent="@style/Theme.AppCompat.Light">
+        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
+        <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
+
+
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- anteriores -->
+
+
+
+
+
+
 	<style name="TitlebarBackgroundStyle">
         <item name="android:background">@drawable/bg_title</item>
          

@@ -19,14 +19,6 @@
  */
 package alberapps.android.tiempobus.buscador;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
-import alberapps.android.tiempobus.database.BuscadorLineasProvider;
-import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
@@ -48,6 +40,14 @@ import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
+import alberapps.android.tiempobus.database.BuscadorLineasProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * The main activity for the dictionary. Displays search results triggered by
@@ -182,11 +182,7 @@ public class BuscadorLineas extends ActionBarBuscadorActivity {
 			onSearchRequested();
 			break;
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		}
 

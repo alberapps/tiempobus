@@ -18,18 +18,9 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
-import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.noticias.Noticias;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -38,6 +29,8 @@ import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
@@ -52,12 +45,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.noticias.Noticias;
+
 /**
  * Detalle de la noticia
  */
 @SuppressWarnings("deprecation")
 @SuppressLint("NewApi")
-public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
+public class DetalleNoticiaActivity extends ActionBarActivity {
 
 	private ProgressDialog dialog;
 
@@ -81,12 +80,12 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
+
+			ActionBar actionBar = getSupportActionBar();
 			if(actionBar != null){
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
-		}
+
 
 		dialog = ProgressDialog.show(DetalleNoticiaActivity.this, "", getString(R.string.dialogo_espera), true);
 
@@ -326,11 +325,6 @@ public class DetalleNoticiaActivity extends ActionBarBuscadorActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
 
 		}
 

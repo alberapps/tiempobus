@@ -19,11 +19,6 @@
  */
 package alberapps.android.tiempobus;
 
-import alberapps.android.tiempobus.database.BuscadorLineasProvider;
-import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
-import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
-import alberapps.android.tiempobus.util.Notificaciones;
-import alberapps.android.tiempobus.util.PreferencesUtil;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -35,6 +30,12 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.widget.Toast;
+
+import alberapps.android.tiempobus.database.BuscadorLineasProvider;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
+import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 
 /**
  * 

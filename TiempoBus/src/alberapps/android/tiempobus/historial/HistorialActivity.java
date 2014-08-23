@@ -19,21 +19,16 @@
  */
 package alberapps.android.tiempobus.historial;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarActivity;
-import alberapps.android.tiempobus.database.historial.HistorialDB;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -46,6 +41,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.database.historial.HistorialDB;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Historial
@@ -80,12 +80,12 @@ public class HistorialActivity extends ActionBarActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
+
+			ActionBar actionBar = getSupportActionBar();
 			if(actionBar != null){
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
-		}
+
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
@@ -132,13 +132,17 @@ public class HistorialActivity extends ActionBarActivity {
 
 		adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
 
-		setListAdapter(adapter);
+
 
 		/*
 		 * Preparamos las acciones a realizar cuando pulsen un favorito
 		 */
 
 		favoritosView = (ListView) findViewById(android.R.id.list);
+
+        favoritosView.setAdapter(adapter);
+
+
 		favoritosView.setOnItemClickListener(favoritoClickedHandler);
 		registerForContextMenu(favoritosView);
 
@@ -250,11 +254,7 @@ public class HistorialActivity extends ActionBarActivity {
 
 			break;
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		}
 

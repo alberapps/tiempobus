@@ -27,7 +27,7 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_android" >
+        android:background="@color/gris_blog_b" >
 
         <TextView
             android:id="@+id/datos_linea"

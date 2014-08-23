@@ -17,6 +17,14 @@
  */
 package alberapps.java.wikipedia;
 
+import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -25,165 +33,152 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
-import android.util.Log;
 
 /**
- * 
  * Consulta de datos geolocalizados de la wikipedia
- * 
  */
 public class ProcesarDatosWikipediaService {
 
-	private static final String URL_IDIOMA = "https://";
-	
-	private static final String URL = ".wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&format=xml&gscoord=";
+    private static final String URL_IDIOMA = "https://";
 
-	// 38.343676|-0.494515
+    private static final String URL = ".wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&format=xml&gscoord=";
 
-	/**
-	 * Consultar datos wikipedia con geosearch
-	 * 
-	 * @param lat
-	 * @param lon
-	 * @return lista
-	 * @throws Exception
-	 */
-	public static WikiQuery getDatosWikiLatLon(String lat, String lon) throws Exception {
+    // 38.343676|-0.494515
 
-		
-		
-		
-		
-		// 38346452
-		// -489110
+    /**
+     * Consultar datos wikipedia con geosearch
+     *
+     * @param lat
+     * @param lon
+     * @return lista
+     * @throws Exception
+     */
+    public static WikiQuery getDatosWikiLatLon(String lat, String lon) throws Exception {
 
-		String glat = Double.toString((Integer.parseInt(lat) / 1E6));
-		String glon = Double.toString((Integer.parseInt(lon) / 1E6));
 
-		InputStream is = null;
+        // 38346452
+        // -489110
 
-		WikiQuery resultados = new WikiQuery();
+        String glat = Double.toString((Integer.parseInt(lat) / 1E6));
+        String glon = Double.toString((Integer.parseInt(lon) / 1E6));
 
-		String caracter = URLEncoder.encode("|", "UTF-8");
-		
-		String urlGet = URL_IDIOMA + UtilidadesUI.getIdiomaWiki() + URL + glat + caracter + glon;
-		
-		
+        InputStream is = null;
 
-		try {
+        WikiQuery resultados = new WikiQuery();
 
-			is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, true, true));
+        String caracter = URLEncoder.encode("|", "UTF-8");
 
-			if (is != null) {
+        String urlGet = URL_IDIOMA + UtilidadesUI.getIdiomaWiki() + URL + glat + caracter + glon;
 
-				resultados = parse(is);
 
-			} else {
+        try {
 
-				// resultados
+            is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, true, true));
 
-			}
+            if (is != null) {
 
-		} catch (Exception e) {
+                resultados = parse(is);
 
-			Log.d("webservice", "Error consulta wiki");
+            } else {
 
-			e.printStackTrace();
+                // resultados
 
-			try {
+            }
 
-				is.close();
-			} catch (Exception ex) {
+        } catch (Exception e) {
 
-			}
+            Log.d("webservice", "Error consulta wiki");
 
-			// Respuesta no esperada del servicio
-			throw e;
+            e.printStackTrace();
 
-		} finally {
-			try {
+            try {
 
-				is.close();
-			} catch (Exception e) {
+                is.close();
+            } catch (Exception ex) {
 
-			}
-		}
+            }
 
-		return resultados;
+            // Respuesta no esperada del servicio
+            throw e;
 
-	}
+        } finally {
+            try {
 
-	/**
-	 * Parsear entrada
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public static WikiQuery parse(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<WikiData> wikiDataList = new ArrayList<WikiData>();
+                is.close();
+            } catch (Exception e) {
 
-		WikiQuery resultados = new WikiQuery();
+            }
+        }
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+        return resultados;
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+    }
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+    /**
+     * Parsear entrada
+     *
+     * @param is
+     * @return
+     */
+    public static WikiQuery parse(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<WikiData> wikiDataList = new ArrayList<WikiData>();
 
-			// Folder principal
-			NodeList gsList = root.getElementsByTagName("gs");
+        WikiQuery resultados = new WikiQuery();
 
-			for (int i = 0; i < gsList.getLength(); i++) {
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-				// gs
-				Node gs = gsList.item(i);
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-				NamedNodeMap atributos = gs.getAttributes();
+            // Nos posicionamos en el nodo principal del árbol
+            Element root = dom.getDocumentElement();
 
-				String pageId = atributos.getNamedItem("pageid").getNodeValue();
+            // Folder principal
+            NodeList gsList = root.getElementsByTagName("gs");
 
-				String title = atributos.getNamedItem("title").getNodeValue();
+            for (int i = 0; i < gsList.getLength(); i++) {
 
-				String latW = atributos.getNamedItem("lat").getNodeValue();
+                // gs
+                Node gs = gsList.item(i);
 
-				String lonW = atributos.getNamedItem("lon").getNodeValue();
+                NamedNodeMap atributos = gs.getAttributes();
 
-				String distancia = atributos.getNamedItem("dist").getNodeValue();
+                String pageId = atributos.getNamedItem("pageid").getNodeValue();
 
-				WikiData data = new WikiData();
+                String title = atributos.getNamedItem("title").getNodeValue();
 
-				data.setPageId(pageId);
-				data.setTitle(title);
-				data.setLat(latW);
-				data.setLon(lonW);
-				data.setDist(distancia);
+                String latW = atributos.getNamedItem("lat").getNodeValue();
 
-				wikiDataList.add(data);
+                String lonW = atributos.getNamedItem("lon").getNodeValue();
 
-			}
+                String distancia = atributos.getNamedItem("dist").getNodeValue();
 
-			resultados.setListaDatos(wikiDataList);
+                WikiData data = new WikiData();
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+                data.setPageId(pageId);
+                data.setTitle(title);
+                data.setLat(latW);
+                data.setLon(lonW);
+                data.setDist(distancia);
 
-		return resultados;
-	}
+                wikiDataList.add(data);
+
+            }
+
+            resultados.setListaDatos(wikiDataList);
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return resultados;
+    }
 
 }

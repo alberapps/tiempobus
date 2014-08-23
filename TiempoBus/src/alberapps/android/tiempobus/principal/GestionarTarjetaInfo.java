@@ -179,7 +179,7 @@ public class GestionarTarjetaInfo {
 				int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
 				int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
 
-				if (!tablet) {
+				//if (!tablet) {
 
 					TextView parada = (TextView) v.findViewById(R.id.parada);
 					TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
@@ -200,7 +200,7 @@ public class GestionarTarjetaInfo {
 
 					}
 
-				}
+				//}
 
 				String lat = cursor.getString(latIndex);
 				String lon = cursor.getString(lonIndex);
@@ -650,11 +650,11 @@ public class GestionarTarjetaInfo {
 
 				textoTemperatura.setText(temp.toString());
 
-                //TextView textoLocalidad = (TextView) v.findViewById(R.id.TextLocalidad);
-                //textoLocalidad.setText(weather.getListaDatos().get(0).getTitle());
+                TextView textoLocalidad = (TextView) v.findViewById(R.id.textoWeatherTexto2);
+                textoLocalidad.setText("\"" + weather.getListaDatos().get(0).getTitle()+"\"");
 
                 TextView textoWeatherTexto = (TextView) v.findViewById(R.id.textoWeatherTexto);
-                textoWeatherTexto.setText("* " + weather.getListaDatos().get(0).getDescription());
+                textoWeatherTexto.setText(weather.getListaDatos().get(0).getDescription());
 
 				// Datos para siguiente pasada
 				datosWeather = weather;

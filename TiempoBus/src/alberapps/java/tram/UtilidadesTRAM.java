@@ -17,10 +17,11 @@
  */
 package alberapps.java.tram;
 
+import android.util.Log;
+
 import java.util.List;
 
 import alberapps.java.tam.mapas.PlaceMark;
-import android.util.Log;
 
 /**
  * Informacion constante para las funciones del tram
@@ -69,6 +70,9 @@ public class UtilidadesTRAM {
 	public static final String[] PDF_URL = { "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf",
 			"http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf",
 			"http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf" };
+
+
+    public static final String CODIGO_TRAM_LONDRES = "109";
 
 	/**
 	 * Ordena las posiciones del recorrido del tram

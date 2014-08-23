@@ -14,31 +14,71 @@
   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_refresh"
-        android:title="@string/menu_refresh"
-        android:icon="@drawable/ic_action_refresh"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/ic_action_refresh_white"
         android:orderInCategory="1"
-        android:showAsAction="always" />
-    <item android:id="@+id/menu_search"
-        android:title="@string/menu_search"
-        android:icon="@drawable/ic_action_search"
+        android:title="@string/menu_refresh"
+        tiempobus:showAsAction="always" />
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_action_search_white"
         android:orderInCategory="0"
-        android:showAsAction="always"/>
-    
-    <item android:id="@+id/menu_favoritos" android:title="@string/menu_favoritos" android:icon="@drawable/ic_menu_favoritos" android:orderInCategory="5" android:showAsAction="never" /><item android:id="@+id/menu_guardar"
-        android:title="@string/menu_save"
+        android:title="@string/menu_search"
+        tiempobus:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_favoritos"
+        android:icon="@drawable/ic_menu_favoritos"
+        android:orderInCategory="5"
+        android:title="@string/menu_favoritos"
+        tiempobus:showAsAction="never" />
+    <item
+        android:id="@+id/menu_guardar"
         android:icon="@drawable/ic_menu_guardar"
         android:orderInCategory="6"
-        android:showAsAction="never" /><item android:id="@id/menu_preferencias"
-        android:title="@string/preferences"
+        android:title="@string/menu_save"
+        tiempobus:showAsAction="never" />
+    <item
+        android:id="@id/menu_preferencias"
         android:icon="@drawable/ic_menu_preferencias"
         android:orderInCategory="7"
-        android:showAsAction="never" /><item android:id="@+id/menu_noticias" android:orderInCategory="4" android:title="@string/tit_noticias" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item><item android:id="@+id/menu_mapas" android:orderInCategory="1" android:title="@string/menu_mapa" android:showAsAction="never" android:icon="@drawable/ic_menu_mapas"></item><item android:id="@id/menu_fondo" android:title="@string/fondo_pantall" android:icon="@drawable/ic_menu_fondo" android:orderInCategory="8" android:showAsAction="never" /><item android:id="@+id/menu_hitorial" android:orderInCategory="9" android:title="@string/historial_titulo" android:showAsAction="never" android:icon="@drawable/ic_menu_noticias"></item>
-        
-        <!-- 
-        <item android:id="@+id/menu_cancelar_alarma" android:orderInCategory="5" android:title="@string/menu_cancelar_alarma" android:showAsAction="never" android:icon="@drawable/ic_menu_cancelar_alarma"></item>
-        -->
-        <item android:id="@+id/menu_exportar_qr" android:orderInCategory="10" android:title="@string/menu_export_qr" android:showAsAction="never"></item>
-        
+        android:title="@string/preferences"
+        tiempobus:showAsAction="never" />
+    <item
+        android:id="@+id/menu_noticias"
+        android:icon="@drawable/ic_menu_noticias"
+        android:orderInCategory="4"
+        android:title="@string/tit_noticias"
+        tiempobus:showAsAction="never"></item>
+    <item
+        android:id="@+id/menu_mapas"
+        android:icon="@drawable/ic_menu_mapas"
+        android:orderInCategory="1"
+        android:title="@string/menu_mapa"
+        tiempobus:showAsAction="never"></item>
+    <item
+        android:id="@id/menu_fondo"
+        android:icon="@drawable/ic_menu_fondo"
+        android:orderInCategory="8"
+        android:title="@string/fondo_pantall"
+        tiempobus:showAsAction="never" />
+    <item
+        android:id="@+id/menu_hitorial"
+        android:icon="@drawable/ic_menu_noticias"
+        android:orderInCategory="9"
+        android:title="@string/historial_titulo"
+        tiempobus:showAsAction="never"></item>
+
+    <!--
+    <item android:id="@+id/menu_cancelar_alarma" android:orderInCategory="5" android:title="@string/menu_cancelar_alarma" android:showAsAction="never" android:icon="@drawable/ic_menu_cancelar_alarma"></item>
+    -->
+    <item
+        android:id="@+id/menu_exportar_qr"
+        android:orderInCategory="10"
+        android:title="@string/menu_export_qr"
+        tiempobus:showAsAction="never"></item>
+
 </menu>

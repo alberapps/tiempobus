@@ -1,5 +1,5 @@
 <!--
-  Copyright 2013 The Android Open Source Project
+  Copyright 2011 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -14,16 +14,14 @@
   limitations under the License.
   -->
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:gravity="center_vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:textColor="@android:color/white"
-    android:background="?android:attr/activatedBackgroundIndicator"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
-
-    <!-- android:textColor="#fff" -->
+    android:gravity="center">
+    <ProgressBar android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_gravity="center"
+        style="?android:attr/indeterminateProgressStyle" />
+</FrameLayout>

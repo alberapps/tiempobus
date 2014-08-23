@@ -19,24 +19,13 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarBuscadorActivity;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tram.UtilidadesTRAM;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,11 +34,22 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
+
 /**
  * Informacion de la linea
  */
 @SuppressLint("NewApi")
-public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
+public class InfoLineasDatosParadaActivity extends ActionBarActivity {
 
 	String paradaSel = "";
 	String lineaSel = "";
@@ -65,12 +65,12 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.datos_parada);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
+
+			ActionBar actionBar = getSupportActionBar();
 			if(actionBar != null){
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
-		}
+
 
 		try {
 
@@ -225,11 +225,7 @@ public class InfoLineasDatosParadaActivity extends ActionBarBuscadorActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		}
 

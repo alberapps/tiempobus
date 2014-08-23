@@ -18,16 +18,12 @@
  */
 package alberapps.java.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.http.HttpResponseCache;
+import android.os.Build;
+import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -42,13 +38,18 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 import alberapps.android.tiempobus.util.Comunes;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.http.HttpResponseCache;
-import android.os.Build;
-import android.util.Log;
 
 /**
  * Acceso a la red. Conexiones para distintas versiones de Android
@@ -124,8 +125,8 @@ public class Conectividad {
 	/**
 	 * Conexion con get y codificacion ISO
 	 * 
-	 * @param urlPost
-	 * @param post
+	 * @param urlGet
+	 * @param usarCache
 	 * @return string
 	 */
 	public static String conexionGetIso(String urlGet, boolean usarCache, boolean userAgent, boolean utf8) {
@@ -216,6 +217,17 @@ public class Conectividad {
 		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
 
 	}
+
+    /**
+     *
+     * @param urlGet
+     * @return
+     */
+    public static String conexionGetUtf8String(String urlGet) {
+
+        return conexionGetIso(urlGet, true, false, true);
+
+    }
 
 	/**
 	 * Conexion indicando si hay que usar cache

@@ -17,13 +17,14 @@
 -->
 <!-- Options Menu for SearchableActivity and WordActivity.
  -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
     
     <item android:id="@+id/menu_search"
         android:title="@string/menu_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_action_search_white"
         android:orderInCategory="0"
-        android:showAsAction="collapseActionView|ifRoom" android:actionViewClass="android.widget.SearchView"/>
+        tiempobus:showAsAction="collapseActionView|ifRoom" android:actionViewClass="android.widget.SearchView"/>
     
     
 </menu>

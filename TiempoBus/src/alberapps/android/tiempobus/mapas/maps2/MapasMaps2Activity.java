@@ -18,19 +18,7 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.actionbar.ActionBarActivityFragments;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.mapas.DatosMapa;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -39,10 +27,11 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
@@ -73,8 +62,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.mapas.DatosMapa;
+
 @SuppressLint("NewApi")
-public class MapasMaps2Activity extends ActionBarActivityFragments implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
+public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
 		OnMyLocationButtonClickListener {
 
 	public String lineaSeleccionada;
@@ -167,12 +167,12 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 
 		setUpMapIfNeeded();
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			ActionBar actionBar = getActionBar();
+
+			ActionBar actionBar = getSupportActionBar();
 			if(actionBar != null){
 				actionBar.setDisplayHomeAsUpEnabled(true);
 			}
-		}
+
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
@@ -608,11 +608,7 @@ public class MapasMaps2Activity extends ActionBarActivityFragments implements On
 		/*
 		 * case R.id.menu_search_offline: launchBusesOffline(); break;
 		 */
-		case android.R.id.home:
-			Intent intent = new Intent(this, MainActivity.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			break;
+
 
 		}
 		return super.onOptionsItemSelected(item);
