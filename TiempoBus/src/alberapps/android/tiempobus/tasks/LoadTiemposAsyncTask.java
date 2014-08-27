@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,9 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.EOFException;
 import java.util.ArrayList;
 
@@ -31,153 +34,141 @@ import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import alberapps.java.util.Utilidades;
-import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos
- * 
- * 
  */
 public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadTiemposAsyncTaskResponder {
-		public void tiemposLoaded(DatosRespuesta buses);
-	}
+    /**
+     * Interfaz que deberian implementar las clases que la quieran usar Sirve
+     * como callback una vez termine la tarea asincrona
+     */
+    public interface LoadTiemposAsyncTaskResponder {
+        public void tiemposLoaded(DatosRespuesta buses);
+    }
 
-	private LoadTiemposAsyncTaskResponder responder;
+    private LoadTiemposAsyncTaskResponder responder;
 
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadTiemposAsyncTask(LoadTiemposAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    /**
+     * Constructor. Es necesario que nos pasen un objeto para el callback
+     *
+     * @param responder
+     */
+    public LoadTiemposAsyncTask(LoadTiemposAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected DatosRespuesta doInBackground(Object... datos) {
-		ArrayList<BusLlegada> llegadasBus = null;
-		DatosRespuesta datosRespuesta = new DatosRespuesta();
+    /**
+     * Ejecuta el proceso en segundo plano
+     */
+    @Override
+    protected DatosRespuesta doInBackground(Object... datos) {
+        ArrayList<BusLlegada> llegadasBus = null;
+        DatosRespuesta datosRespuesta = new DatosRespuesta();
 
-		String parada = null;
-		int paradaI = 0;
+        String parada = null;
+        int paradaI = 0;
 
-		parada = ((Integer) datos[0]).toString();
+        parada = ((Integer) datos[0]).toString();
 
-		paradaI = (Integer) datos[0];
+        paradaI = (Integer) datos[0];
 
-		int url1 = 1;
-		int url2 = 1;
+        int url1 = 1;
+        int url2 = 1;
 
-		if (DatosPantallaPrincipal.esTram(parada)) {
+        if (DatosPantallaPrincipal.esTram(parada)) {
 
-			// Verificar linea 9
-			if (!UtilidadesTRAM.ACTIVADO_L9 && UtilidadesTRAM.esParadaL9(parada)) {
-				return null;
-			}
+            // Verificar linea 9
+            if (!UtilidadesTRAM.ACTIVADO_L9 && UtilidadesTRAM.esParadaL9(parada)) {
+                return null;
+            }
 
-			// Ip a usar de forma aleatoria
-			boolean iprandom = Utilidades.ipRandom();
+            // Ip a usar de forma aleatoria
+            boolean iprandom = Utilidades.ipRandom();
 
-			if (iprandom) {
+            if (iprandom) {
 
-				url1 = GetPasoParadaWebservice.URL1;
-				url2 = GetPasoParadaWebservice.URL2;
+                url1 = GetPasoParadaWebservice.URL1;
+                url2 = GetPasoParadaWebservice.URL2;
 
-				Log.d("TIEMPOS", "Combinacion url 1");
+                Log.d("TIEMPOS", "Combinacion url 1");
 
-			} else {
+            } else {
 
-				url2 = GetPasoParadaWebservice.URL1;
-				url1 = GetPasoParadaWebservice.URL2;
+                url2 = GetPasoParadaWebservice.URL1;
+                url1 = GetPasoParadaWebservice.URL2;
 
-				Log.d("TIEMPOS", "Combinacion url 2");
+                Log.d("TIEMPOS", "Combinacion url 2");
 
-			}
+            }
 
-		}
+        }
 
-		try {
+        try {
 
-			// llegadasBus =
-			// ProcesarTiemposService.procesaTiemposLlegada(datos[0]);
+            if (DatosPantallaPrincipal.esTram(parada)) {
 
-			// Context contexto = (Context) datos[1];
+                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1);
+            } else {
+                llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
+            }
 
-			if (DatosPantallaPrincipal.esTram(parada)) {
-				// llegadasBus =
-				// ProcesarTiemposTramService.procesaTiemposLlegada(contexto,paradaI);
+            datosRespuesta.setListaBusLlegada(llegadasBus);
 
-				llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1);
-			} else {
-				llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
-			}
+        } catch (EOFException e1) {
 
-			datosRespuesta.setListaBusLlegada(llegadasBus);
+            e1.printStackTrace();
 
-		} catch (EOFException e1) {
+            return null;
 
-			e1.printStackTrace();
+        } catch (TiempoBusException e) {
 
-			return null;
+            datosRespuesta.setError(e.getCodigo());
+            datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
 
-		} catch (TiempoBusException e) {
+            e.printStackTrace();
 
-			datosRespuesta.setError(e.getCodigo());
-			datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
+        } catch (Exception e) {
 
-			e.printStackTrace();
+            // Probar con acceso secundario
+            if (DatosPantallaPrincipal.esTram(parada)) {
 
-		} catch (Exception e) {
+                try {
 
-			// Probar con acceso secundario
-			if (DatosPantallaPrincipal.esTram(parada)) {
+                    Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
-				try {
+                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2);
 
-					Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
+                    datosRespuesta.setListaBusLlegada(llegadasBus);
+                } catch (Exception e1) {
 
-					llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2);
+                    e1.printStackTrace();
 
-					datosRespuesta.setListaBusLlegada(llegadasBus);
-				} catch (Exception e1) {
+                    return null;
 
-					e1.printStackTrace();
+                }
+            } else {
 
-					return null;
+                return null;
 
-				}
-			} else {
+            }
 
-				return null;
+            e.printStackTrace();
 
-			}
-			
-			e.printStackTrace();
-			
-		}
+        }
 
-		return datosRespuesta;
-	}
+        return datosRespuesta;
+    }
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(DatosRespuesta result) {
-		if (responder != null) {
-			responder.tiemposLoaded(result);
-		}
-	}
+    /**
+     * Se ha terminado la ejecucion comunicamos el resultado al llamador
+     */
+    @Override
+    protected void onPostExecute(DatosRespuesta result) {
+        if (responder != null) {
+            responder.tiemposLoaded(result);
+        }
+    }
 
 }

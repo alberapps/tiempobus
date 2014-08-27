@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
-import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -47,183 +46,178 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Guarda un nuevo favorito
- * 
- * 
  */
-@SuppressLint("NewApi")
 public class FavoritoModificarActivity extends ActionBarActivity {
-	private EditText guiDescripcion;
-	private EditText guiTitulo;
+    private EditText guiDescripcion;
+    private EditText guiTitulo;
 
-	private String poste;
+    private String poste;
 
-	private long id_uri;
+    private long id_uri;
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	/**
-	 * OnCreate....
-	 */
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// Configuramos la vista
-
-
-			ActionBar actionBar = getSupportActionBar();
-			if(actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+    /**
+     * OnCreate....
+     */
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Configuramos la vista
 
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-		setContentView(R.layout.favorito_nuevo);
 
-		setupView();
-	}
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-	/**
-	 * Si no hay poste cerramos la actividad
-	 */
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+        setContentView(R.layout.favorito_nuevo);
 
-		if ((poste == null) || poste.equals("")) {
-			Toast.makeText(FavoritoModificarActivity.this, R.string.no_poste, Toast.LENGTH_SHORT).show();
+        setupView();
+    }
 
-			finish();
-		}
-	}
+    /**
+     * Si no hay poste cerramos la actividad
+     */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-	/**
-	 * Configura la vista
-	 */
-	private void setupView() {
-		guiTitulo = (EditText) findViewById(R.id.titulo);
-		guiDescripcion = (EditText) findViewById(R.id.descripcion);
+        if ((poste == null) || poste.equals("")) {
+            Toast.makeText(FavoritoModificarActivity.this, R.string.no_poste, Toast.LENGTH_SHORT).show();
 
-		// Fondo
-		setupFondoAplicacion();
+            finish();
+        }
+    }
 
-		// Comprobamos si nos estan pasando como par�metro el poste y la
-		// descripcion
+    /**
+     * Configura la vista
+     */
+    private void setupView() {
+        guiTitulo = (EditText) findViewById(R.id.titulo);
+        guiDescripcion = (EditText) findViewById(R.id.descripcion);
 
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			poste = "" + extras.getInt("POSTE");
-			guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
-			guiTitulo.setText("" + extras.getString("TITULO"));
+        // Fondo
+        setupFondoAplicacion();
 
-			id_uri = extras.getLong("ID_URI");
+        // Comprobamos si nos estan pasando como par�metro el poste y la
+        // descripcion
 
-		}
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            poste = "" + extras.getInt("POSTE");
+            guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
+            guiTitulo.setText("" + extras.getString("TITULO"));
 
-		setTitle(String.format(getString(R.string.tit_modificar), poste));
+            id_uri = extras.getLong("ID_URI");
+
+        }
+
+        setTitle(String.format(getString(R.string.tit_modificar), poste));
 
 		/*
-		 * Asignamos el comprotamiento de los botones
+         * Asignamos el comprotamiento de los botones
 		 */
-		TextView guiGo = (TextView) findViewById(R.id.boton_go);
-		guiGo.setOnClickListener(guiGoOnClickListener);
+        TextView guiGo = (TextView) findViewById(R.id.boton_go);
+        guiGo.setOnClickListener(guiGoOnClickListener);
 
-	}
+    }
 
-	/**
-	 * Escuchar el boton de guardar
-	 */
-	OnClickListener guiGoOnClickListener = new OnClickListener() {
-		public void onClick(View v) {
-			ContentValues values = new ContentValues();
+    /**
+     * Escuchar el boton de guardar
+     */
+    OnClickListener guiGoOnClickListener = new OnClickListener() {
+        public void onClick(View v) {
+            ContentValues values = new ContentValues();
 
-			values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
-			values.put(TiempoBusDb.Favoritos.DESCRIPCION, guiDescripcion.getText().toString());
-			values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(poste));
+            values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
+            values.put(TiempoBusDb.Favoritos.DESCRIPCION, guiDescripcion.getText().toString());
+            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(poste));
 
-			Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id_uri);
+            Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id_uri);
 
-			getContentResolver().update(miUriM, values, null, null);
+            getContentResolver().update(miUriM, values, null, null);
 
-			Intent intent = new Intent();
-			setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+            Intent intent = new Intent();
+            setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
 
-			modificadoOK();
+            modificadoOK();
 
-			finish();
-		}
-	};
+            finish();
+        }
+    };
 
-	/**
-	 * Escuchar el boton de cancelar
-	 */
-	OnClickListener guiCancelListener = new OnClickListener() {
-		public void onClick(View v) {
-			Intent intent = new Intent();
-			setResult(MainActivity.SUB_ACTIVITY_RESULT_CANCEL, intent);
-			finish();
-		}
-	};
+    /**
+     * Escuchar el boton de cancelar
+     */
+    OnClickListener guiCancelListener = new OnClickListener() {
+        public void onClick(View v) {
+            Intent intent = new Intent();
+            setResult(MainActivity.SUB_ACTIVITY_RESULT_CANCEL, intent);
+            finish();
+        }
+    };
 
-	private void modificadoOK() {
-		Toast.makeText(this, getResources().getText(R.string.info_modificar), Toast.LENGTH_SHORT).show();
-	}
+    private void modificadoOK() {
+        Toast.makeText(this, getResources().getText(R.string.info_modificar), Toast.LENGTH_SHORT).show();
+    }
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+        String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		View contenedor_principal = findViewById(R.id.contenedor_nuevo);
+        View contenedor_principal = findViewById(R.id.contenedor_nuevo);
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.sin_menu, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sin_menu, menu);
 
-		return super.onCreateOptionsMenu(menu);
-	}
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
 
-		}
+        }
 
-		return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 
-	}
+    }
 
-	@Override
-	protected void onStart() {
+    @Override
+    protected void onStart() {
 
-		super.onStart();
+        super.onStart();
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
 
-	}
+    }
 
-	@Override
-	protected void onStop() {
+    @Override
+    protected void onStop() {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
-		
-		super.onStop();
-		
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
 
-	}
+        super.onStop();
+
+
+    }
 
 }

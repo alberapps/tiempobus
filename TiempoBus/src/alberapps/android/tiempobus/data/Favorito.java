@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -19,48 +19,47 @@ package alberapps.android.tiempobus.data;
 
 /**
  * Favorito Item
- * 
  */
 public class Favorito {
 
-	private String id;
-	
-	private String numParada;
+    private String id;
 
-	private String titulo;
+    private String numParada;
 
-	private String descripcion;
+    private String titulo;
 
-	public String getNumParada() {
-		return numParada;
-	}
+    private String descripcion;
 
-	public void setNumParada(String numParada) {
-		this.numParada = numParada;
-	}
+    public String getNumParada() {
+        return numParada;
+    }
 
-	public String getTitulo() {
-		return titulo;
-	}
+    public void setNumParada(String numParada) {
+        this.numParada = numParada;
+    }
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+    public String getTitulo() {
+        return titulo;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }

@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,13 +18,10 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,78 +29,70 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+
 /**
  * Fragmento Noticias
- * 
- * 
  */
 public class FragmentNoticias extends Fragment {
 
-	public static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
+    public static final String noticiasURL = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
-	private NoticiasTabsPager actividad;
+    private NoticiasTabsPager actividad;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
 
-		actividad = (NoticiasTabsPager) getActivity();
+        actividad = (NoticiasTabsPager) getActivity();
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-	}
+    }
 
-	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
 
-		setupFondoAplicacion();
+        setupFondoAplicacion();
 
-		/*TextView accederNoticia = (TextView) getActivity().findViewById(R.id.accederNoticiaL);
+        if (actividad.noticiasRecuperadas != null) {
+            actividad.cargarListado(actividad.noticiasRecuperadas, true);
+        }
 
-		accederNoticia.setLinksClickable(true);
-		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
+        // Progreso lista
+        ListView listNoticiasWiew = (ListView) actividad.findViewById(R.id.lista_noticias);
+        TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias);
+        vacio.setVisibility(View.INVISIBLE);
+        ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_noticias);
+        lpb.setIndeterminate(true);
+        listNoticiasWiew.setEmptyView(lpb);
 
-		accederNoticia.setText(noticiasURL);
-		 */
-		
-		
-		if (actividad.noticiasRecuperadas != null) {
-			actividad.cargarListado(actividad.noticiasRecuperadas, true);
-		}
+        super.onViewStateRestored(savedInstanceState);
+    }
 
-		// Progreso lista
-		ListView listNoticiasWiew = (ListView) actividad.findViewById(R.id.lista_noticias);
-		TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias);
-		vacio.setVisibility(View.INVISIBLE);
-		ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_noticias);
-		lpb.setIndeterminate(true);
-		listNoticiasWiew.setEmptyView(lpb);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.noticias, container, false);
+    }
 
-		super.onViewStateRestored(savedInstanceState);
-	}
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.noticias, container, false);
-	}
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+        String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        View contenedor_principal = getActivity().findViewById(R.id.contenedor_noticias);
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 
-		View contenedor_principal = getActivity().findViewById(R.id.contenedor_noticias);
-
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
-
-	}
+    }
 
 }

@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,72 +32,73 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLlegada;
 
+/**
+ * Gestion de acceso al widget
+ */
 public class GestionarWidget {
 
-	/**
-	 * Cotexto principal
-	 */
-	private MainActivity context;
+    /**
+     * Cotexto principal
+     */
+    private MainActivity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	public GestionarWidget(MainActivity contexto, SharedPreferences preferencia) {
+    public GestionarWidget(MainActivity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
-	
-	
-	/**
-	 * Enviar la parada al widget
-	 */
-	public void enviarAWidget(BusLlegada busSeleccionado, int paradaActual) {
+    }
 
-		if (UtilidadesUI.verificarWidgetInstalado(context)) {
 
-			Intent intent = new Intent();
+    /**
+     * Enviar la parada al widget
+     */
+    public void enviarAWidget(BusLlegada busSeleccionado, int paradaActual) {
 
-			intent.setComponent(new ComponentName(UtilidadesUI.WIDGET_PACKAGE, UtilidadesUI.WIDGET_ACTIVITY));
+        if (UtilidadesUI.verificarWidgetInstalado(context)) {
 
-			// 24,2902;10,2902
+            Intent intent = new Intent();
 
-			intent.putExtra("datos_linea", busSeleccionado.getLinea() + "," + paradaActual + "," + busSeleccionado.getDestino());
+            intent.setComponent(new ComponentName(UtilidadesUI.WIDGET_PACKAGE, UtilidadesUI.WIDGET_ACTIVITY));
 
-			context.startActivity(intent);
+            // 24,2902;10,2902
 
-		} else {
+            intent.putExtra("datos_linea", busSeleccionado.getLinea() + "," + paradaActual + "," + busSeleccionado.getDestino());
 
-			AlertDialog.Builder downloadDialog = new AlertDialog.Builder(context);
-			downloadDialog.setTitle(context.getString(R.string.menu_widget));
-			downloadDialog.setMessage(context.getString(R.string.widget_instalar));
-			downloadDialog.setPositiveButton(context.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+            context.startActivity(intent);
 
-				public void onClick(DialogInterface dialogInterface, int i) {
-					Uri uri = Uri.parse("market://details?id=" + UtilidadesUI.WIDGET_PACKAGE);
-					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-					try {
-						context.startActivity(intent);
-					} catch (ActivityNotFoundException anfe) {
+        } else {
 
-						Toast.makeText(context.getApplicationContext(), context.getString(R.string.widget_market), Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
-			downloadDialog.setNegativeButton(context.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+            AlertDialog.Builder downloadDialog = new AlertDialog.Builder(context);
+            downloadDialog.setTitle(context.getString(R.string.menu_widget));
+            downloadDialog.setMessage(context.getString(R.string.widget_instalar));
+            downloadDialog.setPositiveButton(context.getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 
-				public void onClick(DialogInterface dialogInterface, int i) {
-				}
-			});
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Uri uri = Uri.parse("market://details?id=" + UtilidadesUI.WIDGET_PACKAGE);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    try {
+                        context.startActivity(intent);
+                    } catch (ActivityNotFoundException anfe) {
 
-			downloadDialog.show();
+                        Toast.makeText(context.getApplicationContext(), context.getString(R.string.widget_market), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            downloadDialog.setNegativeButton(context.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
 
-		}
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
 
-	}
-	
-	
-	
-	
+            downloadDialog.show();
+
+        }
+
+    }
+
+
 }

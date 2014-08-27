@@ -23,71 +23,66 @@ import alberapps.java.weather.WeatherQuery;
 import alberapps.java.weather.openweathermap.ProcesarOWMCurrect;
 
 /**
- * Tarea asincrona para recuperar informacion de wikipedia
- * 
- * 
+ * Tarea asincrona para recuperar informacion metereologica
  */
 public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> {
 
-	/**
-	 * 
-	 *
-	 */
-	public interface LoadWeatherAsyncTaskResponder {
-		public void WeatherLoaded(WeatherQuery Wikipedia);
-	}
+    /**
+     *
+     *
+     */
+    public interface LoadWeatherAsyncTaskResponder {
+        public void WeatherLoaded(WeatherQuery Wikipedia);
+    }
 
-	private LoadWeatherAsyncTaskResponder responder;
+    private LoadWeatherAsyncTaskResponder responder;
 
-	/**
-	 * 
-	 * 
-	 * @param responder
-	 */
-	public LoadWeatherAsyncTask(LoadWeatherAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    /**
+     * @param responder
+     */
+    public LoadWeatherAsyncTask(LoadWeatherAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected WeatherQuery doInBackground(Object... datos) {
-		WeatherQuery weather = null;
-		try {
-
+    /**
+     *
+     */
+    @Override
+    protected WeatherQuery doInBackground(Object... datos) {
+        WeatherQuery weather = null;
+        try {
 
 
             String lat = (String) datos[0];
             String lon = (String) datos[1];
 
-			
-			//weather = ProcesarDatosWeatherService.getDatosClima();
 
-			//weather = ProcesarYWRSS.getDatosClima();
+            //weather = ProcesarDatosWeatherService.getDatosClima();
+
+            //weather = ProcesarYWRSS.getDatosClima();
 
             weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
-			
-		} catch (Exception e) {
 
-			e.printStackTrace();
+        } catch (Exception e) {
 
-			return null;
+            e.printStackTrace();
 
-		}
+            return null;
 
-		return weather;
-	}
+        }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected void onPostExecute(WeatherQuery result) {
-		if (responder != null) {
-			responder.WeatherLoaded(result);
-		}
+        return weather;
+    }
 
-	}
+    /**
+     *
+     */
+    @Override
+    protected void onPostExecute(WeatherQuery result) {
+        if (responder != null) {
+            responder.WeatherLoaded(result);
+        }
+
+    }
 
 }

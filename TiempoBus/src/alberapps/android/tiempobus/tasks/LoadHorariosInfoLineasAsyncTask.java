@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,56 +18,53 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+
 import alberapps.java.horarios.DatosHorarios;
 import alberapps.java.horarios.ProcesarHorarios;
 import alberapps.java.tam.BusLinea;
-import android.os.AsyncTask;
 
 /**
- * Consulta asincrona del track de la linea
- * 
- * 
+ * Consulta asincrona de los horarios de la linea
  */
 public class LoadHorariosInfoLineasAsyncTask extends AsyncTask<Object, Void, DatosHorarios> {
 
-	public interface LoadHorariosInfoLineasAsyncTaskResponder {
-		public void datosHorariosInfoLineasLoaded(DatosHorarios datos);
-	}
+    public interface LoadHorariosInfoLineasAsyncTaskResponder {
+        public void datosHorariosInfoLineasLoaded(DatosHorarios datos);
+    }
 
-	private LoadHorariosInfoLineasAsyncTaskResponder responder;
+    private LoadHorariosInfoLineasAsyncTaskResponder responder;
 
-	public LoadHorariosInfoLineasAsyncTask(LoadHorariosInfoLineasAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    public LoadHorariosInfoLineasAsyncTask(LoadHorariosInfoLineasAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	@Override
-	protected DatosHorarios doInBackground(Object... datos) {
-		DatosHorarios datosHorarios = null;
-		try {
-			
-			
-			BusLinea datosLinea = (BusLinea) datos[0];
-			
-			datosHorarios = ProcesarHorarios.getDetalleHorario(datosLinea);
-						
-			
-			
+    @Override
+    protected DatosHorarios doInBackground(Object... datos) {
+        DatosHorarios datosHorarios = null;
+        try {
 
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-			return null;
-		}
 
-		return datosHorarios;
-	}
+            BusLinea datosLinea = (BusLinea) datos[0];
 
-	@Override
-	protected void onPostExecute(DatosHorarios result) {
-		if (responder != null) {
-			responder.datosHorariosInfoLineasLoaded(result);
-		}
-	}
+            datosHorarios = ProcesarHorarios.getDetalleHorario(datosLinea);
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return null;
+        }
+
+        return datosHorarios;
+    }
+
+    @Override
+    protected void onPostExecute(DatosHorarios result) {
+        if (responder != null) {
+            responder.datosHorariosInfoLineasLoaded(result);
+        }
+    }
 
 }

@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,6 @@
  */
 package alberapps.android.tiempobus.alarma;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.service.TiemposForegroundService;
-import alberapps.android.tiempobus.util.PreferencesUtil;
-import alberapps.java.tam.BusLlegada;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
@@ -45,432 +35,431 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.service.TiemposForegroundService;
+import alberapps.android.tiempobus.util.PreferencesUtil;
+import alberapps.java.tam.BusLlegada;
+
+/**
+ * Gestion de alarmas
+ */
 public class GestionarAlarmas {
 
-	/**
-	 * Cotexto principal
-	 */
-	private MainActivity context;
+    /**
+     * Cotexto principal
+     */
+    private MainActivity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	AlarmManager alarmManager;
+    AlarmManager alarmManager;
 
-	public GestionarAlarmas(MainActivity contexto, SharedPreferences preferencia, AlarmManager alarmMa) {
+    public GestionarAlarmas(MainActivity contexto, SharedPreferences preferencia, AlarmManager alarmMa) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-		alarmManager = alarmMa;
+        alarmManager = alarmMa;
 
-	}
+    }
 
-	/**
-	 * Cancelar alarmas establecidas
-	 */
-	public void cancelarAlarmas(boolean avisar) {
+    /**
+     * Cancelar alarmas establecidas
+     */
+    public void cancelarAlarmas(boolean avisar) {
 
-		// Cancelar posible notificacion
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-		mNotificationManager.cancel(AlarmReceiver.ALARM_ID);
+        // Cancelar posible notificacion
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+        mNotificationManager.cancel(AlarmReceiver.ALARM_ID);
 
-		// Iniciar receiver
-		Intent intent = new Intent(context, AlarmReceiver.class);
+        // Iniciar receiver
+        Intent intent = new Intent(context, AlarmReceiver.class);
 
-		PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-		// Cancelar alarma si hay una definida
-		if (alarmReceiver != null) {
+        // Cancelar alarma si hay una definida
+        if (alarmReceiver != null) {
 
-			alarmManager.cancel(alarmReceiver);
+            alarmManager.cancel(alarmReceiver);
 
-			alarmReceiver.cancel();
+            alarmReceiver.cancel();
 
-			alarmReceiver = null;
+            alarmReceiver = null;
 
-			PreferencesUtil.clearAlertaInfo(context);
+            PreferencesUtil.clearAlertaInfo(context);
 
-			if (avisar) {
-				Toast.makeText(context, context.getString(R.string.alarma_cancelada), Toast.LENGTH_SHORT).show();
-			}
+            if (avisar) {
+                Toast.makeText(context, context.getString(R.string.alarma_cancelada), Toast.LENGTH_SHORT).show();
+            }
 
-		}
-	}
+        }
+    }
 
-	/**
-	 * Calcular y activar la alarma
-	 * 
-	 * @param theBus
-	 * @param tiempo
-	 * @param item
-	 * @param paradaActual
-	 * @param alarmReceiver
-	 */
-	public boolean calcularAlarma(BusLlegada theBus, int tiempo, int item, int paradaActual) {
-
-		long et;
+    /**
+     * Calcular y activar la alarma
+     *
+     * @param theBus
+     * @param tiempo
+     * @param item
+     * @param paradaActual
+     */
+    public boolean calcularAlarma(BusLlegada theBus, int tiempo, int item, int paradaActual) {
 
-		// Obtener los minutos de la seleccion
-		long mins = obtenerMinutos(item);// ((item + 1) * 5);
+        long et;
 
-		Log.d("ALARMA", "minutos: " + mins + " item: " + item);
+        // Obtener los minutos de la seleccion
+        long mins = obtenerMinutos(item);// ((item + 1) * 5);
 
-		// Si es tram
-		/*
-		 * if (context.getDatosPantallaPrincipal().esTram(paradaActual)) {
-		 * 
-		 * et = theBus.getProximoMinutosTRAM(); tiempo = 1;
-		 * 
-		 * } else {
-		 */
+        Log.d("ALARMA", "minutos: " + mins + " item: " + item);
 
-		// TRAM
-		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
 
-			// Que tiempo usar
-			// Si el primer bus no cumple, se usa el segundo
-			if (theBus.getProximoMinutos() < mins) {
+        // TRAM
+        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
 
-				//Controlar si hay tiempos combinados
-				if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoTram() != null) {
+            // Que tiempo usar
+            // Si el primer bus no cumple, se usa el segundo
+            if (theBus.getProximoMinutos() < mins) {
 
-					BusLlegada theBus2 = theBus.getSegundoTram();
+                //Controlar si hay tiempos combinados
+                if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoTram() != null) {
 
-					if (theBus2.getProximoMinutos() < mins) {
-						et = theBus2.getSiguienteMinutos();
-						tiempo = 4;
-					} else {
-						et = theBus2.getProximoMinutos();
-						tiempo = 3;
-					}
+                    BusLlegada theBus2 = theBus.getSegundoTram();
 
-				} else if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoBus() != null) {
+                    if (theBus2.getProximoMinutos() < mins) {
+                        et = theBus2.getSiguienteMinutos();
+                        tiempo = 4;
+                    } else {
+                        et = theBus2.getProximoMinutos();
+                        tiempo = 3;
+                    }
 
-					BusLlegada theBus2 = theBus.getSegundoBus();
-
-					if (theBus2.getProximoMinutos() < mins) {
-						et = theBus2.getSiguienteMinutos();
-						tiempo = 4;
-					} else {
-						et = theBus2.getProximoMinutos();
-						tiempo = 3;
-					}
+                } else if (theBus.getSiguienteMinutos() < mins && theBus.getSegundoBus() != null) {
 
-				} else {
-					et = theBus.getSiguienteMinutos();
-					tiempo = 2;
-				}
-			} else {
-				et = theBus.getProximoMinutos();
-				tiempo = 1;
-			}
+                    BusLlegada theBus2 = theBus.getSegundoBus();
 
-		} else {
+                    if (theBus2.getProximoMinutos() < mins) {
+                        et = theBus2.getSiguienteMinutos();
+                        tiempo = 4;
+                    } else {
+                        et = theBus2.getProximoMinutos();
+                        tiempo = 3;
+                    }
 
-			// Que tiempo usar
-			// Si el primer bus no cumple, se usa el segundo
-			if (theBus.getProximoMinutos() < mins) {
-				et = theBus.getSiguienteMinutos();
-				tiempo = 2;
-			} else {
-				et = theBus.getProximoMinutos();
-				tiempo = 1;
-			}
+                } else {
+                    et = theBus.getSiguienteMinutos();
+                    tiempo = 2;
+                }
+            } else {
+                et = theBus.getProximoMinutos();
+                tiempo = 1;
+            }
 
-		}
+        } else {
 
-		// }
+            // Que tiempo usar
+            // Si el primer bus no cumple, se usa el segundo
+            if (theBus.getProximoMinutos() < mins) {
+                et = theBus.getSiguienteMinutos();
+                tiempo = 2;
+            } else {
+                et = theBus.getProximoMinutos();
+                tiempo = 1;
+            }
 
-		// Control de tiempo insuficiente o excesivo
-		if (et < mins) {
-			Toast.makeText(context, String.format(context.getString(R.string.err_bus_cerca), et), Toast.LENGTH_SHORT).show();
-			return false;
-		} else if (et == 9999) {
-			Toast.makeText(context, String.format(context.getString(R.string.err_bus_sin), et), Toast.LENGTH_SHORT).show();
-			return false;
-		}
+        }
 
-		// Establecer la alarma
-		establecerAlarma(et, mins, theBus, tiempo, item, paradaActual);
+        // }
 
-		return true;
-	}
+        // Control de tiempo insuficiente o excesivo
+        if (et < mins) {
+            Toast.makeText(context, String.format(context.getString(R.string.err_bus_cerca), et), Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (et == 9999) {
+            Toast.makeText(context, String.format(context.getString(R.string.err_bus_sin), et), Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
-	/**
-	 * 
-	 * @param et
-	 * @param mins
-	 * @param theBus
-	 * @param tiempo
-	 * @param item
-	 * @param paradaActual
-	 * @param alarmReceiver
-	 */
-	public void establecerAlarma(long et, long mins, BusLlegada theBus, int tiempo, int item, int paradaActual) {
+        // Establecer la alarma
+        establecerAlarma(et, mins, theBus, tiempo, item, paradaActual);
 
-		PendingIntent alarmReceiver;
+        return true;
+    }
 
-		Date actual = new Date();
+    /**
+     * @param et
+     * @param mins
+     * @param theBus
+     * @param tiempo
+     * @param item
+     * @param paradaActual
+     */
+    public void establecerAlarma(long et, long mins, BusLlegada theBus, int tiempo, int item, int paradaActual) {
 
-		long milisegundos = (actual.getTime() + (et * 60000)) - (mins * 60000);
+        PendingIntent alarmReceiver;
 
-		// Iniciar receiver
-		Intent intent = new Intent(context, AlarmReceiver.class);
+        Date actual = new Date();
 
-		String texto = "";
-		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
-			texto = context.getString(R.string.alarm_tram);
-		} else {
-			texto = context.getString(R.string.alarm_bus);
-		}
+        long milisegundos = (actual.getTime() + (et * 60000)) - (mins * 60000);
 
-		String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
-		intent.putExtra("alarmTxt", txt);
-		intent.putExtra("poste", paradaActual);
+        // Iniciar receiver
+        Intent intent = new Intent(context, AlarmReceiver.class);
 
-		alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        String texto = "";
+        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+            texto = context.getString(R.string.alarm_tram);
+        } else {
+            texto = context.getString(R.string.alarm_bus);
+        }
 
-		alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
+        String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
+        intent.putExtra("alarmTxt", txt);
+        intent.putExtra("poste", paradaActual);
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH:mm", Locale.US);
+        alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
 
-		String horaT = ft.format(milisegundos);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
 
-		String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + " (" + mins + " " + context.getString(R.string.literal_min)  + ")" + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
+        SimpleDateFormat ft = new SimpleDateFormat("HH:mm", Locale.US);
 
-		PreferencesUtil.putAlertaInfo(context, alertaDialog);
+        String horaT = ft.format(milisegundos);
 
-	}
+        String alertaDialog = theBus.getLinea() + ";" + paradaActual + ";" + horaT + " (" + mins + " " + context.getString(R.string.literal_min) + ")" + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
-	/**
-	 * 
-	 * @param item
-	 * @return minutos
-	 */
-	public static long obtenerMinutos(int item) {
+        PreferencesUtil.putAlertaInfo(context, alertaDialog);
 
-		long mins = 0;
+    }
 
-		switch (item) {
+    /**
+     * @param item
+     * @return minutos
+     */
+    public static long obtenerMinutos(int item) {
 
-		case 0:
+        long mins = 0;
 
-			// 3 min
+        switch (item) {
 
-			mins = 3;
+            case 0:
 
-			break;
+                // 3 min
 
-		case 1:
+                mins = 3;
 
-			// 5 min
+                break;
 
-			mins = 5;
+            case 1:
 
-			break;
+                // 5 min
 
-		case 2:
+                mins = 5;
 
-			// 10 min
+                break;
 
-			mins = 10;
+            case 2:
 
-			break;
+                // 10 min
 
-		case 3:
+                mins = 10;
 
-			// 15 min
+                break;
 
-			mins = 15;
+            case 3:
 
-			break;
+                // 15 min
 
-		case 4:
+                mins = 15;
 
-			// 20min
+                break;
 
-			mins = 20;
+            case 4:
 
-			break;
+                // 20min
 
-		}
-		;
+                mins = 20;
 
-		return mins;
+                break;
 
-	}
+        }
+        ;
 
-	/**
-	 * 
-	 * @param theBus
-	 * @param paradaActual
-	 * @return
-	 */
-	public String prepararReceiver(BusLlegada theBus, int paradaActual) {
+        return mins;
 
-		String texto = "";
-		if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
-			texto = context.getString(R.string.alarm_tram);
-		} else {
-			texto = context.getString(R.string.alarm_bus);
-		}
+    }
 
-		String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
+    /**
+     * @param theBus
+     * @param paradaActual
+     * @return
+     */
+    public String prepararReceiver(BusLlegada theBus, int paradaActual) {
 
-		return txt;
+        String texto = "";
+        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+            texto = context.getString(R.string.alarm_tram);
+        } else {
+            texto = context.getString(R.string.alarm_bus);
+        }
 
-	}
+        String txt = String.format(texto, "" + theBus.getLinea(), "" + paradaActual);
 
-	/**
-	 * Nuevo selector de tiempos
-	 * 
-	 * @param bus
-	 */
-	public void mostrarModalTiemposAlerta(BusLlegada bus, final int paradaActual, final String textoReceiver) {
+        return txt;
 
-		final BusLlegada theBus = bus;
+    }
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+    /**
+     * Nuevo selector de tiempos
+     *
+     * @param bus
+     */
+    public void mostrarModalTiemposAlerta(BusLlegada bus, final int paradaActual, final String textoReceiver) {
 
-		dialog.setTitle(context.getString(R.string.tit_choose_alarm));
+        final BusLlegada theBus = bus;
 
-		LayoutInflater li = context.getLayoutInflater();
-		View vista = li.inflate(R.layout.seleccionar_tiempo, null, false);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-		final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_tiempos);
+        dialog.setTitle(context.getString(R.string.tit_choose_alarm));
 
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.spinner_minutos, android.R.layout.simple_spinner_item);
+        LayoutInflater li = context.getLayoutInflater();
+        View vista = li.inflate(R.layout.seleccionar_tiempo, null, false);
 
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_tiempos);
 
-		spinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.spinner_minutos, android.R.layout.simple_spinner_item);
 
-		// Por defecto 5
-		spinner.setSelection(1);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		dialog.setView(vista);
+        spinner.setAdapter(adapter);
 
-		dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        // Por defecto 5
+        spinner.setSelection(1);
 
-			public void onClick(DialogInterface dialog, int id) {
+        dialog.setView(vista);
 
-				// Anular si existe una alarma anterior
-				cancelarAlarmas(false);
+        dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-				int seleccion = spinner.getSelectedItemPosition();
+            public void onClick(DialogInterface dialog, int id) {
 
-				boolean correcto = calcularAlarma(theBus, 1, seleccion, paradaActual);
+                // Anular si existe una alarma anterior
+                cancelarAlarmas(false);
 
-				// Si se ha podido establecer
-				if (correcto) {
+                int seleccion = spinner.getSelectedItemPosition();
 
-					Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
-					intent.setClass(context, TiemposForegroundService.class);
-					intent.putExtra("PARADA", paradaActual);
+                boolean correcto = calcularAlarma(theBus, 1, seleccion, paradaActual);
 
-					boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-					
-					if (checkActivo) {
-						context.startService(intent);
-					}
+                // Si se ha podido establecer
+                if (correcto) {
 
-					dialog.dismiss();
+                    Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
+                    intent.setClass(context, TiemposForegroundService.class);
+                    intent.putExtra("PARADA", paradaActual);
 
-					mostrarModalAlertas(paradaActual);
+                    boolean checkActivo = preferencias.getBoolean("activarServicio", false);
 
-				} else {
-					dialog.dismiss();
-				}
+                    if (checkActivo) {
+                        context.startService(intent);
+                    }
 
-			}
+                    dialog.dismiss();
 
-		});
+                    mostrarModalAlertas(paradaActual);
 
-		dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                } else {
+                    dialog.dismiss();
+                }
 
-			public void onClick(DialogInterface dialog, int id) {
+            }
 
-				dialog.dismiss();
+        });
 
-			}
+        dialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 
-		});
+            public void onClick(DialogInterface dialog, int id) {
 
-		dialog.show();
+                dialog.dismiss();
 
-	}
+            }
 
-	/**
-	 * Modal con informacion de la alarma activa
-	 * 
-	 */
-	public void mostrarModalAlertas(int paradaActual) {
+        });
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        dialog.show();
 
-		dialog.setTitle(context.getString(R.string.alarma_modal));
+    }
 
-		String aviso = PreferencesUtil.getAlertaInfo(context);
+    /**
+     * Modal con informacion de la alarma activa
+     */
+    public void mostrarModalAlertas(int paradaActual) {
 
-		if (aviso != null && !aviso.equals("")) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-			String[] datos = aviso.split(";");
+        dialog.setTitle(context.getString(R.string.alarma_modal));
 
-			String alertaDialog = context.getString(R.string.alarma_establecida_linea) + ": " + datos[0] + "\n" + context.getString(R.string.alarma_establecida_parada) + ": " + datos[1] + "\n"
-					+ context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n"
-					+ (context.getString(R.string.alarma_auto_aviso, new Object[] { preferencias.getString("servicio_recarga", "60") }));
+        String aviso = PreferencesUtil.getAlertaInfo(context);
 
-			
-			dialog.setIcon(R.drawable.ic_alarm_modal);
+        if (aviso != null && !aviso.equals("")) {
 
-			LayoutInflater li = context.getLayoutInflater();
-			View vista = li.inflate(R.layout.alertas_info, null, false);
+            String[] datos = aviso.split(";");
 
-			TextView texto = (TextView) vista.findViewById(R.id.textAlerta);
+            String alertaDialog = context.getString(R.string.alarma_establecida_linea) + ": " + datos[0] + "\n" + context.getString(R.string.alarma_establecida_parada) + ": " + datos[1] + "\n"
+                    + context.getString(R.string.alarma_establecida_hora) + ": " + datos[2] + "\n" + context.getString(R.string.alarma_que_tiempo) + ": " + datos[3] + "\n" + "\n"
+                    + (context.getString(R.string.alarma_auto_aviso, new Object[]{preferencias.getString("servicio_recarga", "60")}));
 
-			texto.setText(alertaDialog);
 
-			dialog.setView(vista);
+            dialog.setIcon(R.drawable.ic_alarm_modal);
 
-			CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
+            LayoutInflater li = context.getLayoutInflater();
+            View vista = li.inflate(R.layout.alertas_info, null, false);
 
-			
+            TextView texto = (TextView) vista.findViewById(R.id.textAlerta);
 
-			boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-			check.setChecked(checkActivo);
+            texto.setText(alertaDialog);
 
-			dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            dialog.setView(vista);
 
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
-				}
+            CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
 
-			});
 
-			dialog.setNegativeButton(R.string.menu_cancelar_alarma, new DialogInterface.OnClickListener() {
+            boolean checkActivo = preferencias.getBoolean("activarServicio", false);
+            check.setChecked(checkActivo);
 
-				public void onClick(DialogInterface dialog, int id) {
+            dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-					Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
-					intent.setClass(context, TiemposForegroundService.class);
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
 
-					context.stopService(intent);
+            });
 
-					cancelarAlarmas(true);
-				}
+            dialog.setNegativeButton(R.string.menu_cancelar_alarma, new DialogInterface.OnClickListener() {
 
-			});
+                public void onClick(DialogInterface dialog, int id) {
 
-			dialog.show();
+                    Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
+                    intent.setClass(context, TiemposForegroundService.class);
 
-		} else {
+                    context.stopService(intent);
 
-			Toast.makeText(context, context.getString(R.string.alarma_activa_no), Toast.LENGTH_SHORT).show();
+                    cancelarAlarmas(true);
+                }
 
-		}
+            });
 
-	}
+            dialog.show();
+
+        } else {
+
+            Toast.makeText(context, context.getString(R.string.alarma_activa_no), Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
 
 }

@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,81 +17,66 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.util.List;
 
 import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
-import android.os.AsyncTask;
-import android.util.Log;
 
 /**
  * Tarea asincrona que se encarga de consultar las Twitter
- * 
- * 
  */
 public class LoadTwitterAsyncTask extends AsyncTask<Object, Void, List<TwResultado>> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadTwitterAsyncTaskResponder {
-		public void TwitterLoaded(List<TwResultado> Twitter);
-	}
 
-	private LoadTwitterAsyncTaskResponder responder;
+    public interface LoadTwitterAsyncTaskResponder {
+        public void TwitterLoaded(List<TwResultado> Twitter);
+    }
 
-	
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadTwitterAsyncTask(LoadTwitterAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    private LoadTwitterAsyncTaskResponder responder;
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected List<TwResultado> doInBackground(Object... datos) {
-		List<TwResultado> twList = null;
-		try {
-			
-			List<Boolean> lista = (List<Boolean>) datos[0];
-			
-			String cantidad = (String) datos[1];
-			
-			twList = ProcesarTwitter.procesar(lista, cantidad);
-			
-			Log.d("tw", "lista: " + twList.size());
-			
 
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-			return null;
-			
-			
-			
-		}
+    public LoadTwitterAsyncTask(LoadTwitterAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-		return twList;
-	}
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(List<TwResultado> result) {
-		if (responder != null) {
-			responder.TwitterLoaded(result);
-		}
+    @Override
+    protected List<TwResultado> doInBackground(Object... datos) {
+        List<TwResultado> twList = null;
+        try {
 
-		
-	}
+            List<Boolean> lista = (List<Boolean>) datos[0];
+
+            String cantidad = (String) datos[1];
+
+            twList = ProcesarTwitter.procesar(lista, cantidad);
+
+            Log.d("tw", "lista: " + twList.size());
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return null;
+
+
+        }
+
+        return twList;
+    }
+
+
+    @Override
+    protected void onPostExecute(List<TwResultado> result) {
+        if (responder != null) {
+            responder.TwitterLoaded(result);
+        }
+
+
+    }
 
 }

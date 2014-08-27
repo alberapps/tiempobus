@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
@@ -60,102 +59,99 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Muestra los favoritos guardados
- * 
- * 
  */
-@SuppressLint("NewApi")
 public class FavoritosActivity extends ActionBarActivity {
 
-	public static final int SUB_ACTIVITY_REQUEST_DRIVE = 1100;
+    public static final int SUB_ACTIVITY_REQUEST_DRIVE = 1100;
 
-	public static final String[] PROJECTION = new String[] { TiempoBusDb.Favoritos._ID, // 0
-			TiempoBusDb.Favoritos.POSTE, // 1
-			TiempoBusDb.Favoritos.TITULO, // 2
-			TiempoBusDb.Favoritos.DESCRIPCION, // 3
-	};
+    public static final String[] PROJECTION = new String[]{TiempoBusDb.Favoritos._ID, // 0
+            TiempoBusDb.Favoritos.POSTE, // 1
+            TiempoBusDb.Favoritos.TITULO, // 2
+            TiempoBusDb.Favoritos.DESCRIPCION, // 3
+    };
 
-	private static final int MENU_BORRAR = 2;
+    private static final int MENU_BORRAR = 2;
 
-	private static final int MENU_MODIFICAR = 3;
+    private static final int MENU_MODIFICAR = 3;
 
-	private ListView favoritosView;
+    private ListView favoritosView;
 
-	FavoritosAdapter adapter;
+    FavoritosAdapter adapter;
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	String orden = "";
+    String orden = "";
 
-	private ProgressDialog dialog;
+    private ProgressDialog dialog;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-
-			ActionBar actionBar = getSupportActionBar();
-			if (actionBar != null) {
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-		setContentView(R.layout.favoritos);
 
-		// Fondo
-		setupFondoAplicacion();
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		// Orden de favoritos
-		orden = preferencias.getString("orden_favoritos", TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
-		consultarDatos(orden);
+        setContentView(R.layout.favoritos);
 
-	}
+        // Fondo
+        setupFondoAplicacion();
 
-	/**
-	 * Consulda de datos desde la base de datos en el orden indicado
-	 * 
-	 * @param orden
-	 */
-	private void consultarDatos(String orden) {
+        // Orden de favoritos
+        orden = preferencias.getString("orden_favoritos", TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+        consultarDatos(orden);
+
+    }
+
+    /**
+     * Consulda de datos desde la base de datos en el orden indicado
+     *
+     * @param orden
+     */
+    private void consultarDatos(String orden) {
 
 		/*
-		 * Si no ha sido cargado con anterioridad, cargamos nuestro
+         * Si no ha sido cargado con anterioridad, cargamos nuestro
 		 * "content provider"
 		 */
-		Intent intent = getIntent();
-		if (intent.getData() == null) {
-			intent.setData(TiempoBusDb.Favoritos.CONTENT_URI);
-		}
+        Intent intent = getIntent();
+        if (intent.getData() == null) {
+            intent.setData(TiempoBusDb.Favoritos.CONTENT_URI);
+        }
 
 		/*
 		 * Query "managed": la actividad se encargará de cerrar y volver a
 		 * cargar el cursor cuando sea necesario
 		 */
-		Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+        Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
 
-		List<Favorito> listaFavoritos = new ArrayList<Favorito>();
+        List<Favorito> listaFavoritos = new ArrayList<Favorito>();
 
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-			Favorito favorito = new Favorito();
+            Favorito favorito = new Favorito();
 
-			favorito.setId(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos._ID)));
-			favorito.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
-			favorito.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
-			favorito.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
+            favorito.setId(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos._ID)));
+            favorito.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
+            favorito.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
+            favorito.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
 
-			listaFavoritos.add(favorito);
+            listaFavoritos.add(favorito);
 
-		}
+        }
 
-		// Nuevo adapter para favoritos
-		adapter = new FavoritosAdapter(this, R.layout.favoritos_item);
-		adapter.addAll(listaFavoritos);
+        // Nuevo adapter para favoritos
+        adapter = new FavoritosAdapter(this, R.layout.favoritos_item);
+        adapter.addAll(listaFavoritos);
 
 
 
@@ -163,490 +159,485 @@ public class FavoritosActivity extends ActionBarActivity {
 		 * Preparamos las acciones a realizar cuando pulsen un favorito
 		 */
 
-		favoritosView = (ListView) findViewById(android.R.id.list);
+        favoritosView = (ListView) findViewById(android.R.id.list);
 
         favoritosView.setAdapter(adapter);
 
 
         favoritosView.setOnItemClickListener(favoritoClickedHandler);
-		registerForContextMenu(favoritosView);
+        registerForContextMenu(favoritosView);
 
 
+    }
 
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-	}
+    }
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener favoritoClickedHandler = new OnItemClickListener() {
 
-	}
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+            Favorito fav = (Favorito) l.getItemAtPosition(position);
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener favoritoClickedHandler = new OnItemClickListener() {
+            Intent intent = new Intent();
+            Bundle b = new Bundle();
+            b.putInt("POSTE", Integer.parseInt(fav.getNumParada()));
+            intent.putExtras(b);
+            setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+            finish();
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-			Favorito fav = (Favorito) l.getItemAtPosition(position);
+        }
+    };
 
-			Intent intent = new Intent();
-			Bundle b = new Bundle();
-			b.putInt("POSTE", Integer.parseInt(fav.getNumParada()));
-			intent.putExtras(b);
-			setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
-			finish();
+    /**
+     * Menu contextual
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 
-		}
-	};
+        menu.setHeaderTitle(R.string.menu_contextual);
 
-	/**
-	 * Menu contextual
-	 */
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        menu.add(0, MENU_BORRAR, 0, getResources().getText(R.string.menu_borrar));
 
-		menu.setHeaderTitle(R.string.menu_contextual);
+        menu.add(0, MENU_MODIFICAR, 1, getResources().getText(R.string.menu_modificar));
 
-		menu.add(0, MENU_BORRAR, 0, getResources().getText(R.string.menu_borrar));
+    }
 
-		menu.add(0, MENU_MODIFICAR, 1, getResources().getText(R.string.menu_modificar));
+    /**
+     * Gestionamos la pulsacion de un menu contextual
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
-	}
+        Favorito favorito = adapter.getItem((int) info.id);
 
-	/**
-	 * Gestionamos la pulsacion de un menu contextual
-	 */
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        long id = Long.parseLong(favorito.getId());
 
-		Favorito favorito = adapter.getItem((int) info.id);
+        switch (item.getItemId()) {
+            case MENU_BORRAR:
 
-		long id = Long.parseLong(favorito.getId());
+                launchBorrarFavorito(id);
 
-		switch (item.getItemId()) {
-		case MENU_BORRAR:
+                return true;
 
-			launchBorrarFavorito(id);
+            case MENU_MODIFICAR:
 
-			return true;
+                launchModificarFavorito(id);
 
-		case MENU_MODIFICAR:
+                return true;
 
-			launchModificarFavorito(id);
+            default:
+                // return super.onContextItemSelected(item);
+        }
+        return false;
+    }
 
-			return true;
+    /**
+     * Borrado
+     *
+     * @param idBorrado
+     */
+    public void launchBorrarFavorito(final long idBorrado) {
 
-		default:
-			// return super.onContextItemSelected(item);
-		}
-		return false;
-	}
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-	/**
-	 * Borrado
-	 * 
-	 * @param idBorrado
-	 */
-	public void launchBorrarFavorito(final long idBorrado) {
+        //dialog.setTitle(getString(R.string.menu_borrar));
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage(getString(R.string.favoritos_pregunta));
+        // dialog.setIcon(R.drawable.ic_tiempobus_3);
 
-		//dialog.setTitle(getString(R.string.menu_borrar));
+        dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-		dialog.setMessage(getString(R.string.favoritos_pregunta));
-		// dialog.setIcon(R.drawable.ic_tiempobus_3);
+            public void onClick(DialogInterface dialog, int id) {
 
-		dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                Uri miUri = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, idBorrado);
 
-			public void onClick(DialogInterface dialog, int id) {
+                int resultado = getContentResolver().delete(miUri, null, null);
 
-				Uri miUri = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, idBorrado);
+                adapter.notifyDataSetInvalidated();
 
-				int resultado = getContentResolver().delete(miUri, null, null);
+                consultarDatos(orden);
 
-				adapter.notifyDataSetInvalidated();
+                if (resultado > 0) {
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.info_borrar), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.error_no_definido), Toast.LENGTH_SHORT).show();
+                }
 
-				consultarDatos(orden);
+                dialog.dismiss();
 
-				if (resultado > 0) {
-					Toast.makeText(FavoritosActivity.this, getString(R.string.info_borrar), Toast.LENGTH_SHORT).show();
-				} else {
-					Toast.makeText(FavoritosActivity.this, getString(R.string.error_no_definido), Toast.LENGTH_SHORT).show();
-				}
+            }
 
-				dialog.dismiss();
+        });
 
-			}
+        dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 
-		});
+            public void onClick(DialogInterface dialog, int id) {
 
-		dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                dialog.dismiss();
 
-			public void onClick(DialogInterface dialog, int id) {
+            }
 
-				dialog.dismiss();
+        });
 
-			}
+        dialog.show();
 
-		});
+    }
 
-		dialog.show();
+    /**
+     * Lanza la subactividad para modificar el favorito seleccionado
+     */
+    public void launchModificarFavorito(long id) {
 
-	}
+        Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id);
 
-	/**
-	 * Lanza la subactividad para modificar el favorito seleccionado
-	 */
-	public void launchModificarFavorito(long id) {
+        Cursor mCursor = getContentResolver().query(miUriM, PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
 
-		Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id);
+        String posteN = "";
+        String titulo = "";
+        String descripcion = "";
 
-		Cursor mCursor = getContentResolver().query(miUriM, PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+        if (mCursor != null) {
 
-		String posteN = "";
-		String titulo = "";
-		String descripcion = "";
+            while (mCursor.moveToNext()) {
 
-		if (mCursor != null) {
+                posteN = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE));
+                titulo = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO));
+                descripcion = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION));
 
-			while (mCursor.moveToNext()) {
+            }
 
-				posteN = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE));
-				titulo = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO));
-				descripcion = mCursor.getString(mCursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION));
+            mCursor.close();
 
-			}
+        } else {
 
-			mCursor.close();
+        }
 
-		} else {
+        int poste = Integer.parseInt(posteN);
 
-		}
+        Intent i = new Intent(FavoritosActivity.this, FavoritoModificarActivity.class);
 
-		int poste = Integer.parseInt(posteN);
+        Bundle extras = new Bundle();
+        extras.putInt("POSTE", poste); // Pasamos el poste actual
 
-		Intent i = new Intent(FavoritosActivity.this, FavoritoModificarActivity.class);
+        extras.putString("TITULO", titulo);
 
-		Bundle extras = new Bundle();
-		extras.putInt("POSTE", poste); // Pasamos el poste actual
+        extras.putString("DESCRIPCION", descripcion);
 
-		extras.putString("TITULO", titulo);
+        // Uri de modificacion
+        extras.putLong("ID_URI", id);
 
-		extras.putString("DESCRIPCION", descripcion);
+        i.putExtras(extras);
+        startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+    }
 
-		// Uri de modificacion
-		extras.putLong("ID_URI", id);
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-		i.putExtras(extras);
-		startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
-	}
+        String fondo_galeria = preferencias.getString("image_galeria", "");
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+        View contenedor_principal = findViewById(R.id.contenedor_favoritos);
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 
-		View contenedor_principal = findViewById(R.id.contenedor_favoritos);
+    }
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.favoritos, menu);
 
-	}
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.favoritos, menu);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-		return super.onCreateOptionsMenu(menu);
-	}
+        SharedPreferences.Editor editor = preferencias.edit();
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_ordenar_parada:
 
-		SharedPreferences.Editor editor = preferencias.edit();
+                if (orden.equals(TiempoBusDb.Favoritos.NUM_A_SORT_ORDER)) {
 
-		switch (item.getItemId()) {
-		case R.id.menu_ordenar_parada:
+                    orden = TiempoBusDb.Favoritos.NUM_D_SORT_ORDER;
 
-			if (orden.equals(TiempoBusDb.Favoritos.NUM_A_SORT_ORDER)) {
+                    consultarDatos(orden);
 
-				orden = TiempoBusDb.Favoritos.NUM_D_SORT_ORDER;
+                    // Guardar
+                    editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_D_SORT_ORDER);
+                    editor.commit();
 
-				consultarDatos(orden);
+                } else {
 
-				// Guardar
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_D_SORT_ORDER);
-				editor.commit();
+                    orden = TiempoBusDb.Favoritos.NUM_A_SORT_ORDER;
 
-			} else {
+                    consultarDatos(orden);
 
-				orden = TiempoBusDb.Favoritos.NUM_A_SORT_ORDER;
+                    // Guardar
+                    editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_A_SORT_ORDER);
+                    editor.commit();
 
-				consultarDatos(orden);
+                }
 
-				// Guardar
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_A_SORT_ORDER);
-				editor.commit();
+                break;
+            case R.id.menu_ordenar_nombre:
 
-			}
+                if (orden.equals(TiempoBusDb.Favoritos.NAME_A_SORT_ORDER)) {
 
-			break;
-		case R.id.menu_ordenar_nombre:
+                    orden = TiempoBusDb.Favoritos.NAME_D_SORT_ORDER;
 
-			if (orden.equals(TiempoBusDb.Favoritos.NAME_A_SORT_ORDER)) {
+                    consultarDatos(orden);
 
-				orden = TiempoBusDb.Favoritos.NAME_D_SORT_ORDER;
+                    // Guarda
+                    editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_D_SORT_ORDER);
+                    editor.commit();
+                } else {
 
-				consultarDatos(orden);
+                    orden = TiempoBusDb.Favoritos.NAME_A_SORT_ORDER;
 
-				// Guarda
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_D_SORT_ORDER);
-				editor.commit();
-			} else {
+                    consultarDatos(orden);
 
-				orden = TiempoBusDb.Favoritos.NAME_A_SORT_ORDER;
+                    // Guarda
+                    editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_A_SORT_ORDER);
+                    editor.commit();
 
-				consultarDatos(orden);
+                }
 
-				// Guarda
-				editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_A_SORT_ORDER);
-				editor.commit();
+                break;
 
-			}
+            case R.id.menu_exportar:
 
-			break;
+                exportarDB();
 
-		case R.id.menu_exportar:
+                break;
 
-			exportarDB();
+            case R.id.menu_importar:
 
-			break;
+                importarDB();
 
-		case R.id.menu_importar:
+                break;
 
-			importarDB();
+            case R.id.menu_importar_drive:
 
-			break;
+                importarDriveDB();
 
-		case R.id.menu_importar_drive:
+                break;
 
-			importarDriveDB();
+            case R.id.menu_exportar_drive:
 
-			break;
+                Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
 
-		case R.id.menu_exportar_drive:
+                Bundle b2 = new Bundle();
+                b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
+                intent2.putExtras(b2);
 
-			Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+                startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
 
-			Bundle b2 = new Bundle();
-			b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
-			intent2.putExtras(b2);
+                break;
 
-			startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
 
-			break;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
 
+    /**
+     * Exportar la base de datos
+     */
+    private void exportarDB() {
 
-		}
+        dialog = ProgressDialog.show(FavoritosActivity.this, "", getString(R.string.dialog_procesando), true);
 
-		return super.onOptionsItemSelected(item);
-	}
+        BackupAsyncTaskResponder backupAsyncTaskResponder = new BackupAsyncTaskResponder() {
+            public void backupLoaded(Boolean resultado) {
 
-	/**
-	 * Exportar la base de datos
-	 */
-	private void exportarDB() {
+                if (resultado != null && resultado) {
 
-		dialog = ProgressDialog.show(FavoritosActivity.this, "", getString(R.string.dialog_procesando), true);
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.ok_exportar), Toast.LENGTH_LONG).show();
 
-		BackupAsyncTaskResponder backupAsyncTaskResponder = new BackupAsyncTaskResponder() {
-			public void backupLoaded(Boolean resultado) {
+                } else {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.error_exportar), Toast.LENGTH_SHORT).show();
 
-				if (resultado != null && resultado) {
+                }
+            }
+        };
 
-					if (dialog != null && dialog.isShowing()) {
-						dialog.dismiss();
-					}
-					Toast.makeText(FavoritosActivity.this, getString(R.string.ok_exportar), Toast.LENGTH_LONG).show();
+        new BackupAsyncTask(backupAsyncTaskResponder).execute("exportar");
 
-				} else {
-					if (dialog != null && dialog.isShowing()) {
-						dialog.dismiss();
-					}
-					Toast.makeText(FavoritosActivity.this, getString(R.string.error_exportar), Toast.LENGTH_SHORT).show();
+    }
 
-				}
-			}
-		};
+    /**
+     * Importar la base de datos
+     */
+    private void importarDB() {
 
-		new BackupAsyncTask(backupAsyncTaskResponder).execute("exportar");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
-	}
+                procederImportacionBD();
 
-	/**
-	 * Importar la base de datos
-	 */
-	private void importarDB() {
+            }
+        }).setNegativeButton(getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
 
-				procederImportacionBD();
+        alert.show();
 
-			}
-		}).setNegativeButton(getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
+    }
 
-			}
-		});
-		AlertDialog alert = builder.create();
+    /**
+     * Importar la base de datos
+     */
+    private void importarDriveDB() {
 
-		alert.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
-	}
+                Intent intent1 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
 
-	/**
-	 * Importar la base de datos
-	 */
-	private void importarDriveDB() {
+                Bundle b = new Bundle();
+                b.putString("MODO", FavoritoDriveActivity.MODO_IMPORTAR);
+                intent1.putExtras(b);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
+                startActivityForResult(intent1, SUB_ACTIVITY_REQUEST_DRIVE);
 
-				Intent intent1 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+            }
+        }).setNegativeButton(getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
 
-				Bundle b = new Bundle();
-				b.putString("MODO", FavoritoDriveActivity.MODO_IMPORTAR);
-				intent1.putExtras(b);
+            }
+        });
+        AlertDialog alert = builder.create();
 
-				startActivityForResult(intent1, SUB_ACTIVITY_REQUEST_DRIVE);
+        alert.show();
 
-			}
-		}).setNegativeButton(getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int id) {
-				dialog.cancel();
+    }
 
-			}
-		});
-		AlertDialog alert = builder.create();
+    /**
+     * Recuperar
+     */
+    private void procederImportacionBD() {
 
-		alert.show();
+        dialog = ProgressDialog.show(FavoritosActivity.this, "", getString(R.string.dialog_procesando), true);
 
-	}
+        BackupAsyncTaskResponder backupAsyncTaskResponder = new BackupAsyncTaskResponder() {
+            public void backupLoaded(Boolean resultado) {
 
-	/**
-	 * Recuperar
-	 */
-	private void procederImportacionBD() {
+                if (resultado != null && resultado) {
 
-		dialog = ProgressDialog.show(FavoritosActivity.this, "", getString(R.string.dialog_procesando), true);
+                    consultarDatos(orden);
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.ok_importar), Toast.LENGTH_SHORT).show();
 
-		BackupAsyncTaskResponder backupAsyncTaskResponder = new BackupAsyncTaskResponder() {
-			public void backupLoaded(Boolean resultado) {
+                } else {
+                    // Error al recuperar datos
 
-				if (resultado != null && resultado) {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
 
-					consultarDatos(orden);
-					if (dialog != null && dialog.isShowing()) {
-						dialog.dismiss();
-					}
-					Toast.makeText(FavoritosActivity.this, getString(R.string.ok_importar), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavoritosActivity.this, getString(R.string.error_importar), Toast.LENGTH_LONG).show();
 
-				} else {
-					// Error al recuperar datos
+                }
+            }
+        };
 
-					if (dialog != null && dialog.isShowing()) {
-						dialog.dismiss();
-					}
+        new BackupAsyncTask(backupAsyncTaskResponder).execute("importar");
 
-					Toast.makeText(FavoritosActivity.this, getString(R.string.error_importar), Toast.LENGTH_LONG).show();
+    }
 
-				}
-			}
-		};
+    @Override
+    protected void onStart() {
 
-		new BackupAsyncTask(backupAsyncTaskResponder).execute("importar");
+        super.onStart();
 
-	}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
 
-	@Override
-	protected void onStart() {
+    }
 
-		super.onStart();
+    @Override
+    protected void onStop() {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
 
-	}
+        super.onStop();
 
-	@Override
-	protected void onStop() {
+    }
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case SUB_ACTIVITY_REQUEST_DRIVE:
+                if (resultCode == RESULT_OK) {
 
-		super.onStop();
+                    consultarDatos(orden);
 
-	}
+                }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case SUB_ACTIVITY_REQUEST_DRIVE:
-			if (resultCode == RESULT_OK) {
+                break;
 
-				consultarDatos(orden);
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
 
-			}
+                consultarDatos(orden);
 
-			break;
+                break;
+        }
+    }
 
-		default:
-			super.onActivityResult(requestCode, resultCode, data);
+    /**
+     * Compartir informacion del bus
+     */
+    public void shareFavorito(Favorito favorito) {
 
-			consultarDatos(orden);
+        // String devuelto
 
-			break;
-		}
-	}
+        String mensaje = getString(R.string.share_0) + " " + getString(R.string.share_0b) + " " + favorito.getNumParada() + " '" + favorito.getTitulo() + "' " + ": " + favorito.getDescripcion();
 
-	/**
-	 * Compartir informacion del bus
-	 */
-	public void shareFavorito(Favorito favorito) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.menu_share)));
 
-		// String devuelto
-
-		String mensaje = getString(R.string.share_0) + " " + getString(R.string.share_0b) + " " + favorito.getNumParada() + " '" + favorito.getTitulo() + "' " + ": " + favorito.getDescripcion();
-
-		Intent sendIntent = new Intent();
-		sendIntent.setAction(Intent.ACTION_SEND);
-		sendIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
-		sendIntent.setType("text/plain");
-		startActivity(Intent.createChooser(sendIntent, getString(R.string.menu_share)));
-
-	}
+    }
 
 }

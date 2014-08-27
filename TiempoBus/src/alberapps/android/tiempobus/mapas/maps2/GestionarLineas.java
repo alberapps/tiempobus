@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2013 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -30,6 +30,7 @@ import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tram.UtilidadesTRAM;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -61,805 +62,800 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
- * 
  * Gestion carga de lineas, etc en el mapa
- * 
  */
 public class GestionarLineas {
 
-	private MapasMaps2Activity context;
+    private MapasMaps2Activity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	public GestionarLineas(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public GestionarLineas(MapasMaps2Activity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	/**
-	 * kml de carga
-	 */
-	public void loadDatosMapaV3() {
+    /**
+     * kml de carga
+     */
+    public void loadDatosMapaV3() {
 
-		String url = UtilidadesTAM.getKMLParadasV3(context.lineaSeleccionada);
+        String url = UtilidadesTAM.getKMLParadasV3(context.lineaSeleccionada);
 
-		String urlRecorrido = UtilidadesTAM.getKMLRecorridoV3(context.lineaSeleccionada);
+        String urlRecorrido = UtilidadesTAM.getKMLRecorridoV3(context.lineaSeleccionada);
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			context.taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(url, urlRecorrido);
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			if (context.dialog != null && context.dialog.isShowing()) {
-				context.dialog.dismiss();
-			}
-		}
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            context.taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(url, urlRecorrido);
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            if (context.dialog != null && context.dialog.isShowing()) {
+                context.dialog.dismiss();
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Se llama cuando las paradas hayan sido cargadas
-	 */
-	LoadDatosMapaV3AsyncTaskResponder loadDatosMapaV3AsyncTaskResponderIda = new LoadDatosMapaV3AsyncTaskResponder() {
-		public void datosMapaV3Loaded(DatosMapa[] datos) {
+    /**
+     * Se llama cuando las paradas hayan sido cargadas
+     */
+    LoadDatosMapaV3AsyncTaskResponder loadDatosMapaV3AsyncTaskResponderIda = new LoadDatosMapaV3AsyncTaskResponder() {
+        public void datosMapaV3Loaded(DatosMapa[] datos) {
 
-			if (datos != null) {
-				context.datosMapaCargadosIda = datos[0];
-				context.datosMapaCargadosVuelta = datos[1];
+            if (datos != null) {
+                context.datosMapaCargadosIda = datos[0];
+                context.datosMapaCargadosVuelta = datos[1];
 
-				cargarMapa();
+                cargarMapa();
 
-				context.gestionVehiculos.loadDatosVehiculos();
+                context.gestionVehiculos.loadDatosVehiculos();
 
-				context.dialog.dismiss();
+                context.dialog.dismiss();
 
-			} else {
+            } else {
 
-				Toast toast = Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-				toast.show();
-				context.finish();
+                Toast toast = Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+                toast.show();
+                context.finish();
 
-				context.dialog.dismiss();
+                context.dialog.dismiss();
 
-			}
+            }
 
-		}
-	};
+        }
+    };
 
-	/**
-	 * Cargar el mapa con las paradas de la linea
-	 * 
-	 */
-	public void cargarMapa() {
+    /**
+     * Cargar el mapa con las paradas de la linea
+     */
+    public void cargarMapa() {
 
-		// Cargar datos cabecera
-		String cabdatos = context.lineaSeleccionadaDesc;
+        // Cargar datos cabecera
+        String cabdatos = context.lineaSeleccionadaDesc;
 
-		context.datosLinea.setText(cabdatos);
+        context.datosLinea.setText(cabdatos);
 
-		if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-			context.drawableIda = R.drawable.tramway;
-		} else {
-			context.drawableIda = R.drawable.busstop_blue;
-		}
+        if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            context.drawableIda = R.drawable.tramway;
+        } else {
+            context.drawableIda = R.drawable.busstop_blue;
+        }
 
-		context.drawableVuelta = R.drawable.busstop_green;
-		context.drawableMedio = R.drawable.busstop_medio;
-		context.markersIda = new ArrayList<MarkerOptions>();
-		context.markersVuelta = new ArrayList<MarkerOptions>();
-		context.markersMedio = new ArrayList<MarkerOptions>();
+        context.drawableVuelta = R.drawable.busstop_green;
+        context.drawableMedio = R.drawable.busstop_medio;
+        context.markersIda = new ArrayList<MarkerOptions>();
+        context.markersVuelta = new ArrayList<MarkerOptions>();
+        context.markersMedio = new ArrayList<MarkerOptions>();
 
-		// -0.510017579,38.386057662,0
-		// 38.386057662,-0.510017579
+        // -0.510017579,38.386057662,0
+        // 38.386057662,-0.510017579
 
-		final List<LatLng> listaPuntos = new ArrayList<LatLng>();
+        final List<LatLng> listaPuntos = new ArrayList<LatLng>();
 
-		/**
-		 * 38.344820, -0.483320‎ +38° 20' 41.35", -0° 28' 59.95"
-		 * 38.34482,-0.48332
-		 * 
-		 * long: -0,510018 lati: 38,386058 PRUEBAS‎
-		 * 
-		 */
+        /**
+         * 38.344820, -0.483320‎ +38° 20' 41.35", -0° 28' 59.95"
+         * 38.34482,-0.48332
+         *
+         * long: -0,510018 lati: 38,386058 PRUEBAS‎
+         *
+         */
 
-		// Carga de puntos del mapa
+        // Carga de puntos del mapa
 
-		LatLng point = null;
+        LatLng point = null;
 
-		// Recorrido ida
-		if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
+        // Recorrido ida
+        if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
 
-			String colorRecorrido = "#157087";
+            String colorRecorrido = "#157087";
 
-			// if
-			// (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum))
-			// {
-			// colorRecorrido = "#ed7408";
-			// }
+            // if
+            // (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum))
+            // {
+            // colorRecorrido = "#ed7408";
+            // }
 
-			// Recorrido
-			drawPath(context.datosMapaCargadosIda, Color.parseColor(colorRecorrido));
+            // Recorrido
+            drawPath(context.datosMapaCargadosIda, Color.parseColor(colorRecorrido));
 
-		}
+        }
 
-		MarkerOptions posicionSelecionada = null;
+        MarkerOptions posicionSelecionada = null;
 
-		// Datos IDA
-		if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
+        // Datos IDA
+        if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
-			// Recorrido
-			drawPath(context.datosMapaCargadosIda, Color.parseColor("#157087"));
+            // Recorrido
+            drawPath(context.datosMapaCargadosIda, Color.parseColor("#157087"));
 
-			for (int i = 0; i < context.datosMapaCargadosIda.getPlacemarks().size(); i++) {
+            for (int i = 0; i < context.datosMapaCargadosIda.getPlacemarks().size(); i++) {
 
-				String[] coordenadas = context.datosMapaCargadosIda.getPlacemarks().get(i).getCoordinates().split(",");
+                String[] coordenadas = context.datosMapaCargadosIda.getPlacemarks().get(i).getCoordinates().split(",");
 
-				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
-				// int glat = (int) (lat * 1E6);
-				// int glng = (int) (lng * 1E6);
+                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+                // int glat = (int) (lat * 1E6);
+                // int glng = (int) (lng * 1E6);
 
-				// 19240000,-99120000
-				// 38337176
-				// -491890
+                // 19240000,-99120000
+                // 38337176
+                // -491890
 
-				// point = new GeoPoint(glat, glng);
-				// GeoPoint point = new GeoPoint(19240000,-99120000);
+                // point = new GeoPoint(glat, glng);
+                // GeoPoint point = new GeoPoint(19240000,-99120000);
 
-				point = new LatLng(lat, lng);
+                point = new LatLng(lat, lng);
 
-				String descripcionAlert = context.getResources().getText(R.string.share_2) + " ";
+                String descripcionAlert = context.getResources().getText(R.string.share_2) + " ";
 
-				if (context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido() != null && !context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido().trim().equals("")) {
-					descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido().trim();
-				} else {
-					descripcionAlert += "Ida";
-				}
+                if (context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido() != null && !context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido().trim().equals("")) {
+                    descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getSentido().trim();
+                } else {
+                    descripcionAlert += "Ida";
+                }
 
-				descripcionAlert += "\n" + context.getResources().getText(R.string.lineas) + " ";
+                descripcionAlert += "\n" + context.getResources().getText(R.string.lineas) + " ";
 
-				if (context.datosMapaCargadosIda.getPlacemarks().get(i).getLineas() != null) {
-					descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
-				}
+                if (context.datosMapaCargadosIda.getPlacemarks().get(i).getLineas() != null) {
+                    descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
+                }
 
-				descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
+                descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
 
-				if (context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null) {
-					descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones().trim();
-				}
+                if (context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null) {
+                    descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones().trim();
+                }
 
-				context.markersIda.add(new MarkerOptions().position(point)
-						.title("[" + context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim()).snippet(descripcionAlert)
-						.icon(BitmapDescriptorFactory.fromResource(context.drawableIda)));
+                context.markersIda.add(new MarkerOptions().position(point)
+                        .title("[" + context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim()).snippet(descripcionAlert)
+                        .icon(BitmapDescriptorFactory.fromResource(context.drawableIda)));
 
-				listaPuntos.add(point);
+                listaPuntos.add(point);
 
-				if (context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim())) {
+                if (context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim())) {
 
-					posicionSelecionada = context.markersIda.get(context.markersIda.size() - 1);
+                    posicionSelecionada = context.markersIda.get(context.markersIda.size() - 1);
 
-				}
+                }
 
-			}
+            }
 
-			if (context.markersIda != null && context.markersIda.size() > 0) {
+            if (context.markersIda != null && context.markersIda.size() > 0) {
 
-				cargarMarkers(context.markersIda, posicionSelecionada);
+                cargarMarkers(context.markersIda, posicionSelecionada);
 
-			} else {
-				avisoPosibleError();
-			}
+            } else {
+                avisoPosibleError();
+            }
 
-		}
+        }
 
-		boolean coincide = false;
+        boolean coincide = false;
 
-		// Recorrido vuelta
-		if (context.datosMapaCargadosVuelta != null && context.datosMapaCargadosVuelta.getRecorrido() != null && !context.datosMapaCargadosVuelta.getRecorrido().equals("")) {
+        // Recorrido vuelta
+        if (context.datosMapaCargadosVuelta != null && context.datosMapaCargadosVuelta.getRecorrido() != null && !context.datosMapaCargadosVuelta.getRecorrido().equals("")) {
 
-			// Recorrido
-			drawPath(context.datosMapaCargadosVuelta, Color.parseColor("#6C8715"));
+            // Recorrido
+            drawPath(context.datosMapaCargadosVuelta, Color.parseColor("#6C8715"));
 
-		}
+        }
 
-		// Datos VUELTA
-		if (context.datosMapaCargadosVuelta != null && !context.datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
+        // Datos VUELTA
+        if (context.datosMapaCargadosVuelta != null && !context.datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
 
-			for (int i = 0; i < context.datosMapaCargadosVuelta.getPlacemarks().size(); i++) {
+            for (int i = 0; i < context.datosMapaCargadosVuelta.getPlacemarks().size(); i++) {
 
-				String[] coordenadas = context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCoordinates().split(",");
+                String[] coordenadas = context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCoordinates().split(",");
 
-				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
-				// int glat = (int) (lat * 1E6);
-				// int glng = (int) (lng * 1E6);
+                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+                // int glat = (int) (lat * 1E6);
+                // int glng = (int) (lng * 1E6);
 
-				// 19240000,-99120000
+                // 19240000,-99120000
 
-				// point = new GeoPoint(glat, glng);
-				// GeoPoint point = new GeoPoint(19240000,-99120000);
+                // point = new GeoPoint(glat, glng);
+                // GeoPoint point = new GeoPoint(19240000,-99120000);
 
-				point = new LatLng(lat, lng);
+                point = new LatLng(lat, lng);
 
-				String direc = "";
+                String direc = "";
 
-				coincide = false;
+                coincide = false;
 
-				if (context.datosMapaCargadosIda.getPlacemarks().contains(context.datosMapaCargadosVuelta.getPlacemarks().get(i))) {
+                if (context.datosMapaCargadosIda.getPlacemarks().contains(context.datosMapaCargadosVuelta.getPlacemarks().get(i))) {
 
-					String ida = context.datosMapaCargadosIda.getCurrentPlacemark().getSentido().trim();
+                    String ida = context.datosMapaCargadosIda.getCurrentPlacemark().getSentido().trim();
 
-					if (ida.equals("")) {
-						ida = "Ida";
-					}
+                    if (ida.equals("")) {
+                        ida = "Ida";
+                    }
 
-					direc = ida + " " + context.getResources().getText(R.string.tiempo_m_3) + " " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getSentido();
+                    direc = ida + " " + context.getResources().getText(R.string.tiempo_m_3) + " " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getSentido();
 
-					coincide = true;
+                    coincide = true;
 
-				} else {
-					direc = context.datosMapaCargadosVuelta.getCurrentPlacemark().getSentido().trim();
+                } else {
+                    direc = context.datosMapaCargadosVuelta.getCurrentPlacemark().getSentido().trim();
 
-					coincide = false;
-				}
+                    coincide = false;
+                }
 
-				if (direc == null || (direc != null && direc.trim().equals(""))) {
-					direc = "Vuelta";
-				}
+                if (direc == null || (direc != null && direc.trim().equals(""))) {
+                    direc = "Vuelta";
+                }
 
-				String descripcionAlert = context.getResources().getText(R.string.share_2) + " ";
+                String descripcionAlert = context.getResources().getText(R.string.share_2) + " ";
 
-				if (direc != null) {
-					descripcionAlert += direc;
-				}
+                if (direc != null) {
+                    descripcionAlert += direc;
+                }
 
-				descripcionAlert += "\n" + context.getResources().getText(R.string.lineas) + " ";
+                descripcionAlert += "\n" + context.getResources().getText(R.string.lineas) + " ";
 
-				if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas() != null) {
-					descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
-				}
+                if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas() != null) {
+                    descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
+                }
 
-				descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
+                descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
 
-				if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null) {
-					descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones().trim();
-				}
+                if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null) {
+                    descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones().trim();
+                }
 
-				if (coincide) {
+                if (coincide) {
 
-					context.markersMedio.add(new MarkerOptions().position(point)
-							.title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
-							.snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableMedio)));
+                    context.markersMedio.add(new MarkerOptions().position(point)
+                            .title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
+                            .snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableMedio)));
 
-				} else {
+                } else {
 
-					context.markersVuelta.add(new MarkerOptions().position(point)
-							.title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
-							.snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableVuelta)));
+                    context.markersVuelta.add(new MarkerOptions().position(point)
+                            .title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
+                            .snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableVuelta)));
 
-				}
+                }
 
-				listaPuntos.add(point);
+                listaPuntos.add(point);
 
-				// Si hay seleccion pero no estaba en la ida
-				if (posicionSelecionada == null && context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim())) {
+                // Si hay seleccion pero no estaba en la ida
+                if (posicionSelecionada == null && context.paradaSeleccionadaEntrada != null && context.paradaSeleccionadaEntrada.equals(context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim())) {
 
-					posicionSelecionada = context.markersVuelta.get(context.markersVuelta.size() - 1);
+                    posicionSelecionada = context.markersVuelta.get(context.markersVuelta.size() - 1);
 
-				}
+                }
 
-			}
+            }
 
-			if (context.markersMedio != null && context.markersMedio.size() > 0 && context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
+            if (context.markersMedio != null && context.markersMedio.size() > 0 && context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
-				cargarMarkers(context.markersMedio, posicionSelecionada);
+                cargarMarkers(context.markersMedio, posicionSelecionada);
 
-			}
+            }
 
-			if (context.markersVuelta.size() > 0) {
+            if (context.markersVuelta.size() > 0) {
 
-				cargarMarkers(context.markersVuelta, posicionSelecionada);
+                cargarMarkers(context.markersVuelta, posicionSelecionada);
 
-			} else {
-				avisoPosibleError();
-			}
+            } else {
+                avisoPosibleError();
+            }
 
-		}
+        }
 
-		if (listaPuntos != null && !listaPuntos.isEmpty()) {
+        if (listaPuntos != null && !listaPuntos.isEmpty()) {
 
-			// Pan to see all markers in view.
-			// Cannot zoom to bounds until the map has a size.
-			final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
-			if (mapView.getViewTreeObserver().isAlive()) {
-				mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-					@SuppressWarnings("deprecation")
-					// We use the new method when supported
-					@SuppressLint("NewApi")
-					// We check which build version we are using.
-					public void onGlobalLayout() {
+            // Pan to see all markers in view.
+            // Cannot zoom to bounds until the map has a size.
+            final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
+            if (mapView.getViewTreeObserver().isAlive()) {
+                mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                    @SuppressWarnings("deprecation")
+                    // We use the new method when supported
+                    @SuppressLint("NewApi")
+                    // We check which build version we are using.
+                    public void onGlobalLayout() {
 
-						Builder ltb = new LatLngBounds.Builder();
+                        Builder ltb = new LatLngBounds.Builder();
 
-						for (int i = 0; i < listaPuntos.size(); i++) {
-							ltb.include(listaPuntos.get(i));
-						}
+                        for (int i = 0; i < listaPuntos.size(); i++) {
+                            ltb.include(listaPuntos.get(i));
+                        }
 
-						LatLngBounds bounds = ltb.build();
+                        LatLngBounds bounds = ltb.build();
 
-						if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-							mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-						} else {
-							mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-						}
-						context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-					}
-				});
-			}
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        } else {
+                            mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
+                        context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
+                    }
+                });
+            }
 
-		}
+        }
 
-		// Limpiar para modo normal
-		posicionSelecionada = null;
-		context.paradaSeleccionadaEntrada = null;
+        // Limpiar para modo normal
+        posicionSelecionada = null;
+        context.paradaSeleccionadaEntrada = null;
 
-	}
+    }
 
-	public void avisoPosibleError() {
+    public void avisoPosibleError() {
 
-		Toast.makeText(context, context.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
+        Toast.makeText(context, context.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
 
-	}
+    }
 
-	/**
-	 * Inicializar el mapa
-	 */
-	public void inicializarMapa() {
+    /**
+     * Inicializar el mapa
+     */
+    public void inicializarMapa() {
 
-		// Control de modo de red
-		context.modoRed = context.getIntent().getIntExtra("MODO_RED", 0);
+        // Control de modo de red
+        context.modoRed = context.getIntent().getIntExtra("MODO_RED", 0);
 
-		if (context.getIntent().getExtras() == null || (context.getIntent().getExtras() != null && !context.getIntent().getExtras().containsKey("MODO_RED"))) {
+        if (context.getIntent().getExtras() == null || (context.getIntent().getExtras() != null && !context.getIntent().getExtras().containsKey("MODO_RED"))) {
 
-			context.modoRed = preferencias.getInt("infolinea_modo", 0);
+            context.modoRed = preferencias.getInt("infolinea_modo", 0);
 
-		}
+        }
 
-		context.primeraCarga = true;
+        context.primeraCarga = true;
 
-		context.datosLinea = (TextView) context.findViewById(R.id.datos_linea);
+        context.datosLinea = (TextView) context.findViewById(R.id.datos_linea);
 
-		// Si viene de la seleccion de la lista
-		if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA")) {
+        // Si viene de la seleccion de la lista
+        if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA")) {
 
-			int lineaPos = -1;
+            int lineaPos = -1;
 
-			// tram
-			if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
-				lineaPos = UtilidadesTRAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
-			} else {
-				lineaPos = UtilidadesTAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
-			}
+            // tram
+            if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
+                lineaPos = UtilidadesTRAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
+            } else {
+                lineaPos = UtilidadesTAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
+            }
 
-			Log.d("mapas", "linea: " + lineaPos + "l: " + context.getIntent().getExtras().getString("LINEA_MAPA"));
+            Log.d("mapas", "linea: " + lineaPos + "l: " + context.getIntent().getExtras().getString("LINEA_MAPA"));
 
-			if (lineaPos > -1) {
+            if (lineaPos > -1) {
 
-				if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
+                if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
 
-					// context.lineaSeleccionada =
-					// UtilidadesTRAM.LINEAS_CODIGO_KML[lineaPos];
-					context.lineaSeleccionadaDesc = UtilidadesTRAM.DESC_LINEA[lineaPos];
+                    // context.lineaSeleccionada =
+                    // UtilidadesTRAM.LINEAS_CODIGO_KML[lineaPos];
+                    context.lineaSeleccionadaDesc = UtilidadesTRAM.DESC_LINEA[lineaPos];
 
-					context.lineaSeleccionadaNum = UtilidadesTRAM.LINEAS_NUM[lineaPos];
+                    context.lineaSeleccionadaNum = UtilidadesTRAM.LINEAS_NUM[lineaPos];
 
-				} else {
+                } else {
 
-					context.lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
-					context.lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
+                    context.lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
+                    context.lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
 
-					context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
+                    context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
 
-				}
+                }
 
-				// Control parada seleccionada al entrar
-				context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
+                // Control parada seleccionada al entrar
+                context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
 
-				context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+                context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-				if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
-					context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
-					context.mapasOffline.loadDatosMapaTRAMOffline();
-				} else {
-					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
-					context.mapasOffline.loadDatosMapaOffline();
-				}
+                if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+                    context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
+                    context.mapasOffline.loadDatosMapaTRAMOffline();
+                } else {
+                    context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
+                    context.mapasOffline.loadDatosMapaOffline();
+                }
 
-				context.gestionVehiculos.loadDatosVehiculos();
+                context.gestionVehiculos.loadDatosVehiculos();
 
-			} else {
+            } else {
 
-				Toast.makeText(context, context.getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, context.getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_LONG).show();
 
-			}
+            }
 
-		} else if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA")) {
+        } else if (context.getIntent().getExtras() != null && context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
-			String lineaPos = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA");
+            String lineaPos = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA");
 
-			context.lineaSeleccionada = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA_KML");
-			context.lineaSeleccionadaDesc = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA_DESC");
+            context.lineaSeleccionada = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA_KML");
+            context.lineaSeleccionadaDesc = context.getIntent().getExtras().getString("LINEA_MAPA_FICHA_DESC");
 
-			context.lineaSeleccionadaNum = lineaPos;
+            context.lineaSeleccionadaNum = lineaPos;
 
-			// Control parada seleccionada al entrar
-			context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
+            // Control parada seleccionada al entrar
+            context.paradaSeleccionadaEntrada = context.getIntent().getExtras().getString("LINEA_MAPA_PARADA");
 
-			context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+            context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-			if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
-				context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
-				context.mapasOffline.loadDatosMapaTRAMOffline();
-			} else {
+            if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+                context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
+                context.mapasOffline.loadDatosMapaTRAMOffline();
+            } else {
 
-				if (context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
-					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE;
-					loadDatosMapaV3();
+                if (context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
+                    context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE;
+                    loadDatosMapaV3();
 
-				} else {
-					context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
-					context.mapasOffline.loadDatosMapaOffline();
-				}
-			}
+                } else {
+                    context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
+                    context.mapasOffline.loadDatosMapaOffline();
+                }
+            }
 
-			context.gestionVehiculos.loadDatosVehiculos();
+            context.gestionVehiculos.loadDatosVehiculos();
 
-		}
+        } else {
 
-		else {
+            context.selectorLinea.cargarDatosLineasModal();
 
-			context.selectorLinea.cargarDatosLineasModal();
+        }
 
-		}
+        // Combo de seleccion de datos
+        final Spinner spinner = (Spinner) context.findViewById(R.id.spinner_datos);
 
-		// Combo de seleccion de datos
-		final Spinner spinner = (Spinner) context.findViewById(R.id.spinner_datos);
+        ArrayAdapter<CharSequence> adapter = null;
 
-		ArrayAdapter<CharSequence> adapter = null;
+        if (UtilidadesTRAM.ACTIVADO_TRAM) {
+            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos, android.R.layout.simple_spinner_item);
+        } else {
+            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+        }
 
-		if (UtilidadesTRAM.ACTIVADO_TRAM) {
-			adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos, android.R.layout.simple_spinner_item);
-		} else {
-			adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
-		}
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
-		spinner.setAdapter(adapter);
+        // Seleccion inicial
+        int infolineaModo = preferencias.getInt("infolinea_modo", 0);
+        spinner.setSelection(infolineaModo);
 
-		// Seleccion inicial
-		int infolineaModo = preferencias.getInt("infolinea_modo", 0);
-		spinner.setSelection(infolineaModo);
+        // Seleccion
+        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-		// Seleccion
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                // Solo en caso de haber cambiado
+                if (preferencias.getInt("infolinea_modo", 0) != arg2) {
 
-				// Solo en caso de haber cambiado
-				if (preferencias.getInt("infolinea_modo", 0) != arg2) {
+                    // Guarda la nueva seleciccion
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("infolinea_modo", arg2);
+                    editor.commit();
 
-					// Guarda la nueva seleciccion
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putInt("infolinea_modo", arg2);
-					editor.commit();
+                    // cambiar el modo de la actividad
+                    if (arg2 == 0) {
 
-					// cambiar el modo de la actividad
-					if (arg2 == 0) {
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
 
-						Intent intent2 = context.getIntent();
-						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-							intent2.getExtras().remove("LINEA_MAPA");
-							intent2.removeExtra("LINEA_MAPA");
+                        }
 
-						}
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
 
-							intent2.getExtras().remove("LINEA_MAPA_FICHA");
-							intent2.removeExtra("LINEA_MAPA_FICHA");
+                        }
 
-						}
+                        context.finish();
+                        context.startActivity(intent2);
 
-						context.finish();
-						context.startActivity(intent2);
+                    } else if (arg2 == 1) {
 
-					} else if (arg2 == 1) {
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
 
-						Intent intent2 = context.getIntent();
-						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-							intent2.getExtras().remove("LINEA_MAPA");
-							intent2.removeExtra("LINEA_MAPA");
+                        }
 
-						}
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
 
-							intent2.getExtras().remove("LINEA_MAPA_FICHA");
-							intent2.removeExtra("LINEA_MAPA_FICHA");
+                        }
 
-						}
+                        context.finish();
+                        context.startActivity(intent2);
 
-						context.finish();
-						context.startActivity(intent2);
+                    } else if (arg2 == 2) {
 
-					} else if (arg2 == 2) {
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
 
-						Intent intent2 = context.getIntent();
-						intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-							intent2.getExtras().remove("LINEA_MAPA");
-							intent2.removeExtra("LINEA_MAPA");
+                        }
 
-						}
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
 
-						if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
 
-							intent2.getExtras().remove("LINEA_MAPA_FICHA");
-							intent2.removeExtra("LINEA_MAPA_FICHA");
+                        }
 
-						}
+                        context.finish();
+                        context.startActivity(intent2);
 
-						context.finish();
-						context.startActivity(intent2);
+                    }
 
-					}
+                }
 
-				}
+            }
 
-			}
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
+            }
 
-			}
+        });
 
-		});
+        // Control de boton vehiculos
+        final ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
 
-		// Control de boton vehiculos
-		final ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
+        boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
-		boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
+        if (vehiculosPref) {
+            botonVehiculos.setChecked(true);
+        }
 
-		if (vehiculosPref) {
-			botonVehiculos.setChecked(true);
-		}
+        botonVehiculos.setOnClickListener(new OnClickListener() {
 
-		botonVehiculos.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
 
-			public void onClick(View v) {
+                if (botonVehiculos.isChecked()) {
 
-				if (botonVehiculos.isChecked()) {
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putBoolean("mapas_vehiculos", true);
+                    editor.commit();
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putBoolean("mapas_vehiculos", true);
-					editor.commit();
+                    context.gestionVehiculos.loadDatosVehiculos();
+                } else {
 
-					context.gestionVehiculos.loadDatosVehiculos();
-				} else {
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putBoolean("mapas_vehiculos", false);
+                    editor.commit();
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putBoolean("mapas_vehiculos", false);
-					editor.commit();
+                    if (context.markersVehiculos != null) {
 
-					if (context.markersVehiculos != null) {
+                        if (context.timer != null) {
+                            context.timer.cancel();
+                        }
 
-						if (context.timer != null) {
-							context.timer.cancel();
-						}
+                        if (context.gestionVehiculos.markersVehiculos != null && !context.gestionVehiculos.markersVehiculos.isEmpty()) {
+                            context.gestionarLineas.quitarMarkers(context.gestionVehiculos.markersVehiculos);
+                        }
 
-						if (context.gestionVehiculos.markersVehiculos != null && !context.gestionVehiculos.markersVehiculos.isEmpty()) {
-							context.gestionarLineas.quitarMarkers(context.gestionVehiculos.markersVehiculos);
-						}
+                    }
+                }
 
-					}
-				}
+            }
+        });
 
-			}
-		});
+    }
 
-	}
+    /**
+     * Cargar marcadores sin guardar
+     *
+     * @param markers
+     */
+    public void cargarMarkers(List<MarkerOptions> markers, MarkerOptions posicionSeleccionada) {
 
-	/**
-	 * Cargar marcadores sin guardar
-	 * 
-	 * @param markers
-	 */
-	public void cargarMarkers(List<MarkerOptions> markers, MarkerOptions posicionSeleccionada) {
+        Log.d("mapas", "selecciondada: " + posicionSeleccionada);
 
-		Log.d("mapas", "selecciondada: " + posicionSeleccionada);
+        if (markers != null) {
+            for (int i = 0; i < markers.size(); i++) {
 
-		if (markers != null) {
-			for (int i = 0; i < markers.size(); i++) {
+                Marker marker = context.mMap.addMarker(markers.get(i));
 
-				Marker marker = context.mMap.addMarker(markers.get(i));
+                // Mostrar informacion de la seleccionada
+                if ((posicionSeleccionada != null) && markers.get(i).equals(posicionSeleccionada)) {
 
-				// Mostrar informacion de la seleccionada
-				if ((posicionSeleccionada != null) && markers.get(i).equals(posicionSeleccionada)) {
+                    marker.showInfoWindow();
 
-					marker.showInfoWindow();
+                }
 
-				}
+            }
+        }
 
-			}
-		}
+    }
 
-	}
+    /**
+     * Cargar marcadores y guardarlos
+     *
+     * @param markers
+     * @return
+     */
+    public List<Marker> cargarMarkersCtr(List<MarkerOptions> markers) {
 
-	/**
-	 * Cargar marcadores y guardarlos
-	 * 
-	 * @param markers
-	 * @return
-	 */
-	public List<Marker> cargarMarkersCtr(List<MarkerOptions> markers) {
+        List<Marker> listaMarker = new ArrayList<Marker>();
 
-		List<Marker> listaMarker = new ArrayList<Marker>();
+        if (markers != null) {
+            for (int i = 0; i < markers.size(); i++) {
+                listaMarker.add(context.mMap.addMarker(markers.get(i)));
+            }
+        }
 
-		if (markers != null) {
-			for (int i = 0; i < markers.size(); i++) {
-				listaMarker.add(context.mMap.addMarker(markers.get(i)));
-			}
-		}
+        return listaMarker;
 
-		return listaMarker;
+    }
 
-	}
+    /**
+     * Eliminar marcadores
+     *
+     * @param markers
+     */
+    public void quitarMarkers(List<Marker> markers) {
 
-	/**
-	 * Eliminar marcadores
-	 * 
-	 * @param markers
-	 */
-	public void quitarMarkers(List<Marker> markers) {
+        if (markers != null) {
+            for (int i = 0; i < markers.size(); i++) {
 
-		if (markers != null) {
-			for (int i = 0; i < markers.size(); i++) {
+                markers.get(i).remove();
 
-				markers.get(i).remove();
+            }
 
-			}
+            markers.clear();
+        }
 
-			markers.clear();
-		}
+    }
 
-	}
+    /**
+     * Recorrido
+     *
+     * @param navSet
+     * @param color
+     */
+    public void drawPath(DatosMapa navSet, int color) {
 
-	/**
-	 * Recorrido
-	 * 
-	 * @param navSet
-	 * @param color
-	 */
-	public void drawPath(DatosMapa navSet, int color) {
+        if (context.mMap == null) {
+            return;
+        }
 
-		if (context.mMap == null) {
-			return;
-		}
+        // color correction for dining, make it darker
+        if (color == Color.parseColor("#add331"))
+            color = Color.parseColor("#6C8715");
 
-		// color correction for dining, make it darker
-		if (color == Color.parseColor("#add331"))
-			color = Color.parseColor("#6C8715");
+        String path = navSet.getRecorrido();
 
-		String path = navSet.getRecorrido();
+        if (path != null && path.trim().length() > 0) {
+            String[] pairs = path.trim().split(" ");
 
-		if (path != null && path.trim().length() > 0) {
-			String[] pairs = path.trim().split(" ");
+            String[] lngLat = pairs[0].split(","); // lngLat[0]=longitude
+            // lngLat[1]=latitude
+            // lngLat[2]=height
 
-			String[] lngLat = pairs[0].split(","); // lngLat[0]=longitude
-													// lngLat[1]=latitude
-													// lngLat[2]=height
+            if (lngLat.length < 3)
+                lngLat = pairs[1].split(","); // if first pair is not
+            // transferred completely, take
+            // seconds pair //TODO
 
-			if (lngLat.length < 3)
-				lngLat = pairs[1].split(","); // if first pair is not
-												// transferred completely, take
-												// seconds pair //TODO
+            try {
 
-			try {
+                LatLng startGP = new LatLng(Double.parseDouble(lngLat[1]), Double.parseDouble(lngLat[0]));
 
-				LatLng startGP = new LatLng(Double.parseDouble(lngLat[1]), Double.parseDouble(lngLat[0]));
+                LatLng gp1;
+                LatLng gp2 = startGP;
 
-				LatLng gp1;
-				LatLng gp2 = startGP;
+                for (int i = 1; i < pairs.length; i++) // the last one would be
+                // crash
+                {
+                    lngLat = pairs[i].split(",");
 
-				for (int i = 1; i < pairs.length; i++) // the last one would be
-														// crash
-				{
-					lngLat = pairs[i].split(",");
+                    gp1 = gp2;
 
-					gp1 = gp2;
+                    if (gp1 != null && gp2 != null && lngLat.length >= 2) {
+                        gp2 = new LatLng(Double.parseDouble(lngLat[1]), Double.parseDouble(lngLat[0]));
 
-					if (gp1 != null && gp2 != null && lngLat.length >= 2) {
-						gp2 = new LatLng(Double.parseDouble(lngLat[1]), Double.parseDouble(lngLat[0]));
+                        context.mMap.addPolyline(new PolylineOptions().add(gp1, gp2).width(5).color(color));
 
-						context.mMap.addPolyline(new PolylineOptions().add(gp1, gp2).width(5).color(color));
+                    }
 
-					}
+                }
 
-				}
+                context.mMap.addPolyline(new PolylineOptions().add(gp2, gp2).width(5).color(color));
 
-				context.mMap.addPolyline(new PolylineOptions().add(gp2, gp2).width(5).color(color));
+            } catch (Exception e) {
 
-			} catch (Exception e) {
+                e.printStackTrace();
 
-				e.printStackTrace();
+            }
+        }
 
-			}
-		}
+    }
 
-	}
+    /**
+     * Mostrar y ocultar el recorrido de ida
+     */
+    public void cargarOcultarIda() {
 
-	/**
-	 * Mostrar y ocultar el recorrido de ida
-	 */
-	public void cargarOcultarIda() {
+        if (context.datosMapaCargadosIda != null) {
 
-		if (context.datosMapaCargadosIda != null) {
+            if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
+                context.datosMapaCargadosIdaAux = new DatosMapa();
+                context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
+                context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
+            } else if (context.datosMapaCargadosIdaAux != null) {
+                context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
+            }
 
-			if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
-				context.datosMapaCargadosIdaAux = new DatosMapa();
-				context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
-				context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
-			} else if (context.datosMapaCargadosIdaAux != null) {
-				context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
-			}
+            // Limpiar lista anterior para nuevas busquedas
+            if (context.mMap != null) {
+                context.mMap.clear();
+            }
 
-			// Limpiar lista anterior para nuevas busquedas
-			if (context.mMap != null) {
-				context.mMap.clear();
-			}
+            cargarMapa();
 
-			cargarMapa();
+            context.gestionVehiculos.loadDatosVehiculos();
+        }
+    }
 
-			context.gestionVehiculos.loadDatosVehiculos();
-		}
-	}
+    /**
+     * Mostrar y ocultar el recorrido de vuelta
+     */
+    public void cargarOcultarVuelta() {
 
-	/**
-	 * Mostrar y ocultar el recorrido de vuelta
-	 */
-	public void cargarOcultarVuelta() {
+        if (context.datosMapaCargadosVuelta != null) {
 
-		if (context.datosMapaCargadosVuelta != null) {
+            if (!context.datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
+                context.datosMapaCargadosVueltaAux = new DatosMapa();
+                context.datosMapaCargadosVueltaAux.setPlacemarks(context.datosMapaCargadosVuelta.getPlacemarks());
+                context.datosMapaCargadosVuelta.setPlacemarks(new ArrayList<PlaceMark>());
+            } else if (context.datosMapaCargadosVueltaAux != null) {
+                context.datosMapaCargadosVuelta.setPlacemarks(context.datosMapaCargadosVueltaAux.getPlacemarks());
+            }
 
-			if (!context.datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
-				context.datosMapaCargadosVueltaAux = new DatosMapa();
-				context.datosMapaCargadosVueltaAux.setPlacemarks(context.datosMapaCargadosVuelta.getPlacemarks());
-				context.datosMapaCargadosVuelta.setPlacemarks(new ArrayList<PlaceMark>());
-			} else if (context.datosMapaCargadosVueltaAux != null) {
-				context.datosMapaCargadosVuelta.setPlacemarks(context.datosMapaCargadosVueltaAux.getPlacemarks());
-			}
+            // Limpiar lista anterior para nuevas busquedas
+            if (context.mMap != null) {
+                context.mMap.clear();
+            }
 
-			// Limpiar lista anterior para nuevas busquedas
-			if (context.mMap != null) {
-				context.mMap.clear();
-			}
+            cargarMapa();
 
-			cargarMapa();
+            context.gestionVehiculos.loadDatosVehiculos();
 
-			context.gestionVehiculos.loadDatosVehiculos();
-
-		}
-	}
+        }
+    }
 
 }

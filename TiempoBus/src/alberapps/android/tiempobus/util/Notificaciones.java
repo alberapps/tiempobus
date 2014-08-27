@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,10 +18,6 @@
  */
 package alberapps.android.tiempobus.util;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -34,387 +30,388 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
 
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+
 /**
  * Gestion de las notificaciones
- * 
- * 
  */
 public class Notificaciones {
 
-	/**
-	 * Base de datos
-	 */
-	public static int NOTIFICACION_BASE_DATOS = 5;
-	public static String NOTIFICACION_BD_INICIAL = "inicial";
-	public static String NOTIFICACION_BD_FINAL = "final";
-	public static String NOTIFICACION_BD_INCREMENTA = "incrementa";
-	public static String NOTIFICACION_BD_ERROR = "error";
+    /**
+     * Base de datos
+     */
+    public static int NOTIFICACION_BASE_DATOS = 5;
+    public static String NOTIFICACION_BD_INICIAL = "inicial";
+    public static String NOTIFICACION_BD_FINAL = "final";
+    public static String NOTIFICACION_BD_INCREMENTA = "incrementa";
+    public static String NOTIFICACION_BD_ERROR = "error";
 
-	/**
-	 * Noticias
-	 */
-	public static int NOTIFICACION_NOTICIAS = 2;
-	
-	public static int NOTIFICACION_NOTICIAS_TRAM = 3;
+    /**
+     * Noticias
+     */
+    public static int NOTIFICACION_NOTICIAS = 2;
 
-	/**
-	 * Alarmas
-	 */
-	public static int NOTIFICACION_ALARMAS = 1;
+    public static int NOTIFICACION_NOTICIAS_TRAM = 3;
 
-	/**
-	 * Notificaciones de Base de Datos
-	 * 
-	 * @param contexto
-	 * @param accion
-	 */
-	public static Builder notificacionBaseDatos(Context contexto, String accion, Builder mBuilderN, Integer incrementa) {
+    /**
+     * Alarmas
+     */
+    public static int NOTIFICACION_ALARMAS = 1;
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+    /**
+     * Notificaciones de Base de Datos
+     *
+     * @param contexto
+     * @param accion
+     */
+    public static Builder notificacionBaseDatos(Context contexto, String accion, Builder mBuilderN, Integer incrementa) {
 
-		if (accion.equals(NOTIFICACION_BD_INICIAL)) {
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
 
-			NotificationCompat.Builder mBuilder = null;
+        if (accion.equals(NOTIFICACION_BD_INICIAL)) {
 
-			mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.recarga_bd))
-					.setContentText(contexto.getString(R.string.recarga_bd_desc));
+            NotificationCompat.Builder mBuilder = null;
 
-			mBuilder.setAutoCancel(false);
+            mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.recarga_bd))
+                    .setContentText(contexto.getString(R.string.recarga_bd_desc));
 
-			// ticker
-			CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc);
-			mBuilder.setTicker(tickerText);
+            mBuilder.setAutoCancel(false);
 
-			mBuilder.setProgress(100, 0, false);
+            // ticker
+            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc);
+            mBuilder.setTicker(tickerText);
 
-			// Creates an explicit intent for an Activity in your app
-			Intent resultIntent = new Intent(contexto, MainActivity.class);
+            mBuilder.setProgress(100, 0, false);
 
-			// The stack builder object will contain an artificial back stack
-			// for
-			// the
-			// started Activity.
-			// This ensures that navigating backward from the Activity leads out
-			// of
-			// your application to the Home screen.
-			TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
-			// Adds the back stack for the Intent (but not the Intent itself)
-			stackBuilder.addParentStack(MainActivity.class);
-			// Adds the Intent that starts the Activity to the top of the stack
-			stackBuilder.addNextIntent(resultIntent);
+            // Creates an explicit intent for an Activity in your app
+            Intent resultIntent = new Intent(contexto, MainActivity.class);
 
-			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-			mBuilder.setContentIntent(resultPendingIntent);
+            // The stack builder object will contain an artificial back stack
+            // for
+            // the
+            // started Activity.
+            // This ensures that navigating backward from the Activity leads out
+            // of
+            // your application to the Home screen.
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+            // Adds the back stack for the Intent (but not the Intent itself)
+            stackBuilder.addParentStack(MainActivity.class);
+            // Adds the Intent that starts the Activity to the top of the stack
+            stackBuilder.addNextIntent(resultIntent);
 
-			// mId allows you to update the notification later on.
-			mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilder.build());
+            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            mBuilder.setContentIntent(resultPendingIntent);
 
-			return mBuilder;
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilder.build());
 
-		} else if (accion.equals(NOTIFICACION_BD_INCREMENTA)) {
+            return mBuilder;
 
-			mBuilderN.setProgress(100, incrementa, false);
+        } else if (accion.equals(NOTIFICACION_BD_INCREMENTA)) {
 
-			// mId allows you to update the notification later on.
-			mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+            mBuilderN.setProgress(100, incrementa, false);
 
-			return mBuilderN;
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
 
-		}
+            return mBuilderN;
 
-		else if (accion.equals(NOTIFICACION_BD_FINAL)) {
-			mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_final));
+        } else if (accion.equals(NOTIFICACION_BD_FINAL)) {
+            mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_final));
 
-			mBuilderN.setAutoCancel(true);
+            mBuilderN.setAutoCancel(true);
 
-			// ticker
-			CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_final);
-			mBuilderN.setTicker(tickerText);
+            // ticker
+            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_final);
+            mBuilderN.setTicker(tickerText);
 
-			mBuilderN.setProgress(0, 0, false);
+            mBuilderN.setProgress(0, 0, false);
 
-			// mId allows you to update the notification later on.
-			mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
 
-			return mBuilderN;
+            return mBuilderN;
 
-		} else if (accion.equals(NOTIFICACION_BD_ERROR)) {
-			mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_error));
+        } else if (accion.equals(NOTIFICACION_BD_ERROR)) {
+            mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_error));
 
-			mBuilderN.setAutoCancel(true);
+            mBuilderN.setAutoCancel(true);
 
-			// ticker
-			CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_error);
-			mBuilderN.setTicker(tickerText);
+            // ticker
+            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_error);
+            mBuilderN.setTicker(tickerText);
 
-			mBuilderN.setProgress(0, 0, false);
+            mBuilderN.setProgress(0, 0, false);
 
-			// mId allows you to update the notification later on.
-			mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
 
-			return mBuilderN;
+            return mBuilderN;
 
-		}
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/**
-	 * Notificacion nuevas noticias
-	 * 
-	 * @param contexto
-	 */
-	public static void notificacionNoticias(Context contexto, String[] extendido, int nuevas) {
+    /**
+     * Notificacion nuevas noticias
+     *
+     * @param contexto
+     */
+    public static void notificacionNoticias(Context contexto, String[] extendido, int nuevas) {
 
-		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = null;
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
-				.setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas);
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
+                .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas);
 
-		mBuilder.setAutoCancel(true);
+        mBuilder.setAutoCancel(true);
 
-		// Led
-		int defaults = Notification.DEFAULT_LIGHTS;
+        // Led
+        int defaults = Notification.DEFAULT_LIGHTS;
 
-		// Sonido seleccionado
-		String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
+        // Sonido seleccionado
+        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
-		if (strRingtonePreference == "DEFAULT_SOUND") {
-			// Sonido por defecto
-			defaults = defaults | Notification.DEFAULT_SOUND;
+        if (strRingtonePreference == "DEFAULT_SOUND") {
+            // Sonido por defecto
+            defaults = defaults | Notification.DEFAULT_SOUND;
 
-		} else {
+        } else {
 
-			// Sonido seleccionado
-			mBuilder.setSound(Uri.parse(strRingtonePreference));
+            // Sonido seleccionado
+            mBuilder.setSound(Uri.parse(strRingtonePreference));
 
-		}
+        }
 
-		// Usar o no la vibracion
-		boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+        // Usar o no la vibracion
+        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
 
-		if (controlVibrar) {
-			// Vibrate por defecto
-			defaults = defaults | Notification.DEFAULT_VIBRATE;
+        if (controlVibrar) {
+            // Vibrate por defecto
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
 
-		}
+        }
 
-		// Opciones por defecto seleccionadas
-		mBuilder.setDefaults(defaults);
+        // Opciones por defecto seleccionadas
+        mBuilder.setDefaults(defaults);
 
-		// ticker
-		CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
-		mBuilder.setTicker(tickerText);
+        // ticker
+        CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
+        mBuilder.setTicker(tickerText);
 
-		NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
-		String[] events = extendido;
-		// Sets a title for the Inbox style big view
-		inboxStyle.bigText(extendido[0] + "\n" + extendido[1]);
+        NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
+        String[] events = extendido;
+        // Sets a title for the Inbox style big view
+        inboxStyle.bigText(extendido[0] + "\n" + extendido[1]);
 
-		// Moves events into the big view
-		// for (int i=0; i < events.length; i++) {
+        // Moves events into the big view
+        // for (int i=0; i < events.length; i++) {
 
-		// inboxStyle..addLine(events[i]);
-		// }
-		inboxStyle.setSummaryText(contexto.getString(R.string.app_name) + " (" + contexto.getString(R.string.tab_noticias) + ")");
-		// Moves the big view style object into the notification object.
-		mBuilder.setStyle(inboxStyle);
+        // inboxStyle..addLine(events[i]);
+        // }
+        inboxStyle.setSummaryText(contexto.getString(R.string.app_name) + " (" + contexto.getString(R.string.tab_noticias) + ")");
+        // Moves the big view style object into the notification object.
+        mBuilder.setStyle(inboxStyle);
 
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
 
-		// The stack builder object will contain an artificial back stack for
-		// the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(NoticiasTabsPager.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(resultIntent);
+        // The stack builder object will contain an artificial back stack for
+        // the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(NoticiasTabsPager.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
 
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
-		mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
 
-	}
-	
-	/**
-	 * Notificacion nuevas noticias
-	 * 
-	 * @param contexto
-	 */
-	public static void notificacionAvisosTram(Context contexto, String[] extendido) {
+    }
 
-		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+    /**
+     * Notificacion nuevas noticias
+     *
+     * @param contexto
+     */
+    public static void notificacionAvisosTram(Context contexto, String[] extendido) {
 
-		NotificationCompat.Builder mBuilder = null;
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
-				.setContentText(contexto.getString(R.string.nuevas_noticias_b));
+        NotificationCompat.Builder mBuilder = null;
 
-		mBuilder.setAutoCancel(true);
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
+                .setContentText(contexto.getString(R.string.nuevas_noticias_b));
 
-		// Led
-		int defaults = Notification.DEFAULT_LIGHTS;
+        mBuilder.setAutoCancel(true);
 
-		// Sonido seleccionado
-		String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
+        // Led
+        int defaults = Notification.DEFAULT_LIGHTS;
 
-		if (strRingtonePreference == "DEFAULT_SOUND") {
-			// Sonido por defecto
-			defaults = defaults | Notification.DEFAULT_SOUND;
+        // Sonido seleccionado
+        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
-		} else {
+        if (strRingtonePreference == "DEFAULT_SOUND") {
+            // Sonido por defecto
+            defaults = defaults | Notification.DEFAULT_SOUND;
 
-			// Sonido seleccionado
-			mBuilder.setSound(Uri.parse(strRingtonePreference));
+        } else {
 
-		}
+            // Sonido seleccionado
+            mBuilder.setSound(Uri.parse(strRingtonePreference));
 
-		// Usar o no la vibracion
-		boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+        }
 
-		if (controlVibrar) {
-			// Vibrate por defecto
-			defaults = defaults | Notification.DEFAULT_VIBRATE;
+        // Usar o no la vibracion
+        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
 
-		}
+        if (controlVibrar) {
+            // Vibrate por defecto
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
 
-		// Opciones por defecto seleccionadas
-		mBuilder.setDefaults(defaults);
+        }
 
-		// ticker
-		CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
-		mBuilder.setTicker(tickerText);
+        // Opciones por defecto seleccionadas
+        mBuilder.setDefaults(defaults);
 
-		NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
-		String[] events = extendido;
-		// Sets a title for the Inbox style big view
-		inboxStyle.bigText(extendido[0] + "\n" + extendido[1]);
+        // ticker
+        CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
+        mBuilder.setTicker(tickerText);
 
-		// Moves events into the big view
-		// for (int i=0; i < events.length; i++) {
+        NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
+        String[] events = extendido;
+        // Sets a title for the Inbox style big view
+        inboxStyle.bigText(extendido[0] + "\n" + extendido[1]);
 
-		// inboxStyle..addLine(events[i]);
-		// }
-		inboxStyle.setSummaryText(contexto.getString(R.string.app_name) + " (" + contexto.getString(R.string.nuevas_tram) + ")");
-		// Moves the big view style object into the notification object.
-		mBuilder.setStyle(inboxStyle);
+        // Moves events into the big view
+        // for (int i=0; i < events.length; i++) {
 
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
+        // inboxStyle..addLine(events[i]);
+        // }
+        inboxStyle.setSummaryText(contexto.getString(R.string.app_name) + " (" + contexto.getString(R.string.nuevas_tram) + ")");
+        // Moves the big view style object into the notification object.
+        mBuilder.setStyle(inboxStyle);
 
-		// The stack builder object will contain an artificial back stack for
-		// the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(NoticiasTabsPager.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(resultIntent);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
 
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
+        // The stack builder object will contain an artificial back stack for
+        // the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(NoticiasTabsPager.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
-		mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
 
-	}
-	
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
 
-	/**
-	 * Notificacion alarma
-	 * 
-	 * @param contexto
-	 */
-	public static void notificacionAlarma(Context contexto, CharSequence aviso, int parada) {
+    }
 
-		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		NotificationCompat.Builder mBuilder = null;
+    /**
+     * Notificacion alarma
+     *
+     * @param contexto
+     */
+    public static void notificacionAlarma(Context contexto, CharSequence aviso, int parada) {
 
-		String texto = "";
-		if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
-			texto = contexto.getString(R.string.notification_title_tram);
-		} else {
-			texto = contexto.getString(R.string.notification_title);
-		}
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(texto).setContentText(aviso);
+        NotificationCompat.Builder mBuilder = null;
 
-		// Led
-		int defaults = Notification.DEFAULT_LIGHTS;
+        String texto = "";
+        if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
+            texto = contexto.getString(R.string.notification_title_tram);
+        } else {
+            texto = contexto.getString(R.string.notification_title);
+        }
 
-		// Sonido seleccionado
-		String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(texto).setContentText(aviso);
 
-		if (strRingtonePreference == "DEFAULT_SOUND") {
-			// Sonido por defecto
-			defaults = defaults | Notification.DEFAULT_SOUND;
+        // Led
+        int defaults = Notification.DEFAULT_LIGHTS;
 
-		} else {
+        // Sonido seleccionado
+        String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
 
-			// Sonido seleccionado
-			mBuilder.setSound(Uri.parse(strRingtonePreference));
+        if (strRingtonePreference == "DEFAULT_SOUND") {
+            // Sonido por defecto
+            defaults = defaults | Notification.DEFAULT_SOUND;
 
-		}
+        } else {
 
-		// Usar o no la vibracion
-		boolean controlVibrar = preferencias.getBoolean("alarma_vibrar", true);
+            // Sonido seleccionado
+            mBuilder.setSound(Uri.parse(strRingtonePreference));
 
-		if (controlVibrar) {
+        }
 
-			// Vibrate por defecto
-			defaults = defaults | Notification.DEFAULT_VIBRATE;
+        // Usar o no la vibracion
+        boolean controlVibrar = preferencias.getBoolean("alarma_vibrar", true);
 
-		}
+        if (controlVibrar) {
 
-		// Opciones por defecto seleccionadas
-		mBuilder.setDefaults(defaults);
+            // Vibrate por defecto
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
 
-		mBuilder.setAutoCancel(true);
+        }
 
-		// ticker
+        // Opciones por defecto seleccionadas
+        mBuilder.setDefaults(defaults);
 
-		mBuilder.setTicker(aviso);
+        mBuilder.setAutoCancel(true);
 
-		// Creates an explicit intent for an Activity in your app
-		Intent resultIntent = new Intent(contexto, MainActivity.class);
+        // ticker
 
-		resultIntent.putExtra("poste", parada);
+        mBuilder.setTicker(aviso);
 
-		// The stack builder object will contain an artificial back stack for
-		// the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(MainActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(resultIntent);
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(contexto, MainActivity.class);
 
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-		mBuilder.setContentIntent(resultPendingIntent);
+        resultIntent.putExtra("poste", parada);
 
-		NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-		// mId allows you to update the notification later on.
-		mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
+        // The stack builder object will contain an artificial back stack for
+        // the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
 
-	}
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
+
+    }
 
 }

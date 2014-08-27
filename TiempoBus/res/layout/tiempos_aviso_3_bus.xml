@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -16,69 +15,63 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
-   android:padding="6dip"
-   >
-    
-<LinearLayout
-  
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:background="@drawable/item_sombra"
-  android:orientation="vertical"
-  >
-  
-  			<TextView
-  			    android:padding="2dip"
-  			    android:id="@+id/legal"
-  			    android:layout_width="fill_parent"
-  			    android:layout_height="wrap_content"
-  			    
-  			    android:text="@string/acercade_info_nuevo_bus"
-  			    android:textAppearance="?android:attr/textAppearanceSmall"
-  			    android:textColor="@android:color/black"
-  			    android:textSize="10sp"
-  			    android:autoLink="web"
-  			    android:textColorLink="@android:color/darker_gray"
-  			    />
+    android:padding="6dip">
 
-  			
+    <LinearLayout
 
-  			<TextView
-  			    android:padding="2dip"
-  			    android:id="@+id/legal2"
-  			    android:layout_width="fill_parent"
-  			    android:layout_height="wrap_content"
-  			    
-  			    android:text="@string/acercade_info_nuevo_2"
-  			    android:textAppearance="?android:attr/textAppearanceSmall"
-  			    android:textColor="@android:color/black"
-  			    android:textSize="10sp"
-  			    android:autoLink="web"
-  			    android:textColorLink="@android:color/darker_gray"
-  			    />
-  			
-  			<TextView
-  			    android:padding="2dip"
-  			    android:id="@+id/legal3"
-  			    android:layout_width="fill_parent"
-  			    android:layout_height="wrap_content"
-  			    
-  			    android:text="@string/aviso_infoapp"
-  			    android:textAppearance="?android:attr/textAppearanceSmall"
-  			    android:textColor="@android:color/black"
-  			    android:textSize="10sp"
-  			    android:autoLink="web"
-  			    android:textColorLink="@android:color/darker_gray"
-  			    android:textStyle="bold"
-  			    />
-  			
-  			
-  
-</LinearLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:background="@drawable/item_sombra"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/legal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+
+            android:padding="2dip"
+            android:text="@string/acercade_info_nuevo_bus"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorLink="@android:color/darker_gray"
+            android:textSize="10sp" />
+
+
+        <TextView
+            android:id="@+id/legal2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+
+            android:padding="2dip"
+            android:text="@string/acercade_info_nuevo_2"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorLink="@android:color/darker_gray"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/legal3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+
+            android:padding="2dip"
+            android:text="@string/aviso_infoapp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black"
+            android:textColorLink="@android:color/darker_gray"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
 
 </LinearLayout>

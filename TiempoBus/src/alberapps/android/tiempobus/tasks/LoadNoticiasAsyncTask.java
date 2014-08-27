@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,73 +17,60 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+
 import java.util.List;
 
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.ProcesarNoticias;
-import android.os.AsyncTask;
 
 /**
  * Tarea asincrona que se encarga de consultar las noticias
- * 
- * 
  */
 public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias>> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadNoticiasAsyncTaskResponder {
-		public void noticiasLoaded(List<Noticias> noticias);
-	}
 
-	private LoadNoticiasAsyncTaskResponder responder;
+    public interface LoadNoticiasAsyncTaskResponder {
+        public void noticiasLoaded(List<Noticias> noticias);
+    }
 
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadNoticiasAsyncTask(LoadNoticiasAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    private LoadNoticiasAsyncTaskResponder responder;
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected List<Noticias> doInBackground(Object... datos) {
-		List<Noticias> noticiasList = null;
-		try {
 
-			Boolean usarCache = true;
+    public LoadNoticiasAsyncTask(LoadNoticiasAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-			if (datos.length > 0) {
 
-				usarCache = (Boolean) datos[0];
+    @Override
+    protected List<Noticias> doInBackground(Object... datos) {
+        List<Noticias> noticiasList = null;
+        try {
 
-			}
+            Boolean usarCache = true;
 
-			noticiasList = ProcesarNoticias.getTamNews(usarCache);
+            if (datos.length > 0) {
 
-		} catch (Exception e) {
-			return null;
-		}
+                usarCache = (Boolean) datos[0];
 
-		return noticiasList;
-	}
+            }
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(List<Noticias> result) {
-		if (responder != null) {
-			responder.noticiasLoaded(result);
-		}
+            noticiasList = ProcesarNoticias.getTamNews(usarCache);
 
-	}
+        } catch (Exception e) {
+            return null;
+        }
+
+        return noticiasList;
+    }
+
+
+    @Override
+    protected void onPostExecute(List<Noticias> result) {
+        if (responder != null) {
+            responder.noticiasLoaded(result);
+        }
+
+    }
 
 }

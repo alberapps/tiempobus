@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -36,69 +36,68 @@ import alberapps.android.tiempobus.R;
  */
 public class TraduccionesActivity extends ActionBarActivity {
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	@SuppressLint("NewApi")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.traducciones);
+    @SuppressLint("NewApi")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.traducciones);
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
 
 		/*ActionBar actionBar = getSupportActionBar();
-		if(actionBar != null){
+        if(actionBar != null){
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}*/
 
 
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.sin_menu, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sin_menu, menu);
 
-		return super.onCreateOptionsMenu(menu);
-	}
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
 
+        }
 
-		}
+        return super.onOptionsItemSelected(item);
 
-		return super.onOptionsItemSelected(item);
+    }
 
-	}
+    @Override
+    protected void onStart() {
 
-	@Override
-	protected void onStart() {
+        super.onStart();
 
-		super.onStart();
+        if (preferencias.getBoolean("analytics_on", true)) {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
 
-	}
+    }
 
-	@Override
-	protected void onStop() {
+    @Override
+    protected void onStop() {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
-		
-		super.onStop();
-		
+        if (preferencias.getBoolean("analytics_on", true)) {
 
-	}
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
+
+        super.onStop();
+
+
+    }
 
 }

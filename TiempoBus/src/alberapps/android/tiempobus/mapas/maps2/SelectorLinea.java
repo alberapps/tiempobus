@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2013 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,16 +18,6 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
-import alberapps.java.tam.BusLinea;
-import alberapps.java.util.Utilidades;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,221 +36,235 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
+import alberapps.java.tam.BusLinea;
+import alberapps.java.util.Utilidades;
+
+/**
+ * Modal seleccion de linea
+ */
 public class SelectorLinea {
 
-	private MapasMaps2Activity context;
+    private MapasMaps2Activity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	private LinkedList<SpinnerItem> listaSpinner = new LinkedList<SpinnerItem>();
+    private LinkedList<SpinnerItem> listaSpinner = new LinkedList<SpinnerItem>();
 
-	public SelectorLinea(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public SelectorLinea(MapasMaps2Activity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	/**
-	 * Nuevo selector de tiempos
-	 * 
-	 * @param bus
-	 */
-	public void mostrarModalSelectorLinea() {
+    /**
+     * Nuevo selector de tiempos
+     */
+    public void mostrarModalSelectorLinea() {
 
-		AlertDialog.Builder dialogSeleccion = new AlertDialog.Builder(context);
+        AlertDialog.Builder dialogSeleccion = new AlertDialog.Builder(context);
 
-		dialogSeleccion.setTitle(context.getString(R.string.tit_buses));
+        dialogSeleccion.setTitle(context.getString(R.string.tit_buses));
 
-		LayoutInflater li = context.getLayoutInflater();
-		View vista = li.inflate(R.layout.seleccionar_linea, null, false);
+        LayoutInflater li = context.getLayoutInflater();
+        View vista = li.inflate(R.layout.seleccionar_linea, null, false);
 
-		final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
+        final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
 
-		// ArrayAdapter<CharSequence> adapter =
-		// ArrayAdapter.createFromResource(context, R.array.spinner_minutos,
-		// android.R.layout.simple_spinner_item);
 
-		final ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<SpinnerItem>(context, android.R.layout.simple_spinner_item, listaSpinner);
+        final ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<SpinnerItem>(context, android.R.layout.simple_spinner_item, listaSpinner);
 
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		spinner.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
-		// Busqueda
-		final TextView textoBuscar = (TextView) vista.findViewById(R.id.texto_buscar);
+        // Busqueda
+        final TextView textoBuscar = (TextView) vista.findViewById(R.id.texto_buscar);
 
-		textoBuscar.addTextChangedListener(new TextWatcher() {
+        textoBuscar.addTextChangedListener(new TextWatcher() {
 
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-				adapter.getFilter().filter(s);
+                adapter.getFilter().filter(s);
 
-			}
+            }
 
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-			}
+            }
 
-			public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s) {
 
-			}
-		});
+            }
+        });
 
-		// Por defecto 5
-		// spinner.setSelection(1);
+        // Por defecto 5
+        // spinner.setSelection(1);
 
-		dialogSeleccion.setView(vista);
+        dialogSeleccion.setView(vista);
 
-		dialogSeleccion.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+        dialogSeleccion.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {
 
-				int seleccion = spinner.getSelectedItemPosition();
+                int seleccion = spinner.getSelectedItemPosition();
 
-				Log.d("SELECTOR", "seleccion: " + seleccion);
+                Log.d("SELECTOR", "seleccion: " + seleccion);
 
-				if (seleccion >= 0) {
+                if (seleccion >= 0) {
 
-					Log.d("SELECTOR", "seleccion id: " + ((SpinnerItem) spinner.getSelectedItem()).getId());
+                    Log.d("SELECTOR", "seleccion id: " + ((SpinnerItem) spinner.getSelectedItem()).getId());
 
-					int seleccionId = ((SpinnerItem) spinner.getSelectedItem()).getId();
+                    int seleccionId = ((SpinnerItem) spinner.getSelectedItem()).getId();
 
-					lineaSeleccionada(seleccionId);
+                    lineaSeleccionada(seleccionId);
 
-				}
+                }
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-		});
+        });
 
-		dialogSeleccion.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+        dialogSeleccion.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-		});
+        });
 
-		dialogSeleccion.show();
+        dialogSeleccion.show();
 
-	}
+    }
 
-	public void cargarDatosLineasModal() {
+    public void cargarDatosLineasModal() {
 
-		loadBuses();
+        loadBuses();
 
-	}
+    }
 
-	/**
-	 * Carga las lineas de bus
-	 */
-	private void loadBuses() {
+    /**
+     * Carga las lineas de bus
+     */
+    private void loadBuses() {
 
-		context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+        context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-		// Limpiar
-		if (listaSpinner != null && !listaSpinner.isEmpty()) {
-			listaSpinner.clear();
-		}
+        // Limpiar
+        if (listaSpinner != null && !listaSpinner.isEmpty()) {
+            listaSpinner.clear();
+        }
 
-		// Carga local de lineas
-		String datosOffline = null;
-		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+        // Carga local de lineas
+        String datosOffline = null;
+        if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
-			Resources resources = context.getResources();
-			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
+            Resources resources = context.getResources();
+            InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
 
-			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+            datosOffline = Utilidades.obtenerStringDeStream(inputStream);
 
-		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+        } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
-			Resources resources = context.getResources();
-			InputStream inputStream = resources.openRawResource(R.raw.lineasoffline_tram);
+            Resources resources = context.getResources();
+            InputStream inputStream = resources.openRawResource(R.raw.lineasoffline_tram);
 
-			datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+            datosOffline = Utilidades.obtenerStringDeStream(inputStream);
 
-		}
+        }
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			context.taskBuses = new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			if (context.dialog != null && context.dialog.isShowing()) {
-				context.dialog.dismiss();
-			}
-		}
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            context.taskBuses = new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            if (context.dialog != null && context.dialog.isShowing()) {
+                context.dialog.dismiss();
+            }
+        }
 
-	}
+    }
 
-	LoadDatosLineasAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadDatosLineasAsyncTaskResponder() {
-		public void busesLoaded(ArrayList<BusLinea> buses) {
-			if (buses != null) {
-				context.lineasBus = buses;
+    LoadDatosLineasAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadDatosLineasAsyncTaskResponder() {
+        public void busesLoaded(ArrayList<BusLinea> buses) {
+            if (buses != null) {
+                context.lineasBus = buses;
 
-				for (int i = 0; i < buses.size(); i++) {
+                for (int i = 0; i < buses.size(); i++) {
 
-					listaSpinner.add(new SpinnerItem(i, buses.get(i).getLinea()));
+                    listaSpinner.add(new SpinnerItem(i, buses.get(i).getLinea()));
 
-				}
-				
-				context.dialog.dismiss();
+                }
 
-				mostrarModalSelectorLinea();
+                context.dialog.dismiss();
 
-			} else {
+                mostrarModalSelectorLinea();
 
-				context.dialog.dismiss();
+            } else {
 
-				Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+                context.dialog.dismiss();
 
-			}
+                Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
 
-		}
-	};
+            }
 
-	private void lineaSeleccionada(int posicion) {
+        }
+    };
 
-		context.detenerTareas();
+    /**
+     * Control de linea seleccionada
+     *
+     * @param posicion
+     */
+    private void lineaSeleccionada(int posicion) {
 
-		// Limpiar lista anterior para nuevas busquedas
-		if (context.mMap != null) {
-			context.mMap.clear();
-		}
+        context.detenerTareas();
 
-		context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
-		context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+        // Limpiar lista anterior para nuevas busquedas
+        if (context.mMap != null) {
+            context.mMap.clear();
+        }
 
-		context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+        context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
+        context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
 
-		Log.d("SELECTOR", "linea: " + context.lineaSeleccionadaNum);
+        context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
 
-		context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+        Log.d("SELECTOR", "linea: " + context.lineaSeleccionadaNum);
 
-		if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+        context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-			context.gestionarLineas.loadDatosMapaV3();
+        if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 
-		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-			context.mapasOffline.loadDatosMapaOffline();
+            context.gestionarLineas.loadDatosMapaV3();
 
-			context.gestionVehiculos.loadDatosVehiculos();
+        } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+            context.mapasOffline.loadDatosMapaOffline();
 
-		} else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-			context.mapasOffline.loadDatosMapaTRAMOffline();
+            context.gestionVehiculos.loadDatosVehiculos();
 
-			context.gestionVehiculos.loadDatosVehiculos();
+        } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            context.mapasOffline.loadDatosMapaTRAMOffline();
 
-		}
+            context.gestionVehiculos.loadDatosVehiculos();
 
-	}
+        }
+
+    }
 
 }

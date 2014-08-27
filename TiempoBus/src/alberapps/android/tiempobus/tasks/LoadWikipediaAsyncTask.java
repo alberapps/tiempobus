@@ -17,69 +17,66 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+
 import alberapps.java.wikipedia.ProcesarDatosWikipediaService;
 import alberapps.java.wikipedia.WikiQuery;
-import android.os.AsyncTask;
 
 /**
  * Tarea asincrona para recuperar informacion de wikipedia
- * 
- * 
  */
 public class LoadWikipediaAsyncTask extends AsyncTask<Object, Void, WikiQuery> {
 
-	/**
-	 * 
-	 *
-	 */
-	public interface LoadWikipediaAsyncTaskResponder {
-		public void WikipediaLoaded(WikiQuery Wikipedia);
-	}
+    /**
+     *
+     *
+     */
+    public interface LoadWikipediaAsyncTaskResponder {
+        public void WikipediaLoaded(WikiQuery Wikipedia);
+    }
 
-	private LoadWikipediaAsyncTaskResponder responder;
+    private LoadWikipediaAsyncTaskResponder responder;
 
-	/**
-	 * 
-	 * 
-	 * @param responder
-	 */
-	public LoadWikipediaAsyncTask(LoadWikipediaAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    /**
+     * @param responder
+     */
+    public LoadWikipediaAsyncTask(LoadWikipediaAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected WikiQuery doInBackground(Object... datos) {
-		WikiQuery wiki = null;
-		try {
+    /**
+     *
+     */
+    @Override
+    protected WikiQuery doInBackground(Object... datos) {
+        WikiQuery wiki = null;
+        try {
 
-			String lat = (String) datos[0];
-			String lon = (String) datos[1];
+            String lat = (String) datos[0];
+            String lon = (String) datos[1];
 
-			wiki = ProcesarDatosWikipediaService.getDatosWikiLatLon(lat, lon);
+            wiki = ProcesarDatosWikipediaService.getDatosWikiLatLon(lat, lon);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			return null;
+            return null;
 
-		}
+        }
 
-		return wiki;
-	}
+        return wiki;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected void onPostExecute(WikiQuery result) {
-		if (responder != null) {
-			responder.WikipediaLoaded(result);
-		}
+    /**
+     *
+     */
+    @Override
+    protected void onPostExecute(WikiQuery result) {
+        if (responder != null) {
+            responder.WikipediaLoaded(result);
+        }
 
-	}
+    }
 
 }

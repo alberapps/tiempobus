@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,63 +17,46 @@
  */
 package alberapps.android.tiempobus.tasks;
 
-import alberapps.java.noticias.Noticias;
-import alberapps.java.noticias.ProcesarDetalleNoticia;
 import android.os.AsyncTask;
 
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.ProcesarDetalleNoticia;
+
 /**
- * Tarea asincrona que se encarga de consultar las noticias
- * 
- * 
+ * Tarea asincrona que se encarga de consulta del detalle de las noticias
  */
 public class LoadDetalleNoticiaAsyncTask extends AsyncTask<String, Void, Noticias> {
-	
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar
-	 * Sirve como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadDetalleNoticiaAsyncTaskResponder {
-	    public void detalleNoticiaLoaded(Noticias noticias);
-	  }
-	private LoadDetalleNoticiaAsyncTaskResponder responder;
-	
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadDetalleNoticiaAsyncTask(LoadDetalleNoticiaAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
-	
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected Noticias doInBackground(String... datos) {
-		Noticias noticia = null;
-		try {
-			//noticiasList = TamNews.getTamNews();
-			
-			noticia = ProcesarDetalleNoticia.getDetalleNoticia(datos[0]);
-			
-		} catch (Exception e) {
-			return null;
-		}
-		
-		return noticia;
-	}
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(Noticias result) {
-		if(responder != null) {
-			responder.detalleNoticiaLoaded(result);
-		}
-	}
+    public interface LoadDetalleNoticiaAsyncTaskResponder {
+        public void detalleNoticiaLoaded(Noticias noticias);
+    }
 
-	
+    private LoadDetalleNoticiaAsyncTaskResponder responder;
+
+    public LoadDetalleNoticiaAsyncTask(LoadDetalleNoticiaAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
+
+    @Override
+    protected Noticias doInBackground(String... datos) {
+        Noticias noticia = null;
+        try {
+
+            noticia = ProcesarDetalleNoticia.getDetalleNoticia(datos[0]);
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return noticia;
+    }
+
+    @Override
+    protected void onPostExecute(Noticias result) {
+        if (responder != null) {
+            responder.detalleNoticiaLoaded(result);
+        }
+    }
+
+
 }

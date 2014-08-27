@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,145 +18,143 @@
 package alberapps.android.tiempobus.database;
 
 /**
- * 
  * Informacion de la parada
- * 
  */
 public class Parada {
 
-	private String lineaNum;
+    private String lineaNum;
 
-	private String lineaDesc;
+    private String lineaDesc;
 
-	private String destino;
+    private String destino;
 
-	private String parada;
+    private String parada;
 
-	private String coordenadas;
+    private String coordenadas;
 
-	private String direccion;
+    private String direccion;
 
-	private String conexion;
+    private String conexion;
 
-	private Integer latitud;
+    private Integer latitud;
 
-	private Integer longitud;
+    private Integer longitud;
 
-	private String observaciones;
+    private String observaciones;
 
-	private String red;
-	
-	public String getLineaNum() {
-		return lineaNum;
-	}
+    private String red;
 
-	public void setLineaNum(String lineaNum) {
-		this.lineaNum = lineaNum;
-	}
+    public String getLineaNum() {
+        return lineaNum;
+    }
 
-	public String getLineaDesc() {
-		return lineaDesc;
-	}
+    public void setLineaNum(String lineaNum) {
+        this.lineaNum = lineaNum;
+    }
 
-	public void setLineaDesc(String lineaDesc) {
-		this.lineaDesc = lineaDesc;
-	}
+    public String getLineaDesc() {
+        return lineaDesc;
+    }
 
-	public String getDestino() {
-		return destino;
-	}
+    public void setLineaDesc(String lineaDesc) {
+        this.lineaDesc = lineaDesc;
+    }
 
-	public void setDestino(String destino) {
-		this.destino = destino;
-	}
+    public String getDestino() {
+        return destino;
+    }
 
-	public String getParada() {
-		return parada;
-	}
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
 
-	public void setParada(String parada) {
-		this.parada = parada;
-	}
+    public String getParada() {
+        return parada;
+    }
 
-	public String getCoordenadas() {
-		return coordenadas;
-	}
+    public void setParada(String parada) {
+        this.parada = parada;
+    }
 
-	public void setCoordenadas(String coordenadas) {
-		this.coordenadas = coordenadas;
-	}
+    public String getCoordenadas() {
+        return coordenadas;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
+    public String getDireccion() {
+        return direccion;
+    }
 
-	public String getConexion() {
-		return conexion;
-	}
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
 
-	public void setConexion(String conexion) {
-		this.conexion = conexion;
-	}
+    public String getConexion() {
+        return conexion;
+    }
 
-	public Integer getLatitud() {
-		return latitud;
-	}
+    public void setConexion(String conexion) {
+        this.conexion = conexion;
+    }
 
-	public void setLatitud(Integer latitud) {
-		this.latitud = latitud;
-	}
+    public Integer getLatitud() {
+        return latitud;
+    }
 
-	public Integer getLongitud() {
-		return longitud;
-	}
+    public void setLatitud(Integer latitud) {
+        this.latitud = latitud;
+    }
 
-	public void setLongitud(Integer longitud) {
-		this.longitud = longitud;
-	}
+    public Integer getLongitud() {
+        return longitud;
+    }
 
-	public String getObservaciones() {
-		return observaciones;
-	}
+    public void setLongitud(Integer longitud) {
+        this.longitud = longitud;
+    }
 
-	public void setObservaciones(String observaciones) {
-		this.observaciones = observaciones;
-	}
+    public String getObservaciones() {
+        return observaciones;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((parada == null) ? 0 : parada.hashCode());
-		return result;
-	}
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Parada other = (Parada) obj;
-		if (parada == null) {
-			if (other.parada != null)
-				return false;
-		} else if (!parada.equals(other.parada))
-			return false;
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((parada == null) ? 0 : parada.hashCode());
+        return result;
+    }
 
-	public String getRed() {
-		return red;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Parada other = (Parada) obj;
+        if (parada == null) {
+            if (other.parada != null)
+                return false;
+        } else if (!parada.equals(other.parada))
+            return false;
+        return true;
+    }
 
-	public void setRed(String red) {
-		this.red = red;
-	}
+    public String getRed() {
+        return red;
+    }
+
+    public void setRed(String red) {
+        this.red = red;
+    }
 
 }

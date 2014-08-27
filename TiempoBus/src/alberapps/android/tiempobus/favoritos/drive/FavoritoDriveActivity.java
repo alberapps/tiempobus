@@ -17,13 +17,6 @@
  */
 package alberapps.android.tiempobus.favoritos.drive;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
-import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask.BackupDriveAsyncTaskResponder;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -42,290 +35,271 @@ import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
+import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask.BackupDriveAsyncTaskResponder;
+
 /**
  * Exportar e importar desde drive
- * 
- * 
  */
 @SuppressLint("NewApi")
 public class FavoritoDriveActivity extends BaseDriveActivity {
 
-	private static final String TAG = "FavoritoDriveActivity";
+    private static final String TAG = "FavoritoDriveActivity";
 
-	protected static final int REQUEST_CODE_CREATOR = 1;
+    protected static final int REQUEST_CODE_CREATOR = 1;
 
-	protected static final int REQUEST_CODE_OPENER = 2;
+    protected static final int REQUEST_CODE_OPENER = 2;
 
-	public static final String MODO_EXPORTAR = "exportar";
-	public static final String MODO_IMPORTAR = "importar";
+    public static final String MODO_EXPORTAR = "exportar";
+    public static final String MODO_IMPORTAR = "importar";
 
-	private String modo = MODO_EXPORTAR;
+    private String modo = MODO_EXPORTAR;
 
-	private ProgressDialog dialog;
+    private ProgressDialog dialog;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			setTheme(android.R.style.Theme_Holo_Light_Dialog);
-		} else {
-			setTheme(android.R.style.Theme_Dialog);
-		}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setTheme(android.R.style.Theme_Holo_Light_Dialog);
+        } else {
+            setTheme(android.R.style.Theme_Dialog);
+        }
 
-		setContentView(R.layout.favoritos_drive);
+        setContentView(R.layout.favoritos_drive);
 
-		if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("MODO")) {
+        if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("MODO")) {
 
-			modo = this.getIntent().getExtras().getString("MODO");
-		}
+            modo = this.getIntent().getExtras().getString("MODO");
+        }
 
-	}
+    }
 
-	@Override
-	protected void onResume() {
+    @Override
+    protected void onResume() {
 
-		activarProgreso();
+        activarProgreso();
 
-		super.onResume();
-	}
+        super.onResume();
+    }
 
-	private void activarProgreso() {
-		// dialog = ProgressDialog.show(this, "",
-		// getString(R.string.dialog_procesando), true);
-	}
+    private void activarProgreso() {
+        // dialog = ProgressDialog.show(this, "",
+        // getString(R.string.dialog_procesando), true);
+    }
 
-	@Override
-	public void onConnected(Bundle connectionHint) {
-		super.onConnected(connectionHint);
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        super.onConnected(connectionHint);
 
-		if (modo.equals(MODO_EXPORTAR)) {
+        if (modo.equals(MODO_EXPORTAR)) {
 
-			nuevoArchivoDrive();
+            nuevoArchivoDrive();
 
-		} else if (modo.equals(MODO_IMPORTAR)) {
+        } else if (modo.equals(MODO_IMPORTAR)) {
 
-			cargarFicheroDrive();
+            cargarFicheroDrive();
 
-		}
+        }
 
-	}
+    }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case REQUEST_CODE_CREATOR:
-			if (resultCode == RESULT_OK) {
-				DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-				// showMessage("File created with ID: " + driveId);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_CREATOR:
+                if (resultCode == RESULT_OK) {
+                    DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+                    // showMessage("File created with ID: " + driveId);
 
-				if (driveId != null) {
+                    if (driveId != null) {
 
-					// activarProgreso();
+                        // activarProgreso();
 
-					guardarDatos(driveId);
+                        guardarDatos(driveId);
 
-				} else {
+                    } else {
 
-					if (dialog != null && dialog.isShowing()) {
-						dialog.dismiss();
-					}
+                        if (dialog != null && dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
 
-					// Relanzar
-					// relanzar();
+                        // Relanzar
+                        // relanzar();
 
-				}
+                    }
 
-			} else {
+                } else {
 
-				terminar(null);
+                    terminar(null);
 
-			}
+                }
 
-			break;
+                break;
 
-		case REQUEST_CODE_OPENER:
-			if (resultCode == RESULT_OK) {
-				DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-				// showMessage("Selected file's ID: " + driveId);
+            case REQUEST_CODE_OPENER:
+                if (resultCode == RESULT_OK) {
+                    DriveId driveId = (DriveId) data.getParcelableExtra(OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+                    // showMessage("Selected file's ID: " + driveId);
 
-				if (driveId != null) {
+                    if (driveId != null) {
 
-					// activarProgreso();
+                        // activarProgreso();
 
-					cargarDatos(driveId);
-				} else {
+                        cargarDatos(driveId);
+                    } else {
 
-					// terminar(null);
+                        // terminar(null);
 
-				}
+                    }
 
-			} else {
+                } else {
 
-				terminar(null);
+                    terminar(null);
 
-			}
+                }
 
-			break;
+                break;
 
-		default:
-			super.onActivityResult(requestCode, resultCode, data);
-			break;
-		}
-	}
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
+        }
+    }
 
-	/**
-	 * Crear archivo en drive
-	 */
-	private void nuevoArchivoDrive() {
+    /**
+     * Crear archivo en drive
+     */
+    private void nuevoArchivoDrive() {
 
-		final ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
+        final ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
 
-			public void onResult(ContentsResult result) {
+            public void onResult(ContentsResult result) {
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.US);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.US);
 
-				String fecha = sdf.format(new Date());
+                String fecha = sdf.format(new Date());
 
-				String nombre = "tiempobus_" + fecha + ".db";
+                String nombre = "tiempobus_" + fecha + ".db";
 
-				MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/octet-stream").setTitle(nombre).build();
-				IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialContents(result.getContents()).build(getGoogleApiClient());
-				try {
-					startIntentSenderForResult(intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
-				} catch (SendIntentException e) {
-					Log.w(TAG, "Unable to send intent", e);
-				}
-			}
-		};
+                MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/octet-stream").setTitle(nombre).build();
+                IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialContents(result.getContents()).build(getGoogleApiClient());
+                try {
+                    startIntentSenderForResult(intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
+                } catch (SendIntentException e) {
+                    Log.w(TAG, "Unable to send intent", e);
+                }
+            }
+        };
 
-		if (dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
-		Drive.DriveApi.newContents(getGoogleApiClient()).setResultCallback(contentsCallback);
+        Drive.DriveApi.newContents(getGoogleApiClient()).setResultCallback(contentsCallback);
 
-	}
+    }
 
-	/**
-	 * Guardar datos en el archivo
-	 * 
-	 * @param id
-	 */
-	private void guardarDatos(DriveId id) {
+    /**
+     * Guardar datos en el archivo
+     *
+     * @param id
+     */
+    private void guardarDatos(DriveId id) {
 
-		// activarProgreso();
+        // activarProgreso();
 
-		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
-		BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
-			public void backupLoaded(Boolean resultado) {
+        BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
+            public void backupLoaded(Boolean resultado) {
 
-				if (resultado != null && resultado) {
+                if (resultado != null && resultado) {
 
-					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_exportar_drive), Toast.LENGTH_LONG).show();
+                    Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_exportar_drive), Toast.LENGTH_LONG).show();
 
-				} else {
+                } else {
 
-					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_exportar_drive), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_exportar_drive), Toast.LENGTH_SHORT).show();
 
-				}
+                }
 
-				terminar(null);
+                terminar(null);
 
-			}
-		};
+            }
+        };
 
-		new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");
 
-	}
+    }
 
-	/**
-	 * Cargar el fichero desde drive
-	 */
-	private void cargarFicheroDrive() {
+    /**
+     * Cargar el fichero desde drive
+     */
+    private void cargarFicheroDrive() {
 
-		IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder().setMimeType(new String[] { "application/octet-stream" }).build(getGoogleApiClient());
-		try {
-			startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
-		} catch (SendIntentException e) {
-			Log.w(TAG, "Unable to send intent", e);
-		}
+        IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder().setMimeType(new String[]{"application/octet-stream"}).build(getGoogleApiClient());
+        try {
+            startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
+        } catch (SendIntentException e) {
+            Log.w(TAG, "Unable to send intent", e);
+        }
 
-	}
+    }
 
-	/**
-	 * Cargar los datos del archivo
-	 * 
-	 * @param id
-	 */
-	private void cargarDatos(DriveId id) {
+    /**
+     * Cargar los datos del archivo
+     *
+     * @param id
+     */
+    private void cargarDatos(DriveId id) {
 
-		// activarProgreso();
+        // activarProgreso();
 
-		DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
-		BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
-			public void backupLoaded(Boolean resultado) {
+        BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
+            public void backupLoaded(Boolean resultado) {
 
-				if (resultado != null && resultado) {
+                if (resultado != null && resultado) {
 
-					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_importar_drive), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavoritoDriveActivity.this, getString(R.string.ok_importar_drive), Toast.LENGTH_SHORT).show();
 
-				} else {
-					// Error al recuperar datos
-					Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_importar_drive), Toast.LENGTH_LONG).show();
+                } else {
+                    // Error al recuperar datos
+                    Toast.makeText(FavoritoDriveActivity.this, getString(R.string.error_importar_drive), Toast.LENGTH_LONG).show();
 
-				}
+                }
 
-				terminar(RESULT_OK);
+                terminar(RESULT_OK);
 
-			}
-		};
+            }
+        };
 
-		new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");
 
-	}
+    }
 
-	private void terminar(Integer resultado) {
-		getGoogleApiClient().disconnect();
+    private void terminar(Integer resultado) {
+        getGoogleApiClient().disconnect();
 
-		if (resultado != null) {
-			setResult(resultado);
-		}
+        if (resultado != null) {
+            setResult(resultado);
+        }
 
-		if (dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
-		finish();
-	}
+        finish();
+    }
 
-	/*
-	 * private void relanzar() {
-	 * 
-	 * AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	 * builder.setMessage
-	 * (getString(R.string.favoritos_pregunta)).setCancelable(false
-	 * ).setPositiveButton(getString(R.string.barcode_si), new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) {
-	 * 
-	 * finish(); startActivity(getIntent());
-	 * 
-	 * 
-	 * } }).setNegativeButton(getString(R.string.barcode_no), new
-	 * DialogInterface.OnClickListener() { public void onClick(DialogInterface
-	 * dialog, int id) { dialog.cancel();
-	 * 
-	 * terminar(null);
-	 * 
-	 * } }); AlertDialog alert = builder.create();
-	 * 
-	 * alert.show();
-	 * 
-	 * }
-	 */
 
 }

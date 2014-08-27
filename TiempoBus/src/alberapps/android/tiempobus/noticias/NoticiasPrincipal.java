@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,43 +18,42 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import alberapps.android.tiempobus.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import alberapps.android.tiempobus.R;
+
 /**
- * Fragmento principal
- * 
- * 
+ * Fragmento principal de noticias
  */
 public class NoticiasPrincipal extends Fragment {
 
-	NoticiasTabsPager actividad;
+    NoticiasTabsPager actividad;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		actividad = (NoticiasTabsPager) getActivity();
+        actividad = (NoticiasTabsPager) getActivity();
 
-	}
+    }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		super.onViewCreated(view, savedInstanceState);
-	}
+        super.onViewCreated(view, savedInstanceState);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.fragment_tabs_pager, container, false);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_tabs_pager, container, false);
+    }
 
 }

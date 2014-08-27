@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by The Android Open Source Project
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -85,985 +84,981 @@ import alberapps.java.tam.webservice.estructura.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**
- * Demonstrates combining a TabHost with a ViewPager to implement a tab UI that
- * switches between tabs and also allows the user to perform horizontal flicks
- * to move between the tabs.
+ * Noticias con tabs
  */
-@SuppressLint("NewApi")
 public class NoticiasTabsPager extends ActionBarActivity {
-	TabHost mTabHost;
-	ViewPager mViewPager;
-	TabsAdapter mTabsAdapter;
+    TabHost mTabHost;
+    ViewPager mViewPager;
+    TabsAdapter mTabsAdapter;
 
-	BusLinea linea = null;
+    BusLinea linea = null;
 
-	String sentidoIda = "";
-	String sentidoVuelta = "";
+    String sentidoIda = "";
+    String sentidoVuelta = "";
 
-	GetLineasResult lineasMapas = null;
+    GetLineasResult lineasMapas = null;
 
-	DatosMapa datosIda = null;
-	DatosMapa datosVuelta = null;
+    DatosMapa datosIda = null;
+    DatosMapa datosVuelta = null;
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	private ListView noticiasView;
+    private ListView noticiasView;
 
-	List<Noticias> noticiasRecuperadas;
+    List<Noticias> noticiasRecuperadas;
 
-	NoticiasAdapter noticiasAdapter;
+    NoticiasAdapter noticiasAdapter;
 
-	private ListView listTwWiew;
+    private ListView listTwWiew;
 
-	private ListView noticiasRssView;
+    private ListView noticiasRssView;
 
-	List<TwResultado> avisosRecuperados;
+    List<TwResultado> avisosRecuperados;
 
-	List<NoticiaRss> noticiasRss;
+    List<NoticiaRss> noticiasRss;
 
-	TwAdapter twAdapter;
+    TwAdapter twAdapter;
 
-	NoticiasRssAdapter noticiasRssAdapter;
+    NoticiasRssAdapter noticiasRssAdapter;
 
-	private ProgressDialog dialog;
+    private ProgressDialog dialog;
 
     MenuItem refresh = null;
 
-	AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
+    AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
 
-	AsyncTask<Object, Void, List<TwResultado>> loadTwTask = null;
+    AsyncTask<Object, Void, List<TwResultado>> loadTwTask = null;
 
-	AsyncTask<Object, Void, List<NoticiaRss>> loadNoticiasRssTask = null;
+    AsyncTask<Object, Void, List<NoticiaRss>> loadNoticiasRssTask = null;
 
-	public BusLinea getLinea() {
-		return linea;
-	}
+    public BusLinea getLinea() {
+        return linea;
+    }
 
-	public void setLinea(BusLinea linea) {
-		this.linea = linea;
-	}
+    public void setLinea(BusLinea linea) {
+        this.linea = linea;
+    }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		if (UtilidadesTRAM.ACTIVADO_TRAM) {
-			setContentView(R.layout.noticias_contenedor);
-		} else {
-			setContentView(R.layout.noticias_contenedor_2);
-		}
-
-
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null) {
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}
+        if (UtilidadesTRAM.ACTIVADO_TRAM) {
+            setContentView(R.layout.noticias_contenedor);
+        } else {
+            setContentView(R.layout.noticias_contenedor_2);
+        }
 
 
-		if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-			mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-			mTabHost.setup();
 
-			mViewPager = (ViewPager) findViewById(R.id.pager);
+        if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
-			mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
+            mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+            mTabHost.setup();
 
-			mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
+            mViewPager = (ViewPager) findViewById(R.id.pager);
 
-			if (UtilidadesTRAM.ACTIVADO_TRAM) {
-				mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
-			}
+            mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
-			mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
+            mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
 
-			if (savedInstanceState != null) {
-				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-			}
+            if (UtilidadesTRAM.ACTIVADO_TRAM) {
+                mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
+            }
 
-		}
-	}
+            mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
 
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
-			outState.putString("tab", mTabHost.getCurrentTabTag());
-		}
-	}
+            if (savedInstanceState != null) {
+                mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+            }
 
-	@Override
-	protected void onDestroy() {
+        }
+    }
 
-		// Se cancelan las tareas en caso de volver sin terminar
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
+            outState.putString("tab", mTabHost.getCurrentTabTag());
+        }
+    }
 
-		if (loadNoticiasTask != null && loadNoticiasTask.getStatus() == Status.RUNNING) {
+    @Override
+    protected void onDestroy() {
 
-			loadNoticiasTask.cancel(true);
+        // Se cancelan las tareas en caso de volver sin terminar
 
-			Log.d("noticias", "Cancelada task noticias");
+        if (loadNoticiasTask != null && loadNoticiasTask.getStatus() == Status.RUNNING) {
 
-		}
+            loadNoticiasTask.cancel(true);
 
-		if (loadTwTask != null && loadTwTask.getStatus() == Status.RUNNING) {
+            Log.d("noticias", "Cancelada task noticias");
 
-			loadTwTask.cancel(true);
+        }
 
-			Log.d("noticias", "Cancelada task twitter");
+        if (loadTwTask != null && loadTwTask.getStatus() == Status.RUNNING) {
 
-		}
+            loadTwTask.cancel(true);
 
-		if (loadNoticiasRssTask != null && loadNoticiasRssTask.getStatus() == Status.RUNNING) {
+            Log.d("noticias", "Cancelada task twitter");
 
-			loadNoticiasRssTask.cancel(true);
+        }
 
-			Log.d("noticias", "Cancelada task rss");
+        if (loadNoticiasRssTask != null && loadNoticiasRssTask.getStatus() == Status.RUNNING) {
 
-		}
+            loadNoticiasRssTask.cancel(true);
 
-		super.onDestroy();
-	}
+            Log.d("noticias", "Cancelada task rss");
 
-	/**
-	 * This is a helper class that implements the management of tabs and all
-	 * details of connecting a ViewPager with associated TabHost. It relies on a
-	 * trick. Normally a tab host has a simple API for supplying a View or
-	 * Intent that each tab will show. This is not sufficient for switching
-	 * between pages. So instead we make the content part of the tab host 0dp
-	 * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-	 * show as the tab content. It listens to changes in tabs, and takes care of
-	 * switch to the correct paged in the ViewPager whenever the selected tab
-	 * changes.
-	 */
-	public static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
-		private final Context mContext;
-		private final TabHost mTabHost;
-		private final ViewPager mViewPager;
-		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+        }
 
-		static final class TabInfo {
-			private final String tag;
-			private final Class<?> clss;
-			private final Bundle args;
+        super.onDestroy();
+    }
 
-			TabInfo(String _tag, Class<?> _class, Bundle _args) {
-				tag = _tag;
-				clss = _class;
-				args = _args;
-			}
-		}
+    /**
+     * This is a helper class that implements the management of tabs and all
+     * details of connecting a ViewPager with associated TabHost. It relies on a
+     * trick. Normally a tab host has a simple API for supplying a View or
+     * Intent that each tab will show. This is not sufficient for switching
+     * between pages. So instead we make the content part of the tab host 0dp
+     * high (it is not shown) and the TabsAdapter supplies its own dummy view to
+     * show as the tab content. It listens to changes in tabs, and takes care of
+     * switch to the correct paged in the ViewPager whenever the selected tab
+     * changes.
+     */
+    public static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+        private final Context mContext;
+        private final TabHost mTabHost;
+        private final ViewPager mViewPager;
+        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-		static class DummyTabFactory implements TabHost.TabContentFactory {
-			private final Context mContext;
+        static final class TabInfo {
+            private final String tag;
+            private final Class<?> clss;
+            private final Bundle args;
 
-			public DummyTabFactory(Context context) {
-				mContext = context;
-			}
+            TabInfo(String _tag, Class<?> _class, Bundle _args) {
+                tag = _tag;
+                clss = _class;
+                args = _args;
+            }
+        }
 
-			public View createTabContent(String tag) {
-				View v = new View(mContext);
-				v.setMinimumWidth(0);
-				v.setMinimumHeight(0);
-				return v;
-			}
-		}
+        static class DummyTabFactory implements TabHost.TabContentFactory {
+            private final Context mContext;
 
-		public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
-			super(activity.getSupportFragmentManager());
-			mContext = activity;
-			mTabHost = tabHost;
-			mViewPager = pager;
-			mTabHost.setOnTabChangedListener(this);
-			mViewPager.setAdapter(this);
-			mViewPager.setOnPageChangeListener(this);
-		}
+            public DummyTabFactory(Context context) {
+                mContext = context;
+            }
 
-		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-			tabSpec.setContent(new DummyTabFactory(mContext));
-			String tag = tabSpec.getTag();
+            public View createTabContent(String tag) {
+                View v = new View(mContext);
+                v.setMinimumWidth(0);
+                v.setMinimumHeight(0);
+                return v;
+            }
+        }
 
-			TabInfo info = new TabInfo(tag, clss, args);
-			mTabs.add(info);
-			mTabHost.addTab(tabSpec);
-			notifyDataSetChanged();
-		}
+        public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
+            super(activity.getSupportFragmentManager());
+            mContext = activity;
+            mTabHost = tabHost;
+            mViewPager = pager;
+            mTabHost.setOnTabChangedListener(this);
+            mViewPager.setAdapter(this);
+            mViewPager.setOnPageChangeListener(this);
+        }
 
-		@Override
-		public int getCount() {
-			return mTabs.size();
-		}
+        public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
+            tabSpec.setContent(new DummyTabFactory(mContext));
+            String tag = tabSpec.getTag();
 
-		@Override
-		public Fragment getItem(int position) {
-			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(), info.args);
-		}
+            TabInfo info = new TabInfo(tag, clss, args);
+            mTabs.add(info);
+            mTabHost.addTab(tabSpec);
+            notifyDataSetChanged();
+        }
 
-		public void onTabChanged(String tabId) {
-			int position = mTabHost.getCurrentTab();
-			mViewPager.setCurrentItem(position);
-		}
+        @Override
+        public int getCount() {
+            return mTabs.size();
+        }
 
-		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		}
+        @Override
+        public Fragment getItem(int position) {
+            TabInfo info = mTabs.get(position);
+            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+        }
 
-		public void onPageSelected(int position) {
-			// Unfortunately when TabHost changes the current tab, it kindly
-			// also takes care of putting focus on it when not in touch mode.
-			// The jerk.
-			// This hack tries to prevent this from pulling focus out of our
-			// ViewPager.
-			TabWidget widget = mTabHost.getTabWidget();
-			int oldFocusability = widget.getDescendantFocusability();
-			widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-			mTabHost.setCurrentTab(position);
-			widget.setDescendantFocusability(oldFocusability);
-		}
+        public void onTabChanged(String tabId) {
+            int position = mTabHost.getCurrentTab();
+            mViewPager.setCurrentItem(position);
+        }
 
-		public void onPageScrollStateChanged(int state) {
-		}
-	}
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_noticias, menu);
+        public void onPageSelected(int position) {
+            // Unfortunately when TabHost changes the current tab, it kindly
+            // also takes care of putting focus on it when not in touch mode.
+            // The jerk.
+            // This hack tries to prevent this from pulling focus out of our
+            // ViewPager.
+            TabWidget widget = mTabHost.getTabWidget();
+            int oldFocusability = widget.getDescendantFocusability();
+            widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+            mTabHost.setCurrentTab(position);
+            widget.setDescendantFocusability(oldFocusability);
+        }
+
+        public void onPageScrollStateChanged(int state) {
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_noticias, menu);
 
         refresh = menu.findItem(R.id.menu_refresh);
 
-		return super.onCreateOptionsMenu(menu);
-	}
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
 
-		case R.id.menu_refresh:
+            case R.id.menu_refresh:
 
-			recargarNoticias(false, false);
+                recargarNoticias(false, false);
 
-			break;
+                break;
 
-		case R.id.menu_preferencias:
-			showPreferencias();
-			break;
+            case R.id.menu_preferencias:
+                showPreferencias();
+                break;
 
-		}
+        }
 
-		return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 
-	}
+    }
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		// Quitar notificacion
-		// Get a reference to the notification manager
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(ns);
-		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS);
-		mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS_TRAM);
+        // Quitar notificacion
+        // Get a reference to the notification manager
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(ns);
+        mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS);
+        mNotificationManager.cancel(Notificaciones.NOTIFICACION_NOTICIAS_TRAM);
 
-		recargarNoticias(false, true);
+        recargarNoticias(false, true);
 
-	}
+    }
 
-	/**
-	 * Lanza la subactivididad de preferencias
-	 */
-	private void showPreferencias() {
-		Intent i = new Intent(this, PreferencesFromXml.class);
+    /**
+     * Lanza la subactivididad de preferencias
+     */
+    private void showPreferencias() {
+        Intent i = new Intent(this, PreferencesFromXml.class);
 
-		startActivity(i);
+        startActivity(i);
 
-	}
+    }
 
-	/**
-	 * Recarga de noticias
-	 */
-	private void recargarNoticias(boolean bloqueo, boolean usarCache) {
+    /**
+     * Recarga de noticias
+     */
+    private void recargarNoticias(boolean bloqueo, boolean usarCache) {
 
-		if (bloqueo) {
-			dialog.show();
+        if (bloqueo) {
+            dialog.show();
 
-			dialog.setMessage(getString(R.string.carga_noticias_msg));
+            dialog.setMessage(getString(R.string.carga_noticias_msg));
 
-		} else {
+        } else {
 
-			setRefreshActionItemState(true);
-		}
+            setRefreshActionItemState(true);
+        }
 
-		/**
-		 * Sera llamado cuando la tarea de cargar las noticias
-		 */
-		LoadNoticiasAsyncTaskResponder loadNoticiasAsyncTaskResponder = new LoadNoticiasAsyncTaskResponder() {
-			public void noticiasLoaded(List<Noticias> noticias) {
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadNoticiasAsyncTaskResponder loadNoticiasAsyncTaskResponder = new LoadNoticiasAsyncTaskResponder() {
+            public void noticiasLoaded(List<Noticias> noticias) {
 
-				if (noticias != null && !noticias.isEmpty()) {
-					noticiasRecuperadas = noticias;
-					cargarListado(noticias, true);
+                if (noticias != null && !noticias.isEmpty()) {
+                    noticiasRecuperadas = noticias;
+                    cargarListado(noticias, true);
 
-				} else {
+                } else {
 
-					noticiasRecuperadas = null;
-					// Error al recuperar datos
-					cargarListado(noticias, false);
+                    noticiasRecuperadas = null;
+                    // Error al recuperar datos
+                    cargarListado(noticias, false);
 
-				}
+                }
 
-				// Quitar barra progreso inicial
-				ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
-				if (lpb != null) {
-					lpb.clearAnimation();
-					lpb.setVisibility(View.INVISIBLE);
-				}
+                // Quitar barra progreso inicial
+                ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_noticias);
+                if (lpb != null) {
+                    lpb.clearAnimation();
+                    lpb.setVisibility(View.INVISIBLE);
+                }
 
-				if (noticias == null || noticias.isEmpty()) {
-					TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
-					noticiasView.setEmptyView(vacio);
-				}
+                if (noticias == null || noticias.isEmpty()) {
+                    TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
+                    noticiasView.setEmptyView(vacio);
+                }
 
-				// Inicia carga twitter
-				recargarTw();
+                // Inicia carga twitter
+                recargarTw();
 
-			}
-		};
+            }
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(usarCache);
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(usarCache);
 
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			setRefreshActionItemState(false);
+            setRefreshActionItemState(false);
 
-			if (dialog != null && dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Carga del listado
-	 * 
-	 * @param noticiasList
-	 * @param ok
-	 */
-	public void cargarListado(List<Noticias> noticiasList, boolean ok) {
+    /**
+     * Carga del listado
+     *
+     * @param noticiasList
+     * @param ok
+     */
+    public void cargarListado(List<Noticias> noticiasList, boolean ok) {
 
-		try {
+        try {
 
-			noticiasView = (ListView) findViewById(R.id.lista_noticias);
+            noticiasView = (ListView) findViewById(R.id.lista_noticias);
 
-			if (noticiasView != null) {
+            if (noticiasView != null) {
 
-				cargarHeaderNoticias();
+                cargarHeaderNoticias();
 
-				noticiasAdapter = new NoticiasAdapter(this, R.layout.noticias_item);
+                noticiasAdapter = new NoticiasAdapter(this, R.layout.noticias_item);
 
-				if (ok) {
+                if (ok) {
 
-					noticiasAdapter.addAll(noticiasList);
+                    noticiasAdapter.addAll(noticiasList);
 
-					noticiasAdapter.notifyDataSetChanged();
-				}
+                    noticiasAdapter.notifyDataSetChanged();
+                }
 
-				noticiasView.setOnItemClickListener(noticiasClickedHandler);
-				noticiasView.setAdapter(noticiasAdapter);
-				View emptyView = findViewById(R.id.vacio_noticias);
-				noticiasView.setEmptyView(emptyView);
+                noticiasView.setOnItemClickListener(noticiasClickedHandler);
+                noticiasView.setAdapter(noticiasAdapter);
+                View emptyView = findViewById(R.id.vacio_noticias);
+                noticiasView.setEmptyView(emptyView);
 
-			}
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			// Para evitar fallos si se intenta volver antes de terminar
+            // Para evitar fallos si se intenta volver antes de terminar
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Cargar cabecera listado
-	 */
-	public void cargarHeaderNoticias() {
+    /**
+     * Cargar cabecera listado
+     */
+    public void cargarHeaderNoticias() {
 
-		if (noticiasView != null && noticiasView.getHeaderViewsCount() == 0) {
+        if (noticiasView != null && noticiasView.getHeaderViewsCount() == 0) {
 
-			LayoutInflater li2 = LayoutInflater.from(this);
+            LayoutInflater li2 = LayoutInflater.from(this);
 
-			View vheader = li2.inflate(R.layout.noticias_header, null);
+            View vheader = li2.inflate(R.layout.noticias_header, null);
 
-			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-			StringBuffer textoHeader = new StringBuffer();
+            StringBuffer textoHeader = new StringBuffer();
 
-			textoHeader.append(getString(R.string.aviso_noticias));
-			textoHeader.append("\n");
-			textoHeader.append(FragmentNoticias.noticiasURL);
-			textoHeader.append("\n");
-			textoHeader.append(getString(R.string.noticias_instrucciones));
+            textoHeader.append(getString(R.string.aviso_noticias));
+            textoHeader.append("\n");
+            textoHeader.append(FragmentNoticias.noticiasURL);
+            textoHeader.append("\n");
+            textoHeader.append(getString(R.string.noticias_instrucciones));
 
-			texto.setLinksClickable(true);
-			texto.setAutoLinkMask(Linkify.WEB_URLS);
+            texto.setLinksClickable(true);
+            texto.setAutoLinkMask(Linkify.WEB_URLS);
 
-			texto.setText(textoHeader.toString());
+            texto.setText(textoHeader.toString());
 
-			noticiasView = (ListView) findViewById(R.id.lista_noticias);
+            noticiasView = (ListView) findViewById(R.id.lista_noticias);
 
-			noticiasView.addHeaderView(vheader);
+            noticiasView.addHeaderView(vheader);
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener noticiasClickedHandler = new OnItemClickListener() {
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener noticiasClickedHandler = new OnItemClickListener() {
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position_inicial
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, final int position_inicial, long id) {
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position_inicial
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, final int position_inicial, long id) {
 
-			if (position_inicial == 0) {
-				return;
-			}
+            if (position_inicial == 0) {
+                return;
+            }
 
-			// Para descartar la cabecera
-			final int position = position_inicial - 1;
+            // Para descartar la cabecera
+            final int position = position_inicial - 1;
 
-			if (noticiasRecuperadas.get(position).getLinks() != null && !noticiasRecuperadas.get(position).getLinks().isEmpty()) {
+            if (noticiasRecuperadas.get(position).getLinks() != null && !noticiasRecuperadas.get(position).getLinks().isEmpty()) {
 
-				if (noticiasRecuperadas.get(position).getLinks().size() > 1) {
+                if (noticiasRecuperadas.get(position).getLinks().size() > 1) {
 
-					AlertDialog.Builder builder = new AlertDialog.Builder(NoticiasTabsPager.this);
-					builder.setTitle(R.string.noticias_links);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NoticiasTabsPager.this);
+                    builder.setTitle(R.string.noticias_links);
 
-					int size = noticiasRecuperadas.get(position).getDescLink().size();
-					CharSequence[] items = new CharSequence[size];
+                    int size = noticiasRecuperadas.get(position).getDescLink().size();
+                    CharSequence[] items = new CharSequence[size];
 
-					for (int i = 0; i < noticiasRecuperadas.get(position).getDescLink().size(); i++) {
+                    for (int i = 0; i < noticiasRecuperadas.get(position).getDescLink().size(); i++) {
 
-						items[i] = noticiasRecuperadas.get(position).getDescLink().get(i);
+                        items[i] = noticiasRecuperadas.get(position).getDescLink().get(i);
 
-					}
+                    }
 
-					builder.setItems(items, new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int item) {
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
 
-							Intent i = new Intent(NoticiasTabsPager.this, DetalleNoticiaActivity.class);
-							i.putExtra("NOTICIA_SELECCIONADA", noticiasRecuperadas.get(position));
-							i.putExtra("POSICION_LINK", item);
-							startActivity(i);
+                            Intent i = new Intent(NoticiasTabsPager.this, DetalleNoticiaActivity.class);
+                            i.putExtra("NOTICIA_SELECCIONADA", noticiasRecuperadas.get(position));
+                            i.putExtra("POSICION_LINK", item);
+                            startActivity(i);
 
-						}
-					});
+                        }
+                    });
 
-					AlertDialog alert = builder.create();
+                    AlertDialog alert = builder.create();
 
-					alert.show();
+                    alert.show();
 
-				} else {
+                } else {
 
-					Intent i = new Intent(NoticiasTabsPager.this, DetalleNoticiaActivity.class);
-					i.putExtra("NOTICIA_SELECCIONADA", noticiasRecuperadas.get(position));
-					i.putExtra("POSICION_LINK", 0);
-					startActivity(i);
+                    Intent i = new Intent(NoticiasTabsPager.this, DetalleNoticiaActivity.class);
+                    i.putExtra("NOTICIA_SELECCIONADA", noticiasRecuperadas.get(position));
+                    i.putExtra("POSICION_LINK", 0);
+                    startActivity(i);
 
-				}
+                }
 
-			}
-		}
-	};
+            }
+        }
+    };
 
-	/**
-	 * Recarga de datos twitter
-	 */
-	private void recargarTw() {
+    /**
+     * Recarga de datos twitter
+     */
+    private void recargarTw() {
 
-		if (dialog != null && dialog.isShowing()) {
-			dialog.setMessage(getString(R.string.carga_tw_msg));
-		}
+        if (dialog != null && dialog.isShowing()) {
+            dialog.setMessage(getString(R.string.carga_tw_msg));
+        }
 
-		/**
-		 * Sera llamado cuando la tarea de cargar las noticias
-		 */
-		LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
-			public void TwitterLoaded(List<TwResultado> mensajes) {
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
+            public void TwitterLoaded(List<TwResultado> mensajes) {
 
-				if (mensajes != null && !mensajes.isEmpty()) {
-					avisosRecuperados = mensajes;
+                if (mensajes != null && !mensajes.isEmpty()) {
+                    avisosRecuperados = mensajes;
 
-					cargarListadoTw();
+                    cargarListadoTw();
 
-				} else {
+                } else {
 
-					avisosRecuperados = null;
-					// Error al recuperar datos
+                    avisosRecuperados = null;
+                    // Error al recuperar datos
 
-					cargarListadoTw();
+                    cargarListadoTw();
 
-				}
+                }
 
-				if (UtilidadesTRAM.ACTIVADO_TRAM) {
+                if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
-					recargarRss();
+                    recargarRss();
 
-				} else {
+                } else {
 
-					setRefreshActionItemState(false);
+                    setRefreshActionItemState(false);
 
-					if (dialog != null && dialog.isShowing()) {
+                    if (dialog != null && dialog.isShowing()) {
 
-						dialog.dismiss();
+                        dialog.dismiss();
 
-					}
+                    }
 
-				}
+                }
 
-				if (listTwWiew != null) {
-					// Quitar barra progreso inicial
-					ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
-					lpb.clearAnimation();
-					lpb.setVisibility(View.INVISIBLE);
+                if (listTwWiew != null) {
+                    // Quitar barra progreso inicial
+                    ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
+                    lpb.clearAnimation();
+                    lpb.setVisibility(View.INVISIBLE);
 
-					if (mensajes == null || mensajes.isEmpty()) {
-						TextView vacio = (TextView) findViewById(R.id.vacio_tw);
-						listTwWiew.setEmptyView(vacio);
-					}
-				}
+                    if (mensajes == null || mensajes.isEmpty()) {
+                        TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+                        listTwWiew.setEmptyView(vacio);
+                    }
+                }
 
-			}
-		};
+            }
+        };
 
-		// Opcion de desactivar twitter
-		if (!preferencias.getBoolean("tw_activar", true)) {
+        // Opcion de desactivar twitter
+        if (!preferencias.getBoolean("tw_activar", true)) {
 
-			setRefreshActionItemState(false);
+            setRefreshActionItemState(false);
 
-			if (dialog != null && dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-			listTwWiew = (ListView) findViewById(R.id.listatw);
+            listTwWiew = (ListView) findViewById(R.id.listatw);
 
-			if (listTwWiew != null) {
-				// Quitar barra progreso inicial
-				ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
-				lpb.clearAnimation();
-				lpb.setVisibility(View.INVISIBLE);
+            if (listTwWiew != null) {
+                // Quitar barra progreso inicial
+                ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tw);
+                lpb.clearAnimation();
+                lpb.setVisibility(View.INVISIBLE);
 
-				TextView vacio = (TextView) findViewById(R.id.vacio_tw);
-				listTwWiew.setEmptyView(vacio);
+                TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+                listTwWiew.setEmptyView(vacio);
 
-			}
-			avisosRecuperados = null;
+            }
+            avisosRecuperados = null;
 
-			cargarListadoTw();
+            cargarListadoTw();
 
-			return;
-		}
+            return;
+        }
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			// Cargar lista de elementos a consultar
-			List<Boolean> listaTW = new ArrayList<Boolean>();
+            // Cargar lista de elementos a consultar
+            List<Boolean> listaTW = new ArrayList<Boolean>();
 
-			listaTW.add(preferencias.getBoolean("tw_2", true));
-			listaTW.add(preferencias.getBoolean("tw_3", true));
-			listaTW.add(preferencias.getBoolean("tw_4", true));
-			listaTW.add(preferencias.getBoolean("tw_5", true));
-			listaTW.add(preferencias.getBoolean("tw_6", true));
+            listaTW.add(preferencias.getBoolean("tw_2", true));
+            listaTW.add(preferencias.getBoolean("tw_3", true));
+            listaTW.add(preferencias.getBoolean("tw_4", true));
+            listaTW.add(preferencias.getBoolean("tw_5", true));
+            listaTW.add(preferencias.getBoolean("tw_6", true));
 
-			String cantidad = preferencias.getString("tweets_maximos_v11", "3");
+            String cantidad = preferencias.getString("tweets_maximos_v11", "3");
 
-			loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, cantidad);
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			setRefreshActionItemState(false);
+            setRefreshActionItemState(false);
 
-			if (dialog != null && dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
-		}
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Carga el listado
-	 */
-	public void cargarListadoTw() {
+    /**
+     * Carga el listado
+     */
+    public void cargarListadoTw() {
 
-		try {
+        try {
 
-			listTwWiew = (ListView) findViewById(R.id.listatw);
+            listTwWiew = (ListView) findViewById(R.id.listatw);
 
-			if (listTwWiew != null) {
+            if (listTwWiew != null) {
 
-				// listTwWiew.setDrawingCacheEnabled(false);
+                // listTwWiew.setDrawingCacheEnabled(false);
 
-				cargarHeaderTwitter();
+                cargarHeaderTwitter();
 
-				twAdapter = new TwAdapter(this, R.layout.avisostw_item);
+                twAdapter = new TwAdapter(this, R.layout.avisostw_item);
 
-				if (avisosRecuperados != null) {
+                if (avisosRecuperados != null) {
 
-					twAdapter.addAll(avisosRecuperados);
-					twAdapter.notifyDataSetChanged();
+                    twAdapter.addAll(avisosRecuperados);
+                    twAdapter.notifyDataSetChanged();
 
-				} else {
+                } else {
 
-					twAdapter.clear();
-					twAdapter.notifyDataSetChanged();
+                    twAdapter.clear();
+                    twAdapter.notifyDataSetChanged();
 
-				}
+                }
 
-				// lineasView.setOnItemClickListener(twClickedHandler);
+                // lineasView.setOnItemClickListener(twClickedHandler);
 
-				listTwWiew.setAdapter(twAdapter);
+                listTwWiew.setAdapter(twAdapter);
 
-			}
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			// Para evitar fallos en caso de volver antes de terminar
+            // Para evitar fallos en caso de volver antes de terminar
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Cargar cabecera listado
-	 */
-	public void cargarHeaderTwitter() {
+    /**
+     * Cargar cabecera listado
+     */
+    public void cargarHeaderTwitter() {
 
-		if (listTwWiew != null && listTwWiew.getHeaderViewsCount() == 0) {
+        if (listTwWiew != null && listTwWiew.getHeaderViewsCount() == 0) {
 
-			LayoutInflater li2 = LayoutInflater.from(this);
+            LayoutInflater li2 = LayoutInflater.from(this);
 
-			View vheader = li2.inflate(R.layout.noticias_header, null);
+            View vheader = li2.inflate(R.layout.noticias_header, null);
 
-			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-			StringBuffer textoHeader = new StringBuffer();
+            StringBuffer textoHeader = new StringBuffer();
 
-			textoHeader.append(getString(R.string.dato_tw));
-			textoHeader.append("\n");
-			textoHeader.append(getString(R.string.tw1));
-			textoHeader.append("\n");
-			textoHeader.append(getString(R.string.twitter4j));
+            textoHeader.append(getString(R.string.dato_tw));
+            textoHeader.append("\n");
+            textoHeader.append(getString(R.string.tw1));
+            textoHeader.append("\n");
+            textoHeader.append(getString(R.string.twitter4j));
 
-			texto.setText(textoHeader.toString());
+            texto.setText(textoHeader.toString());
 
-			listTwWiew = (ListView) findViewById(R.id.listatw);
+            listTwWiew = (ListView) findViewById(R.id.listatw);
 
-			listTwWiew.addHeaderView(vheader);
+            listTwWiew.addHeaderView(vheader);
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener twClickedHandler = new OnItemClickListener() {
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener twClickedHandler = new OnItemClickListener() {
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			String url = avisosRecuperados.get(position).getUrl();
+            String url = avisosRecuperados.get(position).getUrl();
 
-			Intent i = new Intent(Intent.ACTION_VIEW);
+            Intent i = new Intent(Intent.ACTION_VIEW);
 
-			i.setData(Uri.parse(url));
-			startActivity(i);
+            i.setData(Uri.parse(url));
+            startActivity(i);
 
-		}
-	};
+        }
+    };
 
-	// ///////RSS
+    // ///////RSS
 
-	/**
-	 * Recarga de datos twitter
-	 */
-	private void recargarRss() {
+    /**
+     * Recarga de datos twitter
+     */
+    private void recargarRss() {
 
-		if (dialog != null && dialog.isShowing()) {
-			dialog.setMessage(getString(R.string.carga_rss_tram_msg));
-		}
+        if (dialog != null && dialog.isShowing()) {
+            dialog.setMessage(getString(R.string.carga_rss_tram_msg));
+        }
 
-		/**
-		 * Sera llamado cuando la tarea de cargar las noticias
-		 */
-		LoadNoticiasRssAsyncTaskResponder loadNoticiasRssAsyncTaskResponder = new LoadNoticiasRssAsyncTaskResponder() {
-			public void noticiasRssLoaded(List<NoticiaRss> noticias) {
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadNoticiasRssAsyncTaskResponder loadNoticiasRssAsyncTaskResponder = new LoadNoticiasRssAsyncTaskResponder() {
+            public void noticiasRssLoaded(List<NoticiaRss> noticias) {
 
-				if (noticias != null && !noticias.isEmpty()) {
-					noticiasRss = noticias;
-					cargarListadoRss();
+                if (noticias != null && !noticias.isEmpty()) {
+                    noticiasRss = noticias;
+                    cargarListadoRss();
 
-				} else {
+                } else {
 
-					noticiasRss = null;
-					// Error al recuperar datos
-					cargarListadoRss();
+                    noticiasRss = null;
+                    // Error al recuperar datos
+                    cargarListadoRss();
 
-				}
+                }
 
-				setRefreshActionItemState(false);
+                setRefreshActionItemState(false);
 
-				if (dialog != null && dialog.isShowing()) {
+                if (dialog != null && dialog.isShowing()) {
 
-					dialog.dismiss();
+                    dialog.dismiss();
 
-				}
+                }
 
-				if (noticiasRssView != null) {
-					// Quitar barra progreso inicial
-					ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_rss);
-					lpb.clearAnimation();
-					lpb.setVisibility(View.INVISIBLE);
+                if (noticiasRssView != null) {
+                    // Quitar barra progreso inicial
+                    ProgressBar lpb = (ProgressBar) findViewById(R.id.progreso_rss);
+                    lpb.clearAnimation();
+                    lpb.setVisibility(View.INVISIBLE);
 
-					if (noticias == null || noticias.isEmpty()) {
-						TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
-						noticiasRssView.setEmptyView(vacio);
-					}
-				}
+                    if (noticias == null || noticias.isEmpty()) {
+                        TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
+                        noticiasRssView.setEmptyView(vacio);
+                    }
+                }
 
-			}
-		};
+            }
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			setRefreshActionItemState(false);
+            setRefreshActionItemState(false);
 
-			if (dialog != null && dialog.isShowing()) {
+            if (dialog != null && dialog.isShowing()) {
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
-		}
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Carga el listado
-	 */
-	public void cargarListadoRss() {
+    /**
+     * Carga el listado
+     */
+    public void cargarListadoRss() {
 
-		try {
+        try {
 
-			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+            noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
 
-			noticiasRssAdapter = new NoticiasRssAdapter(this, R.layout.noticias_rss_item);
+            noticiasRssAdapter = new NoticiasRssAdapter(this, R.layout.noticias_rss_item);
 
-			if (noticiasRss != null) {
+            if (noticiasRss != null) {
 
-				cargarHeaderNoticiasRss();
+                cargarHeaderNoticiasRss();
 
-				noticiasRssAdapter.addAll(noticiasRss);
-				noticiasRssAdapter.notifyDataSetChanged();
+                noticiasRssAdapter.addAll(noticiasRss);
+                noticiasRssAdapter.notifyDataSetChanged();
 
-			}
+            }
 
-			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+            noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
 
-			TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
-			noticiasRssView.setEmptyView(vacio);
+            TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
+            noticiasRssView.setEmptyView(vacio);
 
-			// lineasView.setOnItemClickListener(twClickedHandler);
+            // lineasView.setOnItemClickListener(twClickedHandler);
 
-			noticiasRssView.setAdapter(noticiasRssAdapter);
+            noticiasRssView.setAdapter(noticiasRssAdapter);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			// Para evitar fallos en caso de volver antes de terminar
-			e.printStackTrace();
+            // Para evitar fallos en caso de volver antes de terminar
+            e.printStackTrace();
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Cargar cabecera listado
-	 */
-	public void cargarHeaderNoticiasRss() {
+    /**
+     * Cargar cabecera listado
+     */
+    public void cargarHeaderNoticiasRss() {
 
-		if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 0) {
+        if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 0) {
 
-			LayoutInflater li2 = LayoutInflater.from(this);
+            LayoutInflater li2 = LayoutInflater.from(this);
 
-			View vheader = li2.inflate(R.layout.noticias_header, null);
+            View vheader = li2.inflate(R.layout.noticias_header, null);
 
-			TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-			StringBuffer textoHeader = new StringBuffer();
+            StringBuffer textoHeader = new StringBuffer();
 
-			textoHeader.append(getString(R.string.aviso_noticias));
-			textoHeader.append("\n");
-			textoHeader.append(FragmentNoticiasRss.noticiasURL);
-			textoHeader.append("\n");
-			textoHeader.append(ProcesarTwitter.tw_tram_ruta);
+            textoHeader.append(getString(R.string.aviso_noticias));
+            textoHeader.append("\n");
+            textoHeader.append(FragmentNoticiasRss.noticiasURL);
+            textoHeader.append("\n");
+            textoHeader.append(ProcesarTwitter.tw_tram_ruta);
 
-			texto.setLinksClickable(true);
-			texto.setAutoLinkMask(Linkify.WEB_URLS);
+            texto.setLinksClickable(true);
+            texto.setAutoLinkMask(Linkify.WEB_URLS);
 
-			texto.setText(textoHeader.toString());
+            texto.setText(textoHeader.toString());
 
-			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+            noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
 
-			noticiasRssView.addHeaderView(vheader);
+            noticiasRssView.addHeaderView(vheader);
 
-			verificarNuevasNoticiasTram();
+            verificarNuevasNoticiasTram();
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Ultimas noticias tram
-	 */
-	public void cargarHeaderUltimasNoticiasTram(List<TwResultado> noticias) {
+    /**
+     * Ultimas noticias tram
+     */
+    public void cargarHeaderUltimasNoticiasTram(List<TwResultado> noticias) {
 
-		if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 1 && noticias == null) {
+        if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 1 && noticias == null) {
 
-			// Cargar layout para noticias tram tw
+            // Cargar layout para noticias tram tw
 
-			LayoutInflater li2 = LayoutInflater.from(this);
+            LayoutInflater li2 = LayoutInflater.from(this);
 
-			View vheader = li2.inflate(R.layout.noticias_tram_ultimas_item, null);
+            View vheader = li2.inflate(R.layout.noticias_tram_ultimas_item, null);
 
-			TextView titulo = (TextView) vheader.findViewById(R.id.titulo);
+            TextView titulo = (TextView) vheader.findViewById(R.id.titulo);
 
-			titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
+            titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
 
-			TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
 
-			StringBuffer textoHeader = new StringBuffer();
+            StringBuffer textoHeader = new StringBuffer();
 
-			textoHeader.append(getString(R.string.aviso_recarga));
+            textoHeader.append(getString(R.string.aviso_recarga));
 
-			descripcion.setLinksClickable(true);
-			descripcion.setAutoLinkMask(Linkify.WEB_URLS);
+            descripcion.setLinksClickable(true);
+            descripcion.setAutoLinkMask(Linkify.WEB_URLS);
 
-			descripcion.setText(textoHeader.toString());
+            descripcion.setText(textoHeader.toString());
 
-			noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+            noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
 
-			noticiasRssView.addHeaderView(vheader);
+            noticiasRssView.addHeaderView(vheader);
 
-		} else if (noticias != null && !noticias.isEmpty()) {
+        } else if (noticias != null && !noticias.isEmpty()) {
 
-			// Carga el contenido de la noticia de tram tw
+            // Carga el contenido de la noticia de tram tw
 
-			View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
+            View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
 
-			TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
 
-			StringBuffer textoHeader = new StringBuffer();
+            StringBuffer textoHeader = new StringBuffer();
 
-			textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
+            textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
 
-			if (noticias.size() > 1) {
-				textoHeader.append("\n");
-				textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
-			}
+            if (noticias.size() > 1) {
+                textoHeader.append("\n");
+                textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
+            }
 
-			descripcion.setText(textoHeader.toString());
+            descripcion.setText(textoHeader.toString());
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Verifica si hay nuevas noticias y muestra un aviso
-	 * 
-	 */
-	public void verificarNuevasNoticiasTram() {
+    /**
+     * Verifica si hay nuevas noticias y muestra un aviso
+     */
+    public void verificarNuevasNoticiasTram() {
 
-		// Cargar noticias tw
-		cargarHeaderUltimasNoticiasTram(null);
+        // Cargar noticias tw
+        cargarHeaderUltimasNoticiasTram(null);
 
-		/**
-		 * Sera llamado cuando la tarea de cargar las noticias
-		 */
-		LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
-			public void AvisosTramLoaded(List<TwResultado> noticias) {
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
+            public void AvisosTramLoaded(List<TwResultado> noticias) {
 
-				if (noticias != null && !noticias.isEmpty()) {
+                if (noticias != null && !noticias.isEmpty()) {
 
-					// Cargar noticias tw
-					cargarHeaderUltimasNoticiasTram(noticias);
+                    // Cargar noticias tw
+                    cargarHeaderUltimasNoticiasTram(noticias);
 
-					int nuevas = 0;
+                    int nuevas = 0;
 
-					String fecha_ultima = "";
-					boolean lanzarAviso = false;
+                    String fecha_ultima = "";
+                    boolean lanzarAviso = false;
 
-					// Ver si se guardo la fecha de la ultima noticia
-					if (preferencias.contains("ultima_noticia_tram")) {
-						fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
+                    // Ver si se guardo la fecha de la ultima noticia
+                    if (preferencias.contains("ultima_noticia_tram")) {
+                        fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
 
-						if (fecha_ultima != null) {
+                        if (fecha_ultima != null) {
 
-							// Date fechaUltima =
-							// Utilidades.getFechaDate(fecha_ultima);
+                            // Date fechaUltima =
+                            // Utilidades.getFechaDate(fecha_ultima);
 
-							// Contar nuevas noticias
+                            // Contar nuevas noticias
 
 							/*
-							 * for (int i = 0; i < noticias.size(); i++) {
+                             * for (int i = 0; i < noticias.size(); i++) {
 							 * 
 							 * if (noticias.get(i).getFechaDate() != null) { if
 							 * (
@@ -1073,116 +1068,117 @@ public class NoticiasTabsPager extends ActionBarActivity {
 							 * }
 							 */
 
-						}
+                        }
 
-						if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
+                        if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
 
-							lanzarAviso = true;
+                            lanzarAviso = true;
 
-							SharedPreferences.Editor editor = preferencias.edit();
-							editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-							editor.commit();
+                            SharedPreferences.Editor editor = preferencias.edit();
+                            editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
+                            editor.commit();
 
-						}
+                        }
 
-					} else {
+                    } else {
 
-						SharedPreferences.Editor editor = preferencias.edit();
-						editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-						editor.commit();
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
+                        editor.commit();
 
-					}
+                    }
 
-					// Si se guardo la fecha y no coincide con la ultima, lanzar
-					// aviso
-					if (lanzarAviso) {
+                    // Si se guardo la fecha y no coincide con la ultima, lanzar
+                    // aviso
+                    if (lanzarAviso) {
 
-						// Extendido
+                        // Extendido
 
-						String[] extendido = new String[2];
+                        String[] extendido = new String[2];
 
-						extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje();
+                        extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje();
 
-						if (noticias.size() > 1) {
-							extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje();
-						} else {
-							extendido[1] = "";
-						}
+                        if (noticias.size() > 1) {
+                            extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje();
+                        } else {
+                            extendido[1] = "";
+                        }
 
-						Notificaciones.notificacionAvisosTram(getApplicationContext(), extendido);
+                        Notificaciones.notificacionAvisosTram(getApplicationContext(), extendido);
 
-					}
-				} else {
+                    }
+                } else {
 
-				}
-			}
-		};
+                }
+            }
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-		}
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
 
-	}
+    }
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener noticiaRssClickedHandler = new OnItemClickListener() {
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener noticiaRssClickedHandler = new OnItemClickListener() {
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-		}
-	};
+        }
+    };
 
-	@Override
-	protected void onStart() {
+    @Override
+    protected void onStart() {
 
-		super.onStart();
+        super.onStart();
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            // EasyTracker.getInstance(this).activityStart(this);
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
 
-	}
+    }
 
-	@Override
-	protected void onStop() {
+    @Override
+    protected void onStop() {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            // EasyTracker.getInstance(this).activityStop(this);
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
 
-		super.onStop();
+        super.onStop();
 
-	}
+    }
 
     /**
      * Progreso en barra superior
+     *
      * @param show
      */
     public void setRefreshActionItemState(boolean show) {
 
         if (show && refresh != null) {
             MenuItemCompat.setActionView(refresh, R.layout.actionbar_indeterminate_progress);
-        } else if(refresh != null){
-            MenuItemCompat.setActionView(refresh,null);
+        } else if (refresh != null) {
+            MenuItemCompat.setActionView(refresh, null);
         }
 
     }

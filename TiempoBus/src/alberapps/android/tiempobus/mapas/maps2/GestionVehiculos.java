@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2013 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,19 +18,6 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
-import alberapps.java.tam.mapas.DatosMapa;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -45,67 +32,79 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
+import alberapps.java.tam.mapas.DatosMapa;
+
 /**
  * Gestion de vehiculos
- * 
  */
 public class GestionVehiculos {
 
-	private MapasMaps2Activity context;
+    private MapasMaps2Activity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	List<Marker> markersVehiculos;
+    List<Marker> markersVehiculos;
 
-	public GestionVehiculos(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public GestionVehiculos(MapasMaps2Activity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	/**
-	 * Cargar el mapa con las paradas de la linea
-	 * 
-	 */
-	public void cargarVehiculosMapa() {
+    /**
+     * Cargar el mapa con las paradas de la linea
+     */
+    public void cargarVehiculosMapa() {
 
-		if (markersVehiculos != null && !markersVehiculos.isEmpty()) {
-			context.gestionarLineas.quitarMarkers(markersVehiculos);
-		}
+        if (markersVehiculos != null && !markersVehiculos.isEmpty()) {
+            context.gestionarLineas.quitarMarkers(markersVehiculos);
+        }
 
-		if (((MapasMaps2Activity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-			context.drawableVehiculo = R.drawable.tramway_2;
-		} else {
-			context.drawableVehiculo = R.drawable.bus;
-		}
+        if (((MapasMaps2Activity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            context.drawableVehiculo = R.drawable.tramway_2;
+        } else {
+            context.drawableVehiculo = R.drawable.bus;
+        }
 
-		context.markersVehiculos = new ArrayList<MarkerOptions>();
+        context.markersVehiculos = new ArrayList<MarkerOptions>();
 
-		LatLng point = null;
+        LatLng point = null;
 
-		// Datos IDA
-		if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getVehiculosList().isEmpty()) {
+        // Datos IDA
+        if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getVehiculosList().isEmpty()) {
 
-			for (int i = 0; i < context.datosMapaCargadosIda.getVehiculosList().size(); i++) {
+            for (int i = 0; i < context.datosMapaCargadosIda.getVehiculosList().size(); i++) {
 
-				double y = Double.parseDouble(context.datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
-				double x = Double.parseDouble(context.datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
+                double y = Double.parseDouble(context.datosMapaCargadosIda.getVehiculosList().get(i).getYcoord());
+                double x = Double.parseDouble(context.datosMapaCargadosIda.getVehiculosList().get(i).getXcoord());
 
-				String coord = UtilidadesGeo.getLatLongUTMBus(y, x);
+                String coord = UtilidadesGeo.getLatLongUTMBus(y, x);
 
-				String[] coordenadas = coord.split(",");
+                String[] coordenadas = coord.split(",");
 
-				double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-				double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
 
-				// Desvio en el calculo
-				// lat = lat - 0.001517;
-				// lng = lng - 0.001517;
+                // Desvio en el calculo
+                // lat = lat - 0.001517;
+                // lng = lng - 0.001517;
 
 				/*
-				 * prueba no: 0,002185
+                 * prueba no: 0,002185
 				 * 
 				 * Erronea: 38.337297,-0.492949 correcta: 38.337625,-0.492155
 				 * desvio: +0,000328, +0,000794
@@ -128,25 +127,25 @@ public class GestionVehiculos {
 				 * desvio: 0,001203 0,002072
 				 */
 
-				int glat = (int) (lat * 1E6);
-				int glng = (int) (lng * 1E6);
+                int glat = (int) (lat * 1E6);
+                int glng = (int) (lng * 1E6);
 
-				// Calibrado
-				// https://github.com/Sloy/SeviBus
-				// Rafa Vazquez (Sloy)
-				glat = glat - 200 * 10;
-				glng = glng - 130 * 10;
-				//
+                // Calibrado
+                // https://github.com/Sloy/SeviBus
+                // Rafa Vazquez (Sloy)
+                glat = glat - 200 * 10;
+                glng = glng - 130 * 10;
+                //
 
-				double latB = glat / 1E6;
-				double longB = glng / 1E6;
+                double latB = glat / 1E6;
+                double longB = glng / 1E6;
 
-				point = new LatLng(latB, longB);
+                point = new LatLng(latB, longB);
 
-				String descripcionAlert = "";
+                String descripcionAlert = "";
 
-				context.markersVehiculos.add(new MarkerOptions().position(point).title(context.datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim()).snippet(descripcionAlert)
-						.icon(BitmapDescriptorFactory.fromResource(context.drawableVehiculo)));
+                context.markersVehiculos.add(new MarkerOptions().position(point).title(context.datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim()).snippet(descripcionAlert)
+                        .icon(BitmapDescriptorFactory.fromResource(context.drawableVehiculo)));
 
 				/*
 				 * // 19240000,-99120000
@@ -157,132 +156,125 @@ public class GestionVehiculos {
 				 * -0.52710 geographiclib //lat:38337176 //long:-491890
 				 */
 
-			}
+            }
 
-			if (context.markersVehiculos != null && context.markersVehiculos.size() > 0) {
-				markersVehiculos = context.gestionarLineas.cargarMarkersCtr(context.markersVehiculos);
-			} else {
-				context.gestionarLineas.avisoPosibleError();
-			}
+            if (context.markersVehiculos != null && context.markersVehiculos.size() > 0) {
+                markersVehiculos = context.gestionarLineas.cargarMarkersCtr(context.markersVehiculos);
+            } else {
+                context.gestionarLineas.avisoPosibleError();
+            }
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Carga de vehiculos de la linea
-	 */
-	public void loadDatosVehiculos() {
+    /**
+     * Carga de vehiculos de la linea
+     */
+    public void loadDatosVehiculos() {
 
-		Log.d("mapas", "Inicia carga de vehiculos");
+        Log.d("mapas", "Inicia carga de vehiculos");
 
-		// ToggleButton toogleButton = (ToggleButton)
-		// context.findViewById(R.id.mapasVehiculosButton);
 
-		// if (!toogleButton.isChecked() || context.lineaSeleccionadaNum == null
-		// || context.lineaSeleccionadaNum.equals("")) {
-		// return;
-		// }
+        boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
-		boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
+        if (!vehiculosPref || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("")) {
+            return;
+        }
 
-		if (!vehiculosPref || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("")) {
-			return;
-		}
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+            if (context.timer != null) {
+                context.timer.cancel();
+            }
 
-			if (context.timer != null) {
-				context.timer.cancel();
-			}
+            final Handler handler = new Handler();
+            context.timer = new Timer();
+            TimerTask timerTask = new TimerTask() {
 
-			final Handler handler = new Handler();
-			context.timer = new Timer();
-			TimerTask timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
 
-				@Override
-				public void run() {
-					handler.post(new Runnable() {
+                        public void run() {
 
-						public void run() {
+                            context.taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(context.lineaSeleccionadaNum);
 
-							context.taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(context.lineaSeleccionadaNum);
+                        }
+                    });
 
-						}
-					});
+                }
+            };
 
-				}
-			};
+            context.timer.schedule(timerTask, 0, frecuenciaRecarga());
 
-			context.timer.schedule(timerTask, 0, frecuenciaRecarga());
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            if (context.dialog != null && context.dialog.isShowing()) {
+                context.dialog.dismiss();
+            }
+        }
 
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			if (context.dialog != null && context.dialog.isShowing()) {
-				context.dialog.dismiss();
-			}
-		}
+    }
 
-	}
+    /**
+     * Carga de vehiculos de la linea
+     */
+    LoadVehiculosMapaAsyncTaskResponder loadVehiculosMapaAsyncTaskResponder = new LoadVehiculosMapaAsyncTaskResponder() {
 
-	/**
-	 * Carga de vehiculos de la linea
-	 */
-	LoadVehiculosMapaAsyncTaskResponder loadVehiculosMapaAsyncTaskResponder = new LoadVehiculosMapaAsyncTaskResponder() {
+        public void vehiculosMapaLoaded(DatosMapa datosMapa) {
 
-		public void vehiculosMapaLoaded(DatosMapa datosMapa) {
+            if (datosMapa != null && datosMapa.getVehiculosList() != null && context.datosMapaCargadosIda != null) {
+                context.datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
 
-			if (datosMapa != null && datosMapa.getVehiculosList() != null && context.datosMapaCargadosIda != null) {
-				context.datosMapaCargadosIda.setVehiculosList(datosMapa.getVehiculosList());
+                cargarVehiculosMapa();
 
-				cargarVehiculosMapa();
+                if (context.dialog != null && context.dialog.isShowing()) {
+                    context.dialog.dismiss();
+                }
 
-				if (context.dialog != null && context.dialog.isShowing()) {
-					context.dialog.dismiss();
-				}
-				
-				//Actualizar hora
-				ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
-				
-				final Calendar c = Calendar.getInstance();
+                //Actualizar hora
+                ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
 
-				SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
+                final Calendar c = Calendar.getInstance();
 
-				String updated = df.format(c.getTime()).toString();
-				
-				botonVehiculos.setText("("+updated+")");
-				
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
 
-			} else {
+                String updated = df.format(c.getTime()).toString();
 
-				Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
-				// context.finish();
+                botonVehiculos.setText("(" + updated + ")");
 
-				if (context.dialog != null && context.dialog.isShowing()) {
-					context.dialog.dismiss();
-				}
 
-			}
+            } else {
 
-		}
-	};
+                Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+                // context.finish();
 
-	/**
-	 * Frecuencia configurable
-	 * 
-	 * @return frecuencia
-	 */
-	public long frecuenciaRecarga() {
+                if (context.dialog != null && context.dialog.isShowing()) {
+                    context.dialog.dismiss();
+                }
 
-		String preFrec = preferencias.getString("tiempo_recarga_vehiculos", "30");
+            }
 
-		long frecuencia = Long.parseLong(preFrec) * 1000;
+        }
+    };
 
-		return frecuencia;
+    /**
+     * Frecuencia configurable
+     *
+     * @return frecuencia
+     */
+    public long frecuenciaRecarga() {
 
-	}
+        String preFrec = preferencias.getString("tiempo_recarga_vehiculos", "30");
+
+        long frecuencia = Long.parseLong(preFrec) * 1000;
+
+        return frecuencia;
+
+    }
 
 }

@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,146 +64,144 @@ import alberapps.java.wikipedia.WikiQuery;
 
 /**
  * Gestion de la tarjeta de informacion
- * 
- * 
  */
 public class GestionarTarjetaInfo {
 
-	/**
-	 * Cotexto principal
-	 */
-	private MainActivity context;
+    /**
+     * Cotexto principal
+     */
+    private MainActivity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	public GestionarTarjetaInfo(MainActivity contexto, SharedPreferences preferencia) {
+    public GestionarTarjetaInfo(MainActivity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	private String paradaWiki = null;
-	private String datosWiki = null;
+    private String paradaWiki = null;
+    private String datosWiki = null;
     private String datosLocalizacion = null;
     private String paradaLocaliza = null;
 
-	AsyncTask<Object, Void, WeatherQuery> weatherTask = null;
-	AsyncTask<Object, Void, String> actualizarTask = null;
-	AsyncTask<Object, Void, String> actualizarNumTask = null;
-	AsyncTask<Object, Void, WikiQuery> wikiTask = null;
+    AsyncTask<Object, Void, WeatherQuery> weatherTask = null;
+    AsyncTask<Object, Void, String> actualizarTask = null;
+    AsyncTask<Object, Void, String> actualizarNumTask = null;
+    AsyncTask<Object, Void, WikiQuery> wikiTask = null;
     AsyncTask<Object, Void, Localizacion> localizacionTask = null;
 
-	/**
-	 * Tarjeta con informacion de la parada
-	 */
-	public void cargarTarjetaInfo() {
+    /**
+     * Tarjeta con informacion de la parada
+     */
+    public void cargarTarjetaInfo() {
 
-		View v = null;
+        View v = null;
 
-		boolean tablet = false;
+        boolean tablet = false;
 
-		if (context.avisoTarjetaInfo != null && context.tiemposView != null) {
-			context.tiemposView.removeFooterView(context.avisoTarjetaInfo);
-		}
+        if (context.avisoTarjetaInfo != null && context.tiemposView != null) {
+            context.tiemposView.removeFooterView(context.avisoTarjetaInfo);
+        }
 
-		// Si es una tablet en horizontal
-		FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+        // Si es una tablet en horizontal
+        FragmentSecundarioTablet detalleFrag = (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
 
-		if (detalleFrag != null && UtilidadesUI.pantallaTabletHorizontal(context)) {
+        if (detalleFrag != null && UtilidadesUI.pantallaTabletHorizontal(context)) {
 
-			v = detalleFrag.getView().findViewById(R.id.contenedor_secundario);
+            v = detalleFrag.getView().findViewById(R.id.contenedor_secundario);
 
-			tablet = true;
+            tablet = true;
 
-		} else {
+        } else {
 
-			tablet = false;
+            tablet = false;
 
-			LayoutInflater li = LayoutInflater.from(context);
+            LayoutInflater li = LayoutInflater.from(context);
 
-			v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
+            v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
 
-		}
+        }
 
-		String parametros[] = { Integer.toString(context.paradaActual) };
+        String parametros[] = {Integer.toString(context.paradaActual)};
 
-		try {
+        try {
 
-			Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
-			if (cursor == null) {
+            if (cursor == null) {
 
-				return;
+                return;
 
-			} else {
+            } else {
 
-				StringBuffer observaciones = new StringBuffer();
+                StringBuffer observaciones = new StringBuffer();
 
-				// Observaciones
-				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-					int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
-					int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+                // Observaciones
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+                    int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
 
-					String observa = cursor.getString(observacionesIndex);
-					String linea = cursor.getString(numLineaIndex);
+                    String observa = cursor.getString(observacionesIndex);
+                    String linea = cursor.getString(numLineaIndex);
 
-					if (observa != null && !observa.trim().equals("")) {
+                    if (observa != null && !observa.trim().equals("")) {
 
-						if (observaciones.length() > 0) {
-							observaciones.append(", ");
-						}
+                        if (observaciones.length() > 0) {
+                            observaciones.append(", ");
+                        }
 
-						observaciones.append("(");
-						observaciones.append(linea);
-						observaciones.append(") ");
-						observaciones.append(observa);
-					}
+                        observaciones.append("(");
+                        observaciones.append(linea);
+                        observaciones.append(") ");
+                        observaciones.append(observa);
+                    }
 
-				}
+                }
 
-				// Primera posicion
-				cursor.moveToFirst();
+                // Primera posicion
+                cursor.moveToFirst();
 
-				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
-				int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
-				int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
-				int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
-				int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
+                int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
+                int lineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_DESC);
+                int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
+                int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
+                int destinoIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DESTINO);
 
-				int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
+                int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
 
-				int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
+                int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
 
-				int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
-				int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
+                int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
+                int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
 
-				//if (!tablet) {
+                //if (!tablet) {
 
-					TextView parada = (TextView) v.findViewById(R.id.parada);
-					TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
+                TextView parada = (TextView) v.findViewById(R.id.parada);
+                TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
 
-					TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
+                TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
 
-					parada.setText(cursor.getString(paradaIndex));
+                parada.setText(cursor.getString(paradaIndex));
 
-					localizacion.setText(cursor.getString(direccionIndex));
+                localizacion.setText(cursor.getString(direccionIndex));
 
-					datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
+                datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
 
-					String observa = observaciones.toString();
+                String observa = observaciones.toString();
 
-					if (observa != null && !observa.trim().equals("")) {
+                if (observa != null && !observa.trim().equals("")) {
 
-						datosParada.setText(datosParada.getText() + "\ni: " + observa);
+                    datosParada.setText(datosParada.getText() + "\ni: " + observa);
 
-					}
+                }
 
-				//}
+                //}
 
-				String lat = cursor.getString(latIndex);
-				String lon = cursor.getString(lonIndex);
+                String lat = cursor.getString(latIndex);
+                String lon = cursor.getString(lonIndex);
 
 
                 final View vista = v;
@@ -266,14 +264,13 @@ public class GestionarTarjetaInfo {
                     textoLocation.setText(datosLocalizacion);
 
 
-
-                }else {
+                } else {
                     paradaLocaliza = Integer.toString(context.paradaActual);
                     datosLocalizacion = null;
                 }
 
                 //Cargar datos si no los tenemos
-                if(datosLocalizacion == null){
+                if (datosLocalizacion == null) {
 
                     // Control de disponibilidad de conexion
                     ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -292,163 +289,155 @@ public class GestionarTarjetaInfo {
                 }
 
 
-
-
-
-
-
-
-				// Cargar info wikipedia
-				if (lat != null && !lat.equals("") && !lon.equals("")) {
-					context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
+                // Cargar info wikipedia
+                if (lat != null && !lat.equals("") && !lon.equals("")) {
+                    context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
 
                     // Cargar informacion del tiempo
                     context.gestionarTarjetaInfo.cargarInfoWeather(lat, lon, v);
 
-				}
+                }
 
 
+            }
 
-			}
+        } catch (Exception e) {
 
-		} catch (Exception e) {
+            return;
 
-			return;
+        }
 
-		}
+        if (!tablet) {
+            context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
-		if (!tablet) {
-			context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
+            context.tiemposView.addFooterView(v);
 
-			context.tiemposView.addFooterView(v);
+            context.avisoTarjetaInfo = v;
 
-			context.avisoTarjetaInfo = v;
+        }
 
-		}
+    }
 
-	}
+    /**
+     * Cargar la informacion de la wikipedia para la parada
+     */
+    public void cargarInfoWikipedia(String lat, String lon, final View v) {
 
-	/**
-	 * Cargar la informacion de la wikipedia para la parada
-	 */
-	public void cargarInfoWikipedia(String lat, String lon, final View v) {
+        // Verificar si ya disponemos de los datos
+        if (paradaWiki != null && datosWiki != null && paradaWiki.equals(Integer.toString(context.paradaActual))) {
 
-		// Verificar si ya disponemos de los datos
-		if (paradaWiki != null && datosWiki != null && paradaWiki.equals(Integer.toString(context.paradaActual))) {
+            try {
+                TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
 
-			try {
-				TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+                textoWiki.setText(Html.fromHtml(datosWiki));
+                textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
 
-				textoWiki.setText(Html.fromHtml(datosWiki));
-				textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+            return;
 
-			return;
+        } else {
+            paradaWiki = Integer.toString(context.paradaActual);
+            datosWiki = null;
+        }
 
-		} else {
-			paradaWiki = Integer.toString(context.paradaActual);
-			datosWiki = null;
-		}
+        LoadWikipediaAsyncTaskResponder loadWikipediaAsyncTaskResponder = new LoadWikipediaAsyncTaskResponder() {
+            public void WikipediaLoaded(WikiQuery wiki) {
 
-		LoadWikipediaAsyncTaskResponder loadWikipediaAsyncTaskResponder = new LoadWikipediaAsyncTaskResponder() {
-			public void WikipediaLoaded(WikiQuery wiki) {
+                if (wiki != null) {
 
-				if (wiki != null) {
+                    StringBuffer sb = new StringBuffer();
 
-					StringBuffer sb = new StringBuffer();
+                    try {
 
-					try {
+                        // Preparar titulos
+                        for (int i = 0; i < wiki.getListaDatos().size(); i++) {
 
-						// Preparar titulos
-						for (int i = 0; i < wiki.getListaDatos().size(); i++) {
+                            if (i == (wiki.getListaDatos().size() / 2)) {
+                                sb.append("<br/>");
+                            } else if (sb.length() > 0) {
+                                sb.append(", ");
+                            }
 
-							if(i == (wiki.getListaDatos().size() / 2)){
-								sb.append("<br/>");
-							}else if (sb.length() > 0) {
-								sb.append(", ");
-							}
+                            sb.append("<a href=\"http://");
+                            sb.append(UtilidadesUI.getIdiomaWiki());
+                            sb.append(".wikipedia.org/?curid=");
+                            sb.append(wiki.getListaDatos().get(i).getPageId());
+                            sb.append("\">");
 
-							sb.append("<a href=\"http://");
-							sb.append(UtilidadesUI.getIdiomaWiki());
-							sb.append(".wikipedia.org/?curid=");
-							sb.append(wiki.getListaDatos().get(i).getPageId());
-							sb.append("\">");
+                            sb.append(wiki.getListaDatos().get(i).getTitle());
+                            sb.append("</a>");
 
-							sb.append(wiki.getListaDatos().get(i).getTitle());
-							sb.append("</a>");
-							
-							
 
-						}
+                        }
 
-					} catch (Exception e) {
+                    } catch (Exception e) {
 
-						sb.setLength(0);
+                        sb.setLength(0);
 
-					}
+                    }
 
-					// Cargar titulos en textView
-					if (sb.length() > 0) {
+                    // Cargar titulos en textView
+                    if (sb.length() > 0) {
 
-						try {
-							TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+                        try {
+                            TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
 
-							textoWiki.setText(Html.fromHtml(sb.toString()));
-							textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+                            textoWiki.setText(Html.fromHtml(sb.toString()));
+                            textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
 
-							// Datos para siguiente pasada
-							datosWiki = sb.toString();
+                            // Datos para siguiente pasada
+                            datosWiki = sb.toString();
 
-						} catch (Exception e) {
+                        } catch (Exception e) {
 
-						}
+                        }
 
-					} else {
+                    } else {
 
-						sb.append(context.getString(R.string.main_no_items));
+                        sb.append(context.getString(R.string.main_no_items));
 
-						TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+                        TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
 
-						textoWiki.setText(sb.toString());
+                        textoWiki.setText(sb.toString());
 
-					}
+                    }
 
-				} else {
+                } else {
 
-				}
-			}
+                }
+            }
 
-		};
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
-			textoWiki.setText(context.getString(R.string.aviso_recarga));
+            TextView textoWiki = (TextView) v.findViewById(R.id.datos_wiki);
+            textoWiki.setText(context.getString(R.string.aviso_recarga));
 
-			wikiTask = new LoadWikipediaAsyncTask(loadWikipediaAsyncTaskResponder).execute(lat, lon);
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-		}
+            wikiTask = new LoadWikipediaAsyncTask(loadWikipediaAsyncTaskResponder).execute(lat, lon);
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
 
-	}
+    }
 
-	private WeatherQuery datosWeather = null;
+    private WeatherQuery datosWeather = null;
     private String paradaWeather = null;
 
-	/**
-	 * Cargar la informacion del clima
-	 */
-	public void cargarInfoWeather(String lat, String lon, final View v) {
+    /**
+     * Cargar la informacion del clima
+     */
+    public void cargarInfoWeather(String lat, String lon, final View v) {
 
-		final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
+        final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 
-		// Verificar si ya disponemos de los datos
+        // Verificar si ya disponemos de los datos
         /*if (datosWeather != null) {
 
 			try {
@@ -484,232 +473,231 @@ public class GestionarTarjetaInfo {
         }
 
 
+        LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
+            public void WeatherLoaded(WeatherQuery weather) {
 
-		LoadWeatherAsyncTaskResponder loadWeatherAsyncTaskResponder = new LoadWeatherAsyncTaskResponder() {
-			public void WeatherLoaded(WeatherQuery weather) {
+                iv.setVisibility(ImageView.INVISIBLE);
 
-				iv.setVisibility(ImageView.INVISIBLE);
+                if (weather != null) {
 
-				if (weather != null) {
+                    mostrarElTiempoOwm(weather, iv, v);
 
-					mostrarElTiempoOwm(weather, iv, v);
+                } else {
 
-				} else {
+                    iv.setVisibility(ImageView.INVISIBLE);
 
-					iv.setVisibility(ImageView.INVISIBLE);
+                }
+            }
 
-				}
-			}
+        };
 
-		};
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+            TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+            textoWeather.setText(context.getString(R.string.aviso_recarga));
 
-			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
-			textoWeather.setText(context.getString(R.string.aviso_recarga));
+            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon);
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
 
-			weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon);
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-		}
+    }
 
-	}
+    /**
+     * Mostrar el tiempo aemet
+     *
+     * @param weather
+     * @param iv
+     * @param v
+     */
+    private void mostrarElTiempo(WeatherQuery weather, ImageView iv, View v) {
 
-	/**
-	 * Mostrar el tiempo aemet
-	 * 
-	 * @param weather
-	 * @param iv
-	 * @param v
-	 */
-	private void mostrarElTiempo(WeatherQuery weather, ImageView iv, View v) {
+        StringBuffer sb = new StringBuffer();
 
-		StringBuffer sb = new StringBuffer();
+        try {
 
-		try {
+            for (int i = 0; i < weather.getListaDatos().size(); i++) {
 
-			for (int i = 0; i < weather.getListaDatos().size(); i++) {
+                for (int j = 0; j < weather.getListaDatos().get(i).getEstadoCielo().size(); j++) {
 
-				for (int j = 0; j < weather.getListaDatos().get(i).getEstadoCielo().size(); j++) {
+                    if (weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())) {
 
-					if (weather.getListaDatos().get(i).getEstadoCielo().get(j).getPeriodo().equals(getPeriodoWheather())) {
+                        imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
 
-						imgTiempo(weather.getListaDatos().get(i).getEstadoCielo().get(j), iv);
+                        sb.append("(");
 
-						sb.append("(");
+                        // sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
 
-						// sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+                        sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
 
-						sb.append(weather.getListaDatos().get(i).getEstadoCielo().get(j).getDescripcion());
+                        sb.append(") ");
 
-						sb.append(") ");
+                    }
 
-					}
+                }
 
-				}
+                sb.append(" min/máx: ");
+                sb.append(weather.getListaDatos().get(i).getTempMinima());
+                sb.append("/");
+                sb.append(weather.getListaDatos().get(i).getTempMaxima());
 
-				sb.append(" min/máx: ");
-				sb.append(weather.getListaDatos().get(i).getTempMinima());
-				sb.append("/");
-				sb.append(weather.getListaDatos().get(i).getTempMaxima());
+            }
 
-			}
+        } catch (Exception e) {
 
-		} catch (Exception e) {
+            sb.setLength(0);
 
-			sb.setLength(0);
+        }
 
-		}
+        // Cargar titulos en textView
+        if (sb.length() > 0) {
 
-		// Cargar titulos en textView
-		if (sb.length() > 0) {
+            try {
+                TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
-			try {
-				TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+                textoWeather.setText(sb.toString());
+                // textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
 
-				textoWeather.setText(sb.toString());
-				// textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+                // Datos para siguiente pasada
+                datosWeather = weather;
 
-				// Datos para siguiente pasada
-				datosWeather = weather;
+            } catch (Exception e) {
 
-			} catch (Exception e) {
+            }
 
-			}
+        } else {
 
-		} else {
+            sb.append(context.getString(R.string.main_no_items));
 
-			sb.append(context.getString(R.string.main_no_items));
+            TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
-			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+            textoWeather.setText(sb.toString());
 
-			textoWeather.setText(sb.toString());
+        }
 
-		}
+    }
 
-	}
+    /**
+     * Informacion del tiempo de yahoo
+     *
+     * @param weather
+     * @param iv
+     * @param v
+     */
+    private void mostrarElTiempoOwm(WeatherQuery weather, ImageView iv, View v) {
 
-	/**
-	 * Informacion del tiempo de yahoo
-	 * 
-	 * @param weather
-	 * @param iv
-	 * @param v
-	 */
-	private void mostrarElTiempoOwm(WeatherQuery weather, ImageView iv, View v) {
+        StringBuffer sb = new StringBuffer();
 
-		StringBuffer sb = new StringBuffer();
+        StringBuffer temp = new StringBuffer();
 
-		StringBuffer temp = new StringBuffer();
+        try {
 
-		try {
+            if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty()) {
 
-			if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty()) {
-
-				// Imagen
-				if (weather.getListaDatos().get(0).getImagen() != null) {
-					iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
-					iv.setVisibility(ImageView.VISIBLE);
-				} else {
-					iv.setVisibility(ImageView.INVISIBLE);
-				}
+                // Imagen
+                if (weather.getListaDatos().get(0).getImagen() != null) {
+                    iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
+                    iv.setVisibility(ImageView.VISIBLE);
+                } else {
+                    iv.setVisibility(ImageView.INVISIBLE);
+                }
 
                 sb.append(weather.getListaDatos().get(0).getHumidity());
-				sb.append("%, ");
+                sb.append("%, ");
                 sb.append(weather.getListaDatos().get(0).getLow());
-				sb.append("º/");
-				sb.append(weather.getListaDatos().get(0).getHigh());
-				sb.append("º");
+                sb.append("º/");
+                sb.append(weather.getListaDatos().get(0).getHigh());
+                sb.append("º");
 
 
-				temp.append(weather.getListaDatos().get(0).getContitionTemp());
-				temp.append("º");
+                temp.append(weather.getListaDatos().get(0).getContitionTemp());
+                temp.append("º");
 
-			}
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			sb.setLength(0);
-			temp.setLength(0);
+            sb.setLength(0);
+            temp.setLength(0);
 
-		}
+        }
 
-		// Cargar titulos en textView
-		if (sb.length() > 0 && temp.length() > 0) {
+        // Cargar titulos en textView
+        if (sb.length() > 0 && temp.length() > 0) {
 
-			try {
-				TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+            try {
+                TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
-				textoWeather.setText(sb.toString());
-				// textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
+                textoWeather.setText(sb.toString());
+                // textoWiki.setMovementMethod(LinkMovementMethod.getInstance());
 
-				TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
+                TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
 
-				textoTemperatura.setText(temp.toString());
+                textoTemperatura.setText(temp.toString());
 
                 TextView textoLocalidad = (TextView) v.findViewById(R.id.textoWeatherTexto2);
-                textoLocalidad.setText("\"" + weather.getListaDatos().get(0).getTitle()+"\"");
+                textoLocalidad.setText("\"" + weather.getListaDatos().get(0).getTitle() + "\"");
 
                 TextView textoWeatherTexto = (TextView) v.findViewById(R.id.textoWeatherTexto);
                 textoWeatherTexto.setText(weather.getListaDatos().get(0).getDescription());
 
-				// Datos para siguiente pasada
-				datosWeather = weather;
+                // Datos para siguiente pasada
+                datosWeather = weather;
 
-			} catch (Exception e) {
+            } catch (Exception e) {
 
-			}
+            }
 
-		} else {
+        } else {
 
-			sb.append(context.getString(R.string.main_no_items));
+            sb.append(context.getString(R.string.main_no_items));
 
-			TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+            TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
-			textoWeather.setText(sb.toString());
+            textoWeather.setText(sb.toString());
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Periodo para tiempo
-	 * 
-	 * @return periodo
-	 */
-	private String getPeriodoWheather() {
+    /**
+     * Periodo para tiempo
+     *
+     * @return periodo
+     */
+    private String getPeriodoWheather() {
 
-		SimpleDateFormat ft = new SimpleDateFormat("HH", Locale.US);
+        SimpleDateFormat ft = new SimpleDateFormat("HH", Locale.US);
 
-		int horaT = Integer.parseInt(ft.format(new Date()));
+        int horaT = Integer.parseInt(ft.format(new Date()));
 
-		if (horaT > 0 && horaT < 6) {
-			return "00-06";
-		} else if (horaT >= 6 && horaT < 12) {
-			return "06-12";
-		} else if (horaT >= 12 && horaT < 18) {
-			return "12-18";
-		} else if (horaT >= 18) {
-			return "18-24";
-		} else {
-			return null;
-		}
+        if (horaT > 0 && horaT < 6) {
+            return "00-06";
+        } else if (horaT >= 6 && horaT < 12) {
+            return "06-12";
+        } else if (horaT >= 12 && horaT < 18) {
+            return "12-18";
+        } else if (horaT >= 18) {
+            return "18-24";
+        } else {
+            return null;
+        }
 
-	}
+    }
 
-	/**
-	 * Cargar imagen estado del tiempo
-	 * 
-	 * @param data
-	 * @param iv
-	 */
-	private void imgTiempo(EstadoCielo data, ImageView iv) {
+    /**
+     * Cargar imagen estado del tiempo
+     *
+     * @param data
+     * @param iv
+     */
+    private void imgTiempo(EstadoCielo data, ImageView iv) {
 
 		/*
-		 * 11: sol
+         * 11: sol
 		 * 
 		 * 
 		 * 12: nube-sol 13: nube-sol+ 14: nube-sol++ 17: niebla
@@ -728,7 +716,7 @@ public class GestionarTarjetaInfo {
 		 * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
 		 * nuboso tormenta+ 64: nuboso tormenta++
 		 */
-		/*
+        /*
 		 * if (data.getValor().substring(0, 2).equals("11")) {
 		 * iv.setImageResource(R.drawable.weather_sun_blue_48); } else if
 		 * (data.getValor().substring(0, 2).equals("15")) {
@@ -746,9 +734,9 @@ public class GestionarTarjetaInfo {
 		 * iv.setImageResource(R.drawable.weather_thunder_blue_48); } else {
 		 * iv.setVisibility(ImageView.INVISIBLE); return; }
 		 */
-		iv.setVisibility(ImageView.VISIBLE);
+        iv.setVisibility(ImageView.VISIBLE);
 
-	}
+    }
 
 	/*
 	 * private void imgTiempoYW(String condionCode, ImageView iv){
@@ -785,246 +773,253 @@ public class GestionarTarjetaInfo {
 	 * }
 	 */
 
-	/**
-	 * Control de estado de actualizaciones
-	 * 
-	 * @param tw
-	 */
-	public void controlActualizarDB(final TextView tw) {
+    /**
+     * Control de estado de actualizaciones
+     *
+     * @param tw
+     */
+    public void controlActualizarDB(final TextView tw) {
 
-		// Verificar si hay que consultar la version
-		boolean verificar = preferencias.getBoolean("control_verificar_actualiza", true);
-		if (!verificar) {
-			return;
-		}
+        // Verificar si hay que consultar la version
+        boolean verificar = preferencias.getBoolean("control_verificar_actualiza", true);
+        if (!verificar) {
+            return;
+        }
 
-		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
-			public void ActualizarBDLoaded(final String respuesta) {
+        LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+            public void ActualizarBDLoaded(final String respuesta) {
 
-				boolean mostrarAviso = false;
+                boolean mostrarAviso = false;
 
-				if (respuesta != null && !respuesta.equals("false")) {
+                if (respuesta != null && !respuesta.equals("false")) {
 
-					Log.d("ACTUALIZA", "respuesta: " + respuesta);
+                    Log.d("ACTUALIZA", "respuesta: " + respuesta);
 
-					// 01012014
+                    // 01012014
 
-					if (respuesta.length() == 8) {
+                    if (respuesta.length() == 8) {
 
-						// Si es la primera actualizacion
-						if (PreferencesUtil.getUpdateInfo(context).equals("")) {
+                        // Si es la primera actualizacion
+                        if (PreferencesUtil.getUpdateInfo(context).equals("")) {
 
-							// Si es mas actual que la instalada
-							if (Utilidades.isFechaControl(respuesta, DatosLineasDB.DATABASE_VERSION_FECHA)) {
-								Log.d("ACTUALIZA", "aviso comparado copia local");
-								mostrarAviso = true;
-							} else {
+                            // Si es mas actual que la instalada
+                            if (Utilidades.isFechaControl(respuesta, DatosLineasDB.DATABASE_VERSION_FECHA)) {
+                                Log.d("ACTUALIZA", "aviso comparado copia local");
+                                mostrarAviso = true;
+                            } else {
 
-								Log.d("ACTUALIZA", "aviso comparado copia local - no actualizar");
-								mostrarAviso = false;
+                                Log.d("ACTUALIZA", "aviso comparado copia local - no actualizar");
+                                mostrarAviso = false;
 
-							}
+                            }
 
-						} else if (!PreferencesUtil.getUpdateInfo(context).equals("")) {
+                        } else if (!PreferencesUtil.getUpdateInfo(context).equals("")) {
 
-							String control = PreferencesUtil.getUpdateInfo(context);
-							String ignorar = PreferencesUtil.getUpdateIgnorarInfo(context);
+                            String control = PreferencesUtil.getUpdateInfo(context);
+                            String ignorar = PreferencesUtil.getUpdateIgnorarInfo(context);
 
-							// Si opcion de ignorar
-							if (!ignorar.equals("")) {
+                            // Si opcion de ignorar
+                            if (!ignorar.equals("")) {
 
-								if (control.equals(ignorar)) {
-									mostrarAviso = false;
+                                if (control.equals(ignorar)) {
+                                    mostrarAviso = false;
 
-									Log.d("ACTUALIZA", "ingnorar");
+                                    Log.d("ACTUALIZA", "ingnorar");
 
-								} else {
+                                } else {
 
-									// Si la actualizacion es posterior a la
-									// actual
-									if (Utilidades.isFechaControl(respuesta, control)) {
+                                    // Si la actualizacion es posterior a la
+                                    // actual
+                                    if (Utilidades.isFechaControl(respuesta, control)) {
 
-										mostrarAviso = true;
+                                        mostrarAviso = true;
 
-										Log.d("ACTUALIZA", "mostrar");
+                                        Log.d("ACTUALIZA", "mostrar");
 
-									}
+                                    }
 
-								}
+                                }
 
-							}
+                            }
 
-						}
+                        }
 
-					}
+                    }
 
-				} else {
+                } else {
 
-					mostrarAviso = false;
+                    mostrarAviso = false;
 
-				}
+                }
 
-				if (mostrarAviso) {
+                if (mostrarAviso) {
 
-					final CharSequence textoAnterior = tw.getText();
+                    final CharSequence textoAnterior = tw.getText();
 
-					tw.setText(tw.getText() + "\n" + context.getString(R.string.actualizacion_aviso));
+                    tw.setText(tw.getText() + "\n" + context.getString(R.string.actualizacion_aviso));
 
-					tw.setOnClickListener(new TextView.OnClickListener() {
-						public void onClick(View arg0) {
+                    tw.setOnClickListener(new TextView.OnClickListener() {
+                        public void onClick(View arg0) {
 
-							modalActualizar(respuesta, textoAnterior, tw);
+                            modalActualizar(respuesta, textoAnterior, tw);
 
-						}
-					});
+                        }
+                    });
 
-				}
+                }
 
-			}
+            }
 
-		};
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			actualizarNumTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
-		} else {
+            actualizarNumTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
+        } else {
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Modal de confirmacion de actualizar
-	 * 
-	 * @param respuesta
-	 * @param textoAnterior
-	 * @param tw
-	 */
-	private void modalActualizar(final String respuesta, final CharSequence textoAnterior, final TextView tw) {
+    /**
+     * Modal de confirmacion de actualizar
+     *
+     * @param respuesta
+     * @param textoAnterior
+     * @param tw
+     */
+    private void modalActualizar(final String respuesta, final CharSequence textoAnterior, final TextView tw) {
 
-		AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
-		dialog.setTitle(context.getString(R.string.actualizacion_titulo));
+        dialog.setTitle(context.getString(R.string.actualizacion_titulo));
 
-		dialog.setMessage(context.getString(R.string.actualizacion_desc));
-		dialog.setIcon(R.drawable.ic_tiempobus_3);
+        dialog.setMessage(context.getString(R.string.actualizacion_desc));
+        dialog.setIcon(R.drawable.ic_tiempobus_3);
 
-		dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {
 
-				// PreferencesUtil.putUpdateInfo(context, respuesta, "");
+                // PreferencesUtil.putUpdateInfo(context, respuesta, "");
 
-				tw.setText(textoAnterior);
-				tw.setOnClickListener(new TextView.OnClickListener() {
-					public void onClick(View arg0) {
+                tw.setText(textoAnterior);
+                tw.setOnClickListener(new TextView.OnClickListener() {
+                    public void onClick(View arg0) {
 
-					}
-				});
-				actualizarDB(respuesta);
+                    }
+                });
+                actualizarDB(respuesta);
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-		});
+        });
 
-		dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
 
-			public void onClick(DialogInterface dialog, int id) {
+            public void onClick(DialogInterface dialog, int id) {
 
-				PreferencesUtil.putUpdateInfo(context, respuesta, respuesta);
-				tw.setText(textoAnterior);
-				tw.setOnClickListener(new TextView.OnClickListener() {
-					public void onClick(View arg0) {
+                PreferencesUtil.putUpdateInfo(context, respuesta, respuesta);
+                tw.setText(textoAnterior);
+                tw.setOnClickListener(new TextView.OnClickListener() {
+                    public void onClick(View arg0) {
 
-					}
-				});
+                    }
+                });
 
-				dialog.dismiss();
+                dialog.dismiss();
 
-			}
+            }
 
-		});
+        });
 
-		dialog.show();
+        dialog.show();
 
-	}
+    }
 
-	/**
-	 * Actualizar la base de datos
-	 * 
-	 * @param respuesta
-	 */
-	public void actualizarDB(String respuesta) {
+    /**
+     * Actualizar la base de datos
+     *
+     * @param respuesta
+     */
+    public void actualizarDB(String respuesta) {
 
-		final Builder mBuilder = Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
+        final Builder mBuilder = Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
 
-		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
-			public void ActualizarBDLoaded(String respuesta) {
+        LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+            public void ActualizarBDLoaded(String respuesta) {
 
-				if (respuesta.equals("true")) {
-					context.getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+                if (respuesta.equals("true")) {
+                    context.getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
 
-					PreferencesUtil.putUpdateInfo(context, respuesta, "");
+                    PreferencesUtil.putUpdateInfo(context, respuesta, "");
 
-				} else {
-					Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
 
-					Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
-				}
+                    Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+                }
 
-			}
+            }
 
-		};
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			actualizarTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
-		} else {
-			Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            actualizarTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+            Notificaciones.notificacionBaseDatos(context.getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
 
-		}
+        }
 
-	}
+    }
 
-	/**
-	 * Detener tareas
-	 */
-	public void detenerTareas() {
+    /**
+     * Detener tareas
+     */
+    public void detenerTareas() {
 
-		if (weatherTask != null && weatherTask.getStatus() == Status.RUNNING) {
+        if (weatherTask != null && weatherTask.getStatus() == Status.RUNNING) {
 
-			weatherTask.cancel(true);
+            weatherTask.cancel(true);
 
-		}
+        }
 
-		if (actualizarTask != null && actualizarTask.getStatus() == Status.RUNNING) {
+        if (actualizarTask != null && actualizarTask.getStatus() == Status.RUNNING) {
 
-			actualizarTask.cancel(true);
+            actualizarTask.cancel(true);
 
-		}
+        }
 
-		if (actualizarNumTask != null && actualizarNumTask.getStatus() == Status.RUNNING) {
+        if (actualizarNumTask != null && actualizarNumTask.getStatus() == Status.RUNNING) {
 
-			actualizarNumTask.cancel(true);
+            actualizarNumTask.cancel(true);
 
-		}
+        }
 
-		if (wikiTask != null && wikiTask.getStatus() == Status.RUNNING) {
+        if (wikiTask != null && wikiTask.getStatus() == Status.RUNNING) {
 
-			wikiTask.cancel(true);
+            wikiTask.cancel(true);
 
-		}
+        }
 
-	}
+        if (localizacionTask != null && localizacionTask.getStatus() == Status.RUNNING) {
+
+            localizacionTask.cancel(true);
+
+        }
+
+
+    }
 
 }

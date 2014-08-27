@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,44 +18,43 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+
 /**
- * Fragmento vuelta
- * 
- * 
+ * Fragmento para el drawer
  */
 public class FragmentPrincipalDrawer extends Fragment {
 
-	MainActivity actividad;
+    MainActivity actividad;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		actividad = (MainActivity) getActivity();
+        actividad = (MainActivity) getActivity();
 
-	}
+    }
 
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
 
-		super.onViewCreated(view, savedInstanceState);
-	}
+        super.onViewCreated(view, savedInstanceState);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.pantalla_principal_fragment, container, false);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.pantalla_principal_gridlayout, container, false);
+    }
 
 }

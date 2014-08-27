@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +17,9 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -28,135 +29,115 @@ import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
 import alberapps.java.tram.vehiculos.ProcesarCochesService;
 import alberapps.java.tram.webservice.GetPasoParadaWebservice;
 import alberapps.java.util.Utilidades;
-import android.os.AsyncTask;
-import android.util.Log;
 
 /**
- * Tarea para la carga de datos de los mapas
- * 
- * 
+ * Tarea para la carga de datos de los vehiculos para los mapas
  */
 public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMapa> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadVehiculosMapaAsyncTaskResponder {
-		public void vehiculosMapaLoaded(DatosMapa datosMapa);
-	}
+    public interface LoadVehiculosMapaAsyncTaskResponder {
+        public void vehiculosMapaLoaded(DatosMapa datosMapa);
+    }
 
-	private LoadVehiculosMapaAsyncTaskResponder responder;
+    private LoadVehiculosMapaAsyncTaskResponder responder;
 
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadVehiculosMapaAsyncTask(LoadVehiculosMapaAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    public LoadVehiculosMapaAsyncTask(LoadVehiculosMapaAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected DatosMapa doInBackground(String... datos) {
-		DatosMapa datosMapa = null;
+    @Override
+    protected DatosMapa doInBackground(String... datos) {
+        DatosMapa datosMapa = null;
 
-		String linea = null;
+        String linea = null;
 
-		int url1 = 1;
-		int url2 = 1;
+        int url1 = 1;
+        int url2 = 1;
 
-		linea = datos[0];
+        linea = datos[0];
 
-		if (DatosPantallaPrincipal.esLineaTram(linea)) {
+        if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
-			// Ip a usar de forma aleatoria
-			boolean iprandom = Utilidades.ipRandom();
+            // Ip a usar de forma aleatoria
+            boolean iprandom = Utilidades.ipRandom();
 
-			if (iprandom) {
+            if (iprandom) {
 
-				url1 = GetPasoParadaWebservice.URL1;
-				url2 = GetPasoParadaWebservice.URL2;
+                url1 = GetPasoParadaWebservice.URL1;
+                url2 = GetPasoParadaWebservice.URL2;
 
-				Log.d("TIEMPOS", "Combinacion url 1");
+                Log.d("TIEMPOS", "Combinacion url 1");
 
-			} else {
+            } else {
 
-				url2 = GetPasoParadaWebservice.URL1;
-				url1 = GetPasoParadaWebservice.URL2;
+                url2 = GetPasoParadaWebservice.URL1;
+                url1 = GetPasoParadaWebservice.URL2;
 
-				Log.d("TIEMPOS", "Combinacion url 2");
+                Log.d("TIEMPOS", "Combinacion url 2");
 
-			}
+            }
 
-		}
+        }
 
-		List<InfoVehiculo> vehiculosList = null;
+        List<InfoVehiculo> vehiculosList = null;
 
-		try {
+        try {
 
-			if (DatosPantallaPrincipal.esLineaTram(linea)) {
+            if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
-				Log.d("mapas", "Procesar vehiculos tram: " + datos[0]);
+                Log.d("mapas", "Procesar vehiculos tram: " + datos[0]);
 
-				vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url1);
+                vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url1);
 
-				Log.d("mapas", "vehiculos recuperados: " + vehiculosList.size());
+                Log.d("mapas", "vehiculos recuperados: " + vehiculosList.size());
 
-			} else {
-				vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
-			}
+            } else {
+                vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
+            }
 
-			datosMapa = new DatosMapa();
+            datosMapa = new DatosMapa();
 
-			datosMapa.setVehiculosList(vehiculosList);
+            datosMapa.setVehiculosList(vehiculosList);
 
-		} catch (Exception e) {
-			// Probar con acceso secundario
-			if (DatosPantallaPrincipal.esLineaTram(linea)) {
+        } catch (Exception e) {
+            // Probar con acceso secundario
+            if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
-				try {
+                try {
 
-					Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
+                    Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
-					vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url2);
+                    vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url2);
 
-					datosMapa = new DatosMapa();
+                    datosMapa = new DatosMapa();
 
-					datosMapa.setVehiculosList(vehiculosList);
+                    datosMapa.setVehiculosList(vehiculosList);
 
-				} catch (Exception e1) {
+                } catch (Exception e1) {
 
-					e1.printStackTrace();
+                    e1.printStackTrace();
 
-					return null;
+                    return null;
 
-				}
-			} else {
+                }
+            } else {
 
-				return null;
+                return null;
 
-			}
-			
-			e.printStackTrace();
-			
-		}
+            }
 
-		return datosMapa;
-	}
+            e.printStackTrace();
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(DatosMapa result) {
-		if (responder != null) {
-			responder.vehiculosMapaLoaded(result);
-		}
-	}
+        }
+
+        return datosMapa;
+    }
+
+    @Override
+    protected void onPostExecute(DatosMapa result) {
+        if (responder != null) {
+            responder.vehiculosMapaLoaded(result);
+        }
+    }
 
 }

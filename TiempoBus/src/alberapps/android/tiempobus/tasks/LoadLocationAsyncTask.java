@@ -25,67 +25,62 @@ import alberapps.java.localizacion.Localizacion;
 
 /**
  * Tarea asincrona para recuperar informacion de localizacion
- * 
- * 
  */
 public class LoadLocationAsyncTask extends AsyncTask<Object, Void, Localizacion> {
 
-	/**
-	 *
-	 *
-	 */
-	public interface LoadLocationAsyncTaskResponder {
-		public void LocationLoaded(Localizacion localizacion);
-	}
+    /**
+     *
+     *
+     */
+    public interface LoadLocationAsyncTaskResponder {
+        public void LocationLoaded(Localizacion localizacion);
+    }
 
-	private LoadLocationAsyncTaskResponder responder;
+    private LoadLocationAsyncTaskResponder responder;
 
-	/**
-	 *
-	 *
-	 * @param responder
-	 */
-	public LoadLocationAsyncTask(LoadLocationAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    /**
+     * @param responder
+     */
+    public LoadLocationAsyncTask(LoadLocationAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected Localizacion doInBackground(Object... datos) {
-		Localizacion localizacion = null;
-		try {
+    /**
+     *
+     */
+    @Override
+    protected Localizacion doInBackground(Object... datos) {
+        Localizacion localizacion = null;
+        try {
 
-			String lat = (String) datos[0];
-			String lon = (String) datos[1];
+            String lat = (String) datos[0];
+            String lon = (String) datos[1];
 
             Context context = (Context) datos[2];
 
             localizacion = GeocoderInfo.getDatosLocalizacion(lat, lon, context);
 
 
+        } catch (Exception e) {
 
-		} catch (Exception e) {
+            e.printStackTrace();
 
-			e.printStackTrace();
+            return null;
 
-			return null;
+        }
 
-		}
+        return localizacion;
+    }
 
-		return localizacion;
-	}
+    /**
+     *
+     */
+    @Override
+    protected void onPostExecute(Localizacion result) {
+        if (responder != null) {
+            responder.LocationLoaded(result);
+        }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected void onPostExecute(Localizacion result) {
-		if (responder != null) {
-			responder.LocationLoaded(result);
-		}
-
-	}
+    }
 
 }

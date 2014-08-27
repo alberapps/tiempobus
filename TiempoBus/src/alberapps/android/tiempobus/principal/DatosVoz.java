@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,88 +21,83 @@ package alberapps.android.tiempobus.principal;
 
 /**
  * Datos para la gestion del reconocimiento de voz
- * 
- * 
  */
 public class DatosVoz {
 
-	private String resultado;
-	
-	private String descripcion;
+    private String resultado;
 
-	private boolean posibleParada;
-	
-	private boolean posibleFavorito;
-	
-	private String favoritoParada;
+    private String descripcion;
 
-	public String getResultado() {
-		return resultado;
-	}
+    private boolean posibleParada;
 
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
-	}
+    private boolean posibleFavorito;
 
-	public boolean isPosibleParada() {
-		return posibleParada;
-	}
+    private String favoritoParada;
 
-	public void setPosibleParada(boolean posibleParada) {
-		this.posibleParada = posibleParada;
-	}
+    public String getResultado() {
+        return resultado;
+    }
 
-	public boolean isPosibleFavorito() {
-		return posibleFavorito;
-	}
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
 
-	public void setPosibleFavorito(boolean posibleFavorito) {
-		this.posibleFavorito = posibleFavorito;
-	}
+    public boolean isPosibleParada() {
+        return posibleParada;
+    }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+    public void setPosibleParada(boolean posibleParada) {
+        this.posibleParada = posibleParada;
+    }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+    public boolean isPosibleFavorito() {
+        return posibleFavorito;
+    }
 
-	public String getFavoritoParada() {
-		return favoritoParada;
-	}
+    public void setPosibleFavorito(boolean posibleFavorito) {
+        this.posibleFavorito = posibleFavorito;
+    }
 
-	public void setFavoritoParada(String favoritoParada) {
-		this.favoritoParada = favoritoParada;
-	}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((resultado == null) ? 0 : resultado.hashCode());
-		return result;
-	}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		DatosVoz other = (DatosVoz) obj;
-		if (resultado == null) {
-			if (other.resultado != null)
-				return false;
-		} else if (!resultado.equals(other.resultado))
-			return false;
-		return true;
-	}
+    public String getFavoritoParada() {
+        return favoritoParada;
+    }
 
-	
+    public void setFavoritoParada(String favoritoParada) {
+        this.favoritoParada = favoritoParada;
+    }
 
-	
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((resultado == null) ? 0 : resultado.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        DatosVoz other = (DatosVoz) obj;
+        if (resultado == null) {
+            if (other.resultado != null)
+                return false;
+        } else if (!resultado.equals(other.resultado))
+            return false;
+        return true;
+    }
+
 
 }

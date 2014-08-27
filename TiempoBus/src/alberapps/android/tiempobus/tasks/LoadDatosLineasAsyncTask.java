@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,85 +17,57 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.lineas.ProcesarDatosLineasIsaeService;
-import android.os.AsyncTask;
 
 /**
  * Cargar informacion de las lineas
- * 
- * 
  */
 public class LoadDatosLineasAsyncTask extends AsyncTask<String, Void, ArrayList<BusLinea>> {
 
-	/**
-	 * Interfaz que deberin implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadDatosLineasAsyncTaskResponder {
-		public void busesLoaded(ArrayList<BusLinea> buses);
-	}
 
-	private LoadDatosLineasAsyncTaskResponder responder;
+    public interface LoadDatosLineasAsyncTaskResponder {
+        public void busesLoaded(ArrayList<BusLinea> buses);
+    }
 
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadDatosLineasAsyncTask(LoadDatosLineasAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    private LoadDatosLineasAsyncTaskResponder responder;
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected ArrayList<BusLinea> doInBackground(String... datos) {
-		ArrayList<BusLinea> lineasBus = null;
-		try {
 
-			String datosOffline = null;
+    public LoadDatosLineasAsyncTask(LoadDatosLineasAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-			if (datos != null && datos.length > 0 && datos[0] != null) {
-				datosOffline = datos[0];
-			}
 
-			// lineasBus = ProcesarLineasService.getLineasBus();
+    @Override
+    protected ArrayList<BusLinea> doInBackground(String... datos) {
+        ArrayList<BusLinea> lineasBus = null;
+        try {
 
-			lineasBus = ProcesarDatosLineasIsaeService.getLineasBus(datosOffline);
+            String datosOffline = null;
 
-			/*
-			 * lineasBus = new ArrayList<BusLinea>();
-			 * 
-			 * for (int i = 0; i < UtilidadesTAM.LINEAS_CODIGO_KML.length; i++)
-			 * {
-			 * 
-			 * lineasBus.add(new BusLinea(UtilidadesTAM.LINEAS_CODIGO_KML[i],
-			 * UtilidadesTAM.LINEAS_DESCRIPCION[i],
-			 * UtilidadesTAM.LINEAS_NUM[i]));
-			 * 
-			 * }
-			 */
+            if (datos != null && datos.length > 0 && datos[0] != null) {
+                datosOffline = datos[0];
+            }
 
-		} catch (Exception e) {
-			lineasBus = null;
-		}
+            lineasBus = ProcesarDatosLineasIsaeService.getLineasBus(datosOffline);
 
-		return lineasBus;
-	}
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(ArrayList<BusLinea> result) {
-		if (responder != null) {
-			responder.busesLoaded(result);
-		}
-	}
+        } catch (Exception e) {
+            lineasBus = null;
+        }
+
+        return lineasBus;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<BusLinea> result) {
+        if (responder != null) {
+            responder.busesLoaded(result);
+        }
+    }
 
 }

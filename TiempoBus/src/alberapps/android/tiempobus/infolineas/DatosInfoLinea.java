@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,56 +20,59 @@ package alberapps.android.tiempobus.infolineas;
 
 import alberapps.java.tam.mapas.DatosMapa;
 
+/**
+ * Datos para informacion de las lineas
+ */
 public class DatosInfoLinea {
 
-	private DatosMapa result;
-	
-	private DatosMapa resultIda;
+    private DatosMapa result;
 
-	private DatosMapa resultVuelta;
+    private DatosMapa resultIda;
 
-	private FragmentIda fIda;
+    private DatosMapa resultVuelta;
 
-	private String url;
+    private FragmentIda fIda;
 
-	public String getUrl() {
-		return url;
-	}
+    private String url;
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public FragmentIda getfIda() {
-		return fIda;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setfIda(FragmentIda fIda) {
-		this.fIda = fIda;
-	}
+    public FragmentIda getfIda() {
+        return fIda;
+    }
 
-	public DatosMapa getResultIda() {
-		return resultIda;
-	}
+    public void setfIda(FragmentIda fIda) {
+        this.fIda = fIda;
+    }
 
-	public void setResultIda(DatosMapa resultIda) {
-		this.resultIda = resultIda;
-	}
+    public DatosMapa getResultIda() {
+        return resultIda;
+    }
 
-	public DatosMapa getResultVuelta() {
-		return resultVuelta;
-	}
+    public void setResultIda(DatosMapa resultIda) {
+        this.resultIda = resultIda;
+    }
 
-	public void setResultVuelta(DatosMapa resultVuelta) {
-		this.resultVuelta = resultVuelta;
-	}
+    public DatosMapa getResultVuelta() {
+        return resultVuelta;
+    }
 
-	public DatosMapa getResult() {
-		return result;
-	}
+    public void setResultVuelta(DatosMapa resultVuelta) {
+        this.resultVuelta = resultVuelta;
+    }
 
-	public void setResult(DatosMapa result) {
-		this.result = result;
-	}
+    public DatosMapa getResult() {
+        return result;
+    }
+
+    public void setResult(DatosMapa result) {
+        this.result = result;
+    }
 
 }

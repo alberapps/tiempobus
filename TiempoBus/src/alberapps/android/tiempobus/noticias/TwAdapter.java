@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,13 +17,6 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import java.util.HashMap;
-import java.util.List;
-
-import alberapps.android.tiempobus.R;
-import alberapps.java.noticias.tw.ProcesarTwitter;
-import alberapps.java.noticias.tw.TwResultado;
-import alberapps.java.noticias.tw.tw4j.ProcesarTwitter4j;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -41,228 +32,227 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.List;
+
+import alberapps.android.tiempobus.R;
+import alberapps.java.noticias.tw.ProcesarTwitter;
+import alberapps.java.noticias.tw.TwResultado;
+import alberapps.java.noticias.tw.tw4j.ProcesarTwitter4j;
+
 /**
  * Datos lista de tw
- * 
  */
 public class TwAdapter extends ArrayAdapter<TwResultado> {
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 * @param textViewResourceId
-	 */
-	public TwAdapter(Context context, int textViewResourceId) {
-		super(context, textViewResourceId);
-	}
 
-	public HashMap<String, Bitmap> imagenesCache = new HashMap<String, Bitmap>();
+    public TwAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
+    }
 
-	/**
-	 * Genera la vista de cada uno de los items del listado
-	 */
-	public View getView(final int position, View v, ViewGroup parent) {
+    public HashMap<String, Bitmap> imagenesCache = new HashMap<String, Bitmap>();
 
-		ViewHolder holder = new ViewHolder();
 
-		if (v == null) {
-			Context ctx = getContext();
-			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public View getView(final int position, View v, ViewGroup parent) {
 
-			v = vi.inflate(R.layout.avisostw_item, null);
+        ViewHolder holder = new ViewHolder();
 
-			// holder.progress = (ProgressBar)
-			// convertView.findViewById(R.id.progress_spinner);
-			v.setTag(holder);
+        if (v == null) {
+            Context ctx = getContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		} else {
+            v = vi.inflate(R.layout.avisostw_item, null);
 
-			holder = (ViewHolder) v.getTag();
+            // holder.progress = (ProgressBar)
+            // convertView.findViewById(R.id.progress_spinner);
+            v.setTag(holder);
 
-		}
+        } else {
 
-		//Asignacion holder
-		holder.usuario = (TextView) v.findViewById(R.id.usuarioNombre);
-		holder.noticiaText = (TextView) v.findViewById(R.id.noticia);
-		holder.usuarioId = (TextView) v.findViewById(R.id.usuarioId);
-		holder.fecha = (TextView) v.findViewById(R.id.fecha);
-		holder.twwebText = (TextView) v.findViewById(R.id.tw_web);
-		holder.imagen = (ImageView) v.findViewById(R.id.imagenTw);
-		holder.imagen.setTag(getItem(position).getImagen());
-		holder.position = position;
-		holder.imagen.setVisibility(View.INVISIBLE);
-		holder.imagen.setImageBitmap(null);
-		
-		
+            holder = (ViewHolder) v.getTag();
 
-		if (this.getCount() > 0) {
-			final TwResultado tw = getItem(position);
-			if (tw != null) {
+        }
 
-				TextView usuario = holder.usuario;
-				TextView noticiaText = holder.noticiaText;
+        //Asignacion holder
+        holder.usuario = (TextView) v.findViewById(R.id.usuarioNombre);
+        holder.noticiaText = (TextView) v.findViewById(R.id.noticia);
+        holder.usuarioId = (TextView) v.findViewById(R.id.usuarioId);
+        holder.fecha = (TextView) v.findViewById(R.id.fecha);
+        holder.twwebText = (TextView) v.findViewById(R.id.tw_web);
+        holder.imagen = (ImageView) v.findViewById(R.id.imagenTw);
+        holder.imagen.setTag(getItem(position).getImagen());
+        holder.position = position;
+        holder.imagen.setVisibility(View.INVISIBLE);
+        holder.imagen.setImageBitmap(null);
 
-				ImageView imagen = holder.imagen;
 
-				// Link de la imagen de usuario
-				imagen.setOnClickListener(new OnClickListener() {
+        if (this.getCount() > 0) {
+            final TwResultado tw = getItem(position);
+            if (tw != null) {
 
-					public void onClick(View view) {
+                TextView usuario = holder.usuario;
+                TextView noticiaText = holder.noticiaText;
 
-						String url = tw.getUrl();
+                ImageView imagen = holder.imagen;
 
-						Intent i = new Intent(Intent.ACTION_VIEW);
+                // Link de la imagen de usuario
+                imagen.setOnClickListener(new OnClickListener() {
 
-						i.setData(Uri.parse(url));
-						getContext().startActivity(i);
+                    public void onClick(View view) {
 
-					}
+                        String url = tw.getUrl();
 
-				});
+                        Intent i = new Intent(Intent.ACTION_VIEW);
 
-				TextView usuarioId = holder.usuarioId;
-				TextView fecha = holder.fecha;
+                        i.setData(Uri.parse(url));
+                        getContext().startActivity(i);
 
-				usuario.setText(tw.getNombreCompleto());
-				noticiaText.setText(tw.getMensaje().trim());
-				usuarioId.setText(tw.getUsuario());
-				fecha.setText(tw.getFecha());
+                    }
 
-				if (tw.getImagen() != null) {
-					// imagen.setImageBitmap(tw.getImagenBitmap());
+                });
 
-					if (imagenesCache.containsKey((String) holder.imagen.getTag())) {
-						holder.imagen.setVisibility(View.VISIBLE);
-						holder.imagen.setImageBitmap(imagenesCache.get((String) holder.imagen.getTag()));
-					} else {
+                TextView usuarioId = holder.usuarioId;
+                TextView fecha = holder.fecha;
 
-						// Using an AsyncTask to load the slow images in a
-						// background thread
-						new AsyncTask<ViewHolder, Void, Bitmap>() {
-							private ViewHolder v;
+                usuario.setText(tw.getNombreCompleto());
+                noticiaText.setText(tw.getMensaje().trim());
+                usuarioId.setText(tw.getUsuario());
+                fecha.setText(tw.getFecha());
 
-							@Override
-							protected Bitmap doInBackground(ViewHolder... params) {
-								v = params[0];
+                if (tw.getImagen() != null) {
+                    // imagen.setImageBitmap(tw.getImagenBitmap());
 
-								Bitmap imagenRecuperada = null;
+                    if (imagenesCache.containsKey((String) holder.imagen.getTag())) {
+                        holder.imagen.setVisibility(View.VISIBLE);
+                        holder.imagen.setImageBitmap(imagenesCache.get((String) holder.imagen.getTag()));
+                    } else {
 
-								try {
-									imagenRecuperada = ProcesarTwitter4j.recuperaImagen((String) v.imagen.getTag());
+                        // Using an AsyncTask to load the slow images in a
+                        // background thread
+                        new AsyncTask<ViewHolder, Void, Bitmap>() {
+                            private ViewHolder v;
 
-									Log.d("Twitter2", "Imagen recuperada: " + v.imagen.getTag());
+                            @Override
+                            protected Bitmap doInBackground(ViewHolder... params) {
+                                v = params[0];
 
-								} catch (Exception e) {
-									return null;
-								}
+                                Bitmap imagenRecuperada = null;
 
-								return imagenRecuperada;
-							}
+                                try {
+                                    imagenRecuperada = ProcesarTwitter4j.recuperaImagen((String) v.imagen.getTag());
 
-							@Override
-							protected void onPostExecute(Bitmap result) {
-								super.onPostExecute(result);
-								if (v.position == position) {
-									// If this item hasn't been recycled
-									// already,
-									// hide the
-									// progress and set and show the image
-									// v.progress.setVisibility(View.GONE);
-									v.imagen.setVisibility(View.VISIBLE);
-									v.imagen.setImageBitmap(result);
+                                    Log.d("Twitter2", "Imagen recuperada: " + v.imagen.getTag());
 
-									imagenesCache.put((String) v.imagen.getTag(), result);
+                                } catch (Exception e) {
+                                    return null;
+                                }
 
-									Log.d("Twitter2", "Carga imagen");
+                                return imagenRecuperada;
+                            }
 
-								}
-							}
-						}.execute(holder);
+                            @Override
+                            protected void onPostExecute(Bitmap result) {
+                                super.onPostExecute(result);
+                                if (v.position == position) {
+                                    // If this item hasn't been recycled
+                                    // already,
+                                    // hide the
+                                    // progress and set and show the image
+                                    // v.progress.setVisibility(View.GONE);
+                                    v.imagen.setVisibility(View.VISIBLE);
+                                    v.imagen.setImageBitmap(result);
 
-					}
+                                    imagenesCache.put((String) v.imagen.getTag(), result);
 
-				}
+                                    Log.d("Twitter2", "Carga imagen");
 
-				// Link del nombre de usuario
-				usuario.setOnClickListener(new OnClickListener() {
+                                }
+                            }
+                        }.execute(holder);
 
-					public void onClick(View view) {
+                    }
 
-						String url = tw.getUrl();
+                }
 
-						Intent i = new Intent(Intent.ACTION_VIEW);
+                // Link del nombre de usuario
+                usuario.setOnClickListener(new OnClickListener() {
 
-						i.setData(Uri.parse(url));
-						getContext().startActivity(i);
+                    public void onClick(View view) {
 
-					}
+                        String url = tw.getUrl();
 
-				});
+                        Intent i = new Intent(Intent.ACTION_VIEW);
 
-				// Link del nombre de usuario
-				usuarioId.setOnClickListener(new OnClickListener() {
+                        i.setData(Uri.parse(url));
+                        getContext().startActivity(i);
 
-					public void onClick(View view) {
+                    }
 
-						String url = tw.getUrl();
+                });
 
-						Intent i = new Intent(Intent.ACTION_VIEW);
+                // Link del nombre de usuario
+                usuarioId.setOnClickListener(new OnClickListener() {
 
-						i.setData(Uri.parse(url));
-						getContext().startActivity(i);
+                    public void onClick(View view) {
 
-					}
+                        String url = tw.getUrl();
 
-				});
+                        Intent i = new Intent(Intent.ACTION_VIEW);
 
-				TextView twwebText = holder.twwebText;
+                        i.setData(Uri.parse(url));
+                        getContext().startActivity(i);
 
-				// Link de acceso a twitter
-				twwebText.setOnClickListener(new OnClickListener() {
+                    }
 
-					public void onClick(View view) {
+                });
 
-						String url = tw.getUrl() + ProcesarTwitter.TW_STATUS + tw.getId();
+                TextView twwebText = holder.twwebText;
 
-						Intent i = new Intent(Intent.ACTION_VIEW);
+                // Link de acceso a twitter
+                twwebText.setOnClickListener(new OnClickListener() {
 
-						i.setData(Uri.parse(url));
-						getContext().startActivity(i);
+                    public void onClick(View view) {
 
-					}
+                        String url = tw.getUrl() + ProcesarTwitter.TW_STATUS + tw.getId();
 
-				});
+                        Intent i = new Intent(Intent.ACTION_VIEW);
 
-			}
-		}
+                        i.setData(Uri.parse(url));
+                        getContext().startActivity(i);
 
-		return v;
-	}
+                    }
 
-	/**
-	 * Anade todas al adapter
-	 * 
-	 * @param tw
-	 */
-	public void addAll(List<TwResultado> tw) {
-		if (tw == null) {
-			return;
-		}
+                });
 
-		for (int i = 0; i < tw.size(); i++) {
-			add(tw.get(i));
-		}
-	}
+            }
+        }
 
-	private static class ViewHolder {
-		public TextView usuario;
-		public TextView noticiaText;
-		public TextView usuarioId;
-		public TextView fecha;
-		public TextView twwebText;
-		public ImageView imagen;
-		public ProgressBar progress;
-		public int position;
-	}
+        return v;
+    }
+
+    /**
+     * Todas
+     *
+     * @param tw
+     */
+    public void addAll(List<TwResultado> tw) {
+        if (tw == null) {
+            return;
+        }
+
+        for (int i = 0; i < tw.size(); i++) {
+            add(tw.get(i));
+        }
+    }
+
+    private static class ViewHolder {
+        public TextView usuario;
+        public TextView noticiaText;
+        public TextView usuarioId;
+        public TextView fecha;
+        public TextView twwebText;
+        public ImageView imagen;
+        public ProgressBar progress;
+        public int position;
+    }
 
 }

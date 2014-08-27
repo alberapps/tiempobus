@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,16 +18,6 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.jsoup.helper.StringUtil;
-
-import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.data.TiempoBusDb;
-import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -40,282 +30,290 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.widget.EditText;
 
+import org.jsoup.helper.StringUtil;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.data.TiempoBusDb;
+import alberapps.android.tiempobus.favoritos.FavoritosActivity;
+
 /**
  * Funciones de reconocimiento de voz
- * 
- * 
  */
 public class GestionarVoz {
 
-	/**
-	 * Cotexto principal
-	 */
-	private MainActivity context;
+    /**
+     * Cotexto principal
+     */
+    private MainActivity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	public static final int VOICE_REQUEST_CODE = 4000;
+    public static final int VOICE_REQUEST_CODE = 4000;
 
-	public GestionarVoz(MainActivity contexto, SharedPreferences preferencia) {
+    public GestionarVoz(MainActivity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	/**
-	 * Intent de reconocimiento de voz
-	 */
-	public boolean reconocerVoz() {
+    /**
+     * Intent de reconocimiento de voz
+     */
+    public boolean reconocerVoz() {
 
-		try {
+        try {
 
-			Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-			intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-			intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voz_texto));
-			intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
-			context.startActivityForResult(intent, VOICE_REQUEST_CODE);
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voz_texto));
+            intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+            context.startActivityForResult(intent, VOICE_REQUEST_CODE);
 
-		} catch (ActivityNotFoundException e) {
+        } catch (ActivityNotFoundException e) {
 
-			return false;
+            return false;
 
-		}
+        }
 
-		return true;
+        return true;
 
-	}
+    }
 
-	public boolean reconocimientoDisponible() {
+    public boolean reconocimientoDisponible() {
 
-		PackageManager manager = context.getPackageManager();
-		List<ResolveInfo> actividades = manager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        PackageManager manager = context.getPackageManager();
+        List<ResolveInfo> actividades = manager.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
 
-		if (actividades.size() == 0) {
+        if (actividades.size() == 0) {
 
-			Log.i("VOZ", "Reconocimiento no disponible");
+            Log.i("VOZ", "Reconocimiento no disponible");
 
-			return false;
+            return false;
 
-		}
+        }
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * Modal que muestra los posibles resultados del reconocimiento de voz
-	 * 
-	 */
-	public boolean seleccionarPosibleOpcion(ArrayList<String> resultados) {
+    /**
+     * Modal que muestra los posibles resultados del reconocimiento de voz
+     */
+    public boolean seleccionarPosibleOpcion(ArrayList<String> resultados) {
 
-		// Procesa los resultados
-		final List<DatosVoz> datosVoz = procesarResultados(resultados);
+        // Procesa los resultados
+        final List<DatosVoz> datosVoz = procesarResultados(resultados);
 
-		if (datosVoz == null || datosVoz.isEmpty()) {
-			return false;
-		}
+        if (datosVoz == null || datosVoz.isEmpty()) {
+            return false;
+        }
 
-		CharSequence[] items = datosAcaracter(datosVoz);
+        CharSequence[] items = datosAcaracter(datosVoz);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(R.string.reconocimiento_voz_titulo);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.reconocimiento_voz_titulo);
 
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int item) {
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
 
-				if (datosVoz.get(item).isPosibleParada()) {
+                if (datosVoz.get(item).isPosibleParada()) {
 
-					context.paradaActual = Integer.parseInt(datosVoz.get(item).getResultado());
+                    context.paradaActual = Integer.parseInt(datosVoz.get(item).getResultado());
 
-					// Poner en campo de poste
-					EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
-					txtPoste.setText(Integer.toString(context.paradaActual));
+                    // Poner en campo de poste
+                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    txtPoste.setText(Integer.toString(context.paradaActual));
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putInt("parada_inicio", context.paradaActual);
-					editor.commit();
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("parada_inicio", context.paradaActual);
+                    editor.commit();
 
-					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+                    context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 
-				} else if (datosVoz.get(item).getFavoritoParada() != null) {
+                } else if (datosVoz.get(item).getFavoritoParada() != null) {
 
-					context.paradaActual = Integer.parseInt(datosVoz.get(item).getFavoritoParada());
+                    context.paradaActual = Integer.parseInt(datosVoz.get(item).getFavoritoParada());
 
-					// Poner en campo de poste
-					EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
-					txtPoste.setText(Integer.toString(context.paradaActual));
+                    // Poner en campo de poste
+                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    txtPoste.setText(Integer.toString(context.paradaActual));
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putInt("parada_inicio", context.paradaActual);
-					editor.commit();
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("parada_inicio", context.paradaActual);
+                    editor.commit();
 
-					context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+                    context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 
-				}
+                }
 
-			}
-		});
+            }
+        });
 
-		AlertDialog alert = builder.create();
+        AlertDialog alert = builder.create();
 
-		alert.show();
+        alert.show();
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * Para obtener posibles paradas y o favoritos
-	 * 
-	 * @param resultados
-	 * @return lista
-	 */
-	private List<DatosVoz> procesarResultados(ArrayList<String> resultados) {
+    /**
+     * Para obtener posibles paradas y o favoritos
+     *
+     * @param resultados
+     * @return lista
+     */
+    private List<DatosVoz> procesarResultados(ArrayList<String> resultados) {
 
-		HashMap<String, String> datosFav = cargarDatosFavoritos();
+        HashMap<String, String> datosFav = cargarDatosFavoritos();
 
-		List<DatosVoz> datosVoz = new ArrayList<DatosVoz>();
+        List<DatosVoz> datosVoz = new ArrayList<DatosVoz>();
 
-		DatosVoz dato = null;
+        DatosVoz dato = null;
 
-		for (int i = 0; i < resultados.size(); i++) {
+        for (int i = 0; i < resultados.size(); i++) {
 
-			dato = null;
+            dato = null;
 
-			// Quitar espacios en blanco
-			String resultadoParada = resultados.get(i).trim().replaceAll(" ", "");
-			String resultadoFavorito = resultados.get(i).trim();
+            // Quitar espacios en blanco
+            String resultadoParada = resultados.get(i).trim().replaceAll(" ", "");
+            String resultadoFavorito = resultados.get(i).trim();
 
-			DatosVoz buscar = new DatosVoz();
-			buscar.setResultado(resultadoParada);
+            DatosVoz buscar = new DatosVoz();
+            buscar.setResultado(resultadoParada);
 
-			if (datosVoz.contains(buscar)) {
-				continue;
-			}
+            if (datosVoz.contains(buscar)) {
+                continue;
+            }
 
-			if (!resultadoParada.equals("") && resultadoParada.length() <= 4 && StringUtil.isNumeric(resultadoParada)) {
+            if (!resultadoParada.equals("") && resultadoParada.length() <= 4 && StringUtil.isNumeric(resultadoParada)) {
 
-				// Posible parada o tambien posible favorito
+                // Posible parada o tambien posible favorito
 
-				dato = new DatosVoz();
-				dato.setResultado(resultadoParada);
-				dato.setPosibleParada(true);
-				dato.setPosibleFavorito(false);
-				dato.setDescripcion("Parada: " + resultadoParada);
+                dato = new DatosVoz();
+                dato.setResultado(resultadoParada);
+                dato.setPosibleParada(true);
+                dato.setPosibleFavorito(false);
+                dato.setDescripcion("Parada: " + resultadoParada);
 
-				datosVoz.add(dato);
+                datosVoz.add(dato);
 
-				// Posible favorito?
+                // Posible favorito?
 
-				String parada = existeFavorito(resultadoParada, datosFav);
+                String parada = existeFavorito(resultadoParada, datosFav);
 
-				if (parada != null) {
+                if (parada != null) {
 
-					dato = new DatosVoz();
-					dato.setResultado(resultadoParada);
-					dato.setPosibleParada(false);
-					dato.setPosibleFavorito(true);
-					dato.setDescripcion("Favorito: " + resultadoParada + " (" + parada + ")");
-					dato.setFavoritoParada(parada);
+                    dato = new DatosVoz();
+                    dato.setResultado(resultadoParada);
+                    dato.setPosibleParada(false);
+                    dato.setPosibleFavorito(true);
+                    dato.setDescripcion("Favorito: " + resultadoParada + " (" + parada + ")");
+                    dato.setFavoritoParada(parada);
 
-					datosVoz.add(dato);
+                    datosVoz.add(dato);
 
-				}
+                }
 
-			} else if (!resultadoFavorito.equals("")) {
+            } else if (!resultadoFavorito.equals("")) {
 
-				// Posible favorito?
+                // Posible favorito?
 
-				String parada = existeFavorito(resultadoFavorito, datosFav);
+                String parada = existeFavorito(resultadoFavorito, datosFav);
 
-				if (parada != null) {
+                if (parada != null) {
 
-					dato = new DatosVoz();
+                    dato = new DatosVoz();
 
-					dato.setResultado(resultadoFavorito);
-					dato.setPosibleParada(false);
-					dato.setPosibleFavorito(true);
-					dato.setDescripcion("Favorito: " + resultadoFavorito + " (" + parada + ")");
-					dato.setFavoritoParada(parada);
+                    dato.setResultado(resultadoFavorito);
+                    dato.setPosibleParada(false);
+                    dato.setPosibleFavorito(true);
+                    dato.setDescripcion("Favorito: " + resultadoFavorito + " (" + parada + ")");
+                    dato.setFavoritoParada(parada);
 
-					datosVoz.add(dato);
+                    datosVoz.add(dato);
 
-				}
+                }
 
-			}
+            }
 
-		}
+        }
 
-		return datosVoz;
+        return datosVoz;
 
-	}
+    }
 
-	/**
-	 * charsecquence para el listado
-	 * 
-	 * @param datosVoz
-	 * @return datos
-	 */
-	private CharSequence[] datosAcaracter(List<DatosVoz> datosVoz) {
+    /**
+     * charsecquence para el listado
+     *
+     * @param datosVoz
+     * @return datos
+     */
+    private CharSequence[] datosAcaracter(List<DatosVoz> datosVoz) {
 
-		CharSequence[] items = new CharSequence[datosVoz.size()];
+        CharSequence[] items = new CharSequence[datosVoz.size()];
 
-		for (int i = 0; i < datosVoz.size(); i++) {
+        for (int i = 0; i < datosVoz.size(); i++) {
 
-			items[i] = datosVoz.get(i).getDescripcion();
+            items[i] = datosVoz.get(i).getDescripcion();
 
-		}
+        }
 
-		return items;
-	}
+        return items;
+    }
 
-	/**
-	 * Es un posible vavorito? Si lo es devuelve la parada que le corresponderia
-	 * 
-	 * @param dato
-	 * @param datosFav
-	 * @return parada
-	 */
-	private String existeFavorito(String dato, HashMap<String, String> datosFav) {
+    /**
+     * Es un posible vavorito? Si lo es devuelve la parada que le corresponderia
+     *
+     * @param dato
+     * @param datosFav
+     * @return parada
+     */
+    private String existeFavorito(String dato, HashMap<String, String> datosFav) {
 
-		if (datosFav.containsKey(dato)) {
+        if (datosFav.containsKey(dato)) {
 
-			return datosFav.get(dato);
+            return datosFav.get(dato);
 
-		} else {
-			return null;
-		}
+        } else {
+            return null;
+        }
 
-	}
+    }
 
-	/**
-	 * Carga los favoritos en un hashmap
-	 * 
-	 * @return hashmap
-	 */
-	private HashMap<String, String> cargarDatosFavoritos() {
+    /**
+     * Carga los favoritos en un hashmap
+     *
+     * @return hashmap
+     */
+    private HashMap<String, String> cargarDatosFavoritos() {
 
-		try {
-			HashMap<String, String> datosFav = new HashMap<String, String>();
+        try {
+            HashMap<String, String> datosFav = new HashMap<String, String>();
 
-			Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
 
-			if (cursor != null) {
+            if (cursor != null) {
 
-				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-					datosFav.put(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)), cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
-				}
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                    datosFav.put(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)), cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
+                }
 
-			}
+            }
 
-			return datosFav;
+            return datosFav;
 
-		} catch (Exception e) {
-			return null;
-		}
+        } catch (Exception e) {
+            return null;
+        }
 
-	}
+    }
 
 }

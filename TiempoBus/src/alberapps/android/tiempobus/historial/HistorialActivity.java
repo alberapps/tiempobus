@@ -1,8 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +18,6 @@
  */
 package alberapps.android.tiempobus.historial;
 
-import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +40,8 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
@@ -49,88 +49,87 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Historial
- * 
  */
-@SuppressLint("NewApi")
+
 public class HistorialActivity extends ActionBarActivity {
 
-	public static final String[] PROJECTION = new String[] { HistorialDB.Historial._ID, // 0
-			HistorialDB.Historial.PARADA, // 1
-			HistorialDB.Historial.TITULO, // 2
-			HistorialDB.Historial.DESCRIPCION, // 3
-			HistorialDB.Historial.FECHA, // 4
-	};
+    public static final String[] PROJECTION = new String[]{HistorialDB.Historial._ID, // 0
+            HistorialDB.Historial.PARADA, // 1
+            HistorialDB.Historial.TITULO, // 2
+            HistorialDB.Historial.DESCRIPCION, // 3
+            HistorialDB.Historial.FECHA, // 4
+    };
 
-	private static final int MENU_BORRAR = 2;
+    private static final int MENU_BORRAR = 2;
 
-	private ListView favoritosView;
+    private ListView favoritosView;
 
-	SimpleCursorAdapter adapter;
+    SimpleCursorAdapter adapter;
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	String orden = "";
+    String orden = "";
 
-	// private ProgressDialog dialog;
+    // private ProgressDialog dialog;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-
-			ActionBar actionBar = getSupportActionBar();
-			if(actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
 
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
-		setContentView(R.layout.favoritos);
-		// setTitle(R.string.tit_favoritos);
 
-		// Fondo
-		setupFondoAplicacion();
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-		// Orden de historico
-		orden = HistorialDB.Historial.DEFAULT_SORT_ORDER;
-		consultarDatos(orden);
+        setContentView(R.layout.favoritos);
 
-	}
 
-	/**
-	 * Consulta de datos de historial
-	 * 
-	 * @param orden
-	 */
-	private void consultarDatos(String orden) {
+        // Fondo
+        setupFondoAplicacion();
+
+        // Orden de historico
+        orden = HistorialDB.Historial.DEFAULT_SORT_ORDER;
+        consultarDatos(orden);
+
+    }
+
+    /**
+     * Consulta de datos de historial
+     *
+     * @param orden
+     */
+    private void consultarDatos(String orden) {
 
 		/*
-		 * Si no ha sido cargado con anterioridad, cargamos nuestro
+         * Si no ha sido cargado con anterioridad, cargamos nuestro
 		 * "content provider"
 		 */
-		Intent intent = getIntent();
-		if (intent.getData() == null) {
-			intent.setData(HistorialDB.Historial.CONTENT_URI);
-		}
+        Intent intent = getIntent();
+        if (intent.getData() == null) {
+            intent.setData(HistorialDB.Historial.CONTENT_URI);
+        }
 
 		/*
 		 * Query "managed": la actividad se encargará de cerrar y volver a
 		 * cargar el cursor cuando sea necesario
 		 */
-		Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+        Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
 
 		/*
 		 * Mapeamos las querys SQL a los campos de las vistas
 		 */
-		String[] camposDb = new String[] { HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION };
-		int[] camposView = new int[] { R.id.poste, R.id.titulo, R.id.descripcion };
+        String[] camposDb = new String[]{HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION};
+        int[] camposView = new int[]{R.id.poste, R.id.titulo, R.id.descripcion};
 
-		adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
+        adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
 
 
 
@@ -138,149 +137,146 @@ public class HistorialActivity extends ActionBarActivity {
 		 * Preparamos las acciones a realizar cuando pulsen un favorito
 		 */
 
-		favoritosView = (ListView) findViewById(android.R.id.list);
+        favoritosView = (ListView) findViewById(android.R.id.list);
 
         favoritosView.setAdapter(adapter);
 
 
-		favoritosView.setOnItemClickListener(favoritoClickedHandler);
-		registerForContextMenu(favoritosView);
+        favoritosView.setOnItemClickListener(favoritoClickedHandler);
+        registerForContextMenu(favoritosView);
 
-	}
+    }
 
-	/**
-	 * Si no hay favoritos cerramos la actividad
-	 */
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    /**
+     * Si no hay favoritos cerramos la actividad
+     */
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-	}
+    }
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener favoritoClickedHandler = new OnItemClickListener() {
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener favoritoClickedHandler = new OnItemClickListener() {
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-			Cursor c = (Cursor) l.getItemAtPosition(position);
-			int poste = c.getInt(c.getColumnIndex(HistorialDB.Historial.PARADA));
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+            Cursor c = (Cursor) l.getItemAtPosition(position);
+            int poste = c.getInt(c.getColumnIndex(HistorialDB.Historial.PARADA));
 
-			Intent intent = new Intent();
-			Bundle b = new Bundle();
-			b.putInt("POSTE", poste);
-			intent.putExtras(b);
-			setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
-			finish();
+            Intent intent = new Intent();
+            Bundle b = new Bundle();
+            b.putInt("POSTE", poste);
+            intent.putExtras(b);
+            setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+            finish();
 
-		}
-	};
+        }
+    };
 
-	/**
-	 * Menu contextual
-	 */
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+    /**
+     * Menu contextual
+     */
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 
-		menu.setHeaderTitle(R.string.menu_contextual);
+        menu.setHeaderTitle(R.string.menu_contextual);
 
-		menu.add(0, MENU_BORRAR, 0, getResources().getText(R.string.menu_borrar));
+        menu.add(0, MENU_BORRAR, 0, getResources().getText(R.string.menu_borrar));
 
-	}
+    }
 
-	/**
-	 * Gestionamos la pulsacion de un menu contextual
-	 */
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    /**
+     * Gestionamos la pulsacion de un menu contextual
+     */
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
-		switch (item.getItemId()) {
-		case MENU_BORRAR:
-			Uri miUri = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, info.id);
+        switch (item.getItemId()) {
+            case MENU_BORRAR:
+                Uri miUri = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, info.id);
 
-			getContentResolver().delete(miUri, null, null);
+                getContentResolver().delete(miUri, null, null);
 
-			Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 
-			return true;
+                return true;
 
-		default:
-			// return super.onContextItemSelected(item);
-		}
-		return false;
-	}
+            default:
+                // return super.onContextItemSelected(item);
+        }
+        return false;
+    }
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+        String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		View contenedor_principal = findViewById(R.id.contenedor_favoritos);
+        View contenedor_principal = findViewById(R.id.contenedor_favoritos);
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.historial, menu);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.historial, menu);
 
-		return super.onCreateOptionsMenu(menu);
-	}
+        return super.onCreateOptionsMenu(menu);
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-		switch (item.getItemId()) {
-		case R.id.menu_hist_borrar:
+        switch (item.getItemId()) {
+            case R.id.menu_hist_borrar:
 
-			getContentResolver().delete(HistorialDB.Historial.CONTENT_URI, null, null);
+                getContentResolver().delete(HistorialDB.Historial.CONTENT_URI, null, null);
 
-			Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 
-			break;
+                break;
 
 
+        }
 
-		}
+        return super.onOptionsItemSelected(item);
+    }
 
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    protected void onStart() {
 
-	@Override
-	protected void onStart() {
+        super.onStart();
 
-		super.onStart();
-/*
-		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStart(this);
-		}
-*/
-	}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
+    }
 
-	@Override
-	protected void onStop() {
+    @Override
+    protected void onStop() {
 
-		super.onStop();
-/*
-		if (preferencias.getBoolean("analytics_on", true)) {
-			EasyTracker.getInstance(this).activityStop(this);
-		}
-*/
-	}
+        super.onStop();
+
+        if (preferencias.getBoolean("analytics_on", true)) {
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
+    }
 
 }

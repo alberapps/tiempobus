@@ -61,6 +61,14 @@ public class UtilidadesUI {
         return inSampleSize;
     }
 
+    /**
+     * Obtener bitmap de fichero
+     *
+     * @param res
+     * @param reqWidth
+     * @param reqHeight
+     * @return
+     */
     public static Bitmap decodeBitmapFromFile(String res, int reqWidth, int reqHeight) {
 
         // First decode with inJustDecodeBounds=true to check dimensions
@@ -76,6 +84,13 @@ public class UtilidadesUI {
         return BitmapFactory.decodeFile(res, options);
     }
 
+    /**
+     * Fondo desde la galeria
+     *
+     * @param fondoGaleria
+     * @param contenedorPrincipal
+     * @param actividad
+     */
     public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
 
         if (!fondoGaleria.equals("")) {

@@ -17,91 +17,86 @@
  */
 package alberapps.android.tiempobus.tasks;
 
-import alberapps.java.actualizador.DescargarActualizaBD;
-import alberapps.java.weather.ProcesarDatosWeatherService;
-import alberapps.java.weather.WeatherQuery;
 import android.os.AsyncTask;
+
+import alberapps.java.actualizador.DescargarActualizaBD;
 
 /**
  * Tarea asincrona para recuperar informacion de wikipedia
- * 
- * 
  */
 public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, String> {
 
-	/**
-	 * 
-	 *
-	 */
-	public interface LoadActualizarBDAsyncTaskResponder {
-		public void ActualizarBDLoaded(String resultado);
-	}
+    /**
+     *
+     *
+     */
+    public interface LoadActualizarBDAsyncTaskResponder {
+        public void ActualizarBDLoaded(String resultado);
+    }
 
-	private LoadActualizarBDAsyncTaskResponder responder;
+    private LoadActualizarBDAsyncTaskResponder responder;
 
-	/**
-	 * 
-	 * 
-	 * @param responder
-	 */
-	public ActualizarBDAsyncTask(LoadActualizarBDAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    /**
+     * @param responder
+     */
+    public ActualizarBDAsyncTask(LoadActualizarBDAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected String doInBackground(Object... datos) {
+    /**
+     *
+     */
+    @Override
+    protected String doInBackground(Object... datos) {
 
-		String respuesta = "false";
+        String respuesta = "false";
 
-		boolean control = true;
+        boolean control = true;
 
-		if (datos != null && datos.length > 0 && datos[0] != null && ((Boolean) datos[0]).equals(true)) {
+        if (datos != null && datos.length > 0 && datos[0] != null && ((Boolean) datos[0]).equals(true)) {
 
-			control = true;
+            control = true;
 
-		} else {
-			control = false;
-		}
+        } else {
+            control = false;
+        }
 
-		try {
+        try {
 
-			if (control) {
+            if (control) {
 
-				respuesta = DescargarActualizaBD.controlActualizacion();
+                respuesta = DescargarActualizaBD.controlActualizacion();
 
-			} else {
+            } else {
 
-				if (DescargarActualizaBD.iniciarActualizacion()) {
-					respuesta = "true";
-				} else {
-					respuesta = "false";
-				}
+                if (DescargarActualizaBD.iniciarActualizacion()) {
+                    respuesta = "true";
+                } else {
+                    respuesta = "false";
+                }
 
-			}
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			respuesta = "false";
+            respuesta = "false";
 
-		}
+        }
 
-		return respuesta;
-	}
+        return respuesta;
+    }
 
-	/**
-	 * 
-	 */
-	@Override
-	protected void onPostExecute(String result) {
-		if (responder != null) {
-			responder.ActualizarBDLoaded(result);
-		}
+    /**
+     *
+     */
+    @Override
+    protected void onPostExecute(String result) {
+        if (responder != null) {
+            responder.ActualizarBDLoaded(result);
+        }
 
-	}
+    }
 
 }

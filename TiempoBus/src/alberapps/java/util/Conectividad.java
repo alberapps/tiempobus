@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,430 +53,445 @@ import alberapps.android.tiempobus.util.Comunes;
 
 /**
  * Acceso a la red. Conexiones para distintas versiones de Android
- * 
  */
 public class Conectividad {
 
-	public static final String USER_AGENT = "TiempoBus/3.1.4 (http://alberapps.blogspot.com; alberapps@gmail.com)";
+    public static final String USER_AGENT = "TiempoBus/3.1.4 (http://alberapps.blogspot.com; alberapps@gmail.com)";
 
-	/**
-	 * Conexion con post y codificacion UTF-8
-	 * 
-	 * Sin cache
-	 * 
-	 * @param urlPost
-	 * @param post
-	 * @return
-	 */
-	public static String conexionPostUtf8(String urlPost, String post) {
+    /**
+     * Conexion con post y codificacion UTF-8
+     * <p/>
+     * Sin cache
+     *
+     * @param urlPost
+     * @param post
+     * @return
+     */
+    public static String conexionPostUtf8(String urlPost, String post) throws Exception {
 
-		// Para Froyo
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+        // Para Froyo
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
-			return conexionPostUtf8Froyo(urlPost, post);
+            return conexionPostUtf8Froyo(urlPost, post);
 
-		}
+        }
 
-		// Abrir Conexion
-		HttpURLConnection urlConnection = null;
+        // Abrir Conexion
+        HttpURLConnection urlConnection = null;
 
-		String datos = null;
+        String datos = null;
 
-		try {
+        try {
 
-			// Crear url
-			URL url = new URL(urlPost);
+            // Crear url
+            URL url = new URL(urlPost);
 
-			urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
 
-			urlConnection.setDoOutput(true);
-			// urlConnection.setChunkedStreamingMode(0);
-			urlConnection.setFixedLengthStreamingMode(post.length());
+            urlConnection.setDoOutput(true);
+            // urlConnection.setChunkedStreamingMode(0);
+            urlConnection.setFixedLengthStreamingMode(post.length());
 
-			urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-			urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
-			urlConnection.setRequestMethod("POST");
-			urlConnection.setDoInput(true);
+            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
 
             urlConnection.setRequestProperty("User-Agent", USER_AGENT);
 
-			urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+            urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-			urlConnection.addRequestProperty("Cache-Control", "no-cache");
+            urlConnection.addRequestProperty("Cache-Control", "no-cache");
 
-			OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-			Utilidades.writeIt(out, post);
+            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+            Utilidades.writeIt(out, post);
 
-			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-			datos = Utilidades.obtenerStringDeStreamUTF8(in);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (urlConnection != null) {
-				urlConnection.disconnect();
-			}
-		}
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            datos = Utilidades.obtenerStringDeStreamUTF8(in);
+        } catch (IOException e) {
 
-		return datos;
+            e.printStackTrace();
 
-	}
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
 
-	/**
-	 * Conexion con get y codificacion ISO
-	 * 
-	 * @param urlGet
-	 * @param usarCache
-	 * @return string
-	 */
-	public static String conexionGetIso(String urlGet, boolean usarCache, boolean userAgent, boolean utf8) {
+            throw new Exception("Error al acceder al servicio");
 
-		// Para Froyo
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
 
-			return conexionGetIsoFroyo(urlGet, userAgent);
+        return datos;
 
-		}
-
-		// Abrir Conexion
-		HttpURLConnection urlConnection = null;
-
-		String datos = null;
-
-		try {
-
-			// Crear url
-			URL url = new URL(urlGet);
-
-			urlConnection = (HttpURLConnection) url.openConnection();
-
-			urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-			urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
-
-			urlConnection.setRequestMethod("GET");
-			urlConnection.setDoInput(true);
-
-			//if (userAgent) {
-			urlConnection.setRequestProperty("User-Agent", USER_AGENT);
-			//}
-
-			if (!usarCache) {
-				urlConnection.addRequestProperty("Cache-Control", "no-cache");
-				Log.d("CONEXION", "Sin cache");
-			} else {
-				Log.d("CONEXION", "Con cache");
-			}
-
-			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-			if (utf8) {
-				datos = Utilidades.obtenerStringDeStreamUTF8(in);
-			} else {
-				datos = Utilidades.obtenerStringDeStream(in);
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (urlConnection != null) {
-				urlConnection.disconnect();
-			}
-		}
-
-		return datos;
-
-	}
-
-	/**
-	 * Devuelve inputstream
-	 * 
-	 * @param urlGet
-	 * @return stream
-	 */
-	public static InputStream conexionGetIsoStream(String urlGet) {
-
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, false));
-
-	}
+    }
 
     /**
+     * Conexion con get y codificacion ISO
      *
+     * @param urlGet
+     * @param usarCache
+     * @return string
+     */
+    public static String conexionGetIso(String urlGet, boolean usarCache, boolean userAgent, boolean utf8) throws Exception {
+
+        // Para Froyo
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+
+            return conexionGetIsoFroyo(urlGet, userAgent);
+
+        }
+
+        // Abrir Conexion
+        HttpURLConnection urlConnection = null;
+
+        String datos = null;
+
+        try {
+
+            // Crear url
+            URL url = new URL(urlGet);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            //if (userAgent) {
+            urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+            //}
+
+            if (!usarCache) {
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                Log.d("CONEXION", "Sin cache");
+            } else {
+                Log.d("CONEXION", "Con cache");
+            }
+
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+
+            if (utf8) {
+                datos = Utilidades.obtenerStringDeStreamUTF8(in);
+            } else {
+                datos = Utilidades.obtenerStringDeStream(in);
+            }
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            throw new Exception("Error al acceder al servicio");
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+
+        return datos;
+
+    }
+
+    /**
+     * Devuelve inputstream
+     *
+     * @param urlGet
+     * @return stream
+     */
+    public static InputStream conexionGetIsoStream(String urlGet) throws Exception {
+
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, false));
+
+    }
+
+    /**
      * @param urlGet
      * @return
      */
-    public static String conexionGetIsoString(String urlGet) {
+    public static String conexionGetIsoString(String urlGet) throws Exception {
 
         return conexionGetIso(urlGet, true, false, false);
 
     }
 
 
-	public static InputStream conexionGetUtf8Stream(String urlGet) {
+    public static InputStream conexionGetUtf8Stream(String urlGet) throws Exception {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
 
-	}
+    }
 
     /**
-     *
      * @param urlGet
      * @return
      */
-    public static String conexionGetUtf8String(String urlGet) {
+    public static String conexionGetUtf8String(String urlGet) throws Exception {
 
         return conexionGetIso(urlGet, true, false, true);
 
     }
 
-	/**
-	 * Conexion indicando si hay que usar cache
-	 * 
-	 * @param urlGet
-	 * @param usarCache
-	 * @return stream
-	 */
-	public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, Boolean userAgent) {
+    /**
+     * Conexion indicando si hay que usar cache
+     *
+     * @param urlGet
+     * @param usarCache
+     * @return stream
+     */
+    public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, Boolean userAgent) throws Exception {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
 
-	}
-
-
+    }
 
 
-	/**
-	 * Devuelve inputstream sin usar cache en conexion
-	 * 
-	 * @param urlGet
-	 * @return stream
-	 */
-	public static InputStream conexionGetIsoStreamNoCache(String urlGet) {
+    /**
+     * Devuelve inputstream sin usar cache en conexion
+     *
+     * @param urlGet
+     * @return stream
+     */
+    public static InputStream conexionGetIsoStreamNoCache(String urlGet) throws Exception {
 
-		return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, false, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, false, false));
 
-	}
+    }
 
-	/**
-	 * Conexion sencilla con urlconnection
-	 * 
-	 * @param urlEntrada
-	 * @return stream
-	 */
-	public static InputStream recuperarStreamConexionSimple(String urlEntrada) {
+    /**
+     * Conexion sencilla con urlconnection
+     *
+     * @param urlEntrada
+     * @return stream
+     */
+    public static InputStream recuperarStreamConexionSimple(String urlEntrada) throws Exception {
 
-		InputStream is = null;
+        InputStream is = null;
 
-		try {
+        try {
 
-			URL url = new URL(urlEntrada);
+            URL url = new URL(urlEntrada);
 
-			URLConnection con = url.openConnection();
+            URLConnection con = url.openConnection();
 
-			// timeout
-			con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
-			con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            // timeout
+            con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
+            con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
 
-			is = con.getInputStream();
+            is = con.getInputStream();
 
-		} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			e.printStackTrace();
-		}
+            e.printStackTrace();
 
-		return is;
+            throw new Exception("Error al acceder al servicio");
 
-	}
+        }
 
-	/**
-	 * Conexion con Apache para Froyo
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String conexionGetIsoFroyo(String url, boolean userAgent) {
+        return is;
 
-		HttpGet request = new HttpGet(url);
+    }
 
-		try {
+    /**
+     * Conexion con Apache para Froyo
+     *
+     * @param url
+     * @return
+     */
+    public static String conexionGetIsoFroyo(String url, boolean userAgent) throws Exception {
 
-			// Timeout para establecer conexion
-			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
-			HttpParams httpParam = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+        HttpGet request = new HttpGet(url);
 
-			// Timeout para recibir datos
-			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
-			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+        try {
 
-			//if (userAgent) {
-			request.setHeader("User-Agent", USER_AGENT);
-			//}
+            // Timeout para establecer conexion
+            int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+            HttpParams httpParam = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
-			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+            // Timeout para recibir datos
+            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
-			HttpResponse response = client.execute(request);
+            //if (userAgent) {
+            request.setHeader("User-Agent", USER_AGENT);
+            //}
 
-			final int statusCode = response.getStatusLine().getStatusCode();
+            DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
-			if (statusCode != HttpStatus.SC_OK) {
+            HttpResponse response = client.execute(request);
 
-				return null;
-			}
+            final int statusCode = response.getStatusLine().getStatusCode();
 
-			HttpEntity responseEntity = response.getEntity();
+            if (statusCode != HttpStatus.SC_OK) {
 
-			return EntityUtils.toString(responseEntity, HTTP.ISO_8859_1);
+                return null;
+            }
 
-		} catch (IOException e) {
-			request.abort();
+            HttpEntity responseEntity = response.getEntity();
 
-		}
+            return EntityUtils.toString(responseEntity, HTTP.ISO_8859_1);
 
-		return null;
+        } catch (IOException e) {
+            request.abort();
 
-	}
+            throw new Exception("Error al acceder al servicio");
+        }
 
-	/**
-	 * Conexion con Apache para Froyo
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String conexionPostUtf8Froyo(String url, String post) {
+        //return null;
 
-		HttpPost request = new HttpPost(url);
+    }
 
-		try {
+    /**
+     * Conexion con Apache para Froyo
+     *
+     * @param url
+     * @return
+     */
+    public static String conexionPostUtf8Froyo(String url, String post) throws Exception {
 
-			// Timeout para establecer conexion
-			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
-			HttpParams httpParam = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+        HttpPost request = new HttpPost(url);
 
-			// Timeout para recibir datos
-			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
-			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+        try {
+
+            // Timeout para establecer conexion
+            int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+            HttpParams httpParam = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+
+            // Timeout para recibir datos
+            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
             request.setHeader("User-Agent", USER_AGENT);
 
-			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+            DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
-			// Datos
-			StringEntity ent = new StringEntity(post, HTTP.UTF_8);
-			ent.setContentType("text/xml; charset=utf-8");
+            // Datos
+            StringEntity ent = new StringEntity(post, HTTP.UTF_8);
+            ent.setContentType("text/xml; charset=utf-8");
 
-			request.setEntity(ent);
+            request.setEntity(ent);
 
-			HttpResponse response = client.execute(request);
+            HttpResponse response = client.execute(request);
 
-			final int statusCode = response.getStatusLine().getStatusCode();
+            final int statusCode = response.getStatusLine().getStatusCode();
 
-			if (statusCode != HttpStatus.SC_OK) {
+            if (statusCode != HttpStatus.SC_OK) {
 
-				return null;
-			}
+                return null;
+            }
 
-			HttpEntity responseEntity = response.getEntity();
+            HttpEntity responseEntity = response.getEntity();
 
-			return EntityUtils.toString(responseEntity, HTTP.UTF_8);
+            return EntityUtils.toString(responseEntity, HTTP.UTF_8);
 
-		} catch (IOException e) {
-			request.abort();
+        } catch (IOException e) {
+            request.abort();
 
-		}
+            throw new Exception("Error al acceder al servicio");
 
-		return null;
+        }
 
-	}
+        //return null;
 
-	/**
-	 * Activar el uso de cache si la plataforma lo permite
-	 * 
-	 * @param context
-	 */
-	@SuppressLint("NewApi")
-	public static void activarCache(Context context, SharedPreferences preferencias) {
+    }
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+    /**
+     * Activar el uso de cache si la plataforma lo permite
+     *
+     * @param context
+     */
+    @SuppressLint("NewApi")
+    public static void activarCache(Context context, SharedPreferences preferencias) {
 
-			boolean cacheActiva = preferencias.getBoolean("conectividad_cache", true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-			boolean cacheEliminada = preferencias.getBoolean("conectividad_cache_eliminada", false);
+            boolean cacheActiva = preferencias.getBoolean("conectividad_cache", true);
 
-			if (cacheActiva) {
+            boolean cacheEliminada = preferencias.getBoolean("conectividad_cache_eliminada", false);
 
-				// Activar la cache
+            if (cacheActiva) {
 
-				try {
-					File httpCacheDir = new File(context.getCacheDir(), "http");
-					long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
-					HttpResponseCache.install(httpCacheDir, httpCacheSize);
-					Log.i("Conectividad", "Cache activa");
+                // Activar la cache
 
-					Log.d("Conectividad", "Request count: " + HttpResponseCache.getInstalled().getRequestCount());
-					Log.d("Conectividad", "Network count: " + HttpResponseCache.getInstalled().getNetworkCount());
-					Log.d("Conectividad", "Hit count: " + HttpResponseCache.getInstalled().getHitCount());
+                try {
+                    File httpCacheDir = new File(context.getCacheDir(), "http");
+                    long httpCacheSize = 10 * 1024 * 1024; // 10 MiB
+                    HttpResponseCache.install(httpCacheDir, httpCacheSize);
+                    Log.i("Conectividad", "Cache activa");
 
-					SharedPreferences.Editor editor = preferencias.edit();
-					editor.putBoolean("cache_eliminada", false);
-					editor.commit();
+                    Log.d("Conectividad", "Request count: " + HttpResponseCache.getInstalled().getRequestCount());
+                    Log.d("Conectividad", "Network count: " + HttpResponseCache.getInstalled().getNetworkCount());
+                    Log.d("Conectividad", "Hit count: " + HttpResponseCache.getInstalled().getHitCount());
 
-				} catch (IOException e) {
-					Log.i("Conectividad", "HTTP response cache installation failed:" + e);
-				}
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putBoolean("cache_eliminada", false);
+                    editor.commit();
 
-			} else if (!cacheEliminada) {
+                } catch (IOException e) {
+                    Log.i("Conectividad", "HTTP response cache installation failed:" + e);
+                }
 
-				// Si se ha decidido eliminar la cache
+            } else if (!cacheEliminada) {
 
-				HttpResponseCache cache = HttpResponseCache.getInstalled();
+                // Si se ha decidido eliminar la cache
 
-				if (cache != null) {
+                HttpResponseCache cache = HttpResponseCache.getInstalled();
 
-					try {
-						cache.delete();
+                if (cache != null) {
 
-						SharedPreferences.Editor editor = preferencias.edit();
-						editor.putBoolean("cache_eliminada", true);
-						editor.commit();
+                    try {
+                        cache.delete();
 
-						Log.i("Conectividad", "Cache eliminada");
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putBoolean("cache_eliminada", true);
+                        editor.commit();
 
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+                        Log.i("Conectividad", "Cache eliminada");
 
-				}
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
 
-			}
+                }
 
-		}
+            }
 
-	}
+        }
 
-	/**
-	 * Asegurar guardado de la cache al salir
-	 */
-	@SuppressLint("NewApi")
-	public static void flushCache() {
+    }
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+    /**
+     * Asegurar guardado de la cache al salir
+     */
+    @SuppressLint("NewApi")
+    public static void flushCache() {
 
-			HttpResponseCache cache = HttpResponseCache.getInstalled();
-			if (cache != null) {
-				cache.flush();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-				Log.i("Conectividad", "flush de cache");
+            HttpResponseCache cache = HttpResponseCache.getInstalled();
+            if (cache != null) {
+                cache.flush();
 
-			}
-		}
+                Log.i("Conectividad", "flush de cache");
 
-	}
+            }
+        }
+
+    }
 
 }

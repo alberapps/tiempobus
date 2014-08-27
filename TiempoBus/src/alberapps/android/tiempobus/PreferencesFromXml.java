@@ -38,123 +38,121 @@ import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 
 /**
- * 
  * Pantalla de preferencias
- * 
  */
 public class PreferencesFromXml extends PreferenceActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			setTheme(R.style.AppTheme);
-		}
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setTheme(R.style.AppTheme);
+        }
 
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-		// Load the preferences from an XML resource
-		addPreferencesFromResource(R.xml.preferences);
+        // Load the preferences from an XML resource
+        addPreferencesFromResource(R.xml.preferences);
 
-	}
+    }
 
-	@Override
-	public void finish() {
+    @Override
+    public void finish() {
 
-		Intent intent = new Intent();
-		setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+        Intent intent = new Intent();
+        setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
 
-		super.finish();
+        super.finish();
 
-	}
+    }
 
-	@Override
-	@Deprecated
-	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    @Override
+    @Deprecated
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
-		if (preference != null && preference.getKey() != null) {
+        if (preference != null && preference.getKey() != null) {
 
-			if (preference.getKey().equals("reiniciar_db")) {
+            if (preference.getKey().equals("reiniciar_db")) {
 
-				reiniciarDB();
+                reiniciarDB();
 
-			} else if (preference.getKey().equals("actualizar_db")) {
+            } else if (preference.getKey().equals("actualizar_db")) {
 
-				actualizarDB();
+                actualizarDB();
 
-			}
+            }
 
-		}
+        }
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 
-			super.onPreferenceTreeClick(preferenceScreen, preference);
+            super.onPreferenceTreeClick(preferenceScreen, preference);
 
-			// Para resolver bug de versiones anteriores
-			if (preference != null) {
-				if (preference instanceof PreferenceScreen) {
-					if (((PreferenceScreen) preference).getDialog() != null) {
+            // Para resolver bug de versiones anteriores
+            if (preference != null) {
+                if (preference instanceof PreferenceScreen) {
+                    if (((PreferenceScreen) preference).getDialog() != null) {
 
-						((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
+                        ((PreferenceScreen) preference).getDialog().getWindow().getDecorView().setBackgroundDrawable(this.getWindow().getDecorView().getBackground().getConstantState().newDrawable());
 
-					}
-				}
-			}
+                    }
+                }
+            }
 
-			return false;
+            return false;
 
-		} else {
-			return super.onPreferenceTreeClick(preferenceScreen, preference);
-		}
-	}
+        } else {
+            return super.onPreferenceTreeClick(preferenceScreen, preference);
+        }
+    }
 
-	/**
-	 * Reinicia la base de datos
-	 */
-	public void reiniciarDB() {
+    /**
+     * Reinicia la base de datos
+     */
+    public void reiniciarDB() {
 
-		getContentResolver().delete(BuscadorLineasProvider.CONTENT_URI, null, null);
+        getContentResolver().delete(BuscadorLineasProvider.CONTENT_URI, null, null);
 
-	}
+    }
 
-	/**
-	 * Actualiza la base de datos
-	 */
-	public void actualizarDB() {
+    /**
+     * Actualiza la base de datos
+     */
+    public void actualizarDB() {
 
-		final Builder mBuilder = Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
+        final Builder mBuilder = Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_INICIAL, null, null);
 
-		LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
-			public void ActualizarBDLoaded(String respuesta) {
+        LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
+            public void ActualizarBDLoaded(String respuesta) {
 
-				if (respuesta.equals("true")) {
-					getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
+                if (respuesta.equals("true")) {
+                    getContentResolver().update(BuscadorLineasProvider.CONTENT_URI, null, null, null);
 
-					PreferencesUtil.putUpdateInfo(getApplicationContext(), respuesta, "");
+                    PreferencesUtil.putUpdateInfo(getApplicationContext(), respuesta, "");
 
-				} else {
-					Toast.makeText(getApplicationContext(), getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_descarga_actualizacion), Toast.LENGTH_SHORT).show();
 
-					Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
-				}
+                    Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+                }
 
-			}
+            }
 
-		};
+        };
 
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
 
-			new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute();
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 
-			Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
+            Notificaciones.notificacionBaseDatos(getApplicationContext(), Notificaciones.NOTIFICACION_BD_ERROR, mBuilder, null);
 
-		}
+        }
 
-	}
+    }
 
 }

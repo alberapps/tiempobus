@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,11 +18,6 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -32,138 +27,143 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
+
 /**
  * Fragmento vuelta
- * 
- * 
  */
 public class FragmentVuelta extends Fragment {
 
-	private ListView lineasView;
+    private ListView lineasView;
 
-	InfoLineasTabsPager actividad;
+    InfoLineasTabsPager actividad;
 
-	InfoLineaParadasAdapter infoLineaParadasAdapter;
+    InfoLineaParadasAdapter infoLineaParadasAdapter;
 
-	/**
-	 * On Create
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    /**
+     * On Create
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		actividad = (InfoLineasTabsPager) getActivity();
+        actividad = (InfoLineasTabsPager) getActivity();
 
-	}
+    }
 
-	@Override
-	public void onViewStateRestored(Bundle savedInstanceState) {
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
 
-		setupFondoAplicacion();
+        setupFondoAplicacion();
 
-		recargaInformacion();
+        recargaInformacion();
 
-		super.onViewStateRestored(savedInstanceState);
-	}
+        super.onViewStateRestored(savedInstanceState);
+    }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.infolinea_vuelta, container, false);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.infolinea_vuelta, container, false);
+    }
 
-	
-	public void recargaInformacion(){
-		
-		TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
 
-		if (actividad.datosHorarios != null) {
+    /**
+     * Recarga de datos
+     */
+    public void recargaInformacion() {
 
-			titVuelta.setText(actividad.datosHorarios.getTituloSalidaVuelta());
+        TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
 
-			actividad.cargarListadoHorarioVuelta();
+        if (actividad.datosHorarios != null) {
 
-		} else if (actividad.datosVuelta != null) {
+            titVuelta.setText(actividad.datosHorarios.getTituloSalidaVuelta());
 
-			actividad.limpiarHorariosVuelta();
+            actividad.cargarListadoHorarioVuelta();
 
-			cargarListado();
-		} else {
+        } else if (actividad.datosVuelta != null) {
 
-			ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+            actividad.limpiarHorariosVuelta();
 
-			TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
-			idaView.setEmptyView(vacio);
-		}
-		
-	}
-	
-	
-	public void cargarListado() {
+            cargarListado();
+        } else {
 
-		TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
+            ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
 
-		if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
-			titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
-		} else {
-			titVuelta.setText("-");
-		}
+            TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+            idaView.setEmptyView(vacio);
+        }
 
-		infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
+    }
 
-		infoLineaParadasAdapter.addAll(actividad.datosVuelta.getPlacemarks());
+    /**
+     * Carga el listado de pantalla
+     */
+    public void cargarListado() {
 
-		ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+        TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
 
-		TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
-		idaView.setEmptyView(vacio);
+        if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
+            titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
+        } else {
+            titVuelta.setText("-");
+        }
 
-		idaView.setOnItemClickListener(lineasClickedHandler);
+        infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
 
-		idaView.setAdapter(infoLineaParadasAdapter);
+        infoLineaParadasAdapter.addAll(actividad.datosVuelta.getPlacemarks());
 
-	}
+        ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
 
-	/**
-	 * Listener encargado de gestionar las pulsaciones sobre los items
-	 */
-	private OnItemClickListener lineasClickedHandler = new OnItemClickListener() {
+        TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+        idaView.setEmptyView(vacio);
 
-		/**
-		 * @param l
-		 *            The ListView where the click happened
-		 * @param v
-		 *            The view that was clicked within the ListView
-		 * @param position
-		 *            The position of the view in the list
-		 * @param id
-		 *            The row id of the item that was clicked
-		 */
-		public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+        idaView.setOnItemClickListener(lineasClickedHandler);
 
-			actividad.seleccionarParadaVuelta(position);
+        idaView.setAdapter(infoLineaParadasAdapter);
 
-		}
-	};
+    }
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+    /**
+     * Listener encargado de gestionar las pulsaciones sobre los items
+     */
+    private OnItemClickListener lineasClickedHandler = new OnItemClickListener() {
 
-		PreferenceManager.setDefaultValues(actividad, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(actividad);
+        /**
+         * @param l
+         *            The ListView where the click happened
+         * @param v
+         *            The view that was clicked within the ListView
+         * @param position
+         *            The position of the view in the list
+         * @param id
+         *            The row id of the item that was clicked
+         */
+        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+            actividad.seleccionarParadaVuelta(position);
 
-		View contenedor_principal = actividad.findViewById(R.id.contenedor_infolinea_vuelta);
+        }
+    };
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, actividad);
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-	}
+        PreferenceManager.setDefaultValues(actividad, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(actividad);
+
+        String fondo_galeria = preferencias.getString("image_galeria", "");
+
+        View contenedor_principal = actividad.findViewById(R.id.contenedor_infolinea_vuelta);
+
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, actividad);
+
+    }
 
 }

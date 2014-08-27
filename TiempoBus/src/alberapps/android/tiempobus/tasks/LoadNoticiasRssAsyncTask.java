@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,68 +17,54 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+
 import java.util.List;
 
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.rss.ParserXML;
-import android.os.AsyncTask;
 
 /**
- * Tarea asincrona que se encarga de consultar las noticias
- * 
- * 
+ * Tarea asincrona que se encarga de consultar las noticias rss del tram
  */
 public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<NoticiaRss>> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadNoticiasRssAsyncTaskResponder {
-		public void noticiasRssLoaded(List<NoticiaRss> noticias);
-	}
 
-	private LoadNoticiasRssAsyncTaskResponder responder;
+    public interface LoadNoticiasRssAsyncTaskResponder {
+        public void noticiasRssLoaded(List<NoticiaRss> noticias);
+    }
 
-	
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadNoticiasRssAsyncTask(LoadNoticiasRssAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    private LoadNoticiasRssAsyncTaskResponder responder;
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected List<NoticiaRss> doInBackground(Object... datos) {
-		List<NoticiaRss> noticiasList = null;
-		try {		
 
-			
-			noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
-			
-		} catch (Exception e) {
-			return null;
-		}
+    public LoadNoticiasRssAsyncTask(LoadNoticiasRssAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-		return noticiasList;
-	}
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(List<NoticiaRss> result) {
-		if (responder != null) {
-			responder.noticiasRssLoaded(result);
-		}
+    @Override
+    protected List<NoticiaRss> doInBackground(Object... datos) {
+        List<NoticiaRss> noticiasList = null;
+        try {
 
-		
-	}
+
+            noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return noticiasList;
+    }
+
+
+    @Override
+    protected void onPostExecute(List<NoticiaRss> result) {
+        if (responder != null) {
+            responder.noticiasRssLoaded(result);
+        }
+
+
+    }
 
 }

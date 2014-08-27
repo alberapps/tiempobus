@@ -19,7 +19,7 @@
 --> 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="6dip">
 
@@ -43,12 +43,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:maxLines="1"
                 android:text="@string/main_no_items"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/color_android" />
+
+            <TextView
+                android:id="@+id/txt_sin_datos_aviso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/color_android" />
 
+
         </LinearLayout>
+
+
 
     </LinearLayout>
 	

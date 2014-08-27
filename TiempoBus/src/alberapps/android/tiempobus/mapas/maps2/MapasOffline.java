@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,10 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,270 +31,255 @@ import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.widget.Toast;
 
 /**
- * 
  * Gestion de paradas offline
- * 
  */
 public class MapasOffline {
 
-	private MapasMaps2Activity context;
+    private MapasMaps2Activity context;
 
-	private SharedPreferences preferencias;
+    private SharedPreferences preferencias;
 
-	public MapasOffline(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public MapasOffline(MapasMaps2Activity contexto, SharedPreferences preferencia) {
 
-		context = contexto;
+        context = contexto;
 
-		preferencias = preferencia;
+        preferencias = preferencia;
 
-	}
+    }
 
-	/**
-	 * Cargar datos en modo offline
-	 */
-	public void loadDatosMapaOffline() {
+    /**
+     * Cargar datos en modo offline
+     */
+    public void loadDatosMapaOffline() {
 
-		DatosMapa datosIda = new DatosMapa();
-		DatosMapa datosVuelta = new DatosMapa();
+        DatosMapa datosIda = new DatosMapa();
+        DatosMapa datosVuelta = new DatosMapa();
 
-		String parametros[] = { context.lineaSeleccionadaNum };
+        String parametros[] = {context.lineaSeleccionadaNum};
 
-		Cursor cursorParadas = null;
+        Cursor cursorParadas = null;
 
-		try {
-			cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+        try {
+            cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			cursorParadas = null;
+            cursorParadas = null;
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		}
+        }
 
-		if (cursorParadas != null) {
-			List<Parada> listaParadasIda = new ArrayList<Parada>();
+        if (cursorParadas != null) {
+            List<Parada> listaParadasIda = new ArrayList<Parada>();
 
-			List<Parada> listaParadasVuelta = new ArrayList<Parada>();
+            List<Parada> listaParadasVuelta = new ArrayList<Parada>();
 
-			String destinoIda = "";
-			String destinoVuelta = "";
+            String destinoIda = "";
+            String destinoVuelta = "";
 
-			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
+            for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
 
-				Parada par = new Parada();
+                Parada par = new Parada();
 
-				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
-				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+                par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+                par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+                par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+                par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+                par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+                par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+                par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+                par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+                par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
 
-				if (destinoIda.equals("")) {
-					destinoIda = par.getDestino();
-				} else if (destinoVuelta.equals("") && !destinoIda.equals(par.getDestino())) {
-					destinoVuelta = par.getDestino();
-				}
+                if (destinoIda.equals("")) {
+                    destinoIda = par.getDestino();
+                } else if (destinoVuelta.equals("") && !destinoIda.equals(par.getDestino())) {
+                    destinoVuelta = par.getDestino();
+                }
 
-				if (par.getDestino().equals(destinoIda)) {
+                if (par.getDestino().equals(destinoIda)) {
 
-					listaParadasIda.add(par);
+                    listaParadasIda.add(par);
 
-				} else if (par.getDestino().equals(destinoVuelta)) {
+                } else if (par.getDestino().equals(destinoVuelta)) {
 
-					listaParadasVuelta.add(par);
+                    listaParadasVuelta.add(par);
 
-				}
+                }
 
-			}
+            }
 
-			if (listaParadasIda != null && !listaParadasIda.isEmpty() && listaParadasVuelta != null && !listaParadasVuelta.isEmpty()) {
-				datosIda = mapearDatosModelo(listaParadasIda);
+            if (listaParadasIda != null && !listaParadasIda.isEmpty() && listaParadasVuelta != null && !listaParadasVuelta.isEmpty()) {
+                datosIda = mapearDatosModelo(listaParadasIda);
 
-				datosVuelta = mapearDatosModelo(listaParadasVuelta);
+                datosVuelta = mapearDatosModelo(listaParadasVuelta);
 
-				context.datosMapaCargadosIda = datosIda;
+                context.datosMapaCargadosIda = datosIda;
 
-				context.datosMapaCargadosVuelta = datosVuelta;
+                context.datosMapaCargadosVuelta = datosVuelta;
 
-				// Recorrido
+                // Recorrido
 
-				Cursor cursorRecorrido = null;
+                Cursor cursorRecorrido = null;
 
-				try {
-					cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-				} catch (Exception e) {
-					cursorRecorrido = null;
-					e.printStackTrace();
-				}
+                try {
+                    cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+                } catch (Exception e) {
+                    cursorRecorrido = null;
+                    e.printStackTrace();
+                }
 
-				if (cursorRecorrido != null) {
-					cursorRecorrido.moveToFirst();
+                if (cursorRecorrido != null) {
+                    cursorRecorrido.moveToFirst();
 
-					context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                    context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-					cursorRecorrido.moveToNext();
+                    cursorRecorrido.moveToNext();
 
-					context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                    context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-					// Cargar datos en el mapa
-					context.gestionarLineas.cargarMapa();
+                    // Cargar datos en el mapa
+                    context.gestionarLineas.cargarMapa();
 
-				} else {
-					Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
-				}
+                } else {
+                    Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+                }
 
-			} else {
-				Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
-			}
+            } else {
+                Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+            }
 
-		} else {
-			Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
-		}
+        } else {
+            Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+        }
 
-		context.dialog.dismiss();
+        context.dialog.dismiss();
 
-	}
+    }
 
-	/**
-	 * Cargar datos en modo offline
-	 */
-	public void loadDatosMapaTRAMOffline() {
+    /**
+     * Cargar datos en modo offline
+     */
+    public void loadDatosMapaTRAMOffline() {
 
-		DatosMapa datosIda = new DatosMapa();
+        DatosMapa datosIda = new DatosMapa();
 
-		String parametros[] = { context.lineaSeleccionadaNum };
+        String parametros[] = {context.lineaSeleccionadaNum};
 
-		Cursor cursorParadas = null;
+        Cursor cursorParadas = null;
 
-		try {
-			cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-		} catch (Exception e) {
+        try {
+            cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+        } catch (Exception e) {
 
-			cursorParadas = null;
+            cursorParadas = null;
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		}
+        }
 
-		if (cursorParadas != null) {
-			List<Parada> listaParadasIda = new ArrayList<Parada>();
+        if (cursorParadas != null) {
+            List<Parada> listaParadasIda = new ArrayList<Parada>();
 
-			for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
+            for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
 
-				Parada par = new Parada();
+                Parada par = new Parada();
 
-				par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-				par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-				par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-				par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-				par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-				par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-				par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-				par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-				par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
-				par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
+                par.setLineaNum(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
+                par.setLineaDesc(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
+                par.setConexion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
+                par.setCoordenadas(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                par.setDestino(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
+                par.setDireccion(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
+                par.setLatitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
+                par.setLongitud(cursorParadas.getInt(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
+                par.setParada(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
+                par.setObservaciones(cursorParadas.getString(cursorParadas.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
 
-				listaParadasIda.add(par);
+                listaParadasIda.add(par);
 
-			}
+            }
 
-			datosIda = mapearDatosModelo(listaParadasIda);
+            datosIda = mapearDatosModelo(listaParadasIda);
 
-			context.datosMapaCargadosIda = datosIda;
+            context.datosMapaCargadosIda = datosIda;
 
-			
-			
-			// Recorrido
 
-			Cursor cursorRecorrido = null;
+            // Recorrido
 
-			try {
-				cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-			} catch (Exception e) {
-				cursorRecorrido = null;
-				e.printStackTrace();
-			}
+            Cursor cursorRecorrido = null;
 
-			if (cursorRecorrido != null) {
-				cursorRecorrido.moveToFirst();
+            try {
+                cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+            } catch (Exception e) {
+                cursorRecorrido = null;
+                e.printStackTrace();
+            }
 
-				context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+            if (cursorRecorrido != null) {
+                cursorRecorrido.moveToFirst();
 
-				//cursorRecorrido.moveToNext();
+                context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-				//context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                //cursorRecorrido.moveToNext();
 
-				// Cargar datos en el mapa
-				context.gestionarLineas.cargarMapa();
+                //context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-			} else {
-				Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
-			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			// Cargar datos en el mapa
-			//context.gestionarLineas.cargarMapa();
+                // Cargar datos en el mapa
+                context.gestionarLineas.cargarMapa();
 
-		} else {
-			Toast toast = Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
-			toast.show();
-		}
+            } else {
+                Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+            }
 
-		context.dialog.dismiss();
 
-	}
+            // Cargar datos en el mapa
+            //context.gestionarLineas.cargarMapa();
 
-	/**
-	 * Cargar datos en modo online
-	 * 
-	 * @param listaParadas
-	 * @return
-	 */
-	private DatosMapa mapearDatosModelo(List<Parada> listaParadas) {
+        } else {
+            Toast toast = Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
-		DatosMapa datos = new DatosMapa();
+        context.dialog.dismiss();
 
-		datos.setPlacemarks(new ArrayList<PlaceMark>());
+    }
 
-		for (int i = 0; i < listaParadas.size(); i++) {
+    /**
+     * Cargar datos en modo online
+     *
+     * @param listaParadas
+     * @return
+     */
+    private DatosMapa mapearDatosModelo(List<Parada> listaParadas) {
 
-			PlaceMark placeMark = new PlaceMark();
+        DatosMapa datos = new DatosMapa();
 
-			placeMark.setAddress(listaParadas.get(i).getDireccion());
-			placeMark.setCodigoParada(listaParadas.get(i).getParada());
-			placeMark.setCoordinates(listaParadas.get(i).getCoordenadas());
-			placeMark.setDescription(listaParadas.get(i).getLineaDesc());
-			placeMark.setLineas(listaParadas.get(i).getConexion());
-			placeMark.setObservaciones(listaParadas.get(i).getObservaciones());
-			placeMark.setSentido(listaParadas.get(i).getDestino());
-			placeMark.setTitle(listaParadas.get(i).getDireccion());
+        datos.setPlacemarks(new ArrayList<PlaceMark>());
 
-			datos.getPlacemarks().add(placeMark);
-		}
+        for (int i = 0; i < listaParadas.size(); i++) {
 
-		datos.setCurrentPlacemark(datos.getPlacemarks().get(0));
+            PlaceMark placeMark = new PlaceMark();
 
-		return datos;
-	}
+            placeMark.setAddress(listaParadas.get(i).getDireccion());
+            placeMark.setCodigoParada(listaParadas.get(i).getParada());
+            placeMark.setCoordinates(listaParadas.get(i).getCoordenadas());
+            placeMark.setDescription(listaParadas.get(i).getLineaDesc());
+            placeMark.setLineas(listaParadas.get(i).getConexion());
+            placeMark.setObservaciones(listaParadas.get(i).getObservaciones());
+            placeMark.setSentido(listaParadas.get(i).getDestino());
+            placeMark.setTitle(listaParadas.get(i).getDireccion());
+
+            datos.getPlacemarks().add(placeMark);
+        }
+
+        datos.setCurrentPlacemark(datos.getPlacemarks().get(0));
+
+        return datos;
+    }
 
 }

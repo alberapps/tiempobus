@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by The Android Open Source Project
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,227 +47,220 @@ import alberapps.java.tram.UtilidadesTRAM;
 /**
  * Informacion de la linea
  */
-@SuppressLint("NewApi")
 public class InfoLineasDatosParadaActivity extends ActionBarActivity {
 
-	String paradaSel = "";
-	String lineaSel = "";
+    String paradaSel = "";
+    String lineaSel = "";
 
-	BusLinea datosLineaSel = null;
+    BusLinea datosLineaSel = null;
 
-	SharedPreferences preferencias = null;
+    SharedPreferences preferencias = null;
 
-	private static final int GRIS_BLOG = R.color.gris_blog;
+    private static final int GRIS_BLOG = R.color.gris_blog;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.datos_parada);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.datos_parada);
 
 
-			ActionBar actionBar = getSupportActionBar();
-			if(actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
 
-		try {
+        try {
 
-			PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-			preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+            PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+            preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-			// Fondo
-			setupFondoAplicacion();
+            // Fondo
+            setupFondoAplicacion();
 
-			PlaceMark datosParada = (PlaceMark) this.getIntent().getExtras().get("DATOS_PARADA");
-			BusLinea datosLinea = (BusLinea) this.getIntent().getExtras().get("DATOS_LINEA");
+            PlaceMark datosParada = (PlaceMark) this.getIntent().getExtras().get("DATOS_PARADA");
+            BusLinea datosLinea = (BusLinea) this.getIntent().getExtras().get("DATOS_LINEA");
 
-			TextView parada = (TextView) findViewById(R.id.parada);
-			TextView linea = (TextView) findViewById(R.id.linea);
-			TextView destino = (TextView) findViewById(R.id.destino);
-			TextView localizacion = (TextView) findViewById(R.id.localizacion);
-			TextView conexiones = (TextView) findViewById(R.id.conexiones);
-			TextView observaciones = (TextView) findViewById(R.id.observaciones);
+            TextView parada = (TextView) findViewById(R.id.parada);
+            TextView linea = (TextView) findViewById(R.id.linea);
+            TextView destino = (TextView) findViewById(R.id.destino);
+            TextView localizacion = (TextView) findViewById(R.id.localizacion);
+            TextView conexiones = (TextView) findViewById(R.id.conexiones);
+            TextView observaciones = (TextView) findViewById(R.id.observaciones);
 
-			parada.setText(datosParada.getCodigoParada());
+            parada.setText(datosParada.getCodigoParada());
 
-			paradaSel = datosParada.getCodigoParada().trim();
+            paradaSel = datosParada.getCodigoParada().trim();
 
-			// int pos =
-			// UtilidadesTAM.getNumLinea(datosLinea.getIdlinea().trim());
+            String lineaNum = datosLinea.getNumLinea();
 
-			// String lineaNum = UtilidadesTAM.LINEAS_NUM[pos];
+            lineaSel = lineaNum;
+            datosLineaSel = datosLinea;
 
-			String lineaNum = datosLinea.getNumLinea();
+            linea.setText(datosLinea.getLinea());
+            destino.setText(datosParada.getSentido());
+            localizacion.setText(datosParada.getTitle());
+            conexiones.setText(datosParada.getLineas());
+            observaciones.setText(datosParada.getObservaciones());
 
-			lineaSel = lineaNum;
-			datosLineaSel = datosLinea;
+            TextView botonPoste = (TextView) findViewById(R.id.buttonT);
 
-			linea.setText(datosLinea.getLinea());
-			destino.setText(datosParada.getSentido());
-			localizacion.setText(datosParada.getTitle());
-			conexiones.setText(datosParada.getLineas());
-			observaciones.setText(datosParada.getObservaciones());
+            if (!UtilidadesTRAM.ACTIVADO_L9 && lineaNum.equals("L9")) {
+                botonPoste.setVisibility(View.INVISIBLE);
+            } else {
 
-			TextView botonPoste = (TextView) findViewById(R.id.buttonT);
+                // boton parada
 
-			if (!UtilidadesTRAM.ACTIVADO_L9 && lineaNum.equals("L9")) {
-				botonPoste.setVisibility(View.INVISIBLE);
-			} else {
+                botonPoste.setOnClickListener(new OnClickListener() {
+                    public void onClick(View arg0) {
 
-				// boton parada
+                        int codigo = -1;
 
-				botonPoste.setOnClickListener(new OnClickListener() {
-					public void onClick(View arg0) {
+                        try {
+                            codigo = Integer.parseInt(paradaSel);
 
-						int codigo = -1;
+                        } catch (Exception e) {
 
-						try {
-							codigo = Integer.parseInt(paradaSel);
+                        }
 
-						} catch (Exception e) {
+                        if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
 
-						}
+                            cargarTiempos(codigo);
 
-						if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
+                        } else {
 
-							cargarTiempos(codigo);
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
 
-						} else {
+                        }
 
-							Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-						}
+            }
 
-					}
-				});
+            // boton mapa
+            TextView botonMapa = (TextView) findViewById(R.id.buttonM);
+            botonMapa.setOnClickListener(new OnClickListener() {
+                public void onClick(View arg0) {
 
-			}
+                    launchMapasSeleccion(lineaSel, datosLineaSel);
 
-			// boton mapa
-			TextView botonMapa = (TextView) findViewById(R.id.buttonM);
-			botonMapa.setOnClickListener(new OnClickListener() {
-				public void onClick(View arg0) {
+                }
+            });
 
-					launchMapasSeleccion(lineaSel, datosLineaSel);
+        } catch (Exception e) {
 
-				}
-			});
+            Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.error_tabs), Toast.LENGTH_SHORT);
+            toast.show();
+            finish();
 
-		} catch (Exception e) {
+        }
 
-			Toast toast = Toast.makeText(getApplicationContext(), getResources().getText(R.string.error_tabs), Toast.LENGTH_SHORT);
-			toast.show();
-			finish();
+    }
 
-		}
+    /**
+     * Cargar tiempos
+     *
+     * @param codigo
+     */
+    private void cargarTiempos(int codigo) {
 
-	}
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("poste", codigo);
+        intent.putExtras(b);
 
-	/**
-	 * Cargar tiempos
-	 * 
-	 * @param codigo
-	 */
-	private void cargarTiempos(int codigo) {
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt("parada_inicio", codigo);
+        editor.commit();
 
-		Intent intent = new Intent(this, MainActivity.class);
-		Bundle b = new Bundle();
-		b.putInt("poste", codigo);
-		intent.putExtras(b);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-		SharedPreferences.Editor editor = preferencias.edit();
-		editor.putInt("parada_inicio", codigo);
-		editor.commit();
+        startActivity(intent);
 
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    }
 
-		startActivity(intent);
+    /**
+     * Abrir mapa de linea seleccionada
+     *
+     * @param linea
+     * @param datosLinea
+     */
+    private void launchMapasSeleccion(String linea, BusLinea datosLinea) {
 
-	}
+        if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
-	/**
-	 * Abrir mapa de linea seleccionada
-	 * 
-	 * @param linea
-	 * @param datosLinea
-	 */
-	private void launchMapasSeleccion(String linea, BusLinea datosLinea) {
+            if (linea != null && !linea.equals("")) {
+                Intent i = new Intent(this, MapasMaps2Activity.class);
+                i.putExtra("LINEA_MAPA_FICHA", linea);
+                i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
+                i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
+                i.putExtra("LINEA_MAPA_FICHA_DESC", datosLinea.getLinea());
 
-		if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
+                i.putExtra("LINEA_MAPA_PARADA", paradaSel);
 
-			if (linea != null && !linea.equals("")) {
-				Intent i = new Intent(this, MapasMaps2Activity.class);
-				i.putExtra("LINEA_MAPA_FICHA", linea);
-				i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
-				i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());
-				i.putExtra("LINEA_MAPA_FICHA_DESC", datosLinea.getLinea());
-				
-				i.putExtra("LINEA_MAPA_PARADA", paradaSel);
-				
-				
-				startActivity(i);
-			}
 
-		}
-	}
+                startActivity(i);
+            }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.sin_menu, menu);
+        }
+    }
 
-		return super.onCreateOptionsMenu(menu);
-	}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sin_menu, menu);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
 
-		}
+        }
 
-		return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 
-	}
+    }
 
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
 
-		String fondo_galeria = preferencias.getString("image_galeria", "");
+        String fondo_galeria = preferencias.getString("image_galeria", "");
 
-		View contenedor_principal = findViewById(R.id.datos_contenedor);
+        View contenedor_principal = findViewById(R.id.datos_contenedor);
 
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 
-	}
+    }
 
-	@Override
-	protected void onStart() {
+    @Override
+    protected void onStart() {
 
-		super.onStart();
+        super.onStart();
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
+        if (preferencias.getBoolean("analytics_on", true)) {
+            //EasyTracker.getInstance(this).activityStart(this);
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
 
-	}
+    }
 
-	@Override
-	protected void onStop() {
+    @Override
+    protected void onStop() {
 
-		if (preferencias.getBoolean("analytics_on", true)) {
-			//EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
-		
-		super.onStop();
-		
+        if (preferencias.getBoolean("analytics_on", true)) {
+            //EasyTracker.getInstance(this).activityStop(this);
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
 
-	}
+        super.onStop();
+
+
+    }
 
 }

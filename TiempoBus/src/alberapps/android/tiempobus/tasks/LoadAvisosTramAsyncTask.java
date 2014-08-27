@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,77 +17,62 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.util.List;
 
 import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
-import android.os.AsyncTask;
-import android.util.Log;
 
 /**
- * Tarea asincrona que se encarga de consultar las Twitter
- * 
- * 
+ * Tarea asincrona que se encarga de consultar los avisos del tram
  */
 public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, List<TwResultado>> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface LoadAvisosTramAsyncTaskResponder {
-		public void AvisosTramLoaded(List<TwResultado> Twitter);
-	}
 
-	private LoadAvisosTramAsyncTaskResponder responder;
+    public interface LoadAvisosTramAsyncTaskResponder {
+        public void AvisosTramLoaded(List<TwResultado> Twitter);
+    }
 
-	
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public LoadAvisosTramAsyncTask(LoadAvisosTramAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    private LoadAvisosTramAsyncTaskResponder responder;
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected List<TwResultado> doInBackground(Object... datos) {
-		List<TwResultado> twList = null;
-		try {
-			
-			twList = ProcesarTwitter.procesarTram();
-			
-			Log.d("tw", "lista: " + twList.size());
-			
 
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			
-			return null;
-			
-			
-			
-		}
+    public LoadAvisosTramAsyncTask(LoadAvisosTramAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-		return twList;
-	}
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(List<TwResultado> result) {
-		if (responder != null) {
-			responder.AvisosTramLoaded(result);
-		}
+    @Override
+    protected List<TwResultado> doInBackground(Object... datos) {
+        List<TwResultado> twList = null;
+        try {
 
-		
-	}
+            twList = ProcesarTwitter.procesarTram();
+
+            Log.d("tw", "lista: " + twList.size());
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return null;
+
+
+        }
+
+        return twList;
+    }
+
+
+    @Override
+    protected void onPostExecute(List<TwResultado> result) {
+        if (responder != null) {
+            responder.AvisosTramLoaded(result);
+        }
+
+
+    }
 
 }

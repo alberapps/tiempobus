@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *  based on code by The Android Open Source Project Copyright (C) 2013
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,36 +19,36 @@
  */
 package alberapps.android.tiempobus;
 
-import java.util.HashMap;
-
 import android.app.Application;
 import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+import java.util.HashMap;
+
 public class ApplicationTiempoBus extends Application {
 
-	public enum TrackerName {
-		APP_TRACKER
-	}
+    public enum TrackerName {
+        APP_TRACKER
+    }
 
-	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
-	public ApplicationTiempoBus() {
+    public ApplicationTiempoBus() {
 
-		super();
+        super();
 
-	}
+    }
 
-	synchronized Tracker getTracker(TrackerName trackerId) {
+    synchronized Tracker getTracker(TrackerName trackerId) {
 
-		Log.d("APP", "inicia tracker");
+        Log.d("APP", "inicia tracker");
 
-		if (!mTrackers.containsKey(trackerId)) {
+        if (!mTrackers.containsKey(trackerId)) {
 
-			GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-			/*
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            /*
 			 * Tracker t = (trackerId == TrackerName.APP_TRACKER) ?
 			 * analytics.newTracker(PROPERTY_ID) : (trackerId ==
 			 * TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(
@@ -56,11 +56,11 @@ public class ApplicationTiempoBus extends Application {
 			 * analytics.newTracker(R.xml.ecommerce_tracker);
 			 */
 
-			Tracker t = analytics.newTracker(R.xml.app_tracker);
+            Tracker t = analytics.newTracker(R.xml.app_tracker);
 
-			mTrackers.put(trackerId, t);
+            mTrackers.put(trackerId, t);
 
-		}
-		return mTrackers.get(trackerId);
-	}
+        }
+        return mTrackers.get(trackerId);
+    }
 }

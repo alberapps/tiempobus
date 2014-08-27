@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,7 +18,6 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -54,319 +53,296 @@ import alberapps.java.noticias.Noticias;
 /**
  * Detalle de la noticia
  */
-@SuppressWarnings("deprecation")
-@SuppressLint("NewApi")
 public class DetalleNoticiaActivity extends ActionBarActivity {
 
-	private ProgressDialog dialog;
+    private ProgressDialog dialog;
 
-	WebView mWebView;
+    WebView mWebView;
 
-	Noticias noticia;
+    Noticias noticia;
 
-	String link;
+    String link;
 
-	AsyncTask<String, Void, Noticias> taskDetalle = null;
-
-	SharedPreferences preferencias = null;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detalle_noticia);
-
-		
-
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-		preferencias = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-			ActionBar actionBar = getSupportActionBar();
-			if(actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-			}
-
-
-		dialog = ProgressDialog.show(DetalleNoticiaActivity.this, "", getString(R.string.dialogo_espera), true);
-
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-
-			noticia = (Noticias) extras.get("NOTICIA_SELECCIONADA");
-
-			int posicion = extras.getInt("POSICION_LINK");
-
-			link = noticia.getLinks().get(posicion);
-
-		}
-
-		// Fondo
-		setupFondoAplicacion();
-		
-		/**
-		 * Sera llamado cuando la tarea de cargar las noticias
-		 */
-		LoadDetalleNoticiaAsyncTaskResponder loadDetalleNoticiaAsyncTaskResponder = new LoadDetalleNoticiaAsyncTaskResponder() {
-			public void detalleNoticiaLoaded(Noticias noticia) {
-
-				if (noticia != null) {
-
-					cargarDetalle(noticia);
-					dialog.dismiss();
-
-				} else {
-					// Error al recuperar datos
-
-					cargarDetalleError();
-
-					Toast.makeText(getApplicationContext(), getString(R.string.ko_noticia), Toast.LENGTH_SHORT).show();
-					dialog.dismiss();
-
-				}
-			}
-		};
-
-		// Control de disponibilidad de conexion
-		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-		if (networkInfo != null && networkInfo.isConnected()) {
-			taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link);
-		} else {
-			Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-			if (dialog != null && dialog.isShowing()) {
-				dialog.dismiss();
-			}
-		}
-
-		
-		TextView zoomMas = (TextView) findViewById(R.id.noticia_zoom_aumenta);
-		
-		zoomMas.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View view) {
-				
-				if(mWebView != null){
-				
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				
-						//mWebView.getSettings().setLoadWithOverviewMode(false);
-						//mWebView.getSettings().setUseWideViewPort(false);
-						
-						if(mWebView.getSettings().getTextZoom() < 200){
-						
-							mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() + 10);
-						
-						}
-					
-					}else{
-						
-						//mWebView.getSettings().setLoadWithOverviewMode(false);
-						//mWebView.getSettings().setUseWideViewPort(false);
-						
-						
-						
-						
-						if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLEST)){
-							mWebView.getSettings().setTextSize(TextSize.SMALLER);
-						} else if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)){
-							mWebView.getSettings().setTextSize(TextSize.NORMAL);
-						} else if(mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)){
-							mWebView.getSettings().setTextSize(TextSize.LARGER);
-						}else if(mWebView.getSettings().getTextSize().equals(TextSize.LARGER)){
-							mWebView.getSettings().setTextSize(TextSize.LARGEST);
-						}
-						
-						
-					}
-				
-
-				}
-				
-			}
-
-		});
-		
-		
-		TextView zoomMenos = (TextView) findViewById(R.id.noticia_zoom_reduc);
-		
-		zoomMenos.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View view) {
-				
-				if(mWebView != null){
-				
-					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-				
-						//mWebView.getSettings().setLoadWithOverviewMode(false);
-						//mWebView.getSettings().setUseWideViewPort(false);
-						
-						Log.d("Detalle Noticias", "Zoom: " + mWebView.getSettings().getTextZoom());
-						
-						if(mWebView.getSettings().getTextZoom() > 50){
-						
-							mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() - 10);
-						
-						}
-					
-					}else{
-						
-						//mWebView.getSettings().setLoadWithOverviewMode(true);
-						//mWebView.getSettings().setUseWideViewPort(true);
-						
-						if(mWebView.getSettings().getTextSize().equals(TextSize.LARGEST)){
-							mWebView.getSettings().setTextSize(TextSize.LARGER);
-						} else if(mWebView.getSettings().getTextSize().equals(TextSize.LARGER)){
-							mWebView.getSettings().setTextSize(TextSize.NORMAL);
-						} else if(mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)){
-							mWebView.getSettings().setTextSize(TextSize.SMALLER);
-						}else if(mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)){
-							mWebView.getSettings().setTextSize(TextSize.SMALLEST);
-						}
-						
-					}
-				
-
-				}
-				
-			}
-
-		});
-		
-		
-	}
-
-	@Override
-	protected void onDestroy() {
-
-		detenerTareas();
-
-		super.onDestroy();
-	}
-
-	public void detenerTareas() {
-
-		if (taskDetalle != null && taskDetalle.getStatus() == Status.RUNNING) {
-
-			taskDetalle.cancel(true);
-
-			Log.d("NOTICIAS", "Cancelada task detalle");
-
-		}
-
-	}
-
-	/**
-	 * Cargar el detallet
-	 * 
-	 * @param noticia
-	 */
-	public void cargarDetalle(Noticias noticia) {
-
-		TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
-		TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
-		TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
-
-		cabFecha.setText(noticia.getFechaCabecera());
-		cabTitulo.setText(noticia.getTituloCabecera());
-		cabLinea.setText(noticia.getLineaCabecera());
-
-		TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
-
-		accederNoticia.setLinksClickable(true);
-		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
-
-		accederNoticia.setText(link);
-
-		if (noticia.getContenidoHtml() != null) {
-			mWebView = (WebView) findViewById(R.id.webViewDetalle);
-			
-			//mWebView.getSettings().setLoadWithOverviewMode(true);
-			//mWebView.getSettings().setUseWideViewPort(true);
-			//mWebView.getSettings().setBuiltInZoomControls(true);
-			//mWebView.getSettings().setDisplayZoomControls(true);
-
-			mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
-
-		}
-
-	}
-
-	/**
-	 * Cargar informacion minima en caso de error
-	 */
-	public void cargarDetalleError() {
-
-		TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
-		TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
-		TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
-
-		cabFecha.setText(noticia.getFecha());
-		cabTitulo.setText(noticia.getNoticia());
-		cabLinea.setText("");
-
-		TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
-
-		accederNoticia.setLinksClickable(true);
-		accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
-
-		accederNoticia.setText(link);
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.sin_menu, menu);
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-
-
-		}
-
-		return super.onOptionsItemSelected(item);
-
-	}
-
-	@Override
-	protected void onStart() {
-
-		super.onStart();
-
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStart(this);
-			GoogleAnalytics.getInstance(this).reportActivityStart(this);
-		}
-
-	}
-
-	@Override
-	protected void onStop() {
-
-		if (preferencias.getBoolean("analytics_on", true)) {
-			// EasyTracker.getInstance(this).activityStop(this);
-			GoogleAnalytics.getInstance(this).reportActivityStop(this);
-		}
-
-		super.onStop();
-
-	}
-
-	/**
-	 * Seleccion del fondo de la galeria en el arranque
-	 */
-	private void setupFondoAplicacion() {
-
-		String fondo_galeria = preferencias.getString("image_galeria", "");
-
-		View contenedor_principal = findViewById(R.id.main);
-
-		UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
-
-	}
+    AsyncTask<String, Void, Noticias> taskDetalle = null;
+
+    SharedPreferences preferencias = null;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.detalle_noticia);
+
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+
+        dialog = ProgressDialog.show(DetalleNoticiaActivity.this, "", getString(R.string.dialogo_espera), true);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            noticia = (Noticias) extras.get("NOTICIA_SELECCIONADA");
+
+            int posicion = extras.getInt("POSICION_LINK");
+
+            link = noticia.getLinks().get(posicion);
+
+        }
+
+        // Fondo
+        setupFondoAplicacion();
+
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadDetalleNoticiaAsyncTaskResponder loadDetalleNoticiaAsyncTaskResponder = new LoadDetalleNoticiaAsyncTaskResponder() {
+            public void detalleNoticiaLoaded(Noticias noticia) {
+
+                if (noticia != null) {
+
+                    cargarDetalle(noticia);
+                    dialog.dismiss();
+
+                } else {
+                    // Error al recuperar datos
+
+                    cargarDetalleError();
+
+                    Toast.makeText(getApplicationContext(), getString(R.string.ko_noticia), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+
+                }
+            }
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link);
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+
+
+        TextView zoomMas = (TextView) findViewById(R.id.noticia_zoom_aumenta);
+
+        zoomMas.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+
+                if (mWebView != null) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+                        if (mWebView.getSettings().getTextZoom() < 200) {
+
+                            mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() + 10);
+
+                        }
+
+                    } else {
+
+                        if (mWebView.getSettings().getTextSize().equals(TextSize.SMALLEST)) {
+                            mWebView.getSettings().setTextSize(TextSize.SMALLER);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)) {
+                            mWebView.getSettings().setTextSize(TextSize.NORMAL);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)) {
+                            mWebView.getSettings().setTextSize(TextSize.LARGER);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.LARGER)) {
+                            mWebView.getSettings().setTextSize(TextSize.LARGEST);
+                        }
+
+
+                    }
+
+
+                }
+
+            }
+
+        });
+
+
+        TextView zoomMenos = (TextView) findViewById(R.id.noticia_zoom_reduc);
+
+        zoomMenos.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+
+                if (mWebView != null) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+                        Log.d("Detalle Noticias", "Zoom: " + mWebView.getSettings().getTextZoom());
+
+                        if (mWebView.getSettings().getTextZoom() > 50) {
+
+                            mWebView.getSettings().setTextZoom(mWebView.getSettings().getTextZoom() - 10);
+
+                        }
+
+                    } else {
+
+                        if (mWebView.getSettings().getTextSize().equals(TextSize.LARGEST)) {
+                            mWebView.getSettings().setTextSize(TextSize.LARGER);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.LARGER)) {
+                            mWebView.getSettings().setTextSize(TextSize.NORMAL);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.NORMAL)) {
+                            mWebView.getSettings().setTextSize(TextSize.SMALLER);
+                        } else if (mWebView.getSettings().getTextSize().equals(TextSize.SMALLER)) {
+                            mWebView.getSettings().setTextSize(TextSize.SMALLEST);
+                        }
+
+                    }
+
+
+                }
+
+            }
+
+        });
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        detenerTareas();
+
+        super.onDestroy();
+    }
+
+    public void detenerTareas() {
+
+        if (taskDetalle != null && taskDetalle.getStatus() == Status.RUNNING) {
+
+            taskDetalle.cancel(true);
+
+            Log.d("NOTICIAS", "Cancelada task detalle");
+
+        }
+
+    }
+
+    /**
+     * Cargar el detallet
+     *
+     * @param noticia
+     */
+    public void cargarDetalle(Noticias noticia) {
+
+        TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
+        TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
+        TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
+
+        cabFecha.setText(noticia.getFechaCabecera());
+        cabTitulo.setText(noticia.getTituloCabecera());
+        cabLinea.setText(noticia.getLineaCabecera());
+
+        TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
+
+        accederNoticia.setLinksClickable(true);
+        accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
+
+        accederNoticia.setText(link);
+
+        if (noticia.getContenidoHtml() != null) {
+            mWebView = (WebView) findViewById(R.id.webViewDetalle);
+
+            mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+
+        }
+
+    }
+
+    /**
+     * Cargar informacion minima en caso de error
+     */
+    public void cargarDetalleError() {
+
+        TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
+        TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
+        TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
+
+        cabFecha.setText(noticia.getFecha());
+        cabTitulo.setText(noticia.getNoticia());
+        cabLinea.setText("");
+
+        TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
+
+        accederNoticia.setLinksClickable(true);
+        accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
+
+        accederNoticia.setText(link);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sin_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        if (preferencias.getBoolean("analytics_on", true)) {
+            // EasyTracker.getInstance(this).activityStart(this);
+            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
+
+    }
+
+    @Override
+    protected void onStop() {
+
+        if (preferencias.getBoolean("analytics_on", true)) {
+            // EasyTracker.getInstance(this).activityStop(this);
+            GoogleAnalytics.getInstance(this).reportActivityStop(this);
+        }
+
+        super.onStop();
+
+    }
+
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
+
+        String fondo_galeria = preferencias.getString("image_galeria", "");
+
+        View contenedor_principal = findViewById(R.id.main);
+
+        UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
+
+    }
 
 }

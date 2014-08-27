@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,67 +17,49 @@
  */
 package alberapps.android.tiempobus.tasks;
 
-import alberapps.java.data.backup.DatosBackup;
 import android.os.AsyncTask;
+
+import alberapps.java.data.backup.DatosBackup;
 
 /**
  * Tarea asincrona copia de seguridad
- * 
- * 
  */
 public class BackupAsyncTask extends AsyncTask<String, Void, Boolean> {
 
-	/**
-	 * Interfaz que deberian implementar las clases que la quieran usar Sirve
-	 * como callback una vez termine la tarea asincrona
-	 * 
-	 */
-	public interface BackupAsyncTaskResponder {
-		public void backupLoaded(Boolean result);
-	}
+    public interface BackupAsyncTaskResponder {
+        public void backupLoaded(Boolean result);
+    }
 
-	private BackupAsyncTaskResponder responder;
+    private BackupAsyncTaskResponder responder;
 
-	/**
-	 * Constructor. Es necesario que nos pasen un objeto para el callback
-	 * 
-	 * @param responder
-	 */
-	public BackupAsyncTask(BackupAsyncTaskResponder responder) {
-		this.responder = responder;
-	}
+    public BackupAsyncTask(BackupAsyncTaskResponder responder) {
+        this.responder = responder;
+    }
 
-	/**
-	 * Ejecuta el proceso en segundo plano
-	 */
-	@Override
-	protected Boolean doInBackground(String... datos) {
-		Boolean resultado = null;
-		try {
-			// noticiasList = TamNews.getTamNews();
+    @Override
+    protected Boolean doInBackground(String... datos) {
+        Boolean resultado = null;
+        try {
 
-			String entrada = (String) datos[0];
+            String entrada = (String) datos[0];
 
-			if (entrada.equals("importar")) {
-				resultado = DatosBackup.recuperar(false);
-			} else {
-				resultado = DatosBackup.exportar(false);
-			}
-		} catch (Exception e) {
-			return false;
-		}
+            if (entrada.equals("importar")) {
+                resultado = DatosBackup.recuperar(false);
+            } else {
+                resultado = DatosBackup.exportar(false);
+            }
+        } catch (Exception e) {
+            return false;
+        }
 
-		return resultado;
-	}
+        return resultado;
+    }
 
-	/**
-	 * Se ha terminado la ejecucion comunicamos el resultado al llamador
-	 */
-	@Override
-	protected void onPostExecute(Boolean result) {
-		if (responder != null) {
-			responder.backupLoaded(result);
-		}
-	}
+    @Override
+    protected void onPostExecute(Boolean result) {
+        if (responder != null) {
+            responder.backupLoaded(result);
+        }
+    }
 
 }

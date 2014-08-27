@@ -1,8 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,111 +35,110 @@ import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**
- * Adaptador Tiempos
+ * Adaptador listado de paradas
  */
 public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
-	private Context contexto;
+    private Context contexto;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 * @param textViewResourceId
-	 */
-	public InfoLineaParadasAdapter(Context context, int textViewResourceId) {
-		super(context, textViewResourceId);
+    /**
+     * Constructor
+     *
+     * @param context
+     * @param textViewResourceId
+     */
+    public InfoLineaParadasAdapter(Context context, int textViewResourceId) {
+        super(context, textViewResourceId);
 
-		this.contexto = context;
+        this.contexto = context;
 
-	}
+    }
 
-	/**
-	 * Genera la vista de cada uno de los items
-	 */
-	@Override
-	public View getView(final int position, View v, ViewGroup parent) {
-		// Si no tenemos la vista de la fila creada componemos una
-		if (v == null) {
-			Context ctx = this.getContext().getApplicationContext();
-			LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    /**
+     * Genera la vista de cada uno de los items
+     */
+    @Override
+    public View getView(final int position, View v, ViewGroup parent) {
+        // Si no tenemos la vista de la fila creada componemos una
+        if (v == null) {
+            Context ctx = this.getContext().getApplicationContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			v = vi.inflate(R.layout.infolineas_paradas_item, null);
+            v = vi.inflate(R.layout.infolineas_paradas_item, null);
 
-		}
+        }
 
-		TextView numParada;
-		TextView descParada;
-		TextView datos;
+        TextView numParada;
+        TextView descParada;
+        TextView datos;
 
-		numParada = (TextView) v.findViewById(R.id.num_parada);
-		descParada = (TextView) v.findViewById(R.id.desc_parada);
-		datos = (TextView) v.findViewById(R.id.datos_parada);
+        numParada = (TextView) v.findViewById(R.id.num_parada);
+        descParada = (TextView) v.findViewById(R.id.desc_parada);
+        datos = (TextView) v.findViewById(R.id.datos_parada);
 
-		final PlaceMark bus = getItem(position);
+        final PlaceMark bus = getItem(position);
 
-		if (bus != null) {
-			numParada.setText(bus.getCodigoParada());
-			descParada.setText(bus.getTitle());
-			datos.setText("T: ".concat(bus.getLineas()));
+        if (bus != null) {
+            numParada.setText(bus.getCodigoParada());
+            descParada.setText(bus.getTitle());
+            datos.setText("T: ".concat(bus.getLineas()));
 
-			if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
+            if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
 
-				datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
+                datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
 
-			}
+            }
 
-		}
+        }
 
-		TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
+        TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
 
-		// Link informacion
-		informacionText.setOnClickListener(new OnClickListener() {
+        // Link informacion
+        informacionText.setOnClickListener(new OnClickListener() {
 
-			public void onClick(View view) {
+            public void onClick(View view) {
 
-				((InfoLineasTabsPager) contexto).irInformacion(bus);
+                ((InfoLineasTabsPager) contexto).irInformacion(bus);
 
-			}
+            }
 
-		});
+        });
 
-		TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
+        TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
 
-		if (!UtilidadesTRAM.ACTIVADO_L9 && ((InfoLineasTabsPager) contexto).getLinea().getNumLinea().equals("L9")) {
-			cargarText.setVisibility(View.INVISIBLE);
-		} else {
+        if (!UtilidadesTRAM.ACTIVADO_L9 && ((InfoLineasTabsPager) contexto).getLinea().getNumLinea().equals("L9")) {
+            cargarText.setVisibility(View.INVISIBLE);
+        } else {
 
-			// Link cargar
-			cargarText.setOnClickListener(new OnClickListener() {
+            // Link cargar
+            cargarText.setOnClickListener(new OnClickListener() {
 
-				public void onClick(View view) {
+                public void onClick(View view) {
 
-					int codigo = -1;
+                    int codigo = -1;
 
-					try {
-						codigo = Integer.parseInt(bus.getCodigoParada());
+                    try {
+                        codigo = Integer.parseInt(bus.getCodigoParada());
 
-					} catch (Exception e) {
+                    } catch (Exception e) {
 
-					}
+                    }
 
-					if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
+                    if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
 
-						((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
+                        ((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
 
-					} else {
+                    } else {
 
-						Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
 
-					}
+                    }
 
-				}
+                }
 
-			});
+            });
 
-		}
-
+        }
 
 
         TextView infoText = (TextView) v.findViewById(R.id.infoparada_info);
@@ -160,22 +157,22 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         });
 
 
-            return v;
-        }
+        return v;
+    }
 
     /**
-    * Anade todas las lineas al adapter
-    *
-    * @param parada
-    */
+     * Anade todas las lineas al adapter
+     *
+     * @param parada
+     */
     public void addAll(List<PlaceMark> parada) {
-		if (parada == null) {
-			return;
-		}
+        if (parada == null) {
+            return;
+        }
 
-		for (int i = 0; i < parada.size(); i++) {
-			add(parada.get(i));
-		}
-	}
+        for (int i = 0; i < parada.size(); i++) {
+            add(parada.get(i));
+        }
+    }
 
 }
