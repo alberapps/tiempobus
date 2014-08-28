@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,62 +19,62 @@
 package alberapps.java.exception;
 
 /**
- *  
+ *
  */
 public class TiempoBusException extends Exception {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2041443242078108937L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2041443242078108937L;
 
-	public static int ERROR_STATUS_SERVICIO = 1;
-	public static String ERROR_STATUS_SERVICIO_MSG = "Error en el status del servicio";
+    public static int ERROR_STATUS_SERVICIO = 1;
+    public static String ERROR_STATUS_SERVICIO_MSG = "Error en el status del servicio";
 
-	private int codigo;
+    private int codigo;
 
-	/**
-	 * 
-	 */
-	public TiempoBusException() {
+    /**
+     *
+     */
+    public TiempoBusException() {
 
-	}
+    }
 
-	public TiempoBusException(int cod) {
+    public TiempoBusException(int cod) {
 
-		super(ERROR_STATUS_SERVICIO_MSG);
+        super(ERROR_STATUS_SERVICIO_MSG);
 
-		codigo = cod;
-	}
+        codigo = cod;
+    }
 
-	/**
-	 * @param detailMessage
-	 */
-	public TiempoBusException(String detailMessage) {
-		super(detailMessage);
-	}
+    /**
+     * @param detailMessage
+     */
+    public TiempoBusException(String detailMessage) {
+        super(detailMessage);
+    }
 
-	/**
-	 * @param throwable
-	 */
-	public TiempoBusException(Throwable throwable) {
-		super(throwable);
-	}
+    /**
+     * @param throwable
+     */
+    public TiempoBusException(Throwable throwable) {
+        super(throwable);
+    }
 
-	/**
-	 * @param detailMessage
-	 * @param throwable
-	 */
-	public TiempoBusException(String detailMessage, Throwable throwable) {
-		super(detailMessage, throwable);
-	}
+    /**
+     * @param detailMessage
+     * @param throwable
+     */
+    public TiempoBusException(String detailMessage, Throwable throwable) {
+        super(detailMessage, throwable);
+    }
 
-	public int getCodigo() {
-		return codigo;
-	}
+    public int getCodigo() {
+        return codigo;
+    }
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
 }

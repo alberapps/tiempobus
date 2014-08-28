@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +17,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.util;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,181 +51,164 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Comunes;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 /**
- * 
  * Utilidadades de acceso a la red
- * 
  */
 public class Conectividad2 {
 
-	/**
-	 * Conexion sencilla
-	 * 
-	 * @param urlEntrada
-	 * @return stream
-	 */
-	public static InputStream recuperarStreamConexionSimple(String urlEntrada) {
+    /**
+     * Conexion sencilla
+     *
+     * @param urlEntrada
+     * @return stream
+     */
+    public static InputStream recuperarStreamConexionSimple(String urlEntrada) {
 
-		InputStream is = null;
+        InputStream is = null;
 
-		try {
+        try {
 
-			URL url = new URL(urlEntrada);
+            URL url = new URL(urlEntrada);
 
-			URLConnection con = url.openConnection();
+            URLConnection con = url.openConnection();
 
-			// timeout
-			con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
-			con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            // timeout
+            con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
+            con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
 
-			is = con.getInputStream();
+            is = con.getInputStream();
 
-		} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
 
-		return is;
+        return is;
 
-	}
+    }
 
-	public static InputStream recuperarStreamConexionSimpleDepuracion(Context contexto, String urlEntrada) throws IOException {
+    public static InputStream recuperarStreamConexionSimpleDepuracion(Context contexto, String urlEntrada) throws IOException {
 
-		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		int readTimeout = Integer.parseInt(preferencias.getString("read_timeout", "60")) * 1000;
+        int readTimeout = Integer.parseInt(preferencias.getString("read_timeout", "60")) * 1000;
 
-		int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout", "50")) * 1000;
+        int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout", "50")) * 1000;
 
-		InputStream is = null;
+        InputStream is = null;
 
-		try {
+        try {
 
-			URL url = new URL(urlEntrada);
+            URL url = new URL(urlEntrada);
 
-			URLConnection con = url.openConnection();
+            URLConnection con = url.openConnection();
 
-			// timeout
-			if (readTimeout > 0) {
-				con.setReadTimeout(readTimeout);
-			}
-			if (conexionTimeout > 0) {
-				con.setConnectTimeout(conexionTimeout);
-			}
+            // timeout
+            if (readTimeout > 0) {
+                con.setReadTimeout(readTimeout);
+            }
+            if (conexionTimeout > 0) {
+                con.setConnectTimeout(conexionTimeout);
+            }
 
-			is = con.getInputStream();
+            is = con.getInputStream();
 
-		} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			throw e;
+            throw e;
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			throw e;
-		}
+            throw e;
+        }
 
-		return is;
+        return is;
 
-	}
+    }
 
-	public static InputStream recuperarStreamConexionSimpleDepuracionTipo2(Context contexto, String urlEntrada) throws Exception {
+    public static InputStream recuperarStreamConexionSimpleDepuracionTipo2(Context contexto, String urlEntrada) throws Exception {
 
-		PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
-		SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-		int readTimeout = Integer.parseInt(preferencias.getString("read_timeout_2", "60")) * 1000;
+        int readTimeout = Integer.parseInt(preferencias.getString("read_timeout_2", "60")) * 1000;
 
-		int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout_2", "50")) * 1000;
+        int conexionTimeout = Integer.parseInt(preferencias.getString("conexion_timeout_2", "50")) * 1000;
 
-		InputStream is = null;
+        InputStream is = null;
 
-		try {
+        try {
 
-			HttpGet request = new HttpGet(urlEntrada);
+            HttpGet request = new HttpGet(urlEntrada);
 
-			int timeout = 60000;
+            int timeout = 60000;
 
-			HttpParams httpParam = new BasicHttpParams();
+            HttpParams httpParam = new BasicHttpParams();
 
-			// Timeout para establecer conexion
-			if (conexionTimeout > 0) {
-				timeout = conexionTimeout;
+            // Timeout para establecer conexion
+            if (conexionTimeout > 0) {
+                timeout = conexionTimeout;
 
-				HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+                HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
-			}
+            }
 
-			// Timeout para recibir datos
-			int timeoutSocket = 60000;
-			if (readTimeout > 0) {
-				timeoutSocket = readTimeout;
+            // Timeout para recibir datos
+            int timeoutSocket = 60000;
+            if (readTimeout > 0) {
+                timeoutSocket = readTimeout;
 
-				HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+                HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
-			}
+            }
 
-			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+            DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
-			HttpResponse response = client.execute(request);
+            HttpResponse response = client.execute(request);
 
-			final int statusCode = response.getStatusLine().getStatusCode();
+            final int statusCode = response.getStatusLine().getStatusCode();
 
 			/*
-			 * if (statusCode != HttpStatus.SC_OK) {
+             * if (statusCode != HttpStatus.SC_OK) {
 			 * 
 			 * return null; }
 			 */
 
-			HttpEntity responseEntity = response.getEntity();
-			is = responseEntity.getContent();
+            HttpEntity responseEntity = response.getEntity();
+            is = responseEntity.getContent();
 
-		} catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			throw e;
+            throw e;
 
-		} catch (IOException e) {
+        } catch (IOException e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			throw e;
-		} catch (Exception e) {
-			e.printStackTrace();
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
 
-			throw e;
-		}
+            throw e;
+        }
 
-		return is;
+        return is;
 
-	}
+    }
 
 	/*
 	 * public static InputStream recuperarStream(String url) {
@@ -221,198 +220,198 @@ public class Conectividad2 {
 	 * }
 	 */
 
-	/**
-	 * 
-	 * Otros sistemas de conexion
-	 * 
-	 */
+    /**
+     *
+     * Otros sistemas de conexion
+     *
+     */
 
-	/**
-	 * Recuperar con basic
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static InputStream recuperarStreamBasic(String url) {
+    /**
+     * Recuperar con basic
+     *
+     * @param url
+     * @return
+     */
+    public static InputStream recuperarStreamBasic(String url) {
 
-		HttpGet request = new HttpGet(url);
+        HttpGet request = new HttpGet(url);
 
-		try {
+        try {
 
-			// Timeout para establecer conexion
-			int timeout = 3000;
-			HttpParams httpParam = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+            // Timeout para establecer conexion
+            int timeout = 3000;
+            HttpParams httpParam = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
-			// Timeout para recibir datos
-			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
-			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+            // Timeout para recibir datos
+            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
-			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+            DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
-			HttpResponse response = client.execute(request);
+            HttpResponse response = client.execute(request);
 
-			final int statusCode = response.getStatusLine().getStatusCode();
+            final int statusCode = response.getStatusLine().getStatusCode();
 
-			if (statusCode != HttpStatus.SC_OK) {
+            if (statusCode != HttpStatus.SC_OK) {
 
-				return null;
-			}
+                return null;
+            }
 
-			HttpEntity responseEntity = response.getEntity();
-			return responseEntity.getContent();
+            HttpEntity responseEntity = response.getEntity();
+            return responseEntity.getContent();
 
-		} catch (IOException e) {
-			request.abort();
+        } catch (IOException e) {
+            request.abort();
 
-		}
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/**
-	 * Recuperar en utf8
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String recuperarStringUTF8(String url) {
+    /**
+     * Recuperar en utf8
+     *
+     * @param url
+     * @return
+     */
+    public static String recuperarStringUTF8(String url) {
 
-		HttpGet request = new HttpGet(url);
+        HttpGet request = new HttpGet(url);
 
-		try {
+        try {
 
-			// Timeout para establecer conexion
-			int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
-			HttpParams httpParam = new BasicHttpParams();
-			HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
+            // Timeout para establecer conexion
+            int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+            HttpParams httpParam = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
-			// Timeout para recibir datos
-			int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
-			HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
+            // Timeout para recibir datos
+            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
-			DefaultHttpClient client = new DefaultHttpClient(httpParam);
+            DefaultHttpClient client = new DefaultHttpClient(httpParam);
 
-			HttpResponse response = client.execute(request);
+            HttpResponse response = client.execute(request);
 
-			final int statusCode = response.getStatusLine().getStatusCode();
+            final int statusCode = response.getStatusLine().getStatusCode();
 
-			if (statusCode != HttpStatus.SC_OK) {
+            if (statusCode != HttpStatus.SC_OK) {
 
-				return null;
-			}
+                return null;
+            }
 
-			HttpEntity responseEntity = response.getEntity();
+            HttpEntity responseEntity = response.getEntity();
 
-			return EntityUtils.toString(responseEntity, HTTP.UTF_8);
+            return EntityUtils.toString(responseEntity, HTTP.UTF_8);
 
-		} catch (IOException e) {
-			request.abort();
+        } catch (IOException e) {
+            request.abort();
 
-		}
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	// Given a URL, establishes an HttpUrlConnection and retrieves
-	// the web page content as a InputStream, which it returns as
-	// a string.
-	private static InputStream recuperarStreamNuevo(String myurl) {
-		InputStream is = null;
-		// Only display the first 500 characters of the retrieved
-		// web page content.
-		// int len = 500;
+    // Given a URL, establishes an HttpUrlConnection and retrieves
+    // the web page content as a InputStream, which it returns as
+    // a string.
+    private static InputStream recuperarStreamNuevo(String myurl) {
+        InputStream is = null;
+        // Only display the first 500 characters of the retrieved
+        // web page content.
+        // int len = 500;
 
-		try {
-			URL url = new URL(myurl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-			conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
-			conn.setRequestMethod("GET");
-			conn.setDoInput(true);
-			// Starts the query
-			conn.connect();
-			// int response = conn.getResponseCode();
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            // int response = conn.getResponseCode();
 
-			is = conn.getInputStream();
+            is = conn.getInputStream();
 
-			// Makes sure that the InputStream is closed after the app is
-			// finished using it.
-		} catch (Exception e) {
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } catch (Exception e) {
 
-			try {
-				is.close();
-				is = null;
-			} catch (Exception ex) {
+            try {
+                is.close();
+                is = null;
+            } catch (Exception ex) {
 
-			}
+            }
 
-		} finally {
+        } finally {
 			/*
 			 * if (is != null) { try { is.close(); } catch (IOException e) {
 			 * 
 			 * } }
 			 */
-		}
+        }
 
-		return is;
+        return is;
 
-	}
+    }
 
-	// Given a URL, establishes an HttpUrlConnection and retrieves
-	// the web page content as a InputStream, which it returns as
-	// a string.
-	private static String recuperarStringUTF8Nuevos(String myurl) {
-		InputStream is = null;
-		// Only display the first 500 characters of the retrieved
-		// web page content.
-		int len = 500;
+    // Given a URL, establishes an HttpUrlConnection and retrieves
+    // the web page content as a InputStream, which it returns as
+    // a string.
+    private static String recuperarStringUTF8Nuevos(String myurl) {
+        InputStream is = null;
+        // Only display the first 500 characters of the retrieved
+        // web page content.
+        int len = 500;
 
-		try {
-			URL url = new URL(myurl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-			conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
-			conn.setRequestMethod("GET");
-			conn.setDoInput(true);
-			// Starts the query
-			conn.connect();
-			// int response = conn.getResponseCode();
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            conn.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            // int response = conn.getResponseCode();
 
-			is = conn.getInputStream();
+            is = conn.getInputStream();
 
-			// Convert the InputStream into a string
-			String contentAsString = readIt(is, len);
-			return contentAsString;
+            // Convert the InputStream into a string
+            String contentAsString = readIt(is, len);
+            return contentAsString;
 
-			// Makes sure that the InputStream is closed after the app is
-			// finished using it.
-		} catch (Exception e) {
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } catch (Exception e) {
 
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
 
-				}
-			}
-		}
+                }
+            }
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	// Reads an InputStream and converts it to a String.
-	public static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-		Reader reader = null;
-		reader = new InputStreamReader(stream, "UTF-8");
-		char[] buffer = new char[len];
-		reader.read(buffer);
-		return new String(buffer);
-	}
+    // Reads an InputStream and converts it to a String.
+    public static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+        Reader reader = null;
+        reader = new InputStreamReader(stream, "UTF-8");
+        char[] buffer = new char[len];
+        reader.read(buffer);
+        return new String(buffer);
+    }
 
 	/*
 	 * ConnectivityManager connMgr = (ConnectivityManager)
@@ -422,134 +421,132 @@ public class Conectividad2 {
 	 * ...
 	 */
 
-	/**
-	 * 
-	 * @param inputStream
-	 * @return
-	 */
-	public static String obtenerStringDeStream(InputStream inputStream) {
+    /**
+     * @param inputStream
+     * @return
+     */
+    public static String obtenerStringDeStream(InputStream inputStream) {
 
-		String datos = "";
+        String datos = "";
 
-		Scanner s = new Scanner(inputStream, "ISO-8859-1").useDelimiter("\\A");
-		datos = s.hasNext() ? s.next() : "";
+        Scanner s = new Scanner(inputStream, "ISO-8859-1").useDelimiter("\\A");
+        datos = s.hasNext() ? s.next() : "";
 
-		return datos;
-	}
-	
-	/**
-	 * 
-	 * @param inputStream
-	 * @return
-	 */
-	public static String obtenerStringDeStreamUTF8(InputStream inputStream) {
+        return datos;
+    }
 
-		String datos = "";
+    /**
+     * @param inputStream
+     * @return
+     */
+    public static String obtenerStringDeStreamUTF8(InputStream inputStream) {
 
-		Scanner s = new Scanner(inputStream, "UTF-8").useDelimiter("\\A");
-		datos = s.hasNext() ? s.next() : "";
+        String datos = "";
 
-		return datos;
-	}
-	
+        Scanner s = new Scanner(inputStream, "UTF-8").useDelimiter("\\A");
+        datos = s.hasNext() ? s.next() : "";
 
-	/**
-	 * Date desde string
-	 * 
-	 * @param fecha
-	 * @return
-	 */
-	public static Date getFechaDate(String fecha) {
+        return datos;
+    }
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
-		Date fechaDate = null;
+    /**
+     * Date desde string
+     *
+     * @param fecha
+     * @return
+     */
+    public static Date getFechaDate(String fecha) {
 
-		if (fecha != null) {
-			try {
-				fechaDate = df.parse(fecha);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
-				return fechaDate;
+        Date fechaDate = null;
 
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
+        if (fecha != null) {
+            try {
+                fechaDate = df.parse(fecha);
 
-		return null;
+                return fechaDate;
 
-	}
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
-	/**
-	 * String desde date
-	 * 
-	 * @param fecha
-	 * @return
-	 */
-	public static String getFechaString(Date fecha) {
+        return null;
 
-		DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.US);
+    }
 
-		String fechaString = null;
+    /**
+     * String desde date
+     *
+     * @param fecha
+     * @return
+     */
+    public static String getFechaString(Date fecha) {
 
-		if (fecha != null) {
+        DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy HH:mm", Locale.US);
 
-			fechaString = df.format(fecha);
+        String fechaString = null;
 
-			return fechaString;
+        if (fecha != null) {
 
-		}
+            fechaString = df.format(fecha);
 
-		return null;
+            return fechaString;
 
-	}
+        }
 
-	/**
-	 * String desde date
-	 * 
-	 * @param fecha
-	 * @return
-	 */
-	public static String getFechaSQL(Date fecha) {
+        return null;
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+    }
 
-		String fechaString = null;
+    /**
+     * String desde date
+     *
+     * @param fecha
+     * @return
+     */
+    public static String getFechaSQL(Date fecha) {
 
-		if (fecha != null) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
-			fechaString = df.format(fecha);
+        String fechaString = null;
 
-			return fechaString;
+        if (fecha != null) {
 
-		}
+            fechaString = df.format(fecha);
 
-		return null;
+            return fechaString;
 
-	}
+        }
 
-	/**
-	 * Aleatorio
-	 * 
-	 * @return int
-	 */
-	public static boolean ipRandom() {
+        return null;
 
-		int min = 0;
-		int max = 1;
+    }
 
-		Random rand = new Random();
+    /**
+     * Aleatorio
+     *
+     * @return int
+     */
+    public static boolean ipRandom() {
 
-		int random = rand.nextInt((max - min) + 1) + min;
+        int min = 0;
+        int max = 1;
 
-		Log.d("RANDOM", "RANDOM: " + random);
+        Random rand = new Random();
 
-		if (random == 0) {
-			return true;
-		} else {
-			return false;
-		}
+        int random = rand.nextInt((max - min) + 1) + min;
 
-	}
+        Log.d("RANDOM", "RANDOM: " + random);
+
+        if (random == 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 }

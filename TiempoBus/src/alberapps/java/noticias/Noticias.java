@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -28,109 +28,109 @@ import java.util.Locale;
 
 public class Noticias implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4240900250983171841L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4240900250983171841L;
 
-	private String fecha;
-	private String noticia;
+    private String fecha;
+    private String noticia;
 
-	private List<String> links;
+    private List<String> links;
 
-	private List<String> descLink;
+    private List<String> descLink;
 
-	private String contenidoHtml;
+    private String contenidoHtml;
 
-	private String fechaCabecera;
+    private String fechaCabecera;
 
-	private String tituloCabecera;
+    private String tituloCabecera;
 
-	private String lineaCabecera;
+    private String lineaCabecera;
 
-	public String getLineaCabecera() {
-		return lineaCabecera;
-	}
+    public String getLineaCabecera() {
+        return lineaCabecera;
+    }
 
-	public void setLineaCabecera(String lineaCabecera) {
-		this.lineaCabecera = lineaCabecera;
-	}
+    public void setLineaCabecera(String lineaCabecera) {
+        this.lineaCabecera = lineaCabecera;
+    }
 
-	public String getFechaCabecera() {
-		return fechaCabecera;
-	}
+    public String getFechaCabecera() {
+        return fechaCabecera;
+    }
 
-	public void setFechaCabecera(String fechaCabecera) {
-		this.fechaCabecera = fechaCabecera;
-	}
+    public void setFechaCabecera(String fechaCabecera) {
+        this.fechaCabecera = fechaCabecera;
+    }
 
-	public String getTituloCabecera() {
-		return tituloCabecera;
-	}
+    public String getTituloCabecera() {
+        return tituloCabecera;
+    }
 
-	public void setTituloCabecera(String tituloCabecera) {
-		this.tituloCabecera = tituloCabecera;
-	}
+    public void setTituloCabecera(String tituloCabecera) {
+        this.tituloCabecera = tituloCabecera;
+    }
 
-	public String getContenidoHtml() {
-		return contenidoHtml;
-	}
+    public String getContenidoHtml() {
+        return contenidoHtml;
+    }
 
-	public void setContenidoHtml(String contenidoHtml) {
-		this.contenidoHtml = contenidoHtml;
-	}
+    public void setContenidoHtml(String contenidoHtml) {
+        this.contenidoHtml = contenidoHtml;
+    }
 
-	public List<String> getLinks() {
-		return links;
-	}
+    public List<String> getLinks() {
+        return links;
+    }
 
-	public void setLinks(List<String> links) {
-		this.links = links;
-	}
+    public void setLinks(List<String> links) {
+        this.links = links;
+    }
 
-	public List<String> getDescLink() {
-		return descLink;
-	}
+    public List<String> getDescLink() {
+        return descLink;
+    }
 
-	public void setDescLink(List<String> descLink) {
-		this.descLink = descLink;
-	}
+    public void setDescLink(List<String> descLink) {
+        this.descLink = descLink;
+    }
 
-	public String getFecha() {
-		return fecha;
-	}
+    public String getFecha() {
+        return fecha;
+    }
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
-	public String getNoticia() {
-		return noticia;
-	}
+    public String getNoticia() {
+        return noticia;
+    }
 
-	public void setNoticia(String noticia) {
-		this.noticia = noticia;
-	}
+    public void setNoticia(String noticia) {
+        this.noticia = noticia;
+    }
 
-	public Date getFechaDate() {
+    public Date getFechaDate() {
 
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
-		Date fechaDate = null;
+        Date fechaDate = null;
 
-		if (fecha != null) {
-			try {
-				fechaDate = df.parse(fecha);
+        if (fecha != null) {
+            try {
+                fechaDate = df.parse(fecha);
 
-				return fechaDate;
+                return fechaDate;
 
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
 }

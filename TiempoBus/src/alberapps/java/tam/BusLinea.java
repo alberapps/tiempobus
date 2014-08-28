@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -25,94 +25,90 @@ import java.util.HashMap;
 
 /**
  * Clase contenedora de la estructura de datos para una linea de bus
- * 
- * 
  */
 public class BusLinea implements Comparable<BusLinea>, Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7404099850060654141L;
-	private String idlinea;
-	private String linea;
-	private HashMap<String, String> destinos = new HashMap<String, String>();
-	private ArrayList<BusParada> paradas;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7404099850060654141L;
+    private String idlinea;
+    private String linea;
+    private HashMap<String, String> destinos = new HashMap<String, String>();
+    private ArrayList<BusParada> paradas;
 
-	private String numLinea;
-	
-	private String grupo;
-	
-	public String getNumLinea() {
-		return numLinea;
-	}
+    private String numLinea;
 
-	/**
-	 * Constructor
-	 * 
-	 * @param linea
-	 *            bus
-	 * @param destino
-	 *            dirección de de destino
-	 */
+    private String grupo;
 
-	public BusLinea(String idlinea) {
-		this.idlinea = idlinea;
-	}
+    public String getNumLinea() {
+        return numLinea;
+    }
 
-	public BusLinea(String idlinea, String linea, String numLinea, String grupo) {
-		this(idlinea);
-		this.linea = linea;
-		this.numLinea = numLinea;
-		this.grupo = grupo;
-	}
+    /**
+     * Constructor
+     *
+     * @param linea   bus
+     * @param destino dirección de de destino
+     */
 
-	public BusLinea(String idlinea, String linea, String numLinea, HashMap<String, String> destinos, ArrayList<BusParada> paradas) {
-		this(idlinea, linea, numLinea, null);
+    public BusLinea(String idlinea) {
+        this.idlinea = idlinea;
+    }
 
-		this.destinos = destinos;
-		this.paradas = paradas;
-	}
+    public BusLinea(String idlinea, String linea, String numLinea, String grupo) {
+        this(idlinea);
+        this.linea = linea;
+        this.numLinea = numLinea;
+        this.grupo = grupo;
+    }
 
-	public int compareTo(BusLinea bus2) {
-		return linea.compareTo(bus2.linea);
-	}
+    public BusLinea(String idlinea, String linea, String numLinea, HashMap<String, String> destinos, ArrayList<BusParada> paradas) {
+        this(idlinea, linea, numLinea, null);
 
-	public String getIdlinea() {
-		return idlinea;
-	}
+        this.destinos = destinos;
+        this.paradas = paradas;
+    }
 
-	public String getLinea() {
-		return linea;
-	}
+    public int compareTo(BusLinea bus2) {
+        return linea.compareTo(bus2.linea);
+    }
 
-	public ArrayList<BusParada> getParadas() {
-		return paradas;
-	}
+    public String getIdlinea() {
+        return idlinea;
+    }
 
-	public void setParadas(ArrayList<BusParada> paradas) {
-		this.paradas = paradas;
-	}
+    public String getLinea() {
+        return linea;
+    }
 
-	public void putDestino(String id, String destino) {
-		destinos.put(id, destino);
-	}
+    public ArrayList<BusParada> getParadas() {
+        return paradas;
+    }
 
-	public HashMap<String, String> getDestinos() {
-		return destinos;
-	}
+    public void setParadas(ArrayList<BusParada> paradas) {
+        this.paradas = paradas;
+    }
 
-	@Override
-	public String toString() {
-		return "" + linea + " (" + idlinea + ") \n" + "Destinos: " + destinos + "\n" + "Paradas: " + paradas;
-	}
+    public void putDestino(String id, String destino) {
+        destinos.put(id, destino);
+    }
 
-	public String getGrupo() {
-		return grupo;
-	}
+    public HashMap<String, String> getDestinos() {
+        return destinos;
+    }
 
-	public void setGrupo(String grupo) {
-		this.grupo = grupo;
-	}
+    @Override
+    public String toString() {
+        return "" + linea + " (" + idlinea + ") \n" + "Destinos: " + destinos + "\n" + "Paradas: " + paradas;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
 
 }

@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -23,36 +23,35 @@ import java.util.List;
 
 public class Horario {
 
-	private String linkHorario = "";
-	
-	private String tituloHorario = "";
-	
-	private List<String> horarios = new ArrayList<String>();
+    private String linkHorario = "";
 
-	public String getLinkHorario() {
-		return linkHorario;
-	}
+    private String tituloHorario = "";
 
-	public void setLinkHorario(String linkHorario) {
-		this.linkHorario = linkHorario;
-	}
+    private List<String> horarios = new ArrayList<String>();
 
-	public String getTituloHorario() {
-		return tituloHorario;
-	}
+    public String getLinkHorario() {
+        return linkHorario;
+    }
 
-	public void setTituloHorario(String tituloHorario) {
-		this.tituloHorario = tituloHorario;
-	}
+    public void setLinkHorario(String linkHorario) {
+        this.linkHorario = linkHorario;
+    }
 
-	public List<String> getHorarios() {
-		return horarios;
-	}
+    public String getTituloHorario() {
+        return tituloHorario;
+    }
 
-	public void setHorarios(List<String> horarios) {
-		this.horarios = horarios;
-	}
-	
-	
+    public void setTituloHorario(String tituloHorario) {
+        this.tituloHorario = tituloHorario;
+    }
+
+    public List<String> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(List<String> horarios) {
+        this.horarios = horarios;
+    }
+
 
 }

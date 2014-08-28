@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,95 +18,93 @@
  */
 package alberapps.java.tam.lineas;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import alberapps.java.util.Conectividad;
 
 /**
- * 
  * Procesa los datos recuperados de las lineas
- * 
  */
 public class ProcesarDatosLineasService {
 
-	public static final String URL_SUBUS_LINEAS = "http://www.subus.es/Lineas/MapaMapsAgregadorZoom.asp";
+    public static final String URL_SUBUS_LINEAS = "http://www.subus.es/Lineas/MapaMapsAgregadorZoom.asp";
 
-	public static void getLineasInfo() throws Exception {
+    public static void getLineasInfo() throws Exception {
 
-		// List<Noticias> noticias = new ArrayList<Noticias>();
+        // List<Noticias> noticias = new ArrayList<Noticias>();
 
-		InputStream st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
-		
-		Document doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
+        InputStream st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
 
-		String title = doc.title();
+        Document doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
 
-		Elements tables = doc.select("table"); // a with href
+        String title = doc.title();
 
-		Element tablaGlobal = tables.get(8);
+        Elements tables = doc.select("table"); // a with href
 
-		DatosLinea datosLinea = new DatosLinea();
+        Element tablaGlobal = tables.get(8);
 
-		List<DatosLinea> lineas = new ArrayList<DatosLinea>();
+        DatosLinea datosLinea = new DatosLinea();
 
-		String tituloCabecera = "";
-		String lineaDesc = "";
-		String lineaNum = "";
+        List<DatosLinea> lineas = new ArrayList<DatosLinea>();
 
-		// Grupo
-		// Element tablaAlicanteUrbano =
-		// tables.get(8).select("table").get(1).select("table").get(0);
+        String tituloCabecera = "";
+        String lineaDesc = "";
+        String lineaNum = "";
 
-		// Titulo cabecera grupo
-		tituloCabecera = tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza").text();
+        // Grupo
+        // Element tablaAlicanteUrbano =
+        // tables.get(8).select("table").get(1).select("table").get(0);
 
-		for (int i = 0; i < tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").size(); i++) {
+        // Titulo cabecera grupo
+        tituloCabecera = tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza").text();
 
-			// Descripcion linea
-			lineaDesc = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).attr("title");
+        for (int i = 0; i < tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").size(); i++) {
 
-			// Numero linea
-			lineaNum = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).text();
+            // Descripcion linea
+            lineaDesc = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).attr("title");
 
-			datosLinea = new DatosLinea();
-			datosLinea.setTituloCabecera(tituloCabecera);
-			datosLinea.setLineaDescripcion(lineaDesc);
-			datosLinea.setLineaNum(lineaNum);
+            // Numero linea
+            lineaNum = tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(i).text();
 
-			lineas.add(datosLinea);
-		}
+            datosLinea = new DatosLinea();
+            datosLinea.setTituloCabecera(tituloCabecera);
+            datosLinea.setLineaDescripcion(lineaDesc);
+            datosLinea.setLineaNum(lineaNum);
 
-		// urbano : tables.get(8).select("table").get(1).select("table").get(0)
+            lineas.add(datosLinea);
+        }
 
-		// titulo urbano:
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza")
+        // urbano : tables.get(8).select("table").get(1).select("table").get(0)
 
-		// elementos:
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace")
+        // titulo urbano:
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.cabeza")
 
-		// links valor:
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
+        // elementos:
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace")
 
-		// textos lineas:
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
+        // links valor:
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
 
-		// titulo
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(0).attr("title")
+        // textos lineas:
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a")
 
-		// javascript link :
-		// tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("input").get(0).attr("onclick")
+        // titulo
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("a").get(0).attr("title")
 
-		// tables.get(8).select("table").get(1).select("table").get(1) elemento
+        // javascript link :
+        // tables.get(8).select("table").get(1).select("table").get(0).select("td.enlace").select("input").get(0).attr("onclick")
+
+        // tables.get(8).select("table").get(1).select("table").get(1) elemento
 
 		/*
-		 * Elements filas = tabla.select("tr");
+         * Elements filas = tabla.select("tr");
 		 * 
 		 * for (int i = 0; i < filas.size(); i++) {
 		 * 
@@ -139,6 +137,6 @@ public class ProcesarDatosLineasService {
 		 * 
 		 * return noticias;
 		 */
-	}
+    }
 
 }

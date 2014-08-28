@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -23,75 +23,75 @@ import java.util.List;
 
 public class DatosHorarios {
 
-	private String tituloSalidaIda;
+    private String tituloSalidaIda;
 
-	private String tituloSalidaVuelta;
+    private String tituloSalidaVuelta;
 
-	private String validezHorarios;
+    private String validezHorarios;
 
-	private StringBuffer comentariosIda;
+    private StringBuffer comentariosIda;
 
-	private StringBuffer comentariosVuelta;
+    private StringBuffer comentariosVuelta;
 
-	private List<Horario> horariosIda = new ArrayList<Horario>();
+    private List<Horario> horariosIda = new ArrayList<Horario>();
 
-	private List<Horario> horariosVuelta = new ArrayList<Horario>();
+    private List<Horario> horariosVuelta = new ArrayList<Horario>();
 
-	public List<Horario> getHorariosIda() {
-		return horariosIda;
-	}
+    public List<Horario> getHorariosIda() {
+        return horariosIda;
+    }
 
-	public void setHorarios(List<Horario> horarios) {
-		this.horariosIda = horarios;
-	}
+    public void setHorarios(List<Horario> horarios) {
+        this.horariosIda = horarios;
+    }
 
-	public List<Horario> getHorariosVuelta() {
-		return horariosVuelta;
-	}
+    public List<Horario> getHorariosVuelta() {
+        return horariosVuelta;
+    }
 
-	public void setHorariosVuelta(List<Horario> horariosVuelta) {
-		this.horariosVuelta = horariosVuelta;
-	}
+    public void setHorariosVuelta(List<Horario> horariosVuelta) {
+        this.horariosVuelta = horariosVuelta;
+    }
 
-	public String getTituloSalidaIda() {
-		return tituloSalidaIda;
-	}
+    public String getTituloSalidaIda() {
+        return tituloSalidaIda;
+    }
 
-	public void setTituloSalidaIda(String tituloSalidaIda) {
-		this.tituloSalidaIda = tituloSalidaIda;
-	}
+    public void setTituloSalidaIda(String tituloSalidaIda) {
+        this.tituloSalidaIda = tituloSalidaIda;
+    }
 
-	public String getTituloSalidaVuelta() {
-		return tituloSalidaVuelta;
-	}
+    public String getTituloSalidaVuelta() {
+        return tituloSalidaVuelta;
+    }
 
-	public void setTituloSalidaVuelta(String tituloSalidaVuelta) {
-		this.tituloSalidaVuelta = tituloSalidaVuelta;
-	}
+    public void setTituloSalidaVuelta(String tituloSalidaVuelta) {
+        this.tituloSalidaVuelta = tituloSalidaVuelta;
+    }
 
-	public String getValidezHorarios() {
-		return validezHorarios;
-	}
+    public String getValidezHorarios() {
+        return validezHorarios;
+    }
 
-	public void setValidezHorarios(String validezHorarios) {
-		this.validezHorarios = validezHorarios;
-	}
+    public void setValidezHorarios(String validezHorarios) {
+        this.validezHorarios = validezHorarios;
+    }
 
-	public StringBuffer getComentariosIda() {
-		return comentariosIda;
-	}
+    public StringBuffer getComentariosIda() {
+        return comentariosIda;
+    }
 
-	public void setComentariosIda(StringBuffer comentariosIda) {
-		this.comentariosIda = comentariosIda;
-	}
+    public void setComentariosIda(StringBuffer comentariosIda) {
+        this.comentariosIda = comentariosIda;
+    }
 
-	public StringBuffer getComentariosVuelta() {
-		return comentariosVuelta;
-	}
+    public StringBuffer getComentariosVuelta() {
+        return comentariosVuelta;
+    }
 
-	public void setComentariosVuelta(StringBuffer comentariosVuelta) {
-		this.comentariosVuelta = comentariosVuelta;
-	}
+    public void setComentariosVuelta(StringBuffer comentariosVuelta) {
+        this.comentariosVuelta = comentariosVuelta;
+    }
 
-	
+
 }

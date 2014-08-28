@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,10 @@
  */
 package alberapps.java.actualizador;
 
+import android.os.Environment;
+
+import org.apache.http.protocol.HTTP;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,329 +29,317 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.protocol.HTTP;
-
-import alberapps.java.tam.lineas.DatosLinea;
 import alberapps.java.util.Conectividad;
-import android.os.Environment;
 
 /**
- * 
  * Descarga de actualizaciones de la base de datos
- * 
  */
 public class DescargarActualizaBD {
 
-	public static final String URL_CONTROL_ACTUALIZA = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/infoupdate.txt";
-	
-	public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineas";
-	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido";
-	public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido2";
+    public static final String URL_CONTROL_ACTUALIZA = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/infoupdate.txt";
 
-	public static final String PRECARGA_INFOLINEAS = "precargainfolineas_dw";
-	public static final String PRECARGA_INFOLINEAS_RECORRIDO_1 = "precargainfolineasrecorrido_dw";
-	public static final String PRECARGA_INFOLINEAS_RECORRIDO_2 = "precargainfolineasrecorrido2_dw";
+    public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineas";
+    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido";
+    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido2";
 
-	public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
+    public static final String PRECARGA_INFOLINEAS = "precargainfolineas_dw";
+    public static final String PRECARGA_INFOLINEAS_RECORRIDO_1 = "precargainfolineasrecorrido_dw";
+    public static final String PRECARGA_INFOLINEAS_RECORRIDO_2 = "precargainfolineasrecorrido2_dw";
 
-	public static final String BD_DESCARGA = "descarga";
+    public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
 
-	/**
-	 * Iniciar el proceso de actualizacion
-	 * 
-	 * @return boolean
-	 */
-	public static boolean iniciarActualizacion() {
+    public static final String BD_DESCARGA = "descarga";
 
-		boolean resultado = descargarArchivos();
+    /**
+     * Iniciar el proceso de actualizacion
+     *
+     * @return boolean
+     */
+    public static boolean iniciarActualizacion() {
 
-		return resultado;
+        boolean resultado = descargarArchivos();
 
-	}
+        return resultado;
 
-	/**
-	 * Descargar todos los archivos de actualizacion
-	 * 
-	 * @return boolean
-	 */
-	public static boolean descargarArchivos() {
+    }
 
-		// precargainfolineas
-		if (descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS, PRECARGA_INFOLINEAS) &&
-		// precargainfolineasrecorrido
-				descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_1, PRECARGA_INFOLINEAS_RECORRIDO_1) &&
-				// precargainfolineasrecorrido2
-				descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_2, PRECARGA_INFOLINEAS_RECORRIDO_2)) {
+    /**
+     * Descargar todos los archivos de actualizacion
+     *
+     * @return boolean
+     */
+    public static boolean descargarArchivos() {
 
-			return true;
+        // precargainfolineas
+        if (descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS, PRECARGA_INFOLINEAS) &&
+                // precargainfolineasrecorrido
+                descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_1, PRECARGA_INFOLINEAS_RECORRIDO_1) &&
+                // precargainfolineasrecorrido2
+                descargarArchivoActualizacion(URL_PRECARGA_INFOLINEAS_RECORRIDO_2, PRECARGA_INFOLINEAS_RECORRIDO_2)) {
 
-		} else {
-			return false;
-		}
+            return true;
 
-	}
+        } else {
+            return false;
+        }
 
-	/**
-	 * Descargar archivo
-	 * 
-	 * @param url
-	 * @param archivo
-	 * @return boolean
-	 */
-	public static boolean descargarArchivoActualizacion(String url, String archivo) {
+    }
 
-		boolean resultado = false;
+    /**
+     * Descargar archivo
+     *
+     * @param url
+     * @param archivo
+     * @return boolean
+     */
+    public static boolean descargarArchivoActualizacion(String url, String archivo) {
 
-		InputStream is = null;
+        boolean resultado = false;
 
-		FileOutputStream fileExport = null;
+        InputStream is = null;
 
-		try {
+        FileOutputStream fileExport = null;
 
-			is = Conectividad.conexionGetIsoStream(url);
+        try {
 
-			if (is != null) {
+            is = Conectividad.conexionGetIsoStream(url);
 
-				// Copiar fichero al sistema de archivos
-				// directorio de memoria interna
-				File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
-				directorio.mkdirs();
+            if (is != null) {
 
-				File fileEx = null;
-				fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, archivo);
+                // Copiar fichero al sistema de archivos
+                // directorio de memoria interna
+                File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
+                directorio.mkdirs();
 
-				fileEx.createNewFile();
+                File fileEx = null;
+                fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, archivo);
 
-				fileExport = new FileOutputStream(fileEx);
+                fileEx.createNewFile();
 
-				copyFileI(is, fileExport);
+                fileExport = new FileOutputStream(fileEx);
 
-				fileExport.flush();
+                copyFileI(is, fileExport);
 
-				resultado = true;
+                fileExport.flush();
 
-			} else {
+                resultado = true;
 
-				resultado = false;
+            } else {
 
-			}
+                resultado = false;
 
-		} catch (Exception e) {
+            }
 
-			resultado = false;
+        } catch (Exception e) {
 
-		} finally {
-			try {
-				if (is != null) {
-					is.close();
-				}
-			} catch (IOException e) {
-
-			}
-
-			if (fileExport != null) {
-				try {
-
-					fileExport.close();
+            resultado = false;
 
-					fileExport = null;
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
 
-				} catch (IOException e) {
+            }
 
-				}
-			}
+            if (fileExport != null) {
+                try {
 
-		}
+                    fileExport.close();
 
-		return resultado;
+                    fileExport = null;
 
-	}
+                } catch (IOException e) {
 
-	/**
-	 * Borrar archivos de actualizacion
-	 */
-	public static void borrarArchivosLineas(){
-		
-		File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
-		
-		//Borrar
-		file1.delete();
-		
-	}
-	
-	
-	/**
-	 * Borrar archivos de actualizacion
-	 */
-	public static void borrarArchivosRecorridos(){
-		
-		File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
-		File file3 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
-		
-		//Borrar
-		file2.delete();
-		file3.delete();
-		
-	}
-	
-	
-	
-	/**
-	 * Copiar archivo
-	 * 
-	 * @param in
-	 * @param out
-	 * @throws IOException
-	 */
-	private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
+                }
+            }
 
-		byte[] buffer = new byte[1024];
-		int read;
+        }
 
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
+        return resultado;
 
-	}
+    }
 
-	/**
-	 * 
-	 * inputStream infolineas
-	 * 
-	 * @return is
-	 */
-	public static InputStream inputStreamInfolineas() {
+    /**
+     * Borrar archivos de actualizacion
+     */
+    public static void borrarArchivosLineas() {
 
-		FileInputStream fileEXIE = null;
+        File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
 
-		File fileEx = null;
+        //Borrar
+        file1.delete();
 
-		try {
+    }
 
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
 
-			fileEXIE = new FileInputStream(fileEx);
+    /**
+     * Borrar archivos de actualizacion
+     */
+    public static void borrarArchivosRecorridos() {
 
-		} catch (IOException e) {
+        File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
+        File file3 = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
 
-		}
+        //Borrar
+        file2.delete();
+        file3.delete();
 
-		return fileEXIE;
+    }
 
-	}
 
-	/**
-	 * inputStream infolineasrecorrido1
-	 * 
-	 * @return is
-	 */
-	public static InputStream inputStreamInfolineasRecorrido1() {
+    /**
+     * Copiar archivo
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
 
-		FileInputStream fileEXIE = null;
+        byte[] buffer = new byte[1024];
+        int read;
 
-		File fileEx = null;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
 
-		try {
+    }
 
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
+    /**
+     * inputStream infolineas
+     *
+     * @return is
+     */
+    public static InputStream inputStreamInfolineas() {
 
-			fileEXIE = new FileInputStream(fileEx);
+        FileInputStream fileEXIE = null;
 
-		} catch (IOException e) {
+        File fileEx = null;
 
-		}
+        try {
 
-		return fileEXIE;
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS);
 
-	}
+            fileEXIE = new FileInputStream(fileEx);
 
-	/**
-	 * nputStream infolineasrecorrido2
-	 * 
-	 * @return is
-	 */
-	public static InputStream inputStreamInfolineasRecorrido2() {
+        } catch (IOException e) {
 
-		FileInputStream fileEXIE = null;
+        }
 
-		File fileEx = null;
+        return fileEXIE;
 
-		try {
+    }
 
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
+    /**
+     * inputStream infolineasrecorrido1
+     *
+     * @return is
+     */
+    public static InputStream inputStreamInfolineasRecorrido1() {
 
-			fileEXIE = new FileInputStream(fileEx);
+        FileInputStream fileEXIE = null;
 
-		} catch (IOException e) {
+        File fileEx = null;
 
-		}
+        try {
 
-		return fileEXIE;
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_1);
 
-	}
+            fileEXIE = new FileInputStream(fileEx);
 
-	
-	
-	public static String controlActualizacion() {
+        } catch (IOException e) {
 
-		String actualizar = null;
+        }
 
-		InputStream is = null;
+        return fileEXIE;
 
-		try {
+    }
 
-			is = Conectividad.conexionGetUtf8Stream(URL_CONTROL_ACTUALIZA);
-			
-			if (is != null) {
+    /**
+     * nputStream infolineasrecorrido2
+     *
+     * @return is
+     */
+    public static InputStream inputStreamInfolineasRecorrido2() {
 
-				BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
+        FileInputStream fileEXIE = null;
 
-				String l = "";
+        File fileEx = null;
 
-				
-				int linea = 0;
+        try {
 
-				while ((l = input.readLine()) != null) {
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, PRECARGA_INFOLINEAS_RECORRIDO_2);
 
-					//Si actualizar
-					if(linea == 0 && !l.equals("true")){
-						break;						
-					}else if(linea == 1){
-						
-						actualizar = l;
-						
-					}else if(linea > 1){
-						break;
-					}
-					
-					linea++;
+            fileEXIE = new FileInputStream(fileEx);
 
-				}
+        } catch (IOException e) {
 
-				
+        }
 
-			} else {
-				actualizar = null;
-			}
+        return fileEXIE;
 
-		} catch (Exception e) {
+    }
 
-			actualizar = null;
-			
-		} finally {
-			try {
-				if(is != null){
-					is.close();
-				}
-			} catch (IOException e) {
 
-			}
-		}
+    public static String controlActualizacion() {
 
-		return actualizar;
-	}
-	
+        String actualizar = null;
+
+        InputStream is = null;
+
+        try {
+
+            is = Conectividad.conexionGetUtf8Stream(URL_CONTROL_ACTUALIZA);
+
+            if (is != null) {
+
+                BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
+
+                String l = "";
+
+
+                int linea = 0;
+
+                while ((l = input.readLine()) != null) {
+
+                    //Si actualizar
+                    if (linea == 0 && !l.equals("true")) {
+                        break;
+                    } else if (linea == 1) {
+
+                        actualizar = l;
+
+                    } else if (linea > 1) {
+                        break;
+                    }
+
+                    linea++;
+
+                }
+
+
+            } else {
+                actualizar = null;
+            }
+
+        } catch (Exception e) {
+
+            actualizar = null;
+
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+
+            }
+        }
+
+        return actualizar;
+    }
+
 }

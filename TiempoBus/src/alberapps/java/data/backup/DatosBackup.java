@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -29,249 +29,246 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 /**
- * 
  * Gestion de copias de seguridad
- * 
- * 
  */
 public class DatosBackup {
 
-	/**
-	 * Exportar la base de datos
-	 * 
-	 * @return boolean
-	 */
-	public static boolean exportar(boolean respaldo) {
+    /**
+     * Exportar la base de datos
+     *
+     * @return boolean
+     */
+    public static boolean exportar(boolean respaldo) {
 
-		if (isSDCARDMounted()) {
+        if (isSDCARDMounted()) {
 
-			boolean control = false;
+            boolean control = false;
 
-			// directorio de sd
-			File directorio = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/");
-			directorio.mkdirs();
+            // directorio de sd
+            File directorio = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/");
+            directorio.mkdirs();
 
-			FileInputStream baseDatos = null;
-			FileOutputStream fileExport = null;
+            FileInputStream baseDatos = null;
+            FileOutputStream fileExport = null;
 
-			try {
+            try {
 
-				// fichero de db
-				File fileEx = null;
+                // fichero de db
+                File fileEx = null;
 
-				// Copia de respaldo para posible fallo en importacion
-				if (!respaldo) {
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.db");
+                // Copia de respaldo para posible fallo en importacion
+                if (!respaldo) {
+                    fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.db");
 
-				} else {
+                } else {
 
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+                    fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
 
-				}
+                }
 
-				fileEx.createNewFile();
+                fileEx.createNewFile();
 
-				fileExport = new FileOutputStream(fileEx);
+                fileExport = new FileOutputStream(fileEx);
 
-				// base de datos
-				baseDatos = new FileInputStream(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+                // base de datos
+                baseDatos = new FileInputStream(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
 
-				copyFile(baseDatos, fileExport);
+                copyFile(baseDatos, fileExport);
 
-				fileExport.flush();
+                fileExport.flush();
 
-				control = true;
+                control = true;
 
-			} catch (IOException e) {
-				control = false;
-			} finally {
+            } catch (IOException e) {
+                control = false;
+            } finally {
 
-				if (baseDatos != null) {
-					try {
-						baseDatos.close();
-						baseDatos = null;
-					} catch (IOException e) {
+                if (baseDatos != null) {
+                    try {
+                        baseDatos.close();
+                        baseDatos = null;
+                    } catch (IOException e) {
 
-					}
-				}
-				if (fileExport != null) {
-					try {
+                    }
+                }
+                if (fileExport != null) {
+                    try {
 
-						fileExport.close();
+                        fileExport.close();
 
-						fileExport = null;
+                        fileExport = null;
 
-					} catch (IOException e) {
+                    } catch (IOException e) {
 
-					}
-				}
+                    }
+                }
 
-			}
+            }
 
-			return control;
+            return control;
 
-		} else {
-			return false;
-		}
+        } else {
+            return false;
+        }
 
-	}
+    }
 
-	/**
-	 * Sobreescribir la base de datos
-	 * 
-	 * @return boolean
-	 */
-	public static boolean recuperar(boolean respaldo) {
-		if (isSDCARDMounted()) {
+    /**
+     * Sobreescribir la base de datos
+     *
+     * @return boolean
+     */
+    public static boolean recuperar(boolean respaldo) {
+        if (isSDCARDMounted()) {
 
-			// Copia de respaldo para posible fallo
-			exportar(true);
+            // Copia de respaldo para posible fallo
+            exportar(true);
 
-			FileInputStream fileEXIE = null;
-			FileOutputStream baseDatosE = null;
+            FileInputStream fileEXIE = null;
+            FileOutputStream baseDatosE = null;
 
-			boolean control = false;
+            boolean control = false;
 
-			try {
-				File fileEx = null;
+            try {
+                File fileEx = null;
 
-				// Copia de recuperacion
-				if (!respaldo) {
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.db");
-				} else {
-					fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
-				}
+                // Copia de recuperacion
+                if (!respaldo) {
+                    fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.db");
+                } else {
+                    fileEx = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/backup/", "tiempoBusDB.restore.db");
+                }
 
-				if (!fileEx.exists()) {
-					return false;
-				}
+                if (!fileEx.exists()) {
+                    return false;
+                }
 
-				if (!verificarArchivoBD(fileEx)) {
-					return false;
-				}
+                if (!verificarArchivoBD(fileEx)) {
+                    return false;
+                }
 
-				fileEXIE = new FileInputStream(fileEx);
+                fileEXIE = new FileInputStream(fileEx);
 
-				File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+                File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
 
-				baseDatos.createNewFile();
+                baseDatos.createNewFile();
 
-				baseDatosE = new FileOutputStream(baseDatos);
+                baseDatosE = new FileOutputStream(baseDatos);
 
-				copyFile(fileEXIE, baseDatosE);
+                copyFile(fileEXIE, baseDatosE);
 
-				control = true;
-			} catch (IOException e) {
+                control = true;
+            } catch (IOException e) {
 
-				// Recuperar respaldo
-				recuperar(true);
+                // Recuperar respaldo
+                recuperar(true);
 
-				control = false;
-			} finally {
-				if (fileEXIE != null) {
-					try {
-						fileEXIE.close();
-						fileEXIE = null;
-					} catch (IOException e) {
-
-					}
-				}
-
-				if (baseDatosE != null) {
-					try {
-						baseDatosE.close();
-						baseDatosE = null;
-					} catch (IOException e) {
-
-					}
-				}
-
-			}
-
-			return control;
-
-		} else {
-			return false;
-		}
-
-	}
-
-	/**
-	 * Comprobaciones
-	 * 
-	 * @param db
-	 * @return boolean
-	 */
-	public static boolean verificarArchivoBD(File db) {
-
-		SQLiteDatabase sqlDb = null;
-		Cursor cursor = null;
-
-		try {
-			sqlDb = SQLiteDatabase.openDatabase(db.getPath(), null, SQLiteDatabase.OPEN_READONLY);
-
-			cursor = sqlDb.query(true, "favoritos", null, null, null, null, null, null, null);
-
-			String[] columnas = { "poste", "titulo", "descripcion" };
-
-			String s;
-			for (int i = 0; i < columnas.length; i++) {
-				s = columnas[i];
-				cursor.getColumnIndexOrThrow(s);
-			}
-
-		} catch (Exception e) {
-			// No valida
-			return false;
-		} finally {
-			sqlDb.close();
-			cursor.close();
-		}
-
-		return true;
-	}
-
-	/**
-	 * Copiar archivo
-	 * 
-	 * @param in
-	 * @param out
-	 * @throws IOException
-	 */
-	private static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
-
-		byte[] buffer = new byte[1024];
-		int read;
-
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
-
-	}
-	
-	private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
-
-		byte[] buffer = new byte[1024];
-		int read;
-
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
-
-	}
-
-	/**
-	 * tarjeta SD disponible
-	 * 
-	 * @return boolean
-	 */
-	private static boolean isSDCARDMounted() {
-		String status = Environment.getExternalStorageState();
-		if (status.equals(Environment.MEDIA_MOUNTED))
-			return true;
-		return false;
-	}
-	
+                control = false;
+            } finally {
+                if (fileEXIE != null) {
+                    try {
+                        fileEXIE.close();
+                        fileEXIE = null;
+                    } catch (IOException e) {
+
+                    }
+                }
+
+                if (baseDatosE != null) {
+                    try {
+                        baseDatosE.close();
+                        baseDatosE = null;
+                    } catch (IOException e) {
+
+                    }
+                }
+
+            }
+
+            return control;
+
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Comprobaciones
+     *
+     * @param db
+     * @return boolean
+     */
+    public static boolean verificarArchivoBD(File db) {
+
+        SQLiteDatabase sqlDb = null;
+        Cursor cursor = null;
+
+        try {
+            sqlDb = SQLiteDatabase.openDatabase(db.getPath(), null, SQLiteDatabase.OPEN_READONLY);
+
+            cursor = sqlDb.query(true, "favoritos", null, null, null, null, null, null, null);
+
+            String[] columnas = {"poste", "titulo", "descripcion"};
+
+            String s;
+            for (int i = 0; i < columnas.length; i++) {
+                s = columnas[i];
+                cursor.getColumnIndexOrThrow(s);
+            }
+
+        } catch (Exception e) {
+            // No valida
+            return false;
+        } finally {
+            sqlDb.close();
+            cursor.close();
+        }
+
+        return true;
+    }
+
+    /**
+     * Copiar archivo
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
+
+        byte[] buffer = new byte[1024];
+        int read;
+
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+
+    }
+
+    private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
+
+        byte[] buffer = new byte[1024];
+        int read;
+
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+
+    }
+
+    /**
+     * tarjeta SD disponible
+     *
+     * @return boolean
+     */
+    private static boolean isSDCARDMounted() {
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED))
+            return true;
+        return false;
+    }
+
 	
 	
 	
@@ -323,7 +320,6 @@ public class DatosBackup {
 	} 
 	
 	}*/
-	
-	
+
 
 }

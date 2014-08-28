@@ -24,27 +24,26 @@ import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
 
 /**
  * Consulta de poscion de vehiculos
- * 
  */
 public class ProcesarVehiculosService {
 
-	/**
-	 * Procesa vehiculos
-	 * 
-	 * @param linea
-	 * @return lista
-	 * @throws Exception
-	 */
+    /**
+     * Procesa vehiculos
+     *
+     * @param linea
+     * @return lista
+     * @throws Exception
+     */
 
-	public static List<InfoVehiculo> procesaVehiculos(String linea) throws Exception {
+    public static List<InfoVehiculo> procesaVehiculos(String linea) throws Exception {
 
-		GetVehiculosXmlWebservice service = new GetVehiculosXmlWebservice();
+        GetVehiculosXmlWebservice service = new GetVehiculosXmlWebservice();
 
-		List<InfoVehiculo> vehiculosList = null;
+        List<InfoVehiculo> vehiculosList = null;
 
-		vehiculosList = service.consultarServicio(linea).getInfoVehiculoList();
+        vehiculosList = service.consultarServicio(linea).getInfoVehiculoList();
 
-		return vehiculosList;
-	}
+        return vehiculosList;
+    }
 
 }

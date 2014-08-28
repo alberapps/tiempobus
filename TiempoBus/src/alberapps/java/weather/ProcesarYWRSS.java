@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,15 @@
  */
 package alberapps.java.weather;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.Html;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,216 +35,206 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import alberapps.java.util.Conectividad;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.text.Html;
 
 /**
  * Procesar informacion del tiempo de yahoo
- * 
- * 
  */
 public class ProcesarYWRSS {
 
-	public static final String URL = "http://weather.yahooapis.com/forecastrss?w=752101&u=c";
+    public static final String URL = "http://weather.yahooapis.com/forecastrss?w=752101&u=c";
 
-	public static final String URL_IMAGEN = "http://l.yimg.com/a/i/us/we/52/"; // 28.gif";
+    public static final String URL_IMAGEN = "http://l.yimg.com/a/i/us/we/52/"; // 28.gif";
 
-	/**
-	 * Datos del clima
-	 * 
-	 * @return clima
-	 * @throws Exception
-	 */
-	public static WeatherQuery getDatosClima() throws Exception {
+    /**
+     * Datos del clima
+     *
+     * @return clima
+     * @throws Exception
+     */
+    public static WeatherQuery getDatosClima() throws Exception {
 
-		WeatherQuery resultados = new WeatherQuery();
+        WeatherQuery resultados = new WeatherQuery();
 
-		resultados.setListaDatos(parsea(URL));
+        resultados.setListaDatos(parsea(URL));
 
-		return resultados;
+        return resultados;
 
-	}
+    }
 
-	/**
-	 * Parsear los datos RSS de yahoo
-	 * 
-	 * @param urlEntrada
-	 * @return datos
-	 */
-	public static List<WeatherData> parsea(String urlEntrada) {
+    /**
+     * Parsear los datos RSS de yahoo
+     *
+     * @param urlEntrada
+     * @return datos
+     */
+    public static List<WeatherData> parsea(String urlEntrada) {
 
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		List<WeatherData> listaWeather = new ArrayList<WeatherData>();
-		WeatherData data = null;
+        List<WeatherData> listaWeather = new ArrayList<WeatherData>();
+        WeatherData data = null;
 
-		InputStream st = null;
+        InputStream st = null;
 
-		try {
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			st = Conectividad.conexionGetIsoStream(urlEntrada);
-			Document dom = builder.parse(st);
-			Element root = dom.getDocumentElement();
-			NodeList items = root.getElementsByTagName("item");
-			for (int i = 0; i < items.getLength(); i++) {
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            st = Conectividad.conexionGetIsoStream(urlEntrada);
+            Document dom = builder.parse(st);
+            Element root = dom.getDocumentElement();
+            NodeList items = root.getElementsByTagName("item");
+            for (int i = 0; i < items.getLength(); i++) {
 
-				data = new WeatherData();
+                data = new WeatherData();
 
-				Node item = items.item(i);
-				NodeList properties = item.getChildNodes();
-				for (int j = 0; j < properties.getLength(); j++) {
-					Node property = properties.item(j);
-					String name = property.getNodeName();
-					if (name.equalsIgnoreCase("title")) {
+                Node item = items.item(i);
+                NodeList properties = item.getChildNodes();
+                for (int j = 0; j < properties.getLength(); j++) {
+                    Node property = properties.item(j);
+                    String name = property.getNodeName();
+                    if (name.equalsIgnoreCase("title")) {
 
-						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
-						data.setTitle(textoProc);
+                        data.setTitle(textoProc);
 
-					} else if (name.equalsIgnoreCase("link")) {
+                    } else if (name.equalsIgnoreCase("link")) {
 
-						data.setLink(property.getFirstChild().getNodeValue());
+                        data.setLink(property.getFirstChild().getNodeValue());
 
-					} else if (name.equalsIgnoreCase("description")) {
+                    } else if (name.equalsIgnoreCase("description")) {
 
-						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
-						data.setDescription(textoProc);
+                        data.setDescription(textoProc);
 
-					} else if (name.equalsIgnoreCase("geo:lat")) {
+                    } else if (name.equalsIgnoreCase("geo:lat")) {
 
-						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
-						data.setGeolat(textoProc);
+                        data.setGeolat(textoProc);
 
-					} else if (name.equalsIgnoreCase("geo:long")) {
+                    } else if (name.equalsIgnoreCase("geo:long")) {
 
-						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
-						data.setGeolong(textoProc);
+                        data.setGeolong(textoProc);
 
-					} else if (name.equalsIgnoreCase("pubDate")) {
+                    } else if (name.equalsIgnoreCase("pubDate")) {
 
-						String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
 
-						data.setPubDate(textoProc);
+                        data.setPubDate(textoProc);
 
-					} else if (name.equalsIgnoreCase("yweather:condition")) {
+                    } else if (name.equalsIgnoreCase("yweather:condition")) {
 
-						for (int k = 0; k < property.getAttributes().getLength(); k++) {
+                        for (int k = 0; k < property.getAttributes().getLength(); k++) {
 
-							if (property.getAttributes().item(k).getNodeName().equals("text")) {
+                            if (property.getAttributes().item(k).getNodeName().equals("text")) {
 
-								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+                                String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
 
-								data.setContitionText(textoProc);
+                                data.setContitionText(textoProc);
 
-							} else if (property.getAttributes().item(k).getNodeName().equals("code")) {
+                            } else if (property.getAttributes().item(k).getNodeName().equals("code")) {
 
-								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+                                String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
 
-								data.setContitionCode(textoProc);
+                                data.setContitionCode(textoProc);
 
-								// Imagen
-								data.setImagen(recuperaImagen(URL_IMAGEN + textoProc + ".gif"));
+                                // Imagen
+                                data.setImagen(recuperaImagen(URL_IMAGEN + textoProc + ".gif"));
 
-							} else if (property.getAttributes().item(k).getNodeName().equals("temp")) {
+                            } else if (property.getAttributes().item(k).getNodeName().equals("temp")) {
 
-								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+                                String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
 
-								data.setContitionTemp(textoProc);
+                                data.setContitionTemp(textoProc);
 
-							}
+                            }
 
-						}
+                        }
 
-					} else if (name.equalsIgnoreCase("yweather:forecast")) {
+                    } else if (name.equalsIgnoreCase("yweather:forecast")) {
 
-						for (int k = 0; k < property.getAttributes().getLength(); k++) {
+                        for (int k = 0; k < property.getAttributes().getLength(); k++) {
 
-							if (property.getAttributes().item(k).getNodeName().equals("low")) {
+                            if (property.getAttributes().item(k).getNodeName().equals("low")) {
 
-								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+                                String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
 
-								data.setLow(textoProc);
+                                data.setLow(textoProc);
 
-							} else if (property.getAttributes().item(k).getNodeName().equals("high")) {
+                            } else if (property.getAttributes().item(k).getNodeName().equals("high")) {
 
-								String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
+                                String textoProc = (Html.fromHtml(property.getAttributes().item(k).getNodeValue())).toString();
 
-								data.setHigh(textoProc);
+                                data.setHigh(textoProc);
 
-							}
-						}
+                            }
+                        }
 
-						break;
+                        break;
 
-					}
+                    }
 
-				}
-				listaWeather.add(data);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
+                }
+                listaWeather.add(data);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
 
-			try {
-				if (st != null) {
-					st.close();
-				}
-			} catch (IOException eb) {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException eb) {
 
-			}
+            }
 
-		}
+        }
 
-		return listaWeather;
+        return listaWeather;
 
-	}
+    }
 
-	/**
-	 * Recuperar la imagen
-	 * 
-	 * @param urlParam
-	 * @return imagen
-	 */
-	private static Bitmap recuperaImagen(String urlParam) {
+    /**
+     * Recuperar la imagen
+     *
+     * @param urlParam
+     * @return imagen
+     */
+    private static Bitmap recuperaImagen(String urlParam) {
 
-		InputStream st = null;
+        InputStream st = null;
 
-		Bitmap bm = null;
+        Bitmap bm = null;
 
-		try {
+        try {
 
-			st = Conectividad.conexionGetIsoStream(urlParam);
+            st = Conectividad.conexionGetIsoStream(urlParam);
 
-			bm = BitmapFactory.decodeStream(st);
+            bm = BitmapFactory.decodeStream(st);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			bm = null;
+            bm = null;
 
-		} finally {
+        } finally {
 
-			try {
-				if (st != null) {
-					st.close();
-				}
-			} catch (IOException e) {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException e) {
 
-			}
+            }
 
-		}
+        }
 
-		return bm;
+        return bm;
 
-	}
+    }
 
 }

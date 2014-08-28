@@ -19,40 +19,42 @@ package alberapps.java.tram.webservice;
 
 import java.io.Serializable;
 
-public class InfoParada implements Serializable{
+public class InfoParada implements Serializable {
 
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7960399548980147983L;
-	
-	
-	private String minutos;
-	private String metros;
-	private String tipo;
-	
-	public String getMinutos() {
-		return minutos;
-	}
-	public void setMinutos(String minutos) {
-		this.minutos = minutos;
-	}
-	public String getMetros() {
-		return metros;
-	}
-	public void setMetros(String metros) {
-		this.metros = metros;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	
-	
-	
-	
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7960399548980147983L;
+
+
+    private String minutos;
+    private String metros;
+    private String tipo;
+
+    public String getMinutos() {
+        return minutos;
+    }
+
+    public void setMinutos(String minutos) {
+        this.minutos = minutos;
+    }
+
+    public String getMetros() {
+        return metros;
+    }
+
+    public void setMetros(String metros) {
+        this.metros = metros;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+
 }

@@ -26,42 +26,41 @@ import alberapps.java.tram.webservice.vehiculos.InfoCoche;
 
 /**
  * Consulta de poscion de vehiculos
- * 
  */
 public class ProcesarCochesService {
 
-	/**
-	 * Procesa vehiculos
-	 * 
-	 * @param linea
-	 * @return lista
-	 * @throws Exception
-	 */
+    /**
+     * Procesa vehiculos
+     *
+     * @param linea
+     * @return lista
+     * @throws Exception
+     */
 
-	public static List<InfoVehiculo> procesaVehiculos(String linea, int consulta) throws Exception {
+    public static List<InfoVehiculo> procesaVehiculos(String linea, int consulta) throws Exception {
 
-		GetCochesXmlWebservice service = new GetCochesXmlWebservice();
+        GetCochesXmlWebservice service = new GetCochesXmlWebservice();
 
-		List<InfoCoche> cochesList = null;
-		List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
+        List<InfoCoche> cochesList = null;
+        List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
 
-		cochesList = service.consultarServicio(linea, consulta).getInfoVehiculoList();
+        cochesList = service.consultarServicio(linea, consulta).getInfoVehiculoList();
 
-		if (cochesList == null) {
-			return null;
-		}
+        if (cochesList == null) {
+            return null;
+        }
 
-		InfoVehiculo iv = null;
+        InfoVehiculo iv = null;
 
-		for (int i = 0; i < cochesList.size(); i++) {
+        for (int i = 0; i < cochesList.size(); i++) {
 
-			iv = cochesList.get(i).toInfoVehiculo();
+            iv = cochesList.get(i).toInfoVehiculo();
 
-			vehiculosList.add(iv);
+            vehiculosList.add(iv);
 
-		}
+        }
 
-		return vehiculosList;
-	}
+        return vehiculosList;
+    }
 
 }

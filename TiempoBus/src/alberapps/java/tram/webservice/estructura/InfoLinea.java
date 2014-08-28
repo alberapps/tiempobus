@@ -21,29 +21,29 @@ import java.io.Serializable;
 
 public class InfoLinea implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -765272789806627206L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -765272789806627206L;
 
-	private String label;
+    private String label;
 
-	private String nombre;
+    private String nombre;
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
 }

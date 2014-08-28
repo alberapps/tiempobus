@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- *  
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -31,263 +31,258 @@ import alberapps.java.tram.webservice.GetPasoParadaXmlWebservice;
 
 /**
  * Consulta de tiempos TRAM
- * 
  */
 public class ProcesarTiemposTramIsaeService {
 
-	private static GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+    private static GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
-	/**
-	 * Procesa tiempos
-	 * 
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
+    /**
+     * Procesa tiempos
+     *
+     * @param parada
+     * @return
+     * @throws Exception
+     */
 
-	public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta) throws Exception {
 
-		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
-		ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
 
-		// ProcesarTiemposTramService.enviarDebug("Inicia proceso para parada= "
-		// + parada);
+        // ProcesarTiemposTramService.enviarDebug("Inicia proceso para parada= "
+        // + parada);
 
-		// for (int i = 0; i < UtilidadesTRAM.LINEAS_A_CONSULTAR.length; i++) {
+        // for (int i = 0; i < UtilidadesTRAM.LINEAS_A_CONSULTAR.length; i++) {
 
-		try {
+        try {
 
-			// busesList =
-			// getParadaConLineaTRAM(UtilidadesTRAM.LINEAS_A_CONSULTAR[i],
-			// Integer.toString(parada), consulta);
+            // busesList =
+            // getParadaConLineaTRAM(UtilidadesTRAM.LINEAS_A_CONSULTAR[i],
+            // Integer.toString(parada), consulta);
 
-			// Nuevo modo de consulta. * recupera todas las lineas
-			busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta);
+            // Nuevo modo de consulta. * recupera todas las lineas
+            busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta);
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			Log.d("TIEMPOS TRAM", "TRAM: " + e.getMessage());
+            Log.d("TIEMPOS TRAM", "TRAM: " + e.getMessage());
 
-			// ProcesarTiemposTramService.enviarDebug("Error procesado= " +
-			// e.getMessage() + " - " + e.getClass());
+            // ProcesarTiemposTramService.enviarDebug("Error procesado= " +
+            // e.getMessage() + " - " + e.getClass());
 
-			busesList = null;
+            busesList = null;
 
-			throw e;
-		}
+            throw e;
+        }
 
-		if (busesList != null) {
-			buses.addAll(busesList);
-		}
+        if (busesList != null) {
+            buses.addAll(busesList);
+        }
 
-		// }
+        // }
 
-		// ProcesarTiemposTramService.enviarDebug("Proceso finalizado para: " +
-		// parada + " resultados= " + buses.size());
+        // ProcesarTiemposTramService.enviarDebug("Proceso finalizado para: " +
+        // parada + " resultados= " + buses.size());
 
-		// Control errores del status
-		if (buses == null || buses.isEmpty()) {
+        // Control errores del status
+        if (buses == null || buses.isEmpty()) {
 
-			throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
+            throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
 
-		}
+        }
 
-		Collections.sort(buses);
-		return buses;
-	}
+        Collections.sort(buses);
+        return buses;
+    }
 
-	public static void combinarRegistros(List<BusLlegada> busesList) {
+    public static void combinarRegistros(List<BusLlegada> busesList) {
 
-		for (int i = 0; i < busesList.size(); i++) {
-			for (int j = 0; j < busesList.size(); j++) {
-				if (i != j && busesList.get(i).getLinea().equals(busesList.get(j).getLinea()) && busesList.get(i).getDestino().equals(busesList.get(j).getDestino())) {
+        for (int i = 0; i < busesList.size(); i++) {
+            for (int j = 0; j < busesList.size(); j++) {
+                if (i != j && busesList.get(i).getLinea().equals(busesList.get(j).getLinea()) && busesList.get(i).getDestino().equals(busesList.get(j).getDestino())) {
 
-					// Añadir como repetido
-					busesList.get(i).setSegundoTram(busesList.remove(j));
+                    // Añadir como repetido
+                    busesList.get(i).setSegundoTram(busesList.remove(j));
 
-					Log.d("TRAM", "Unificados registros: " + busesList.get(i).getLinea() + " - " + busesList.get(i).getSegundoTram().getLinea());
+                    Log.d("TRAM", "Unificados registros: " + busesList.get(i).getLinea() + " - " + busesList.get(i).getSegundoTram().getLinea());
 
-					j = 0;
+                    j = 0;
 
-					ordenarTiempos(busesList.get(i));
+                    ordenarTiempos(busesList.get(i));
 
-					// Si el tercero es mayor que el maximo
-					if (busesList.get(i).getSegundoTram().getSiguienteMinutos() > 60) {
-						busesList.get(i).getSegundoTram().cambiarSiguiente(9999);
-					}
+                    // Si el tercero es mayor que el maximo
+                    if (busesList.get(i).getSegundoTram().getSiguienteMinutos() > 60) {
+                        busesList.get(i).getSegundoTram().cambiarSiguiente(9999);
+                    }
 
-					// Eliminar si excede tiempo maximo
-					if (busesList.get(i).getSegundoTram().getProximoMinutos() > 60 || busesList.get(i).getSegundoTram().getProximoMinutos() < 0) {
-						busesList.get(i).setSegundoTram(null);
-					}
-					
-					continue;
+                    // Eliminar si excede tiempo maximo
+                    if (busesList.get(i).getSegundoTram().getProximoMinutos() > 60 || busesList.get(i).getSegundoTram().getProximoMinutos() < 0) {
+                        busesList.get(i).setSegundoTram(null);
+                    }
 
-				}
-			}
+                    continue;
 
-		}
+                }
+            }
 
-	}
+        }
 
-	/**
-	 * Ordenacion de los tiempos en caso de repetirse
-	 * 
-	 * @param bus
-	 */
-	private static void ordenarTiempos(BusLlegada bus) {
+    }
 
-		Log.d("TRAM", "REORDENAR");
+    /**
+     * Ordenacion de los tiempos en caso de repetirse
+     *
+     * @param bus
+     */
+    private static void ordenarTiempos(BusLlegada bus) {
 
-		Integer tiempo1 = bus.getProximoMinutos();
-		Integer tiempo2 = bus.getSiguienteMinutos();
-		Integer tiempo3 = bus.getSegundoTram().getProximoMinutos();
-		Integer tiempo4 = bus.getSegundoTram().getSiguienteMinutos();
+        Log.d("TRAM", "REORDENAR");
 
-		List<Integer> lista = Arrays.asList(tiempo1, tiempo2, tiempo3, tiempo4);
+        Integer tiempo1 = bus.getProximoMinutos();
+        Integer tiempo2 = bus.getSiguienteMinutos();
+        Integer tiempo3 = bus.getSegundoTram().getProximoMinutos();
+        Integer tiempo4 = bus.getSegundoTram().getSiguienteMinutos();
 
-		Collections.sort(lista);
+        List<Integer> lista = Arrays.asList(tiempo1, tiempo2, tiempo3, tiempo4);
 
-		bus.cambiarProximo(lista.get(0));
-		bus.cambiarSiguiente(lista.get(1));
-		bus.getSegundoTram().cambiarProximo(lista.get(2));
-		bus.getSegundoTram().cambiarSiguiente(lista.get(3));
+        Collections.sort(lista);
 
-		Log.d("TRAM", "REORDENAR: " + bus.getProximo());
-		Log.d("TRAM", "REORDENAR2: " + bus.getSegundoTram().getProximo());
+        bus.cambiarProximo(lista.get(0));
+        bus.cambiarSiguiente(lista.get(1));
+        bus.getSegundoTram().cambiarProximo(lista.get(2));
+        bus.getSegundoTram().cambiarSiguiente(lista.get(3));
 
-		
+        Log.d("TRAM", "REORDENAR: " + bus.getProximo());
+        Log.d("TRAM", "REORDENAR2: " + bus.getSegundoTram().getProximo());
 
-	}
 
-	/**
-	 * 
-	 * @param linea
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
-	public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta) throws Exception {
+    }
 
-		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+    /**
+     * @param linea
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta) throws Exception {
+
+        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
 
         //TODO PARCHE PARA PARADA LONDRES
-        if(parada.equals(UtilidadesTRAM.CODIGO_TRAM_LONDRES)){
+        if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_LONDRES)) {
 
             linea = UtilidadesTRAM.LINEAS_A_CONSULTAR[2];
 
         }
 
 
+        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta);
 
-		GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta);
+        for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 
-		for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
+            String infoSalidas = "";
 
-			String infoSalidas = "";
+            if (serviceResult.getPasoParadaList().get(i).getE1().getMinutos().substring(0, 1).equals("0")) {
 
-			if (serviceResult.getPasoParadaList().get(i).getE1().getMinutos().substring(0, 1).equals("0")) {
+                infoSalidas += "enlaparada";
 
-				infoSalidas += "enlaparada";
+            } else if (serviceResult.getPasoParadaList().get(i).getE1().getMinutos().substring(0, 1).equals("-")) {
 
-			} else if (serviceResult.getPasoParadaList().get(i).getE1().getMinutos().substring(0, 1).equals("-")) {
+                infoSalidas += "sinestimacion";
 
-				infoSalidas += "sinestimacion";
+            } else {
 
-			} else {
+                infoSalidas += serviceResult.getPasoParadaList().get(i).getE1().getMinutos();
 
-				infoSalidas += serviceResult.getPasoParadaList().get(i).getE1().getMinutos();
+            }
 
-			}
+            infoSalidas += ";";
 
-			infoSalidas += ";";
+            if (serviceResult.getPasoParadaList().get(i).getE2().getMinutos().substring(0, 2).equals("-1")) {
 
-			if (serviceResult.getPasoParadaList().get(i).getE2().getMinutos().substring(0, 2).equals("-1")) {
+                infoSalidas += "sinestimacion";
 
-				infoSalidas += "sinestimacion";
+            } else {
 
-			} else {
+                infoSalidas += serviceResult.getPasoParadaList().get(i).getE2().getMinutos();
 
-				infoSalidas += serviceResult.getPasoParadaList().get(i).getE2().getMinutos();
+            }
 
-			}
+            BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
 
-			BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
+            if (bus.getSiguienteMinutos() > 60) {
+                bus.cambiarSiguiente(9999);
+            }
 
-			if(bus.getSiguienteMinutos() > 60){
-				bus.cambiarSiguiente(9999);
-			}
-			
-			// >60min
-			if (bus.getProximoMinutos() > 60) {
-				// Quitar
-			} else {
-				buses.add(bus);
-			}
-			
-			
+            // >60min
+            if (bus.getProximoMinutos() > 60) {
+                // Quitar
+            } else {
+                buses.add(bus);
+            }
 
-			// Filtrar repetidos
-			combinarRegistros(buses);
 
-		}
+            // Filtrar repetidos
+            combinarRegistros(buses);
 
-		return buses;
-	}
+        }
 
-	/**
-	 * Recupera tiempos para una parada y linea indicadas
-	 * 
-	 * @param linea
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
+        return buses;
+    }
 
-	public static BusLlegada getParadaConLineaConDestino(String linea, String parada, String destino) throws Exception {
+    /**
+     * Recupera tiempos para una parada y linea indicadas
+     *
+     * @param linea
+     * @param parada
+     * @return
+     * @throws Exception
+     */
 
-		Log.d("TIEMPOS TRAM", "LINEA: " + linea + " PARADA: " + parada + " destino: " + destino);
+    public static BusLlegada getParadaConLineaConDestino(String linea, String parada, String destino) throws Exception {
 
-		BusLlegada buses = null;
+        Log.d("TIEMPOS TRAM", "LINEA: " + linea + " PARADA: " + parada + " destino: " + destino);
 
-		ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        BusLlegada buses = null;
 
-		try {
+        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
 
-			// busesList = getParadaConLineaTRAM(linea, parada,
-			// GetPasoParadaWebservice.URL1);
+        try {
 
-			// Cambio de metodo por discrepancias en cabeceras
-			busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1);
+            // busesList = getParadaConLineaTRAM(linea, parada,
+            // GetPasoParadaWebservice.URL1);
 
-			for (int i = 0; i < busesList.size(); i++) {
+            // Cambio de metodo por discrepancias en cabeceras
+            busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1);
 
-				if (busesList.get(i).getLinea().equals(linea) && busesList.get(i).getDestino().equals(destino)) {
+            for (int i = 0; i < busesList.size(); i++) {
 
-					if (busesList.get(i).getProximoMinutos() > -1 && busesList.get(i).getProximoMinutos() < 60) {
+                if (busesList.get(i).getLinea().equals(linea) && busesList.get(i).getDestino().equals(destino)) {
 
-						buses = busesList.get(i);
+                    if (busesList.get(i).getProximoMinutos() > -1 && busesList.get(i).getProximoMinutos() < 60) {
 
-						Log.d("TIEMPOS TRAM", "tiempo valido: " + buses.getProximo());
+                        buses = busesList.get(i);
 
-					}
+                        Log.d("TIEMPOS TRAM", "tiempo valido: " + buses.getProximo());
 
-				}
+                    }
 
-			}
+                }
 
-		} catch (Exception e) {
+            }
 
-			// ProcesarTiemposTramService.enviarDebug("Error procesado= " +
-			// e.getMessage() + " - " + e.getClass());
+        } catch (Exception e) {
 
-			buses = null;
-		}
+            // ProcesarTiemposTramService.enviarDebug("Error procesado= " +
+            // e.getMessage() + " - " + e.getClass());
 
-		return buses;
+            buses = null;
+        }
 
-	}
+        return buses;
+
+    }
 
 }

@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,14 @@
  */
 package alberapps.java.tam.mapas;
 
+import android.os.Build;
+import android.text.Html;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,356 +34,349 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import alberapps.java.util.Conectividad;
-import android.os.Build;
-import android.text.Html;
 
 public class ProcesarMapaService {
 
-	public static final int MODE_ANY = 0;
-	public static final int MODE_CAR = 1;
-	public static final int MODE_WALKING = 2;
+    public static final int MODE_ANY = 0;
+    public static final int MODE_CAR = 1;
+    public static final int MODE_WALKING = 2;
 
-	/**
-	 * Parsear fichero kml
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static DatosMapa getDatosMapa(String url) {
+    /**
+     * Parsear fichero kml
+     *
+     * @param url
+     * @return
+     */
+    public static DatosMapa getDatosMapa(String url) {
 
-		InputStream is = null;
+        InputStream is = null;
 
-		DatosMapa datosMapa = null;
-		try {
+        DatosMapa datosMapa = null;
+        try {
 
-			is = Conectividad.conexionGetIsoStream(url);
+            is = Conectividad.conexionGetIsoStream(url);
 
-			if (is != null) {
+            if (is != null) {
 
-				List<PlaceMark> lista = parse(is);
+                List<PlaceMark> lista = parse(is);
 
-				if (lista != null && !lista.isEmpty()) {
+                if (lista != null && !lista.isEmpty()) {
 
-					datosMapa = new DatosMapa();
+                    datosMapa = new DatosMapa();
 
-					datosMapa.setPlacemarks(lista);
+                    datosMapa.setPlacemarks(lista);
 
-					datosMapa.setCurrentPlacemark(lista.get(0));
+                    datosMapa.setCurrentPlacemark(lista.get(0));
 
-				} else {
+                } else {
 
-					datosMapa = null;
+                    datosMapa = null;
 
-				}
+                }
 
-			} else {
-				datosMapa = null;
-			}
+            } else {
+                datosMapa = null;
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			datosMapa = null;
-		} finally {
-			try {
-				is.close();
-			} catch (Exception e) {
+            datosMapa = null;
+        } finally {
+            try {
+                is.close();
+            } catch (Exception e) {
 
-			}
-		}
+            }
+        }
 
-		return datosMapa;
-	}
+        return datosMapa;
+    }
 
-	/**
-	 * Parsear entrada
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public static List<PlaceMark> parse(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
+    /**
+     * Parsear entrada
+     *
+     * @param is
+     * @return
+     */
+    public static List<PlaceMark> parse(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<PlaceMark> placeMarks = new ArrayList<PlaceMark>();
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
 
-			// Localizamos todos los elementos <Placemark>
-			NodeList items = root.getElementsByTagName("Placemark");
+            // Localizamos todos los elementos <Placemark>
+            NodeList items = root.getElementsByTagName("Placemark");
 
-			// Recorremos la lista de puntos
-			for (int i = 0; i < items.getLength(); i++) {
-				PlaceMark placeMark = new PlaceMark();
+            // Recorremos la lista de puntos
+            for (int i = 0; i < items.getLength(); i++) {
+                PlaceMark placeMark = new PlaceMark();
 
-				// Obtenemos la parada actual
-				Node item = items.item(i);
+                // Obtenemos la parada actual
+                Node item = items.item(i);
 
-				// Obtenemos la lista de datos de la parada actual
-				NodeList datosPlaceMark = item.getChildNodes();
+                // Obtenemos la lista de datos de la parada actual
+                NodeList datosPlaceMark = item.getChildNodes();
 
-				// Procesamos cada dato de la noticia
-				for (int j = 0; j < datosPlaceMark.getLength(); j++) {
-					Node dato = datosPlaceMark.item(j);
-					String etiqueta = dato.getNodeName();
+                // Procesamos cada dato de la noticia
+                for (int j = 0; j < datosPlaceMark.getLength(); j++) {
+                    Node dato = datosPlaceMark.item(j);
+                    String etiqueta = dato.getNodeName();
 
-					if (etiqueta.equals("description")) {
+                    if (etiqueta.equals("description")) {
 
-						String texto = textoSegunVersion(dato);
+                        String texto = textoSegunVersion(dato);
 
-						placeMark.setDescription(Html.fromHtml(texto).toString());
+                        placeMark.setDescription(Html.fromHtml(texto).toString());
 
-						// parsear datos
+                        // parsear datos
 
-						String desc = placeMark.getDescription();
-						int pos = desc.indexOf("parada:");
+                        String desc = placeMark.getDescription();
+                        int pos = desc.indexOf("parada:");
 
-						// Solucion a literal cambiado ejm: linea 23
-						if (pos < 0) {
+                        // Solucion a literal cambiado ejm: linea 23
+                        if (pos < 0) {
 
-							pos = desc.indexOf("Parada:");
+                            pos = desc.indexOf("Parada:");
 
-							// Tipo especial
-							if (pos >= 0)
-								placeMark.setCodigoParada(desc.substring(pos + 7, pos + 7 + 5));
-							else
-								placeMark.setCodigoParada("");
+                            // Tipo especial
+                            if (pos >= 0)
+                                placeMark.setCodigoParada(desc.substring(pos + 7, pos + 7 + 5));
+                            else
+                                placeMark.setCodigoParada("");
 
-						} else {
+                        } else {
 
-							// Tipo normal
-							if (pos >= 0)
-								placeMark.setCodigoParada(desc.substring(pos + 8, pos + 8 + 5));
-							else
-								placeMark.setCodigoParada("");
+                            // Tipo normal
+                            if (pos >= 0)
+                                placeMark.setCodigoParada(desc.substring(pos + 8, pos + 8 + 5));
+                            else
+                                placeMark.setCodigoParada("");
 
-						}
+                        }
 
-						if (placeMark.getCodigoParada() != null) {
-							placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
-						}
+                        if (placeMark.getCodigoParada() != null) {
+                            placeMark.setCodigoParada(placeMark.getCodigoParada().trim());
+                        }
 
-						// Extraer sentido
-						pos = desc.indexOf("Sentido");
-						if (pos >= 0) {
+                        // Extraer sentido
+                        pos = desc.indexOf("Sentido");
+                        if (pos >= 0) {
 
-							int posOb = desc.indexOf("Observaciones:");
+                            int posOb = desc.indexOf("Observaciones:");
 
-							if (posOb < 0)
-								placeMark.setSentido(desc.substring(pos + 8));
-							else {
+                            if (posOb < 0)
+                                placeMark.setSentido(desc.substring(pos + 8));
+                            else {
 
-								placeMark.setSentido(desc.substring(pos + 8, posOb));
+                                placeMark.setSentido(desc.substring(pos + 8, posOb));
 
-								placeMark.setObservaciones(desc.substring(posOb + 14));
+                                placeMark.setObservaciones(desc.substring(posOb + 14));
 
-							}
+                            }
 
-						} else {
-							placeMark.setSentido("");
+                        } else {
+                            placeMark.setSentido("");
 
-							placeMark.setObservaciones("");
-						}
+                            placeMark.setObservaciones("");
+                        }
 
-						if (placeMark.getObservaciones() != null) {
-							placeMark.setObservaciones(placeMark.getObservaciones().trim());
-						}
+                        if (placeMark.getObservaciones() != null) {
+                            placeMark.setObservaciones(placeMark.getObservaciones().trim());
+                        }
 
-						// Extraer lineas
-						int pos2 = desc.indexOf("Líneas");
-						if (pos >= 0 && pos2 >= 0) {
-							placeMark.setLineas(desc.substring(pos2 + 7, pos));
-						} else {
-							placeMark.setLineas("");
-						}
+                        // Extraer lineas
+                        int pos2 = desc.indexOf("Líneas");
+                        if (pos >= 0 && pos2 >= 0) {
+                            placeMark.setLineas(desc.substring(pos2 + 7, pos));
+                        } else {
+                            placeMark.setLineas("");
+                        }
 
-						if (placeMark.getLineas() != null) {
-							placeMark.setLineas(placeMark.getLineas().trim());
-						}
+                        if (placeMark.getLineas() != null) {
+                            placeMark.setLineas(placeMark.getLineas().trim());
+                        }
 
-					} else if (etiqueta.equals("name")) {
+                    } else if (etiqueta.equals("name")) {
 
-						placeMark.setTitle(textoSegunVersion(dato));
+                        placeMark.setTitle(textoSegunVersion(dato));
 
-					} else if (etiqueta.equals("Point")) {
-						NodeList points = dato.getChildNodes();
+                    } else if (etiqueta.equals("Point")) {
+                        NodeList points = dato.getChildNodes();
 
-						for (int z = 0; z < points.getLength(); z++) {
+                        for (int z = 0; z < points.getLength(); z++) {
 
-							Node dato2 = points.item(z);
-							String etiqueta2 = dato2.getNodeName();
+                            Node dato2 = points.item(z);
+                            String etiqueta2 = dato2.getNodeName();
 
-							if (etiqueta2.equals("coordinates")) {
+                            if (etiqueta2.equals("coordinates")) {
 
-								String texto = textoSegunVersion(dato2);
+                                String texto = textoSegunVersion(dato2);
 
-								// String texto = dato2.getTextContent();
-								placeMark.setCoordinates(texto);
-							}
+                                // String texto = dato2.getTextContent();
+                                placeMark.setCoordinates(texto);
+                            }
 
-						}
+                        }
 
-					}
+                    }
 
-				}
+                }
 
-				placeMarks.add(placeMark);
-			}
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+                placeMarks.add(placeMark);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
-		return placeMarks;
-	}
+        return placeMarks;
+    }
 
-	/**
-	 * Parsear fichero kml
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static String getDatosMapaRecorrido(String url) {
+    /**
+     * Parsear fichero kml
+     *
+     * @param url
+     * @return
+     */
+    public static String getDatosMapaRecorrido(String url) {
 
-		InputStream is = null;
+        InputStream is = null;
 
-		String coordenadas = null;
+        String coordenadas = null;
 
-		try {
-			is = Conectividad.conexionGetIsoStream(url);
+        try {
+            is = Conectividad.conexionGetIsoStream(url);
 
-			if (is != null) {
+            if (is != null) {
 
-				coordenadas = parseRecorrido(is);
+                coordenadas = parseRecorrido(is);
 
-			} else {
-				coordenadas = null;
-			}
+            } else {
+                coordenadas = null;
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
 
-			}
-		}
+            }
+        }
 
-		if (coordenadas != null && !coordenadas.equals("")) {
+        if (coordenadas != null && !coordenadas.equals("")) {
 
-			return coordenadas;
+            return coordenadas;
 
-		} else {
-			return null;
-		}
-	}
+        } else {
+            return null;
+        }
+    }
 
-	public static String parseRecorrido(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    public static String parseRecorrido(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-		String coordenadas = null;
+        String coordenadas = null;
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
 
-			// Localizamos todos los elementos <Placemark>
-			NodeList items = root.getElementsByTagName("coordinates");
+            // Localizamos todos los elementos <Placemark>
+            NodeList items = root.getElementsByTagName("coordinates");
 
-			Node item = items.item(0);
+            Node item = items.item(0);
 
-			coordenadas = textoSegunVersion(item).trim();
+            coordenadas = textoSegunVersion(item).trim();
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
-		return coordenadas;
-	}
+        return coordenadas;
+    }
 
-	/**
-	 * Cotrol de version de android
-	 * 
-	 * @param node
-	 * @return
-	 */
-	private static String textoSegunVersion(Node node) {
+    /**
+     * Cotrol de version de android
+     *
+     * @param node
+     * @return
+     */
+    private static String textoSegunVersion(Node node) {
 
-		String texto = null;
+        String texto = null;
 
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-			texto = textAlternativo(node);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+            texto = textAlternativo(node);
 
-			if (texto != null) {
+            if (texto != null) {
 
-				String textoProc = (Html.fromHtml(texto)).toString();
+                String textoProc = (Html.fromHtml(texto)).toString();
 
-				texto = textoProc;
+                texto = textoProc;
 
-			}
+            }
 
-		} else {
-			texto = (new VersionHelper().getTextContent(node));
-		}
+        } else {
+            texto = (new VersionHelper().getTextContent(node));
+        }
 
-		return texto;
+        return texto;
 
-	}
+    }
 
-	/**
-	 * Funcion auxiliar para que funcione en la version 2.1 y anteriores
-	 * 
-	 * @param node
-	 * @return
-	 */
-	private static String textAlternativo(Node node) {
+    /**
+     * Funcion auxiliar para que funcione en la version 2.1 y anteriores
+     *
+     * @param node
+     * @return
+     */
+    private static String textAlternativo(Node node) {
 
-		Node child;
-		String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
+        Node child;
+        String sContent = node.getNodeValue() != null ? node.getNodeValue() : "";
 
-		NodeList nodes = node.getChildNodes();
-		for (int i = 0; i < nodes.getLength(); i++) {
-			child = nodes.item(i);
+        NodeList nodes = node.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            child = nodes.item(i);
 
-			if (child.getNodeValue() != null) {
-				sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
-			} else {
-				sContent += "&" + child.getNodeName();
-			}
+            if (child.getNodeValue() != null) {
+                sContent += child.getNodeValue() != null ? child.getNodeValue() : "";
+            } else {
+                sContent += "&" + child.getNodeName();
+            }
 
-			if (nodes.item(i).getChildNodes().getLength() > 0) {
-				sContent += textAlternativo(nodes.item(i));
-			}
-		}
+            if (nodes.item(i).getChildNodes().getLength() > 0) {
+                sContent += textAlternativo(nodes.item(i));
+            }
+        }
 
-		return sContent;
-	}
+        return sContent;
+    }
 
 }
 
 class VersionHelper {
-	public String getTextContent(Node node) {
+    public String getTextContent(Node node) {
 
-		return node.getTextContent();
+        return node.getTextContent();
 
-	}
+    }
 }

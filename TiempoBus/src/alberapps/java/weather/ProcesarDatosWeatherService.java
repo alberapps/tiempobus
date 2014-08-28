@@ -17,13 +17,7 @@
  */
 package alberapps.java.weather;
 
-import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import android.util.Log;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -31,171 +25,161 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import alberapps.android.tiempobus.util.UtilidadesUI;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
-import android.util.Log;
 
 /**
- * 
  * Consulta de datos geolocalizados de la wikipedia
- * 
  */
 public class ProcesarDatosWeatherService {
 
-	
-	
-	private static final String URL = "http://www.aemet.es/xml/municipios/localidad_03014.xml";
 
-	
+    private static final String URL = "http://www.aemet.es/xml/municipios/localidad_03014.xml";
 
-	/**
-	 * Consultar datos wikipedia con geosearch
-	 * 
-	 * @param lat
-	 * @param lon
-	 * @return lista
-	 * @throws Exception
-	 */
-	public static WeatherQuery getDatosClima() throws Exception {
 
-		
-		
-		
-		
-		
-		InputStream is = null;
+    /**
+     * Consultar datos wikipedia con geosearch
+     *
+     * @throws Exception
+     */
+    public static WeatherQuery getDatosClima() throws Exception {
 
-		WeatherQuery resultados = new WeatherQuery();
 
-		//String caracter = URLEncoder.encode("|", "UTF-8");
-		
-		String urlGet = URL;
-		
-		
+        InputStream is = null;
 
-		try {
+        WeatherQuery resultados = new WeatherQuery();
 
-			is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, true, true));
+        //String caracter = URLEncoder.encode("|", "UTF-8");
 
-			if (is != null) {
+        String urlGet = URL;
 
-				resultados = parse(is);
 
-			} else {
+        try {
 
-				// resultados
+            is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, true, true));
 
-			}
+            if (is != null) {
 
-		} catch (Exception e) {
+                resultados = parse(is);
 
-			Log.d("webservice", "Error consulta wiki");
+            } else {
 
-			e.printStackTrace();
+                // resultados
 
-			try {
+            }
 
-				is.close();
-			} catch (Exception ex) {
+        } catch (Exception e) {
 
-			}
+            Log.d("webservice", "Error consulta wiki");
 
-			// Respuesta no esperada del servicio
-			throw e;
+            e.printStackTrace();
 
-		} finally {
-			try {
+            try {
 
-				is.close();
-			} catch (Exception e) {
+                is.close();
+            } catch (Exception ex) {
 
-			}
-		}
+            }
 
-		return resultados;
+            // Respuesta no esperada del servicio
+            throw e;
 
-	}
+        } finally {
+            try {
 
-	/**
-	 * Parsear entrada
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public static WeatherQuery parse(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<WeatherData> weatherDataList = new ArrayList<WeatherData>();
+                is.close();
+            } catch (Exception e) {
 
-		WeatherQuery resultados = new WeatherQuery();
+            }
+        }
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+        return resultados;
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+    }
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+    /**
+     * Parsear entrada
+     *
+     * @param is
+     * @return
+     */
+    public static WeatherQuery parse(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<WeatherData> weatherDataList = new ArrayList<WeatherData>();
 
-			// Folder principal
-			NodeList diaList = root.getElementsByTagName("dia");
+        WeatherQuery resultados = new WeatherQuery();
 
-			for (int i = 0; i < diaList.getLength(); i++) {
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-				WeatherData data = new WeatherData();
-				
-				// gs
-				Node gs = diaList.item(i);
-				
-				for(int j=0;j<gs.getChildNodes().getLength();j++){
-									
-					if(gs.getChildNodes().item(j).getNodeName() != null && gs.getChildNodes().item(j).getNodeName().equals("estado_cielo")){
-						
-						
-						
-						
-						NamedNodeMap atributos = gs.getChildNodes().item(j).getAttributes();
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-						String periodo = atributos.getNamedItem("periodo").getNodeValue();
-						String descripcion = atributos.getNamedItem("descripcion").getNodeValue();
-						
-						String valor = "";
-						
-						if(gs.getChildNodes().item(j).getFirstChild() != null && gs.getChildNodes().item(j).getFirstChild().getNodeValue() != null){
-							valor = gs.getChildNodes().item(j).getFirstChild().getNodeValue();
-						}
-						
-						EstadoCielo estadoCielo = new EstadoCielo();
-						
-						estadoCielo.setPeriodo(periodo);
-						estadoCielo.setDescripcion(descripcion);
-						estadoCielo.setValor(valor);
-						
-						if(data.getEstadoCielo() == null){
-							data.setEstadoCielo(new ArrayList<EstadoCielo>());
-						}
-						
-						data.getEstadoCielo().add(estadoCielo);
-						
-					}else if(gs.getChildNodes().item(j).getNodeName() != null && gs.getChildNodes().item(j).getNodeName().equals("temperatura")){
-						
-						
-						String max = gs.getChildNodes().item(j).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
-						String min = gs.getChildNodes().item(j).getChildNodes().item(3).getChildNodes().item(0).getNodeValue();
-						
-						data.setTempMaxima(max);
-						data.setTempMinima(min);
-						
-						
-					}
-				
-					
-					
-				}
-				
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
+
+            // Folder principal
+            NodeList diaList = root.getElementsByTagName("dia");
+
+            for (int i = 0; i < diaList.getLength(); i++) {
+
+                WeatherData data = new WeatherData();
+
+                // gs
+                Node gs = diaList.item(i);
+
+                for (int j = 0; j < gs.getChildNodes().getLength(); j++) {
+
+                    if (gs.getChildNodes().item(j).getNodeName() != null && gs.getChildNodes().item(j).getNodeName().equals("estado_cielo")) {
+
+
+                        NamedNodeMap atributos = gs.getChildNodes().item(j).getAttributes();
+
+                        String periodo = atributos.getNamedItem("periodo").getNodeValue();
+                        String descripcion = atributos.getNamedItem("descripcion").getNodeValue();
+
+                        String valor = "";
+
+                        if (gs.getChildNodes().item(j).getFirstChild() != null && gs.getChildNodes().item(j).getFirstChild().getNodeValue() != null) {
+                            valor = gs.getChildNodes().item(j).getFirstChild().getNodeValue();
+                        }
+
+                        EstadoCielo estadoCielo = new EstadoCielo();
+
+                        estadoCielo.setPeriodo(periodo);
+                        estadoCielo.setDescripcion(descripcion);
+                        estadoCielo.setValor(valor);
+
+                        if (data.getEstadoCielo() == null) {
+                            data.setEstadoCielo(new ArrayList<EstadoCielo>());
+                        }
+
+                        data.getEstadoCielo().add(estadoCielo);
+
+                    } else if (gs.getChildNodes().item(j).getNodeName() != null && gs.getChildNodes().item(j).getNodeName().equals("temperatura")) {
+
+
+                        String max = gs.getChildNodes().item(j).getChildNodes().item(1).getChildNodes().item(0).getNodeValue();
+                        String min = gs.getChildNodes().item(j).getChildNodes().item(3).getChildNodes().item(0).getNodeValue();
+
+                        data.setTempMaxima(max);
+                        data.setTempMinima(min);
+
+
+                    }
+
+
+                }
+
 
 				/*NamedNodeMap atributos = gs.getAttributes();
 
@@ -217,19 +201,19 @@ public class ProcesarDatosWeatherService {
 				data.setLon(lonW);
 				data.setDist(distancia);*/
 
-				weatherDataList.add(data);
+                weatherDataList.add(data);
 
-				break;
-				
-			}
+                break;
 
-			resultados.setListaDatos(weatherDataList);
+            }
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+            resultados.setListaDatos(weatherDataList);
 
-		return resultados;
-	}
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+
+        return resultados;
+    }
 
 }

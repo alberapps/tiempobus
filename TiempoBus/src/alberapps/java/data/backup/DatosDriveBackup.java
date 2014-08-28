@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,13 +18,6 @@
  */
 package alberapps.java.data.backup;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
@@ -32,413 +25,417 @@ import android.util.Log;
 
 import com.google.android.gms.drive.DriveApi.ContentsResult;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 /**
- * 
  * Gestion de copias de seguridad en Drive
- * 
- * 
  */
 public class DatosDriveBackup {
 
-	public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
-	public static final String RUTA_DATABASE = "/data/alberapps.android.tiempobus/databases/zgzbus.db";
-	public static final String FICHERO_DB_RESTORE = "tiempoBusDB.restore.db";
-	public static final String FICHERO_DB_DRIVE = "tiempoBusDB.drive.db";
+    public static final String RUTA_BACKUP = "/data/alberapps.android.tiempobus/backup/";
+    public static final String RUTA_DATABASE = "/data/alberapps.android.tiempobus/databases/zgzbus.db";
+    public static final String FICHERO_DB_RESTORE = "tiempoBusDB.restore.db";
+    public static final String FICHERO_DB_DRIVE = "tiempoBusDB.drive.db";
 
-	/**
-	 * Exportar la base de datos a Drive
-	 * 
-	 * @return boolean
-	 */
-	public static boolean exportar(ContentsResult contentsResult) {
+    /**
+     * Exportar la base de datos a Drive
+     *
+     * @return boolean
+     */
+    public static boolean exportar(ContentsResult contentsResult) {
 
-		boolean control = false;
+        boolean control = false;
 
-		FileInputStream baseDatos = null;
+        FileInputStream baseDatos = null;
 
-		try {
+        try {
 
-			OutputStream outputStream = contentsResult.getContents().getOutputStream();
+            OutputStream outputStream = contentsResult.getContents().getOutputStream();
 
-			// base de datos
-			baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
+            // base de datos
+            baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
 
-			copyFileDrive(baseDatos, outputStream);
+            copyFileDrive(baseDatos, outputStream);
 
-			control = true;
+            control = true;
 
-		} catch (IOException e) {
-			control = false;
-		} finally {
+        } catch (IOException e) {
+            control = false;
+        } finally {
 
-			if (baseDatos != null) {
-				try {
-					baseDatos.close();
-					baseDatos = null;
-				} catch (IOException e) {
+            if (baseDatos != null) {
+                try {
+                    baseDatos.close();
+                    baseDatos = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-		}
+        }
 
-		return control;
+        return control;
 
-	}
+    }
 
-	/**
-	 * Sobreescribir la base de datos
-	 * 
-	 * @return boolean
-	 */
-	public static boolean recuperar(ContentsResult contentsResult) {
+    /**
+     * Sobreescribir la base de datos
+     *
+     * @return boolean
+     */
+    public static boolean recuperar(ContentsResult contentsResult) {
 
-		// Copia de respaldo para posible fallo
-		exportarRespaldo();
+        // Copia de respaldo para posible fallo
+        exportarRespaldo();
 
-		InputStream fileDriveStream = null;
-		FileOutputStream baseDatosE = null;
-		FileInputStream fileEXIE = null;
+        InputStream fileDriveStream = null;
+        FileOutputStream baseDatosE = null;
+        FileInputStream fileEXIE = null;
 
-		boolean control = false;
+        boolean control = false;
 
-		FileOutputStream fileExport = null;
+        FileOutputStream fileExport = null;
 
-		try {
+        try {
 
-			// Copiar fichero de drive a la memoria para procesar
-			// directorio de memoria interna
-			File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
-			directorio.mkdirs();
+            // Copiar fichero de drive a la memoria para procesar
+            // directorio de memoria interna
+            File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
+            directorio.mkdirs();
 
-			File fileEx = null;
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
+            File fileEx = null;
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
 
-			fileEx.createNewFile();
+            fileEx.createNewFile();
 
-			fileExport = new FileOutputStream(fileEx);
+            fileExport = new FileOutputStream(fileEx);
 
-			// Copiar desde drive a sd
+            // Copiar desde drive a sd
 
-			fileDriveStream = contentsResult.getContents().getInputStream();
+            fileDriveStream = contentsResult.getContents().getInputStream();
 
-			copyFileI(fileDriveStream, fileExport);
+            copyFileI(fileDriveStream, fileExport);
 
-			fileExport.flush();
+            fileExport.flush();
 
-			if (!fileEx.exists()) {
-				return false;
-			}
+            if (!fileEx.exists()) {
+                return false;
+            }
 
-			if (!verificarArchivoBD(fileEx)) {
-				return false;
-			}
+            if (!verificarArchivoBD(fileEx)) {
+                return false;
+            }
 
-			// Copiar de SD a la base de datos
-			File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
+            // Copiar de SD a la base de datos
+            File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
 
-			baseDatos.createNewFile();
+            baseDatos.createNewFile();
 
-			baseDatosE = new FileOutputStream(baseDatos);
+            baseDatosE = new FileOutputStream(baseDatos);
 
-			fileEXIE = new FileInputStream(fileEx);
+            fileEXIE = new FileInputStream(fileEx);
 
-			copyFileI(fileEXIE, baseDatosE);
+            copyFileI(fileEXIE, baseDatosE);
 
-			baseDatosE.flush();
+            baseDatosE.flush();
 
-			control = true;
+            control = true;
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			// Recuperar respaldo
-			recuperarRespaldo();
+            // Recuperar respaldo
+            recuperarRespaldo();
 
-			control = false;
-		} finally {
-			if (fileDriveStream != null) {
-				try {
-					fileDriveStream.close();
-					fileDriveStream = null;
-				} catch (IOException e) {
+            control = false;
+        } finally {
+            if (fileDriveStream != null) {
+                try {
+                    fileDriveStream.close();
+                    fileDriveStream = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-			if (baseDatosE != null) {
-				try {
-					baseDatosE.close();
-					baseDatosE = null;
-				} catch (IOException e) {
+            if (baseDatosE != null) {
+                try {
+                    baseDatosE.close();
+                    baseDatosE = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-			if (fileExport != null) {
-				try {
+            if (fileExport != null) {
+                try {
 
-					fileExport.close();
+                    fileExport.close();
 
-					fileExport = null;
+                    fileExport = null;
 
-				} catch (IOException e) {
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-			if (fileEXIE != null) {
-				try {
-					fileEXIE.close();
-					fileEXIE = null;
-				} catch (IOException e) {
+            if (fileEXIE != null) {
+                try {
+                    fileEXIE.close();
+                    fileEXIE = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-		}
+        }
 
-		return control;
+        return control;
 
-	}
+    }
 
-	/**
-	 * Comprobaciones
-	 * 
-	 * @param db
-	 * @return boolean
-	 */
-	public static boolean verificarArchivoBD(File db) {
+    /**
+     * Comprobaciones
+     *
+     * @param db
+     * @return boolean
+     */
+    public static boolean verificarArchivoBD(File db) {
 
-		SQLiteDatabase sqlDb = null;
-		Cursor cursor = null;
+        SQLiteDatabase sqlDb = null;
+        Cursor cursor = null;
 
-		try {
-			sqlDb = SQLiteDatabase.openDatabase(db.getPath(), null, SQLiteDatabase.OPEN_READONLY);
+        try {
+            sqlDb = SQLiteDatabase.openDatabase(db.getPath(), null, SQLiteDatabase.OPEN_READONLY);
 
-			cursor = sqlDb.query(true, "favoritos", null, null, null, null, null, null, null);
+            cursor = sqlDb.query(true, "favoritos", null, null, null, null, null, null, null);
 
-			String[] columnas = { "poste", "titulo", "descripcion" };
+            String[] columnas = {"poste", "titulo", "descripcion"};
 
-			String s;
-			for (int i = 0; i < columnas.length; i++) {
-				s = columnas[i];
-				cursor.getColumnIndexOrThrow(s);
-			}
+            String s;
+            for (int i = 0; i < columnas.length; i++) {
+                s = columnas[i];
+                cursor.getColumnIndexOrThrow(s);
+            }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			Log.e("drive", "Error al verificar la base de datos");
+            Log.e("drive", "Error al verificar la base de datos");
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-			// No valida
-			return false;
-		} finally {
-			sqlDb.close();
-			cursor.close();
-		}
+            // No valida
+            return false;
+        } finally {
+            sqlDb.close();
+            cursor.close();
+        }
 
-		Log.d("drive", "Base de datos OK");
+        Log.d("drive", "Base de datos OK");
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Copiar archivo
-	 * 
-	 * @param in
-	 * @param out
-	 * @throws IOException
-	 */
-	private static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
+    /**
+     * Copiar archivo
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
 
-		byte[] buffer = new byte[1024];
-		int read;
+        byte[] buffer = new byte[1024];
+        int read;
 
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
 
-	}
+    }
 
-	/**
-	 * Copiar archivo
-	 * 
-	 * @param in
-	 * @param out
-	 * @throws IOException
-	 */
-	private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
+    /**
+     * Copiar archivo
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
 
-		byte[] buffer = new byte[1024];
-		int read;
+        byte[] buffer = new byte[1024];
+        int read;
 
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
 
-	}
+    }
 
-	/**
-	 * Copiar archivo
-	 * 
-	 * @param in
-	 * @param out
-	 * @throws IOException
-	 */
-	private static void copyFileDrive(FileInputStream in, OutputStream out) throws IOException {
+    /**
+     * Copiar archivo
+     *
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private static void copyFileDrive(FileInputStream in, OutputStream out) throws IOException {
 
-		byte[] buffer = new byte[1024];
-		int read;
+        byte[] buffer = new byte[1024];
+        int read;
 
-		while ((read = in.read(buffer)) != -1) {
-			out.write(buffer, 0, read);
-		}
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
 
-	}
+    }
 
-	/**
-	 * Copia de respaldo por si hay error en el proceso
-	 * 
-	 * @return boolean
-	 */
-	public static boolean exportarRespaldo() {
+    /**
+     * Copia de respaldo por si hay error en el proceso
+     *
+     * @return boolean
+     */
+    public static boolean exportarRespaldo() {
 
-		boolean control = false;
+        boolean control = false;
 
-		// directorio al que copiar respaldo
-		File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
-		directorio.mkdirs();
+        // directorio al que copiar respaldo
+        File directorio = new File(Environment.getDataDirectory() + RUTA_BACKUP);
+        directorio.mkdirs();
 
-		FileInputStream baseDatos = null;
-		FileOutputStream fileExport = null;
+        FileInputStream baseDatos = null;
+        FileOutputStream fileExport = null;
 
-		try {
+        try {
 
-			// fichero de db
-			File fileEx = null;
+            // fichero de db
+            File fileEx = null;
 
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
 
-			fileEx.createNewFile();
+            fileEx.createNewFile();
 
-			fileExport = new FileOutputStream(fileEx);
+            fileExport = new FileOutputStream(fileEx);
 
-			// base de datos
-			baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
+            // base de datos
+            baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
 
-			copyFile(baseDatos, fileExport);
+            copyFile(baseDatos, fileExport);
 
-			fileExport.flush();
+            fileExport.flush();
 
-			control = true;
+            control = true;
 
-		} catch (IOException e) {
-			control = false;
-		} finally {
+        } catch (IOException e) {
+            control = false;
+        } finally {
 
-			if (baseDatos != null) {
-				try {
-					baseDatos.close();
-					baseDatos = null;
-				} catch (IOException e) {
+            if (baseDatos != null) {
+                try {
+                    baseDatos.close();
+                    baseDatos = null;
+                } catch (IOException e) {
 
-				}
-			}
-			if (fileExport != null) {
-				try {
+                }
+            }
+            if (fileExport != null) {
+                try {
 
-					fileExport.close();
+                    fileExport.close();
 
-					fileExport = null;
+                    fileExport = null;
 
-				} catch (IOException e) {
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-		}
+        }
 
-		return control;
+        return control;
 
-	}
+    }
 
-	/**
-	 * Recuperar la copia de respaldo
-	 * 
-	 * @return boolean
-	 */
-	public static boolean recuperarRespaldo() {
+    /**
+     * Recuperar la copia de respaldo
+     *
+     * @return boolean
+     */
+    public static boolean recuperarRespaldo() {
 
-		FileInputStream fileEXIE = null;
-		FileOutputStream baseDatosE = null;
+        FileInputStream fileEXIE = null;
+        FileOutputStream baseDatosE = null;
 
-		boolean control = false;
+        boolean control = false;
 
-		try {
-			File fileEx = null;
+        try {
+            File fileEx = null;
 
-			fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
+            fileEx = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
 
-			if (!fileEx.exists()) {
-				return false;
-			}
+            if (!fileEx.exists()) {
+                return false;
+            }
 
-			if (!verificarArchivoBD(fileEx)) {
-				return false;
-			}
+            if (!verificarArchivoBD(fileEx)) {
+                return false;
+            }
 
-			fileEXIE = new FileInputStream(fileEx);
+            fileEXIE = new FileInputStream(fileEx);
 
-			File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
+            File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
 
-			baseDatos.createNewFile();
+            baseDatos.createNewFile();
 
-			baseDatosE = new FileOutputStream(baseDatos);
+            baseDatosE = new FileOutputStream(baseDatos);
 
-			copyFile(fileEXIE, baseDatosE);
+            copyFile(fileEXIE, baseDatosE);
 
-			control = true;
-		} catch (IOException e) {
+            control = true;
+        } catch (IOException e) {
 
-			control = false;
-		} finally {
-			if (fileEXIE != null) {
-				try {
-					fileEXIE.close();
-					fileEXIE = null;
-				} catch (IOException e) {
+            control = false;
+        } finally {
+            if (fileEXIE != null) {
+                try {
+                    fileEXIE.close();
+                    fileEXIE = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-			if (baseDatosE != null) {
-				try {
-					baseDatosE.close();
-					baseDatosE = null;
-				} catch (IOException e) {
+            if (baseDatosE != null) {
+                try {
+                    baseDatosE.close();
+                    baseDatosE = null;
+                } catch (IOException e) {
 
-				}
-			}
+                }
+            }
 
-		}
+        }
 
-		return control;
+        return control;
 
-	}
+    }
 
-	/**
-	 * Borrar archivos de backup
-	 */
-	public static void borrarArchivosBackup() {
+    /**
+     * Borrar archivos de backup
+     */
+    public static void borrarArchivosBackup() {
 
-		File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
-		File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
+        File file1 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_RESTORE);
+        File file2 = new File(Environment.getDataDirectory() + RUTA_BACKUP, FICHERO_DB_DRIVE);
 
-		// Borrar
-		file1.delete();
-		file2.delete();
+        // Borrar
+        file1.delete();
+        file2.delete();
 
-	}
+    }
 
 }

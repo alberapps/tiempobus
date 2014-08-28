@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +18,8 @@
  */
 package alberapps.java.tam.lineas;
 
+import org.apache.http.protocol.HTTP;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,76 +27,72 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.protocol.HTTP;
-
 import alberapps.java.tam.BusLinea;
 import alberapps.java.util.Conectividad;
 
 /**
- * 
  * Procesa los datos recuperados de las lineas
- * 
  */
 public class ProcesarLineasService {
 
-	public static final String URL_DATOS = "http://tiempobus.googlecode.com/svn/alberapps/trunk/InfoLineasBus/lineas/lineas.txt";
+    public static final String URL_DATOS = "http://tiempobus.googlecode.com/svn/alberapps/trunk/InfoLineasBus/lineas/lineas.txt";
 
-	
-	/**
-	 * Parsear datos lineas
-	 * 
-	 * @param url
-	 * @return
-	 */
-	public static List<DatosLinea> getDatosLineas(String url) {
 
-		List<DatosLinea> datosLineas = null;
+    /**
+     * Parsear datos lineas
+     *
+     * @param url
+     * @return
+     */
+    public static List<DatosLinea> getDatosLineas(String url) {
 
-		InputStream is = null;
+        List<DatosLinea> datosLineas = null;
 
-		try {
+        InputStream is = null;
 
-			is = Conectividad.conexionGetIsoStream(url);
+        try {
 
-			if (is != null) {
+            is = Conectividad.conexionGetIsoStream(url);
 
-				BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
+            if (is != null) {
 
-				String l = "";
+                BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
 
-				List<String> lineasFichero = new ArrayList<String>();
+                String l = "";
 
-				while ((l = input.readLine()) != null) {
+                List<String> lineasFichero = new ArrayList<String>();
 
-					lineasFichero.add(l);
+                while ((l = input.readLine()) != null) {
 
-				}
+                    lineasFichero.add(l);
 
-				datosLineas = procesa(lineasFichero);
+                }
 
-			} else {
-				datosLineas = null;
-			}
+                datosLineas = procesa(lineasFichero);
 
-		} catch (Exception e) {
+            } else {
+                datosLineas = null;
+            }
 
-			datosLineas = null;
-			
-		} finally {
-			try {
-				if(is != null){
-					is.close();
-				}
-			} catch (IOException e) {
+        } catch (Exception e) {
 
-			}
-		}
+            datosLineas = null;
 
-		return datosLineas;
-	}
+        } finally {
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+
+            }
+        }
+
+        return datosLineas;
+    }
 
 	/*
-	 * public static List<DatosLinea> getDatosLineas(String url) {
+     * public static List<DatosLinea> getDatosLineas(String url) {
 	 * 
 	 * List<DatosLinea> datosLineas = null; try { final URL aUrl = new URL(url);
 	 * final URLConnection conn = aUrl.openConnection(); conn.setReadTimeout(15
@@ -128,76 +126,76 @@ public class ProcesarLineasService {
 	 * 
 	 * return datosLineas; }
 	 */
-	/**
-	 * 
-	 * @param lineasFichero
-	 * @return
-	 */
-	private static List<DatosLinea> procesa(List<String> lineasFichero) {
 
-		if (lineasFichero != null && !lineasFichero.isEmpty() && lineasFichero.size() >= 3) {
+    /**
+     * @param lineasFichero
+     * @return
+     */
+    private static List<DatosLinea> procesa(List<String> lineasFichero) {
 
-			List<DatosLinea> datos = new ArrayList<DatosLinea>();
+        if (lineasFichero != null && !lineasFichero.isEmpty() && lineasFichero.size() >= 3) {
 
-			DatosLinea dat = null;
+            List<DatosLinea> datos = new ArrayList<DatosLinea>();
 
-			String[] lineasDescrip = lineasFichero.get(0).split(";;");
-			String[] lineasCodigoKML = lineasFichero.get(1).split(";;");
-			String[] lineasNum = lineasFichero.get(2).split(";;");
+            DatosLinea dat = null;
 
-			// Controles
-			if ((lineasDescrip.length == lineasCodigoKML.length) && (lineasCodigoKML.length == lineasNum.length)) {
+            String[] lineasDescrip = lineasFichero.get(0).split(";;");
+            String[] lineasCodigoKML = lineasFichero.get(1).split(";;");
+            String[] lineasNum = lineasFichero.get(2).split(";;");
 
-				for (int i = 0; i < lineasDescrip.length; i++) {
+            // Controles
+            if ((lineasDescrip.length == lineasCodigoKML.length) && (lineasCodigoKML.length == lineasNum.length)) {
 
-					dat = new DatosLinea();
-					dat.setLineaDescripcion(lineasDescrip[i]);
-					dat.setLineaCodigoKML(lineasCodigoKML[i]);
-					dat.setLineaNum(lineasNum[i]);
+                for (int i = 0; i < lineasDescrip.length; i++) {
 
-					datos.add(dat);
+                    dat = new DatosLinea();
+                    dat.setLineaDescripcion(lineasDescrip[i]);
+                    dat.setLineaCodigoKML(lineasCodigoKML[i]);
+                    dat.setLineaNum(lineasNum[i]);
 
-				}
+                    datos.add(dat);
 
-				return datos;
+                }
 
-			} else {
-				return null;
-			}
+                return datos;
 
-		} else {
-			return null;
-		}
+            } else {
+                return null;
+            }
 
-	}
+        } else {
+            return null;
+        }
 
-	/**
-	 * Mapea los datos recuperados a la anterior estructura
-	 * 
-	 * @param datos
-	 * @return
-	 * @throws IOException
-	 */
-	public static ArrayList<BusLinea> getLineasBus() throws IOException {
+    }
 
-		ArrayList<BusLinea> lineasBus = new ArrayList<BusLinea>();
+    /**
+     * Mapea los datos recuperados a la anterior estructura
+     *
+     * @param datos
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<BusLinea> getLineasBus() throws IOException {
 
-		List<DatosLinea> datosRecuperados = getDatosLineas(URL_DATOS);
+        ArrayList<BusLinea> lineasBus = new ArrayList<BusLinea>();
 
-		if (datosRecuperados != null && !datosRecuperados.isEmpty()) {
+        List<DatosLinea> datosRecuperados = getDatosLineas(URL_DATOS);
 
-			// Datos recuperados con exito
-			for (int i = 0; i < datosRecuperados.size(); i++) {
+        if (datosRecuperados != null && !datosRecuperados.isEmpty()) {
 
-				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(),null));
+            // Datos recuperados con exito
+            for (int i = 0; i < datosRecuperados.size(); i++) {
 
-			}
-		} else {
-			return null;
+                lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), null));
 
-		}
+            }
+        } else {
+            return null;
 
-		return lineasBus;
-	}
+        }
+
+        return lineasBus;
+    }
 
 }

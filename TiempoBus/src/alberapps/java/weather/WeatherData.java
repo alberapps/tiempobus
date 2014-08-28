@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2014 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,31 +23,28 @@ import android.graphics.Bitmap;
 import java.util.List;
 
 /**
- * 
  * Datos del tiempo
- * 
- * 
  */
 public class WeatherData {
 
-	// Aemet
-	private String enlace;
-	private String dia;
-	private List<EstadoCielo> estadoCielo;
-	private String tempMaxima;
-	private String tempMinima;
+    // Aemet
+    private String enlace;
+    private String dia;
+    private List<EstadoCielo> estadoCielo;
+    private String tempMaxima;
+    private String tempMinima;
 
-	// YW
-	private String link;
-	private String description;
-	private String title;
-	private String geolong;
-	private String geolat;
-	private String pubDate;
-	private String contitionText;
-	private String contitionCode;
-	private String contitionTemp;
-	private Bitmap imagen;
+    // YW
+    private String link;
+    private String description;
+    private String title;
+    private String geolong;
+    private String geolat;
+    private String pubDate;
+    private String contitionText;
+    private String contitionCode;
+    private String contitionTemp;
+    private Bitmap imagen;
 
     public String getSunset() {
         return sunset;
@@ -58,7 +55,7 @@ public class WeatherData {
     }
 
     private String low;
-	private String high;
+    private String high;
 
     private String humidity;
 
@@ -82,140 +79,140 @@ public class WeatherData {
     private String sunrise;
     private String sunset;
 
-	public String getEnlace() {
-		return enlace;
-	}
+    public String getEnlace() {
+        return enlace;
+    }
 
-	public void setEnlace(String enlace) {
-		this.enlace = enlace;
-	}
+    public void setEnlace(String enlace) {
+        this.enlace = enlace;
+    }
 
-	public String getDia() {
-		return dia;
-	}
+    public String getDia() {
+        return dia;
+    }
 
-	public void setDia(String dia) {
-		this.dia = dia;
-	}
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
 
-	public String getTempMaxima() {
-		return tempMaxima;
-	}
+    public String getTempMaxima() {
+        return tempMaxima;
+    }
 
-	public void setTempMaxima(String tempMaxima) {
-		this.tempMaxima = tempMaxima;
-	}
+    public void setTempMaxima(String tempMaxima) {
+        this.tempMaxima = tempMaxima;
+    }
 
-	public String getTempMinima() {
-		return tempMinima;
-	}
+    public String getTempMinima() {
+        return tempMinima;
+    }
 
-	public void setTempMinima(String tempMinima) {
-		this.tempMinima = tempMinima;
-	}
+    public void setTempMinima(String tempMinima) {
+        this.tempMinima = tempMinima;
+    }
 
-	public List<EstadoCielo> getEstadoCielo() {
-		return estadoCielo;
-	}
+    public List<EstadoCielo> getEstadoCielo() {
+        return estadoCielo;
+    }
 
-	public void setEstadoCielo(List<EstadoCielo> estadoCielo) {
-		this.estadoCielo = estadoCielo;
-	}
+    public void setEstadoCielo(List<EstadoCielo> estadoCielo) {
+        this.estadoCielo = estadoCielo;
+    }
 
-	public String getLink() {
-		return link;
-	}
+    public String getLink() {
+        return link;
+    }
 
-	public void setLink(String link) {
-		this.link = link;
-	}
+    public void setLink(String link) {
+        this.link = link;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public String getGeolong() {
-		return geolong;
-	}
+    public String getGeolong() {
+        return geolong;
+    }
 
-	public void setGeolong(String geolong) {
-		this.geolong = geolong;
-	}
+    public void setGeolong(String geolong) {
+        this.geolong = geolong;
+    }
 
-	public String getGeolat() {
-		return geolat;
-	}
+    public String getGeolat() {
+        return geolat;
+    }
 
-	public void setGeolat(String geolat) {
-		this.geolat = geolat;
-	}
+    public void setGeolat(String geolat) {
+        this.geolat = geolat;
+    }
 
-	public String getPubDate() {
-		return pubDate;
-	}
+    public String getPubDate() {
+        return pubDate;
+    }
 
-	public void setPubDate(String pubDate) {
-		this.pubDate = pubDate;
-	}
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
+    }
 
-	public String getContitionText() {
-		return contitionText;
-	}
+    public String getContitionText() {
+        return contitionText;
+    }
 
-	public void setContitionText(String contitionText) {
-		this.contitionText = contitionText;
-	}
+    public void setContitionText(String contitionText) {
+        this.contitionText = contitionText;
+    }
 
-	public String getContitionCode() {
-		return contitionCode;
-	}
+    public String getContitionCode() {
+        return contitionCode;
+    }
 
-	public void setContitionCode(String contitionCode) {
-		this.contitionCode = contitionCode;
-	}
+    public void setContitionCode(String contitionCode) {
+        this.contitionCode = contitionCode;
+    }
 
-	public String getContitionTemp() {
-		return contitionTemp;
-	}
+    public String getContitionTemp() {
+        return contitionTemp;
+    }
 
-	public void setContitionTemp(String contitionTemp) {
-		this.contitionTemp = contitionTemp;
-	}
+    public void setContitionTemp(String contitionTemp) {
+        this.contitionTemp = contitionTemp;
+    }
 
-	public Bitmap getImagen() {
-		return imagen;
-	}
+    public Bitmap getImagen() {
+        return imagen;
+    }
 
-	public void setImagen(Bitmap imagen) {
-		this.imagen = imagen;
-	}
+    public void setImagen(Bitmap imagen) {
+        this.imagen = imagen;
+    }
 
-	public String getLow() {
-		return low;
-	}
+    public String getLow() {
+        return low;
+    }
 
-	public void setLow(String low) {
-		this.low = low;
-	}
+    public void setLow(String low) {
+        this.low = low;
+    }
 
-	public String getHigh() {
-		return high;
-	}
+    public String getHigh() {
+        return high;
+    }
 
-	public void setHigh(String high) {
-		this.high = high;
-	}
+    public void setHigh(String high) {
+        this.high = high;
+    }
 
 }

@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,171 +18,168 @@
  */
 package alberapps.java.tam.lineas;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
-import android.util.Log;
 
 /**
- * 
  * Procesa los datos recuperados de las lineas
- * 
  */
 public class ProcesarDatosLineasIsaeService {
 
-	public static final String URL_SUBUS_LINEAS = "http://isaealicante.subus.es/movil/estima.aspx";
+    public static final String URL_SUBUS_LINEAS = "http://isaealicante.subus.es/movil/estima.aspx";
 
-	public static List<DatosLinea> getLineasInfo(String offline) {
+    public static List<DatosLinea> getLineasInfo(String offline) {
 
-		List<DatosLinea> lineas = null;
+        List<DatosLinea> lineas = null;
 
-		InputStream st = null;
+        InputStream st = null;
 
-		try {
+        try {
 
-			Document doc = null;
+            Document doc = null;
 
-			// Carga desde internet o desde fichero local
-			if (offline == null) {
-				st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
-				doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
-			} else {
+            // Carga desde internet o desde fichero local
+            if (offline == null) {
+                st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
+                doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
+            } else {
 
-				Log.d("lineas", "datos offline: " + offline);
+                Log.d("lineas", "datos offline: " + offline);
 
-				doc = Jsoup.parse(offline);
-			}
+                doc = Jsoup.parse(offline);
+            }
 
-			Elements selectLineas = doc.select("select[name=LineasBox]");
+            Elements selectLineas = doc.select("select[name=LineasBox]");
 
-			Elements option = selectLineas.get(0).select("option");
+            Elements option = selectLineas.get(0).select("option");
 
-			DatosLinea datosLinea = null;
+            DatosLinea datosLinea = null;
 
-			lineas = new ArrayList<DatosLinea>();
+            lineas = new ArrayList<DatosLinea>();
 
-			for (int i = 0; i < option.size(); i++) {
+            for (int i = 0; i < option.size(); i++) {
 
-				datosLinea = new DatosLinea();
+                datosLinea = new DatosLinea();
 
-				datosLinea.setLineaDescripcion(option.get(i).text());
+                datosLinea.setLineaDescripcion(option.get(i).text());
 
-				datosLinea.setLineaNum(option.get(i).attr("value"));
-				
-				//Para evitar puntos
-				datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
+                datosLinea.setLineaNum(option.get(i).attr("value"));
 
-				// KML
-				int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
+                //Para evitar puntos
+                datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
 
-				boolean esTram = false;
+                // KML
+                int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
 
-				if (posicion < 0) {
+                boolean esTram = false;
 
-					// Verificar si es TRAM
-					posicion = UtilidadesTRAM.getIdLinea(datosLinea.getLineaNum());
+                if (posicion < 0) {
 
-					esTram = true;
+                    // Verificar si es TRAM
+                    posicion = UtilidadesTRAM.getIdLinea(datosLinea.getLineaNum());
 
-				}
+                    esTram = true;
 
-				if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
-					datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
+                }
 
-					datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
+                if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
+                    datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
 
-				} else if (esTram && posicion >= 0) {
+                    datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
 
-					datosLinea.setGrupoLinea(UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]]);
+                } else if (esTram && posicion >= 0) {
 
-				}
+                    datosLinea.setGrupoLinea(UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]]);
 
-				else {
-					datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**Sin información]"));
-				}
+                } else {
+                    datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**Sin información]"));
+                }
 
-				lineas.add(datosLinea);
+                lineas.add(datosLinea);
 
-				// 11H
-				if (datosLinea.getLineaNum().equals("11")) {
-					
-					DatosLinea datosLineaH = new DatosLinea();
-					datosLineaH.setLineaNum("11H");
-					int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
-					datosLineaH.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicionH]);
-					datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
+                // 11H
+                if (datosLinea.getLineaNum().equals("11")) {
 
-					datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
+                    DatosLinea datosLineaH = new DatosLinea();
+                    datosLineaH.setLineaNum("11H");
+                    int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
+                    datosLineaH.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicionH]);
+                    datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
 
-					lineas.add(datosLineaH);
-					
-					//Cambiar descripcion 11
-					int posicion11 = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
-					datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
-					
-				}
+                    datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
 
-			}
+                    lineas.add(datosLineaH);
 
-		} catch (Exception e) {
+                    //Cambiar descripcion 11
+                    int posicion11 = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
+                    datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
 
-			lineas = null;
-			
-			e.printStackTrace();
+                }
 
-		} finally {
+            }
 
-			try {
-				if (st != null) {
-					st.close();
-				}
-			} catch (IOException eb) {
+        } catch (Exception e) {
 
-			}
+            lineas = null;
 
-		}
+            e.printStackTrace();
 
-		return lineas;
+        } finally {
 
-	}
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException eb) {
 
-	/**
-	 * Mapea los datos recuperados a la anterior estructura
-	 * 
-	 * @param datos
-	 * @return
-	 * @throws IOException
-	 */
-	public static ArrayList<BusLinea> getLineasBus(String offline) throws IOException {
+            }
 
-		ArrayList<BusLinea> lineasBus = new ArrayList<BusLinea>();
+        }
 
-		List<DatosLinea> datosRecuperados = getLineasInfo(offline);
+        return lineas;
 
-		if (datosRecuperados != null && !datosRecuperados.isEmpty()) {
+    }
 
-			// Datos recuperados con exito
-			for (int i = 0; i < datosRecuperados.size(); i++) {
+    /**
+     * Mapea los datos recuperados a la anterior estructura
+     *
+     * @param datos
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<BusLinea> getLineasBus(String offline) throws IOException {
 
-				lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), datosRecuperados.get(i).getGrupoLinea()));
+        ArrayList<BusLinea> lineasBus = new ArrayList<BusLinea>();
 
-			}
-		} else {
-			return null;
+        List<DatosLinea> datosRecuperados = getLineasInfo(offline);
 
-		}
+        if (datosRecuperados != null && !datosRecuperados.isEmpty()) {
 
-		return lineasBus;
-	}
+            // Datos recuperados con exito
+            for (int i = 0; i < datosRecuperados.size(); i++) {
+
+                lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), datosRecuperados.get(i).getGrupoLinea()));
+
+            }
+        } else {
+            return null;
+
+        }
+
+        return lineasBus;
+    }
 
 }

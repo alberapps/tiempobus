@@ -27,22 +27,22 @@ import alberapps.android.tiempobus.util.Comunes;
 
 public class GetPasoParadaWebservice {
 
-	private int timeout = Comunes.TIMEOUT_WEBSERVICE;
+    private int timeout = Comunes.TIMEOUT_WEBSERVICE;
 
-	public static final int URL1 = 1;
-	public static final int URL2 = 2;
+    public static final int URL1 = 1;
+    public static final int URL2 = 2;
 
-	public GetPasoParadaWebservice() {
-	}
+    public GetPasoParadaWebservice() {
+    }
 
-	/**
-	 * Consulta del servicioWeb y mapeo de la respuesta
-	 * 
-	 * @param linea
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
+    /**
+     * Consulta del servicioWeb y mapeo de la respuesta
+     *
+     * @param linea
+     * @param parada
+     * @return
+     * @throws Exception
+     */
 /*	public GetPasoParadaResult consultarServicio(String linea, String parada, int consulta) throws Exception {
 
 		SoapObject request = new SoapObject(DatosTRAM.NAMESPACE, DatosTRAM.METHOD_NAME_PASO_PARADA);
@@ -143,27 +143,27 @@ public class GetPasoParadaWebservice {
 		
 	}*/
 
-	/**
-	 * Forma string con los minutos faltantes y la hora aproximada de llegada
-	 * 
-	 * @param minutosLlegada
-	 * @return
-	 */
-	private String getFormatoTiempoEspera(String minutosLlegada) {
+    /**
+     * Forma string con los minutos faltantes y la hora aproximada de llegada
+     *
+     * @param minutosLlegada
+     * @return
+     */
+    private String getFormatoTiempoEspera(String minutosLlegada) {
 
-		String formatoMinHora = "";
+        String formatoMinHora = "";
 
-		GregorianCalendar cl = new GregorianCalendar();
-		cl.setTimeInMillis((new Date()).getTime());
-		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
+        GregorianCalendar cl = new GregorianCalendar();
+        cl.setTimeInMillis((new Date()).getTime());
+        cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
 
-		SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.US);
-		String horaString = sf.format(cl.getTime());
+        SimpleDateFormat sf = new SimpleDateFormat("HH:mm", Locale.US);
+        String horaString = sf.format(cl.getTime());
 
-		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
+        formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
 
-		return formatoMinHora;
+        return formatoMinHora;
 
-	}
+    }
 
 }

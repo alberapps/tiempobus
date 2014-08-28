@@ -24,41 +24,40 @@ import java.util.List;
 
 public class GetLineasResult implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6381814647861271111L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6381814647861271111L;
 
-	List<InfoLinea> infoLineaList;
+    List<InfoLinea> infoLineaList;
 
-	private HashMap<String, HashMap<String,List<String>>> hashDatosParadas;
-	
-	
-	public GetLineasResult() {
+    private HashMap<String, HashMap<String, List<String>>> hashDatosParadas;
 
-		infoLineaList = new ArrayList<InfoLinea>();
-		
-		hashDatosParadas = new HashMap<String, HashMap<String,List<String>>>();
-		
-		
-	}
 
-	public List<InfoLinea> getInfoLineaList() {
-		return infoLineaList;
-	}
+    public GetLineasResult() {
 
-	public void setInfoLineaList(List<InfoLinea> infoLineaList) {
-		this.infoLineaList = infoLineaList;
-	}
+        infoLineaList = new ArrayList<InfoLinea>();
 
-	public HashMap<String, HashMap<String, List<String>>> getHashDatosParadas() {
-		return hashDatosParadas;
-	}
+        hashDatosParadas = new HashMap<String, HashMap<String, List<String>>>();
 
-	public void setHashDatosParadas(HashMap<String, HashMap<String, List<String>>> hashDatosParadas) {
-		this.hashDatosParadas = hashDatosParadas;
-	}
 
-	
+    }
+
+    public List<InfoLinea> getInfoLineaList() {
+        return infoLineaList;
+    }
+
+    public void setInfoLineaList(List<InfoLinea> infoLineaList) {
+        this.infoLineaList = infoLineaList;
+    }
+
+    public HashMap<String, HashMap<String, List<String>>> getHashDatosParadas() {
+        return hashDatosParadas;
+    }
+
+    public void setHashDatosParadas(HashMap<String, HashMap<String, List<String>>> hashDatosParadas) {
+        this.hashDatosParadas = hashDatosParadas;
+    }
+
 
 }

@@ -19,37 +19,36 @@ package alberapps.java.tam;
 
 /**
  * Clase contenedora de la estructura de datos para un poste
- * 
+ *
  * @author francho - http://francho.org/lab/
- * 
  */
 public class BusParada {
-	private String poste;
-	private String direccion;
-	
-	public BusParada(String poste, String direccion) {
-		this.poste=poste;
-		this.direccion=direccion;		
-	}
+    private String poste;
+    private String direccion;
 
-	public String getPoste() {
-		return poste;
-	}
+    public BusParada(String poste, String direccion) {
+        this.poste = poste;
+        this.direccion = direccion;
+    }
 
-	public void setPoste(String poste) {
-		this.poste = poste;
-	}
+    public String getPoste() {
+        return poste;
+    }
 
-	public String getDireccion() {
-		return direccion;
-	}
+    public void setPoste(String poste) {
+        this.poste = poste;
+    }
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-	
-	public String toString() {
-		return poste + " - " + direccion;
-	}
-	
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String toString() {
+        return poste + " - " + direccion;
+    }
+
 }

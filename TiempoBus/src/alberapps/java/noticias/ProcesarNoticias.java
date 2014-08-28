@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,71 +18,69 @@
  */
 package alberapps.java.noticias;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import alberapps.java.util.Conectividad;
 
 /**
- * 
  * Procesar lista de noticias usando JSOUP
- * 
  */
 public class ProcesarNoticias {
 
-	public static String URL_SUBUS_NOTICIAS = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
+    public static String URL_SUBUS_NOTICIAS = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
 
-	public static List<Noticias> getTamNews(Boolean usarCache) throws Exception {
+    public static List<Noticias> getTamNews(Boolean usarCache) throws Exception {
 
-		List<Noticias> noticias = new ArrayList<Noticias>();
+        List<Noticias> noticias = new ArrayList<Noticias>();
 
-		Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache, false), "ISO-8859-1", URL_SUBUS_NOTICIAS);
+        Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache, false), "ISO-8859-1", URL_SUBUS_NOTICIAS);
 
-		String title = doc.title();
+        String title = doc.title();
 
-		Elements tables = doc.select("table"); // a with href
+        Elements tables = doc.select("table"); // a with href
 
-		Element tabla = tables.get(5);
+        Element tabla = tables.get(5);
 
-		Elements filas = tabla.select("tr");
+        Elements filas = tabla.select("tr");
 
-		for (int i = 0; i < filas.size(); i++) {
+        for (int i = 0; i < filas.size(); i++) {
 
-			if (filas.get(i).select("td").size() == 2) {
-				Noticias noticia = new Noticias();
+            if (filas.get(i).select("td").size() == 2) {
+                Noticias noticia = new Noticias();
 
-				noticia.setFecha(filas.get(i).select("td").get(0).text());
+                noticia.setFecha(filas.get(i).select("td").get(0).text());
 
-				noticia.setNoticia(filas.get(i).select("td").get(1).text());
+                noticia.setNoticia(filas.get(i).select("td").get(1).text());
 
-				noticia.setLinks(new ArrayList<String>());
-				noticia.setDescLink(new ArrayList<String>());
+                noticia.setLinks(new ArrayList<String>());
+                noticia.setDescLink(new ArrayList<String>());
 
-				Elements links = filas.get(i).select("td").get(1).select("a[href]");
+                Elements links = filas.get(i).select("td").get(1).select("a[href]");
 
-				for (Element link : links) {
+                for (Element link : links) {
 
-					noticia.getLinks().add(link.attr("abs:href"));
-					noticia.getDescLink().add(link.text());
+                    noticia.getLinks().add(link.attr("abs:href"));
+                    noticia.getDescLink().add(link.text());
 
-				}
+                }
 
-				noticias.add(noticia);
+                noticias.add(noticia);
 
-			}
+            }
 
-		}
-		if (!noticias.isEmpty()) {
-			noticias.remove(0);
-		}
+        }
+        if (!noticias.isEmpty()) {
+            noticias.remove(0);
+        }
 
-		return noticias;
+        return noticias;
 
-	}
+    }
 
 }

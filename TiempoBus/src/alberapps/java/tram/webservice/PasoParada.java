@@ -21,99 +21,93 @@ package alberapps.java.tram.webservice;
 import java.io.Serializable;
 
 
-
 public class PasoParada implements Serializable {
 
-		
-       
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1736225819399570972L;
-	
-	
 
-	private boolean cabecera = false;
-    
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1736225819399570972L;
+
+
+    private boolean cabecera = false;
+
     private InfoParada e1;
-    
+
     private InfoParada e2;
-    
+
     private String linea;
-    
+
     private String parada;
-    
+
     private String ruta;
-    
+
     private String sublinea;
 
-    
-    public PasoParada(){
-    	
-    	e1 = new InfoParada();
-    	e2 = new InfoParada();
-    	
+
+    public PasoParada() {
+
+        e1 = new InfoParada();
+        e2 = new InfoParada();
+
     }
-    
-	public boolean isCabecera() {
-		return cabecera;
-	}
 
-	public void setCabecera(boolean cabecera) {
-		this.cabecera = cabecera;
-	}
+    public boolean isCabecera() {
+        return cabecera;
+    }
 
-	
+    public void setCabecera(boolean cabecera) {
+        this.cabecera = cabecera;
+    }
 
-	public String getLinea() {
-		return linea;
-	}
 
-	public void setLinea(String linea) {
-		this.linea = linea;
-	}
+    public String getLinea() {
+        return linea;
+    }
 
-	public String getParada() {
-		return parada;
-	}
+    public void setLinea(String linea) {
+        this.linea = linea;
+    }
 
-	public void setParada(String parada) {
-		this.parada = parada;
-	}
+    public String getParada() {
+        return parada;
+    }
 
-	public String getRuta() {
-		return ruta;
-	}
+    public void setParada(String parada) {
+        this.parada = parada;
+    }
 
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
-	}
+    public String getRuta() {
+        return ruta;
+    }
 
-	public String getSublinea() {
-		return sublinea;
-	}
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
 
-	public void setSublinea(String sublinea) {
-		this.sublinea = sublinea;
-	}
+    public String getSublinea() {
+        return sublinea;
+    }
 
-	public InfoParada getE1() {
-		return e1;
-	}
+    public void setSublinea(String sublinea) {
+        this.sublinea = sublinea;
+    }
 
-	public void setE1(InfoParada e1) {
-		this.e1 = e1;
-	}
+    public InfoParada getE1() {
+        return e1;
+    }
 
-	public InfoParada getE2() {
-		return e2;
-	}
+    public void setE1(InfoParada e1) {
+        this.e1 = e1;
+    }
 
-	public void setE2(InfoParada e2) {
-		this.e2 = e2;
-	}
-	
-	
-       
+    public InfoParada getE2() {
+        return e2;
+    }
+
+    public void setE2(InfoParada e2) {
+        this.e2 = e2;
+    }
+
 
 }

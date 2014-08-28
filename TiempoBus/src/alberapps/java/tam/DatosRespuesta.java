@@ -1,7 +1,7 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
+ *
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,31 +21,31 @@ package alberapps.java.tam;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DatosRespuesta implements Serializable{
+public class DatosRespuesta implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6379507005761833173L;
-	
-	private ArrayList<BusLlegada> listaBusLlegada;
-	
-	private Integer error = 0;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6379507005761833173L;
 
-	public ArrayList<BusLlegada> getListaBusLlegada() {
-		return listaBusLlegada;
-	}
+    private ArrayList<BusLlegada> listaBusLlegada;
 
-	public void setListaBusLlegada(ArrayList<BusLlegada> listaBusLlegada) {
-		this.listaBusLlegada = listaBusLlegada;
-	}
+    private Integer error = 0;
 
-	public Integer getError() {
-		return error;
-	}
+    public ArrayList<BusLlegada> getListaBusLlegada() {
+        return listaBusLlegada;
+    }
 
-	public void setError(Integer error) {
-		this.error = error;
-	}
+    public void setListaBusLlegada(ArrayList<BusLlegada> listaBusLlegada) {
+        this.listaBusLlegada = listaBusLlegada;
+    }
+
+    public Integer getError() {
+        return error;
+    }
+
+    public void setError(Integer error) {
+        this.error = error;
+    }
 
 }
