@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -18,136 +18,155 @@
  */
 package alberapps.java.noticias.tw;
 
-import java.util.Date;
-
 import android.graphics.Bitmap;
+
+import java.util.Date;
 
 /**
  * Resultados de tw
- * 
  */
 public class TwResultado implements Comparable<TwResultado> {
 
-	private String usuario;
+    private String usuario;
 
-	private String nombreCompleto;
+    private String nombreCompleto;
 
-	private String fecha;
+    private String fecha;
 
-	private Date fechaDate;
+    private Date fechaDate;
 
-	private String url;
+    private String url;
 
-	private String id;
+    private String id;
 
-	private long respuestaId;
+    private long respuestaId;
 
-	private boolean retweet;
+    private boolean retweet;
 
-	public String getNombreCompleto() {
-		return nombreCompleto;
-	}
+    private String error;
 
-	public void setNombreCompleto(String nombreCompleto) {
-		this.nombreCompleto = nombreCompleto;
-	}
+    public String getMensajeError() {
+        return mensajeError;
+    }
 
-	public String getFecha() {
-		return fecha;
-	}
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
 
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
-	}
+    private String mensajeError;
 
-	private String mensaje;
+    public String getError() {
+        return error;
+    }
 
-	private String imagen;
+    public void setError(String error) {
+        this.error = error;
+    }
 
-	private Bitmap imagenBitmap;
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
 
-	public Bitmap getImagenBitmap() {
-		return imagenBitmap;
-	}
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
 
-	public void setImagenBitmap(Bitmap imagenBitmap) {
-		this.imagenBitmap = imagenBitmap;
-	}
+    public String getFecha() {
+        return fecha;
+    }
 
-	public String getImagen() {
-		return imagen;
-	}
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
+    private String mensaje;
 
-	public String getUsuario() {
-		return usuario;
-	}
+    private String imagen;
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+    private Bitmap imagenBitmap;
 
-	public String getMensaje() {
-		return mensaje;
-	}
+    public Bitmap getImagenBitmap() {
+        return imagenBitmap;
+    }
 
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
-	}
+    public void setImagenBitmap(Bitmap imagenBitmap) {
+        this.imagenBitmap = imagenBitmap;
+    }
 
-	public int compareTo(TwResultado arg0) {
+    public String getImagen() {
+        return imagen;
+    }
 
-		if (arg0.getFechaDate() != null) {
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 
-			return arg0.getFechaDate().compareTo(getFechaDate());
+    public String getUsuario() {
+        return usuario;
+    }
 
-		} else {
-			return -1;
-		}
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
-	}
+    public String getMensaje() {
+        return mensaje;
+    }
 
-	public Date getFechaDate() {
-		return fechaDate;
-	}
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
 
-	public void setFechaDate(Date fechaDate) {
-		this.fechaDate = fechaDate;
-	}
+    public int compareTo(TwResultado arg0) {
 
-	public String getUrl() {
-		return url;
-	}
+        if (arg0.getFechaDate() != null) {
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+            return arg0.getFechaDate().compareTo(getFechaDate());
 
-	public String getId() {
-		return id;
-	}
+        } else {
+            return -1;
+        }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    }
 
-	public long getRespuestaId() {
-		return respuestaId;
-	}
+    public Date getFechaDate() {
+        return fechaDate;
+    }
 
-	public void setRespuestaId(long respuestaId) {
-		this.respuestaId = respuestaId;
-	}
+    public void setFechaDate(Date fechaDate) {
+        this.fechaDate = fechaDate;
+    }
 
-	public boolean isRetweet() {
-		return retweet;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public void setRetweet(boolean retweet) {
-		this.retweet = retweet;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getRespuestaId() {
+        return respuestaId;
+    }
+
+    public void setRespuestaId(long respuestaId) {
+        this.respuestaId = respuestaId;
+    }
+
+    public boolean isRetweet() {
+        return retweet;
+    }
+
+    public void setRetweet(boolean retweet) {
+        this.retweet = retweet;
+    }
 
 }

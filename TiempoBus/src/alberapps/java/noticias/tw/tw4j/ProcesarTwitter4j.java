@@ -18,15 +18,22 @@
  */
 package alberapps.java.noticias.tw.tw4j;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
+import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.noticias.tw.Constantes;
+import alberapps.java.noticias.tw.TwResultado;
+import alberapps.java.util.Conectividad;
 import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -38,13 +45,6 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
-import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.noticias.tw.Constantes;
-import alberapps.java.noticias.tw.TwResultado;
-import alberapps.java.util.Conectividad;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
 
 /**
  * Acceso a la api de twitter mediante la libreria twitter4j
@@ -205,7 +205,14 @@ public class ProcesarTwitter4j {
 			}
 
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
+
+            TwResultado resultado = new TwResultado();
+
+            resultado.setError(Integer.toString(e.getErrorCode()));
+            resultado.setMensajeError(e.getMessage());
+
+            listaResultados.add(resultado);
+
 			e.printStackTrace();
 		}
 

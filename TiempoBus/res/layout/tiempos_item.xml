@@ -137,22 +137,44 @@
                     android:layout_marginRight="2dp"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/tiempos_opciones"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:gravity="right"
-                        android:text=">>"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="12sp"
-                        android:textStyle="italic|bold" />
+
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="4dp">
+
+            <ImageView
+                android:id="@+id/fijar_img"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/actionbar_compat_item"
+                android:src="@drawable/fijar"
+                android:contentDescription="Fijar linea"
+                android:layout_gravity="right|top"/>
+
+
+
+            <TextView
+                android:id="@+id/tiempos_opciones"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/actionbar_compat_item"
+                android:gravity="right|bottom"
+                android:text=">>"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                android:textStyle="italic|bold" />
+
+            </LinearLayout>
 
     </LinearLayout>
 	

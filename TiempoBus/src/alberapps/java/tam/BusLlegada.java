@@ -55,6 +55,16 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
     private boolean errorServicio = false;
 
+    private boolean tarjetaFijada = false;
+
+    public boolean isTarjetaFijada() {
+        return tarjetaFijada;
+    }
+
+    public void setTarjetaFijada(boolean tarjetaFijada) {
+        this.tarjetaFijada = tarjetaFijada;
+    }
+
     public boolean isErrorServicio() {
         return errorServicio;
     }

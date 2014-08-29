@@ -448,4 +448,6 @@
     <string name="tlf_tram">Tram: 900 720 472</string>
     <string name="tlf_subus">Subús: 965 140 936</string>
 
+    <string name="error_twitter">No se han podido recuperar datos de Twitter</string>
+
 </resources>

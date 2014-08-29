@@ -68,6 +68,8 @@ import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Datos;
+import alberapps.java.util.GestionarDatos;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -481,6 +483,15 @@ public class DatosPantallaPrincipal {
          */
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
             public void AvisosTramLoaded(List<TwResultado> noticias) {
+
+                if (noticias != null && !noticias.isEmpty() && noticias.size() == 1 && noticias.get(0).getError() != null && !noticias.get(0).getError().equals("")) {
+
+                    Toast.makeText(context, context.getString(R.string.error_twitter) + ": " + noticias.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+
+                    noticias = null;
+
+                }
+
 
                 if (noticias != null && !noticias.isEmpty()) {
 
@@ -1131,5 +1142,129 @@ public class DatosPantallaPrincipal {
             return false;
         }
     }
+
+
+    /**
+     * Tarjetas fijas en el listado para mostrarlas primero
+     *
+     * @param busSeleccionado
+     */
+    public void fijarTarjeta(BusLlegada busSeleccionado) {
+
+        String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");
+
+        List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
+
+        if (fijarLista == null) {
+            fijarLista = new ArrayList<Datos>();
+        }
+
+        //Nuevo dato fijado
+        Datos dato = new Datos();
+        dato.setLinea(busSeleccionado.getLinea());
+        dato.setDestino(busSeleccionado.getDestino());
+        dato.setParada("");
+
+        fijarLista.add(dato);
+
+        String datosNuevos = GestionarDatos.getStringDeLista(fijarLista);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("tarjetas_fijas", datosNuevos);
+        editor.commit();
+
+    }
+
+
+    /**
+     * Tarjetas fijas en el listado para mostrarlas primero. Eliminar
+     *
+     * @param busSeleccionado
+     */
+    public void eliminarTarjeta(BusLlegada busSeleccionado) {
+
+        String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");
+
+        List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
+
+        if (fijarLista == null) {
+            fijarLista = new ArrayList<Datos>();
+        }
+
+
+        //Objeto a eliminar
+        Datos dato = new Datos();
+        dato.setLinea(busSeleccionado.getLinea());
+        dato.setDestino(busSeleccionado.getDestino());
+        dato.setParada(null);
+
+        fijarLista.remove(dato);
+
+
+        String datosNuevos = GestionarDatos.getStringDeLista(fijarLista);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("tarjetas_fijas", datosNuevos);
+        editor.commit();
+
+    }
+
+    /**
+     * Reordena la lista para tener los fijos primero
+     *
+     * @param tiempos
+     * @return
+     */
+    public ArrayList<BusLlegada> ordenarTiemposPorTarjetaFija(ArrayList<BusLlegada> tiempos) {
+
+
+        String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");
+        List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
+
+        if (fijarLista == null || fijarLista.isEmpty()) {
+            return tiempos;
+        }
+
+        ArrayList<BusLlegada> tiemposCoincide = new ArrayList<BusLlegada>();
+
+        ArrayList<BusLlegada> tiemposNoCoincide = new ArrayList<BusLlegada>();
+
+        boolean coincide = false;
+
+        for (int i = 0; i < tiempos.size(); i++) {
+
+            for (int j = 0; j < fijarLista.size(); j++) {
+
+                if (tiempos.get(i).getLinea().equals(fijarLista.get(j).getLinea()) && tiempos.get(i).getDestino().equals(fijarLista.get(j).getDestino())) {
+
+                    tiempos.get(i).setTarjetaFijada(true);
+                    tiemposCoincide.add(tiempos.get(i));
+                    coincide = true;
+                    break;
+
+                }
+
+            }
+
+            if (!coincide) {
+                tiemposNoCoincide.add(tiempos.get(i));
+            } else {
+                coincide = false;
+            }
+
+        }
+
+        if (tiemposCoincide.isEmpty()) {
+            return tiempos;
+        } else {
+
+            tiemposCoincide.addAll(tiemposNoCoincide);
+
+            return tiemposCoincide;
+        }
+
+
+    }
+
 
 }

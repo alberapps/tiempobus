@@ -167,6 +167,65 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             });
 
+
+            //Fijar
+            ImageView fijar = (ImageView) v.findViewById(R.id.fijar_img);
+
+
+            if(bus.isTarjetaFijada()){
+
+                fijar.setImageResource(R.drawable.content_remove);
+
+                fijar.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View view) {
+
+                        MainActivity actividad = (MainActivity) contexto;
+
+
+                        actividad.datosPantallaPrincipal.eliminarTarjeta(bus);
+
+                        actividad.buses.get(getPosition(bus)).setTarjetaFijada(false);
+
+                        actividad.buses = actividad.datosPantallaPrincipal.ordenarTiemposPorTarjetaFija(actividad.buses);
+
+                        actividad.handler.sendEmptyMessage(MainActivity.MSG_FRECUENCIAS_ACTUALIZADAS);
+
+                        notifyDataSetChanged();
+
+
+                    }
+
+                });
+
+
+            }else {
+
+
+                fijar.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View view) {
+
+                        MainActivity actividad = (MainActivity) contexto;
+
+
+                        actividad.datosPantallaPrincipal.fijarTarjeta(bus);
+
+                        actividad.buses.get(getPosition(bus)).setTarjetaFijada(true);
+
+                        actividad.buses = actividad.datosPantallaPrincipal.ordenarTiemposPorTarjetaFija(actividad.buses);
+
+                        actividad.handler.sendEmptyMessage(MainActivity.MSG_FRECUENCIAS_ACTUALIZADAS);
+
+                        notifyDataSetChanged();
+
+                    }
+
+                });
+
+            }
+
+
         } else if (bus.isConsultaInicial()) {
 
             Context ctx = this.getContext().getApplicationContext();

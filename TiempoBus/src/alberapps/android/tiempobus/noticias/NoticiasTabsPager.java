@@ -610,6 +610,14 @@ public class NoticiasTabsPager extends ActionBarActivity {
         LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
             public void TwitterLoaded(List<TwResultado> mensajes) {
 
+                if (mensajes != null && !mensajes.isEmpty() && mensajes.size() == 1 && mensajes.get(0).getError() != null && !mensajes.get(0).getError().equals("")) {
+
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_twitter) + ": " + mensajes.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+
+                    mensajes = null;
+
+                }
+
                 if (mensajes != null && !mensajes.isEmpty()) {
                     avisosRecuperados = mensajes;
 
@@ -1035,6 +1043,15 @@ public class NoticiasTabsPager extends ActionBarActivity {
          */
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
             public void AvisosTramLoaded(List<TwResultado> noticias) {
+
+                if (noticias != null && !noticias.isEmpty() && noticias.size() == 1 && noticias.get(0).getError() != null && !noticias.get(0).getError().equals("")) {
+
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_twitter) + ": " + noticias.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+
+                    noticias = null;
+
+                }
+
 
                 if (noticias != null && !noticias.isEmpty()) {
 

@@ -125,12 +125,12 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     protected static final int MSG_CLOSE_CARGANDO = 200;
     protected static final int MSG_ERROR_TIEMPOS = 201;
-    protected static final int MSG_FRECUENCIAS_ACTUALIZADAS = 202;
+    public static final int MSG_FRECUENCIAS_ACTUALIZADAS = 202;
     public static final int MSG_RECARGA = 203;
     public static final long DELAY_RECARGA = 750;
 
-    private ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
-    private TiemposAdapter posteAdapter;
+    public ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+    private TiemposAdapter tiemposAdapter;
     private TextView guiHora;
     private TextView datosParada;
 
@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     public int paradaActual = 4450;
     public final ParadaActualHandler handler = new ParadaActualHandler(this);
 
-    public TiemposUpdater posteUpdater = new TiemposUpdater();
+    public TiemposUpdater tiemposUpdater = new TiemposUpdater();
     AlarmManager alarmManager;
     private ImageButton botonCargaTiempos;
 
@@ -771,7 +771,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         /**
          * Configuramos la lista de resultados
          */
-        posteAdapter = new TiemposAdapter(this, R.layout.tiempos_item);
+        tiemposAdapter = new TiemposAdapter(this, R.layout.tiempos_item);
 
         // registerForContextMenu(getListView());
 
@@ -789,7 +789,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         BusLlegada sinDatos = new BusLlegada();
         sinDatos.setSinDatos(true);
         sinDatos.setConsultaInicial(true);
-        posteAdapter.add(sinDatos);
+        tiemposAdapter.add(sinDatos);
 
         datosPantallaPrincipal.cargarPie();
 
@@ -818,8 +818,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         });
 
         // Asignamos el adapter a la lista
-        tiemposView.setAdapter(posteAdapter);
-        posteAdapter.notifyDataSetChanged();
+        tiemposView.setAdapter(tiemposAdapter);
+        tiemposAdapter.notifyDataSetChanged();
 
         // registerForContextMenu(guiTitulo);
 
@@ -1298,6 +1298,10 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                         if (datosRespuesta != null) {
                             tiempos = datosRespuesta.getListaBusLlegada();
+
+                            //Reordenar en funcion de fijado
+                            tiempos = datosPantallaPrincipal.ordenarTiemposPorTarjetaFija(tiempos);
+
                         }
 
                         if (tiempos != null) {
@@ -1394,11 +1398,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 case MSG_RECARGA:
 
-                    if (laActividad.posteUpdater != null) {
-                        removeCallbacks(laActividad.posteUpdater);
+                    if (laActividad.tiemposUpdater != null) {
+                        removeCallbacks(laActividad.tiemposUpdater);
                     }
                     removeMessages(MSG_RECARGA);
-                    post(laActividad.posteUpdater);
+                    post(laActividad.tiemposUpdater);
                     sendEmptyMessageDelayed(MSG_RECARGA, laActividad.datosPantallaPrincipal.frecuenciaRecarga());
                     break;
 
@@ -1476,21 +1480,21 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     laActividad.guiHora.setText(updated);
 
                     // Limpiamos la lista
-                    laActividad.posteAdapter.clear();
+                    laActividad.tiemposAdapter.clear();
 
                     // La rellenamos con los nuevos datos
                     if (laActividad.buses != null && laActividad.buses.size() > 0) {
                         int n = laActividad.buses.size();
 
                         for (int i = 0; i < n; i++) {
-                            laActividad.posteAdapter.add(laActividad.buses.get(i));
+                            laActividad.tiemposAdapter.add(laActividad.buses.get(i));
                         }
                     } else {
 
                         // Control de sin datos
                         BusLlegada sinDatos = new BusLlegada();
                         sinDatos.setSinDatos(true);
-                        laActividad.posteAdapter.add(sinDatos);
+                        laActividad.tiemposAdapter.add(sinDatos);
 
                     }
 
@@ -1498,7 +1502,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     laActividad.gestionarTarjetaInfo.cargarTarjetaInfo();
                     laActividad.datosPantallaPrincipal.cargarPie();
 
-                    laActividad.posteAdapter.notifyDataSetChanged();
+                    laActividad.tiemposAdapter.notifyDataSetChanged();
                     break;
 
             }
