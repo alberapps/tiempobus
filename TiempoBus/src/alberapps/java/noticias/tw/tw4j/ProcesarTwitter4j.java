@@ -157,11 +157,11 @@ public class ProcesarTwitter4j {
 	 * @param elementos
 	 * @return listado
 	 */
-	public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) {
+	public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) throws Exception{
 
 		List<TwResultado> listaResultados = new ArrayList<TwResultado>();
 
-		try {
+
 
 			Paging pagina = new Paging();
 
@@ -204,19 +204,11 @@ public class ProcesarTwitter4j {
 
 			}
 
-		} catch (TwitterException e) {
 
-            TwResultado resultado = new TwResultado();
 
-            resultado.setError(Integer.toString(e.getErrorCode()));
-            resultado.setMensajeError(e.getMessage());
+        //throw new Exception("prueba");
 
-            listaResultados.add(resultado);
-
-			e.printStackTrace();
-		}
-
-		return listaResultados;
+        return listaResultados;
 
 	}
 

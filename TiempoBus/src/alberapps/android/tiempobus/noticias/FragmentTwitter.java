@@ -57,16 +57,38 @@ public class FragmentTwitter extends Fragment {
         setupFondoAplicacion();
 
         if (actividad.avisosRecuperados != null) {
-            actividad.cargarListadoTw();
-        }
+            //Si hay resultados
 
-        // Progreso lista
-        ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
-        TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
-        vacio.setVisibility(View.INVISIBLE);
-        ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
-        lpb.setIndeterminate(true);
-        listTwWiew.setEmptyView(lpb);
+            actividad.cargarListadoTw();
+        } else if (actividad.twSinResultados) {
+
+            //Si se ha consultado y no hay resultados
+
+            actividad.cargarListadoTw();
+
+            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
+            lpb.clearAnimation();
+            lpb.setVisibility(View.INVISIBLE);
+
+            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
+
+            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
+            listTwWiew.setEmptyView(vacio);
+
+
+        } else {
+
+            //Progreso inicial
+
+            // Progreso lista
+            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
+            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
+            vacio.setVisibility(View.INVISIBLE);
+            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
+            lpb.setIndeterminate(true);
+            listTwWiew.setEmptyView(lpb);
+
+        }
 
         super.onViewStateRestored(savedInstanceState);
     }

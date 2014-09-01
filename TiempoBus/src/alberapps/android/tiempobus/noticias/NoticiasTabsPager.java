@@ -125,6 +125,8 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
     MenuItem refresh = null;
 
+    public boolean twSinResultados = false;
+
     AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
 
     AsyncTask<Object, Void, List<TwResultado>> loadTwTask = null;
@@ -595,6 +597,36 @@ public class NoticiasTabsPager extends ActionBarActivity {
         }
     };
 
+
+    /**
+     * Cotrol de errores de twitter
+     *
+     * @param context
+     * @param mensajes
+     * @return
+     */
+    public static boolean errorTwitter(Context context, List<TwResultado> mensajes) {
+
+        if (mensajes != null && !mensajes.isEmpty() && mensajes.size() == 1 && mensajes.get(0).getError() != null && !mensajes.get(0).getError().equals("100")) {
+
+            Toast.makeText(context, context.getString(R.string.error_twitter) + ": " + mensajes.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+
+            return true;
+
+        } else if (mensajes != null && !mensajes.isEmpty() && mensajes.size() == 1 && mensajes.get(0).getError() != null && mensajes.get(0).getError().equals("100")) {
+
+            Toast.makeText(context, context.getString(R.string.error_twitter), Toast.LENGTH_SHORT).show();
+
+            return true;
+
+        }
+
+
+        return false;
+
+    }
+
+
     /**
      * Recarga de datos twitter
      */
@@ -610,15 +642,18 @@ public class NoticiasTabsPager extends ActionBarActivity {
         LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
             public void TwitterLoaded(List<TwResultado> mensajes) {
 
-                if (mensajes != null && !mensajes.isEmpty() && mensajes.size() == 1 && mensajes.get(0).getError() != null && !mensajes.get(0).getError().equals("")) {
-
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_twitter) + ": " + mensajes.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+                if (errorTwitter(getApplicationContext(), mensajes)) {
 
                     mensajes = null;
+
+                    twSinResultados = true;
 
                 }
 
                 if (mensajes != null && !mensajes.isEmpty()) {
+
+                    twSinResultados = false;
+
                     avisosRecuperados = mensajes;
 
                     cargarListadoTw();
@@ -658,6 +693,8 @@ public class NoticiasTabsPager extends ActionBarActivity {
                         TextView vacio = (TextView) findViewById(R.id.vacio_tw);
                         listTwWiew.setEmptyView(vacio);
                     }
+
+
                 }
 
             }
@@ -741,21 +778,19 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
                 twAdapter = new TwAdapter(this, R.layout.avisostw_item);
 
-                if (avisosRecuperados != null) {
 
-                    twAdapter.addAll(avisosRecuperados);
-                    twAdapter.notifyDataSetChanged();
+                twAdapter.addAll(avisosRecuperados);
 
-                } else {
+                listTwWiew.setAdapter(twAdapter);
 
-                    twAdapter.clear();
-                    twAdapter.notifyDataSetChanged();
+                //View emptyView = findViewById(R.id.vacio_tw);
+                //listTwWiew.setEmptyView(emptyView);
 
-                }
+                twAdapter.notifyDataSetChanged();
+
 
                 // lineasView.setOnItemClickListener(twClickedHandler);
 
-                listTwWiew.setAdapter(twAdapter);
 
             }
 
@@ -1044,13 +1079,12 @@ public class NoticiasTabsPager extends ActionBarActivity {
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
             public void AvisosTramLoaded(List<TwResultado> noticias) {
 
-                if (noticias != null && !noticias.isEmpty() && noticias.size() == 1 && noticias.get(0).getError() != null && !noticias.get(0).getError().equals("")) {
-
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_twitter) + ": " + noticias.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+                if (errorTwitter(getApplicationContext(), noticias)) {
 
                     noticias = null;
 
                 }
+
 
 
                 if (noticias != null && !noticias.isEmpty()) {
@@ -1125,6 +1159,13 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
                     }
                 } else {
+
+
+                    View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
+
+                    TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+
+                    descripcion.setText(getString(R.string.main_no_items));
 
                 }
             }

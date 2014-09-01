@@ -58,6 +58,7 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
@@ -484,9 +485,7 @@ public class DatosPantallaPrincipal {
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
             public void AvisosTramLoaded(List<TwResultado> noticias) {
 
-                if (noticias != null && !noticias.isEmpty() && noticias.size() == 1 && noticias.get(0).getError() != null && !noticias.get(0).getError().equals("")) {
-
-                    Toast.makeText(context, context.getString(R.string.error_twitter) + ": " + noticias.get(0).getMensajeError(), Toast.LENGTH_SHORT).show();
+                if (NoticiasTabsPager.errorTwitter(context.getApplicationContext(), noticias)) {
 
                     noticias = null;
 

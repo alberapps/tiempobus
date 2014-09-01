@@ -601,6 +601,9 @@ public class GestionarTarjetaInfo {
                 if (weather.getListaDatos().get(0).getImagen() != null) {
                     iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
                     iv.setVisibility(ImageView.VISIBLE);
+
+
+
                 } else {
                     iv.setVisibility(ImageView.INVISIBLE);
                 }
