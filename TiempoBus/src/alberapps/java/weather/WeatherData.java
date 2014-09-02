@@ -46,6 +46,16 @@ public class WeatherData {
     private String contitionTemp;
     private Bitmap imagen;
 
+    private String json;
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+
     public String getSunset() {
         return sunset;
     }

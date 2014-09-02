@@ -60,7 +60,7 @@ public class FragmentTwitter extends Fragment {
             //Si hay resultados
 
             actividad.cargarListadoTw();
-        } else if (actividad.twSinResultados) {
+        } else if (actividad.twSinResultados || !actividad.preferencias.getBoolean("tw_activar", true)) {
 
             //Si se ha consultado y no hay resultados
 

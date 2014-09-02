@@ -79,14 +79,15 @@
             android:key="conf_twitter"
             android:summary="@string/preferences"
             android:title="@string/tab_tw" >
-            <ListPreference
+
+            <!--ListPreference
                 android:defaultValue="3"
                 android:dialogTitle="@string/tw_maximo"
                 android:entries="@array/cantidad_tw"
                 android:entryValues="@array/cantidad_tw"
                 android:key="tweets_maximos_v11"
                 android:summary="@string/tw_maximo_desc"
-                android:title="@string/tw_maximo" />
+                android:title="@string/tw_maximo" /-->
 
             <CheckBoxPreference
                 android:defaultValue="true"

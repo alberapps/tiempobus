@@ -56,38 +56,82 @@ public class ProcesarTwitter {
             ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
             procesar4j.setUp();
 
-            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
+            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt("5"));
 
-            if (cargar.get(0)) {
 
-                lista.addAll(procesar4j.recuperarTimeline("Alicante_City", tw_alicante_ruta, Integer.parseInt(cantidad)));
+
+            lista.addAll(procesar4j.recuperarListaUsuario("alberapps", tw_alberapps_ruta, Integer.parseInt("15")));
+
+            //lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
+
+            List<TwResultado> listaBorrar = new ArrayList<TwResultado>();
+
+
+            if (!cargar.get(0)) {
+
+                //lista.addAll(procesar4j.recuperarTimeline("Alicante_City", tw_alicante_ruta, Integer.parseInt(cantidad)));
+
+
+                TwResultado buscar = new TwResultado();
+                buscar.setUsuario("@Alicante_City");
+                listaBorrar.add(buscar);
+
+
+
 
             }
 
-            if (cargar.get(1)) {
+            if (!cargar.get(1)) {
 
-                lista.addAll(procesar4j.recuperarTimeline("campelloturismo", tw_campello_ruta, Integer.parseInt(cantidad)));
+                //lista.addAll(procesar4j.recuperarTimeline("campelloturismo", tw_campello_ruta, Integer.parseInt(cantidad)));
 
-            }
-
-            if (cargar.get(2)) {
-
-                lista.addAll(procesar4j.recuperarTimeline("aytoraspeig", tw_sanvi_ruta, Integer.parseInt(cantidad)));
+                TwResultado buscar = new TwResultado();
+                buscar.setUsuario("@CampelloTurismo");
+                listaBorrar.add(buscar);
 
             }
 
-            if (cargar.get(3)) {
+            if (!cargar.get(2)) {
 
-                lista.addAll(procesar4j.recuperarTimeline("sant_joan", tw_santjoan_ruta, Integer.parseInt(cantidad)));
+                //lista.addAll(procesar4j.recuperarTimeline("aytoraspeig", tw_sanvi_ruta, Integer.parseInt(cantidad)));
+
+                TwResultado buscar = new TwResultado();
+                buscar.setUsuario("@aytoraspeig");
+                listaBorrar.add(buscar);
 
             }
 
-            if (cargar.get(4)) {
+            if (!cargar.get(3)) {
+
+                //lista.addAll(procesar4j.recuperarTimeline("sant_joan", tw_santjoan_ruta, Integer.parseInt(cantidad)));
+
+                TwResultado buscar = new TwResultado();
+                buscar.setUsuario("@sant_joan");
+                listaBorrar.add(buscar);
+
+
+            }
+
+            if (!cargar.get(4)) {
                 // Tram
-                lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
+                //lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
+
+                TwResultado buscar = new TwResultado();
+                buscar.setUsuario("@TramdeAlicante");
+                listaBorrar.add(buscar);
+
             }
 
+
+
+
+            //Ordenar la lista por fecha
             if (lista != null && !lista.isEmpty()) {
+
+                //Eliminar resultados indicados
+                if(listaBorrar != null && !listaBorrar.isEmpty()){
+                    lista.removeAll(listaBorrar);
+                }
 
                 // Ordenar por fecha
                 Collections.sort(lista);

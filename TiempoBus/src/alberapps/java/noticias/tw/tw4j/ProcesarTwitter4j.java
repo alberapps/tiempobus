@@ -1,8 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
  *  Copyright (C) 2012 Alberto Montiel
- * 
- *  
+ *
+ *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -43,234 +43,296 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.UserList;
 import twitter4j.auth.OAuth2Token;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
  * Acceso a la api de twitter mediante la libreria twitter4j
- * 
  */
 public class ProcesarTwitter4j {
 
-	private ConfigurationBuilder builder;
+    private ConfigurationBuilder builder;
 
-	private Twitter twitter;
+    private Twitter twitter;
 
-	/**
-	 * Inicializar
-	 */
-	public void setUp() {
+    /**
+     * Inicializar
+     */
+    public void setUp() {
 
-		builder = new ConfigurationBuilder();
-		// builder.setUseSSL(true);
-		builder.setApplicationOnlyAuthEnabled(true);
+        builder = new ConfigurationBuilder();
+        // builder.setUseSSL(true);
+        builder.setApplicationOnlyAuthEnabled(true);
 
-		try {
+        try {
 
-			twitter = new TwitterFactory(builder.build()).getInstance();
+            twitter = new TwitterFactory(builder.build()).getInstance();
 
-			twitter.setOAuthConsumer(Constantes.ck, Constantes.cs);
+            twitter.setOAuthConsumer(Constantes.ck, Constantes.cs);
 
-			// Para que cargue
-			OAuth2Token token = twitter.getOAuth2Token();
+            // Para que cargue
+            OAuth2Token token = twitter.getOAuth2Token();
 
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	/**
-	 * Recuperar el limite
-	 */
-	public void recuperarRateLimit() {
+    /**
+     * Recuperar el limite
+     */
+    public void recuperarRateLimit() {
 
-		try {
+        try {
 
-			Map<String, RateLimitStatus> rateLimit = twitter.getRateLimitStatus("search");
+            Map<String, RateLimitStatus> rateLimit = twitter.getRateLimitStatus("search");
 
-			RateLimitStatus searchTweetsRateLimit = rateLimit.get("/search/tweets");
+            RateLimitStatus searchTweetsRateLimit = rateLimit.get("/search/tweets");
 
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	/**
-	 * Buscar
-	 * 
-	 * @return lista
-	 */
-	public List<TwResultado> recuperarSearch() {
+    /**
+     * Buscar
+     *
+     * @return lista
+     */
+    public List<TwResultado> recuperarSearch() {
 
-		List<TwResultado> listaResultados = null;
+        List<TwResultado> listaResultados = null;
 
-		try {
+        try {
 
-			Query query = new Query("from:Alicante_City");
+            Query query = new Query("from:Alicante_City");
 
-			QueryResult resultados = twitter.search(query);
+            QueryResult resultados = twitter.search(query);
 
-			List<Status> timeline = resultados.getTweets();
+            List<Status> timeline = resultados.getTweets();
 
-			listaResultados = new ArrayList<TwResultado>();
+            listaResultados = new ArrayList<TwResultado>();
 
-			TwResultado resultado = null;
+            TwResultado resultado = null;
 
-			for (int i = 0; i < timeline.size(); i++) {
+            for (int i = 0; i < timeline.size(); i++) {
 
-				resultado = new TwResultado();
+                resultado = new TwResultado();
 
-				resultado.setId(Long.toString(timeline.get(i).getId()));
-				resultado.setFechaDate(timeline.get(i).getCreatedAt());
-				resultado.setNombreCompleto(timeline.get(i).getUser().getName());
-				resultado.setUsuario(timeline.get(i).getUser().getScreenName());
-				resultado.setMensaje(timeline.get(i).getText());
-				resultado.setImagen(timeline.get(i).getUser().getMiniProfileImageURLHttps());
+                resultado.setId(Long.toString(timeline.get(i).getId()));
+                resultado.setFechaDate(timeline.get(i).getCreatedAt());
+                resultado.setNombreCompleto(timeline.get(i).getUser().getName());
+                resultado.setUsuario(timeline.get(i).getUser().getScreenName());
+                resultado.setMensaje(timeline.get(i).getText());
+                resultado.setImagen(timeline.get(i).getUser().getMiniProfileImageURLHttps());
 
-				// Imagen de perfil
-				resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
+                // Imagen de perfil
+                resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
-				resultado.setUrl("");
+                resultado.setUrl("");
 
-				listaResultados.add(resultado);
+                listaResultados.add(resultado);
 
-			}
+            }
 
-		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (TwitterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		return listaResultados;
+        return listaResultados;
 
-	}
+    }
 
-	/**
-	 * Recuperar el timeline del usuario indicado
-	 * 
-	 * @param twuser
-	 * @param url
-	 * @param elementos
-	 * @return listado
-	 */
-	public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) throws Exception{
+    /**
+     * Recuperar el timeline del usuario indicado
+     *
+     * @param twuser
+     * @param url
+     * @param elementos
+     * @return listado
+     */
+    public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) throws Exception {
 
-		List<TwResultado> listaResultados = new ArrayList<TwResultado>();
+        List<TwResultado> listaResultados = new ArrayList<TwResultado>();
 
 
+        Paging pagina = new Paging();
 
-			Paging pagina = new Paging();
+        pagina.setCount(elementos);
 
-			pagina.setCount(elementos);
+        ResponseList<Status> timeline = twitter.getUserTimeline(twuser, pagina);
 
-			ResponseList<Status> timeline = twitter.getUserTimeline(twuser, pagina);
+        listaResultados = new ArrayList<TwResultado>();
 
-			listaResultados = new ArrayList<TwResultado>();
+        Status linea = timeline.get(0);
 
-			Status linea = timeline.get(0);
+        TwResultado resultado = null;
 
-			TwResultado resultado = null;
+        for (int i = 0; i < timeline.size(); i++) {
 
-			for (int i = 0; i < timeline.size(); i++) {
+            resultado = new TwResultado();
 
-				resultado = new TwResultado();
+            resultado.setId(Long.toString(timeline.get(i).getId()));
+            resultado.setFechaDate(timeline.get(i).getCreatedAt());
 
-				resultado.setId(Long.toString(timeline.get(i).getId()));
-				resultado.setFechaDate(timeline.get(i).getCreatedAt());
+            resultado.setFecha(formatearFechaTw(resultado.getFechaDate()));
 
-				resultado.setFecha(formatearFechaTw(resultado.getFechaDate()));
+            resultado.setNombreCompleto(timeline.get(i).getUser().getName());
+            resultado.setUsuario("@" + timeline.get(i).getUser().getScreenName());
+            resultado.setMensaje(timeline.get(i).getText());
+            resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
-				resultado.setNombreCompleto(timeline.get(i).getUser().getName());
-				resultado.setUsuario("@" + timeline.get(i).getUser().getScreenName());
-				resultado.setMensaje(timeline.get(i).getText());
-				resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
+            resultado.setRetweet(timeline.get(i).isRetweet());
 
-				resultado.setRetweet(timeline.get(i).isRetweet());
+            // Imagen de perfil
+            // resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
 
-				// Imagen de perfil
-				// resultado.setImagenBitmap(recuperaImagen(resultado.getImagen()));
+            resultado.setUrl(url);
 
-				resultado.setUrl(url);
+            resultado.setRespuestaId(timeline.get(i).getInReplyToUserId());
 
-				resultado.setRespuestaId(timeline.get(i).getInReplyToUserId());
+            Log.d("twitter", "resp: " + resultado.getRespuestaId());
 
-				Log.d("twitter", "resp: " + resultado.getRespuestaId());
+            listaResultados.add(resultado);
 
-				listaResultados.add(resultado);
-
-			}
-
+        }
 
 
         //throw new Exception("prueba");
 
         return listaResultados;
 
-	}
+    }
 
-	/**
-	 * Recuperar la imagen
-	 * 
-	 * @param urlParam
-	 * @return imagen
-	 */
-	public static Bitmap recuperaImagen(String urlParam) {
 
-		InputStream st = null;
+    /**
+     * Recuperar la lista indicada
+     *
+     * @param twuser
+     * @param url
+     * @param elementos
+     * @return listado
+     */
+    public List<TwResultado> recuperarListaUsuario(String twuser, String url, int elementos) throws Exception {
 
-		Bitmap bm = null;
+        List<TwResultado> listaResultados = new ArrayList<TwResultado>();
 
-		try {
 
-			st = Conectividad.conexionGetIsoStream(urlParam);
+        Paging pagina = new Paging();
 
-			bm = BitmapFactory.decodeStream(st);
+        pagina.setCount(elementos);
 
-		} catch (Exception e) {
+        UserList userList = twitter.showUserList(twuser, "tiempobuslist");
 
-			bm = null;
 
-		} finally {
+        ResponseList<Status> timeline = twitter.getUserListStatuses(userList.getId(), pagina);
 
-			try {
-				if (st != null) {
-					st.close();
-				}
-			} catch (IOException e) {
 
-			}
+        listaResultados = new ArrayList<TwResultado>();
 
-		}
+        Status linea = timeline.get(0);
 
-		return bm;
+        TwResultado resultado = null;
 
-	}
+        for (int i = 0; i < timeline.size(); i++) {
 
-	/**
-	 * Formatear la fecha devuelta por tw
-	 * 
-	 * @param fecha
-	 * @return string
-	 */
-	private static String formatearFechaTw(Date fecha) {
+            resultado = new TwResultado();
 
-		if (fecha != null) {
+            resultado.setId(Long.toString(timeline.get(i).getId()));
+            resultado.setFechaDate(timeline.get(i).getCreatedAt());
 
-			final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
+            resultado.setFecha(formatearFechaTw(resultado.getFechaDate()));
 
-			SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, UtilidadesUI.getLocaleUsuario());
+            resultado.setNombreCompleto(timeline.get(i).getUser().getName());
+            resultado.setUsuario("@" + timeline.get(i).getUser().getScreenName());
+            resultado.setMensaje(timeline.get(i).getText());
+            resultado.setImagen(timeline.get(i).getUser().getBiggerProfileImageURL());
 
-			return sfNueva.format(fecha);
+            resultado.setRetweet(timeline.get(i).isRetweet());
 
-		} else {
+            resultado.setUrl(url);
 
-			return null;
-		}
+            resultado.setRespuestaId(timeline.get(i).getInReplyToUserId());
 
-	}
+            Log.d("twitter", "resp: " + resultado.getRespuestaId());
+
+            listaResultados.add(resultado);
+
+        }
+
+
+        //throw new Exception("prueba");
+
+        return listaResultados;
+
+    }
+
+
+    /**
+     * Recuperar la imagen
+     *
+     * @param urlParam
+     * @return imagen
+     */
+    public static Bitmap recuperaImagen(String urlParam) {
+
+        InputStream st = null;
+
+        Bitmap bm = null;
+
+        try {
+
+            st = Conectividad.conexionGetIsoStream(urlParam);
+
+            bm = BitmapFactory.decodeStream(st);
+
+        } catch (Exception e) {
+
+            bm = null;
+
+        } finally {
+
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException e) {
+
+            }
+
+        }
+
+        return bm;
+
+    }
+
+    /**
+     * Formatear la fecha devuelta por tw
+     *
+     * @param fecha
+     * @return string
+     */
+    private static String formatearFechaTw(Date fecha) {
+
+        if (fecha != null) {
+
+            final String nuevaFechaP = "EEE dd MMM yyyy HH:mm";
+
+            SimpleDateFormat sfNueva = new SimpleDateFormat(nuevaFechaP, UtilidadesUI.getLocaleUsuario());
+
+            return sfNueva.format(fecha);
+
+        } else {
+
+            return null;
+        }
+
+    }
 
 }

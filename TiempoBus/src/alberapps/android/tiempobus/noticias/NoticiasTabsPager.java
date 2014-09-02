@@ -727,6 +727,25 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
             cargarListadoTw();
 
+            //Lanzar directamente TRAM
+
+            if (UtilidadesTRAM.ACTIVADO_TRAM) {
+
+                recargarRss();
+
+            } else {
+
+                setRefreshActionItemState(false);
+
+                if (dialog != null && dialog.isShowing()) {
+
+                    dialog.dismiss();
+
+                }
+
+            }
+
+
             return;
         }
 
@@ -1084,7 +1103,6 @@ public class NoticiasTabsPager extends ActionBarActivity {
                     noticias = null;
 
                 }
-
 
 
                 if (noticias != null && !noticias.isEmpty()) {

@@ -17,8 +17,14 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.Date;
+import java.util.List;
+
+import alberapps.android.tiempobus.util.PreferencesUtil;
+import alberapps.java.weather.WeatherData;
 import alberapps.java.weather.WeatherQuery;
 import alberapps.java.weather.openweathermap.ProcesarOWMCurrect;
 
@@ -52,9 +58,72 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
         WeatherQuery weather = null;
         try {
 
-
             String lat = (String) datos[0];
             String lon = (String) datos[1];
+
+            //Control cache
+            Context context = (Context) datos[2];
+            String paradaWeather = (String) datos[3];
+
+            //Control de cache
+            String fechaConsultaClima = PreferencesUtil.getCache(context, "cache_clima_fecha");
+
+            //Si no hay valor almacenarlo y continuar
+            if (fechaConsultaClima == null || fechaConsultaClima.equals("")) {
+                String control = String.valueOf((new Date()).getTime());
+                PreferencesUtil.putCache(context, "cache_clima_fecha", control);
+                PreferencesUtil.putCache(context, "cache_clima_parada", paradaWeather);
+                PreferencesUtil.putCache(context, "cache_clima_json", "");
+            } else {
+
+                //Si la parada ha cambiado, se descarta
+                String paradaCache = PreferencesUtil.getCache(context, "cache_clima_parada");
+
+                if (!paradaCache.equals(paradaWeather)) {
+
+                    String control = String.valueOf((new Date()).getTime());
+                    PreferencesUtil.putCache(context, "cache_clima_fecha", control);
+                    PreferencesUtil.putCache(context, "cache_clima_parada", paradaWeather);
+                    PreferencesUtil.putCache(context, "cache_clima_json", "");
+
+                } else {
+
+                    //Si coincide parada continuar para verificar hora
+
+                    Date fecha = new Date(Long.parseLong(fechaConsultaClima));
+
+                    Date ahora = new Date();
+
+                    //Si la diferencia es menor a 15 minutos. No continuar
+                    if (ahora.getTime() - fecha.getTime() < 15 * 60 * 1000) {
+
+                        String jsonCache = PreferencesUtil.getCache(context, "cache_clima_json");
+
+                        if (jsonCache != null && !jsonCache.equals("")) {
+                            List<WeatherData> weatherData = ProcesarOWMCurrect.parsea(jsonCache);
+
+
+                            if (weatherData != null) {
+                                weather = new WeatherQuery();
+                                weather.setListaDatos(weatherData);
+
+                                return weather;
+
+                            }
+
+
+                        }
+                    } else {
+                        String control = String.valueOf((new Date()).getTime());
+                        PreferencesUtil.putCache(context, "cache_clima_fecha", control);
+                        PreferencesUtil.putCache(context, "cache_clima_parada", paradaWeather);
+                        PreferencesUtil.putCache(context, "cache_clima_json", "");
+                    }
+
+
+                }
+
+            }
 
 
             //weather = ProcesarDatosWeatherService.getDatosClima();
@@ -62,6 +131,11 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
             //weather = ProcesarYWRSS.getDatosClima();
 
             weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
+
+            //Guardar ultima consulta json
+            if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty() && weather.getListaDatos().get(0).getJson() != null) {
+                PreferencesUtil.putCache(context, "cache_clima_json", weather.getListaDatos().get(0).getJson());
+            }
 
         } catch (Exception e) {
 

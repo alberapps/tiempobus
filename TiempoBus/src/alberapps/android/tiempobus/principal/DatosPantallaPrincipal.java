@@ -64,6 +64,7 @@ import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramA
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask.LoadNoticiasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.tw.TwResultado;
@@ -478,6 +479,31 @@ public class DatosPantallaPrincipal {
      * Verifica si hay nuevas noticias y muestra un aviso
      */
     public void verificarNuevasNoticiasTram() {
+
+
+        String fechaAvisoTram = PreferencesUtil.getCache(context, "cache_aviso_tram");
+
+        //Si no hay valor almacenarlo y continuar
+        if (fechaAvisoTram == null || fechaAvisoTram.equals("")) {
+            String control = String.valueOf((new Date()).getTime());
+            PreferencesUtil.putCache(context, "cache_aviso_tram", control);
+        } else {
+
+            Date fecha = new Date(Long.parseLong(fechaAvisoTram));
+
+            Date ahora = new Date();
+
+            //Si la diferencia es menor a 15 minutos. No continuar
+            if (ahora.getTime() - fecha.getTime() < 15 * 60 * 1000) {
+                return;
+            }else{
+                String control = String.valueOf((new Date()).getTime());
+                PreferencesUtil.putCache(context, "cache_aviso_tram", control);
+            }
+
+
+        }
+
 
         /**
          * Sera llamado cuando la tarea de cargar las noticias

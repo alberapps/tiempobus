@@ -491,6 +491,7 @@ public class GestionarTarjetaInfo {
 
         };
 
+
         // Control de disponibilidad de conexion
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -499,7 +500,7 @@ public class GestionarTarjetaInfo {
             TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
             textoWeather.setText(context.getString(R.string.aviso_recarga));
 
-            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon);
+            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon, context, paradaWeather);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
@@ -601,7 +602,6 @@ public class GestionarTarjetaInfo {
                 if (weather.getListaDatos().get(0).getImagen() != null) {
                     iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
                     iv.setVisibility(ImageView.VISIBLE);
-
 
 
                 } else {
@@ -720,7 +720,7 @@ public class GestionarTarjetaInfo {
 		 * nuboso tormenta+ 64: nuboso tormenta++
 		 */
         /*
-		 * if (data.getValor().substring(0, 2).equals("11")) {
+         * if (data.getValor().substring(0, 2).equals("11")) {
 		 * iv.setImageResource(R.drawable.weather_sun_blue_48); } else if
 		 * (data.getValor().substring(0, 2).equals("15")) {
 		 * iv.setImageResource(R.drawable.weather_clouds_blue_48); } else if

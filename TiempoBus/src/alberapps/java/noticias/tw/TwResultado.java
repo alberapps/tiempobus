@@ -169,4 +169,21 @@ public class TwResultado implements Comparable<TwResultado> {
         this.retweet = retweet;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TwResultado that = (TwResultado) o;
+
+        if (usuario != null ? !usuario.equals(that.usuario) : that.usuario != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return usuario != null ? usuario.hashCode() : 0;
+    }
 }

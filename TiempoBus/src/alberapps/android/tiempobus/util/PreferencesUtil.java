@@ -234,4 +234,69 @@ public class PreferencesUtil {
     }
 
 
+    /**
+     * Control cache datos
+     */
+
+    /**
+     * Crear pref de alerta
+     *
+     * @param context
+     * @param campo
+     */
+    public static void putCache(Context context, String campo, String valor) {
+
+        SharedPreferences preferenciasCache = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            preferenciasCache = context.getSharedPreferences("prefcache", Context.MODE_MULTI_PROCESS);
+
+        } else {
+
+            preferenciasCache = context.getSharedPreferences("prefcache", 0);
+
+        }
+
+        //Guardar valor
+        SharedPreferences.Editor editor = preferenciasCache.edit();
+        editor.putString(campo, valor);
+        editor.commit();
+
+    }
+
+
+    /**
+     * Recuperar pref de actualizaciones
+     *
+     * @param context
+     * @return
+     */
+    public static String getCache(Context context, String campo) {
+
+        SharedPreferences preferenciasCache = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            preferenciasCache = context.getSharedPreferences("prefcache", Context.MODE_MULTI_PROCESS);
+
+        } else {
+
+            preferenciasCache = context.getSharedPreferences("prefcache", 0);
+
+        }
+
+
+        String valor = preferenciasCache.getString(campo, "");
+
+
+
+
+        return valor;
+
+    }
+
+
+
+
 }

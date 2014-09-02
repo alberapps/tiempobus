@@ -61,40 +61,15 @@ public class ProcesarOWMCurrect {
         String glat = Double.toString((Integer.parseInt(lat) / 1E6));
         String glon = Double.toString((Integer.parseInt(lon) / 1E6));
 
-        resultados.setListaDatos(parsea(glat, glon, lang));
-
-        return resultados;
-
-    }
-
-    /**
-     * Parsea los datos json recibidos
-     *
-     * @param lat
-     * @param lon
-     * @param lang
-     * @return
-     */
-    public static List<WeatherData> parsea(String lat, String lon, String lang) {
-
-
-        String forecastJsonStr = null;
-
-
-        List<WeatherData> listaWeather = new ArrayList<WeatherData>();
-        WeatherData data = null;
-
-
         try {
-
 
             Uri.Builder builder = new Uri.Builder();
             builder.scheme("http").authority("api.openweathermap.org").appendPath("data").appendPath("2.5")
                     .appendPath("weather")
                             //.appendQueryParameter("lat", "38.347107")
                             //.appendQueryParameter("lon", "-0.4887623")
-                    .appendQueryParameter("lat", lat)
-                    .appendQueryParameter("lon", lon)
+                    .appendQueryParameter("lat", glat)
+                    .appendQueryParameter("lon", glon)
 
                     .appendQueryParameter("units", "metric")
                     .appendQueryParameter("lang", lang) //es
@@ -106,7 +81,33 @@ public class ProcesarOWMCurrect {
             Log.d(LOG_TAG, "Built URI " + urlWeather.toString());
 
 
-            forecastJsonStr = Conectividad.conexionGetUtf8String(urlWeather.toString());
+            String forecastJsonStr = Conectividad.conexionGetUtf8String(urlWeather.toString());
+
+            resultados.setListaDatos(parsea(forecastJsonStr));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultados;
+
+    }
+
+    /**
+     * Parsea los datos json recibidos
+     *
+     * @param forecastJsonStr
+     * @return
+     */
+    public static List<WeatherData> parsea(String forecastJsonStr) {
+
+
+        List<WeatherData> listaWeather = new ArrayList<WeatherData>();
+        WeatherData data = null;
+
+
+        try {
+
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
 
@@ -162,6 +163,10 @@ public class ProcesarOWMCurrect {
 
             data.setTitle(ciudad);
             data.setDescription(description);
+
+
+            //Datos para cache
+            data.setJson(forecastJsonStr);
 
             listaWeather.add(data);
 
