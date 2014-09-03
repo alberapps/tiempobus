@@ -20,9 +20,7 @@ package alberapps.android.tiempobus.appinfo;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +35,7 @@ import android.widget.ImageView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**
@@ -70,9 +69,7 @@ public class AppInfoActivity extends ActionBarActivity {
         botonGpl.setOnClickListener(new ImageView.OnClickListener() {
             public void onClick(View arg0) {
 
-                Uri uri = Uri.parse("http://www.gnu.org/licenses/gpl-3.0-standalone.html");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                UtilidadesUI.openWebPage(AppInfoActivity.this, "http://www.gnu.org/licenses/gpl-3.0-standalone.html");
 
             }
         });
@@ -91,9 +88,7 @@ public class AppInfoActivity extends ActionBarActivity {
             botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Uri uri = Uri.parse("http://www.fgv.es");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    UtilidadesUI.openWebPage(AppInfoActivity.this, "http://www.fgv.es");
 
                 }
             });
@@ -102,9 +97,7 @@ public class AppInfoActivity extends ActionBarActivity {
             botonTram.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Uri uri = Uri.parse("http://www.tramalicante.es");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    UtilidadesUI.openWebPage(AppInfoActivity.this, "http://www.tramalicante.es");
 
                 }
             });

@@ -496,7 +496,7 @@ public class DatosPantallaPrincipal {
             //Si la diferencia es menor a 15 minutos. No continuar
             if (ahora.getTime() - fecha.getTime() < 15 * 60 * 1000) {
                 return;
-            }else{
+            } else {
                 String control = String.valueOf((new Date()).getTime());
                 PreferencesUtil.putCache(context, "cache_aviso_tram", control);
             }
@@ -837,9 +837,7 @@ public class DatosPantallaPrincipal {
             imgTram.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Uri uri = Uri.parse("http://www.tramalicante.es");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    context.startActivity(intent);
+                    UtilidadesUI.openWebPage(context, "http://www.tramalicante.es");
 
                 }
             });
@@ -848,9 +846,8 @@ public class DatosPantallaPrincipal {
             imgFgv.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    Uri uri = Uri.parse("http://www.fgv.es");
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    context.startActivity(intent);
+
+                    UtilidadesUI.openWebPage(context, "http://www.fgv.es");
 
                 }
             });

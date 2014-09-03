@@ -264,8 +264,7 @@
                             android:shadowRadius="1"
                             android:textAppearance="?android:attr/textAppearanceLarge"
                             android:textColor="@color/color_android"
-                            android:textStyle="bold"
-                            android:layout_gravity="center_vertical" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/textoWeather"
@@ -277,8 +276,7 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/color_android"
                             android:textColorLink="@android:color/darker_gray"
-                            android:textStyle="italic"
-                            android:layout_gravity="center_vertical" />
+                            android:textStyle="italic" />
 
                     </LinearLayout>
 
@@ -313,7 +311,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_marginTop="1dp"
                         android:id="@+id/linearLayout">
 
@@ -335,6 +333,30 @@
                             android:textColor="@color/color_android"
                             android:textColorLink="@android:color/darker_gray"
                             android:textStyle="italic" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginRight="7dp"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/textoWeatherTexto3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top|right"
+                            android:maxLines="2"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/color_android"
+                            android:textColorLink="@android:color/darker_gray"
+                            android:textStyle="italic"
+                            android:autoLink="web"
+                            android:textSize="10dp"/>
                     </LinearLayout>
 
 

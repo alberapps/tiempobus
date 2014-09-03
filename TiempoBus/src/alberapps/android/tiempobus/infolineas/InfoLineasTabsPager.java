@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
@@ -609,9 +608,7 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
                     dialog.dismiss();
 
-                    Uri uri = Uri.parse(linkHorario);
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
+                    UtilidadesUI.openWebPage(InfoLineasTabsPager.this, linkHorario);
 
                     linkHorario = null;
 

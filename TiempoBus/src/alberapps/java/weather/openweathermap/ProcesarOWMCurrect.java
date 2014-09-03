@@ -114,6 +114,7 @@ public class ProcesarOWMCurrect {
 
             String ciudad = forecastJson.getString("name");
             String date = forecastJson.getString("dt");
+            String idCiudad = forecastJson.getString("id");
 
 
             //Main
@@ -167,6 +168,13 @@ public class ProcesarOWMCurrect {
 
             //Datos para cache
             data.setJson(forecastJsonStr);
+
+            //Link
+            Uri.Builder builderLink = new Uri.Builder();
+            builderLink.scheme("http").authority("openweathermap.org").appendPath("city").appendPath(idCiudad);
+            Uri urlLink = builderLink.build();
+            data.setLink(builderLink.toString());
+
 
             listaWeather.add(data);
 
