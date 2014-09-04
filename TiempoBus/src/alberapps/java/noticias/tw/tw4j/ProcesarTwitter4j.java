@@ -224,9 +224,9 @@ public class ProcesarTwitter4j {
         List<TwResultado> listaResultados = new ArrayList<TwResultado>();
 
 
-        Paging pagina = new Paging();
+        Paging pagina = new Paging(1, 25);
 
-        pagina.setCount(elementos);
+        //pagina.setCount(elementos);
 
         UserList userList = twitter.showUserList(twuser, "tiempobuslist");
 

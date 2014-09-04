@@ -41,8 +41,9 @@ public class ProcesarTwitter {
 
     public static final String TW_STATUS = "/status/";
 
+
     /**
-     * listas que se quieran
+     * Procesar a partir de los timeline de cada uno
      *
      * @return listado
      */
@@ -56,8 +57,97 @@ public class ProcesarTwitter {
             ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
             procesar4j.setUp();
 
-            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt("5"));
+            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
 
+            if (cargar.get(0)) {
+
+                lista.addAll(procesar4j.recuperarTimeline("Alicante_City", tw_alicante_ruta, Integer.parseInt(cantidad)));
+
+            }
+
+            if (cargar.get(1)) {
+
+                lista.addAll(procesar4j.recuperarTimeline("campelloturismo", tw_campello_ruta, Integer.parseInt(cantidad)));
+
+            }
+
+            if (cargar.get(2)) {
+
+                lista.addAll(procesar4j.recuperarTimeline("aytoraspeig", tw_sanvi_ruta, Integer.parseInt(cantidad)));
+
+            }
+
+            if (cargar.get(3)) {
+
+                lista.addAll(procesar4j.recuperarTimeline("sant_joan", tw_santjoan_ruta, Integer.parseInt(cantidad)));
+
+            }
+
+            if (cargar.get(4)) {
+                // Tram
+                lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
+            }
+
+            if (lista != null && !lista.isEmpty()) {
+
+                // Ordenar por fecha
+                Collections.sort(lista);
+
+            } else {
+
+                return null;
+
+            }
+
+
+        } catch (TwitterException e) {
+//88 rate limit exceeded
+            TwResultado resultado = new TwResultado();
+
+            resultado.setError(Integer.toString(e.getErrorCode()));
+            resultado.setMensajeError(e.getErrorMessage());
+
+            lista = new ArrayList<TwResultado>();
+
+            lista.add(resultado);
+
+            e.printStackTrace();
+        } catch (Exception e) {
+
+            TwResultado resultado = new TwResultado();
+
+            resultado.setError("100");
+            resultado.setMensajeError(e.getMessage());
+
+            lista = new ArrayList<TwResultado>();
+
+            lista.add(resultado);
+
+            e.printStackTrace();
+
+        }
+
+        return lista;
+
+    }
+
+
+    /**
+     * Recuperar a partir de lista de twitter
+     *
+     * @return listado
+     */
+    public static List<TwResultado> procesarConLista(List<Boolean> cargar, String cantidad) {
+
+        List<TwResultado> lista;
+
+        try {
+
+            // Iniciar
+            ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
+            procesar4j.setUp();
+
+            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt("5"));
 
 
             lista.addAll(procesar4j.recuperarListaUsuario("alberapps", tw_alberapps_ruta, Integer.parseInt("15")));
@@ -75,8 +165,6 @@ public class ProcesarTwitter {
                 TwResultado buscar = new TwResultado();
                 buscar.setUsuario("@Alicante_City");
                 listaBorrar.add(buscar);
-
-
 
 
             }
@@ -123,13 +211,11 @@ public class ProcesarTwitter {
             }
 
 
-
-
             //Ordenar la lista por fecha
             if (lista != null && !lista.isEmpty()) {
 
                 //Eliminar resultados indicados
-                if(listaBorrar != null && !listaBorrar.isEmpty()){
+                if (listaBorrar != null && !listaBorrar.isEmpty()) {
                     lista.removeAll(listaBorrar);
                 }
 
