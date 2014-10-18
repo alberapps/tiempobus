@@ -41,12 +41,11 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -203,9 +202,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         cambiarLocale(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             iniciarDrawer(savedInstanceState);
-        }
+        //}
 
         // Verificar si hay parada por defecto
         if (preferencias.contains("parada_inicio")) {
@@ -276,7 +275,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // between the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 mDrawerLayout, /* DrawerLayout object */
-                R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+
                 R.string.drawer_open, /* "open drawer" description for accessibility */
                 R.string.drawer_close /* "close drawer" description for accessibility */
         ) {
@@ -317,14 +316,14 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
             // If the nav drawer is open, hide action items related to the
             // content view
             boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
             menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
-            menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
-        }
+            //menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
+        //}
 
         return super.onPrepareOptionsMenu(menu);
 
@@ -639,9 +638,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         datosPantallaPrincipal.controlMostrarNovedades();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             mDrawerToggle.syncState();
-        }
+        //}
 
     }
 
@@ -650,7 +649,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         getMenuInflater().inflate(R.menu.main, menu);
 
-        refresh = menu.findItem(R.id.menu_refresh);
+        //refresh = menu.findItem(R.id.menu_refresh);
 
         // Calling super after populating the menu is necessary here to ensure
         // that the
@@ -662,31 +661,31 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             // Pass any configuration change to the drawer toggls
             mDrawerToggle.onConfigurationChanged(newConfig);
-        }
+        //}
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             if (mDrawerToggle.onOptionsItemSelected(item)) {
                 return true;
             }
-        }
+        //}
 
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.menu_refresh:
+            /*case R.id.menu_refresh:
 
                 recargarTiempos();
 
-                break;
+                break;*/
 
             case R.id.menu_search:
 
@@ -761,9 +760,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
      */
     private void setupView() {
 
-        guiHora = (TextView) findViewById(R.id.ultima_act);
 
-        datosParada = (TextView) findViewById(R.id.datos_parada);
 
         // Fondo
         gestionarFondo.setupFondoAplicacion();
@@ -777,6 +774,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         // Pie para la lista de resultados
         datosPantallaPrincipal.cargarHeader();
+
+
+        guiHora = (TextView) findViewById(R.id.ultima_act);
+
+        datosParada = (TextView) findViewById(R.id.datos_parada);
 
         // Progreso inicial
 		/*
@@ -903,7 +905,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // Swipe para recargar
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
         swipeRefresh.setOnRefreshListener(this);
-        swipeRefresh.setColorScheme(android.R.color.black, android.R.color.darker_gray, android.R.color.black, android.R.color.darker_gray);
+        //swipeRefresh.setColorScheme(android.R.color.black, android.R.color.darker_gray, android.R.color.black, android.R.color.darker_gray);
 
     }
 
@@ -1259,9 +1261,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 
             //Recarga en boton barra superior
-            if (refresh != null) {
+           /* if (refresh != null) {
                 MenuItemCompat.setActionView(refresh, R.layout.actionbar_indeterminate_progress);
-            }
+            }*/
 
         } else {
 
@@ -1270,9 +1272,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 swipeRefresh.setRefreshing(false);
             }
 
-            if (refresh != null) {
+            /*if (refresh != null) {
                 MenuItemCompat.setActionView(refresh, null);
-            }
+            }*/
 
         }
     }
@@ -1408,102 +1410,112 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 case MSG_FRECUENCIAS_ACTUALIZADAS:
 
-                    String cabdatos = "";
-                    String cabdatos2 = "";
+                    try {
 
-                    cabdatos2 = laActividad.datosPantallaPrincipal.cargarDescripcionBD(laActividad.paradaActual);
 
-                    cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
+                        String cabdatos = "";
+                        String cabdatos2 = "";
 
-                    ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
+                        cabdatos2 = laActividad.datosPantallaPrincipal.cargarDescripcionBD(laActividad.paradaActual);
 
-                    if (cabdatos.equals("")) {
-                        // Si no hay favorito, descripcion de la base de datos
-                        cabdatos = cabdatos2;
+                        cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
-                        // Si no es favorito
-                        imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_not_important));
+                        ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
 
-                        final MainActivity activ = mActividad.get();
+                        if (cabdatos.equals("")) {
+                            // Si no hay favorito, descripcion de la base de datos
+                            cabdatos = cabdatos2;
 
-                        // Para acceder a guardar favorito
-                        imgFavorito.setOnClickListener(new OnClickListener() {
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+                            // Si no es favorito
+                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_not_important_light));
 
-                                Bundle extras = new Bundle();
-                                extras.putInt("POSTE", activ.paradaActual);
-                                // Preparamos una descripcion automatica para el
-                                // favorito
-                                HashSet<String> h = new HashSet<String>();
-                                for (BusLlegada bus : activ.buses) {
-                                    h.add(bus.getLinea() + " a " + bus.getDestino());
+                            final MainActivity activ = mActividad.get();
+
+                            // Para acceder a guardar favorito
+                            imgFavorito.setOnClickListener(new OnClickListener() {
+                                public void onClick(View v) {
+                                    // TODO Auto-generated method stub
+                                    Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+
+                                    Bundle extras = new Bundle();
+                                    extras.putInt("POSTE", activ.paradaActual);
+                                    // Preparamos una descripcion automatica para el
+                                    // favorito
+                                    HashSet<String> h = new HashSet<String>();
+                                    for (BusLlegada bus : activ.buses) {
+                                        h.add(bus.getLinea() + " a " + bus.getDestino());
+                                    }
+                                    extras.putString("DESCRIPCION", h.toString());
+
+                                    i.putExtras(extras);
+                                    activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
                                 }
-                                extras.putString("DESCRIPCION", h.toString());
+                            });
 
-                                i.putExtras(extras);
-                                activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
-                            }
-                        });
+                        } else {
 
-                    } else {
+                            // Si hay favorito cambiar indicador favorito
+                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_important_light));
 
-                        // Si hay favorito cambiar indicador favorito
-                        imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_important));
-
-                    }
-
-                    if (cabdatos.equals("")) {
-                        cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
-                    }
-
-                    if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
-                        cabdatos = "TRAM " + cabdatos;
-
-                        // Estadisticas tram
-                        analyticsTram(laActividad);
-
-                    }
-
-                    // Historial
-                    laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual);
-
-                    laActividad.datosParada.setText(cabdatos);
-
-                    final Calendar c = Calendar.getInstance();
-
-                    SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
-
-                    String updated = df.format(c.getTime()).toString();
-
-                    laActividad.guiHora.setText(updated);
-
-                    // Limpiamos la lista
-                    laActividad.tiemposAdapter.clear();
-
-                    // La rellenamos con los nuevos datos
-                    if (laActividad.buses != null && laActividad.buses.size() > 0) {
-                        int n = laActividad.buses.size();
-
-                        for (int i = 0; i < n; i++) {
-                            laActividad.tiemposAdapter.add(laActividad.buses.get(i));
                         }
-                    } else {
 
-                        // Control de sin datos
-                        BusLlegada sinDatos = new BusLlegada();
-                        sinDatos.setSinDatos(true);
-                        laActividad.tiemposAdapter.add(sinDatos);
+                        if (cabdatos.equals("")) {
+                            cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
+                        }
+
+                        if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
+                            cabdatos = "TRAM " + cabdatos;
+
+                            // Estadisticas tram
+                            analyticsTram(laActividad);
+
+                        }
+
+                        // Historial
+                        laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual);
+
+                        laActividad.datosParada.setText(cabdatos);
+
+                        final Calendar c = Calendar.getInstance();
+
+                        SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
+
+                        String updated = df.format(c.getTime()).toString();
+
+                        laActividad.guiHora.setText(updated);
+
+                        // Limpiamos la lista
+                        laActividad.tiemposAdapter.clear();
+
+                        // La rellenamos con los nuevos datos
+                        if (laActividad.buses != null && laActividad.buses.size() > 0) {
+                            int n = laActividad.buses.size();
+
+                            for (int i = 0; i < n; i++) {
+                                laActividad.tiemposAdapter.add(laActividad.buses.get(i));
+                            }
+                        } else {
+
+                            // Control de sin datos
+                            BusLlegada sinDatos = new BusLlegada();
+                            sinDatos.setSinDatos(true);
+                            laActividad.tiemposAdapter.add(sinDatos);
+
+                        }
+
+                        // Pie para la lista de resultados
+                        laActividad.gestionarTarjetaInfo.cargarTarjetaInfo();
+                        laActividad.datosPantallaPrincipal.cargarPie();
+
+                        laActividad.tiemposAdapter.notifyDataSetChanged();
+                        break;
+
+
+                    }catch(Exception e){
+
+                        Toast.makeText(laActividad.getApplicationContext(), laActividad.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
 
                     }
-
-                    // Pie para la lista de resultados
-                    laActividad.gestionarTarjetaInfo.cargarTarjetaInfo();
-                    laActividad.datosPantallaPrincipal.cargarPie();
-
-                    laActividad.tiemposAdapter.notifyDataSetChanged();
-                    break;
 
             }
 

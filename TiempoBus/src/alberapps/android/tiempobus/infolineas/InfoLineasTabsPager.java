@@ -167,15 +167,27 @@ public class InfoLineasTabsPager extends ActionBarActivity {
                 mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
+
+               /* mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+                mTabHost.getTabWidget().getChildAt(0).set.setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+
+                mTabHost.getTabWidget().getChildAt(1).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+                mTabHost.getTabWidget().getChildAt(2).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+*/
             } else if (modoRed == MODO_RED_TRAM_OFFLINE) {
                 mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
-
+/*
+                mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+                mTabHost.getTabWidget().getChildAt(1).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
+*/
             }
 
             if (savedInstanceState != null) {
                 mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
             }
+
+
 
         } else {
             if (modoRed == MODO_RED_TRAM_OFFLINE) {

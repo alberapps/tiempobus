@@ -29,7 +29,7 @@
         android:id="@+id/tituloIda"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_android"
+        android:background="@color/mi_material_blue_indigo"
         android:gravity="center"
         android:text="@string/guion"
         android:textAppearance="?android:attr/textAppearanceMedium"

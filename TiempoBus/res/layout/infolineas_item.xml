@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -16,112 +15,123 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="6dip" >
+    android:orientation="horizontal">
 
     <LinearLayout
+
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/item_sombra" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-         <TextView
-            android:id="@+id/bus_linea"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="5sp"
-            android:cacheColorHint="#00000000"
-            android:gravity="center"
-            android:shadowColor="#ff335e80"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/guion"
-            android:textColor="@color/color_android"
-            
-            android:textStyle="bold" 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/desc_linea"
-                
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                
-                android:text="@string/guion"
-                android:textColor="@color/color_android"
-               
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            <TextView
-                android:id="@+id/datos_linea"
-                
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:text="@string/guion"
-                android:textColor="@color/color_android"                
-                android:textStyle="italic" 
-                android:textAppearance="?android:attr/textAppearanceSmall"/>
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp" >
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/infoparada_horarios"
+                    android:id="@+id/bus_linea"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="@string/infolinea_horarios"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/darker_gray"
-                    
-                    android:textStyle="italic|bold" 
-                    android:background="@drawable/actionbar_compat_item"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginRight="5sp"
+                    android:gravity="center"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/primary_material_dark"
+                    android:textStyle="bold" />
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/infoparada_paradas"
+                        android:id="@+id/desc_linea"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:gravity="right"
-                        android:text="@string/infolinea_paradas"
+                        android:gravity="center_vertical"
+                        android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@android:color/darker_gray"
-                       
-                        android:textStyle="italic|bold" 
-                        android:background="@drawable/actionbar_compat_item"/>
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/datos_linea"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textStyle="italic" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp">
+
+                        <TextView
+                            android:id="@+id/infoparada_horarios"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:text="@string/infolinea_horarios"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+
+                            android:textColor="@color/link_text_material_dark"
+                            android:textStyle="italic|bold" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/infoparada_paradas"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:background="@drawable/actionbar_compat_item"
+                                android:gravity="right"
+                                android:text="@string/infolinea_paradas"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+
+                                android:textColor="@color/link_text_material_dark"
+                                android:textStyle="italic|bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
 
             </LinearLayout>
-            
-            
-        </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

@@ -91,7 +91,7 @@ public class GestionarFondo {
 
                 } else if (item == 1) {
                     View contenedor_principal = context.findViewById(R.id.contenedor_principal);
-                    contenedor_principal.setBackgroundResource(R.color.fondo_g);
+                    contenedor_principal.setBackgroundResource(R.color.background_material_light);
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putString("image_galeria", "");

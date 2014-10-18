@@ -445,9 +445,11 @@
     
     <string name="mensaje_borrar_pregunta">¿Borrar el dato?</string>
 
-    <string name="tlf_tram">Tram: 900 720 472</string>
-    <string name="tlf_subus"></string>
+    <string name="tlf_tram">TRAM: 900 720 472</string>
+    <string name="tlf_subus">T.A.M: 965 140 936</string>
 
     <string name="error_twitter">No se han podido recuperar datos de Twitter</string>
+
+    <string name="error_voz_lectura">Error: No se ha podido leer el texto</string>
 
 </resources>

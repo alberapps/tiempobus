@@ -1049,47 +1049,57 @@ public class DatosPantallaPrincipal {
      */
     public void cantarLinea(BusLlegada busSeleccionado) {
 
-        if (context.lecturaOK) {
+        try {
 
-            String lineaALeer = "";
+            if (context.lecturaOK) {
 
-            if (esTram(context.paradaActual)) {
+                String lineaALeer = "";
 
-                lineaALeer = context.getString(R.string.leer_1_tram) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
-                        + context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+                if (esTram(context.paradaActual)) {
+
+                    lineaALeer = context.getString(R.string.leer_1_tram) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
+                            + context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+
+                } else {
+
+                    lineaALeer = context.getString(R.string.leer_1) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
+                            + context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+
+                }
+
+                context.textToSpeech(lineaALeer);
+
+            } else if (context.lecturaAlternativa) {
+
+                Toast.makeText(context, context.getString(R.string.leer_ko_2), Toast.LENGTH_SHORT).show();
+
+                String lineaALeer = "";
+
+                if (esTram(context.paradaActual)) {
+
+                    lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
+
+                } else {
+
+                    lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
+
+                }
+
+                context.textToSpeech(lineaALeer);
 
             } else {
 
-                lineaALeer = context.getString(R.string.leer_1) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
-                        + context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
+                Toast.makeText(context, context.getString(R.string.leer_ko), Toast.LENGTH_SHORT).show();
 
             }
 
-            context.textToSpeech(lineaALeer);
 
-        } else if (context.lecturaAlternativa) {
+        }catch(Exception e){
 
-            Toast.makeText(context, context.getString(R.string.leer_ko_2), Toast.LENGTH_SHORT).show();
-
-            String lineaALeer = "";
-
-            if (esTram(context.paradaActual)) {
-
-                lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
-
-            } else {
-
-                lineaALeer = "El autobús de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
-
-            }
-
-            context.textToSpeech(lineaALeer);
-
-        } else {
-
-            Toast.makeText(context, context.getString(R.string.leer_ko), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.error_voz_lectura), Toast.LENGTH_SHORT).show();
 
         }
+
 
     }
 

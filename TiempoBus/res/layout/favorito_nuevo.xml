@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
    
@@ -16,81 +15,97 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
-<LinearLayout android:layout_width="fill_parent"
-	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-	android:id="@id/contenedor_nuevo"
-	android:padding="6dip">
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@id/contenedor_nuevo"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
-	<LinearLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="vertical" 
-	    android:background="@drawable/item_sombra">
 
-	    <TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:paddingTop="10dp"
-	        android:text="@string/nuevo_titulo"
-	        android:textStyle="bold" />
+    <android.support.v7.widget.CardView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
 
-	    <EditText
-	        android:id="@+id/titulo"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:ems="10" 
-	        android:inputType="text"
-	        android:textAppearance="?android:attr/textAppearanceMedium">
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation"
 
-	        <requestFocus />
-	    </EditText>
+        >
 
-	    <TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:paddingTop="10dp"
-	        android:text="@string/nuevo_descripcion"
-	        android:textStyle="bold" />
 
-	    <EditText
-	        android:id="@+id/descripcion"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:ems="10"
-	        android:inputType="textMultiLine"
-	        android:lines="3" 
-	        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-	    <RelativeLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content" 
-	        android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/nuevo_titulo"
+                android:textStyle="bold" />
 
-	        
-	         <TextView
+            <EditText
+                android:id="@+id/titulo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:inputType="text"
+                android:textAppearance="?android:attr/textAppearanceMedium">
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingTop="10dp"
+                android:text="@string/nuevo_descripcion"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/descripcion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
+
+
+                <TextView
                     android:id="@+id/boton_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
+                    android:background="@drawable/actionbar_compat_item"
                     android:text="@string/nuevo_guardar"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/darker_gray"
-                    android:layout_centerHorizontal="true"
-                    android:textStyle="italic|bold"
-                    android:background="@drawable/actionbar_compat_item" 
-                    />
-	        
-	        
-	    </RelativeLayout>
-	</LinearLayout>
+                    android:textColor="@color/link_text_material_dark"
+                    android:textStyle="italic|bold" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>
 

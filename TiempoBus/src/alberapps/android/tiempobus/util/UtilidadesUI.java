@@ -115,12 +115,12 @@ public class UtilidadesUI {
             if (dr != null) {
                 contenedorPrincipal.setBackgroundDrawable(dr);
             } else {
-                contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
+                contenedorPrincipal.setBackgroundResource(R.color.background_material_light);
             }
 
         } else {
 
-            contenedorPrincipal.setBackgroundResource(R.color.fondo_g);
+            contenedorPrincipal.setBackgroundResource(R.color.background_material_light);
 
         }
 

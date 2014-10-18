@@ -249,7 +249,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             if (bus != null && bus.isErrorServicio()) {
                 text.setText(ctx.getString(R.string.error_tiempos));
             } else {
-                text.setText(ctx.getString(R.string.main_no_items));
+                text.setText(ctx.getString(R.string.main_no_items) + "\n" + ctx.getString(R.string.error_status));
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
@@ -263,6 +263,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             } else {
                 aviso = ctx.getString(R.string.tlf_subus);
             }
+
+            ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
+            imagenAviso.setImageResource(R.drawable.alerts_warning);
+
 
 
             textAviso.setText(aviso);

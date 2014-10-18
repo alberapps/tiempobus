@@ -29,7 +29,7 @@
         android:id="@+id/tituloAviso"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_android"
+        android:background="@color/mi_material_blue_indigo"
         android:text="@string/aviso_buscador_online"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"

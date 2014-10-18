@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -16,166 +15,182 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"   
-    android:orientation="horizontal"
-    android:layout_height="wrap_content"    
-    android:padding="6dip">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <LinearLayout
+
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_sombra" >
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/bus_linea"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="5sp"
-            android:cacheColorHint="#00000000"
-            android:gravity="center"
-            android:shadowColor="#ff335e80"
-            android:shadowDx="1"
-            android:shadowDy="1"
-            android:shadowRadius="1"
-            android:text="@string/guion"
-            android:textColor="@color/color_android"
-           
-            android:textStyle="bold" 
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="7dp"
-             android:layout_marginLeft="1dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+        <android.support.v7.widget.CardView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
 
-            <TextView
-                android:id="@+id/bus_destino"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" 
-                android:textColor="@color/color_android" 
-                />
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
 
-            <TextView
-                android:id="@+id/bus_proximo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                
-                android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall"                 
-                android:textColor="@color/color_android" 
-                 />
+            >
+
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp" >
-
-                <ImageView
-                    android:id="@+id/tiempos_alerta_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/device_access_alarms" 
-                    android:contentDescription="Establecer alerta"/>
-
-                <ImageView
-                    android:id="@+id/compartir_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/social_share" 
-                    android:contentDescription="Compartir parada"/>
-
-                <ImageView
-                    android:id="@+id/mapa_tarjeta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/location_map_2" 
-                    android:contentDescription="Mapa parada"/>
-
-                <ImageView
-                    android:id="@+id/audio_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:src="@drawable/device_access_volume_on" 
-                    android:contentDescription="Leer tiempo"/>
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tiempos_alerta"
+                    android:id="@+id/bus_linea"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="12sp"
-                    android:textStyle="italic|bold" />
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginRight="5sp"
+                    android:gravity="center"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_material_dark"/>
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="2dp"
-                    android:orientation="vertical" >
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/bus_destino"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_dark_material_light"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/bus_proximo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light"
+
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp">
+
+                        <ImageView
+                            android:id="@+id/tiempos_alerta_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Establecer alerta"
+                            android:src="@drawable/device_access_alarms" />
+
+                        <ImageView
+                            android:id="@+id/compartir_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Compartir parada"
+                            android:src="@drawable/social_share" />
+
+                        <ImageView
+                            android:id="@+id/mapa_tarjeta"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Mapa parada"
+                            android:src="@drawable/location_map_2" />
+
+                        <ImageView
+                            android:id="@+id/audio_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Leer tiempo"
+                            android:src="@drawable/device_access_volume_on" />
+
+                        <TextView
+                            android:id="@+id/tiempos_alerta"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="12sp"
+                            android:textStyle="italic|bold" />
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:orientation="vertical">
+
+
+                        </LinearLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
-            </LinearLayout>
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="4dp"
+                    android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginBottom="7dp"
-            android:layout_marginRight="4dp">
-
-            <ImageView
-                android:id="@+id/fijar_img"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/actionbar_compat_item"
-                android:src="@drawable/fijar"
-                android:contentDescription="Fijar linea"
-                android:layout_gravity="right|top"/>
+                    <ImageView
+                        android:id="@+id/fijar_img"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|top"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Fijar linea"
+                        android:src="@drawable/fijar" />
 
 
+                    <TextView
+                        android:id="@+id/tiempos_opciones"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right|bottom"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:gravity="right|bottom"
+                        android:text=">>"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold"
+                        android:textColor="@color/primary_dark_material_light"/>
 
-            <TextView
-                android:id="@+id/tiempos_opciones"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="right|bottom"
-                android:background="@drawable/actionbar_compat_item"
-                android:gravity="right|bottom"
-                android:text=">>"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp"
-                android:textStyle="italic|bold" />
+                </LinearLayout>
 
             </LinearLayout>
 
+        </android.support.v7.widget.CardView>
     </LinearLayout>
-	
+
 </LinearLayout>

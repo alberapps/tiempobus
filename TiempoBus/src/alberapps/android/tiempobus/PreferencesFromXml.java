@@ -47,9 +47,9 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
 
