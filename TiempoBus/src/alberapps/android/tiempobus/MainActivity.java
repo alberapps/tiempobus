@@ -54,7 +54,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -89,6 +88,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.principal.DrawerAdapter;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.principal.GestionarFondo;
 import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
@@ -172,6 +172,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mDrawerTitles;
+    private String[] mDrawerIcons;
 
     AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
 
@@ -264,11 +265,14 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        mDrawerIcons = getResources().getStringArray(R.array.menu_icons_array);
+
         // set a custom shadow that overlays the main content when the drawer
         // opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
+        mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -677,9 +681,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         //}
 
         switch (item.getItemId()) {
-            case android.R.id.home:
+            //case android.R.id.home:
                 // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-                break;
+              //  break;
 
             /*case R.id.menu_refresh:
 
@@ -694,6 +698,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 break;
 
+            /*
             case R.id.menu_preferencias:
 
                 detenerTodasTareas();
@@ -749,7 +754,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 integrator.shareText(paradaCodificada);
 
                 break;
-
+*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -1427,7 +1432,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             cabdatos = cabdatos2;
 
                             // Si no es favorito
-                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_not_important_light));
+                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_grey600_18dp));
 
                             final MainActivity activ = mActividad.get();
 
@@ -1455,7 +1460,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         } else {
 
                             // Si hay favorito cambiar indicador favorito
-                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.rating_important_light));
+                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_grey600_18dp));
 
                         }
 

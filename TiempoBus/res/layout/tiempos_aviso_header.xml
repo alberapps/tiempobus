@@ -64,7 +64,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:contentDescription="Favorito"
-                            android:src="@drawable/rating_not_important_light" />
+                            android:src="@drawable/ic_bookmark_outline_grey600_18dp" />
 
                         <TextView
                             android:id="@+id/datos_parada"
@@ -158,7 +158,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Cargar tiempo entrada"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_action_refresh" />
+                            android:src="@drawable/ic_refresh_grey600_24dp" />
 
                         <FrameLayout
                             android:id="@+id/FrameLayout01"
@@ -174,7 +174,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Estado alertas"
                             android:scaleType="centerInside"
-                            android:src="@drawable/device_access_alarms_light" />
+                            android:src="@drawable/ic_alarm_grey600_24dp" />
 
                         <ImageButton
                             android:id="@+id/boton_info"
@@ -184,7 +184,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Entrada voz"
                             android:scaleType="centerInside"
-                            android:src="@drawable/device_access_mic_light" />
+                            android:src="@drawable/ic_keyboard_voice_grey600_24dp" />
 
                         <FrameLayout
                             android:id="@+id/frameLayout1"

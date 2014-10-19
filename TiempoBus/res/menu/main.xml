@@ -29,11 +29,12 @@
         tiempobus:showAsAction="always" /-->
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/ic_action_search_white"
+        android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="0"
         android:title="@string/menu_search"
         tiempobus:showAsAction="always" />
 
+    <!--
     <item
         android:id="@+id/menu_favoritos"
         android:icon="@drawable/ic_menu_favoritos"
@@ -76,14 +77,14 @@
         android:orderInCategory="9"
         android:title="@string/historial_titulo"
         tiempobus:showAsAction="never"></item>
-
+-->
     <!--
     <item android:id="@+id/menu_cancelar_alarma" android:orderInCategory="5" android:title="@string/menu_cancelar_alarma" android:showAsAction="never" android:icon="@drawable/ic_menu_cancelar_alarma"></item>
     -->
-    <item
+<!--    <item
         android:id="@+id/menu_exportar_qr"
         android:orderInCategory="10"
         android:title="@string/menu_export_qr"
         tiempobus:showAsAction="never"></item>
-
+-->
 </menu>

@@ -14,16 +14,36 @@
   limitations under the License.
   -->
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:layout_gravity="center"
+    android:paddingLeft="5dp"
+    android:src="@drawable/device_access_alarms"
+    android:id="@+id/textoIcon"/>
+
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+    android:id="@+id/textoItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_weight="2"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
     android:gravity="center_vertical"
-    android:paddingLeft="16dp"
+    android:paddingLeft="5dp"
     android:paddingRight="16dp"
-    android:textColor="@android:color/white"
+    android:textColor="@color/primary_dark_material_light"
     android:background="?android:attr/activatedBackgroundIndicator"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:text="Prueba"/>
 
     <!-- android:textColor="#fff" -->
+
+
+</LinearLayout>
