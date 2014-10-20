@@ -42,25 +42,21 @@
         android:title="@string/menu_search"></item>
     <item
         android:id="@id/menu_search_online"
-        android:icon="@drawable/ic_menu_mapas"
         android:orderInCategory="5"
         tiempobus:showAsAction="never"
         android:title="@string/mapa_lineas"></item>
     <item
         android:id="@id/menu_ida"
-        android:icon="@drawable/ic_menu_vuelta"
         android:orderInCategory="6"
         tiempobus:showAsAction="never"
         android:title="@string/mapa_vuelta"></item>
     <item
         android:id="@id/menu_vuelta"
-        android:icon="@drawable/ic_menu_ida"
         android:orderInCategory="7"
         tiempobus:showAsAction="never"
         android:title="@string/mapa_ida"></item>
     <item
         android:id="@id/menu_cercanas"
-        android:icon="@drawable/ic_menu_mapas"
         android:orderInCategory="4"
         tiempobus:showAsAction="never"
         android:title="@string/cercanas"></item>

@@ -23,388 +23,345 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!-- A CardView that contains a TextView -->
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
 
-        <ScrollView
-            android:id="@+id/scrollView1"
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginTop="1dp">
+
+                <TextView
+                    android:id="@+id/infoparada_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="@string/launch_preferences"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/parada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginRight="5sp"
+                    android:gravity="center"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary_material_dark"/>
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="6dip">
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/item_sombra"
-                        android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/localizacion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp">
+                        android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/infoparada_info"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:text="@string/launch_preferences"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/color_android"
-                                android:textSize="12sp"
-                                android:textStyle="italic|bold" />
-                        </LinearLayout>
+                    <TextView
+                        android:id="@+id/datos_parada"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
+                        android:textStyle="italic" />
 
-                            <TextView
-                                android:id="@+id/parada"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_marginLeft="5sp"
-                                android:layout_marginRight="5sp"
-                                android:cacheColorHint="#00000000"
-                                android:gravity="center"
-                                android:shadowColor="#ff335e80"
-                                android:shadowDx="1"
-                                android:shadowDy="1"
-                                android:shadowRadius="1"
-                                android:text="@string/guion"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@color/color_android"
-                                android:textStyle="bold" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="fill_parent"
-                                android:layout_marginBottom="7dp"
-                                android:layout_marginLeft="1dp"
-                                android:layout_marginRight="3dp"
-                                android:layout_marginTop="2dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/localizacion"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/guion"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/datos_parada"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="top"
-                                    android:text="@string/guion"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android"
-                                    android:textStyle="italic" />
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp">
-
-                            <ImageView
-                                android:id="@+id/imageView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="fill_parent"
-                                android:src="@drawable/location_place" />
-
-                            <TextView
-                                android:id="@+id/datos_location"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="top"
-                                android:text="@string/guion"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/color_android"
-                                android:textStyle="italic" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
 
                 </LinearLayout>
+            </LinearLayout>
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/location_place" />
+
+                <TextView
+                    android:id="@+id/datos_location"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="6dip">
+                    android:gravity="top"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/item_sombra"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/infoparada_wiki"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/wikipedia"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android"
-                                    android:textSize="12sp"
-                                    android:textStyle="italic|bold" />
-
-                                <HorizontalScrollView
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="fill_parent"
-                                    android:fadeScrollbars="false">
-
-                                    <TextView
-                                        android:id="@+id/datos_wiki"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:fadeScrollbars="false"
-                                        android:gravity="top"
-                                        android:lines="3"
-                                        android:scrollHorizontally="true"
-                                        android:scrollbars="horizontal"
-                                        android:text="@string/guion"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/color_android"
-                                        android:textColorLink="@android:color/darker_gray"
-                                        android:textStyle="italic" />
-
-                                </HorizontalScrollView>
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="6dip">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/item_sombra"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="1dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/TextView01"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/eltiempoOWM"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android"
-                                    android:textSize="12sp"
-                                    android:textStyle="italic|bold" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_marginTop="2dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageWeather"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:contentDescription="Imagen clima"
-                                        android:src="@drawable/ic_info"
-                                        android:visibility="invisible" />
-
-                                    <TextView
-                                        android:id="@+id/TextTemperatura"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="5sp"
-                                        android:layout_marginRight="5sp"
-                                        android:cacheColorHint="#00000000"
-                                        android:gravity="center_vertical"
-                                        android:shadowColor="#ff335e80"
-                                        android:shadowDx="1"
-                                        android:shadowDy="1"
-                                        android:shadowRadius="1"
-                                        android:textAppearance="?android:attr/textAppearanceLarge"
-                                        android:textColor="@color/color_android"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/textoWeather"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:gravity="center_vertical"
-                                        android:maxLines="2"
-                                        android:text="@string/guion"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/color_android"
-                                        android:textColorLink="@android:color/darker_gray"
-                                        android:textStyle="italic" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="1dp"
-                                    android:layout_marginTop="1dp">
-
-
-                                    <ImageView
-                                        android:id="@+id/imageView2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="fill_parent"
-                                        android:layout_gravity="right"
-                                        android:src="@drawable/ic_info" />
-
-                                    <TextView
-                                        android:id="@+id/textoWeatherTexto"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="top"
-                                        android:maxLines="4"
-                                        android:text="@string/guion"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/color_android"
-                                        android:textColorLink="@android:color/darker_gray"
-                                        android:textStyle="italic" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:id="@+id/linearLayout"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_marginTop="1dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageView3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="fill_parent"
-                                        android:layout_gravity="right"
-                                        android:src="@drawable/location_place" />
-
-                                    <TextView
-                                        android:id="@+id/textoWeatherTexto2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="top"
-                                        android:maxLines="4"
-                                        android:text="@string/guion"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/color_android"
-                                        android:textColorLink="@android:color/darker_gray"
-                                        android:textStyle="italic" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="5dp"
-                                    android:layout_marginRight="7dp"
-                                    android:layout_marginTop="1dp"
-
-                                    >
-
-                                    <TextView
-                                        android:id="@+id/textoWeatherTexto3"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:autoLink="web"
-                                        android:gravity="top|right"
-                                        android:maxLines="2"
-                                        android:text="@string/guion"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/color_android"
-                                        android:textColorLink="@android:color/darker_gray"
-                                        android:textSize="10dp"
-                                        android:textStyle="italic" />
-                                </LinearLayout>
-
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
 
-        </ScrollView>
+        </LinearLayout>
 
 
-        <android.support.v7.widget.GridLayout
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            tiempobus:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="#dd2f2d2e"
-                android:orientation="vertical"
-                tiempobus:layout_gravity="bottom|center_horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/eltiempoOWM"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp">
+
+                        <ImageView
+                            android:id="@+id/imageWeather"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:contentDescription="Imagen clima"
+                            android:src="@drawable/ic_info"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/TextTemperatura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5sp"
+                            android:layout_marginRight="5sp"
+                            android:gravity="center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary_material_dark"/>
+
+                        <TextView
+                            android:id="@+id/textoWeather"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:maxLines="2"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="1dp">
+
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="right"
+                            android:src="@drawable/ic_info" />
+
+                        <TextView
+                            android:id="@+id/textoWeatherTexto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:maxLines="4"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="1dp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="right"
+                            android:src="@drawable/location_place" />
+
+                        <TextView
+                            android:id="@+id/textoWeatherTexto2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:maxLines="4"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="1dp"
+
+                        >
+
+                        <TextView
+                            android:id="@+id/textoWeatherTexto3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autoLink="web"
+                            android:gravity="top|right"
+                            android:maxLines="2"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="10dp"
+                            android:textStyle="italic" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+    <!-- A CardView that contains a TextView -->
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/infoparada_wiki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wikipedia"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+
+                    <HorizontalScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:fadeScrollbars="false">
+
+                        <TextView
+                            android:id="@+id/datos_wiki"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fadeScrollbars="false"
+                            android:gravity="top"
+                            android:lines="3"
+                            android:scrollHorizontally="true"
+                            android:scrollbars="horizontal"
+                            android:text="@string/guion"
+
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+
+                    </HorizontalScrollView>
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </android.support.v7.widget.GridLayout>
 
-    </FrameLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>
 

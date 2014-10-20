@@ -260,6 +260,37 @@ public class UtilidadesUI {
 
     }
 
+
+    /**
+     * Idioma para la wikipedia
+     *
+     * @return idioma
+     */
+    public static String getIdiomaRssTram() {
+
+        String idioma = null;
+
+        try {
+            String locale = Locale.getDefault().getLanguage();
+
+            if (locale.substring(0, 2).equals("es")) {
+                idioma = "_es";
+            } else if (locale.substring(0, 2).equals("ca")) {
+                idioma = "_vl";
+            }
+             else {
+                idioma = "_es";
+            }
+
+        } catch (Exception e) {
+            idioma = "_es";
+        }
+
+        return idioma;
+
+    }
+
+
     /**
      * Locale adecuado
      *

@@ -307,7 +307,13 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         } else {
 
+            //tiempo1 = String.format("%02d",Integer.parseInt(procesa[0]));
+
             tiempo1 = procesa[0];
+
+            if(tiempo1.length() == 14){
+                tiempo1 = "0".concat(tiempo1);
+            }
 
         }
 
@@ -319,16 +325,26 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             tiempo2 = (String) contexto.getResources().getText(R.string.tiempo_m_2);
 
+
+
         } else {
+
+            //tiempo2 = String.format("%02d",Integer.parseInt(procesa[1]));
 
             tiempo2 = procesa[1];
 
+            if(tiempo2.length() == 14){
+                tiempo2 = "0".concat(tiempo2);
+            }
+
         }
 
-        traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+        //traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+
+        traducido = "> " + tiempo1 + "\n> " + tiempo2;
 
         // min.
-        String nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));
+        String nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "\"").replace(")", "\"");
 
         return nuevoLiteral;
 

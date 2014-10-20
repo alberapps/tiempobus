@@ -72,7 +72,7 @@ public class DrawerAdapter<T> extends ArrayAdapter<T> {
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            v = vi.inflate(R.layout.drawer_list_item, null);
+            v = vi.inflate(R.layout.drawer_list_item, null,false);
 
         }
 

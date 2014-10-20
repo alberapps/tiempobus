@@ -26,7 +26,6 @@
     android:layout_weight="1"
     android:layout_gravity="center"
     android:paddingLeft="5dp"
-    android:src="@drawable/device_access_alarms"
     android:id="@+id/textoIcon"/>
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,9 +40,9 @@
     android:textColor="@color/primary_dark_material_light"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:text="Prueba"/>
+    />
 
-    <!-- android:textColor="#fff" -->
+
 
 
 </LinearLayout>

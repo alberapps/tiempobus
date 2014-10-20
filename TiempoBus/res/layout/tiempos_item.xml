@@ -56,6 +56,7 @@
                     android:gravity="center"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="@color/primary_material_dark"/>
 
@@ -88,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/primary_dark_material_light"
 
                         />

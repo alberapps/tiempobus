@@ -17,10 +17,12 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import java.util.List;
 
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.rss.ParserXML;
 
@@ -47,8 +49,17 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
         List<NoticiaRss> noticiasList = null;
         try {
 
+            String idioma = UtilidadesUI.getIdiomaRssTram();
 
-            noticiasList = ParserXML.parsea("http://www.tramalicante.es/rss.php?idioma=_es");
+
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http").authority("www.tramalicante.es").appendPath("rss.php")
+                    .appendQueryParameter("idioma", idioma);
+
+            Uri urlNoticias = builder.build();
+
+
+            noticiasList = ParserXML.parsea(urlNoticias.toString());
 
         } catch (Exception e) {
             return null;

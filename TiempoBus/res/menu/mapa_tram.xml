@@ -42,13 +42,11 @@
         android:title="@string/menu_search"></item>
     <item
         android:id="@id/menu_search_online"
-        android:icon="@drawable/ic_menu_mapas"
         android:orderInCategory="5"
         tiempobus:showAsAction="never"
         android:title="@string/mapa_lineas"></item>
     <item
         android:id="@id/menu_cercanas"
-        android:icon="@drawable/ic_menu_mapas"
         android:orderInCategory="4"
         tiempobus:showAsAction="never"
         android:title="@string/cercanas"></item>

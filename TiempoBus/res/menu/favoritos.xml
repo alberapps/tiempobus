@@ -23,37 +23,31 @@
     xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@id/menu_ordenar_parada"
-        android:icon="@drawable/ic_menu_vuelta"
         android:orderInCategory="1"
         tiempobus:showAsAction="never"
         android:title="@string/ordenar_parada"></item>
     <item
         android:id="@id/menu_ordenar_nombre"
-        android:icon="@drawable/ic_menu_ida"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
         android:title="@string/ordenar_nombre"></item>
     <item
         android:id="@id/menu_exportar"
-        android:icon="@drawable/ic_menu_guardar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
         android:title="@string/exportar"></item>
     <item
         android:id="@id/menu_importar"
-        android:icon="@drawable/ic_menu_guardar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
         android:title="@string/importar"></item>
     <item
         android:id="@id/menu_exportar_drive"
-        android:icon="@drawable/ic_menu_guardar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
         android:title="@string/exportar_drive"></item>
     <item
         android:id="@id/menu_importar_drive"
-        android:icon="@drawable/ic_menu_guardar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
         android:title="@string/importar_drive"></item>
