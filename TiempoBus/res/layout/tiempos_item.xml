@@ -47,18 +47,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/bus_linea"
+                <FrameLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="fill_parent"
                     android:layout_marginLeft="5sp"
-                    android:layout_marginRight="5sp"
-                    android:gravity="center"
-                    android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary_material_dark"/>
+                    android:layout_marginRight="5sp">
+
+                    <TextView
+                        android:id="@+id/bus_linea"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                        android:background="@drawable/circulo_azul"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -84,12 +91,23 @@
                         />
 
                     <TextView
+                        android:id="@+id/tiempo_principal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/mi_material_blue_indigo"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
                         android:id="@+id/bus_proximo"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/primary_dark_material_light"
 
                         />

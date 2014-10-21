@@ -41,8 +41,12 @@
     <color name="mi_material_blue_indigo_900">#1a237e</color>
 
 
+    <!-- TRAM -->
+    <color name="tram_l1">#ee3124</color>
+    <color name="tram_l2">#009a42</color>
+    <color name="tram_l3">#ffd204</color>
+    <color name="tram_l4">#cea8ce</color>
 
 
 
-    
 </resources>

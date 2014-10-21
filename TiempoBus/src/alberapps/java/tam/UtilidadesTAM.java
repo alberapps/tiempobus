@@ -18,6 +18,9 @@
  */
 package alberapps.java.tam;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class UtilidadesTAM {
 
     public static boolean ACTIVAR_MAPS_V3 = true;
@@ -73,6 +76,39 @@ public class UtilidadesTAM {
 
     //Nueva
     //136
+
+
+    /*public static String[] LINEAS_AZUL_TAM = {"21","22","23","24","25","26","27","30","31","35","21N","22N","23N","24N","36","38","39","30P","31"};
+    public static String[] LINEAS_AZUL_INTER = {"C-6","C-51","C-52", "C-53","C-54","C-55"};
+    public static String[] LINEAS_AZUL_CAMPELLO = {"C2"};
+    public static String[] LINEAS_AZUL_MUTXAMEL = {"M","136"};
+    public static String[] LINEAS_AZUL_SANTVICENT = {"45","46A","46B"};*/
+    public static String[] LINEAS_URBANAS = {"01","02","03","04","05","06","07","8A","8B","09","10","11","11H","12","16","17","191","192"};
+
+    //public static List<String> lineasAzules = Arrays.asList(LINEAS_AZUL);
+    public static List<String> lineasUrbanas = Arrays.asList(LINEAS_URBANAS);
+
+
+    /*public static boolean isBusAzul(String linea){
+
+        if(lineasAzules.contains(linea)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }*/
+
+    public static boolean isBusUrbano(String linea){
+
+        if(lineasUrbanas.contains(linea)){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
 
     /**
      * KML Paradas ida

@@ -33,6 +33,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.java.tam.BusLlegada;
+import alberapps.java.tam.UtilidadesTAM;
 
 /**
  * Adaptador Tiempos
@@ -82,19 +83,42 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 tag.busLinea.setText(bus.getLinea().trim());
                 tag.busDestino.setText(bus.getDestino().trim());
 
+                tag.tiempoPrincipal.setText(controlAviso(bus.getProximo(), true).trim());
+
+
+                //Color circulo
+                if(bus.getLinea().trim().equals("L1")) {
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+                }else if(bus.getLinea().trim().equals("L2")) {
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+                }else if(bus.getLinea().trim().equals("L3")) {
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+                }else if(bus.getLinea().trim().equals("L4")) {
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+                }else if(UtilidadesTAM.isBusUrbano(bus.getLinea().trim())) {
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+                }else{
+                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+                }
+
+
+
+                //Alcoyana
+
+
                 // tag.busProximo.setText(bus.getProximo());
 
                 if (bus.getSegundoTram() != null) {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo()).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false).trim());
 
                 } else if (bus.getSegundoBus() != null) {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo()).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo()).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false).trim());
 
                 } else {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo()).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim());
                 }
 
             }
@@ -283,7 +307,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
      * @param proximo
      * @return
      */
-    private String controlAviso(String proximo) {
+    private String controlAviso(String proximo, boolean primero) {
 
         String traducido = "";
 
@@ -311,9 +335,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             tiempo1 = procesa[0];
 
-            if(tiempo1.length() == 14){
+            /*if(tiempo1.length() == 14){
                 tiempo1 = "0".concat(tiempo1);
-            }
+            }*/
 
         }
 
@@ -326,25 +350,38 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             tiempo2 = (String) contexto.getResources().getText(R.string.tiempo_m_2);
 
 
-
         } else {
 
             //tiempo2 = String.format("%02d",Integer.parseInt(procesa[1]));
 
             tiempo2 = procesa[1];
 
-            if(tiempo2.length() == 14){
+            /*if(tiempo2.length() == 14){
                 tiempo2 = "0".concat(tiempo2);
-            }
+            }*/
 
         }
 
-        //traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+        String nuevoLiteral = "";
 
-        traducido = "> " + tiempo1 + "\n> " + tiempo2;
+        if (primero) {
 
-        // min.
-        String nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "\"").replace(")", "\"");
+            traducido = tiempo1.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "- ").replace(")", "");
+
+            nuevoLiteral = traducido;
+
+        } else{
+
+
+            traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+
+            //traducido = "> " + tiempo1 + "\n> " + tiempo2;
+
+            // min.
+            nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));//.replace("(", "\"").replace(")", "\"");
+
+
+         }
 
         return nuevoLiteral;
 
@@ -358,11 +395,14 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         TextView busLinea;
         TextView busDestino;
         TextView busProximo;
+        TextView tiempoPrincipal;
 
         public ViewHolder(View v) {
             busLinea = (TextView) v.findViewById(R.id.bus_linea);
             busDestino = (TextView) v.findViewById(R.id.bus_destino);
             busProximo = (TextView) v.findViewById(R.id.bus_proximo);
+
+            tiempoPrincipal = (TextView) v.findViewById(R.id.tiempo_principal);
         }
 
     }
