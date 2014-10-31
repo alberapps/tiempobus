@@ -36,6 +36,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -64,6 +65,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
@@ -88,7 +90,7 @@ import alberapps.java.tram.UtilidadesTRAM;
  */
 public class NoticiasTabsPager extends ActionBarActivity {
     TabHost mTabHost;
-    ViewPager mViewPager;
+    public ViewPager mViewPager;
     TabsAdapter mTabsAdapter;
 
     BusLinea linea = null;
@@ -162,6 +164,7 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
+            /*
 
             mTabHost = (TabHost) findViewById(android.R.id.tabhost);
             mTabHost.setup();
@@ -181,6 +184,14 @@ public class NoticiasTabsPager extends ActionBarActivity {
             if (savedInstanceState != null) {
                 mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
             }
+            */
+
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
+            transaction.replace(R.id.tabs_content_fragment, fragment);
+            transaction.commit();
+
 
         }
     }

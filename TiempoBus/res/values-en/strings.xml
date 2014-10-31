@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TiempoBus</string>
+    <string name="app_name">TiempoBus y TRAM</string>
     <string name="app_version">3.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
@@ -290,7 +290,7 @@
 		\nLines and times data offered and maintained by:</string>
 	<string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.
 		\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Development: alberapps.blogspot.com - twitter.com/alberapps \nTranslations: magnoling.com - twitter.com/Magnoling_</string>
+	<string name="acercade_info_nuevo_2">Development:\nalberapps.blogspot.com - twitter.com/alberapps\nTranslations:\nmagnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Translations: magnoling.com</string>
     

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
 
@@ -42,6 +43,8 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
     private InfoLineasTabsPager contexto;
 
     List<BusLinea> listaOriginal;
+
+    CharSequence filtro;
 
     /**
      * Constructor
@@ -88,6 +91,10 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         }
 
+        //Formato colores
+        DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea());
+
+
         TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
 
         if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
@@ -99,9 +106,9 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                     contexto.setLinea(bus);
 
-                    contexto.setTitle(bus.getLinea());
+                    //contexto.setTitle(bus.getLinea());
 
-                    contexto.cargarHorarios(bus, position);
+                    contexto.gestionHorariosIda.cargarHorarios(bus, position);
 
                 }
 
@@ -222,6 +229,15 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         return lista;
 
+    }
+
+
+    public CharSequence getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(CharSequence filtro) {
+        this.filtro = filtro;
     }
 
 }

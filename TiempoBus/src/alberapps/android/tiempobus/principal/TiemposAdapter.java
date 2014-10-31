@@ -33,7 +33,6 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.java.tam.BusLlegada;
-import alberapps.java.tam.UtilidadesTAM;
 
 /**
  * Adaptador Tiempos
@@ -85,25 +84,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                 tag.tiempoPrincipal.setText(controlAviso(bus.getProximo(), true).trim());
 
-
-                //Color circulo
-                if(bus.getLinea().trim().equals("L1")) {
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
-                }else if(bus.getLinea().trim().equals("L2")) {
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
-                }else if(bus.getLinea().trim().equals("L3")) {
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
-                }else if(bus.getLinea().trim().equals("L4")) {
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
-                }else if(UtilidadesTAM.isBusUrbano(bus.getLinea().trim())) {
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
-                }else{
-                    tag.busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
-                }
-
-
-
-                //Alcoyana
+                //Formato colores
+                DatosPantallaPrincipal.formatoLinea(contexto, tag.busLinea, bus.getLinea());
 
 
                 // tag.busProximo.setText(bus.getProximo());

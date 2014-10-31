@@ -31,12 +31,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -52,7 +52,6 @@ import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -81,7 +80,6 @@ public class FragmentLineas extends Fragment {
 
     int mCurCheckPosition = 0;
 
-    ProgressDialog dialog = null;
 
     InfoLineaAdapter infoLineaAdapter;
 
@@ -106,88 +104,7 @@ public class FragmentLineas extends Fragment {
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
 
-        if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-
-            TextView descrip = (TextView) getActivity().findViewById(R.id.tituloAviso);
-
-            descrip.setText(R.string.aviso_offline);
-
-        } else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-
-            TextView descrip = (TextView) getActivity().findViewById(R.id.tituloAviso);
-
-            descrip.setText(R.string.aviso_buscador_offline_tram);
-
-        }
-
         setupFondoAplicacion();
-
-        // Combo de seleccion de datos
-        final Spinner spinner = (Spinner) getActivity().findViewById(R.id.spinner_datos);
-
-        ArrayAdapter<CharSequence> adapter = null;
-
-        if (UtilidadesTRAM.ACTIVADO_TRAM) {
-            adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
-        } else {
-            adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
-        }
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-        // Seleccion inicial
-        int infolineaModo = preferencias.getInt("infolinea_modo", 0);
-        spinner.setSelection(infolineaModo);
-
-        // Seleccion
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-                // Solo en caso de haber cambiado
-                if (preferencias.getInt("infolinea_modo", 0) != arg2) {
-
-                    // Guarda la nueva seleciccion
-                    SharedPreferences.Editor editor = preferencias.edit();
-                    editor.putInt("infolinea_modo", arg2);
-                    editor.commit();
-
-                    // cambiar el modo de la actividad
-                    if (arg2 == 0) {
-
-                        Intent intent2 = getActivity().getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
-                        getActivity().finish();
-                        startActivity(intent2);
-
-                    } else if (arg2 == 1) {
-
-                        Intent intent2 = getActivity().getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
-                        getActivity().finish();
-                        startActivity(intent2);
-
-                    } else if (arg2 == 2) {
-
-                        Intent intent2 = getActivity().getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
-                        getActivity().finish();
-                        startActivity(intent2);
-
-                    }
-
-                }
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-        });
 
         // Consultar si es necesario, si ya lo tiene carga la lista
         if (lineasBus != null) {
@@ -201,29 +118,9 @@ public class FragmentLineas extends Fragment {
             cargarLineas();
         }
 
-        // Filtrar resultados
-        final TextView textoBuscar = (TextView) actividad.findViewById(R.id.texto_buscar);
+        cargarHeaderLineas();
 
-        textoBuscar.addTextChangedListener(new TextWatcher() {
 
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty()) {
-
-                    infoLineaAdapter.getFilter().filter(s);
-
-                }
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         super.onViewStateRestored(savedInstanceState);
     }
@@ -236,7 +133,7 @@ public class FragmentLineas extends Fragment {
 
     private void cargarLineas() {
 
-        dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
 
         // Carga local de lineas
         String datosOffline = null;
@@ -262,7 +159,7 @@ public class FragmentLineas extends Fragment {
             actividad.taskBuses = new LoadDatosLineasAsyncTask(loadBusesAsyncTaskResponder).execute(datosOffline);
         } else {
             Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            dialog.dismiss();
+            actividad.dialog.dismiss();
         }
 
     }
@@ -277,11 +174,11 @@ public class FragmentLineas extends Fragment {
 
                 cargarListado();
 
-                dialog.dismiss();
+                actividad.dialog.dismiss();
 
             } else {
 
-                dialog.dismiss();
+                actividad.dialog.dismiss();
 
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
                 toast.show();
@@ -314,6 +211,168 @@ public class FragmentLineas extends Fragment {
                 lineasView.setAdapter(infoLineaAdapter);
 
             }
+
+        }
+
+        cargarHeaderLineas();
+
+    }
+
+    /**
+     * Cargar cabecera listado
+     */
+    public void cargarHeaderLineas() {
+
+        if (lineasView != null && lineasView.getHeaderViewsCount() == 0) {
+
+            LayoutInflater li2 = LayoutInflater.from(actividad);
+
+            View vheader = li2.inflate(R.layout.infolinea_lineas_header, null);
+
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+            if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+
+                texto.setText(R.string.aviso_offline);
+
+            } else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+                texto.setText(R.string.aviso_buscador_offline_tram);
+
+            } else {
+
+                texto.setText(R.string.aviso_buscador_online);
+
+            }
+
+            texto.setLinksClickable(true);
+            texto.setAutoLinkMask(Linkify.WEB_URLS);
+
+
+
+            // Combo de seleccion de datos
+            final Spinner spinner = (Spinner) vheader.findViewById(R.id.spinner_datos_tarjeta);
+
+            ArrayAdapter<CharSequence> adapter = null;
+
+            if (UtilidadesTRAM.ACTIVADO_TRAM) {
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
+            } else {
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+            }
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            spinner.setAdapter(adapter);
+
+            // Seleccion inicial
+            int infolineaModo = preferencias.getInt("infolinea_modo", 0);
+            spinner.setSelection(infolineaModo);
+
+            // Seleccion
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                    // Solo en caso de haber cambiado
+                    if (preferencias.getInt("infolinea_modo", 0) != arg2) {
+
+                        // Guarda la nueva seleciccion
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putInt("infolinea_modo", arg2);
+                        editor.commit();
+
+                        // cambiar el modo de la actividad
+                        if (arg2 == 0) {
+
+                            Intent intent2 = getActivity().getIntent();
+                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+                            getActivity().finish();
+                            startActivity(intent2);
+
+                        } else if (arg2 == 1) {
+
+                            Intent intent2 = getActivity().getIntent();
+                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+                            getActivity().finish();
+                            startActivity(intent2);
+
+                        } else if (arg2 == 2) {
+
+                            Intent intent2 = getActivity().getIntent();
+                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+                            getActivity().finish();
+                            startActivity(intent2);
+
+                        }
+
+                    }
+
+                }
+
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+
+            });
+
+
+
+
+
+            // Filtrar resultados
+            final TextView textoBuscar = (TextView) vheader.findViewById(R.id.texto_buscar);
+
+            if(infoLineaAdapter.getFiltro() != null && !infoLineaAdapter.getFiltro().equals("")){
+                textoBuscar.setText(infoLineaAdapter.getFiltro());
+            }
+
+            textoBuscar.addTextChangedListener(new TextWatcher() {
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty()) {
+
+                        infoLineaAdapter.getFilter().filter(s);
+
+                        infoLineaAdapter.setFiltro(s);
+
+                    }
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                public void afterTextChanged(Editable s) {
+
+
+
+                }
+            });
+
+
+            textoBuscar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(textoBuscar.getTextSize() > 0) {
+                        textoBuscar.requestFocus();
+                    }
+                }
+            });
+
+
+
+
+
+
+
+
+            lineasView = (ListView) actividad.findViewById(R.id.infolinea_lista_lineas);
+
+            lineasView.addHeaderView(vheader);
 
         }
 
@@ -363,16 +422,16 @@ public class FragmentLineas extends Fragment {
 
             // linea = lineasBus.get(position);
 
-            linea = infoLineaAdapter.getListaFiltrada().get(position);
+            linea = infoLineaAdapter.getListaFiltrada().get(position - 1);
 
             actividad.setLinea(linea);
 
-            actividad.setTitle(linea.getLinea());
+            //actividad.setTitle(linea.getLinea());
 
             // Quitar de horarios
-            actividad.limpiarHorariosIda();
+            actividad.gestionHorariosIda.limpiarHorariosIda();
 
-            cargarParadas(position);
+            cargarParadas(position - 1);
 
         }
     };
@@ -390,7 +449,7 @@ public class FragmentLineas extends Fragment {
         actividad.sentidoIda = null;
         actividad.sentidoVuelta = null;
 
-        dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
 
         // Control para el nuevo modo offline
         if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
@@ -431,12 +490,71 @@ public class FragmentLineas extends Fragment {
             actividad.taskDatosLinea = new LoadDatosInfoLineasAsyncTask(loadDatosInfoLineasAsyncTaskResponder).execute(datos);
         } else {
             Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
+            if (actividad.dialog != null && actividad.dialog.isShowing()) {
+                actividad.dialog.dismiss();
             }
         }
 
     }
+
+
+    /**
+     * Se llama cuando las paradas hayan sido cargadas
+     */
+    LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponder = new LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder() {
+        public void datosInfoLineasLoaded(DatosInfoLinea datos) {
+
+            if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
+
+                if (datos != null && datos.getResult() != null) {
+
+                    actividad.datosVuelta = datos.getResult();
+
+                    actividad.gestionIda.loadDatosMapaIda(datos.getfIda());
+
+                } else {
+                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+                    toast.show();
+                    actividad.dialog.dismiss();
+
+                }
+
+            } else {
+
+                if (datos != null && datos.getResultIda() != null && datos.getResultVuelta() != null) {
+
+                    actividad.datosVuelta = datos.getResultVuelta();
+                    actividad.datosIda = datos.getResultIda();
+
+
+                    actividad.gestionIda.cargarHeaderIda(true, false, false);
+
+                    actividad.gestionIda.cargarListadoIda();
+
+                    actividad.cambiarTab();
+
+                    if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+
+                        Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
+                    toast.show();
+                    actividad.dialog.dismiss();
+
+                }
+
+                if (actividad.dialog != null && actividad.dialog.isShowing()) {
+                    actividad.dialog.dismiss();
+                }
+
+            }
+
+        }
+    };
+
 
     /**
      * Carga las paradas de MAPAS OFFLINE
@@ -451,15 +569,9 @@ public class FragmentLineas extends Fragment {
 
             actividad.datosIda = datosRecorridos.get(0).getResult();
 
-            TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
+            actividad.gestionIda.cargarHeaderIdaOfflineBus();
 
-            if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-                titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-            } else {
-                titIda.setText("-");
-            }
-
-            cargarListadoIda();
+            actividad.gestionIda.cargarListadoIda();
 
             actividad.cambiarTab();
 
@@ -476,7 +588,7 @@ public class FragmentLineas extends Fragment {
 
         }
 
-        dialog.dismiss();
+        actividad.dialog.dismiss();
 
     }
 
@@ -498,23 +610,9 @@ public class FragmentLineas extends Fragment {
             actividad.datosVuelta = new DatosMapa();
             actividad.datosVuelta.setPlacemarks(actividad.datosIda.getPlacemarksInversa());
 
-            TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
+            actividad.gestionIda.cargarHeaderIdaOfflineTram();
 
-            if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-                // titIda.setText(">> " +
-                // actividad.datosIda.getCurrentPlacemark().getSentido());
-
-                int posicion = UtilidadesTRAM.getIdLinea(actividad.getLinea().getNumLinea());
-
-                String desc = UtilidadesTRAM.DESC_LINEA[UtilidadesTRAM.TIPO[posicion]];
-
-                titIda.setText(desc);
-
-            } else {
-                titIda.setText("-");
-            }
-
-            cargarListadoIda();
+            actividad.gestionIda.cargarListadoIda();
 
             actividad.cambiarTab();
 
@@ -531,172 +629,10 @@ public class FragmentLineas extends Fragment {
 
         }
 
-        dialog.dismiss();
+        actividad.dialog.dismiss();
 
     }
 
-    /**
-     * Paradas ida
-     *
-     * @param fIda
-     */
-    private void loadDatosMapaIda(FragmentIda fIda) {
-
-        // String url = "http://www.subus.es/Lineas/kml/ALC34ParadasIda.xml";
-
-        String url = UtilidadesTAM.getKMLParadasIda(actividad.getLinea().getIdlinea());
-
-        DatosInfoLinea datos = new DatosInfoLinea();
-        datos.setUrl(url);
-        // datos.setfIda(fIda);
-
-        // Control de disponibilidad de conexion
-        ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            actividad.taskInfoLineaIda = new LoadDatosInfoLineasAsyncTask(loadDatosInfoLineasAsyncTaskResponderIda).execute(datos);
-        } else {
-            Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
-        }
-
-    }
-
-    /**
-     * Se llama cuando las paradas hayan sido cargadas
-     */
-    LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponder = new LoadDatosInfoLineasAsyncTaskResponder() {
-        public void datosInfoLineasLoaded(DatosInfoLinea datos) {
-
-            if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
-
-                if (datos != null && datos.getResult() != null) {
-
-                    actividad.datosVuelta = datos.getResult();
-
-                    loadDatosMapaIda(datos.getfIda());
-
-                } else {
-                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                    toast.show();
-                    dialog.dismiss();
-
-                }
-
-            } else {
-
-                if (datos != null && datos.getResultIda() != null && datos.getResultVuelta() != null) {
-
-                    actividad.datosVuelta = datos.getResultVuelta();
-                    actividad.datosIda = datos.getResultIda();
-
-                    TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
-
-                    if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-                        titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-                    } else {
-                        titIda.setText("-");
-                    }
-
-                    cargarListadoIda();
-
-                    actividad.cambiarTab();
-
-                    if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
-
-                        Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
-
-                    }
-
-                } else {
-                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                    toast.show();
-                    dialog.dismiss();
-
-                }
-
-                dialog.dismiss();
-
-            }
-
-        }
-    };
-
-    LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponderIda = new LoadDatosInfoLineasAsyncTaskResponder() {
-        public void datosInfoLineasLoaded(DatosInfoLinea datos) {
-
-            if (datos != null && datos.getResult() != null) {
-
-                actividad.datosIda = datos.getResult();
-
-                // datos.getfIda().cargarListado();
-
-                TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
-
-                if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-                    titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-                } else {
-                    titIda.setText("-");
-                }
-
-                cargarListadoIda();
-
-                actividad.cambiarTab();
-
-                if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
-
-                    Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
-
-                }
-
-            } else {
-                Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                toast.show();
-                dialog.dismiss();
-
-            }
-
-            dialog.dismiss();
-
-        }
-    };
-
-    public void cargarListadoIda() {
-
-        infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
-
-        infoLineaParadasAdapter.addAll(actividad.datosIda.getPlacemarks());
-
-        ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
-        idaView.setOnItemClickListener(idaClickedHandler);
-
-        idaView.setAdapter(infoLineaParadasAdapter);
-
-    }
-
-    /**
-     * Listener encargado de gestionar las pulsaciones sobre los items
-     */
-    private OnItemClickListener idaClickedHandler = new OnItemClickListener() {
-
-        /**
-         * @param l
-         *            The ListView where the click happened
-         * @param v
-         *            The view that was clicked within the ListView
-         * @param position
-         *            The position of the view in the list
-         * @param id
-         *            The row id of the item that was clicked
-         */
-        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
-            actividad.seleccionarParadaIda(position);
-
-        }
-    };
 
     /**
      * Seleccion del fondo de la galeria en el arranque

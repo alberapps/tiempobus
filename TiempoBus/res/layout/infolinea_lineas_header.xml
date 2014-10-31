@@ -19,17 +19,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
-
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <LinearLayout
 
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical">
-
 
         <android.support.v7.widget.CardView
             android:layout_width="fill_parent"
@@ -40,83 +37,71 @@
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"
             card_view:cardElevation="@dimen/cardview_default_elevation"
-
             >
+
+
 
 
             <LinearLayout
 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/legal"
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
+                    android:layout_marginTop="5dp"
 
-                    android:padding="2dip"
-                    android:text="@string/acercade_info_nuevo"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="9sp" />
+                    >
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:padding="2dip">
+                    <Spinner
+                        android:id="@+id/spinner_datos_tarjeta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
 
+                        android:gravity="center" />
 
-                    <ImageView
-                        android:id="@+id/imgTram"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:contentDescription="Link TRAM"
-                        android:src="@drawable/logotram" />
-
-                    <ImageView
-                        android:id="@+id/imgFgv"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:contentDescription="Link fgv"
-                        android:src="@drawable/logofgv"
-
-                        />
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    >
+
+                    <EditText
+                        android:id="@+id/texto_buscar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:ems="10"
+                        android:hint="@string/menu_search"
+                        android:inputType="text"
+                        android:maxLines="1" />
+
+                </LinearLayout>
+
+
                 <TextView
-                    android:id="@+id/legal2"
+                    android:id="@+id/txt_noticias_header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="web"
-
                     android:padding="2dip"
-                    android:text="@string/acercade_info_nuevo_2"
+                    android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/legal3"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-
-                    android:padding="2dip"
-                    android:text="@string/aviso_infoapp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="9sp"
-                    android:textStyle="bold" />
-
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
-
 
 </LinearLayout>

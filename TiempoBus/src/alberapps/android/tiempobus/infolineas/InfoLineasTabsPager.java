@@ -19,42 +19,28 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.text.util.Linkify;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TabHost;
-import android.widget.TabWidget;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -62,12 +48,9 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;
-import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask.LoadHorariosInfoLineasAsyncTaskResponder;
+import alberapps.android.tiempobus.infolineas.sliding.SlidingTabsBasicFragment;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.horarios.DatosHorarios;
-import alberapps.java.horarios.ProcesarHorarios;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
@@ -78,9 +61,9 @@ import alberapps.java.tam.webservice.estructura.GetLineasResult;
  */
 
 public class InfoLineasTabsPager extends ActionBarActivity {
-    TabHost mTabHost;
-    ViewPager mViewPager;
-    TabsAdapter mTabsAdapter;
+
+    public ViewPager mViewPager;
+
 
     BusLinea linea = null;
 
@@ -108,7 +91,7 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     public static int MODO_RED_SUBUS_OFFLINE = 1;
     public static int MODO_RED_TRAM_OFFLINE = 2;
 
-    int modoRed = MODO_RED_SUBUS_ONLINE;
+    public int modoRed = MODO_RED_SUBUS_ONLINE;
 
     SharedPreferences preferencias = null;
 
@@ -117,7 +100,15 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
 
+
+    InfoLineaParadasAdapter infoLineaParadasAdapter;
+
+
     public GestionTram gestionTram;
+    public GestionIda gestionIda;
+    public GestionVuelta gestionVuelta;
+    public GestionHorariosIda gestionHorariosIda;
+    public GestionHorariosVuelta gestionHorariosVuelta;
 
     public BusLinea getLinea() {
         return linea;
@@ -135,6 +126,10 @@ public class InfoLineasTabsPager extends ActionBarActivity {
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
         gestionTram = new GestionTram(this, preferencias);
+        gestionIda = new GestionIda(this, preferencias);
+        gestionVuelta = new GestionVuelta(this, preferencias);
+        gestionHorariosIda = new GestionHorariosIda(this, preferencias);
+        gestionHorariosVuelta = new GestionHorariosVuelta(this, preferencias);
 
         // Control de modo de red
         modoRed = this.getIntent().getIntExtra("MODO_RED", 0);
@@ -156,7 +151,7 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
 
-            mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+           /* mTabHost = (TabHost) findViewById(android.R.id.tabhost);
             mTabHost.setup();
 
             mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -167,26 +162,21 @@ public class InfoLineasTabsPager extends ActionBarActivity {
                 mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
-/*
-                mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-                mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-
-                mTabHost.getTabWidget().getChildAt(1).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-                mTabHost.getTabWidget().getChildAt(2).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-*/
             } else if (modoRed == MODO_RED_TRAM_OFFLINE) {
                 mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
                 mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
-/*
-                mTabHost.getTabWidget().getChildAt(0).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-                mTabHost.getTabWidget().getChildAt(1).setBackgroundColor(getResources().getColor(R.color.mi_material_blue_indigo));
-*/
             }
 
             if (savedInstanceState != null) {
                 mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
             }
+            */
 
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
+            transaction.replace(R.id.tabs_content_fragment, fragment);
+            transaction.commit();
 
 
         } else {
@@ -205,6 +195,8 @@ public class InfoLineasTabsPager extends ActionBarActivity {
                 Log.d("infolinea", "eliminar panel vuelta");
 
             }
+
+
         }
 
     }
@@ -259,15 +251,15 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
+        /*if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
             outState.putString("tab", mTabHost.getCurrentTabTag());
-        }
+        }*/
     }
 
     public void cambiarTab() {
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
-            mTabHost.setCurrentTabByTag("ida");
+            mViewPager.setCurrentItem(1);
         } else {
 
             // Lanzar carga de vuelta
@@ -275,73 +267,15 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
             if (vueltaFrag != null) {
 
-                vueltaFrag.recargaInformacion();
+                gestionVuelta.recargaInformacion();
 
             }
 
         }
 
-    }
-
-    /**
-     * Seleccion parada de ida
-     *
-     * @param posicion
-     */
-    public void seleccionarParadaIda(int posicion) {
-
-
-        int codigo = -1;
-
-        try {
-            codigo = Integer.parseInt(datosIda.getPlacemarks().get(posicion).getCodigoParada());
-
-        } catch (Exception e) {
-
-        }
-
-        if (codigo != -1 && (datosIda.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(datosIda.getPlacemarks().get(posicion).getCodigoParada()))) {
-
-            cargarTiempos(codigo);
-
-        } else {
-
-            Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
-
-        }
-
 
     }
 
-
-    /**
-     * Seleccion parada de vuelta
-     *
-     * @param posicion
-     */
-    public void seleccionarParadaVuelta(int posicion) {
-
-        int codigo = -1;
-
-        try {
-            codigo = Integer.parseInt(datosVuelta.getPlacemarks().get(posicion).getCodigoParada());
-
-        } catch (Exception e) {
-
-        }
-
-        if (codigo != -1 && (datosVuelta.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(datosVuelta.getPlacemarks().get(posicion).getCodigoParada()))) {
-
-            cargarTiempos(codigo);
-
-        } else {
-
-            Toast.makeText(getApplicationContext(), getString(R.string.error_codigo), Toast.LENGTH_SHORT).show();
-
-        }
-
-
-    }
 
     public void cargarTiempos(int codigo) {
 
@@ -369,105 +303,6 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
     }
 
-    /**
-     * This is a helper class that implements the management of tabs and all
-     * details of connecting a ViewPager with associated TabHost. It relies on a
-     * trick. Normally a tab host has a simple API for supplying a View or
-     * Intent that each tab will show. This is not sufficient for switching
-     * between pages. So instead we make the content part of the tab host 0dp
-     * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-     * show as the tab content. It listens to changes in tabs, and takes care of
-     * switch to the correct paged in the ViewPager whenever the selected tab
-     * changes.
-     */
-    public static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
-        private final Context mContext;
-        private final TabHost mTabHost;
-        private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-
-        static final class TabInfo {
-            private final String tag;
-            private final Class<?> clss;
-            private final Bundle args;
-
-            TabInfo(String _tag, Class<?> _class, Bundle _args) {
-                tag = _tag;
-                clss = _class;
-                args = _args;
-            }
-        }
-
-        static class DummyTabFactory implements TabHost.TabContentFactory {
-            private final Context mContext;
-
-            public DummyTabFactory(Context context) {
-                mContext = context;
-            }
-
-            public View createTabContent(String tag) {
-                View v = new View(mContext);
-                v.setMinimumWidth(0);
-                v.setMinimumHeight(0);
-                return v;
-            }
-        }
-
-        public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
-            super(activity.getSupportFragmentManager());
-            mContext = activity;
-            mTabHost = tabHost;
-            mViewPager = pager;
-            mTabHost.setOnTabChangedListener(this);
-            mViewPager.setAdapter(this);
-            mViewPager.setOnPageChangeListener(this);
-        }
-
-        public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-            tabSpec.setContent(new DummyTabFactory(mContext));
-            String tag = tabSpec.getTag();
-
-            TabInfo info = new TabInfo(tag, clss, args);
-            mTabs.add(info);
-            mTabHost.addTab(tabSpec);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return mTabs.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
-        }
-
-        public void onTabChanged(String tabId) {
-            int position = mTabHost.getCurrentTab();
-            mViewPager.setCurrentItem(position);
-        }
-
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        }
-
-        public void onPageSelected(int position) {
-            // Unfortunately when TabHost changes the current tab, it kindly
-            // also takes care of putting focus on it when not in touch mode.
-            // The jerk.
-            // This hack tries to prevent this from pulling focus out of our
-            // ViewPager.
-            TabWidget widget = mTabHost.getTabWidget();
-            int oldFocusability = widget.getDescendantFocusability();
-            widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-            mTabHost.setCurrentTab(position);
-            widget.setDescendantFocusability(oldFocusability);
-        }
-
-        public void onPageScrollStateChanged(int state) {
-        }
-    }
 
     /**
      * Seleccion del fondo de la galeria en el arranque
@@ -523,296 +358,6 @@ public class InfoLineasTabsPager extends ActionBarActivity {
         this.modoRed = modoRed;
     }
 
-	/* HORARIOS */
-
-    public void cargarHorarios(BusLinea linea, int index) {
-
-        // We can display everything in-place with fragments, so update
-        // the list to highlight the selected item and show the data.
-        ListView lineasView = (ListView) findViewById(R.id.infolinea_lista_lineas);
-
-        lineasView.setItemChecked(index, true);
-
-        lineasMapas = null;
-        sentidoIda = null;
-        sentidoVuelta = null;
-        datosHorarios = null;
-        linkHorario = ProcesarHorarios.LINEA_URL + linea.getIdlinea();
-
-        dialog = ProgressDialog.show(this, "", getString(R.string.dialogo_espera), true);
-
-        loadHorarios(linea);
-
-
-    }
-
-    /**
-     * Carga los horarios
-     */
-    private void loadHorarios(BusLinea datosLinea) {
-
-        // Control de disponibilidad de conexion
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            taskHorarios = new LoadHorariosInfoLineasAsyncTask(loadHorariosInfoLineasAsyncTaskResponder).execute(datosLinea);
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
-        }
-
-    }
-
-    /**
-     * Se llama cuando las paradas hayan sido cargadas
-     */
-    LoadHorariosInfoLineasAsyncTaskResponder loadHorariosInfoLineasAsyncTaskResponder = new LoadHorariosInfoLineasAsyncTaskResponder() {
-        public void datosHorariosInfoLineasLoaded(DatosHorarios datos) {
-
-            if (datos != null) {
-
-                datosHorarios = datos;
-
-                cargarListadoHorarioIda();
-
-                cambiarTab();
-
-            } else {
-
-                //datosHorarios = null;
-
-                datosHorarios = new DatosHorarios();
-
-                cargarListadoHorarioIda();
-
-                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                toast.show();
-                dialog.dismiss();
-
-                modalErrorHorario();
-
-            }
-
-            dialog.dismiss();
-
-        }
-    };
-
-    /**
-     * En caso de no poder cargar los horarios
-     */
-    private void modalErrorHorario() {
-
-        if (linkHorario != null) {
-
-            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-
-            dialog.setTitle(getString(R.string.infolinea_horarios));
-
-            dialog.setMessage(getString(R.string.error_horarios_modal));
-            dialog.setIcon(R.drawable.ic_tiempobus_3);
-
-            dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int id) {
-
-                    dialog.dismiss();
-
-                    UtilidadesUI.openWebPage(InfoLineasTabsPager.this, linkHorario);
-
-                    linkHorario = null;
-
-                }
-
-            });
-
-            dialog.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog, int id) {
-
-                    dialog.dismiss();
-
-                    linkHorario = null;
-
-                }
-
-            });
-
-            dialog.show();
-
-        }
-
-
-    }
-
-    /**
-     * Carga lista con los horarios de ida
-     */
-    public void cargarListadoHorarioIda() {
-
-        TextView titIda = (TextView) findViewById(R.id.tituloIda);
-
-        titIda.setText(datosHorarios.getTituloSalidaIda());
-
-        InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
-
-        infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosIda());
-
-        ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
-        // idaView.setOnItemClickListener(idaClickedHandler);
-
-        if (idaView.getFooterViewsCount() == 0) {
-
-            LayoutInflater li = LayoutInflater.from(this);
-
-            vistaPieHorarioIda = li.inflate(R.layout.infolineas_horarios_item, null);
-
-            TextView descHorario = (TextView) vistaPieHorarioIda.findViewById(R.id.desc_horario);
-
-            descHorario.setText(getString(R.string.observaciones));
-
-            idaView.addFooterView(vistaPieHorarioIda);
-
-            // Pie aviso
-            LayoutInflater li2 = LayoutInflater.from(this);
-            vistaPieAvisoIda = li2.inflate(R.layout.infolineas_horarios_item, null);
-            TextView descHorario2 = (TextView) vistaPieAvisoIda.findViewById(R.id.desc_horario);
-
-            descHorario2.setText(getString(R.string.aviso_noticia));
-
-            idaView.addFooterView(vistaPieAvisoIda);
-
-        }
-
-        TextView datosHorario = (TextView) vistaPieHorarioIda.findViewById(R.id.datos_horario);
-
-        StringBuffer comentarios = new StringBuffer("");
-
-        if (datosHorarios.getComentariosIda() != null && !datosHorarios.getComentariosIda().equals("")) {
-            comentarios.append(datosHorarios.getComentariosIda());
-            comentarios.append("\n");
-        }
-
-        if (datosHorarios.getValidezHorarios() != null) {
-            comentarios.append(datosHorarios.getValidezHorarios());
-        }
-
-        datosHorario.setText(comentarios.toString());
-
-        // Aviso
-        TextView datosHorario2 = (TextView) vistaPieAvisoIda.findViewById(R.id.datos_horario);
-        datosHorario2.setAutoLinkMask(Linkify.ALL);
-        datosHorario2.setLinksClickable(true);
-        if (datosHorarios.getHorariosIda() != null && !datosHorarios.getHorariosIda().isEmpty()) {
-            datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
-        }
-
-        idaView.setAdapter(infoLineaHorariosAdapter);
-
-        infoLineaHorariosAdapter.notifyDataSetChanged();
-
-    }
-
-    /**
-     * Carga lista con los horarios de vuelta
-     */
-    public void cargarListadoHorarioVuelta() {
-
-        InfoLineaHorariosAdapter infoLineaHorariosAdapter = new InfoLineaHorariosAdapter(this, R.layout.infolineas_horarios_item);
-
-        infoLineaHorariosAdapter.addAll(datosHorarios.getHorariosVuelta());
-
-        ListView vueltaView = (ListView) findViewById(R.id.infolinea_lista_vuelta);
-        // idaView.setOnItemClickListener(idaClickedHandler);
-
-        if (vueltaView.getFooterViewsCount() == 0) {
-
-            LayoutInflater li = LayoutInflater.from(this);
-            vistaPieHorarioVuelta = li.inflate(R.layout.infolineas_horarios_item, null);
-
-            TextView descHorario = (TextView) vistaPieHorarioVuelta.findViewById(R.id.desc_horario);
-
-            descHorario.setText(getString(R.string.observaciones));
-
-            vueltaView.addFooterView(vistaPieHorarioVuelta);
-
-            // Pie aviso
-            LayoutInflater li2 = LayoutInflater.from(this);
-            vistaPieAvisoVuelta = li2.inflate(R.layout.infolineas_horarios_item, null);
-            TextView descHorario2 = (TextView) vistaPieAvisoVuelta.findViewById(R.id.desc_horario);
-
-            descHorario2.setText(getString(R.string.aviso_noticia));
-
-            vueltaView.addFooterView(vistaPieAvisoVuelta);
-
-        }
-
-        TextView datosHorario = (TextView) vistaPieHorarioVuelta.findViewById(R.id.datos_horario);
-
-        StringBuffer comentarios = new StringBuffer("");
-
-        if (datosHorarios.getComentariosVuelta() != null && !datosHorarios.getComentariosVuelta().equals("")) {
-            comentarios.append(datosHorarios.getComentariosVuelta());
-            comentarios.append("\n");
-        }
-
-        if (datosHorarios.getValidezHorarios() != null) {
-            comentarios.append(datosHorarios.getValidezHorarios());
-        }
-
-        datosHorario.setText(comentarios);
-
-        // Aviso
-        TextView datosHorario2 = (TextView) vistaPieAvisoVuelta.findViewById(R.id.datos_horario);
-        datosHorario2.setAutoLinkMask(Linkify.ALL);
-        datosHorario2.setLinksClickable(true);
-        if (datosHorarios.getHorariosIda() != null && !datosHorarios.getHorariosIda().isEmpty()) {
-            datosHorario2.setText(ProcesarHorarios.URL_SUBUS + datosHorarios.getHorariosIda().get(0).getLinkHorario());
-        }
-
-        vueltaView.setAdapter(infoLineaHorariosAdapter);
-
-        infoLineaHorariosAdapter.notifyDataSetChanged();
-
-    }
-
-    /**
-     * Eliminar datos horarios
-     */
-    public void limpiarHorariosIda() {
-
-        Log.d("INFOLINEAS", "limpiar horarios ida");
-
-        datosHorarios = null;
-
-        ListView idaView = (ListView) findViewById(R.id.infolinea_lista_ida);
-
-        if (idaView.getFooterViewsCount() > 0) {
-            idaView.removeFooterView(vistaPieHorarioIda);
-            idaView.removeFooterView(vistaPieAvisoIda);
-            vistaPieHorarioIda = null;
-        }
-
-    }
-
-    /**
-     * Eliminar datos horarios
-     */
-    public void limpiarHorariosVuelta() {
-
-        datosHorarios = null;
-
-        ListView vueltaView = (ListView) findViewById(R.id.infolinea_lista_vuelta);
-
-        if (vueltaView.getFooterViewsCount() > 0) {
-            vueltaView.removeFooterView(vistaPieHorarioVuelta);
-            vueltaView.removeFooterView(vistaPieAvisoVuelta);
-            vistaPieHorarioVuelta = null;
-        }
-
-    }
 
     @Override
     protected void onStart() {
@@ -820,7 +365,6 @@ public class InfoLineasTabsPager extends ActionBarActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -830,7 +374,6 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

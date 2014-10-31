@@ -25,17 +25,7 @@
     android:layout_weight="0"
     android:orientation="vertical" >
 
-     <TextView
-        android:id="@+id/tituloVuelta"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/mi_material_blue_indigo"
-        android:gravity="center"
-        android:text="@string/guion"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/white" />
-    
-     <RelativeLayout
+    <RelativeLayout
          android:id="@+id/scroll"
          android:layout_width="fill_parent"
          android:layout_height="match_parent"

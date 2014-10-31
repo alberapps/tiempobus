@@ -5,11 +5,45 @@
 
     <!-- extend one of the Theme.AppCompat themes -->
     <style name="Theme.TiempoBusTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_indigo</item>
         <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
         <item name="colorAccent">@color/mi_material_blue</item>
+
+        <!--item name="actionBarStyle">@style/Header.Material</item-->
+
     </style>
+
+
+    <style name="Theme.TiempoBusThemeTab" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/mi_material_blue_indigo</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorAccent">@color/mi_material_blue</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+
+
+    </style>
+
+
+
+    <!--style name="Header.Material" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:overlapAnchor">true</item>
+
+
+
+
+        <item name="android:dividerHeight">0dp</item>
+
+    </style-->
 
 
 

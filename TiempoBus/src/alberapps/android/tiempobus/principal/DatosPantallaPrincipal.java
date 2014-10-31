@@ -31,7 +31,9 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -69,6 +71,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
+import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Datos;
 import alberapps.java.util.GestionarDatos;
@@ -1297,6 +1300,73 @@ public class DatosPantallaPrincipal {
 
 
     }
+
+
+    /**
+     * Colores lineas
+     *
+     * @param contexto
+     * @param busLinea
+     * @param linea
+     */
+    public static void formatoLinea(Context contexto, TextView busLinea, String linea){
+
+        //Color circulo
+        if(linea.trim().equals("L1")) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+            }else{
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+            }
+        }else if(linea.trim().equals("L2")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+            }else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+            }
+
+        }else if(linea.trim().equals("L3")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+            }else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+            }
+        }else if(linea.trim().equals("L4")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+            }else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+            }
+        }else if(UtilidadesTAM.isBusUrbano(linea.trim())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+            }else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+            }
+        }else{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+            }else{
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+            }
+        }
+
+
+
+        //Size
+        if(linea.length() > 2){
+            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        }else{
+            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        }
+
+
+
+
+    }
+
+
 
 
 }

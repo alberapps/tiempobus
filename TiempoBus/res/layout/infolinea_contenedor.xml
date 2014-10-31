@@ -16,16 +16,33 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/sample_main_layout">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        android:id="@+id/tabs_content_fragment"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0px" />
+
+</LinearLayout>
+
+
+<!--LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <fragment
+    <!fragment
         android:id="@+id/infolinea_fragment_principal"
         android:name="alberapps.android.tiempobus.infolineas.InfolineaPrincipal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
-</LinearLayout>
+
+
+</LinearLayout-->

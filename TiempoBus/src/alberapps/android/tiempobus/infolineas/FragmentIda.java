@@ -25,10 +25,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -44,7 +41,6 @@ public class FragmentIda extends Fragment {
 
     InfoLineasTabsPager actividad;
 
-    InfoLineaParadasAdapter infoLineaParadasAdapter;
 
     /**
      * On Create
@@ -62,29 +58,7 @@ public class FragmentIda extends Fragment {
 
         setupFondoAplicacion();
 
-        TextView titIda = (TextView) actividad.findViewById(R.id.tituloIda);
-
-        if (actividad.datosHorarios != null) {
-
-            titIda.setText(actividad.datosHorarios.getTituloSalidaIda());
-
-        } else if (actividad.datosIda != null) {
-
-            actividad.limpiarHorariosIda();
-
-            if (actividad.datosIda != null && actividad.datosIda.getCurrentPlacemark() != null && actividad.datosIda.getCurrentPlacemark().getSentido() != null) {
-                titIda.setText(">> " + actividad.datosIda.getCurrentPlacemark().getSentido());
-            } else {
-                titIda.setText("-");
-            }
-
-            cargarListado();
-        } else {
-            ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
-
-            TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lista_ida_vacio);
-            idaView.setEmptyView(vacio);
-        }
+        actividad.gestionIda.cargarHeaderIda(true, false, false);
 
         super.onViewStateRestored(savedInstanceState);
     }
@@ -95,44 +69,6 @@ public class FragmentIda extends Fragment {
         return inflater.inflate(R.layout.infolinea_ida, container, false);
     }
 
-    public void cargarListado() {
-
-        infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
-
-        infoLineaParadasAdapter.addAll(actividad.datosIda.getPlacemarks());
-
-        ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_ida);
-
-        TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lista_ida_vacio);
-        idaView.setEmptyView(vacio);
-
-        idaView.setOnItemClickListener(idaClickedHandler);
-
-        idaView.setAdapter(infoLineaParadasAdapter);
-
-    }
-
-    /**
-     * Listener encargado de gestionar las pulsaciones sobre los items
-     */
-    private OnItemClickListener idaClickedHandler = new OnItemClickListener() {
-
-        /**
-         * @param l
-         *            The ListView where the click happened
-         * @param v
-         *            The view that was clicked within the ListView
-         * @param position
-         *            The position of the view in the list
-         * @param id
-         *            The row id of the item that was clicked
-         */
-        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
-            actividad.seleccionarParadaIda(position);
-
-        }
-    };
 
     /**
      * Seleccion del fondo de la galeria en el arranque

@@ -55,12 +55,12 @@
 
                     <TextView
                         android:id="@+id/bus_linea"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:gravity="center"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="25sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="@color/abc_primary_text_disable_only_material_dark"
                         android:background="@drawable/circulo_azul"

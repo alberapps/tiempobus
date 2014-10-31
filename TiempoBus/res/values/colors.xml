@@ -42,10 +42,10 @@
 
 
     <!-- TRAM -->
-    <color name="tram_l1">#ee3124</color>
-    <color name="tram_l2">#009a42</color>
-    <color name="tram_l3">#ffd204</color>
-    <color name="tram_l4">#cea8ce</color>
+    <color name="tram_l1">#e51c23</color>
+    <color name="tram_l2">#259b24</color>
+    <color name="tram_l3">#ffb74d</color>
+    <color name="tram_l4">#ba68c8</color>
 
 
 

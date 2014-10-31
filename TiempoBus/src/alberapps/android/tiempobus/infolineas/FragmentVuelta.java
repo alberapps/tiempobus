@@ -25,10 +25,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -60,7 +57,7 @@ public class FragmentVuelta extends Fragment {
 
         setupFondoAplicacion();
 
-        recargaInformacion();
+        actividad.gestionVuelta.recargaInformacion();
 
         super.onViewStateRestored(savedInstanceState);
     }
@@ -71,84 +68,6 @@ public class FragmentVuelta extends Fragment {
         return inflater.inflate(R.layout.infolinea_vuelta, container, false);
     }
 
-
-    /**
-     * Recarga de datos
-     */
-    public void recargaInformacion() {
-
-        TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
-
-        if (actividad.datosHorarios != null) {
-
-            titVuelta.setText(actividad.datosHorarios.getTituloSalidaVuelta());
-
-            actividad.cargarListadoHorarioVuelta();
-
-        } else if (actividad.datosVuelta != null) {
-
-            actividad.limpiarHorariosVuelta();
-
-            cargarListado();
-        } else {
-
-            ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
-
-            TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
-            idaView.setEmptyView(vacio);
-        }
-
-    }
-
-    /**
-     * Carga el listado de pantalla
-     */
-    public void cargarListado() {
-
-        TextView titVuelta = (TextView) actividad.findViewById(R.id.tituloVuelta);
-
-        if (actividad.datosVuelta != null && actividad.datosVuelta.getCurrentPlacemark() != null && actividad.datosVuelta.getCurrentPlacemark().getSentido() != null) {
-            titVuelta.setText(">> " + actividad.datosVuelta.getCurrentPlacemark().getSentido());
-        } else {
-            titVuelta.setText("-");
-        }
-
-        infoLineaParadasAdapter = new InfoLineaParadasAdapter(getActivity(), R.layout.infolineas_item);
-
-        infoLineaParadasAdapter.addAll(actividad.datosVuelta.getPlacemarks());
-
-        ListView idaView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
-
-        TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
-        idaView.setEmptyView(vacio);
-
-        idaView.setOnItemClickListener(lineasClickedHandler);
-
-        idaView.setAdapter(infoLineaParadasAdapter);
-
-    }
-
-    /**
-     * Listener encargado de gestionar las pulsaciones sobre los items
-     */
-    private OnItemClickListener lineasClickedHandler = new OnItemClickListener() {
-
-        /**
-         * @param l
-         *            The ListView where the click happened
-         * @param v
-         *            The view that was clicked within the ListView
-         * @param position
-         *            The position of the view in the list
-         * @param id
-         *            The row id of the item that was clicked
-         */
-        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-
-            actividad.seleccionarParadaVuelta(position);
-
-        }
-    };
 
     /**
      * Seleccion del fondo de la galeria en el arranque

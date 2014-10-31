@@ -25,21 +25,10 @@
     android:layout_weight="0"    
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tituloAviso"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/mi_material_blue_indigo"
-        android:text="@string/aviso_buscador_online"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/white"
-        android:textStyle="italic" />
-
-     <RelativeLayout
+    <RelativeLayout
          android:id="@+id/scroll"
          android:layout_width="fill_parent"
          android:layout_height="match_parent"
-         android:layout_marginBottom="45dip"
          >
 		
 		 <ListView
@@ -63,33 +52,6 @@
 	
 	</RelativeLayout>
 
-     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="47dp"
-        android:layout_marginTop="-46dip"
-        android:background="@drawable/fondo_linea"
-        >
 
-         <Spinner
-             android:id="@+id/spinner_datos"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:layout_marginLeft="5dp"
-             android:layout_marginRight="5dp"
-             android:layout_weight="1"
-             android:gravity="center" />
-
-         <EditText
-             android:id="@+id/texto_buscar"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:ems="10"
-             android:hint="@string/menu_search"
-             android:inputType="text"
-             android:maxLines="1" />
-
-     </LinearLayout>
 
 </LinearLayout>
