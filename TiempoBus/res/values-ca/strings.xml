@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TempsBus i TRAM</string>
+    <string name="app_name">TempsBus i Tram</string>
     <string name="app_version">3.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
@@ -442,5 +442,7 @@ favorit per crear la teua llista.</string>
     
     <string name="noticia_zoom_aumenta">Zoom(+)</string>
     <string name="noticia_zoom_reducir">Zoom(-)</string>
-    
+    <string name="bus_tram">Bus i Tram</string>
+    <string name="bus_tram_titulo">AlberApps: TempsBus</string>
+
 </resources>

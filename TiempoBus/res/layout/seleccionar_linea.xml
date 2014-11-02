@@ -28,6 +28,15 @@
     
     android:orientation="vertical" >
 
+    <Spinner
+        android:id="@+id/spinner_datos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:gravity="center" />
+
+
     <EditText
         android:id="@+id/texto_buscar"
         android:layout_width="match_parent"
@@ -35,6 +44,7 @@
         android:ems="10"
         android:hint="@string/menu_search"
         android:inputType="text"
+        android:layout_margin="5dp"
         android:maxLines="1" >
 
         <requestFocus />
@@ -49,7 +59,6 @@
 
 	</Spinner>
 
-    
    
 </LinearLayout>
  

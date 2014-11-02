@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -67,6 +68,11 @@ public class BuscadorLineas extends ActionBarActivity {
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.resultados_busqueda_offline);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mTextView = (TextView) findViewById(R.id.text);
         mListView = (ListView) findViewById(R.id.list);
@@ -175,7 +181,6 @@ public class BuscadorLineas extends ActionBarActivity {
         switch (item.getItemId()) {
 
 
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -201,7 +206,6 @@ public class BuscadorLineas extends ActionBarActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -211,7 +215,6 @@ public class BuscadorLineas extends ActionBarActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

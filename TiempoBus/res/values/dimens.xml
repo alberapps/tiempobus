@@ -18,4 +18,10 @@
     <dimen name="actionbar_compat_height">48dp</dimen>
     <dimen name="actionbar_compat_button_width">48dp</dimen>
     <dimen name="actionbar_compat_button_home_width">56dp</dimen>
+
+
+    <dimen name="tarjeta_margin">2dp</dimen>
+
+    <dimen name="tarjeta_width_tablet">-1dp</dimen>
+
 </resources>

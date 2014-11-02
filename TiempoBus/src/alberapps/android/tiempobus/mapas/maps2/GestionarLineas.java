@@ -523,114 +523,7 @@ public class GestionarLineas {
 
         }
 
-        // Combo de seleccion de datos
-        final Spinner spinner = (Spinner) context.findViewById(R.id.spinner_datos);
 
-        ArrayAdapter<CharSequence> adapter = null;
-
-        if (UtilidadesTRAM.ACTIVADO_TRAM) {
-            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos, android.R.layout.simple_spinner_item);
-        } else {
-            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
-        }
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
-        // Seleccion inicial
-        int infolineaModo = preferencias.getInt("infolinea_modo", 0);
-        spinner.setSelection(infolineaModo);
-
-        // Seleccion
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-                // Solo en caso de haber cambiado
-                if (preferencias.getInt("infolinea_modo", 0) != arg2) {
-
-                    // Guarda la nueva seleciccion
-                    SharedPreferences.Editor editor = preferencias.edit();
-                    editor.putInt("infolinea_modo", arg2);
-                    editor.commit();
-
-                    // cambiar el modo de la actividad
-                    if (arg2 == 0) {
-
-                        Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);
-
-                    } else if (arg2 == 1) {
-
-                        Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);
-
-                    } else if (arg2 == 2) {
-
-                        Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);
-
-                    }
-
-                }
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-        });
 
         // Control de boton vehiculos
         final ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
@@ -673,6 +566,53 @@ public class GestionarLineas {
 
             }
         });
+
+
+        //Botones ida y vuelta
+        final ToggleButton botonIda = (ToggleButton) context.findViewById(R.id.mapaIdaButton);
+
+
+
+        if (context.flagIda) {
+            botonIda.setChecked(true);
+        }
+
+        botonIda.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+
+                //if (context.modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+                    context.gestionarLineas.cargarOcultarIda();
+                //}
+
+
+            }
+        });
+
+        final ToggleButton botonVuelta = (ToggleButton) context.findViewById(R.id.mapaVueltaButton);
+
+        if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            botonVuelta.setEnabled(false);
+            context.flagVuelta = false;
+        }
+
+
+        if (context.flagVuelta) {
+            botonVuelta.setChecked(true);
+        }
+
+        botonVuelta.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+
+                if (context.modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+                    context.gestionarLineas.cargarOcultarVuelta();
+                }
+
+
+            }
+        });
+
 
     }
 
@@ -816,8 +756,14 @@ public class GestionarLineas {
                 context.datosMapaCargadosIdaAux = new DatosMapa();
                 context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
                 context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
+
+                context.flagIda = false;
+
             } else if (context.datosMapaCargadosIdaAux != null) {
                 context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
+
+                context.flagIda = true;
+
             }
 
             // Limpiar lista anterior para nuevas busquedas
@@ -842,8 +788,14 @@ public class GestionarLineas {
                 context.datosMapaCargadosVueltaAux = new DatosMapa();
                 context.datosMapaCargadosVueltaAux.setPlacemarks(context.datosMapaCargadosVuelta.getPlacemarks());
                 context.datosMapaCargadosVuelta.setPlacemarks(new ArrayList<PlaceMark>());
+
+                context.flagVuelta = false;
+
             } else if (context.datosMapaCargadosVueltaAux != null) {
                 context.datosMapaCargadosVuelta.setPlacemarks(context.datosMapaCargadosVueltaAux.getPlacemarks());
+
+                context.flagVuelta = true;
+
             }
 
             // Limpiar lista anterior para nuevas busquedas

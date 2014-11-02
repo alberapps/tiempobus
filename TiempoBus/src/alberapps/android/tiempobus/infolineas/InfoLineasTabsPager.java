@@ -146,32 +146,12 @@ public class InfoLineasTabsPager extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
         }
 
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
-
-           /* mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-            mTabHost.setup();
-
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-
-            mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
-
-            if (modoRed == MODO_RED_SUBUS_ONLINE || modoRed == MODO_RED_SUBUS_OFFLINE) {
-                mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
-                mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.ida)), FragmentIda.class, null);
-                mTabsAdapter.addTab(mTabHost.newTabSpec("vuelta").setIndicator(getString(R.string.vuelta)), FragmentVuelta.class, null);
-            } else if (modoRed == MODO_RED_TRAM_OFFLINE) {
-                mTabsAdapter.addTab(mTabHost.newTabSpec("lineas").setIndicator(getString(R.string.linea)), FragmentLineas.class, null);
-                mTabsAdapter.addTab(mTabHost.newTabSpec("ida").setIndicator(getString(R.string.parada_tram)), FragmentIda.class, null);
-            }
-
-            if (savedInstanceState != null) {
-                mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-            }
-            */
-
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();

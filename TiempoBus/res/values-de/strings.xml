@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TiempoBus y TRAM</string>
+    <string name="app_name">TiempoBus y Tram</string>
     <string name="app_version">3.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
@@ -374,5 +374,6 @@
     
     
     <string name="foreground_service_started_2">Es beweist Zeit alle 60 Sekunden.</string>
-    
+    <string name="bus_tram">Bus und Tram</string>
+
 </resources>

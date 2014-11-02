@@ -33,7 +33,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="2dp"
+            android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"
@@ -121,28 +121,28 @@
                             android:id="@+id/tiempos_alerta_img"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="30dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Establecer alerta"
-                            android:src="@drawable/device_access_alarms" />
+                            android:src="@drawable/ic_alarm_grey600_18dp" />
 
                         <ImageView
                             android:id="@+id/compartir_img"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="30dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Compartir parada"
-                            android:src="@drawable/social_share" />
+                            android:src="@drawable/ic_share_grey600_18dp" />
 
                         <ImageView
                             android:id="@+id/mapa_tarjeta"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="30dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Mapa parada"
-                            android:src="@drawable/location_map_2" />
+                            android:src="@drawable/ic_map_grey600_18dp" />
 
                         <ImageView
                             android:id="@+id/audio_img"
@@ -150,7 +150,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Leer tiempo"
-                            android:src="@drawable/device_access_volume_on" />
+                            android:src="@drawable/ic_volume_up_grey600_18dp" />
 
                         <TextView
                             android:id="@+id/tiempos_alerta"
@@ -192,7 +192,7 @@
                         android:src="@drawable/fijar" />
 
 
-                    <TextView
+                    <!--TextView
                         android:id="@+id/tiempos_opciones"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -203,7 +203,25 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="12sp"
                         android:textStyle="italic|bold"
-                        android:textColor="@color/primary_dark_material_light"/>
+                        android:textColor="@color/primary_dark_material_light"/-->
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/tiempos_opciones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Mas opciones"
+                            android:src="@drawable/ic_more_vert_grey600_18dp" />
+
+                        </FrameLayout>
+
+
+
 
                 </LinearLayout>
 

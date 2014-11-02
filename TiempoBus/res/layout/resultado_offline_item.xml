@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="2dp"
+            android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"
@@ -42,31 +42,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_margin="5dp">
 
                     <TextView
                         android:id="@+id/titulo"
-                        style="@style/Noticias"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:textColor="@color/color_android"
-                        android:textSize="18sp"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/descripcion"
-                        style="@style/Noticias"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:textColor="@color/color_android"
-                        android:textSize="14sp" />
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        />
 
                 </LinearLayout>
 

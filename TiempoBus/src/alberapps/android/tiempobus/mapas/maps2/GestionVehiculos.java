@@ -245,7 +245,7 @@ public class GestionVehiculos {
 
                 String updated = df.format(c.getTime()).toString();
 
-                botonVehiculos.setText("(" + updated + ")");
+                botonVehiculos.setText(context.getString(R.string.mapas_vehiculo_on) +  ": " + updated );
 
 
             } else {

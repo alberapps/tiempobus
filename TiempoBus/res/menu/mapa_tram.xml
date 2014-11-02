@@ -40,6 +40,10 @@
         android:orderInCategory="3"
         tiempobus:showAsAction="always"
         android:title="@string/menu_search"></item>
+
+
+    <!--
+
     <item
         android:id="@id/menu_search_online"
         android:orderInCategory="5"
@@ -50,6 +54,9 @@
         android:orderInCategory="4"
         tiempobus:showAsAction="never"
         android:title="@string/cercanas"></item>
+
+        -->
+
     <!-- <item android:id="@id/menu_posicion" android:orderInCategory="1" android:title="@string/mapa_ida" android:showAsAction="always" android:icon="@drawable/device_access_location_found"></item>-->
 
 

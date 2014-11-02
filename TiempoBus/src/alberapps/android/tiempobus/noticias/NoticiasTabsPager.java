@@ -89,9 +89,9 @@ import alberapps.java.tram.UtilidadesTRAM;
  * Noticias con tabs
  */
 public class NoticiasTabsPager extends ActionBarActivity {
-    TabHost mTabHost;
+
     public ViewPager mViewPager;
-    TabsAdapter mTabsAdapter;
+
 
     BusLinea linea = null;
 
@@ -160,32 +160,12 @@ public class NoticiasTabsPager extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
         }
 
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
-            /*
-
-            mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-            mTabHost.setup();
-
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-
-            mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
-
-            mTabsAdapter.addTab(mTabHost.newTabSpec("noticias").setIndicator(getString(R.string.tab_noticias)), FragmentNoticias.class, null);
-
-            if (UtilidadesTRAM.ACTIVADO_TRAM) {
-                mTabsAdapter.addTab(mTabHost.newTabSpec("rss").setIndicator(getString(R.string.rss_tram)), FragmentNoticiasRss.class, null);
-            }
-
-            mTabsAdapter.addTab(mTabHost.newTabSpec("alberapps").setIndicator(getString(R.string.tab_tw)), FragmentTwitter.class, null);
-
-            if (savedInstanceState != null) {
-                mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-            }
-            */
-
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             SlidingTabsBasicFragment fragment = new SlidingTabsBasicFragment();
@@ -199,9 +179,9 @@ public class NoticiasTabsPager extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
+        /*if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
             outState.putString("tab", mTabHost.getCurrentTabTag());
-        }
+        }*/
     }
 
     @Override

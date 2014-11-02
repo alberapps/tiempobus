@@ -116,9 +116,11 @@ public class FragmentLineas extends Fragment {
             lineasVi.setEmptyView(vacio);
 
             cargarLineas();
+
+            cargarHeaderLineas();
         }
 
-        cargarHeaderLineas();
+
 
 
 
@@ -174,16 +176,28 @@ public class FragmentLineas extends Fragment {
 
                 cargarListado();
 
-                actividad.dialog.dismiss();
+
 
             } else {
-
-                actividad.dialog.dismiss();
 
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
                 toast.show();
 
+                buses = new ArrayList<BusLinea>();
+                BusLinea b1 = new BusLinea();
+                b1.setErrorServicio(true);
+                buses.add(b1);
+
+                lineasBus = buses;
+
+                cargarListado();
+
+
+
+
             }
+
+            actividad.dialog.dismiss();
 
         }
     };
@@ -208,13 +222,15 @@ public class FragmentLineas extends Fragment {
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
                 lineasView.setEmptyView(vacio);
 
+                cargarHeaderLineas();
+
                 lineasView.setAdapter(infoLineaAdapter);
 
             }
 
         }
 
-        cargarHeaderLineas();
+
 
     }
 
@@ -332,11 +348,13 @@ public class FragmentLineas extends Fragment {
 
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty()) {
+                    if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty() && !lineasBus.get(0).isErrorServicio()) {
 
                         infoLineaAdapter.getFilter().filter(s);
 
                         infoLineaAdapter.setFiltro(s);
+
+
 
                     }
 
@@ -354,14 +372,15 @@ public class FragmentLineas extends Fragment {
             });
 
 
-            textoBuscar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            /*textoBuscar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(textoBuscar.getTextSize() > 0) {
+                    if(textoBuscar.getTextSize() > 0 && !hasFocus) {
                         textoBuscar.requestFocus();
+
                     }
                 }
-            });
+            });*/
 
 
 
@@ -394,6 +413,8 @@ public class FragmentLineas extends Fragment {
 
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
                 lineasView.setEmptyView(vacio);
+
+                cargarHeaderLineas();
 
                 lineasView.setAdapter(infoLineaAdapter);
 

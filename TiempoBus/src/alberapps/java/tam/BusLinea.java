@@ -41,16 +41,27 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
 
     private String grupo;
 
+    private boolean errorServicio = false;
+
+    private boolean filtroSinDatos = false;
+
     public String getNumLinea() {
         return numLinea;
     }
 
-    /**
-     * Constructor
-     *
-     * @param linea   bus
-     * @param destino dirección de de destino
-     */
+    public boolean isErrorServicio() {
+        return errorServicio;
+    }
+
+    public void setErrorServicio(boolean errorServicio) {
+        this.errorServicio = errorServicio;
+    }
+
+
+
+    public BusLinea(){
+
+    }
 
     public BusLinea(String idlinea) {
         this.idlinea = idlinea;
@@ -111,4 +122,11 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
         this.grupo = grupo;
     }
 
+    public boolean isFiltroSinDatos() {
+        return filtroSinDatos;
+    }
+
+    public void setFiltroSinDatos(boolean filtroSinDatos) {
+        this.filtroSinDatos = filtroSinDatos;
+    }
 }

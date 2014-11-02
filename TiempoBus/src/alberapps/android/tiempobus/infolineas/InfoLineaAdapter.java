@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -73,6 +74,15 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         }
 
+        //Control de vista correcta por el filtro
+        if(v.findViewById(R.id.bus_linea) == null){
+            Context ctx = this.getContext().getApplicationContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            v = vi.inflate(R.layout.infolineas_item, null);
+        }
+
+
         TextView busLinea;
         TextView descLinea;
         TextView datosLinea;
@@ -83,54 +93,113 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         final BusLinea bus = getItem(position);
 
-        if (bus != null) {
+        if (bus != null && !bus.isErrorServicio() && !bus.isFiltroSinDatos()) {
             busLinea.setText(bus.getNumLinea());
             descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
 
             datosLinea.setText(bus.getGrupo());
 
+
+            //Formato colores
+            DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea());
+
+
+            TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
+
+            if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+                // Carga de horarios bus
+                // Link informacion
+                informacionText.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View view) {
+
+                        contexto.setLinea(bus);
+
+                        //contexto.setTitle(bus.getLinea());
+
+                        contexto.gestionHorariosIda.cargarHorarios(bus, position);
+
+                    }
+
+                });
+
+            } else {
+
+                informacionText.setText(R.string.infolinea_horarios_pdf);
+
+                // Carga de horarios tram
+                // Link informacion
+                informacionText.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View view) {
+
+                        contexto.gestionTram.seleccionarPdf(bus);
+
+                    }
+
+                });
+
+            }
+        }else if (bus != null && bus.isErrorServicio()) {
+
+            Context ctx = this.getContext().getApplicationContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+
+            TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+
+
+
+            text.setText(ctx.getString(R.string.error_tiempos));
+
+
+            TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
+
+            String aviso = "";
+
+            /*InfoLineasTabsPager actividad = (InfoLineasTabsPager) contexto;
+
+            if (actividad.datosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+                aviso = ctx.getString(R.string.tlf_tram);
+            } else {
+                aviso = ctx.getString(R.string.tlf_subus);
+            }*/
+
+            ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
+            imagenAviso.setImageResource(R.drawable.alerts_warning);
+
+
+
+            textAviso.setText(aviso);
+
+
+
+        }else if (bus != null && bus.isFiltroSinDatos()) {
+
+            Context ctx = this.getContext().getApplicationContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+
+            TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+
+            text.setText(ctx.getString(R.string.main_no_items));
+
+            TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
+
+            String aviso = "";
+
+            //ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
+            //imagenAviso.setImageResource(R.drawable.alerts_warning);
+
+
+
+            textAviso.setText(aviso);
+
+
+
         }
 
-        //Formato colores
-        DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea());
 
-
-        TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
-
-        if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            // Carga de horarios bus
-            // Link informacion
-            informacionText.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View view) {
-
-                    contexto.setLinea(bus);
-
-                    //contexto.setTitle(bus.getLinea());
-
-                    contexto.gestionHorariosIda.cargarHorarios(bus, position);
-
-                }
-
-            });
-
-        } else {
-
-            informacionText.setText(R.string.infolinea_horarios_pdf);
-
-            // Carga de horarios tram
-            // Link informacion
-            informacionText.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View view) {
-
-                    contexto.gestionTram.seleccionarPdf(bus);
-
-                }
-
-            });
-
-        }
 
         return v;
     }
@@ -203,7 +272,16 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                     add(lista.get(i));
                 }
 
+                if(getCount() == 0){
+                    BusLinea b1 = new BusLinea();
+                    b1.setFiltroSinDatos(true);
+                    add(b1);
+                }
+
                 notifyDataSetInvalidated();
+
+                final TextView textoBuscar = (TextView) contexto.findViewById(R.id.texto_buscar);
+                textoBuscar.requestFocus();
 
             }
 

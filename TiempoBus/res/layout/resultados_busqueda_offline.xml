@@ -24,16 +24,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/gris_blog"
     android:orientation="vertical" 
     >
 
     <TextView
             android:id="@+id/text"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="@color/white"
             android:textSize="17sp"
             android:text="@string/search_instructions"
-            android:background="@android:drawable/title_bar"
+            android:background="@color/mi_material_blue_indigo"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -42,7 +41,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="0"
-    android:orientation="vertical" android:background="@color/gris_blog"
+    android:orientation="vertical"
    android:id="@id/contenedor_resultado_offline">
 
      <RelativeLayout

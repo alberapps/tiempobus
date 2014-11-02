@@ -136,6 +136,10 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
 
     String paradaSeleccionada;
 
+    public boolean flagIda = true;
+    public boolean flagVuelta = true;
+
+
     // These settings are the same as the settings for the map. They will in
     // fact give you updates
     // at the maximal rates currently possible.
@@ -158,6 +162,9 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
         }
 
 
@@ -521,7 +528,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
                 }
 
                 break;
-            case R.id.menu_ida:
+            /*case R.id.menu_ida:
                 if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
                     gestionarLineas.cargarOcultarIda();
                 }
@@ -546,7 +553,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
 
                 selectorLinea.cargarDatosLineasModal();
 
-                break;
+                break;*/
 
             case R.id.menu_search:
 

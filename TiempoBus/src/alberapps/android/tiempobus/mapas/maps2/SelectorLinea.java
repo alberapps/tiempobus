@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
@@ -31,6 +32,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.java.tam.BusLinea;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -77,6 +80,11 @@ public class SelectorLinea {
 
         LayoutInflater li = context.getLayoutInflater();
         View vista = li.inflate(R.layout.seleccionar_linea, null, false);
+
+
+        //Spinner modo
+        seleccionModo(vista);
+
 
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
 
@@ -149,6 +157,122 @@ public class SelectorLinea {
         dialogSeleccion.show();
 
     }
+
+    public void seleccionModo(View vista){
+
+        // Combo de seleccion de datos
+        final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_datos);
+
+        ArrayAdapter<CharSequence> adapter = null;
+
+        if (UtilidadesTRAM.ACTIVADO_TRAM) {
+            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos, android.R.layout.simple_spinner_item);
+        } else {
+            adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(adapter);
+
+        // Seleccion inicial
+        int infolineaModo = preferencias.getInt("infolinea_modo", 0);
+        spinner.setSelection(infolineaModo);
+
+        // Seleccion
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                // Solo en caso de haber cambiado
+                if (preferencias.getInt("infolinea_modo", 0) != arg2) {
+
+                    // Guarda la nueva seleciccion
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("infolinea_modo", arg2);
+                    editor.commit();
+
+                    // cambiar el modo de la actividad
+                    if (arg2 == 0) {
+
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
+
+                        }
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
+
+                        }
+
+                        context.finish();
+                        context.startActivity(intent2);
+
+                    } else if (arg2 == 1) {
+
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
+
+                        }
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
+
+                        }
+
+                        context.finish();
+                        context.startActivity(intent2);
+
+                    } else if (arg2 == 2) {
+
+                        Intent intent2 = context.getIntent();
+                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
+                            intent2.getExtras().remove("LINEA_MAPA");
+                            intent2.removeExtra("LINEA_MAPA");
+
+                        }
+
+                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
+
+                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
+                            intent2.removeExtra("LINEA_MAPA_FICHA");
+
+                        }
+
+                        context.finish();
+                        context.startActivity(intent2);
+
+                    }
+
+                }
+
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
+
+    }
+
+
 
     public void cargarDatosLineasModal() {
 

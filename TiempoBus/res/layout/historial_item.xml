@@ -30,10 +30,10 @@
 
 
         <android.support.v7.widget.CardView
-            android:layout_width="fill_parent"
+            android:layout_width="@dimen/tarjeta_width_tablet"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="2dp"
+            android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"

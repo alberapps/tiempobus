@@ -62,26 +62,54 @@
         android:layout_width="fill_parent"
         android:layout_height="47dp"
         android:layout_marginTop="-46dip"
-        android:background="@drawable/fondo_linea"
+        android:background="@color/background_material_light"
+        android:orientation="vertical"
         >
 
-         <Spinner
-             android:id="@+id/spinner_datos"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_gravity="center"
-             android:layout_marginLeft="5dp"
-             android:layout_marginRight="5dp"
-             android:layout_weight="1"
-             android:gravity="center" />
 
-         <ToggleButton
-             android:id="@+id/mapasVehiculosButton"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"             
-             android:textOff="@string/mapas_vehiculo_off"
-             android:textOn="@string/mapas_vehiculo_on" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <ToggleButton
+            android:id="@+id/mapaIdaButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="@string/ida"
+            android:textOn="@string/ida"
+
+            />
+
+        <ToggleButton
+            android:id="@+id/mapaVueltaButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="@string/vuelta"
+            android:textOn="@string/vuelta"
+            android:layout_marginLeft="5dp"
+            />
+
+
+        <ToggleButton
+            android:id="@+id/mapasVehiculosButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="@string/mapas_vehiculo_off"
+            android:textOn="@string/mapas_vehiculo_on"
+            android:layout_marginLeft="5dp"
+            />
+
+
+
+    </LinearLayout>
+
 
      </LinearLayout>
 

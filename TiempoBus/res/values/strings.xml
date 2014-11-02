@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TiempoBus y TRAM</string>
+    <string name="app_name">TiempoBus y Tram</string>
     <string name="app_version">3.2</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
@@ -451,5 +451,14 @@
     <string name="error_twitter">No se han podido recuperar datos de Twitter</string>
 
     <string name="error_voz_lectura">Error: No se ha podido leer el texto</string>
+
+    <string name="bus_tram">
+		Bus y Tram
+	</string>
+
+    <string name="bus_tram_titulo">
+		AlberApps: TiempoBus
+	</string>
+
 
 </resources>

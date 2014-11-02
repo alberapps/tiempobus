@@ -77,7 +77,7 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="@color/color_android"/>
+        android:background="@color/background_material_light"/>
     <!-- android:background="#111" />-->
         
         

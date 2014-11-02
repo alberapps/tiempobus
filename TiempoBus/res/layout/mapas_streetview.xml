@@ -63,7 +63,7 @@
         android:layout_width="fill_parent"
         android:layout_height="47dp"
         android:layout_marginTop="-46dip"
-        android:background="@drawable/fondo_linea"
+        android:background="@color/background_material_light"
         >
 
     <ImageView

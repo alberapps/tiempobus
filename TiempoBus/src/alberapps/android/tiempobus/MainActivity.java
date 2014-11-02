@@ -47,6 +47,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -251,6 +252,10 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
+
+
+
+
     }
 
     /**
@@ -267,6 +272,12 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         mDrawerIcons = getResources().getStringArray(R.array.menu_icons_array);
 
+        //Header
+        LayoutInflater li2 = LayoutInflater.from(this);
+        View vheader = li2.inflate(R.layout.drawer_menu_header, null);
+        mDrawerList.addHeaderView(vheader);
+
+
         // set a custom shadow that overlays the main content when the drawer
         // opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -274,6 +285,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
         mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -342,7 +355,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         switch (position) {
 
-            case 0:
+            case 1:
 
                 if (datosPantallaPrincipal.servicesConnected()) {
 
@@ -353,40 +366,42 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 break;
 
-            case 1:
+            case 2:
 
                 detenerTodasTareas();
                 startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
                 break;
 
-            case 2:
+            case 3:
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
                 break;
 
-            case 3:
+            case 4:
                 detenerTodasTareas();
                 nuevoFavorito();
                 break;
 
-            case 4:
+            case 5:
+                detenerTodasTareas();
+                startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                break;
+
+            case 6:
 
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
                 break;
 
-            case 5:
+            case 7:
 
                 gestionarFondo.seleccionarFondo();
 
                 break;
 
-            case 6:
-                detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
-                break;
 
-            case 7:
+
+            case 8:
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 
                 // configurar
@@ -1262,7 +1277,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
             swipeRefresh.setRefreshing(true);
 
-            Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
 
 
             //Recarga en boton barra superior
@@ -1426,6 +1441,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
                         ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
+                        ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
+
+                        final MainActivity activ = mActividad.get();
 
                         if (cabdatos.equals("")) {
                             // Si no hay favorito, descripcion de la base de datos
@@ -1433,8 +1451,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                             // Si no es favorito
                             imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_grey600_18dp));
-
-                            final MainActivity activ = mActividad.get();
 
                             // Para acceder a guardar favorito
                             imgFavorito.setOnClickListener(new OnClickListener() {
@@ -1457,12 +1473,66 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                                 }
                             });
 
+
+                            // Para acceder a guardar favorito
+                            imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                public void onClick(View v) {
+                                    // TODO Auto-generated method stub
+                                    Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+
+                                    Bundle extras = new Bundle();
+                                    extras.putInt("POSTE", activ.paradaActual);
+                                    // Preparamos una descripcion automatica para el
+                                    // favorito
+                                    HashSet<String> h = new HashSet<String>();
+                                    for (BusLlegada bus : activ.buses) {
+                                        h.add(bus.getLinea() + " a " + bus.getDestino());
+                                    }
+                                    extras.putString("DESCRIPCION", h.toString());
+
+                                    i.putExtras(extras);
+                                    activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+                                }
+                            });
+
+
                         } else {
 
                             // Si hay favorito cambiar indicador favorito
                             imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_grey600_18dp));
 
+                            // Para acceder al listado de favoritos
+                            imgFavorito.setOnClickListener(new OnClickListener() {
+                                public void onClick(View v) {
+                                    activ.detenerTodasTareas();
+                                    activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                }
+                            });
+
+
+                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_white_24dp));
+
+
+                            // Para acceder al listado de favoritos
+                            imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                public void onClick(View v) {
+                                    activ.detenerTodasTareas();
+                                    activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                }
+                            });
+
+
+
                         }
+
+
+
+
+
+
+
+
+
 
                         if (cabdatos.equals("")) {
                             cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;

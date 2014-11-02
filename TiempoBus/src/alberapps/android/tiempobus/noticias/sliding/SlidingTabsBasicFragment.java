@@ -82,13 +82,13 @@ public class SlidingTabsBasicFragment extends Fragment {
 
         InfoLineaFragmentPagerAdapter mTabsAdapter = new InfoLineaFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity());
 
-        mTabsAdapter.addTab(getString(R.string.tab_noticias), FragmentNoticias.class);
+        mTabsAdapter.addTab(getString(R.string.tab_noticias).toUpperCase(), FragmentNoticias.class);
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
-            mTabsAdapter.addTab(getString(R.string.rss_tram), FragmentNoticiasRss.class);
+            mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentNoticiasRss.class);
         }
 
-        mTabsAdapter.addTab(getString(R.string.tab_tw), FragmentTwitter.class);
+        mTabsAdapter.addTab(getString(R.string.tab_tw).toUpperCase(), FragmentTwitter.class);
 
 
 

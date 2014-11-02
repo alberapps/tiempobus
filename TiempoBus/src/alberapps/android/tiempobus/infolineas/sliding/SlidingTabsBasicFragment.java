@@ -82,12 +82,12 @@ public class SlidingTabsBasicFragment extends Fragment {
 
 
         if (((InfoLineasTabsPager) getActivity()).modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE || ((InfoLineasTabsPager) getActivity()).modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-            mTabsAdapter.addTab(getString(R.string.linea), FragmentLineas.class);
-            mTabsAdapter.addTab(getString(R.string.ida), FragmentIda.class);
-            mTabsAdapter.addTab(getString(R.string.vuelta), FragmentVuelta.class);
+            mTabsAdapter.addTab(getString(R.string.linea).toUpperCase(), FragmentLineas.class);
+            mTabsAdapter.addTab(getString(R.string.ida).toUpperCase(), FragmentIda.class);
+            mTabsAdapter.addTab(getString(R.string.vuelta).toUpperCase(), FragmentVuelta.class);
         } else if (((InfoLineasTabsPager) getActivity()).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            mTabsAdapter.addTab(getString(R.string.linea), FragmentLineas.class);
-            mTabsAdapter.addTab(getString(R.string.parada_tram), FragmentIda.class);
+            mTabsAdapter.addTab(getString(R.string.linea).toUpperCase(), FragmentLineas.class);
+            mTabsAdapter.addTab(getString(R.string.parada_tram).toUpperCase(), FragmentIda.class);
         }
 
 
