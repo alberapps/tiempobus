@@ -609,14 +609,65 @@ public class GestionarTarjetaInfo {
             if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty()) {
 
                 // Imagen
-                if (weather.getListaDatos().get(0).getImagen() != null) {
-                    iv.setImageBitmap(weather.getListaDatos().get(0).getImagen());
+                /*if (weather.getListaDatos().get(0).getImagen() != null) {
+
+                    Bitmap bmp = weather.getListaDatos().get(0).getImagen();
+
+                    Bitmap bmp2 = Bitmap.createScaledBitmap(bmp, 80, 80,true);
+
+                    iv.setScaleType(ImageView.ScaleType.MATRIX);
+
+                    iv.setImageBitmap(bmp2);
                     iv.setVisibility(ImageView.VISIBLE);
+
+
+
+                } else {
+                    iv.setVisibility(ImageView.INVISIBLE);
+                }*/
+
+
+                if (weather.getListaDatos().get(0).getIcon() != null) {
+
+
+                    String draw = weather.getListaDatos().get(0).getIcon();
+
+                    if (draw.equals("01d") || draw.equals("01n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clear));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("02d") || draw.equals("02n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_clouds));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("03d") || draw.equals("03n") || draw.equals("04d") || draw.equals("04n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clouds));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("09d") || draw.equals("09n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_rain));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("10d") || draw.equals("10n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_rain));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("11d") || draw.equals("11n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_storm));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("13d") || draw.equals("13n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_snow));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else if (draw.equals("50d") || draw.equals("50n")) {
+                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_fog));
+                        iv.setVisibility(ImageView.VISIBLE);
+                    } else {
+                        iv.setVisibility(ImageView.INVISIBLE);
+                    }
+
+
+                    //iv.setScaleType(ImageView.ScaleType.MATRIX);
 
 
                 } else {
                     iv.setVisibility(ImageView.INVISIBLE);
                 }
+
 
                 sb.append(weather.getListaDatos().get(0).getHumidity());
                 sb.append("%, ");
@@ -757,7 +808,7 @@ public class GestionarTarjetaInfo {
     }
 
 	/*
-	 * private void imgTiempoYW(String condionCode, ImageView iv){
+     * private void imgTiempoYW(String condionCode, ImageView iv){
 	 * 
 	 * 
 	 * // http://developer.yahoo.com/weather/ switch (conditionCode) { case 19:

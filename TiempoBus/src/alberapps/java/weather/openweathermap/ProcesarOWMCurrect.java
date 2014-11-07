@@ -154,12 +154,16 @@ public class ProcesarOWMCurrect {
             data.setSunset(sunset);
 
             // Imagen
-            Uri.Builder builderImg = new Uri.Builder();
+            /*Uri.Builder builderImg = new Uri.Builder();
             builderImg.scheme("http").authority("openweathermap.org").appendPath("img").appendPath("w").appendPath(icon + ".png");
 
             Uri urlImg = builderImg.build();
 
             data.setImagen(recuperaImagen(urlImg.toString()));
+            */
+
+
+            data.setIcon(icon);
 
 
             data.setTitle(ciudad);

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version">3.2</string>
+    <string name="app_version">3.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -173,12 +173,12 @@
     <string name="ko_noticia">Der Inhalt konnte nicht richtig gezeigt werden. Bitte greifen Sie auf das Web zu.</string>
     <string name="aviso_noticia">Wenn der Inhalt nicht richtig gezeigt wird, bitte klicken Sie das Link, um auf das Web zu zugreifen.</string>
     <string name="noticias_links">Mögliche Linken</string>
-    <string name="noticias_instrucciones">Klicken Sie bitte auf die Nachricht, um ihr Detail zu öffnen.</string>
+    <string name="noticias_instrucciones">Klicken Sie bitte auf die Nachricht, um ihr Detail zu öffnen.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Die Verläufe werden direkt von subus.es erlangt.</string>
     <string name="streetview_ko">Fehler beim Zugreifen auf Street View. Bitte überprüfen Sie, wenn es installiert ist.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es</string>
+    <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
     
     <string name="alarma_auto_aviso">* Mit dieser Option, wird Zeit alle %s Sekunden aktualisiert, um an Veränderungen anzupassen.</string>
@@ -191,7 +191,7 @@
     <string name="alarma_preferencias_refrescar">Mit Wiederaufladen aktualisieren</string>
     <string name="alarma_preferencias_refrescar_desc">Es prüft über, wenn die Alarm aktualisiert werden muss, wann eine Zeitwiederaufladung gemacht wird.</string>
     <string name="error_generico_1">Information kann jetzt nicht gezeigt werden.</string>
-    <string name="error_tiempos">Es war nicht möglich, Daten zu erlangen. Versuchen Sie bitte in einige Minuten.</string>
+    <string name="error_tiempos">Es war nicht möglich, Daten zu erlangen.\nVersuchen Sie bitte in einige Minuten.</string>
     
     <string name="error_gcode">Lokale Linienliste wird geladen</string>
     

@@ -59,7 +59,7 @@
                     android:padding="2dip"
                     android:text="@string/acercade_info_nuevo_bus"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:padding="2dip"
                     android:text="@string/acercade_info_nuevo_2"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/legal3"

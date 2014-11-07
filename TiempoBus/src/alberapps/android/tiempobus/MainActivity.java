@@ -1474,6 +1474,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             });
 
 
+                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_white_24dp));
+
                             // Para acceder a guardar favorito
                             imgCircularFavorito.setOnClickListener(new OnClickListener() {
                                 public void onClick(View v) {
@@ -1510,7 +1512,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             });
 
 
-                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_white_24dp));
+                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_white_24dp));
 
 
                             // Para acceder al listado de favoritos

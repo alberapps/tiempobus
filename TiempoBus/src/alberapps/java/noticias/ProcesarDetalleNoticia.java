@@ -62,11 +62,21 @@ public class ProcesarDetalleNoticia {
 
         Noticias noticias = null;
 
+
         try {
 
-            st = Conectividad.conexionGetIsoStream(url);
+            //st = Conectividad.conexionGetIsoStream(url);
 
-            Document doc = Jsoup.parse(st, "ISO-8859-1", url);
+            String datos = Conectividad.conexionGetIsoString(url);
+
+            byte[] utf8 = datos.getBytes("UTF-8");
+
+            //Log.d("PRUEBA UTF-8", "html: " + new String(utf8));
+
+
+//            Document doc = Jsoup.parse(st, "ISO-8859-1", url);
+
+            Document doc = Jsoup.parse(new String(utf8), url);
 
             noticias = new Noticias();
 
@@ -96,7 +106,8 @@ public class ProcesarDetalleNoticia {
             String safe = Jsoup.clean(cont2.html(), "http://www.subus.es/Lineas/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
 
             // Problema caracteres
-            String limpiar = safe.replace("", "-").replace("", "&euro;");
+            //String limpiar = safe.replace("", "-").replace("", "&euro;");
+            String limpiar = safe;
 
             Log.d("NOTICIAS", "html: " + limpiar);
 

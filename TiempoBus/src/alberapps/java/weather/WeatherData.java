@@ -48,6 +48,17 @@ public class WeatherData {
 
     private String json;
 
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    private String icon;
+
     public String getJson() {
         return json;
     }

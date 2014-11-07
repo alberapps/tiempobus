@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version">3.2</string>
+    <string name="app_version">3.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -174,12 +174,12 @@
     <string name="ko_noticia">Невозможно отобразить правильно. Пожалуйста, войдите на сайт.</string>
     <string name="aviso_noticia">Если содержание отображается неправильно, пожалуйста, нажмите на ссылку для доступа на сайт</string>
     <string name="noticias_links">Возможные ссылки</string>
-    <string name="noticias_instrucciones">Нажмите на объявление, чтобы открыть детальную информацию.</string>
+    <string name="noticias_instrucciones">Нажмите на объявление, чтобы открыть детальную информацию.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Маршруты получены непосредственно из сайта subus.es.</string>
     <string name="streetview_ko">Ошибка при доступе к Street View. Пожалуйста, проверьте, если приложение установлено.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es</string>
+    <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
    
     

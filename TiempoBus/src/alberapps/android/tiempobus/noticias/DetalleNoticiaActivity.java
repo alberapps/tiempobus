@@ -37,6 +37,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
 import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -261,7 +262,12 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
         if (noticia.getContenidoHtml() != null) {
             mWebView = (WebView) findViewById(R.id.webViewDetalle);
 
-            mWebView.loadData(noticia.getContenidoHtml(), "text/html", "ISO-8859-1");
+            WebSettings settings = mWebView.getSettings();
+            settings.setDefaultTextEncodingName("utf-8");
+
+            //mWebView.loadData(noticia.getContenidoHtml(), "text/html", "utf-8");
+
+            mWebView.loadDataWithBaseURL(null, noticia.getContenidoHtml(), "text/html", "utf-8", null );
 
         }
 

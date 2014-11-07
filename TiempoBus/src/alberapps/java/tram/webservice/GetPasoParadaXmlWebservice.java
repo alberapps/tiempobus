@@ -37,6 +37,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import alberapps.java.tram.DatosTRAM;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
@@ -163,6 +164,12 @@ public class GetPasoParadaXmlWebservice {
 
                 // linea
                 String linea = datosParada.item(3).getChildNodes().item(0).getNodeValue();
+
+
+                //Control L9
+                if(!UtilidadesTRAM.ACTIVADO_L9 && linea.equals("L9")){
+                    continue;
+                }
 
                 // parada
                 String parada = datosParada.item(4).getChildNodes().item(0).getNodeValue();

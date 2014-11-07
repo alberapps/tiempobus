@@ -91,9 +91,10 @@
         <item>Объявления и новости</item>
         <item>Избранное</item>
         <item>Сохранить</item>
+       <item>Журнал</item>
         <item>Настройки</item>
         <item>Обои</item>  
-        <item>Журнал</item>
+
         <item>Экспорт QR</item>      
     </string-array>
    

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version">3.2</string>
+    <string name="app_version">3.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -174,12 +174,12 @@
     <string name="ko_noticia">No se puede mostrar correctamente, accede a la web</string>
     <string name="aviso_noticia">Si el contenido no se visualiza correctamente, pulsa el link para acceder a la web</string>
     <string name="noticias_links">Enlaces posibles</string>
-    <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.</string>
+    <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de subus.es.</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es</string>
+    <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
     
     <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
@@ -192,7 +192,7 @@
     <string name="alarma_preferencias_refrescar">Actualizar con la Recarga</string>
     <string name="alarma_preferencias_refrescar_desc">Comprueba si hay que actualizar la alarma, cuando se realiza una recarga de tiempos</string>
     <string name="error_generico_1">En este momento no se puede mostrar la información</string>
-    <string name="error_tiempos">No se han podido recuperar los datos. Intentalo en unos minutos.</string>
+    <string name="error_tiempos">No se han podido recuperar los datos.\nIntentalo en unos minutos.</string>
     
     <string name="error_gcode">Cargando lista de líneas local</string>
     
@@ -446,7 +446,7 @@
     <string name="mensaje_borrar_pregunta">¿Borrar el dato?</string>
 
     <string name="tlf_tram">TRAM: 900 720 472</string>
-    <string name="tlf_subus">T.A.M: 965 140 936</string>
+    <string name="tlf_subus">T.A.M: subus.es</string>
 
     <string name="error_twitter">No se han podido recuperar datos de Twitter</string>
 
@@ -458,6 +458,13 @@
 
     <string name="bus_tram_titulo">
 		AlberApps: TiempoBus
+	</string>
+
+    <string name="referencias_infoapp" translatable="false">
+		JSoup jsoup.org, Twitter4j twitter4j.org, Google Material Design github.com/google/material-design-icons,
+        Weather images Udacity example github.com/udacity/Sunshine,
+        zgzBus code.google.com/p/zgzbus, ZXing Team code.google.com/p/zxing,
+        Iconspedia(Yankoa) www.iconspedia.com/community/yankoa, Mapicons mapicons.nicolasmollet.com
 	</string>
 
 

@@ -237,8 +237,13 @@ public class GestionIda {
             //Linea
             TextView textoLinea = (TextView) idaView.findViewById(R.id.datos_desc_linea);
 
-            textoLinea.setText(context.linea.getLinea().substring(context.linea.getNumLinea().length()).trim());
+            if (!esTram) {
 
+                textoLinea.setText(context.linea.getLinea().substring(context.linea.getNumLinea().length()).trim());
+
+            }else{
+                textoLinea.setText(context.getString(R.string.rss_tram));
+            }
 
         }
 

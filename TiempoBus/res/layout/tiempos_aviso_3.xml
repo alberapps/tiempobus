@@ -59,7 +59,7 @@
                     android:padding="2dip"
                     android:text="@string/acercade_info_nuevo"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="9sp" />
+                    android:textSize="12sp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
                     android:padding="2dip"
                     android:text="@string/acercade_info_nuevo_2"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/legal3"

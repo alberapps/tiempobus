@@ -71,9 +71,10 @@
         <item>Meldungen und Störungen</item>
         <item>Favoriten</item>
         <item>Speichern</item>
+       <item>Chronik</item>
         <item>Einstellungen</item>
         <item>Grund</item>        
-        <item>Chronik</item>
+
         <item>QR Exportieren</item>
     </string-array>
    

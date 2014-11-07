@@ -18,8 +18,6 @@
  */
 package alberapps.android.tiempobus.appinfo;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -28,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -52,11 +49,11 @@ public class AppInfoActivity extends ActionBarActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+        /*if (!UtilidadesTRAM.ACTIVADO_TRAM) {
             setContentView(R.layout.infoapp_3_bus);
-        } else {
+        } else {*/
             setContentView(R.layout.infoapp_3);
-        }
+        //}
 
 
 		/*ActionBar actionBar = getSupportActionBar();
@@ -74,14 +71,14 @@ public class AppInfoActivity extends ActionBarActivity {
             }
         });
 
-        Button botonLink = (Button) findViewById(R.id.buttonLinks);
+        /*Button botonLink = (Button) findViewById(R.id.buttonLinks);
         botonLink.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
                 links();
 
             }
-        });
+        });*/
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
@@ -106,7 +103,7 @@ public class AppInfoActivity extends ActionBarActivity {
 
     }
 
-    private void links() {
+    /*private void links() {
 
         final CharSequence[] items = {"zgzBus\nhttp://code.google.com/p/zgzbus", "ksoap2-android\nhttp://code.google.com/p/ksoap2-android/", "ZXing Team\nhttp://code.google.com/p/zxing",
                 "Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa", "Mapicons\nhttp://mapicons.nicolasmollet.com", "JSoup\nhttp://jsoup.org", "google-gson\nhttp://code.google.com/p/google-gson",
@@ -131,7 +128,7 @@ public class AppInfoActivity extends ActionBarActivity {
 
         alert.show();
 
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

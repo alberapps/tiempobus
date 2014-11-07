@@ -71,9 +71,9 @@
         <item>Notices and News</item>
         <item>Favourites</item>
         <item>Save</item>
+       <item>History</item>
         <item>Settings</item>
         <item>Wallpaper</item>        
-        <item>History</item>
         <item>QR Export</item>
     </string-array>
    

@@ -70,10 +70,10 @@
         <item>Avisos i Noticies</item>
         <item>Favorits</item>
         <item>Guardar</item>
+        <item>Historial</item>
         <item>Preferències</item>
         <item>Fons</item>
-        <item>Historial</item>
-        <item>Exportar QR</item>        
+        <item>Exportar QR</item>
     </string-array>
     
     <string-array name="tiempos_recarga">

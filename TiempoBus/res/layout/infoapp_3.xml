@@ -1,198 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper android:id="@+id/main" 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" 
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-<ScrollView
-    android:id="@+id/scrollView1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:background="@color/white">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical" 
-            android:background="@android:color/white">
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:src="@drawable/ic_tiempobus_3_acercade" 
-                android:contentDescription="@string/app_name"
-                />
+            android:background="@color/white">
 
             <LinearLayout
-                android:id="@+id/linearLayout1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_tiempobus_3_acercade" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name_b"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <FrameLayout
+                        android:id="@+id/frameLayout1"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"></FrameLayout>
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_version"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/TextView02"
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name_b"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <FrameLayout
-                    android:id="@+id/frameLayout1"
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent" >
-                </FrameLayout>
+                    android:text="@string/app_autor"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
-                    android:id="@+id/TextView01"
+                    android:id="@+id/textView1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_version"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
+                    android:autoLink="email"
+                    android:text="@string/app_autor_mail"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/app_autor_web"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/infoapp_trad"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_licencia_desc"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                <ImageView
+                    android:id="@+id/boton_gpl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+
+                    android:contentDescription="@string/app_licencia_desc"
+                    android:src="@drawable/gplv3127" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/acercade_info_nuevo"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:text="@string/url_subus"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+                <ImageView
+                    android:id="@+id/imageLogoTram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Link Tram"
+                    android:src="@drawable/tram2_val" />
+
+                <ImageView
+                    android:id="@+id/imageLogoFGV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Logo FGV"
+                    android:src="@drawable/logofgv" />
+
+                <!--Button
+                    android:id="@+id/buttonLinks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/referencias"
+                    android:layout_marginTop="10dp"/-->
+
+                <TextView
+                    android:id="@+id/textViewLegal_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:padding="5dip"
+                    android:text="@string/detalle_licencia"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/textViewLegal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:padding="5dip"
+                    android:text="@string/legal"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/textViewLegal_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:padding="5dip"
+                    android:text="@string/legal_b"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+
+                <TextView
+                    android:id="@+id/textViewLegal_e"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:autoLink="web"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip"
+                    android:paddingTop="5dip"
+                    android:text="@string/referencias"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+                <TextView
+                    android:id="@+id/textViewLegal_e_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:paddingBottom="5dip"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip"
+                    android:paddingTop="1dip"
+                    android:text="@string/referencias_infoapp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+
+                <TextView
+                    android:id="@+id/textViewLegal_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:padding="5dip"
+                    android:text="@string/aviso_legal_analytics"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="9sp" />
+
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_autor"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_autor_mail"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="email"/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_autor_web"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"/>
-            
-            <TextView
-                android:id="@+id/textView20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/infoapp_trad"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"/>
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_licencia_desc"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-          
-            <ImageView
-                android:id="@+id/boton_gpl"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-               
-                android:src="@drawable/gplv3127" 
-                android:contentDescription="@string/app_licencia_desc" />
-            
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/acercade_info_nuevo"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/url_subus"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"/>
-
-                        
-            <ImageView
-                android:id="@+id/imageLogoTram"
-                android:layout_width="wrap_content"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:src="@drawable/tram2_val" 
-                android:contentDescription="Link Tram"/>
-            
-            <ImageView
-                android:id="@+id/imageLogoFGV"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:src="@drawable/logofgv" 
-                android:contentDescription="Logo FGV"
-                />
-
-            <Button
-                android:id="@+id/buttonLinks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/referencias" 
-                android:layout_marginTop="10dp"/>
-
-            <TextView
-                android:id="@+id/textViewLegal_d"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/detalle_licencia"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"
-                android:padding="5dip"
-                android:textSize="9sp"/>
-            
-            <TextView
-                android:id="@+id/textViewLegal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/legal"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"
-                android:padding="5dip"
-                android:textSize="9sp"/>
-            
-            <TextView
-                android:id="@+id/textViewLegal_b"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/legal_b"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"
-                android:padding="5dip"
-                android:textSize="9sp"/>
-            
-            
-            
-            <TextView
-                android:id="@+id/textViewLegal_c"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/aviso_legal_analytics"
-                android:textAppearance="?android:attr/textAppearanceSmall" 
-                android:autoLink="web"
-                android:padding="5dip"
-                android:textSize="9sp"/>
-             
-             
-             
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 
 </ViewFlipper>

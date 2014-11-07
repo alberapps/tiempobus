@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version">3.2</string>
+    <string name="app_version">3.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -174,12 +174,12 @@
     <string name="ko_noticia">La nouvelle ne peut pas être affichée. Accédez au web, s.v.p.</string>
     <string name="aviso_noticia">Si le contenu ne s\'affiche pas correctement, s\'il vous plaît cliquez sur le lien pour accéder au web</string>
     <string name="noticias_links">Liens possibles</string>
-    <string name="noticias_instrucciones">Cliquez sur l\'annonce pour ouvrir le détail.</string>
+    <string name="noticias_instrucciones">Cliquez sur l\'annonce pour ouvrir le détail.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Les itinéraires sont récupérés directement du site subus.es.</string>
     <string name="streetview_ko">Incapable d\'accéder à Street View. S.v.p., vérifiez s\'il est installé.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es</string>
+    <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
     
     <string name="alarma_auto_aviso">* Avec cette option activé, le temps est mise à jour automatiquement chaque %s secondes.</string>
@@ -192,7 +192,7 @@
     <string name="alarma_preferencias_refrescar">Actualiser avec Rechargement</string>
     <string name="alarma_preferencias_refrescar_desc">Vérifiez s\'il faut actualiser l\'alarme en rechargeant les temps</string>
     <string name="error_generico_1">L\'information ne peut pas être affichée en ce moment</string>
-    <string name="error_tiempos">Impossible de récupérer les données. Réessayez  dans quelques minutes.</string>
+    <string name="error_tiempos">Impossible de récupérer les données.\nRéessayez  dans quelques minutes.</string>
     
     <string name="error_gcode">Chargement de la liste des lignes locale</string>
     

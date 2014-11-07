@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TempsBus i Tram</string>
-    <string name="app_version">3.2</string>
+    <string name="app_version">3.5</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -172,12 +172,12 @@ favorit per crear la teua llista.</string>
     <string name="ko_noticia">No es pot mostrar correctament, accedeix a la web</string>
     <string name="aviso_noticia">Si el contingut no es visualitza correctament, selecciona l\'enllaç per accedir a la web</string>
     <string name="noticias_links">Enllaços possibles</string>
-    <string name="noticias_instrucciones">Seleccionar l\'avís per obrir el seu detall.</string>
+    <string name="noticias_instrucciones">Seleccionar l\'avís per obrir el seu detall.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de subus.es.</string>
     <string name="streetview_ko">Error en intentar accedir a Street View, comprova si està instal·lat.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion">-</string>
-    <string name="url_subus">http://www.subus.es</string>
+    <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
 
     
@@ -189,7 +189,7 @@ favorit per crear la teua llista.</string>
     <string name="alarma_preferencias_refrescar">Actualitzar amb la Recàrrega</string>
     <string name="alarma_preferencias_refrescar_desc">Comprova si cal actualitzar l\'alarma, quan es realitza una recàrrega de temps</string>
     <string name="error_generico_1">En este moment no es pot mostrar la informació</string>
-    <string name="error_tiempos">No s\'han pogut recuperar les dades. Intenta en uns minuts.</string>
+    <string name="error_tiempos">No s\'han pogut recuperar les dades.\nIntenta en uns minuts.</string>
     
     <string name="error_gcode">Carregant llista de línies local</string>
     

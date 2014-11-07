@@ -69,9 +69,9 @@
         <item>Nouvelles et avis</item>
         <item>Favoris</item>
         <item>Enregistrer</item>
+       <item>Historique</item>
         <item>Paramètres</item>
-        <item>Papier peint</item>        
-        <item>Historique</item>
+        <item>Papier peint</item>
         <item>Exportateur QR</item>
     </string-array>
    
