@@ -23,126 +23,121 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <LinearLayout
 
+    <android.support.v7.widget.CardView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tarjeta_margin"
 
-        <android.support.v7.widget.CardView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/tarjeta_margin"
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="@dimen/cardview_default_elevation">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5sp"
+                android:layout_marginRight="5sp">
+
+                <TextView
+                    android:id="@+id/bus_linea"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circulo_azul"
+                    android:gravity="center"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp">
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="7dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/desc_linea"
+
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginRight="5sp">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/primary_dark_material_light"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/bus_linea"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/circulo_azul"
-                        android:gravity="center"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/abc_primary_text_disable_only_material_dark"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                </FrameLayout>
+                <TextView
+                    android:id="@+id/datos_linea"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:text="@string/guion"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/primary_dark_material_light"
+                    android:textStyle="italic" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp">
 
                     <TextView
-                        android:id="@+id/desc_linea"
-
+                        android:id="@+id/infoparada_horarios"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="@string/guion"
+                        android:layout_gravity="left"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:text="@string/infolinea_horarios"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/datos_linea"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="italic" />
+                        android:textColor="@color/link_text_material_dark"
+                        android:textStyle="italic|bold" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp">
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/infoparada_horarios"
+                            android:id="@+id/infoparada_paradas"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
+                            android:layout_gravity="right"
                             android:background="@drawable/actionbar_compat_item"
-                            android:text="@string/infolinea_horarios"
+                            android:gravity="right"
+                            android:text="@string/infolinea_paradas"
                             android:textAppearance="?android:attr/textAppearanceSmall"
 
                             android:textColor="@color/link_text_material_dark"
                             android:textStyle="italic|bold" />
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/infoparada_paradas"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:background="@drawable/actionbar_compat_item"
-                                android:gravity="right"
-                                android:text="@string/infolinea_paradas"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-
-                                android:textColor="@color/link_text_material_dark"
-                                android:textStyle="italic|bold" />
-
-                        </LinearLayout>
-
                     </LinearLayout>
-
 
                 </LinearLayout>
 
+
             </LinearLayout>
 
+        </LinearLayout>
 
-        </android.support.v7.widget.CardView>
 
-    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

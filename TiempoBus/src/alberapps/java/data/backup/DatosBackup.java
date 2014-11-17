@@ -18,15 +18,15 @@
  */
 package alberapps.java.data.backup;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 
 /**
  * Gestion de copias de seguridad
@@ -221,8 +221,12 @@ public class DatosBackup {
             // No valida
             return false;
         } finally {
-            sqlDb.close();
-            cursor.close();
+            if (sqlDb != null) {
+                sqlDb.close();
+            }
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
         return true;
@@ -273,7 +277,7 @@ public class DatosBackup {
 	
 	
 	/*public static void precargaBDLineas(Context context){
-				
+
 		FileOutputStream baseDatosE = null;
 
 		InputStream raw = null;

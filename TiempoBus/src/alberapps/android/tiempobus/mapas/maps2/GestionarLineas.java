@@ -18,23 +18,9 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask.LoadDatosMapaV3AsyncTaskResponder;
-import alberapps.java.tam.UtilidadesTAM;
-import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tram.UtilidadesTRAM;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -44,10 +30,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -60,6 +42,19 @@ import com.google.android.gms.maps.model.LatLngBounds.Builder;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask.LoadDatosMapaV3AsyncTaskResponder;
+import alberapps.java.tam.UtilidadesTAM;
+import alberapps.java.tam.mapas.DatosMapa;
+import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tram.UtilidadesTRAM;
 
 /**
  * Gestion carga de lineas, etc en el mapa
@@ -524,7 +519,6 @@ public class GestionarLineas {
         }
 
 
-
         // Control de boton vehiculos
         final ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
 
@@ -572,7 +566,6 @@ public class GestionarLineas {
         final ToggleButton botonIda = (ToggleButton) context.findViewById(R.id.mapaIdaButton);
 
 
-
         if (context.flagIda) {
             botonIda.setChecked(true);
         }
@@ -582,7 +575,7 @@ public class GestionarLineas {
             public void onClick(View v) {
 
                 //if (context.modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-                    context.gestionarLineas.cargarOcultarIda();
+                context.gestionarLineas.cargarOcultarIda();
                 //}
 
 

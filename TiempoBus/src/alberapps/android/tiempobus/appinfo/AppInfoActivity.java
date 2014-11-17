@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.appinfo;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,10 +57,13 @@ public class AppInfoActivity extends ActionBarActivity {
         //}
 
 
-		/*ActionBar actionBar = getSupportActionBar();
+		ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}*/
+			//actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
+		}
 
 
         ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
@@ -140,10 +144,6 @@ public class AppInfoActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-
-        }
 
         return super.onOptionsItemSelected(item);
 

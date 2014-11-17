@@ -95,6 +95,9 @@ public class FavoritosActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
         }
 
 
@@ -324,8 +327,6 @@ public class FavoritosActivity extends ActionBarActivity {
             }
 
             mCursor.close();
-
-        } else {
 
         }
 

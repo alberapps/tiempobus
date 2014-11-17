@@ -67,6 +67,9 @@ public class InfoLineasDatosParadaActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
         }
 
 

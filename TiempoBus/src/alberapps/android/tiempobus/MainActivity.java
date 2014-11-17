@@ -44,6 +44,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -195,6 +196,13 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         Conectividad.activarCache(this, preferencias);
 
+
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+             actionBar.setElevation(0);
+        }
+
         // Delegate gestion
         datosPantallaPrincipal = new DatosPantallaPrincipal(this, preferencias);
         gestionarFondo = new GestionarFondo(this, preferencias);
@@ -253,8 +261,20 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
 
+        /*try {
 
+            String nombre = actionBar.getClass().getName();
 
+            Class.forName("android.support.v7.app.ActionBarActivity");
+
+            Log.d("PRINCIPAL", "Encontrado: " + nombre);
+
+        } catch (ClassNotFoundException e) {
+
+            Log.d("PRINCIPAL", "NO Encontrado");
+
+            e.printStackTrace();
+        }*/
 
     }
 
@@ -417,7 +437,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 break;
 
         }
-        ;
+
 
         mDrawerList.setItemChecked(position, false);
         mDrawerLayout.closeDrawer(mDrawerList);
@@ -1020,7 +1040,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         busSeleccionado = null;
                         break;
                 }
-                ;
+
 
             }
         });
@@ -1406,9 +1426,12 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
             switch (msg.what) {
 
                 case MSG_ERROR_TIEMPOS:
-                    Toast toast = Toast.makeText(laActividad.getApplicationContext(), laActividad.getString(R.string.error_tiempos), Toast.LENGTH_LONG);
-                    toast.show();
-                    laActividad.showProgressBar(false);
+
+                    if (laActividad != null){
+                        Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+
+                        laActividad.showProgressBar(false);
+                    }
 
                     sendEmptyMessage(MSG_FRECUENCIAS_ACTUALIZADAS);
 
@@ -1590,7 +1613,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                     }catch(Exception e){
 
-                        Toast.makeText(laActividad.getApplicationContext(), laActividad.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
+                        if(laActividad != null) {
+                            Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 

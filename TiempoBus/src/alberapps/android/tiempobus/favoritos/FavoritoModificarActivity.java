@@ -68,6 +68,9 @@ public class FavoritoModificarActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
         }
 
 
@@ -188,10 +191,7 @@ public class FavoritoModificarActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
 
-
-        }
 
         return super.onOptionsItemSelected(item);
 

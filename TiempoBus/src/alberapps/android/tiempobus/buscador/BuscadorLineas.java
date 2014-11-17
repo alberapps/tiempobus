@@ -72,6 +72,9 @@ public class BuscadorLineas extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
         }
 
         mTextView = (TextView) findViewById(R.id.text);
@@ -178,10 +181,7 @@ public class BuscadorLineas extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
 
-
-        }
 
         return super.onOptionsItemSelected(item);
 

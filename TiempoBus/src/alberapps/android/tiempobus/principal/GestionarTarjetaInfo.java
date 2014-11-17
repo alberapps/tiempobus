@@ -405,8 +405,6 @@ public class GestionarTarjetaInfo {
 
                     }
 
-                } else {
-
                 }
             }
 
@@ -947,8 +945,6 @@ public class GestionarTarjetaInfo {
         if (networkInfo != null && networkInfo.isConnected()) {
 
             actualizarNumTask = new ActualizarBDAsyncTask(loadActualizarBDAsyncTaskResponder).execute(true);
-        } else {
-
         }
 
     }

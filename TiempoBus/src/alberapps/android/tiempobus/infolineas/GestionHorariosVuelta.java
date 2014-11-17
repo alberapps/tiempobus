@@ -86,7 +86,7 @@ public class GestionHorariosVuelta {
 
         StringBuffer comentarios = new StringBuffer("");
 
-        if (context.datosHorarios.getComentariosVuelta() != null && !context.datosHorarios.getComentariosVuelta().equals("")) {
+        if (context.datosHorarios.getComentariosVuelta() != null && !context.datosHorarios.getComentariosVuelta().toString().equals("")) {
             comentarios.append(context.datosHorarios.getComentariosVuelta());
             comentarios.append("\n");
         }

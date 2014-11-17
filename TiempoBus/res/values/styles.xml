@@ -8,10 +8,12 @@
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_indigo</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorPrimaryDark">@color/mi_material_blue_indigo_700</item>
         <item name="colorAccent">@color/mi_material_blue</item>
 
         <!--item name="actionBarStyle">@style/Header.Material</item-->
+
+        <item name="android:windowContentOverlay">@null</item>
 
     </style>
 
@@ -20,7 +22,7 @@
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_indigo</item>
-        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorPrimaryDark">@color/mi_material_blue_indigo_700</item>
         <item name="colorAccent">@color/mi_material_blue</item>
 
         <item name="android:windowContentOverlay">@null</item>

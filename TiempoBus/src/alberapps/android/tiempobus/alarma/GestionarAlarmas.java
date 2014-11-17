@@ -288,7 +288,7 @@ public class GestionarAlarmas {
                 break;
 
         }
-        ;
+
 
         return mins;
 

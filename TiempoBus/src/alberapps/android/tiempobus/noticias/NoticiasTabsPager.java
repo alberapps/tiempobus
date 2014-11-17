@@ -414,7 +414,10 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
                 if (noticias == null || noticias.isEmpty()) {
                     TextView vacio = (TextView) findViewById(R.id.vacio_noticias);
-                    noticiasView.setEmptyView(vacio);
+
+                    if(noticiasView != null && vacio != null) {
+                       noticiasView.setEmptyView(vacio);
+                    }
                 }
 
                 // Inicia carga twitter

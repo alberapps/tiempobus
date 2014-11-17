@@ -20,8 +20,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/gris_blog">
+    android:layout_height="fill_parent">
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -29,240 +28,172 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+
+            <android.support.v7.widget.CardView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/tarjeta_margin"
+
+                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardCornerRadius="1dp"
+                card_view:cardElevation="@dimen/cardview_default_elevation">
+
 
                 <LinearLayout
-
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.CardView
+
+                    <TextView
+                        android:id="@+id/cabeceraLinea"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/tarjeta_margin"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textStyle="bold" />
 
-                        card_view:cardBackgroundColor="@color/cardview_light_background"
-                        card_view:cardCornerRadius="1dp"
-                        card_view:cardElevation="@dimen/cardview_default_elevation">
+                    <TextView
+                        android:id="@+id/cabeceraFecha"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light" />
+
+                    <TextView
+                        android:id="@+id/cabeceraTitulo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light" />
+
+                    <TextView
+                        android:id="@+id/accederNoticia"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light" />
 
 
-                        <LinearLayout
-                            android:layout_width="fill_parent"
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/tarjeta_margin"
+
+                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardCornerRadius="1dp"
+                card_view:cardElevation="@dimen/cardview_default_elevation">
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:id="@+id/noticia_zoom_reduc"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            >
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical"
-                                android:layout_margin="5dp">
-
-
-                                <TextView
-                                    android:id="@+id/cabeceraLinea"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:gravity="left"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/cabeceraFecha"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:gravity="left"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android" />
-
-                                <TextView
-                                    android:id="@+id/cabeceraTitulo"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:gravity="left"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android" />
-
-                                <TextView
-                                    android:id="@+id/accederNoticia"
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-
-                                    android:gravity="left"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/color_android" />
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </android.support.v7.widget.CardView>
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/tarjeta_margin"
-
-                        card_view:cardBackgroundColor="@color/cardview_light_background"
-                        card_view:cardCornerRadius="1dp"
-                        card_view:cardElevation="@dimen/cardview_default_elevation">
-
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="2dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:text="@string/noticia_zoom_reducir"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/primary_dark_material_light"
+                            android:textStyle="italic|bold" />
 
                         <LinearLayout
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="2dp"
+                            android:orientation="vertical">
 
-                            >
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="4dp">
-
-                                    <TextView
-                                        android:id="@+id/noticia_zoom_reduc"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="left"
-                                        android:layout_marginLeft="2dp"
-                                        android:background="@drawable/actionbar_compat_item"
-                                        android:text="@string/noticia_zoom_reducir"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textColor="@color/primary_dark_material_light"
-                                        android:textStyle="italic|bold" />
-
-                                    <LinearLayout
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginRight="2dp"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            android:id="@+id/noticia_zoom_aumenta"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_gravity="right"
-                                            android:background="@drawable/actionbar_compat_item"
-                                            android:gravity="right"
-                                            android:text="@string/noticia_zoom_aumenta"
-                                            android:textAppearance="?android:attr/textAppearanceSmall"
-                                            android:textColor="@color/primary_dark_material_light"
-                                            android:textStyle="italic|bold" />
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <WebView
-                                    android:id="@+id/webViewDetalle"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" />
-
-                            </LinearLayout>
-
+                            <TextView
+                                android:id="@+id/noticia_zoom_aumenta"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:background="@drawable/actionbar_compat_item"
+                                android:gravity="right"
+                                android:text="@string/noticia_zoom_aumenta"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="@color/primary_dark_material_light"
+                                android:textStyle="italic|bold" />
                         </LinearLayout>
+                    </LinearLayout>
 
+                    <WebView
+                        android:id="@+id/webViewDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-            </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/tarjeta_margin"
+
+                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardCornerRadius="1dp"
+                card_view:cardElevation="@dimen/cardview_default_elevation">
+
 
                 <LinearLayout
-
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+
                     android:orientation="vertical">
 
-                    <android.support.v7.widget.CardView
-                        android:layout_width="fill_parent"
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="@dimen/tarjeta_margin"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/aviso_noticia"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textStyle="bold" />
 
-                        card_view:cardBackgroundColor="@color/cardview_light_background"
-                        card_view:cardCornerRadius="1dp"
-                        card_view:cardElevation="@dimen/cardview_default_elevation">
-
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginTop="5dp"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/TextView01"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center_vertical|center_horizontal"
-                                    android:text="@string/aviso_noticia"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textColor="@color/primary_dark_material_light"
-                                    android:textStyle="bold" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </android.support.v7.widget.CardView>
                 </LinearLayout>
 
-            </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>

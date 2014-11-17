@@ -180,7 +180,7 @@ public class Notificaciones {
         // Sonido seleccionado
         String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
-        if (strRingtonePreference == "DEFAULT_SOUND") {
+        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
             // Sonido por defecto
             defaults = defaults | Notification.DEFAULT_SOUND;
 
@@ -267,7 +267,7 @@ public class Notificaciones {
         // Sonido seleccionado
         String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
-        if (strRingtonePreference == "DEFAULT_SOUND") {
+        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
             // Sonido por defecto
             defaults = defaults | Notification.DEFAULT_SOUND;
 
@@ -359,7 +359,7 @@ public class Notificaciones {
         // Sonido seleccionado
         String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
 
-        if (strRingtonePreference == "DEFAULT_SOUND") {
+        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
             // Sonido por defecto
             defaults = defaults | Notification.DEFAULT_SOUND;
 

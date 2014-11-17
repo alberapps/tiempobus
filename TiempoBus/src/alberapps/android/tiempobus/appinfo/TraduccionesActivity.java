@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,10 +49,13 @@ public class TraduccionesActivity extends ActionBarActivity {
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
 
-		/*ActionBar actionBar = getSupportActionBar();
+		ActionBar actionBar = getSupportActionBar();
         if(actionBar != null){
-			actionBar.setDisplayHomeAsUpEnabled(true);
-		}*/
+			//actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setElevation(0);
+
+		}
 
 
     }

@@ -205,7 +205,7 @@ public class GestionHorariosIda {
 
         StringBuffer comentarios = new StringBuffer("");
 
-        if (context.datosHorarios.getComentariosIda() != null && !context.datosHorarios.getComentariosIda().equals("")) {
+        if (context.datosHorarios.getComentariosIda() != null && !context.datosHorarios.getComentariosIda().toString().equals("")) {
             comentarios.append(context.datosHorarios.getComentariosIda());
             comentarios.append("\n");
         }
@@ -242,7 +242,7 @@ public class GestionHorariosIda {
 
         ListView idaView = (ListView) context.findViewById(R.id.infolinea_lista_ida);
 
-        if (idaView.getFooterViewsCount() > 0) {
+        if (idaView != null && idaView.getFooterViewsCount() > 0) {
             idaView.removeFooterView(context.vistaPieHorarioIda);
             idaView.removeFooterView(context.vistaPieAvisoIda);
             context.vistaPieHorarioIda = null;

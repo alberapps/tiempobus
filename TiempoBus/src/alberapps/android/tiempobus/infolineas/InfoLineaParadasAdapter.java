@@ -141,10 +141,8 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         }
 
 
-        TextView infoText = (TextView) v.findViewById(R.id.infoparada_info);
-
         // Link informacion
-        infoText.setOnClickListener(new OnClickListener() {
+        informacionText.setOnClickListener(new OnClickListener() {
 
             public void onClick(View view) {
 

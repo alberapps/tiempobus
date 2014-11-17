@@ -23,79 +23,51 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <LinearLayout
 
+    <android.support.v7.widget.CardView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tarjeta_margin"
 
-        <android.support.v7.widget.CardView
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/tarjeta_margin"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="7dp"
+            android:orientation="vertical">
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="@dimen/cardview_default_elevation">
+            <TextView
+                android:id="@+id/desc_horario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primary_dark_material_light"
+                android:textStyle="bold" />
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/datos_horario"
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primary_dark_material_light"
+                android:textStyle="italic" />
 
-                >
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_marginBottom="7dp"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+        </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/desc_horario"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
 
-                    <TextView
-                        android:id="@+id/datos_horario"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="italic" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp">
-
-                        <LinearLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
 
 </LinearLayout>

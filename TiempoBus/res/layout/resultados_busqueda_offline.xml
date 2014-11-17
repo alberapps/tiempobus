@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
- <!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
    
@@ -18,52 +17,44 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
- 
- 
+-->
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical">
 
     <TextView
-            android:id="@+id/text"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:text="@string/search_instructions"
-            android:background="@color/mi_material_blue_indigo"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-    
-    <LinearLayout 
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_weight="0"
-    android:orientation="vertical"
-   android:id="@id/contenedor_resultado_offline">
-
-     <RelativeLayout
-         android:id="@+id/scroll"
-         android:layout_width="fill_parent"
-         android:layout_height="match_parent"
-         
-         >
-    
-    <ListView
-        android:id="@+id/list"
+        android:id="@+id/text"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:cacheColorHint="#00000000"
-        android:fastScrollEnabled="true"
-        android:scrollingCache="true"
-        android:divider="#00000000" />
+        android:layout_height="wrap_content"
+        android:background="@color/mi_material_blue_indigo"
+        android:text="@string/search_instructions"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
-    </RelativeLayout>
-   
-   </LinearLayout>
-     
+
+    <LinearLayout
+        android:id="@id/contenedor_resultado_offline"
+        android:layout_width="fill_parent"
+
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="#00000000"
+            android:fastScrollEnabled="true"
+            android:scrollingCache="true" />
+
+
+    </LinearLayout>
+
 </LinearLayout>
 
 

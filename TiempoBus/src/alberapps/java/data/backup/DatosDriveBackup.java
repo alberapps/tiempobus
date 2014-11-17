@@ -231,8 +231,12 @@ public class DatosDriveBackup {
             // No valida
             return false;
         } finally {
-            sqlDb.close();
-            cursor.close();
+            if (sqlDb != null) {
+                sqlDb.close();
+            }
+            if(cursor != null) {
+                cursor.close();
+            }
         }
 
         Log.d("drive", "Base de datos OK");

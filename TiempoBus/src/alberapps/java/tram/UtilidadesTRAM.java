@@ -256,7 +256,7 @@ public class UtilidadesTRAM {
     public static boolean esParadaL9(String parada) {
 
         for (int i = 1; i < L9_ORDEN.length; i++) {
-            if (parada.equals(L9_ORDEN[i])) {
+            if (parada.equals(Integer.toString(L9_ORDEN[i]))) {
                 return true;
             }
 
@@ -276,7 +276,7 @@ public class UtilidadesTRAM {
     public static boolean esParadaL2(String parada) {
 
         for (int i = 0; i < L2_ORDEN.length; i++) {
-            if (parada.equals(L2_ORDEN[i])) {
+            if (parada.equals(Integer.toString(L2_ORDEN[i]))) {
                 return true;
             }
 

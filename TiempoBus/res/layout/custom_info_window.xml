@@ -39,7 +39,7 @@
       android:ellipsize="end"
       android:singleLine="true"
       android:textColor="#ff000000"
-      android:textSize="14dp"
+      android:textSize="14sp"
       android:textStyle="bold"/>
     <TextView
       android:id="@+id/snippet"
@@ -48,6 +48,6 @@
       android:ellipsize="end"
       android:singleLine="true"
       android:textColor="#ff7f7f7f"
-      android:textSize="14dp"/>
+      android:textSize="14sp"/>
   </LinearLayout>
 </LinearLayout>

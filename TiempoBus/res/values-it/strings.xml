@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version">3.5</string>
+
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2014)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -288,8 +288,7 @@
         
     <string name="acercade_info_nuevo">Questa applicazione NON è ufficiale e si sviluppa in modo indipendente.
 		\nDati di linee e tempi offerti e mantenuti da:</string>
-	<string name="acercade_info_nuevo_bus">Questa applicazione NON è ufficiale e si sviluppa in modo indipendente.
-		\nDati di linee e tempi offerti e mantenuti da: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+	<string name="acercade_info_nuevo_bus">Questa applicazione NON è ufficiale e si sviluppa in modo indipendente.\nDati di linee e tempi offerti e mantenuti da: subus.es - isaealicante.subus.es/movil/index.aspx</string>
 	<string name="acercade_info_nuevo_2">Sviluppo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraduzioni:\nmagnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Traduzioni: magnoling.com</string>

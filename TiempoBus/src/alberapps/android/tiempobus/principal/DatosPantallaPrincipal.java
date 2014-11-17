@@ -342,8 +342,6 @@ public class DatosPantallaPrincipal {
                     context.getContentResolver().insert(HistorialDB.Historial.CONTENT_URI, values);
                 }
 
-            } else {
-
             }
 
         } catch (Exception e) {
@@ -424,7 +422,7 @@ public class DatosPantallaPrincipal {
 
                         }
 
-                        if (!fecha_ultima.equals(noticias.get(0).getFecha())) {
+                        if (fecha_ultima != null && !fecha_ultima.equals(noticias.get(0).getFecha())) {
 
                             lanzarAviso = true;
 
@@ -552,7 +550,7 @@ public class DatosPantallaPrincipal {
 
                         }
 
-                        if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
+                        if (fecha_ultima != null && !fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
 
                             lanzarAviso = true;
 
@@ -660,49 +658,56 @@ public class DatosPantallaPrincipal {
      */
     public String formatearShare(String proximo) {
 
-        String traducido = "";
+        if (proximo != null && !proximo.equals("")) {
 
-        String[] procesa = proximo.split(";");
 
-        String tiempo1 = "";
-        String tiempo2 = "";
+            String traducido = "";
 
-        // Si es tram devuelve solo un dato
-        if (procesa[0].equals("TRAM")) {
-            return procesa[1];
-        }
+            String[] procesa = proximo.split(";");
 
-        if (procesa[0].equals("enlaparada")) {
+            String tiempo1 = "";
+            String tiempo2 = "";
 
-            tiempo1 = (String) context.getResources().getText(R.string.tiempo_m_1);
+            // Si es tram devuelve solo un dato
+            if (procesa[0].equals("TRAM")) {
+                return procesa[1];
+            }
 
-        } else if (procesa[0].equals("sinestimacion")) {
+            if (procesa[0].equals("enlaparada")) {
 
-            tiempo1 = (String) context.getResources().getText(R.string.tiempo_m_2);
+                tiempo1 = (String) context.getResources().getText(R.string.tiempo_m_1);
+
+            } else if (procesa[0].equals("sinestimacion")) {
+
+                tiempo1 = (String) context.getResources().getText(R.string.tiempo_m_2);
+
+            } else {
+
+                tiempo1 = procesa[0];
+
+            }
+
+            if (procesa[1].equals("enlaparada")) {
+
+                tiempo2 = (String) context.getResources().getText(R.string.tiempo_m_1);
+
+            } else if (procesa[1].equals("sinestimacion")) {
+
+                tiempo2 = (String) context.getResources().getText(R.string.tiempo_m_2);
+
+            } else {
+
+                tiempo2 = procesa[1];
+
+            }
+
+            traducido = tiempo1 + " " + context.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+
+            return traducido;
 
         } else {
-
-            tiempo1 = procesa[0];
-
+            return "";
         }
-
-        if (procesa[1].equals("enlaparada")) {
-
-            tiempo2 = (String) context.getResources().getText(R.string.tiempo_m_1);
-
-        } else if (procesa[1].equals("sinestimacion")) {
-
-            tiempo2 = (String) context.getResources().getText(R.string.tiempo_m_2);
-
-        } else {
-
-            tiempo2 = procesa[1];
-
-        }
-
-        traducido = tiempo1 + " " + context.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
-
-        return traducido;
 
     }
 
@@ -1097,7 +1102,7 @@ public class DatosPantallaPrincipal {
             }
 
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
             Toast.makeText(context, context.getString(R.string.error_voz_lectura), Toast.LENGTH_SHORT).show();
 
@@ -1309,64 +1314,59 @@ public class DatosPantallaPrincipal {
      * @param busLinea
      * @param linea
      */
-    public static void formatoLinea(Context contexto, TextView busLinea, String linea){
+    public static void formatoLinea(Context contexto, TextView busLinea, String linea) {
 
         //Color circulo
-        if(linea.trim().equals("L1")) {
+        if (linea.trim().equals("L1")) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
-            }else{
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l1));
             }
-        }else if(linea.trim().equals("L2")) {
+        } else if (linea.trim().equals("L2")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
-            }else {
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l2));
             }
 
-        }else if(linea.trim().equals("L3")) {
+        } else if (linea.trim().equals("L3")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
-            }else {
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l3));
             }
-        }else if(linea.trim().equals("L4")) {
+        } else if (linea.trim().equals("L4")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
-            }else {
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l4));
             }
-        }else if(UtilidadesTAM.isBusUrbano(linea.trim())) {
+        } else if (UtilidadesTAM.isBusUrbano(linea.trim())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
-            }else {
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
             }
-        }else{
+        } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
-            }else{
+            } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_azul));
             }
         }
 
 
-
         //Size
-        if(linea.length() > 2){
+        if (linea.length() > 2) {
             busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        }else{
+        } else {
             busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
         }
 
 
-
-
     }
-
-
 
 
 }

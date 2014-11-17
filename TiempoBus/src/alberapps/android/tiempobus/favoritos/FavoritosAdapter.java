@@ -88,7 +88,9 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 FavoritosActivity actividad = (FavoritosActivity) contexto;
 
-                actividad.launchModificarFavorito(Integer.parseInt(favorito.getId()));
+                if (favorito != null) {
+                    actividad.launchModificarFavorito(Integer.parseInt(favorito.getId()));
+                }
 
             }
 
@@ -116,7 +118,9 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 FavoritosActivity actividad = (FavoritosActivity) contexto;
 
-                actividad.launchBorrarFavorito(Integer.parseInt(favorito.getId()));
+                if (favorito != null) {
+                    actividad.launchBorrarFavorito(Integer.parseInt(favorito.getId()));
+                }
 
             }
 
