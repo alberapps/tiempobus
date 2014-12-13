@@ -795,6 +795,11 @@ public class DatosPantallaPrincipal {
 
         }
 
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
+            texto.setText(texto.getText() + "\n" + context.getString(R.string.compatibilidad));
+        }
+
         // Actualzaciones
 
         context.gestionarTarjetaInfo.controlActualizarDB(texto);

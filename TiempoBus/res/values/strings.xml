@@ -465,6 +465,7 @@
         zgzBus code.google.com/p/zgzbus, ZXing Team code.google.com/p/zxing,
         Iconspedia(Yankoa) www.iconspedia.com/community/yankoa, Mapicons mapicons.nicolasmollet.com
 	</string>
+    <string name="compatibilidad">* AVISO: Android 2.2 (Froyo) puede no funcionar con Google Play Services.</string>
 
 
 </resources>

@@ -53,6 +53,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask.BackupAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -439,19 +440,24 @@ public class FavoritosActivity extends ActionBarActivity {
 
             case R.id.menu_importar_drive:
 
-                importarDriveDB();
-
+                if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
+                   importarDriveDB();
+                }
                 break;
 
             case R.id.menu_exportar_drive:
 
-                Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+                if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
-                Bundle b2 = new Bundle();
-                b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
-                intent2.putExtras(b2);
+                    Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
 
-                startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
+                    Bundle b2 = new Bundle();
+                    b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
+                    intent2.putExtras(b2);
+
+                    startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
+
+                }
 
                 break;
 
