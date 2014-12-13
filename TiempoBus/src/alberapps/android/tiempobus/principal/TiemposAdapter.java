@@ -29,6 +29,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
@@ -40,6 +42,35 @@ import alberapps.java.tam.BusLlegada;
 public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
     private Context contexto;
+
+    private ArrayList<BusLlegada> buses;
+
+    private String paradaActual = "";
+
+    public String getParadaActual() {
+        return paradaActual;
+    }
+
+    public void setParadaActual(String paradaActual) {
+        this.paradaActual = paradaActual;
+    }
+
+    public ArrayList<BusLlegada> getBuses(String parada) {
+
+        if(parada.equals(paradaActual)){
+            return buses;
+        }else{
+            buses = new ArrayList<BusLlegada>();
+            paradaActual = "";
+        }
+
+        return buses;
+
+    }
+
+    public void setBuses(ArrayList<BusLlegada> buses) {
+        this.buses = buses;
+    }
 
     /**
      * Constructor

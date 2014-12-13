@@ -23,7 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
-import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveContents;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -47,7 +47,7 @@ public class DatosDriveBackup {
      *
      * @return boolean
      */
-    public static boolean exportar(ContentsResult contentsResult) {
+    public static boolean exportar(DriveContents contents) {
 
         boolean control = false;
 
@@ -55,7 +55,7 @@ public class DatosDriveBackup {
 
         try {
 
-            OutputStream outputStream = contentsResult.getContents().getOutputStream();
+            OutputStream outputStream = contents.getOutputStream();
 
             // base de datos
             baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
@@ -88,7 +88,7 @@ public class DatosDriveBackup {
      *
      * @return boolean
      */
-    public static boolean recuperar(ContentsResult contentsResult) {
+    public static boolean recuperar(DriveContents contents) {
 
         // Copia de respaldo para posible fallo
         exportarRespaldo();
@@ -117,7 +117,7 @@ public class DatosDriveBackup {
 
             // Copiar desde drive a sd
 
-            fileDriveStream = contentsResult.getContents().getInputStream();
+            fileDriveStream = contents.getInputStream();
 
             copyFileI(fileDriveStream, fileExport);
 
@@ -234,7 +234,7 @@ public class DatosDriveBackup {
             if (sqlDb != null) {
                 sqlDb.close();
             }
-            if(cursor != null) {
+            if (cursor != null) {
                 cursor.close();
             }
         }

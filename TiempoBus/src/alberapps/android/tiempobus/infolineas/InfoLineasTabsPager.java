@@ -41,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -109,6 +110,10 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     public GestionVuelta gestionVuelta;
     public GestionHorariosIda gestionHorariosIda;
     public GestionHorariosVuelta gestionHorariosVuelta;
+
+    public ArrayList<BusLinea> lineasBus;
+    public InfoLineaAdapter infoLineaAdapter;
+    public ListView lineasView;
 
     public BusLinea getLinea() {
         return linea;

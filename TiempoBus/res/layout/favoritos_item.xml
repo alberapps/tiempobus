@@ -18,19 +18,19 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <LinearLayout
 
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
         <android.support.v7.widget.CardView
-            android:layout_width="@dimen/tarjeta_width_tablet"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
@@ -43,7 +43,7 @@
 
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -61,7 +61,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayout2"
                     android:layout_width="0dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
@@ -82,7 +82,7 @@
                     <TextView
                         android:id="@+id/descripcion"
 
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
                         android:text="@string/guion"
@@ -133,7 +133,7 @@
                             android:textStyle="italic|bold" />
 
                         <LinearLayout
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="2dp"
                             android:orientation="vertical">

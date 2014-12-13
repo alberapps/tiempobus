@@ -53,7 +53,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -845,19 +844,21 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     busSeleccionado = bus;
                     // openContextMenu(getListView());
 
-                    opcionesLineaSeleccionada();
+                    if(!busSeleccionado.isErrorServicio() && !busSeleccionado.isSinDatos()) {
+                        opcionesLineaSeleccionada();
+                    }
 
                 }
             }
         });
 
-        tiemposView.setOnLongClickListener(new OnLongClickListener() {
+        /*tiemposView.setOnLongClickListener(new OnLongClickListener() {
 
             public boolean onLongClick(View view) {
                 // TODO Auto-generated method stub
                 return false;
             }
-        });
+        });*/
 
         // Asignamos el adapter a la lista
         tiemposView.setAdapter(tiemposAdapter);
@@ -944,8 +945,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         // Swipe para recargar
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
+        swipeRefresh.setColorSchemeResources(R.color.mi_material_blue_indigo, R.color.tram_l2, R.color.mi_material_blue_indigo, R.color.tram_l2);
         swipeRefresh.setOnRefreshListener(this);
-        //swipeRefresh.setColorScheme(android.R.color.black, android.R.color.darker_gray, android.R.color.black, android.R.color.darker_gray);
+
 
     }
 
@@ -1359,6 +1361,17 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             b1.setErrorServicio(true);
                             buses.add(b1);
 
+                            if(tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
+                                int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
+
+                                for (int i = 0; i < n; i++) {
+
+                                    if(!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
+                                        buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
+                                    }
+                                }
+
+                            }
 
                             handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
                         }
@@ -1397,6 +1410,18 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 BusLlegada b1 = new BusLlegada();
                 b1.setErrorServicio(true);
                 buses.add(b1);
+
+                if(tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
+                    int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
+
+                    for (int i = 0; i < n; i++) {
+
+                        if(!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
+                            buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
+                        }
+                    }
+
+                }
 
 
                 handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
@@ -1553,12 +1578,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 
 
-
-
-
-
-
-
                         if (cabdatos.equals("")) {
                             cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
                         }
@@ -1589,11 +1608,15 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                         // La rellenamos con los nuevos datos
                         if (laActividad.buses != null && laActividad.buses.size() > 0) {
+
                             int n = laActividad.buses.size();
 
                             for (int i = 0; i < n; i++) {
                                 laActividad.tiemposAdapter.add(laActividad.buses.get(i));
                             }
+
+                            laActividad.tiemposAdapter.setBuses(laActividad.buses);
+
                         } else {
 
                             // Control de sin datos

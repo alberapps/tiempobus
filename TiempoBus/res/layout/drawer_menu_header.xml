@@ -18,13 +18,13 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <LinearLayout
 
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/cardview_light_background">
@@ -40,13 +40,13 @@
 
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
 
                     <FrameLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5sp"
                         android:layout_marginRight="5sp">
 
@@ -72,7 +72,7 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="fill_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginBottom="7dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="3dp"
@@ -92,7 +92,7 @@
 
                         <TextView
                             android:id="@+id/datos_desc_linea_sentido"
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="top"
                             android:text="@string/bus_tram"

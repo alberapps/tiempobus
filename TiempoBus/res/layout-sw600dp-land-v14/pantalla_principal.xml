@@ -49,14 +49,14 @@
         android:id="@+id/tiempos_fragment"
         android:name="alberapps.android.tiempobus.principal.FragmentPrincipal"
         android:layout_width="0dp"
-        android:layout_height="fill_parent" 
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
      
     <fragment
         android:id="@+id/detalle_fragment"
         android:name="alberapps.android.tiempobus.principal.FragmentSecundarioTablet"
         android:layout_width="0dp"
-        android:layout_height="fill_parent" 
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
      
      </LinearLayout>   

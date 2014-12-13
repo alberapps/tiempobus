@@ -19,8 +19,8 @@
 --> 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
      <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -46,14 +46,14 @@
         android:id="@+id/noticias_fragment"
         android:name="alberapps.android.tiempobus.noticias.FragmentNoticias"
         android:layout_width="0dp"
-        android:layout_height="fill_parent" 
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
             
     <fragment
         android:id="@+id/noticias_3_fragment"
         android:name="alberapps.android.tiempobus.noticias.FragmentTwitter"
         android:layout_width="0dp"
-        android:layout_height="fill_parent" 
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
     
      </LinearLayout>   

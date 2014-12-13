@@ -19,8 +19,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -28,13 +28,13 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
 
             <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
@@ -45,7 +45,7 @@
 
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_marginBottom="5dp"
@@ -55,7 +55,7 @@
 
                     <TextView
                         android:id="@+id/cabeceraLinea"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -64,7 +64,7 @@
 
                     <TextView
                         android:id="@+id/cabeceraFecha"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -72,7 +72,7 @@
 
                     <TextView
                         android:id="@+id/cabeceraTitulo"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -80,7 +80,7 @@
 
                     <TextView
                         android:id="@+id/accederNoticia"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -94,7 +94,7 @@
 
 
             <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
@@ -105,7 +105,7 @@
 
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
@@ -130,7 +130,7 @@
                             android:textStyle="italic|bold" />
 
                         <LinearLayout
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="2dp"
                             android:orientation="vertical">
@@ -161,7 +161,7 @@
 
 
             <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
@@ -172,7 +172,7 @@
 
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"

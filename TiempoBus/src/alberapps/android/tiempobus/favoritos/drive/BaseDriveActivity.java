@@ -23,7 +23,7 @@ package alberapps.android.tiempobus.favoritos.drive;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +35,7 @@ import com.google.android.gms.drive.Drive;
 /**
  * Actividad para el acceso a la api de Google Drive
  */
-public class BaseDriveActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class BaseDriveActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "BaseDriveActivity";
 

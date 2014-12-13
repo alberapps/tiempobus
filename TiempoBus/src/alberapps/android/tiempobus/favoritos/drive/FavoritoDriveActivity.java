@@ -29,7 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.MetadataChangeSet;
@@ -67,7 +67,9 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setTheme(android.R.style.Theme_Material_Light_Dialog);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             setTheme(android.R.style.Theme_Holo_Light_Dialog);
         } else {
             setTheme(android.R.style.Theme_Dialog);
@@ -179,9 +181,10 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
      */
     private void nuevoArchivoDrive() {
 
-        final ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
+        final ResultCallback<DriveApi.DriveContentsResult> contentsCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
 
-            public void onResult(ContentsResult result) {
+            @Override
+            public void onResult(DriveApi.DriveContentsResult result) {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH:mm", Locale.US);
 
@@ -190,7 +193,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
                 String nombre = "tiempobus_" + fecha + ".db";
 
                 MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder().setMimeType("application/octet-stream").setTitle(nombre).build();
-                IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialContents(result.getContents()).build(getGoogleApiClient());
+                IntentSender intentSender = Drive.DriveApi.newCreateFileActivityBuilder().setInitialMetadata(metadataChangeSet).setInitialDriveContents(result.getDriveContents()).build(getGoogleApiClient());
                 try {
                     startIntentSenderForResult(intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
                 } catch (SendIntentException e) {
@@ -203,7 +206,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
             dialog.dismiss();
         }
 
-        Drive.DriveApi.newContents(getGoogleApiClient()).setResultCallback(contentsCallback);
+        Drive.DriveApi.newDriveContents(getGoogleApiClient()).setResultCallback(contentsCallback);
 
     }
 

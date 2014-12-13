@@ -70,9 +70,9 @@ public class FragmentLineas extends Fragment {
 
     GetLineasResult lineasDummy = null;
 
-    private ListView lineasView;
 
-    ArrayList<BusLinea> lineasBus;
+
+
 
     BusLinea linea = null;
 
@@ -81,7 +81,7 @@ public class FragmentLineas extends Fragment {
     int mCurCheckPosition = 0;
 
 
-    InfoLineaAdapter infoLineaAdapter;
+
 
     InfoLineaParadasAdapter infoLineaParadasAdapter;
 
@@ -104,11 +104,32 @@ public class FragmentLineas extends Fragment {
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
 
+
+        if(actividad.lineasBus == null && savedInstanceState != null && savedInstanceState.getSerializable("LINEAS_INSTANCE") != null) {
+            List lineasBusAux = (ArrayList)savedInstanceState.getSerializable("LINEAS_INSTANCE");
+
+            actividad.lineasBus = new ArrayList<BusLinea>();
+
+            for(int i = 0;i < lineasBusAux.size();i++) {
+                actividad.lineasBus.add((BusLinea) lineasBusAux.get(i));
+            }
+
+        }
+
+        if(actividad.dialog != null){
+            actividad.dialog.dismiss();
+        }
+
         setupFondoAplicacion();
 
         // Consultar si es necesario, si ya lo tiene carga la lista
-        if (lineasBus != null) {
+        if (actividad.lineasBus != null && actividad.lineasView != null) {
             recargarListado();
+
+        } else if (actividad.lineasBus != null) {
+
+            cargarListado();
+
         } else {
 
             ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
@@ -125,6 +146,14 @@ public class FragmentLineas extends Fragment {
 
 
         super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        outState.putSerializable("LINEAS_INSTANCE", actividad.lineasBus);
+
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -172,7 +201,7 @@ public class FragmentLineas extends Fragment {
     LoadDatosLineasAsyncTaskResponder loadBusesAsyncTaskResponder = new LoadDatosLineasAsyncTaskResponder() {
         public void busesLoaded(ArrayList<BusLinea> buses) {
             if (buses != null) {
-                lineasBus = buses;
+                actividad.lineasBus = buses;
 
                 cargarListado();
 
@@ -188,7 +217,7 @@ public class FragmentLineas extends Fragment {
                 b1.setErrorServicio(true);
                 buses.add(b1);
 
-                lineasBus = buses;
+                actividad.lineasBus = buses;
 
                 cargarListado();
 
@@ -207,24 +236,24 @@ public class FragmentLineas extends Fragment {
      */
     private void cargarListado() {
 
-        if (lineasBus != null) {
+        if (actividad.lineasBus != null) {
 
-            infoLineaAdapter = new InfoLineaAdapter(getActivity(), R.layout.infolineas_item);
+            actividad.infoLineaAdapter = new InfoLineaAdapter(getActivity(), R.layout.infolineas_item);
 
-            infoLineaAdapter.addAll(lineasBus);
+            actividad.infoLineaAdapter.addAll(actividad.lineasBus);
 
             // Controlar pulsacion
-            lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+            actividad.lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
 
-            if (lineasView != null) {
-                lineasView.setOnItemClickListener(lineasClickedHandler);
+            if (actividad.lineasView != null) {
+                actividad.lineasView.setOnItemClickListener(lineasClickedHandler);
 
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
-                lineasView.setEmptyView(vacio);
+                actividad.lineasView.setEmptyView(vacio);
 
                 cargarHeaderLineas();
 
-                lineasView.setAdapter(infoLineaAdapter);
+                actividad.lineasView.setAdapter(actividad.infoLineaAdapter);
 
             }
 
@@ -239,7 +268,7 @@ public class FragmentLineas extends Fragment {
      */
     public void cargarHeaderLineas() {
 
-        if (lineasView != null && lineasView.getHeaderViewsCount() == 0) {
+        if (actividad.lineasView != null && actividad.lineasView.getHeaderViewsCount() == 0) {
 
             LayoutInflater li2 = LayoutInflater.from(actividad);
 
@@ -340,19 +369,19 @@ public class FragmentLineas extends Fragment {
             // Filtrar resultados
             final TextView textoBuscar = (TextView) vheader.findViewById(R.id.texto_buscar);
 
-            if(infoLineaAdapter.getFiltro() != null && !infoLineaAdapter.getFiltro().equals("")){
-                textoBuscar.setText(infoLineaAdapter.getFiltro());
+            if(actividad.infoLineaAdapter.getFiltro() != null && !actividad.infoLineaAdapter.getFiltro().equals("")){
+                textoBuscar.setText(actividad.infoLineaAdapter.getFiltro());
             }
 
             textoBuscar.addTextChangedListener(new TextWatcher() {
 
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                    if (infoLineaAdapter != null && infoLineaAdapter.getFilter() != null && lineasBus != null && !lineasBus.isEmpty() && !lineasBus.get(0).isErrorServicio()) {
+                    if (actividad.infoLineaAdapter != null && actividad.infoLineaAdapter.getFilter() != null && actividad.lineasBus != null && !actividad.lineasBus.isEmpty() && !actividad.lineasBus.get(0).isErrorServicio()) {
 
-                        infoLineaAdapter.getFilter().filter(s);
+                        actividad.infoLineaAdapter.getFilter().filter(s);
 
-                        infoLineaAdapter.setFiltro(s);
+                        actividad.infoLineaAdapter.setFiltro(s);
 
 
 
@@ -389,9 +418,9 @@ public class FragmentLineas extends Fragment {
 
 
 
-            lineasView = (ListView) actividad.findViewById(R.id.infolinea_lista_lineas);
+            actividad.lineasView = (ListView) actividad.findViewById(R.id.infolinea_lista_lineas);
 
-            lineasView.addHeaderView(vheader);
+            actividad.lineasView.addHeaderView(vheader);
 
         }
 
@@ -402,21 +431,21 @@ public class FragmentLineas extends Fragment {
      */
     private void recargarListado() {
 
-        if (infoLineaAdapter != null) {
+        if (actividad.infoLineaAdapter != null) {
 
             // Controlar pulsacion
-            lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+            actividad.lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
 
-            if (lineasView != null) {
+            if (actividad.lineasView != null) {
 
-                lineasView.setOnItemClickListener(lineasClickedHandler);
+                actividad.lineasView.setOnItemClickListener(lineasClickedHandler);
 
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
-                lineasView.setEmptyView(vacio);
+                actividad.lineasView.setEmptyView(vacio);
 
                 cargarHeaderLineas();
 
-                lineasView.setAdapter(infoLineaAdapter);
+                actividad.lineasView.setAdapter(actividad.infoLineaAdapter);
 
             }
 
@@ -443,7 +472,7 @@ public class FragmentLineas extends Fragment {
 
             // linea = lineasBus.get(position);
 
-            linea = infoLineaAdapter.getListaFiltrada().get(position - 1);
+            linea = actividad.infoLineaAdapter.getListaFiltrada().get(position - 1);
 
             actividad.setLinea(linea);
 
@@ -462,9 +491,9 @@ public class FragmentLineas extends Fragment {
 
         // We can display everything in-place with fragments, so update
         // the list to highlight the selected item and show the data.
-        lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
+        actividad.lineasView = (ListView) getActivity().findViewById(R.id.infolinea_lista_lineas);
 
-        lineasView.setItemChecked(index, true);
+        actividad.lineasView.setItemChecked(index, true);
 
         actividad.lineasMapas = null;
         actividad.sentidoIda = null;

@@ -22,6 +22,4 @@
 
     <dimen name="tarjeta_margin">2dp</dimen>
 
-    <dimen name="tarjeta_width_tablet">-1dp</dimen>
-
 </resources>

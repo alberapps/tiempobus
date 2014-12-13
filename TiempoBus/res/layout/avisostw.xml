@@ -18,22 +18,22 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/contenedor_tw"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_weight="0"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/scroll"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         >
 
         <ListView
             android:id="@+id/listatw"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:cacheColorHint="#00000000"
             android:divider="#00000000"
             android:fastScrollEnabled="true"
@@ -41,8 +41,8 @@
 
         <TextView
             android:id="@+id/vacio_tw"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/listatw"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items"

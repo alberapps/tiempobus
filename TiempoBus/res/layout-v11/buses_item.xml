@@ -18,15 +18,15 @@
  
 --> 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="1dip" >
 
 <TextView
         android:id="@+id/buses_l"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="1dp"
         android:text="@string/guion"
         android:textAppearance="?android:attr/textAppearanceMedium"

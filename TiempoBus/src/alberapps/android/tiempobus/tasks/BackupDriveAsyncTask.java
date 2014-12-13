@@ -19,7 +19,8 @@ package alberapps.android.tiempobus.tasks;
 
 import android.os.AsyncTask;
 
-import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveApi;
+import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 
 import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
@@ -54,14 +55,16 @@ public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
             if (entrada.equals("importar")) {
 
-                ContentsResult contentsResult = file.openContents(context.getGoogleApiClient(), DriveFile.MODE_READ_ONLY, null).await();
+                DriveApi.DriveContentsResult contentsResult = file.open(context.getGoogleApiClient(), DriveFile.MODE_READ_ONLY, null).await();
                 if (!contentsResult.getStatus().isSuccess()) {
                     return false;
                 }
 
-                resultado = DatosDriveBackup.recuperar(contentsResult);
+                DriveContents driveContents = contentsResult.getDriveContents();
 
-                file.discardContents(context.getGoogleApiClient(), contentsResult.getContents()).await();
+                resultado = DatosDriveBackup.recuperar(driveContents);
+
+                driveContents.discard(context.getGoogleApiClient());
 
                 // Limpiar archivos temporales y backup
                 DatosDriveBackup.borrarArchivosBackup();
@@ -70,14 +73,16 @@ public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
             } else {
 
-                ContentsResult contentsResult = file.openContents(context.getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
+                DriveApi.DriveContentsResult contentsResult = file.open(context.getGoogleApiClient(), DriveFile.MODE_WRITE_ONLY, null).await();
                 if (!contentsResult.getStatus().isSuccess()) {
                     return false;
                 }
 
-                resultado = DatosDriveBackup.exportar(contentsResult);
+                DriveContents driveContents = contentsResult.getDriveContents();
 
-                com.google.android.gms.common.api.Status status = file.commitAndCloseContents(context.getGoogleApiClient(), contentsResult.getContents()).await();
+                resultado = DatosDriveBackup.exportar(driveContents);
+
+                com.google.android.gms.common.api.Status status = driveContents.commit(context.getGoogleApiClient(), null).await();
 
                 if (resultado && status.getStatus().isSuccess()) {
                     return true;

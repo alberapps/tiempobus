@@ -25,7 +25,7 @@
 
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
@@ -58,7 +58,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -74,7 +74,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
                     android:layout_marginRight="3dp"
@@ -94,7 +94,7 @@
 
                     <TextView
                         android:id="@+id/datos_parada"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
 
@@ -109,7 +109,7 @@
 
             <TextView
                 android:id="@+id/datos_location"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
@@ -124,7 +124,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
@@ -279,7 +279,7 @@
 
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
@@ -315,8 +315,8 @@
                         android:textStyle="italic|bold" />
 
                     <HorizontalScrollView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:fadeScrollbars="false">
 
                         <TextView

@@ -28,6 +28,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,9 +146,39 @@ public class ProcesarOWMCurrect {
 
             data = new WeatherData();
 
-            data.setContitionTemp(temp);
-            data.setLow(tempMin);
-            data.setHigh(tempMax);
+
+            String numberFormat = "";
+            try {
+                Double tempD = Double.parseDouble(temp);
+                NumberFormat formatear = new DecimalFormat("#0.00");
+                numberFormat = formatear.format(tempD);
+            } catch (Exception e) {
+
+            }
+
+            data.setContitionTemp(numberFormat);
+
+            numberFormat = "";
+            try {
+                Double tempD = Double.parseDouble(tempMin);
+                NumberFormat formatear = new DecimalFormat("#0.00");
+                numberFormat = formatear.format(tempD);
+            } catch (Exception e) {
+
+            }
+            data.setLow(numberFormat);
+
+            numberFormat = "";
+            try {
+                Double tempD = Double.parseDouble(tempMax);
+                NumberFormat formatear = new DecimalFormat("#0.00");
+                numberFormat = formatear.format(tempD);
+            } catch (Exception e) {
+
+            }
+
+            data.setHigh(numberFormat);
+
 
             data.setHumidity(humidity);
 

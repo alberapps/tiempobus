@@ -20,22 +20,22 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/contenedor_infolinea_vuelta"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_weight="0"
     android:orientation="vertical" >
 
     <RelativeLayout
          android:id="@+id/scroll"
-         android:layout_width="fill_parent"
+         android:layout_width="match_parent"
          android:layout_height="match_parent"
         
          >
 		
 		 <ListView
 		     android:id="@+id/infolinea_lista_vuelta"
-		     android:layout_width="fill_parent"
-		     android:layout_height="fill_parent"
+		     android:layout_width="match_parent"
+		     android:layout_height="match_parent"
 		     android:cacheColorHint="#00000000"
 		     android:divider="#00000000"
 		     android:fastScrollEnabled="true"
@@ -43,8 +43,8 @@
 
         <TextView
             android:id="@+id/infolinea_vuelta_empty"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/infolinea_lista_vuelta"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items"
