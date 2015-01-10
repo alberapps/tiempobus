@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="alberapps.android.tiempobus"
     android:installLocation="auto"
-    android:versionCode="48"
-    android:versionName="3.2">
+    android:versionCode="50"
+    android:versionName="3.5.1">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -34,7 +34,7 @@
     <application
         android:name=".ApplicationTiempoBus"
         android:allowBackup="false"
-        android:icon="@drawable/ic_tiempobus_3"
+        android:icon="@drawable/ic_tiempobus_4"
         android:label="@string/app_name"
         android:theme="@style/Theme.TiempoBusTheme">
         //android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
@@ -57,7 +57,7 @@
         <activity
             android:name=".favoritos.FavoritosActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/favoritosN"
             android:parentActivityName=".MainActivity">
 
@@ -69,7 +69,7 @@
         <activity
             android:name=".favoritos.FavoritoNuevoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/favoritosN"
             android:parentActivityName=".MainActivity">
 
@@ -80,7 +80,7 @@
         <activity
             android:name=".favoritos.FavoritoModificarActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/favoritosN"
             android:parentActivityName=".favoritos.FavoritosActivity">
 
@@ -91,7 +91,7 @@
 
         <activity
             android:name=".favoritos.drive.FavoritoDriveActivity"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/favoritosN"
             android:theme="@android:style/Theme.Dialog" />
 
@@ -105,7 +105,7 @@
         <activity
             android:name=".noticias.NoticiasTabsPager"
             android:configChanges="keyboardHidden|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/tit_noticias"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeTab">
@@ -119,7 +119,7 @@
         <activity
             android:name=".noticias.DetalleNoticiaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/tit_noticias"
             android:parentActivityName=".noticias.NoticiasTabsPager">
 
@@ -146,7 +146,7 @@
         <activity
             android:name=".buscador.BuscadorLineas"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/busqueda"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
             android:theme="@style/Theme.TiempoBusThemeTab">
@@ -173,7 +173,7 @@
         <activity
             android:name=".buscador.DatosParadaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/datos_parada"
             android:parentActivityName=".buscador.BuscadorLineas">
 
@@ -200,7 +200,7 @@
             android:name=".appinfo.AppInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:exported="false"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name=".appinfo.AppInfoActivity" />
@@ -213,7 +213,7 @@
             android:name=".appinfo.TraduccionesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:exported="false"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name=".appinfo.TraduccionesActivity" />
@@ -225,7 +225,7 @@
         <activity
             android:name=".infolineas.InfoLineasTabsPager"
             android:configChanges="keyboardHidden|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/buscador_online"
             android:parentActivityName=".MainActivity"
             android:windowSoftInputMode="stateHidden"
@@ -240,7 +240,7 @@
         <activity
             android:name=".infolineas.InfoLineasDatosParadaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/datos_parada"
             android:parentActivityName=".infolineas.InfoLineasTabsPager">
             <meta-data
@@ -253,7 +253,7 @@
         <activity
             android:name=".historial.HistorialActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/historial_titulo"
             android:parentActivityName=".MainActivity">
 
@@ -284,7 +284,7 @@
         <activity
             android:name=".mapas.maps2.MapasMaps2Activity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/menu_mapa"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeTab">
@@ -298,7 +298,7 @@
         <activity
             android:name=".mapas.maps2.StreetViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_3"
+            android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/menu_mapa"
             android:parentActivityName=".mapas.maps2.MapasMaps2Activity"
             android:theme="@style/Theme.TiempoBusThemeTab">
