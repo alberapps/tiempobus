@@ -4,7 +4,7 @@
     <string name="app_name">TempsBus i Tram</string>
 
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2014)</string>
+    <string name="app_autor">Alberto Montiel (2015)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
     <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Nº de parada&#8230;</string>
@@ -443,5 +443,10 @@ favorit per crear la teua llista.</string>
     <string name="noticia_zoom_reducir">Zoom(-)</string>
     <string name="bus_tram">Bus i Tram</string>
     <string name="bus_tram_titulo">AlberApps: TempsBus</string>
+    <string name="conf_conectividad_titulo_check_tiempos">Activar memòria cau temps</string>
+    <string name="conf_conectividad_titulo_desc_tiempos"> Activa Memòria cau d\'accés a Internet en temps. (Android 4.0+)</string>
+    <string name="error_twitter">No s\'han pogut recuperar dades de Twitter</string>
+    <string name="error_voz_lectura"> Error: No s\'ha pogut llegir el text</string>
+    <string name="mensaje_borrar_pregunta"> Esborrar la dada?</string>
 
 </resources>

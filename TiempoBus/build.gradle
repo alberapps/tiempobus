@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 21
-        versionCode 50
-        versionName "3.5.1"
+        versionCode 51
+        versionName "3.5.2"
     }
     sourceSets {
         main {
@@ -50,25 +50,10 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
-    /*buildTypes {
-        debug {
-            //debuggable true
 
-
-            //runProguard false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
-        }
-        release {
-            runProguard true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
-
-        }
-    }*/
     buildTypes {
         debug {
             debuggable true
-
-            //minifyEnabled true
 
             //runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
