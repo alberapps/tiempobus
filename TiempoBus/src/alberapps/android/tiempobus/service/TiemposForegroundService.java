@@ -41,13 +41,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.alarma.AlarmReceiver;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.tam.BusLlegada;
 
@@ -209,14 +209,16 @@ public class TiemposForegroundService extends Service {
             // CharSequence text = getText(R.string.foreground_service_started);
 
             // Set the icon, scrolling text and timestamp
-            Notification notification = new Notification(R.drawable.ic_stat_tiempobus_3, text, System.currentTimeMillis());
+            //Notification notification = new Notification(R.drawable.ic_stat_tiempobus_4, text, System.currentTimeMillis());
 
             // The PendingIntent to launch our activity if the user selects this
             // notification
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+            //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
             // Set the info for the views that show in the notification panel.
-            notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
+            //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
+
+            Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
 
             startForegroundCompat(R.string.foreground_service_started, notification);
 

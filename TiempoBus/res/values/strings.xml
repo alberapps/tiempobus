@@ -460,12 +460,19 @@
 	</string>
 
     <string name="referencias_infoapp" translatable="false">
-		JSoup jsoup.org, Twitter4j twitter4j.org, Google Material Design github.com/google/material-design-icons,
+		JSoup jsoup.org (MIT http://jsoup.org/license);
+        Twitter4j twitter4j.org (Apache http://www.apache.org/licenses/LICENSE-2.0);
+        Google Material Design github.com/google/material-design-icons (http://creativecommons.org/licenses/by/4.0/);
         Weather images Udacity example github.com/udacity/Sunshine,
-        zgzBus code.google.com/p/zgzbus, ZXing Team code.google.com/p/zxing,
-        Iconspedia(Yankoa) www.iconspedia.com/community/yankoa, Mapicons mapicons.nicolasmollet.com
+        zgzBus code.google.com/p/zgzbus (GPLv3. http://www.gnu.org/licenses/gpl.html);
+        ZXing Team code.google.com/p/zxing (Apache http://www.apache.org/licenses/LICENSE-2.0);
+        Mapicons mapicons.nicolasmollet.com;
+        Logo de la App compuesto con http://www.elegantthemes.com/blog/freebie-of-the-week/flat-icon-collection-update (http://www.gnu.org/licenses/gpl-2.0.html)
 	</string>
     <string name="compatibilidad">* AVISO: Android 2.2 (Froyo) puede no funcionar con Google Play Services.</string>
+
+    <string name="conf_conectividad_titulo_check_tiempos">Activar Caché Tiempos</string>
+    <string name="conf_conectividad_titulo_desc_tiempos">Activar Caché de acceso a Internet en tiempos.(Android 4.0+)</string>
 
 
 </resources>

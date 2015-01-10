@@ -42,13 +42,13 @@ public class ProcesarTiemposService {
      * @return lista bus
      * @throws Exception
      */
-    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Boolean cacheTiempos) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
         GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada));
+        GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada), cacheTiempos);
 
         // Control errores del status
         if (serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus().equals("-1")) {
@@ -171,7 +171,7 @@ public class ProcesarTiemposService {
 
         GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(linea, poste);
+        GetPasoParadaResult serviceResult = service.consultarServicio(linea, poste, false);
 
         for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 

@@ -126,6 +126,11 @@
                     android:key="conectividad_cache"
                     android:summary="@string/conf_conectividad_titulo_desc"
                     android:title="@string/conf_conectividad_titulo_check" />
+                <CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="conectividad_cache_tiempos"
+                    android:summary="@string/conf_conectividad_titulo_desc_tiempos"
+                    android:title="@string/conf_conectividad_titulo_check_tiempos" />
             </PreferenceCategory>
             <PreferenceCategory android:title="@string/conf_bd_titulo" >
                  <CheckBoxPreference

@@ -21,7 +21,6 @@ package alberapps.android.tiempobus.service;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -37,9 +36,9 @@ import android.widget.Toast;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.tam.BusLlegada;
 
@@ -197,14 +196,18 @@ public class TiemposNotificacionService extends Service {
             // CharSequence text = getText(R.string.foreground_service_started);
 
             // Set the icon, scrolling text and timestamp
-            Notification notification = new Notification(R.drawable.ic_stat_tiempobus_3, text, System.currentTimeMillis());
+            //Notification notification = new Notification(R.drawable.ic_stat_tiempobus_4, text, System.currentTimeMillis());
 
             // The PendingIntent to launch our activity if the user selects this
             // notification
-            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+            //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
             // Set the info for the views that show in the notification panel.
-            notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
+            //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
+
+
+            Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
+
 
             startForegroundCompat(R.string.foreground_service_started, notification);
 

@@ -29,8 +29,6 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -236,11 +234,12 @@ public class ParadasCercanas {
 
             }
 
-            FusedLocationProviderApi fusedLocationProviderApi = LocationServices.FusedLocationApi;
-
-            Location location = fusedLocationProviderApi.getLastLocation(context.getGoogleApiClient());
-
-            if (location == null ) {
+            if (context.mLocationClient != null && context.mLocationClient.isConnected()) {
+                // String msg = "Location = " +
+                // context.mLocationClient.getLastLocation();
+                // Toast.makeText(context.getApplicationContext(), msg,
+                // Toast.LENGTH_SHORT).show();
+            } else {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getString(R.string.gps_on)).setCancelable(false).setPositiveButton(context.getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
@@ -267,7 +266,7 @@ public class ParadasCercanas {
 
             Toast.makeText(context, context.getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
 
-
+            Location location = context.mLocationClient.getLastLocation();
 
             double latitud = location.getLatitude();
             double longitud = location.getLongitude();

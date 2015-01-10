@@ -81,6 +81,13 @@ public class ProcesarDatosLineasIsaeService {
                 //Para evitar puntos
                 datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
 
+                //Parche 27 - 127
+                if (datosLinea.getLineaNum().equals("127")) {
+                    datosLinea.setLineaNum("27");
+
+                    datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().substring(1));
+                }
+
                 // KML
                 int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
 
@@ -108,6 +115,9 @@ public class ProcesarDatosLineasIsaeService {
                     datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**Sin información]"));
                 }
 
+
+
+
                 lineas.add(datosLinea);
 
                 // 11H
@@ -128,6 +138,7 @@ public class ProcesarDatosLineasIsaeService {
                     datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
 
                 }
+
 
             }
 
@@ -156,7 +167,7 @@ public class ProcesarDatosLineasIsaeService {
     /**
      * Mapea los datos recuperados a la anterior estructura
      *
-     * @param datos
+     * @param offline
      * @return
      * @throws IOException
      */

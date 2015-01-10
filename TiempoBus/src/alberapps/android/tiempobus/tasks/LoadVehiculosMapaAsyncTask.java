@@ -33,7 +33,7 @@ import alberapps.java.util.Utilidades;
 /**
  * Tarea para la carga de datos de los vehiculos para los mapas
  */
-public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMapa> {
+public class LoadVehiculosMapaAsyncTask extends AsyncTask<Object, Void, DatosMapa> {
 
     public interface LoadVehiculosMapaAsyncTaskResponder {
         public void vehiculosMapaLoaded(DatosMapa datosMapa);
@@ -46,7 +46,7 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
     }
 
     @Override
-    protected DatosMapa doInBackground(String... datos) {
+    protected DatosMapa doInBackground(Object... datos) {
         DatosMapa datosMapa = null;
 
         String linea = null;
@@ -54,7 +54,9 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
         int url1 = 1;
         int url2 = 1;
 
-        linea = datos[0];
+        linea = (String) datos[0];
+
+        Boolean tiemposCache = (Boolean) datos[1];
 
         if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
@@ -85,14 +87,14 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 
             if (DatosPantallaPrincipal.esLineaTram(linea)) {
 
-                Log.d("mapas", "Procesar vehiculos tram: " + datos[0]);
+                Log.d("mapas", "Procesar vehiculos tram: " + linea);
 
-                vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url1);
+                vehiculosList = ProcesarCochesService.procesaVehiculos(linea, url1, tiemposCache);
 
                 Log.d("mapas", "vehiculos recuperados: " + vehiculosList.size());
 
             } else {
-                vehiculosList = ProcesarVehiculosService.procesaVehiculos(datos[0]);
+                vehiculosList = ProcesarVehiculosService.procesaVehiculos(linea, tiemposCache);
             }
 
             datosMapa = new DatosMapa();
@@ -107,7 +109,7 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<String, Void, DatosMap
 
                     Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
-                    vehiculosList = ProcesarCochesService.procesaVehiculos(datos[0], url2);
+                    vehiculosList = ProcesarCochesService.procesaVehiculos(linea, url2, tiemposCache);
 
                     datosMapa = new DatosMapa();
 

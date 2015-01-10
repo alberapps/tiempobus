@@ -99,19 +99,19 @@
                             android:id="@+id/compartir_img"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="30dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Compartir"
-                            android:src="@drawable/social_share" />
+                            android:src="@drawable/ic_share_grey600_18dp" />
 
                         <ImageView
                             android:id="@+id/favorito_editar"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginRight="30dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Modificar"
-                            android:src="@drawable/content_edit" />
+                            android:src="@drawable/ic_mode_edit_grey600_18dp" />
 
                         <ImageView
                             android:id="@+id/favorito_borrar"
@@ -119,7 +119,7 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Borrar"
-                            android:src="@drawable/content_discard" />
+                            android:src="@drawable/ic_delete_grey600_18dp" />
 
                         <TextView
                             android:id="@+id/tiempos_alerta"

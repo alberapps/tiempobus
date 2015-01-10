@@ -46,7 +46,7 @@ public class GetCochesXmlWebservice {
 	 * @return
 	 * @throws Exception
 	 */
-	public GetCochesResult consultarServicio(String linea, int consulta) throws Exception {
+	public GetCochesResult consultarServicio(String linea, int consulta, Boolean tiemposCache) throws Exception {
 
 		InputStream is = null;
 
@@ -62,7 +62,7 @@ public class GetCochesXmlWebservice {
 
 		try {
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(url, DatosTRAM.datosPost(linea)));
+			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(url, DatosTRAM.datosPost(linea), tiemposCache));
 
 			if (is != null) {
 

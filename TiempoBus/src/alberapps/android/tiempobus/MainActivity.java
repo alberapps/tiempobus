@@ -240,40 +240,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         // Gestionar alarmas
         gestionarAlarmas = new GestionarAlarmas(this, preferencias, alarmManager);
 
-        // NOTICIAS
-        boolean verificaNoticias = preferencias.getBoolean("aviso_noticias", true);
-        boolean verificaNoticiasTram = preferencias.getBoolean("aviso_noticias_tram", true);
 
-        if (verificaNoticias) {
-
-            datosPantallaPrincipal.verificarNuevasNoticias();
-
-        }
-
-        if (UtilidadesTRAM.ACTIVADO_TRAM && verificaNoticiasTram) {
-
-            datosPantallaPrincipal.verificarNuevasNoticiasTram();
-
-        }
 
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
-
-        /*try {
-
-            String nombre = actionBar.getClass().getName();
-
-            Class.forName("android.support.v7.app.ActionBarActivity");
-
-            Log.d("PRINCIPAL", "Encontrado: " + nombre);
-
-        } catch (ClassNotFoundException e) {
-
-            Log.d("PRINCIPAL", "NO Encontrado");
-
-            e.printStackTrace();
-        }*/
 
     }
 
@@ -1394,11 +1365,13 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     }
                 };
 
+                Boolean cacheTiempos = preferencias.getBoolean("conectividad_cache_tiempos", false);
+
                 // Control de disponibilidad de conexion
                 ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    loadTiemposTask = new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext());
+                    loadTiemposTask = new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext(), cacheTiempos);
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
                     showProgressBar(false);
@@ -1631,6 +1604,21 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         laActividad.datosPantallaPrincipal.cargarPie();
 
                         laActividad.tiemposAdapter.notifyDataSetChanged();
+
+
+                        // NOTICIAS
+                        boolean verificaNoticias = laActividad.preferencias.getBoolean("aviso_noticias", true);
+                        boolean verificaNoticiasTram = laActividad.preferencias.getBoolean("aviso_noticias_tram", true);
+
+                        if (verificaNoticias) {
+                            laActividad.datosPantallaPrincipal.verificarNuevasNoticias();
+                        }
+
+                        if (UtilidadesTRAM.ACTIVADO_TRAM && verificaNoticiasTram) {
+                            laActividad.datosPantallaPrincipal.verificarNuevasNoticiasTram();
+                        }
+
+
                         break;
 
 

@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_tiempobus_3_acercade" />
+                    android:src="@drawable/ic_tiempobus_4_acercade" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout1"

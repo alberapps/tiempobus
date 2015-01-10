@@ -56,7 +56,7 @@ import alberapps.android.tiempobus.util.Comunes;
  */
 public class Conectividad {
 
-    public static final String USER_AGENT = "TiempoBus/3.1.4 (http://alberapps.blogspot.com; alberapps@gmail.com)";
+    public static final String USER_AGENT = "TiempoBus/3.5 (http://alberapps.blogspot.com; alberapps@gmail.com)";
 
     /**
      * Conexion con post y codificacion UTF-8
@@ -67,7 +67,7 @@ public class Conectividad {
      * @param post
      * @return
      */
-    public static String conexionPostUtf8(String urlPost, String post) throws Exception {
+    public static String conexionPostUtf8(String urlPost, String post, Boolean cacheTiempos) throws Exception {
 
         // Para Froyo
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
@@ -101,7 +101,13 @@ public class Conectividad {
 
             urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-            urlConnection.addRequestProperty("Cache-Control", "no-cache");
+            if(cacheTiempos != null && cacheTiempos){
+                urlConnection.addRequestProperty("Cache-Control", "max-age=0");
+                Log.d("CONEXION", "Con cache Tiempos");
+            }else {
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                Log.d("CONEXION", "Sin cache Tiempos");
+            }
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
             Utilidades.writeIt(out, post);

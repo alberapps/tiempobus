@@ -74,6 +74,8 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         paradaI = (Integer) datos[0];
 
+        Boolean cacheTiempos = (Boolean) datos[2];
+
         int url1 = 1;
         int url2 = 1;
 
@@ -109,9 +111,9 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             if (DatosPantallaPrincipal.esTram(parada)) {
 
-                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1);
+                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
             } else {
-                llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI);
+                llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI, cacheTiempos);
             }
 
             datosRespuesta.setListaBusLlegada(llegadasBus);
@@ -138,7 +140,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
                     Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
-                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2);
+                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2, cacheTiempos);
 
                     datosRespuesta.setListaBusLlegada(llegadasBus);
                 } catch (Exception e1) {

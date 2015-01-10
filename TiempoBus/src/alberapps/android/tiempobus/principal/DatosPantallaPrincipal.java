@@ -387,6 +387,30 @@ public class DatosPantallaPrincipal {
      */
     public void verificarNuevasNoticias() {
 
+
+        String fechaAvisoBus = PreferencesUtil.getCache(context, "cache_aviso_bus");
+
+        //Si no hay valor almacenarlo y continuar
+        if (fechaAvisoBus == null || fechaAvisoBus.equals("")) {
+            String control = String.valueOf((new Date()).getTime());
+            PreferencesUtil.putCache(context, "cache_aviso_bus", control);
+        } else {
+
+            Date fecha = new Date(Long.parseLong(fechaAvisoBus));
+
+            Date ahora = new Date();
+
+            //Si la diferencia es menor a 30 minutos. No continuar
+            if (ahora.getTime() - fecha.getTime() < 30 * 60 * 1000) {
+                return;
+            } else {
+                String control = String.valueOf((new Date()).getTime());
+                PreferencesUtil.putCache(context, "cache_aviso_bus", control);
+            }
+
+        }
+
+
         /**
          * Sera llamado cuando la tarea de cargar las noticias
          */
@@ -494,8 +518,8 @@ public class DatosPantallaPrincipal {
 
             Date ahora = new Date();
 
-            //Si la diferencia es menor a 15 minutos. No continuar
-            if (ahora.getTime() - fecha.getTime() < 15 * 60 * 1000) {
+            //Si la diferencia es menor a 30 minutos. No continuar
+            if (ahora.getTime() - fecha.getTime() < 30 * 60 * 1000) {
                 return;
             } else {
                 String control = String.valueOf((new Date()).getTime());
@@ -808,6 +832,9 @@ public class DatosPantallaPrincipal {
 
         context.tiemposView.addHeaderView(vheader);
 
+
+
+
     }
 
     /**
@@ -906,7 +933,7 @@ public class DatosPantallaPrincipal {
                 dialog.setTitle(context.getString(R.string.novedades_titulo));
 
                 dialog.setMessage(context.getString(R.string.info_tram_inicio));
-                dialog.setIcon(R.drawable.ic_tiempobus_3);
+                dialog.setIcon(R.drawable.ic_tiempobus_4);
 
                 dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
@@ -962,7 +989,7 @@ public class DatosPantallaPrincipal {
             dialog.setTitle(context.getString(R.string.analytics_on));
 
             dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
-            dialog.setIcon(R.drawable.ic_tiempobus_3);
+            dialog.setIcon(R.drawable.ic_tiempobus_4);
 
             dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -1015,7 +1042,7 @@ public class DatosPantallaPrincipal {
             dialog.setTitle(context.getString(R.string.analytics_on));
 
             dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
-            dialog.setIcon(R.drawable.ic_tiempobus_3);
+            dialog.setIcon(R.drawable.ic_tiempobus_4);
 
             dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

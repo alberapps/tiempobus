@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -46,11 +45,9 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -77,7 +74,7 @@ import alberapps.java.tam.mapas.DatosMapa;
 
 
 public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
-        OnMyLocationButtonClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        OnMyLocationButtonClickListener {
 
     public String lineaSeleccionada;
     public String lineaSeleccionadaDesc;
@@ -88,7 +85,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
     public AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
     public AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
     public AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
-    public AsyncTask<String, Void, DatosMapa> taskVehiculosMapa = null;
+    public AsyncTask<Object, Void, DatosMapa> taskVehiculosMapa = null;
     public AsyncTask<String, Void, DatosMapa[]> taskDatosMapaV3 = null;
 
     public ProgressDialog dialog;
@@ -133,7 +130,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
 
     private TextView mTopText;
 
-    //public LocationClient mLocationClient;
+    public LocationClient mLocationClient;
 
     public String distancia = ParadasCercanas.DISTACIA_CERCANA;
 
@@ -141,22 +138,6 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
 
     public boolean flagIda = true;
     public boolean flagVuelta = true;
-
-    /**
-     * Google API client.
-     */
-    protected GoogleApiClient mGoogleApiClient;
-
-
-    /**
-     * Request code for auto Google Play Services error resolution.
-     */
-    protected static final int REQUEST_CODE_RESOLUTION = 1;
-
-    /**
-     * Next available request code.
-     */
-    protected static final int NEXT_AVAILABLE_REQUEST_CODE = 2;
 
 
     // These settings are the same as the settings for the map. They will in
@@ -205,20 +186,15 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
         super.onResume();
         setUpMapIfNeeded();
         setUpLocationClientIfNeeded();
-        //mLocationClient.connect();
+        mLocationClient.connect();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //if (mLocationClient != null) {
-          //  mLocationClient.disconnect();
-        //}
-
-        if (mGoogleApiClient != null) {
-            mGoogleApiClient.disconnect();
+        if (mLocationClient != null) {
+            mLocationClient.disconnect();
         }
-
     }
 
     private void setUpMapIfNeeded() {
@@ -237,32 +213,9 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
     }
 
     private void setUpLocationClientIfNeeded() {
-        /*if (mLocationClient == null) {
+        if (mLocationClient == null) {
             mLocationClient = new LocationClient(getApplicationContext(), this, // ConnectionCallbacks
                     this); // OnConnectionFailedListener
-        }*/
-
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
-        }
-        mGoogleApiClient.connect();
-
-
-        //LocationRequest locationRequest = LocationRequest.create().setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        //BroadcastReceiver.PendingResult<Status> result = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, locationListener);
-
-
-    }
-
-    /**
-     * Handles resolution callbacks.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_RESOLUTION && resultCode == RESULT_OK) {
-            mGoogleApiClient.connect();
         }
     }
 
@@ -321,7 +274,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
 
     public boolean onMarkerClick(final Marker marker) {
         /*
-		 * if (marker.equals(mPerth)) { // This causes the marker at Perth to
+         * if (marker.equals(mPerth)) { // This causes the marker at Perth to
 		 * bounce into position when it is clicked. final Handler handler = new
 		 * Handler(); final long start = SystemClock.uptimeMillis(); final long
 		 * duration = 1500;
@@ -561,9 +514,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-		/*
-		 * case R.id.menu_search: onSearchRequested(); break;
-		 */
+
             case R.id.menu_satelite:
 
                 if (mMap.getMapType() == GoogleMap.MAP_TYPE_SATELLITE) {
@@ -575,32 +526,6 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
                 }
 
                 break;
-            /*case R.id.menu_ida:
-                if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-                    gestionarLineas.cargarOcultarIda();
-                }
-
-                break;
-            case R.id.menu_vuelta:
-                if (modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-                    gestionarLineas.cargarOcultarVuelta();
-                }
-                break;
-            case R.id.menu_cercanas:
-
-                detenerTareas();
-
-                paradasCercanas.seleccionarProximidad();
-
-                break;
-            case R.id.menu_posicion:
-                // miLocalizacion(false);
-                break;
-            case R.id.menu_search_online:
-
-                selectorLinea.cargarDatosLineasModal();
-
-                break;*/
 
             case R.id.menu_search:
 
@@ -615,10 +540,6 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
                 paradasCercanas.seleccionarProximidad();
 
                 break;
-
-		/*
-		 * case R.id.menu_search_offline: launchBusesOffline(); break;
-		 */
 
 
         }
@@ -640,12 +561,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
      */
 
     public void onConnected(Bundle connectionHint) {
-        //mLocationClient.requestLocationUpdates(REQUEST, this); // LocationListener
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
+        mLocationClient.requestLocationUpdates(REQUEST, this); // LocationListener
     }
 
     /**
@@ -662,17 +578,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
      */
 
     public void onConnectionFailed(ConnectionResult result) {
-        //Log.i(TAG, "GoogleApiClient connection failed: " + result.toString());
-        if (!result.hasResolution()) {
-            // show the localized error dialog.
-            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
-            return;
-        }
-        try {
-            result.startResolutionForResult(this, REQUEST_CODE_RESOLUTION);
-        } catch (IntentSender.SendIntentException e) {
-            //Log.e(TAG, "Exception while starting resolution activity", e);
-        }
+        // Do nothing
     }
 
     public boolean onMyLocationButtonClick() {
@@ -806,7 +712,6 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -816,19 +721,11 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 
         super.onStop();
 
-    }
-
-    /**
-     * Getter for the {@code GoogleApiClient}.
-     */
-    public GoogleApiClient getGoogleApiClient() {
-        return mGoogleApiClient;
     }
 
 }

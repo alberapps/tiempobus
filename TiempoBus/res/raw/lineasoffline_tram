@@ -7,10 +7,10 @@
 <select name="LineasBox" id="LineasBox" >
 	
 	<option value="L1">L1 Luceros-Benidorm</option>
+	<option value="L2">L2 Luceros-San Vicente</option>
 	<option value="L3">L3 Luceros-El Campello</option>
 	<option value="L4">L4 Luceros-Pl. la Coru&ntilde;a</option>
 	<option value="L9">L9 Benidorm-D&eacute;nia</option>
-	<option value="L2">L2 Luceros-San Vicente</option>
 	
 </select>
 

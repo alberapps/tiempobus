@@ -35,13 +35,13 @@ public class ProcesarVehiculosService {
      * @throws Exception
      */
 
-    public static List<InfoVehiculo> procesaVehiculos(String linea) throws Exception {
+    public static List<InfoVehiculo> procesaVehiculos(String linea, Boolean tiemposCache) throws Exception {
 
         GetVehiculosXmlWebservice service = new GetVehiculosXmlWebservice();
 
         List<InfoVehiculo> vehiculosList = null;
 
-        vehiculosList = service.consultarServicio(linea).getInfoVehiculoList();
+        vehiculosList = service.consultarServicio(linea, tiemposCache).getInfoVehiculoList();
 
         return vehiculosList;
     }

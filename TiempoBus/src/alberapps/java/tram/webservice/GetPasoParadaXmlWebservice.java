@@ -54,7 +54,7 @@ public class GetPasoParadaXmlWebservice {
      * @return
      * @throws Exception
      */
-    public GetPasoParadaResult consultarServicio(String linea, String parada, int consulta) throws Exception {
+    public GetPasoParadaResult consultarServicio(String linea, String parada, int consulta, Boolean cacheTiempos) throws Exception {
 
         InputStream is = null;
 
@@ -74,10 +74,10 @@ public class GetPasoParadaXmlWebservice {
 
         try {
 
-            String datos = Conectividad.conexionPostUtf8(url, datosPost(linea, parada));
+            String datos = Conectividad.conexionPostUtf8(url, datosPost(linea, parada), cacheTiempos);
 
             if (datos == null) {
-                datos = Conectividad.conexionPostUtf8(urlAux, datosPost(linea, parada));
+                datos = Conectividad.conexionPostUtf8(urlAux, datosPost(linea, parada), cacheTiempos);
             }
 
             if (datos != null) {

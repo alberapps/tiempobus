@@ -17,6 +17,13 @@
  */
 package alberapps.java.tam.webservice;
 
+import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,14 +36,8 @@ import java.util.Locale;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
-import android.util.Log;
 
 public class GetPasoParadaXmlWebservice {
 
@@ -50,7 +51,7 @@ public class GetPasoParadaXmlWebservice {
 	 * @return
 	 * @throws Exception
 	 */
-	public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
+	public GetPasoParadaResult consultarServicio(String linea, String parada, Boolean cacheTiempos) throws Exception {
 
 		InputStream is = null;
 
@@ -58,7 +59,7 @@ public class GetPasoParadaXmlWebservice {
 		
 		try {
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada)));
+			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada), cacheTiempos));
 
 			if (is != null) {
 

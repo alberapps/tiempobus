@@ -847,11 +847,38 @@ public class GestionarTarjetaInfo {
      */
     public void controlActualizarDB(final TextView tw) {
 
+
+
+
         // Verificar si hay que consultar la version
         boolean verificar = preferencias.getBoolean("control_verificar_actualiza", true);
         if (!verificar) {
             return;
         }
+
+
+        String fechaControlAct = PreferencesUtil.getCache(context, "cache_aviso_update");
+
+        //Si no hay valor almacenarlo y continuar
+        if (fechaControlAct == null || fechaControlAct.equals("")) {
+            String control = String.valueOf((new Date()).getTime());
+            PreferencesUtil.putCache(context, "cache_aviso_update", control);
+        } else {
+
+            Date fecha = new Date(Long.parseLong(fechaControlAct));
+
+            Date ahora = new Date();
+
+            //Si la diferencia es menor a 48 horas. No continuar
+            if (ahora.getTime() - fecha.getTime() < 48 * 60 * 60 * 1000) {
+                return;
+            } else {
+                String control = String.valueOf((new Date()).getTime());
+                PreferencesUtil.putCache(context, "cache_aviso_update", control);
+            }
+
+        }
+
 
         LoadActualizarBDAsyncTaskResponder loadActualizarBDAsyncTaskResponder = new LoadActualizarBDAsyncTaskResponder() {
             public void ActualizarBDLoaded(final String respuesta) {
@@ -963,7 +990,7 @@ public class GestionarTarjetaInfo {
         dialog.setTitle(context.getString(R.string.actualizacion_titulo));
 
         dialog.setMessage(context.getString(R.string.actualizacion_desc));
-        dialog.setIcon(R.drawable.ic_tiempobus_3);
+        dialog.setIcon(R.drawable.ic_tiempobus_4);
 
         dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

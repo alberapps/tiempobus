@@ -36,11 +36,15 @@
         >
 
 
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:baselineAligned="false">
+
+
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -79,9 +83,10 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/primary_dark_material_light"
                     android:textStyle="bold"
+                    android:drawableLeft="@drawable/ic_directions_grey600_18dp"
 
                     />
 

@@ -201,7 +201,9 @@ public class GestionVehiculos {
 
                         public void run() {
 
-                            context.taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(context.lineaSeleccionadaNum);
+                            Boolean cacheTiempos = preferencias.getBoolean("conectividad_cache_tiempos", false);
+
+                            context.taskVehiculosMapa = new LoadVehiculosMapaAsyncTask(loadVehiculosMapaAsyncTaskResponder).execute(context.lineaSeleccionadaNum, cacheTiempos);
 
                         }
                     });

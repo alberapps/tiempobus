@@ -44,7 +44,7 @@ public class ProcesarTiemposTramIsaeService {
      * @throws Exception
      */
 
-    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta, Boolean cacheTiempos) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
@@ -62,7 +62,7 @@ public class ProcesarTiemposTramIsaeService {
             // Integer.toString(parada), consulta);
 
             // Nuevo modo de consulta. * recupera todas las lineas
-            busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta);
+            busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta, cacheTiempos);
 
         } catch (Exception e) {
 
@@ -165,7 +165,7 @@ public class ProcesarTiemposTramIsaeService {
      * @return
      * @throws Exception
      */
-    public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta) throws Exception {
+    public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta, Boolean cacheTiempos) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
@@ -178,7 +178,7 @@ public class ProcesarTiemposTramIsaeService {
         }
 
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta);
+        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta, cacheTiempos);
 
         for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 
@@ -255,7 +255,7 @@ public class ProcesarTiemposTramIsaeService {
             // GetPasoParadaWebservice.URL1);
 
             // Cambio de metodo por discrepancias en cabeceras
-            busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1);
+            busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1, false);
 
             for (int i = 0; i < busesList.size(); i++) {
 

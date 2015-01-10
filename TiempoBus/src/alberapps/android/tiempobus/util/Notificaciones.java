@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -62,6 +63,11 @@ public class Notificaciones {
     public static int NOTIFICACION_ALARMAS = 1;
 
     /**
+     * Servicio
+     */
+    public static int NOTIFICACION_SERVICIO_ALERTAS = 6;
+
+    /**
      * Notificaciones de Base de Datos
      *
      * @param contexto
@@ -75,8 +81,9 @@ public class Notificaciones {
 
             NotificationCompat.Builder mBuilder = null;
 
-            mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.recarga_bd))
-                    .setContentText(contexto.getString(R.string.recarga_bd_desc));
+            mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
+                    .setContentText(contexto.getString(R.string.recarga_bd_desc))
+                    .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap());
 
             mBuilder.setAutoCancel(false);
 
@@ -169,8 +176,10 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
-                .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas);
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
+                .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas)
+                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         mBuilder.setAutoCancel(true);
 
@@ -256,8 +265,10 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
-                .setContentText(contexto.getString(R.string.nuevas_noticias_b));
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
+                .setContentText(contexto.getString(R.string.nuevas_noticias_b))
+                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         mBuilder.setAutoCancel(true);
 
@@ -351,7 +362,11 @@ public class Notificaciones {
             texto = contexto.getString(R.string.notification_title);
         }
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_3).setContentTitle(texto).setContentText(aviso);
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setCategory(NotificationCompat.CATEGORY_ALARM)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         // Led
         int defaults = Notification.DEFAULT_LIGHTS;
@@ -413,5 +428,56 @@ public class Notificaciones {
         mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
 
     }
+
+
+    /**
+     * Notificacion servicio alertas
+     *
+     * @param contexto
+     */
+    public static Notification notificacionServicioAlerta(Context contexto, CharSequence aviso) {
+
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+
+        NotificationCompat.Builder mBuilder = null;
+
+        String texto = contexto.getString(R.string.foreground_service);
+
+
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+
+
+        // ticker
+        mBuilder.setTicker(texto);
+
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(contexto, MainActivity.class);
+
+        // The stack builder object will contain an artificial back stack for
+        // the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        //mNotificationManager.notify(NOTIFICACION_SERVICIO_ALERTAS, mBuilder.build());
+
+        return mBuilder.build();
+
+    }
+
 
 }
