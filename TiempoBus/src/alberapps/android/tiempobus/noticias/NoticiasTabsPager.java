@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -182,6 +183,15 @@ public class NoticiasTabsPager extends ActionBarActivity {
         /*if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
             outState.putString("tab", mTabHost.getCurrentTabTag());
         }*/
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        finish();
+        startActivity(getIntent());
+
     }
 
     @Override

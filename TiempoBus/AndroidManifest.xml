@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="alberapps.android.tiempobus"
     android:installLocation="auto"
-    android:versionCode="50"
-    android:versionName="3.5.1">
+    android:versionCode="52"
+    android:versionName="3.5.2.1">
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -104,7 +104,7 @@
 
         <activity
             android:name=".noticias.NoticiasTabsPager"
-            android:configChanges="keyboardHidden|locale"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/tit_noticias"
             android:parentActivityName=".MainActivity"
@@ -224,7 +224,7 @@
 
         <activity
             android:name=".infolineas.InfoLineasTabsPager"
-            android:configChanges="keyboardHidden|locale"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:icon="@drawable/ic_tiempobus_4"
             android:label="@string/buscador_online"
             android:parentActivityName=".MainActivity"

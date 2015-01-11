@@ -447,7 +447,8 @@ public class Notificaciones {
 
         mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
                 .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
-                .setCategory(NotificationCompat.CATEGORY_SERVICE);
+                .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
 
         // ticker
