@@ -20,11 +20,11 @@
     
     <string name="app_name">TempsBus Widgets</string>
     
-    <string name="app_name_title">TempsBus Tramvia-TRAM</string>
+    <string name="app_name_title">TempsBus i Tram</string>
     
     <string name="configura">Configura</string>
     
-    <string name="alta_1">El bus/tram de la parada actual ha estat afegit a TiempoBus Widgets.</string>
+    <string name="alta_1">El bus/tram de la parada actual ha estat afegit a TempsBus Widgets.</string>
     
     <string name="alta_2">Seleccioneu "Actualitzar" al widget per visualitzar les noves dades.</string>
     
@@ -52,7 +52,7 @@
     
     <string name="guion">-</string>
     
-    <string name="aviso_sin_datos">Si ja tens parades carregades, prem \'Actualitzar\'. En cas contrari accedeix a TiempoBus i selecciona el bus a la llista de temps.</string>
+    <string name="aviso_sin_datos">Si ja tens parades carregades, prem \'Actualitzar\'. En cas contrari accedeix a TempsBus i selecciona les parades a la llista de temps, amb l\'opció d\'enviar al Widget. Recorda que necessites tindre instal·lada l\'app TempsBus.</string>
     
     <string name="literal_min">min</string>
     

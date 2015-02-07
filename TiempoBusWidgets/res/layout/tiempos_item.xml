@@ -18,64 +18,77 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="6dip" >
+    android:padding="4dip" >
 
     <LinearLayout
         android:id="@id/t_item"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_sombra" >
+        >
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="1dp">
 
             <TextView
                 android:id="@+id/bus_linea"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5sp"
-                android:layout_marginRight="5sp"
-                android:cacheColorHint="#00000000"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circulo_azul"
                 android:gravity="center"
-                android:shadowColor="#ff335e80"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/color_android"
+                android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bus_parada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                               
+
                 android:layout_marginLeft="5sp"
                 android:layout_marginRight="5sp"
-                android:cacheColorHint="#00000000"
+
                 android:gravity="center"
-                android:shadowColor="#ff335e80"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"
+
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/color_android"
+                android:textColor="@color/primary_dark_material_light"
                 android:textStyle="bold" />
-        </LinearLayout>
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+
+
+
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="1dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
+
 
             <TextView
                 android:id="@+id/bus_destino"
@@ -84,18 +97,34 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/guion"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/color_android"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_dark_material_light"
+                android:textStyle="bold"
+                android:drawableLeft="@drawable/ic_directions_grey600_18dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tiempo_principal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/guion"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/mi_material_blue_indigo"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/bus_proximo"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/color_android" />
+                android:textColor="@color/primary_dark_material_light"
+
+                />
+
         </LinearLayout>
     </LinearLayout>
 

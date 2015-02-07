@@ -20,7 +20,7 @@
     
     <string name="app_name">TiempoBus Widgets</string>
     
-    <string name="app_name_title">TiempoBus Tranvía-TRAM</string>
+    <string name="app_name_title">TiempoBus y Tram</string>
     
     <string name="configura">Configurar</string>
     
@@ -52,7 +52,7 @@
     
     <string name="guion">-</string>
     
-    <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \'Actualizar\'. En caso contrario accede a TiempoBus y seleccionalas en la lista de tiempos.</string>
+    <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \'Actualizar\'. En caso contrario accede a TiempoBus y selecciónalas en la lista de tiempos, con la opción de enviar al Widget. Recuerda que necesitas tener instalada la app TiempoBus.</string>
     
     <string name="literal_min">min</string>
     
@@ -69,5 +69,6 @@
     <string name="preferencias_actualizar_des">Actualizar datos</string>
     <string name="preferencias_actualizar_des_sum">Actualizar los tiempos al desbloquear el dispositivo</string>
     <string name="hora">Hora</string>
-    
+    <string name="info_url" translatable="false">alberapps.blogspot.com</string>
+
 </resources>

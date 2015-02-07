@@ -23,9 +23,14 @@ import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+import android.widget.TextView;
+
+import alberapps.java.tam.UtilidadesTAM;
 
 /**
  * This is the service that provides the factory to be bound to the collection
@@ -71,6 +76,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 		// Get the data for this position from the content provider
 		String linea = "";
 		String tiempo = "";
+        String tiempoPrimero = "";
 		String destino = "";
 		String parada = "";
 		if (mCursor.moveToPosition(position)) {
@@ -80,16 +86,13 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 			final int paradaColIndex = mCursor.getColumnIndex(TiemposDataProvider.Columns.PARADA);
 
 			linea = mCursor.getString(lineaColIndex);
-			tiempo = controlAviso(mCursor.getString(tiempoColIndex));
-			
-			// min.
-			tiempo = tiempo.replaceAll("min.", mContext.getString(R.string.literal_min));
-			
+			tiempo = controlAviso(mCursor.getString(tiempoColIndex), false);
+
+
+            tiempoPrimero = controlAviso(mCursor.getString(tiempoColIndex), true);
+
 			destino = mCursor.getString(destinoColIndex);
-			
-			if(destino != null && !destino.equals("")){
-				destino = ">> "+destino;
-			}
+
 			
 			parada = mCursor.getString(paradaColIndex);
 		}
@@ -108,6 +111,9 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 		rv.setTextViewText(R.id.bus_destino, destino);
 		rv.setTextViewText(R.id.bus_proximo, tiempo);
 		rv.setTextViewText(R.id.bus_parada, parada);
+        rv.setTextViewText(R.id.tiempo_principal, tiempoPrimero);
+
+        //formatoLinea(mContext, rv..setba.busLinea, bus.getLinea());
 
 		// Set the click intent so that we can handle it and show a toast
 		// message
@@ -120,64 +126,169 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 		return rv;
 	}
 
-	/**
-	 * Modificación para traducir por idioma
-	 * 
-	 * @param proximo
-	 * @return
-	 */
-	private String controlAviso(String proximo) {
 
-		String traducido = "";
 
-		if (proximo != null && !proximo.equals("")) {
+    /**
+     * Colores lineas
+     *
+     * @param contexto
+     * @param busLinea
+     * @param linea
+     */
+    public static void formatoLinea(Context contexto, TextView busLinea, String linea) {
 
-			String[] procesa = proximo.split(";");
+        //Color circulo
+        if (linea.trim().equals("L1")) {
 
-			String tiempo1 = "";
-			String tiempo2 = "";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+            }
+        } else if (linea.trim().equals("L2")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+            }
 
-			if (procesa[0].equals("enlaparada")) {
+        } else if (linea.trim().equals("L3")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+            }
+        } else if (linea.trim().equals("L4")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+            }
+        } else if (UtilidadesTAM.isBusUrbano(linea.trim())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+            }
+        }
 
-				tiempo1 = mContext.getString(R.string.tiempo_m_1);
 
-			} else if (procesa[0].equals("sinestimacion")) {
+        //Size
+        if (linea.length() > 2) {
+            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        } else {
+            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        }
 
-				tiempo1 = mContext.getString(R.string.tiempo_m_2);
 
-			} else {
+    }
 
-				tiempo1 = procesa[0];
 
-			}
 
-			if (procesa[1].equals("enlaparada")) {
 
-				tiempo2 = mContext.getString(R.string.tiempo_m_1);
+    /**
+     * Modificación para traducir por idioma
+     *
+     * @param proximo
+     * @return
+     */
+    private String controlAviso(String proximo, boolean primero) {
 
-			} else if (procesa[1].equals("sinestimacion")) {
+        String traducido = "";
 
-				tiempo2 = mContext.getString(R.string.tiempo_m_2);
+        String nuevoLiteral = "";
 
-			} else {
+        if(proximo != null && !proximo.trim().equals("")) {
 
-				tiempo2 = procesa[1];
+            String[] procesa = proximo.split(";");
 
-			}
+            // TODO para el TRAM
+            if (procesa[0].equals("TRAM")) {
+                return procesa[1];
+            }
 
-			traducido = tiempo1 + " " + mContext.getString(R.string.tiempo_m_3) + " " + tiempo2;
+            String tiempo1 = "";
+            String tiempo2 = "";
 
-		} else {
+            if (procesa[0].equals("enlaparada")) {
 
-			// Sin informacion para mostrar
+                tiempo1 = mContext.getString(R.string.tiempo_m_1);
 
-			traducido = mContext.getString(R.string.empty_view_text);
+            } else if (procesa[0].equals("sinestimacion")) {
 
-		}
+                tiempo1 = mContext.getString(R.string.tiempo_m_2);
 
-		return traducido;
+            } else {
 
-	}
+                //tiempo1 = String.format("%02d",Integer.parseInt(procesa[0]));
+
+                tiempo1 = procesa[0];
+
+            /*if(tiempo1.length() == 14){
+                tiempo1 = "0".concat(tiempo1);
+            }*/
+
+            }
+
+            if (procesa[1].equals("enlaparada")) {
+
+                tiempo2 = mContext.getString(R.string.tiempo_m_1);
+
+            } else if (procesa[1].equals("sinestimacion")) {
+
+                tiempo2 = mContext.getString(R.string.tiempo_m_2);
+
+
+            } else {
+
+                //tiempo2 = String.format("%02d",Integer.parseInt(procesa[1]));
+
+                tiempo2 = procesa[1];
+
+            /*if(tiempo2.length() == 14){
+                tiempo2 = "0".concat(tiempo2);
+            }*/
+
+            }
+
+
+
+            if (primero) {
+
+                traducido = tiempo1.replaceAll("min.", mContext.getString(R.string.literal_min)).replace("(", "- ").replace(")", "");
+
+                nuevoLiteral = traducido;
+
+            } else {
+
+
+                traducido = tiempo1 + " " + mContext.getString(R.string.tiempo_m_3) + " " + tiempo2;
+
+                //traducido = "> " + tiempo1 + "\n> " + tiempo2;
+
+                // min.
+                nuevoLiteral = traducido.replaceAll("min.", mContext.getString(R.string.literal_min));//.replace("(", "\"").replace(")", "\"");
+
+
+            }
+
+        }else{
+
+            nuevoLiteral = mContext.getString(R.string.tiempo_m_2);
+
+        }
+
+        return nuevoLiteral;
+
+    }
+
+
 
 	public RemoteViews getLoadingView() {
 		// We aren't going to return a default loading view in this sample
