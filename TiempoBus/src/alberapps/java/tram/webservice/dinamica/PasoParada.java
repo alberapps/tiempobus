@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tram.webservice;
+package alberapps.java.tram.webservice.dinamica;
 
 
 import java.io.Serializable;
@@ -50,6 +50,15 @@ public class PasoParada implements Serializable {
         e1 = new InfoParada();
         e2 = new InfoParada();
 
+    }
+
+    public PasoParada(InfoParada e1, InfoParada e2, String linea, String parada, String ruta, String sublinea) {
+        this.e1 = e1;
+        this.e2 = e2;
+        this.linea = linea;
+        this.parada = parada;
+        this.ruta = ruta;
+        this.sublinea = sublinea;
     }
 
     public boolean isCabecera() {

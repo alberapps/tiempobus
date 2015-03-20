@@ -18,6 +18,8 @@
  */
 package alberapps.java.util;
 
+import android.util.Log;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -36,8 +38,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import alberapps.android.tiempobus.util.UtilidadesUI;
-
-import android.util.Log;
 
 /**
  * Clase de utilidades
@@ -129,6 +129,54 @@ public class Utilidades {
      * @param fecha
      * @return
      */
+    public static String getHoraString(Date fecha) {
+
+        DateFormat df = new SimpleDateFormat("HH:mm", UtilidadesUI.getLocaleUsuario());
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
+    /**
+     * String desde date
+     *
+     * @param fecha
+     * @return
+     */
+    public static String getFechaStringSinHora(Date fecha) {
+
+        DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, UtilidadesUI.getLocaleUsuario());
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
+    /**
+     * String desde date
+     *
+     * @param fecha
+     * @return
+     */
     public static String getFechaSQL(Date fecha) {
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
@@ -152,6 +200,25 @@ public class Utilidades {
         Date fecha = new Date();
 
         DateFormat df = new SimpleDateFormat("ddMMyyyy", Locale.US);
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
+
+    public static String getFechaES(Date fecha) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
         String fechaString = null;
 

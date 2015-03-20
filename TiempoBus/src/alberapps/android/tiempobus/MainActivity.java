@@ -1588,7 +1588,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                                 laActividad.tiemposAdapter.add(laActividad.buses.get(i));
                             }
 
-                            laActividad.tiemposAdapter.setBuses(laActividad.buses);
+                            laActividad.tiemposAdapter.setBuses(laActividad.buses, laActividad.paradaActual);
 
                         } else {
 

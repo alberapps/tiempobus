@@ -372,6 +372,7 @@
     
     <string name="foreground_service_started_2">Verify time every 60 seconds</string>
     <string name="bus_tram">Bus and Tram</string>
+    <string name="horarios_tram_aviso">Tours are retrieved directly from the site tramalicante.es</string>
 
 
 </resources>

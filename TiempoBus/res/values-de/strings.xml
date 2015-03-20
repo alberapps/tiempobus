@@ -374,5 +374,6 @@
     
     <string name="foreground_service_started_2">Es beweist Zeit alle 60 Sekunden.</string>
     <string name="bus_tram">Bus und Tram</string>
+    <string name="horarios_tram_aviso">Die Verläufe werden direkt von tramalicante.es erlangt</string>
 
 </resources>

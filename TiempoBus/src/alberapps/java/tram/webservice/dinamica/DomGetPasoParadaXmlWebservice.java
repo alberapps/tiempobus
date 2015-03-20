@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tram.webservice;
+package alberapps.java.tram.webservice.dinamica;
 
 import android.util.Log;
 
@@ -41,7 +41,7 @@ import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
-public class GetPasoParadaXmlWebservice {
+public class DomGetPasoParadaXmlWebservice {
 
     public static final int URL1 = 1;
     public static final int URL2 = 2;
@@ -74,10 +74,10 @@ public class GetPasoParadaXmlWebservice {
 
         try {
 
-            String datos = Conectividad.conexionPostUtf8(url, datosPost(linea, parada), cacheTiempos);
+            String datos = Conectividad.conexionPostUtf8NoKeepAlive(url, datosPost(linea, parada), cacheTiempos);
 
             if (datos == null) {
-                datos = Conectividad.conexionPostUtf8(urlAux, datosPost(linea, parada), cacheTiempos);
+                datos = Conectividad.conexionPostUtf8NoKeepAlive(urlAux, datosPost(linea, parada), cacheTiempos);
             }
 
             if (datos != null) {

@@ -76,12 +76,14 @@ public class Conectividad {
 
         }
 
+
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
 
         String datos = null;
 
         try {
+
 
             // Crear url
             URL url = new URL(urlPost);
@@ -101,10 +103,10 @@ public class Conectividad {
 
             urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-            if(cacheTiempos != null && cacheTiempos){
+            if (cacheTiempos != null && cacheTiempos) {
                 urlConnection.addRequestProperty("Cache-Control", "max-age=0");
                 Log.d("CONEXION", "Con cache Tiempos");
-            }else {
+            } else {
                 urlConnection.addRequestProperty("Cache-Control", "no-cache");
                 Log.d("CONEXION", "Sin cache Tiempos");
             }
@@ -129,6 +131,99 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
         }
+
+
+        return datos;
+
+    }
+
+    /**
+     * Conexion desactivando el keepAlive
+     * Prueba para evitar los problemas del servidor
+     *
+     * @param urlPost
+     * @param post
+     * @param cacheTiempos
+     * @return
+     * @throws Exception
+     */
+    public static String conexionPostUtf8NoKeepAlive(String urlPost, String post, Boolean cacheTiempos) throws Exception {
+
+        // Para Froyo
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+
+            return conexionPostUtf8Froyo(urlPost, post);
+
+        }
+
+
+        // Abrir Conexion
+        HttpURLConnection urlConnection = null;
+
+        String datos = null;
+
+        try {
+
+            if (cacheTiempos != null && cacheTiempos) {
+                System.setProperty("http.keepAlive", "false");
+            }
+
+            // Crear url
+            URL url = new URL(urlPost);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setDoOutput(true);
+            // urlConnection.setChunkedStreamingMode(0);
+            urlConnection.setFixedLengthStreamingMode(post.length());
+
+            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setDoInput(true);
+
+            urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+
+            urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+
+            /*if (cacheTiempos != null && cacheTiempos) {
+                urlConnection.addRequestProperty("Cache-Control", "max-age=0");
+                Log.d("CONEXION", "Con cache Tiempos");
+            } else {*/
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                //Log.d("CONEXION", "Sin cache Tiempos");
+            //}
+
+            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+            Utilidades.writeIt(out, post);
+
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            datos = Utilidades.obtenerStringDeStreamUTF8(in);
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            if (cacheTiempos != null && cacheTiempos) {
+                System.setProperty("http.keepAlive", "true");
+            }
+
+            throw new Exception("Error al acceder al servicio");
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            if (cacheTiempos != null && cacheTiempos) {
+                System.setProperty("http.keepAlive", "true");
+            }
+
+        }
+
 
         return datos;
 

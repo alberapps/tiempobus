@@ -1,6 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
+ *  Copyright (C) 2012 Alberto Montiel
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tram.webservice;
+package alberapps.java.tam.webservice.dinamica;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,35 +23,40 @@ import java.util.List;
 
 public class GetPasoParadaResult implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8238534853834758312L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8238534853834758312L;
 
-    private List<PasoParada> pasoParadaList;
+	private List<PasoParada> pasoParadaList;
 
-    private int status;
+	private String status;
 
-    public GetPasoParadaResult() {
+	public GetPasoParadaResult() {
 
-        pasoParadaList = new ArrayList<PasoParada>();
+		pasoParadaList = new ArrayList<PasoParada>();
 
+	}
+
+    public GetPasoParadaResult(List<PasoParada> pasoParadaList, String status) {
+        this.pasoParadaList = pasoParadaList;
+        this.status = status;
     }
 
     public List<PasoParada> getPasoParadaList() {
-        return pasoParadaList;
-    }
+		return pasoParadaList;
+	}
 
-    public void setPasoParadaList(List<PasoParada> pasoParadaList) {
-        this.pasoParadaList = pasoParadaList;
-    }
+	public void setPasoParadaList(List<PasoParada> pasoParadaList) {
+		this.pasoParadaList = pasoParadaList;
+	}
 
-    public int getStatus() {
-        return status;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

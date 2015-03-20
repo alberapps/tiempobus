@@ -93,6 +93,79 @@
         <item>30</item>
         <item>60</item>
         <item>120</item>                    
-    </string-array> 
-   
+    </string-array>
+
+    <string-array name="estaciones_tram">
+        <item>Albufereta</item>
+        <item>Alicante-Luceros</item>
+        <item>Alqueries</item>
+        <item>Altea</item>
+        <item>Amerador</item>
+        <item>Av. Benidorm</item>
+        <item>Av. Naciones</item>
+        <item>Benidorm</item>
+        <item>Benissa</item>
+        <item>Bulevar del Pla</item>
+        <item>C.C. La Marina - Finestrat</item>
+        <item>Cabo Huertas</item>
+        <item>Cala Piteres</item>
+        <item>Calp</item>
+        <item>Camí Coves</item>
+        <item>Campo de Golf</item>
+        <item>Cap Negret</item>
+        <item>Carrabiners</item>
+        <item>Ciudad Jardín</item>
+        <item>Condomina</item>
+        <item>Costa Blanca</item>
+        <item>Costera Pastor</item>
+        <item>Coveta Fumà</item>
+        <item>Creueta</item>
+        <item>Dénia</item>
+        <item>Disco Benidorm</item>
+        <item>El Albir</item>
+        <item>El Campello</item>
+        <item>Fabraquer</item>
+        <item>Ferrandet</item>
+        <item>Garbinet</item>
+        <item>Garganes</item>
+        <item>Gastón Castelló</item>
+        <item>Gata</item>
+        <item>Holanda</item>
+        <item>Hospital</item>
+        <item>Hospital Denia</item>
+        <item>Hospital Vila</item>
+        <item>Instituto</item>
+        <item>L\'Alfàs del Pí</item>
+        <item>La Goteta- Plaza Mar 2</item>
+        <item>La Isleta</item>
+        <item>La Vila Joiosa</item>
+        <item>La Xarà</item>
+        <item>Les Llances</item>
+        <item>Londres</item>
+        <item>Lucentum</item>
+        <item>Maestro Alonso</item>
+        <item>MARQ - CASTILLO</item>
+        <item>Mercado</item>
+        <item>Mirian Blasco</item>
+        <item>Muchavista</item>
+        <item>Olla de Altea</item>
+        <item>Paises Escandinavos</item>
+        <item>Paradís</item>
+        <item>Pla Barraques</item>
+        <item>Plaza La Coruña</item>
+        <item>Poble Espanyol</item>
+        <item>Salesians</item>
+        <item>Sangueta</item>
+        <item>Sant Vicent del Raspeig</item>
+        <item>Santa Isabel</item>
+        <item>Sergio Cardell</item>
+        <item>Terra Mitica</item>
+        <item>Teulada</item>
+        <item>Tridente</item>
+        <item>Universitat</item>
+        <item>Venta Lanuza</item>
+        <item>Virgen del Remedio</item>
+    </string-array>
+
+
 </resources>

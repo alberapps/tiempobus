@@ -353,6 +353,7 @@
     
     <string name="foreground_service_started_2">Проверять время каждые 60 секунд.</string>
     <string name="bus_tram">Bus и Tram</string>
+    <string name="horarios_tram_aviso">Маршруты получены непосредственно из сайта tramalicante.es</string>
 
 
 </resources>

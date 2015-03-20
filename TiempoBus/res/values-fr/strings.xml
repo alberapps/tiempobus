@@ -352,6 +352,7 @@
     
     <string name="foreground_service_started_2">Vérifier le temps tous les 60 secondes</string>
     <string name="bus_tram">Bus et Tram</string>
+    <string name="horarios_tram_aviso">Les itinéraires sont récupérés directement du site tramalicante.es</string>
 
 
 </resources>

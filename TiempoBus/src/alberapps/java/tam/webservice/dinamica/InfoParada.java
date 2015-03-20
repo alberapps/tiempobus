@@ -15,43 +15,48 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.webservice;
+package alberapps.java.tam.webservice.dinamica;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class GetPasoParadaResult implements Serializable {
+public class InfoParada implements Serializable{
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8238534853834758312L;
-
-	private List<PasoParada> pasoParadaList;
-
-	private String status;
-
-	public GetPasoParadaResult() {
-
-		pasoParadaList = new ArrayList<PasoParada>();
-
+	private static final long serialVersionUID = 7960399548980147983L;
+	
+	
+	private String minutos;
+	private String metros;
+	private String tipo;
+	
+	public String getMinutos() {
+		return minutos;
+	}
+	public void setMinutos(String minutos) {
+		this.minutos = minutos;
+	}
+	public String getMetros() {
+		return metros;
+	}
+	public void setMetros(String metros) {
+		this.metros = metros;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
-	public List<PasoParada> getPasoParadaList() {
-		return pasoParadaList;
-	}
+    public InfoParada() {
+    }
 
-	public void setPasoParadaList(List<PasoParada> pasoParadaList) {
-		this.pasoParadaList = pasoParadaList;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
+    public InfoParada(String minutos, String metros, String tipo) {
+        this.minutos = minutos;
+        this.metros = metros;
+        this.tipo = tipo;
+    }
 }

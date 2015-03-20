@@ -62,7 +62,7 @@ public class GetCochesXmlWebservice {
 
 		try {
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(url, DatosTRAM.datosPost(linea), tiemposCache));
+			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8NoKeepAlive(url, DatosTRAM.datosPost(linea), tiemposCache));
 
 			if (is != null) {
 

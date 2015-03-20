@@ -50,6 +50,7 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.horariosTram.HorariosTramAdapter;
 import alberapps.android.tiempobus.infolineas.sliding.SlidingTabsBasicFragment;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.horarios.DatosHorarios;
@@ -57,6 +58,8 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tram.horarios.DatosConsultaHorariosTram;
+import alberapps.java.tram.horarios.HorarioTram;
 
 /**
  * Informacion de lineas con tabs
@@ -81,7 +84,7 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
     String linkHorario;
 
-    ProgressDialog dialog = null;
+    public ProgressDialog dialog = null;
 
     View vistaPieHorarioIda = null;
     View vistaPieHorarioVuelta = null;
@@ -102,6 +105,8 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
 
+    public AsyncTask<Object, Void, HorarioTram> taskHorariosTram = null;
+
 
     InfoLineaParadasAdapter infoLineaParadasAdapter;
 
@@ -115,6 +120,13 @@ public class InfoLineasTabsPager extends ActionBarActivity {
     public ArrayList<BusLinea> lineasBus;
     public InfoLineaAdapter infoLineaAdapter;
     public ListView lineasView;
+    public ListView horariosTramView;
+    public HorarioTram datosHorariosTram;
+    public HorariosTramAdapter horariosTramAdapter;
+
+
+    public DatosConsultaHorariosTram consultaHorarioTram;
+
 
     public BusLinea getLinea() {
         return linea;

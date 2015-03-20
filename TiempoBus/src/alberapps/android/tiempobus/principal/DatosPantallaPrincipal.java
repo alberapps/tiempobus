@@ -1375,6 +1375,12 @@ public class DatosPantallaPrincipal {
             } else {
                 busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l4));
             }
+        } else if (linea.trim().equals("L9")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l9));
+            } else {
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l9));
+            }
         } else if (UtilidadesTAM.isBusUrbano(linea.trim())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));

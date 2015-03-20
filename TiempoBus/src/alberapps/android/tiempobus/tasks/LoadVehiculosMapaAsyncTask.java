@@ -27,7 +27,7 @@ import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.vehiculos.ProcesarVehiculosService;
 import alberapps.java.tam.webservice.vehiculos.InfoVehiculo;
 import alberapps.java.tram.vehiculos.ProcesarCochesService;
-import alberapps.java.tram.webservice.GetPasoParadaWebservice;
+import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -65,15 +65,15 @@ public class LoadVehiculosMapaAsyncTask extends AsyncTask<Object, Void, DatosMap
 
             if (iprandom) {
 
-                url1 = GetPasoParadaWebservice.URL1;
-                url2 = GetPasoParadaWebservice.URL2;
+                url1 = DinamicaPasoParadaParser.URL1;
+                url2 = DinamicaPasoParadaParser.URL2;
 
                 Log.d("TIEMPOS", "Combinacion url 1");
 
             } else {
 
-                url2 = GetPasoParadaWebservice.URL1;
-                url1 = GetPasoParadaWebservice.URL2;
+                url2 = DinamicaPasoParadaParser.URL1;
+                url1 = DinamicaPasoParadaParser.URL2;
 
                 Log.d("TIEMPOS", "Combinacion url 2");
 

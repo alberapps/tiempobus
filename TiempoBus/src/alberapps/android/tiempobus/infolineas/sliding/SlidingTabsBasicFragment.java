@@ -28,6 +28,7 @@ import alberapps.android.tiempobus.infolineas.FragmentIda;
 import alberapps.android.tiempobus.infolineas.FragmentLineas;
 import alberapps.android.tiempobus.infolineas.FragmentVuelta;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.infolineas.horariosTram.FragmentHorariosTram;
 import alberapps.android.tiempobus.view.SlidingTabLayout;
 
 /**
@@ -88,6 +89,7 @@ public class SlidingTabsBasicFragment extends Fragment {
         } else if (((InfoLineasTabsPager) getActivity()).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             mTabsAdapter.addTab(getString(R.string.linea).toUpperCase(), FragmentLineas.class);
             mTabsAdapter.addTab(getString(R.string.parada_tram).toUpperCase(), FragmentIda.class);
+            mTabsAdapter.addTab(getString(R.string.infolinea_horarios).toUpperCase(), FragmentHorariosTram.class);
         }
 
 

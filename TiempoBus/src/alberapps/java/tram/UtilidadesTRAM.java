@@ -73,6 +73,15 @@ public class UtilidadesTRAM {
 
     public static final String CODIGO_TRAM_LONDRES = "109";
 
+    public static final String CODIGO_TRAM_LUCEROS = "2";
+
+    public static final String CODIGO_TRAM_MERCADO = "3";
+
+    public static final String L2_SANTVICENT = "SANT VICENT";
+
+    public static final Integer[] HORARIOS_COD_ESTACION = {7,2,49,38,20,108,106,33,44,115,31,107,22,42,35,51,40,11,121,9,10,29,21,28,50,34,37,17,14,43,116,39,119,46,113,117,48,30,111,36,114,6,27,47,13,109,8,118,4,3,103,12,41,112,26,16,110,19,15,5,124,122,104,32,45,105,123,25,120};
+
+
     /**
      * Ordena las posiciones del recorrido del tram
      *

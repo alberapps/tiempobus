@@ -22,7 +22,6 @@ package alberapps.android.tiempobus.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.EOFException;
 import java.util.ArrayList;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -32,7 +31,7 @@ import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.UtilidadesTRAM;
-import alberapps.java.tram.webservice.GetPasoParadaWebservice;
+import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -91,15 +90,15 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             if (iprandom) {
 
-                url1 = GetPasoParadaWebservice.URL1;
-                url2 = GetPasoParadaWebservice.URL2;
+                url1 = DinamicaPasoParadaParser.URL1;
+                url2 = DinamicaPasoParadaParser.URL2;
 
                 Log.d("TIEMPOS", "Combinacion url 1");
 
             } else {
 
-                url2 = GetPasoParadaWebservice.URL1;
-                url1 = GetPasoParadaWebservice.URL2;
+                url2 = DinamicaPasoParadaParser.URL1;
+                url1 = DinamicaPasoParadaParser.URL2;
 
                 Log.d("TIEMPOS", "Combinacion url 2");
 
@@ -118,11 +117,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             datosRespuesta.setListaBusLlegada(llegadasBus);
 
-        } catch (EOFException e1) {
-
-            e1.printStackTrace();
-
-            return null;
+            //ProcesarHorariosTram.getHorarios();
 
         } catch (TiempoBusException e) {
 

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tram.webservice;
+package alberapps.java.tram.webservice.dinamica;
 
 import java.io.Serializable;
 
@@ -56,5 +56,12 @@ public class InfoParada implements Serializable {
         this.tipo = tipo;
     }
 
+    public InfoParada() {
+    }
 
+    public InfoParada(String minutos, String metros, String tipo) {
+        this.minutos = minutos;
+        this.metros = metros;
+        this.tipo = tipo;
+    }
 }

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.weather;
+package alberapps.java.weather.aemet;
 
 import android.util.Log;
 
@@ -34,6 +34,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
+import alberapps.java.weather.EstadoCielo;
+import alberapps.java.weather.WeatherData;
+import alberapps.java.weather.WeatherQuery;
 
 /**
  * Consulta de datos geolocalizados de la wikipedia

@@ -1,6 +1,8 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
+ *  Copyright (C) 2015 Alberto Montiel
+ *
+ *  based on DashClock weather extension. Copyright 2013 Google Inc. Apache License, Version 2.0
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,44 +17,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.webservice;
+package alberapps.java.weather.yahooweather;
 
-import java.io.Serializable;
-
-public class InfoParada implements Serializable{
-
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7960399548980147983L;
-	
-	
-	private String minutos;
-	private String metros;
-	private String tipo;
-	
-	public String getMinutos() {
-		return minutos;
-	}
-	public void setMinutos(String minutos) {
-		this.minutos = minutos;
-	}
-	public String getMetros() {
-		return metros;
-	}
-	public void setMetros(String metros) {
-		this.metros = metros;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-	
-	
-	
-	
-	
+/**
+ * Utilidades weather
+ */
+public class WeatherDataUtil {
 }

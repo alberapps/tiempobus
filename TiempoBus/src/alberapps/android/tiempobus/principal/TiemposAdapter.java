@@ -55,11 +55,17 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         this.paradaActual = paradaActual;
     }
 
+    /**
+     * Cache de datos para mostrar en caso de error
+     *
+     * @param parada
+     * @return
+     */
     public ArrayList<BusLlegada> getBuses(String parada) {
 
-        if(parada.equals(paradaActual)){
+        if (parada.equals(paradaActual)) {
             return buses;
-        }else{
+        } else {
             buses = new ArrayList<BusLlegada>();
             paradaActual = "";
         }
@@ -68,8 +74,15 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
     }
 
-    public void setBuses(ArrayList<BusLlegada> buses) {
+    /**
+     * Cache de datos para mostrar en caso de error
+     *
+     * @param buses
+     * @param paradaActual
+     */
+    public void setBuses(ArrayList<BusLlegada> buses, int paradaActual) {
         this.buses = buses;
+        this.paradaActual = Integer.toString(paradaActual);
     }
 
     /**
@@ -95,15 +108,21 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         if (!bus.isSinDatos() && !bus.isErrorServicio()) {
 
+            TextView busLinea = null;
+
+            if(v != null) {
+                busLinea = (TextView) v.findViewById(R.id.bus_linea);
+            }
+
             // Si no tenemos la vista de la fila creada componemos una
-            // if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (v == null || busLinea == null) {
+                Context ctx = this.getContext().getApplicationContext();
+                LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            v = vi.inflate(R.layout.tiempos_item, null);
+                v = vi.inflate(R.layout.tiempos_item, null);
 
-            v.setTag(new ViewHolder(v));
-            // }
+                v.setTag(new ViewHolder(v));
+            }
 
             // Accedemos a la vista cacheada y la rellenamos
             ViewHolder tag = (ViewHolder) v.getTag();
@@ -209,7 +228,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             ImageView fijar = (ImageView) v.findViewById(R.id.fijar_img);
 
 
-            if(bus.isTarjetaFijada()){
+            if (bus.isTarjetaFijada()) {
 
                 fijar.setImageResource(R.drawable.content_remove);
 
@@ -236,7 +255,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 });
 
 
-            }else {
+            } else {
 
 
                 fijar.setOnClickListener(new OnClickListener() {
@@ -303,7 +322,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
             imagenAviso.setImageResource(R.drawable.alerts_warning);
-
 
 
             textAviso.setText(aviso);
@@ -383,7 +401,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             nuevoLiteral = traducido;
 
-        } else{
+        } else {
 
 
             traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
@@ -394,7 +412,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));//.replace("(", "\"").replace(")", "\"");
 
 
-         }
+        }
 
         return nuevoLiteral;
 

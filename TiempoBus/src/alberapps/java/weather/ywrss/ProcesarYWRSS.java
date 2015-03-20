@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.weather;
+package alberapps.java.weather.ywrss;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,6 +36,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import alberapps.java.util.Conectividad;
+import alberapps.java.weather.WeatherData;
+import alberapps.java.weather.WeatherQuery;
 
 /**
  * Procesar informacion del tiempo de yahoo

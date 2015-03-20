@@ -26,7 +26,7 @@ import java.util.List;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.weather.WeatherData;
 import alberapps.java.weather.WeatherQuery;
-import alberapps.java.weather.openweathermap.ProcesarOWMCurrect;
+import alberapps.java.weather.yahooweather.ProcesarYahooWeather;
 
 /**
  * Tarea asincrona para recuperar informacion metereologica
@@ -100,7 +100,9 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
                         String jsonCache = PreferencesUtil.getCache(context, "cache_clima_json");
 
                         if (jsonCache != null && !jsonCache.equals("")) {
-                            List<WeatherData> weatherData = ProcesarOWMCurrect.parsea(jsonCache);
+                            //List<WeatherData> weatherData = ProcesarOWMCurrect.parsea(jsonCache);
+
+                            List<WeatherData> weatherData = ProcesarYahooWeather.parsea(jsonCache);
 
 
                             if (weatherData != null) {
@@ -130,7 +132,9 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
 
             //weather = ProcesarYWRSS.getDatosClima();
 
-            weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
+            //weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
+
+            weather = ProcesarYahooWeather.getDatosClima(lat, lon);
 
             //Guardar ultima consulta json
             if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty() && weather.getListaDatos().get(0).getJson() != null) {

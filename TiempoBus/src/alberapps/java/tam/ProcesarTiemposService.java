@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import alberapps.java.exception.TiempoBusException;
-import alberapps.java.tam.webservice.GetPasoParadaResult;
-import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
+import alberapps.java.tam.webservice.dinamica.GetPasoParadaResult;
+import alberapps.java.tam.webservice.dinamica.DinamicaPasoParadaParser;
 
 /**
  * Consulta de tiempos
@@ -46,7 +46,9 @@ public class ProcesarTiemposService {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
-        GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+        //GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+        DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
+
 
         GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada), cacheTiempos);
 
@@ -161,17 +163,18 @@ public class ProcesarTiemposService {
      * Recupera tiempos para una parada y linea indicadas
      *
      * @param linea
-     * @param poste
+     * @param parada
      * @return bus
      * @throws Exception
      */
-    public static BusLlegada getPosteConLinea(String linea, String poste) throws Exception {
+    public static BusLlegada procesaTiemposLlegadaConParadaLinea(String linea, String parada) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
 
-        GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+        //GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+        DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(linea, poste, false);
+        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, false);
 
         for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 

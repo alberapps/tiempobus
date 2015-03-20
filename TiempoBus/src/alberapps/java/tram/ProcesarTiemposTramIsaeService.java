@@ -26,15 +26,18 @@ import java.util.List;
 
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
-import alberapps.java.tram.webservice.GetPasoParadaResult;
-import alberapps.java.tram.webservice.GetPasoParadaXmlWebservice;
+import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
+import alberapps.java.tram.webservice.dinamica.DomGetPasoParadaXmlWebservice;
+import alberapps.java.tram.webservice.dinamica.GetPasoParadaResult;
 
 /**
  * Consulta de tiempos TRAM
  */
 public class ProcesarTiemposTramIsaeService {
 
-    private static GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+    //private static GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
+    private static DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
+
 
     /**
      * Procesa tiempos
@@ -43,7 +46,6 @@ public class ProcesarTiemposTramIsaeService {
      * @return
      * @throws Exception
      */
-
     public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta, Boolean cacheTiempos) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
@@ -96,6 +98,10 @@ public class ProcesarTiemposTramIsaeService {
         return buses;
     }
 
+    /**
+     *
+     * @param busesList
+     */
     public static void combinarRegistros(List<BusLlegada> busesList) {
 
         for (int i = 0; i < busesList.size(); i++) {
@@ -229,6 +235,10 @@ public class ProcesarTiemposTramIsaeService {
 
         }
 
+        //TODO PARCHE L2 PARADA 2
+        parcheL2en2(parada, buses);
+
+
         return buses;
     }
 
@@ -240,7 +250,6 @@ public class ProcesarTiemposTramIsaeService {
      * @return
      * @throws Exception
      */
-
     public static BusLlegada getParadaConLineaConDestino(String linea, String parada, String destino) throws Exception {
 
         Log.d("TIEMPOS TRAM", "LINEA: " + linea + " PARADA: " + parada + " destino: " + destino);
@@ -255,7 +264,8 @@ public class ProcesarTiemposTramIsaeService {
             // GetPasoParadaWebservice.URL1);
 
             // Cambio de metodo por discrepancias en cabeceras
-            busesList = getParadaConLineaTRAM("*", parada, GetPasoParadaXmlWebservice.URL1, false);
+            busesList = getParadaConLineaTRAM("*", parada, DomGetPasoParadaXmlWebservice.URL1, false);
+
 
             for (int i = 0; i < busesList.size(); i++) {
 
@@ -284,5 +294,75 @@ public class ProcesarTiemposTramIsaeService {
         return buses;
 
     }
+
+
+    /**
+     * Parche para usar tiempos de la parada 3 en la 2
+     *
+     * @param parada
+     * @param busesList
+     */
+    private static void parcheL2en2(String parada, ArrayList<BusLlegada> busesList) {
+
+        //Sustituir los tiempos de la L2 en 2 por los tiempos de la 3 restandole 2 minutos
+        //Para evitar los tiempos inexactos que devuelve el servicio
+        if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_LUCEROS)) {
+
+            try {
+
+                ArrayList<BusLlegada> busesListAux = new ArrayList<BusLlegada>();
+
+                busesListAux = getParadaConLineaTRAM("*", UtilidadesTRAM.CODIGO_TRAM_MERCADO, DomGetPasoParadaXmlWebservice.URL1, false);
+
+                BusLlegada busAux = null;
+
+                for (int i = 0; i < busesListAux.size(); i++) {
+
+                    if (busesListAux.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesListAux.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
+
+                        busAux = busesListAux.get(i);
+
+                        if (busAux.getProximoMinutos() > 2) {
+                            busAux.cambiarProximo(busAux.getProximoMinutos() - 2);
+                            busAux.cambiarSiguiente(busAux.getSiguienteMinutos() - 2);
+                        } else if (busAux.getProximoMinutos() == 2) {
+                            busAux.cambiarProximo(0);
+                            busAux.cambiarSiguiente(busAux.getSiguienteMinutos() - 2);
+                        } else if (busAux.getProximoMinutos() < 2) {
+                            busAux.cambiarProximo(busAux.getSiguienteMinutos() - 2);
+                            busAux.cambiarSiguiente(9999);
+                        }
+
+                        busAux.setSegundoTram(null);
+                        busAux.setSegundoBus(null);
+
+                        //busAux.setDestino(busAux.getDestino() + " *");
+
+                    }
+
+                }
+
+                if (busAux != null) {
+
+                    for (int i = 0; i < busesList.size(); i++) {
+
+                        if (busesList.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesList.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
+
+                            busesList.set(i, busAux);
+
+                        }
+                    }
+                }
+
+            } catch (Exception e) {
+
+                //Ignorar si hay error en este parche
+
+            }
+
+        }
+
+    }
+
 
 }

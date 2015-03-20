@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.webservice;
+package alberapps.java.tam.webservice.dinamica;
 
 import android.util.Log;
 
@@ -39,7 +39,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
-public class GetPasoParadaXmlWebservice {
+public class DomGetPasoParadaXmlWebservice {
 
 	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
