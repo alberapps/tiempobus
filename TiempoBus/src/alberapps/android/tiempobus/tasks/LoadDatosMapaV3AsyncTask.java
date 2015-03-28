@@ -17,15 +17,16 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.mapas.ProcesarMapaServiceV3;
+import alberapps.java.tam.webservice.estructura.ProcesarEstructura;
 
 /**
  * Tarea para la carga de datos de los mapas
  */
-public class LoadDatosMapaV3AsyncTask extends AsyncTask<String, Void, DatosMapa[]> {
+public class LoadDatosMapaV3AsyncTask extends AsyncTask<Object, Void, DatosMapa[]> {
 
     public interface LoadDatosMapaV3AsyncTaskResponder {
         public void datosMapaV3Loaded(DatosMapa[] datosMapa);
@@ -38,25 +39,40 @@ public class LoadDatosMapaV3AsyncTask extends AsyncTask<String, Void, DatosMapa[
     }
 
     @Override
-    protected DatosMapa[] doInBackground(String... datos) {
+    protected DatosMapa[] doInBackground(Object... datos) {
         DatosMapa[] datosMapa = {null, null};
         try {
 
             if (datos != null && datos.length > 0 && datos[0] != null) {
 
-                DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0]);
+                //Nuevo acceso por servicio web
+                DatosMapa[] paradas = ProcesarEstructura.getDatosNodosMapa((String) datos[0], (String) datos[1], true);
+
+                //DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0]);
+
+                //Cargar transbordos de base de datos local
+                ProcesarEstructura.cargarDatosTransbordosBD(paradas[0], (Context) datos[2]);
+                ProcesarEstructura.cargarDatosTransbordosBD(paradas[1], (Context) datos[2]);
 
                 datosMapa[0] = paradas[0];
                 datosMapa[1] = paradas[1];
 
-                if (datos.length == 2) {
+
+                String[] recorridos = ProcesarEstructura.getDatosPolyLinea((String) datos[0], (String) datos[1], true);
+
+                datosMapa[0].setRecorrido(recorridos[0]);
+
+
+                /*if (datos.length == 2) {
+
+
 
                     String[] recorridos = ProcesarMapaServiceV3.getDatosMapaRecorrido(datos[1]);
 
                     datosMapa[0].setRecorrido(recorridos[0]);
                     datosMapa[1].setRecorrido(recorridos[1]);
 
-                }
+                }*/
 
             } else {
                 return datosMapa;

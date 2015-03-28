@@ -83,7 +83,7 @@ public class ProcesarOWMCurrect {
             Log.d(LOG_TAG, "Built URI " + urlWeather.toString());
 
 
-            String forecastJsonStr = Conectividad.conexionGetUtf8String(urlWeather.toString());
+            String forecastJsonStr = Conectividad.conexionGetUtf8String(urlWeather.toString(), true);
 
             resultados.setListaDatos(parsea(forecastJsonStr));
 

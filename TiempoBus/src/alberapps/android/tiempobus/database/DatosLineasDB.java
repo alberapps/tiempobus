@@ -36,7 +36,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Notificaciones;
@@ -70,9 +72,9 @@ public class DatosLineasDB {
     private static final String DATABASE_NAME = "tiempobuslineas";
     private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
     private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-    private static final int DATABASE_VERSION = 67;
+    private static final int DATABASE_VERSION = 68;
 
-    public static final String DATABASE_VERSION_FECHA = "11012015";
+    public static final String DATABASE_VERSION_FECHA = "28032015";
 
     private final DatosLineasOpenHelper mDatabaseOpenHelper;
     private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -171,7 +173,7 @@ public class DatosLineasDB {
         return query(null, selection, selectionArgs, columns);
 
 		/*
-		 * This builds a query that looks like: SELECT <columns> FROM <table>
+         * This builds a query that looks like: SELECT <columns> FROM <table>
 		 * WHERE <KEY_WORD> MATCH 'query*' which is an FTS3 search for the query
 		 * text (plus a wildcard) inside the word column.
 		 * 
@@ -504,7 +506,87 @@ public class DatosLineasDB {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             try {
+
+                //Carga de datos
+                List<Datos> datosList = new ArrayList<Datos>();
+                Datos dato = null;
+
                 String line;
+                while ((line = reader.readLine()) != null) {
+
+                    // Para TAM
+                    line = line.concat(";;TAM");
+
+                    String[] strings = TextUtils.split(line, ";;");
+                    // if (strings.length < 2) continue;
+
+                    dato = new Datos();
+                    dato.setWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim());
+                    dato.setDefinition(strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
+                            + "] - " + strings[5].trim());
+                    dato.setDatos(strings);
+
+
+                    dato.setParada(strings[3].trim());
+                    dato.setLinea(strings[0].trim());
+
+                    datosList.add(dato);
+                }
+
+
+                //Buscar transbordos
+                for (int i = 0; i < datosList.size(); i++) {
+                    for (int j = 0; j < datosList.size(); j++) {
+
+                        if (datosList.get(i).getParada().equals(datosList.get(j).getParada())) {
+
+                            if (datosList.get(i).getTransbordos() == null) {
+                                datosList.get(i).setTransbordos(new ArrayList<String>());
+                            }
+
+                            if (!datosList.get(i).getTransbordos().contains(datosList.get(j).getLinea())) {
+                                datosList.get(i).getTransbordos().add(datosList.get(j).getLinea());
+                            }
+
+
+                        }
+
+                    }
+
+
+                }
+
+
+                String tb = null;
+
+                //Guardar en base de datos
+                for (int i = 0; i < datosList.size(); i++) {
+
+                    tb = null;
+
+                    for (int j = 0; j < datosList.get(i).getTransbordos().size(); j++) {
+
+                        if (tb != null) {
+                            tb = tb + ", ";
+                        } else {
+                            tb = "";
+                        }
+
+                        tb = tb + datosList.get(i).getTransbordos().get(j);
+
+                    }
+
+
+                    long id = addWord(datosList.get(i).getWord(), datosList.get(i).getDefinition(), datosList.get(i).getDatos(), tb);
+                    if (id < 0) {
+                        Log.e(TAG, "unable to add line: " + dato.getLinea());
+                    }
+
+                }
+
+
+
+               /* String line;
                 while ((line = reader.readLine()) != null) {
 
                     // Para TAM
@@ -518,7 +600,7 @@ public class DatosLineasDB {
                     if (id < 0) {
                         Log.e(TAG, "unable to add line: " + strings[0].trim());
                     }
-                }
+                }*/
 
             } finally {
                 inputStream.close();
@@ -737,7 +819,7 @@ public class DatosLineasDB {
 
                         // ida
                         long id = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
-                                + "] - " + strings[5].trim(), strings);
+                                + "] - " + strings[5].trim(), strings, null);
                         if (id < 0) {
                             Log.e(TAG, "unable to add line: " + strings[0].trim());
                         }
@@ -900,7 +982,7 @@ public class DatosLineasDB {
          *
          * @return rowId or -1 if failed
          */
-        public long addWord(String word, String definition, String[] datos) {
+        public long addWord(String word, String definition, String[] datos, String transbordos) {
             ContentValues initialValues = new ContentValues();
 
             initialValues.put(KEY_DEFINITION, definition);
@@ -912,7 +994,12 @@ public class DatosLineasDB {
             initialValues.put(COLUMN_PARADA, datos[3].trim());
             initialValues.put(COLUMN_COORDENADAS, datos[4].trim());
             initialValues.put(COLUMN_DIRECCION, datos[5].trim());
-            initialValues.put(COLUMN_CONEXION, datos[6].trim());
+
+            if (transbordos != null && !transbordos.equals("")) {
+                initialValues.put(COLUMN_CONEXION, transbordos);
+            } else {
+                initialValues.put(COLUMN_CONEXION, datos[6].trim());
+            }
 
             initialValues.put(COLUMN_OBSERVACIONES, datos[7].trim());
 

@@ -18,6 +18,8 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
+import android.content.Context;
+
 import alberapps.java.tam.mapas.DatosMapa;
 
 /**
@@ -34,6 +36,36 @@ public class DatosInfoLinea {
     private FragmentIda fIda;
 
     private String url;
+
+    private String linea;
+
+    private String sublinea;
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    private Context context;
+
+    public String getLinea() {
+        return linea;
+    }
+
+    public void setLinea(String linea) {
+        this.linea = linea;
+    }
+
+    public String getSublinea() {
+        return sublinea;
+    }
+
+    public void setSublinea(String sublinea) {
+        this.sublinea = sublinea;
+    }
 
     public String getUrl() {
         return url;

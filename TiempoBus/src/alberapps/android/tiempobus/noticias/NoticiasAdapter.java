@@ -29,6 +29,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.noticias.Noticias;
+import alberapps.java.util.Utilidades;
 
 /**
  * Datos lista de noticias
@@ -56,7 +57,7 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                 TextView fecha = (TextView) v.findViewById(R.id.fecha);
                 TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
 
-                fecha.setText(noticia.getFecha().substring(0, 10));
+                fecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
                 noticiaText.setText(noticia.getNoticia().trim());
 
             }

@@ -86,7 +86,7 @@ public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerCli
     public AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
     public AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
     public AsyncTask<Object, Void, DatosMapa> taskVehiculosMapa = null;
-    public AsyncTask<String, Void, DatosMapa[]> taskDatosMapaV3 = null;
+    public AsyncTask<Object, Void, DatosMapa[]> taskDatosMapaV3 = null;
 
     public ProgressDialog dialog;
 

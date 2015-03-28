@@ -475,5 +475,7 @@
     <string name="conf_conectividad_titulo_check_tiempos">Activar Caché Tiempos</string>
     <string name="conf_conectividad_titulo_desc_tiempos">Activar Caché de acceso a Internet en tiempos.(Android 4.0+)</string>
 
+    <string name="tarjeta">Tarjetas</string>
+    <string name="tarjeta_clima">Clima</string>
 
 </resources>

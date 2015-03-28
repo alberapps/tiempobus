@@ -78,15 +78,15 @@ public class GestionarLineas {
      */
     public void loadDatosMapaV3() {
 
-        String url = UtilidadesTAM.getKMLParadasV3(context.lineaSeleccionada);
+        //String url = UtilidadesTAM.getKMLParadasV3(context.lineaSeleccionada);
 
-        String urlRecorrido = UtilidadesTAM.getKMLRecorridoV3(context.lineaSeleccionada);
+        //String urlRecorrido = UtilidadesTAM.getKMLRecorridoV3(context.lineaSeleccionada);
 
         // Control de disponibilidad de conexion
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            context.taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(url, urlRecorrido);
+            context.taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(context.lineaSeleccionadaNum, "1", context);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
             if (context.dialog != null && context.dialog.isShowing()) {

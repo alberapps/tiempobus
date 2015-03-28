@@ -54,7 +54,7 @@
 
 
                     <TextView
-                        android:id="@+id/cabeceraLinea"
+                        android:id="@+id/cabeceraTitulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"
@@ -71,7 +71,7 @@
                         android:textColor="@color/primary_dark_material_light" />
 
                     <TextView
-                        android:id="@+id/cabeceraTitulo"
+                        android:id="@+id/cabeceraLinea"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left"

@@ -1,7 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- * 
+ *  Copyright (C) 2015 Alberto Montiel
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,14 +15,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.util;
+package alberapps.java.tam.webservice.estructura.rutas;
 
-public class Comunes {
+import java.io.Serializable;
 
-	public static final int TIMEOUT_WEBSERVICE = 30 * 1000;
+public class InfoLinea implements Serializable {
 
-	public static final int TIMEOUT_HTTP_READ = 25 * 1000;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -765272789806627206L;
 
-	public static final int TIMEOUT_HTTP_CONNECT = 20 * 1000;
+    private String label;
+
+    private String nombre;
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
 }

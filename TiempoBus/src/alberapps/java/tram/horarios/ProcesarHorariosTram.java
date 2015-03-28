@@ -58,7 +58,7 @@ public class ProcesarHorariosTram {
 
 
 
-        InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString()));
+        InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
 
         Document doc = Jsoup.parse(is, "UTF-8", urlHorarios.toString());
 

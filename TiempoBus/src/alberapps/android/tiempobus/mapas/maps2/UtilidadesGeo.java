@@ -19,8 +19,6 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import android.util.Log;
-
 import java.math.BigDecimal;
 
 /**
@@ -114,7 +112,7 @@ public class UtilidadesGeo {
         //longitude = round(longitude, 6);
         //latitude = round(latitude, 6);
 
-        Log.d("GEOPOSICION", "lat: " + latitude + " long: " + longitude);
+        //Log.d("GEOPOSICION", "lat: " + latitude + " long: " + longitude);
 
         return longitude + "," + latitude;
 
@@ -124,7 +122,7 @@ public class UtilidadesGeo {
     public static double round(double value, int places) {
 
 		/*long factor = (long) Math.pow(10,  places);
-		value = value * factor;
+        value = value * factor;
 		long tmp = Math.round(value);
 		return (double) tmp / factor;*/
 
@@ -133,6 +131,41 @@ public class UtilidadesGeo {
 
         return bd.doubleValue();
 
+
+    }
+
+
+    /**
+     * Coordenadas con correccion
+     *
+     * @param coord
+     * @return
+     */
+    public static String getCoordenadasCorreccion(String coord) {
+
+        String[] coordenadas = coord.split(",");
+
+        double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+        double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+
+        int glat = (int) (lat * 1E6);
+        int glng = (int) (lng * 1E6);
+
+        // Calibrado
+        // https://github.com/Sloy/SeviBus
+        // Rafa Vazquez (Sloy)
+        glat = glat - 200 * 10;
+        glng = glng - 130 * 10;
+        //
+
+        double latB = glat / 1E6;
+        double longB = glng / 1E6;
+
+
+        String modificado = longB + "," + latB + ",0";
+
+
+        return modificado;
 
     }
 

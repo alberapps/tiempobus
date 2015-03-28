@@ -19,21 +19,17 @@
 package alberapps.java.noticias;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class Noticias implements Serializable {
+public class Noticias implements Serializable, Comparable<Noticias> {
 
     /**
      *
      */
     private static final long serialVersionUID = 4240900250983171841L;
 
-    private String fecha;
+    private Date fecha;
     private String noticia;
 
     private List<String> links;
@@ -96,11 +92,11 @@ public class Noticias implements Serializable {
         this.descLink = descLink;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -112,25 +108,13 @@ public class Noticias implements Serializable {
         this.noticia = noticia;
     }
 
-    public Date getFechaDate() {
 
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+    @Override
+    public int compareTo(Noticias another) {
 
-        Date fechaDate = null;
+        Date fecha1 = getFecha();
+        Date fecha2 = another.getFecha();
 
-        if (fecha != null) {
-            try {
-                fechaDate = df.parse(fecha);
-
-                return fechaDate;
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return null;
-
+        return fecha2.compareTo(fecha1);
     }
-
 }

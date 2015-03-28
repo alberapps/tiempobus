@@ -26,6 +26,7 @@ import java.util.List;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.weather.WeatherData;
 import alberapps.java.weather.WeatherQuery;
+import alberapps.java.weather.openweathermap.ProcesarOWMCurrect;
 import alberapps.java.weather.yahooweather.ProcesarYahooWeather;
 
 /**
@@ -64,6 +65,8 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
             //Control cache
             Context context = (Context) datos[2];
             String paradaWeather = (String) datos[3];
+
+            String proveedor = (String) datos[4];
 
             //Control de cache
             String fechaConsultaClima = PreferencesUtil.getCache(context, "cache_clima_fecha");
@@ -132,9 +135,11 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
 
             //weather = ProcesarYWRSS.getDatosClima();
 
-            //weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
-
-            weather = ProcesarYahooWeather.getDatosClima(lat, lon);
+            if(proveedor.equals("yw")) {
+                weather = ProcesarYahooWeather.getDatosClima(lat, lon);
+            }else if(proveedor.equals("owm")){
+                weather = ProcesarOWMCurrect.getDatosClima(lat, lon);
+            }
 
             //Guardar ultima consulta json
             if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty() && weather.getListaDatos().get(0).getJson() != null) {

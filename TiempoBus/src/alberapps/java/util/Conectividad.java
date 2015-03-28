@@ -103,13 +103,13 @@ public class Conectividad {
 
             urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-            if (cacheTiempos != null && cacheTiempos) {
+            /*if (cacheTiempos != null && cacheTiempos) {
                 urlConnection.addRequestProperty("Cache-Control", "max-age=0");
                 Log.d("CONEXION", "Con cache Tiempos");
-            } else {
+            } else {*/
                 urlConnection.addRequestProperty("Cache-Control", "no-cache");
-                Log.d("CONEXION", "Sin cache Tiempos");
-            }
+                //Log.d("CONEXION", "Sin cache Tiempos");
+            //}
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
             Utilidades.writeIt(out, post);
@@ -164,9 +164,9 @@ public class Conectividad {
 
         try {
 
-            if (cacheTiempos != null && cacheTiempos) {
+            /*if (cacheTiempos != null && cacheTiempos) {
                 System.setProperty("http.keepAlive", "false");
-            }
+            }*/
 
             // Crear url
             URL url = new URL(urlPost);
@@ -207,9 +207,9 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
-            if (cacheTiempos != null && cacheTiempos) {
+            /*if (cacheTiempos != null && cacheTiempos) {
                 System.setProperty("http.keepAlive", "true");
-            }
+            }*/
 
             throw new Exception("Error al acceder al servicio");
 
@@ -218,9 +218,9 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
-            if (cacheTiempos != null && cacheTiempos) {
+            /*if (cacheTiempos != null && cacheTiempos) {
                 System.setProperty("http.keepAlive", "true");
-            }
+            }*/
 
         }
 
@@ -335,9 +335,9 @@ public class Conectividad {
      * @param urlGet
      * @return
      */
-    public static String conexionGetUtf8String(String urlGet) throws Exception {
+    public static String conexionGetUtf8String(String urlGet, Boolean usarCache) throws Exception {
 
-        return conexionGetIso(urlGet, true, false, true);
+        return conexionGetIso(urlGet, usarCache, false, true);
 
     }
 

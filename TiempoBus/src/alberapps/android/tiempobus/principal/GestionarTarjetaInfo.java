@@ -60,6 +60,7 @@ import alberapps.java.localizacion.Localizacion;
 import alberapps.java.util.Utilidades;
 import alberapps.java.weather.EstadoCielo;
 import alberapps.java.weather.WeatherQuery;
+import alberapps.java.weather.yahooweather.WeatherDataUtil;
 import alberapps.java.wikipedia.WikiQuery;
 
 /**
@@ -294,7 +295,10 @@ public class GestionarTarjetaInfo {
                     context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
 
                     // Cargar informacion del tiempo
-                    context.gestionarTarjetaInfo.cargarInfoWeather(lat, lon, v);
+
+                    String proveedor = preferencias.getString("tarjeta_clima", "yw");
+
+                    context.gestionarTarjetaInfo.cargarInfoWeather(lat, lon, v, proveedor);
 
                 }
 
@@ -431,7 +435,7 @@ public class GestionarTarjetaInfo {
     /**
      * Cargar la informacion del clima
      */
-    public void cargarInfoWeather(String lat, String lon, final View v) {
+    public void cargarInfoWeather(String lat, String lon, final View v, final String proveedor) {
 
         final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 
@@ -457,7 +461,11 @@ public class GestionarTarjetaInfo {
 
             try {
 
-                mostrarElTiempoOwm(datosWeather, iv, v);
+                if (proveedor.equals("yw")) {
+                    mostrarElTiempoYahooWeather(datosWeather, iv, v);
+                } else if (proveedor.equals("owm")) {
+                    mostrarElTiempoOwm(datosWeather, iv, v);
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -478,7 +486,12 @@ public class GestionarTarjetaInfo {
 
                 if (weather != null) {
 
-                    mostrarElTiempoOwm(weather, iv, v);
+                    if (proveedor.equals("yw")) {
+                        mostrarElTiempoYahooWeather(weather, iv, v);
+                    } else if (proveedor.equals("owm")) {
+                        mostrarElTiempoOwm(weather, iv, v);
+                    }
+
 
                 } else {
 
@@ -508,7 +521,7 @@ public class GestionarTarjetaInfo {
             TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
             textoWeather.setText(context.getString(R.string.aviso_recarga));
 
-            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon, context, paradaWeather);
+            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon, context, paradaWeather, proveedor);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
@@ -762,6 +775,97 @@ public class GestionarTarjetaInfo {
 
     }
 
+
+    private void mostrarElTiempoYahooWeather(WeatherQuery weather, ImageView iv, View v) {
+
+        StringBuffer sb = new StringBuffer();
+
+        StringBuffer temp = new StringBuffer();
+
+        try {
+
+            if (weather.getListaDatos() != null && !weather.getListaDatos().isEmpty()) {
+
+
+                if (weather.getListaDatos().get(0).getIcon() != null) {
+
+
+                    Integer draw = Integer.parseInt(weather.getListaDatos().get(0).getIcon());
+
+                    iv.setImageDrawable(context.getResources().getDrawable(WeatherDataUtil.getConditionIconId(draw)));
+                    iv.setVisibility(ImageView.VISIBLE);
+
+                   /* else {
+                        iv.setVisibility(ImageView.INVISIBLE);
+                    }*/
+
+
+                } else {
+                    iv.setVisibility(ImageView.INVISIBLE);
+                }
+
+
+                sb.append(weather.getListaDatos().get(0).getHumidity());
+                sb.append("%, ");
+                sb.append(weather.getListaDatos().get(0).getLow());
+                sb.append("º/");
+                sb.append(weather.getListaDatos().get(0).getHigh());
+                sb.append("º");
+
+
+                temp.append(weather.getListaDatos().get(0).getContitionTemp());
+                temp.append("º");
+
+            }
+
+        } catch (Exception e) {
+
+            sb.setLength(0);
+            temp.setLength(0);
+
+        }
+
+        // Cargar titulos en textView
+        if (sb.length() > 0 && temp.length() > 0) {
+
+            try {
+                TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+                textoWeather.setText(sb.toString());
+
+                TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
+
+                textoTemperatura.setText(temp.toString());
+
+                TextView textoLocalidad = (TextView) v.findViewById(R.id.textoWeatherTexto2);
+                textoLocalidad.setText("\"" + weather.getListaDatos().get(0).getTitle() + "\"");
+
+                TextView textoWeatherTexto = (TextView) v.findViewById(R.id.textoWeatherTexto);
+                textoWeatherTexto.setText(weather.getListaDatos().get(0).getDescription());
+
+
+                TextView textoWeatherTexto3 = (TextView) v.findViewById(R.id.textoWeatherTexto3);
+                textoWeatherTexto3.setText(weather.getListaDatos().get(0).getLink());
+
+                // Datos para siguiente pasada
+                datosWeather = weather;
+
+            } catch (Exception e) {
+
+            }
+
+        } else {
+
+            sb.append(context.getString(R.string.main_no_items));
+
+            TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
+
+            textoWeather.setText(sb.toString());
+
+        }
+
+    }
+
     /**
      * Periodo para tiempo
      *
@@ -878,8 +982,6 @@ public class GestionarTarjetaInfo {
      * @param tw
      */
     public void controlActualizarDB(final TextView tw) {
-
-
 
 
         // Verificar si hay que consultar la version

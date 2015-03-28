@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import alberapps.java.util.Conectividad;
+import alberapps.java.util.Utilidades;
 
 /**
  * Procesar el detalle de la noticia
@@ -39,15 +40,91 @@ public class ProcesarDetalleNoticia {
     public static Noticias getDetalleNoticia(String url) throws Exception {
 
         // Distinguir distintos tipos de noticias
-        if (url.contains("/Lineas/Horario.asp")) {
+        /*if (url.contains("/Lineas/Horario.asp")) {
             // Tipo horario
             return getDetalleNoticiaHorarios(url);
         } else {
             // Para el resto
             return getDetalleNoticiaAvisoModificacion(url);
-        }
+        }*/
+
+        return getDetalleNoticiaNuevo(url);
 
     }
+
+
+    /**
+     * Noticias de tipo Aviso y Modificacion
+     *
+     * @param url
+     * @return noticias
+     * @throws Exception
+     */
+    public static Noticias getDetalleNoticiaNuevo(String url) throws Exception {
+
+        InputStream st = null;
+
+        Noticias noticias = null;
+
+
+        try {
+
+            Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8String(url, true)), "UTF-8", url);
+
+            noticias = new Noticias();
+
+            //Seccion de noticias
+            Element seccionNoticia = doc.select("div.notificaciones-izda").first();
+
+            //Fecha
+            Elements fecha = seccionNoticia.select("div.notif-date");
+            noticias.setFechaCabecera(Utilidades.getFechaStringSinHora(Utilidades.getFechaDateCorta(fecha.first().text())));
+
+            //Titulo
+            Elements titulo = seccionNoticia.select("div.notif-title");
+            noticias.setTituloCabecera(titulo.first().text());
+
+            //Lineas
+            Elements lineas = seccionNoticia.select("div.notif-lineas");
+            noticias.setLineaCabecera(lineas.first().text());
+
+            //Contenido
+            Elements contenido = seccionNoticia.select("div.notif-content");
+
+            // Limpiar resultado
+            String safe = Jsoup.clean(contenido.first().html(), "http://www.alicante.subus.es/notificacion/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
+
+            String limpiar = safe;
+
+            noticias.setContenidoHtml(limpiar);
+
+
+        } catch (Exception e) {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException eb) {
+
+            }
+
+            throw e;
+
+        } finally {
+
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (IOException eb) {
+
+            }
+
+        }
+
+        return noticias;
+    }
+
 
     /**
      * Noticias de tipo Aviso y Modificacion

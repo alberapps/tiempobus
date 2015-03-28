@@ -100,6 +100,33 @@ public class Utilidades {
     }
 
     /**
+     * Date desde string
+     *
+     * @param fecha
+     * @return
+     */
+    public static Date getFechaDateCorta(String fecha) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yy", Locale.US);
+
+        Date fechaDate = null;
+
+        if (fecha != null) {
+            try {
+                fechaDate = df.parse(fecha);
+
+                return fechaDate;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+
+    }
+
+    /**
      * String desde date
      *
      * @param fecha

@@ -33,7 +33,6 @@ import android.widget.Toast;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
-import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**
@@ -115,11 +114,15 @@ public class GestionIda {
 
         // String url = "http://www.subus.es/Lineas/kml/ALC34ParadasIda.xml";
 
-        String url = UtilidadesTAM.getKMLParadasIda(context.getLinea().getIdlinea());
+        //String url = UtilidadesTAM.getKMLParadasIda(context.getLinea().getIdlinea());
 
         DatosInfoLinea datos = new DatosInfoLinea();
-        datos.setUrl(url);
+        //datos.setUrl(url);
         // datos.setfIda(fIda);
+
+        datos.setLinea(context.getLinea().getNumLinea());
+        datos.setSublinea("1");
+
 
         // Control de disponibilidad de conexion
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -197,7 +200,7 @@ public class GestionIda {
          */
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-            if(position == 0){
+            if (position == 0) {
                 return;
             }
 
@@ -226,7 +229,7 @@ public class GestionIda {
 
         }
 
-        if(context.linea != null) {
+        if (context.linea != null) {
             //Linea num
             TextView textoNumLinea = (TextView) idaView.findViewById(R.id.num_linea);
             textoNumLinea.setText(context.linea.getNumLinea());
@@ -241,7 +244,7 @@ public class GestionIda {
 
                 textoLinea.setText(context.linea.getLinea().substring(context.linea.getNumLinea().length()).trim());
 
-            }else{
+            } else {
                 textoLinea.setText(context.getString(R.string.rss_tram));
             }
 
@@ -271,7 +274,7 @@ public class GestionIda {
 
             } else if (esBusOffline && context.datosIda != null && context.datosIda.getCurrentPlacemark() != null && context.datosIda.getCurrentPlacemark().getSentido() != null) {
                 texto.setText(">> " + context.datosIda.getCurrentPlacemark().getSentido());
-            }else {
+            } else {
                 texto.setText("-");
             }
 
@@ -311,10 +314,6 @@ public class GestionIda {
 
 
     }
-
-
-
-
 
 
 }

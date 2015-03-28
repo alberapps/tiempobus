@@ -21,6 +21,7 @@
 	<option value="22N">22N ALICANTE- PLAYA SAN JUAN</option>
 	<option value="23N">23N ALICANTE-SANT JOAN- MUTXAMEL</option>
 	<option value="24N">24N ALICANTE-UNIVERSIDAD-S.VICENTE</option>	
+	<option value="123">123 ESPECIAL SANTA FAZ</option>
 	<option value="01">01 S. GABRIEL- JUAN XXIII  (1&#186;S)</option>
 	<option value="02">02 LA FLORIDA - SAGRADA FAMILIA</option>
 	<option value="03">03 CIUDAD AS&#205;S - COLONIA REQUENA</option>
@@ -33,6 +34,7 @@
 	<option value="10">10 EXPLANADA - VIA PARQUE</option>
 	<option value="11">11 V.REMEDIO-AV.DENIA-HOSP.S.JOAN</option>
 	<option value="12">12 PZA. LUCEROS - S.BLAS - PAU I</option>
+	<option value="13">13 ALICANTE - VILLAFRANQUEZA</option>
 	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
 	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
 	<option value="8B">8B EXPLANADA - VIRGEN DEL REMEDIO</option>
@@ -53,6 +55,7 @@
 	<option value="45">45 HOSPITAL-GIRASOLES-MANCHEGOS</option>
 	<option value="46A">46A HOSPITAL-VILLAMONTES-S.ANTONIO</option>
 	<option value="46B">46B HOSPITAL-P.CANASTELL-P.COTXETA</option>
+	<option value="SE">SE ESPECIAL SAN VICENTE</option>
 	<option value="TURI">TURI BUS TUR&#205;STICO (TURIBUS)</option>
 
 </select>

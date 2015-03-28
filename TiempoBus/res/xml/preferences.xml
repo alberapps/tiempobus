@@ -115,6 +115,19 @@
                 android:title="\@TramdeAlicante" />
         </PreferenceScreen>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/tarjeta" >
+        <ListPreference
+            android:defaultValue="yw"
+            android:dialogTitle="@string/tarjeta_clima"
+            android:entries="@array/tarjeta_clima_value"
+            android:entryValues="@array/tarjeta_clima_key"
+            android:key="tarjeta_clima"
+            android:summary="@string/tarjeta_clima"
+            android:title="@string/tarjeta_clima" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/conf_avanzado_titulo" >
         <PreferenceScreen
             android:key="conf_avanzada"
@@ -126,11 +139,11 @@
                     android:key="conectividad_cache"
                     android:summary="@string/conf_conectividad_titulo_desc"
                     android:title="@string/conf_conectividad_titulo_check" />
-                <CheckBoxPreference
+                <!--<CheckBoxPreference
                     android:defaultValue="false"
                     android:key="conectividad_cache_tiempos"
                     android:summary="@string/conf_conectividad_titulo_desc_tiempos"
-                    android:title="@string/conf_conectividad_titulo_check_tiempos" />
+                    android:title="@string/conf_conectividad_titulo_check_tiempos" />-->
             </PreferenceCategory>
             <PreferenceCategory android:title="@string/conf_bd_titulo" >
                  <CheckBoxPreference

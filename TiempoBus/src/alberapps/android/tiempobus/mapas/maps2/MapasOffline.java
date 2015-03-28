@@ -138,9 +138,9 @@ public class MapasOffline {
 
                     context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-                    cursorRecorrido.moveToNext();
+                    //cursorRecorrido.moveToNext();
 
-                    context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                    //context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
                     // Cargar datos en el mapa
                     context.gestionarLineas.cargarMapa();

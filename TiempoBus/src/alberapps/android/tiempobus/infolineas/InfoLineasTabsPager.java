@@ -57,7 +57,7 @@ import alberapps.java.horarios.DatosHorarios;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.horarios.DatosConsultaHorariosTram;
 import alberapps.java.tram.horarios.HorarioTram;
 

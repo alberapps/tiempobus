@@ -83,7 +83,7 @@ import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**

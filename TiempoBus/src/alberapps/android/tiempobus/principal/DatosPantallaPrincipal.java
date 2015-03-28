@@ -428,16 +428,18 @@ public class DatosPantallaPrincipal {
                     if (preferencias.contains("ultima_noticia")) {
                         fecha_ultima = preferencias.getString("ultima_noticia", "");
 
+                        Date fechaUltima = null;
+
                         if (fecha_ultima != null) {
 
-                            Date fechaUltima = Utilidades.getFechaDate(fecha_ultima);
+                            fechaUltima = Utilidades.getFechaDate(fecha_ultima);
 
                             // Contar nuevas noticias
 
                             for (int i = 0; i < noticias.size(); i++) {
 
-                                if (noticias.get(i).getFechaDate() != null) {
-                                    if (noticias.get(i).getFechaDate().after(fechaUltima)) {
+                                if (noticias.get(i).getFecha() != null) {
+                                    if (noticias.get(i).getFecha().after(fechaUltima)) {
                                         nuevas++;
                                     }
                                 }
@@ -446,12 +448,12 @@ public class DatosPantallaPrincipal {
 
                         }
 
-                        if (fecha_ultima != null && !fecha_ultima.equals(noticias.get(0).getFecha())) {
+                        if (fechaUltima != null && !fechaUltima.equals(noticias.get(0).getFecha())) {
 
                             lanzarAviso = true;
 
                             SharedPreferences.Editor editor = preferencias.edit();
-                            editor.putString("ultima_noticia", noticias.get(0).getFecha());
+                            editor.putString("ultima_noticia", Utilidades.getFechaES(noticias.get(0).getFecha()));
                             editor.commit();
 
                         }
@@ -459,7 +461,7 @@ public class DatosPantallaPrincipal {
                     } else {
 
                         SharedPreferences.Editor editor = preferencias.edit();
-                        editor.putString("ultima_noticia", noticias.get(0).getFecha());
+                        editor.putString("ultima_noticia", Utilidades.getFechaES(noticias.get(0).getFecha()));
                         editor.commit();
 
                     }
@@ -472,10 +474,10 @@ public class DatosPantallaPrincipal {
 
                         String[] extendido = new String[2];
 
-                        extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getNoticia();
+                        extendido[0] = Utilidades.getFechaStringSinHora(noticias.get(0).getFecha()) + ": " + noticias.get(0).getNoticia();
 
                         if (noticias.size() > 1) {
-                            extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getNoticia();
+                            extendido[1] = Utilidades.getFechaStringSinHora(noticias.get(1).getFecha()) + ": " + noticias.get(1).getNoticia();
                         } else {
                             extendido[1] = "";
                         }
@@ -831,8 +833,6 @@ public class DatosPantallaPrincipal {
         context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
         context.tiemposView.addHeaderView(vheader);
-
-
 
 
     }

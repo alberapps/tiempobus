@@ -20,64 +20,67 @@ package alberapps.java.noticias;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import alberapps.java.util.Conectividad;
+import alberapps.java.util.Utilidades;
 
 /**
  * Procesar lista de noticias usando JSOUP
  */
 public class ProcesarNoticias {
 
-    public static String URL_SUBUS_NOTICIAS = "http://www.subus.es/Especiales/Novedades/Novedades.asp";
+    public static String URL_SUBUS_NOTICIAS = "http://www.alicante.subus.es/alertas/";
 
     public static List<Noticias> getTamNews(Boolean usarCache) throws Exception {
 
         List<Noticias> noticias = new ArrayList<Noticias>();
 
-        Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_SUBUS_NOTICIAS, usarCache, false), "ISO-8859-1", URL_SUBUS_NOTICIAS);
+        Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8String(URL_SUBUS_NOTICIAS, usarCache)), "UTF-8", URL_SUBUS_NOTICIAS);
 
-        String title = doc.title();
 
-        Elements tables = doc.select("table"); // a with href
+        //Seccion de noticias
+        Elements seccionNoticias = doc.select("div.novedades_alertas");
 
-        Element tabla = tables.get(5);
+        //Listado de noticias
+        Elements noticiasList = seccionNoticias.select("div.txt_novedades_alertas");
 
-        Elements filas = tabla.select("tr");
 
-        for (int i = 0; i < filas.size(); i++) {
+        Noticias noticia = null;
 
-            if (filas.get(i).select("td").size() == 2) {
-                Noticias noticia = new Noticias();
+        //Recorrer listado de noticias
+        for (int i = 0; i < noticiasList.size(); i++) {
 
-                noticia.setFecha(filas.get(i).select("td").get(0).text());
+            String fecha = noticiasList.get(i).select("div.fecha_novedades").text();
 
-                noticia.setNoticia(filas.get(i).select("td").get(1).text());
+            Elements seccionLink = noticiasList.get(i).select("a[href]");
 
-                noticia.setLinks(new ArrayList<String>());
-                noticia.setDescLink(new ArrayList<String>());
+            String h2 = seccionLink.get(0).select("h2").text();
+            String p = seccionLink.get(0).select("p").text();
 
-                Elements links = filas.get(i).select("td").get(1).select("a[href]");
+            String noticiaTexto = h2 + "\n\n" + p;
 
-                for (Element link : links) {
+            String link = seccionLink.get(0).attr("abs:href");
 
-                    noticia.getLinks().add(link.attr("abs:href"));
-                    noticia.getDescLink().add(link.text());
+            noticia = new Noticias();
 
-                }
+            noticia.setFecha(Utilidades.getFechaDateCorta(fecha));
+            noticia.setNoticia(noticiaTexto);
+            noticia.setLinks(new ArrayList<String>());
+            noticia.setDescLink(new ArrayList<String>());
+            noticia.getLinks().add(link);
+            noticia.getDescLink().add(noticiaTexto);
 
-                noticias.add(noticia);
-
-            }
+            noticias.add(noticia);
 
         }
-        if (!noticias.isEmpty()) {
-            noticias.remove(0);
-        }
+
+
+        Collections.sort(noticias);
 
         return noticias;
 

@@ -59,7 +59,7 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tam.webservice.estructura.GetLineasResult;
+import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 
@@ -71,16 +71,11 @@ public class FragmentLineas extends Fragment {
     GetLineasResult lineasDummy = null;
 
 
-
-
-
     BusLinea linea = null;
 
     InfoLineasTabsPager actividad;
 
     int mCurCheckPosition = 0;
-
-
 
 
     InfoLineaParadasAdapter infoLineaParadasAdapter;
@@ -105,18 +100,18 @@ public class FragmentLineas extends Fragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
 
 
-        if(actividad.lineasBus == null && savedInstanceState != null && savedInstanceState.getSerializable("LINEAS_INSTANCE") != null) {
-            List lineasBusAux = (ArrayList)savedInstanceState.getSerializable("LINEAS_INSTANCE");
+        if (actividad.lineasBus == null && savedInstanceState != null && savedInstanceState.getSerializable("LINEAS_INSTANCE") != null) {
+            List lineasBusAux = (ArrayList) savedInstanceState.getSerializable("LINEAS_INSTANCE");
 
             actividad.lineasBus = new ArrayList<BusLinea>();
 
-            for(int i = 0;i < lineasBusAux.size();i++) {
+            for (int i = 0; i < lineasBusAux.size(); i++) {
                 actividad.lineasBus.add((BusLinea) lineasBusAux.get(i));
             }
 
         }
 
-        if(actividad.dialog != null){
+        if (actividad.dialog != null) {
             actividad.dialog.dismiss();
         }
 
@@ -140,9 +135,6 @@ public class FragmentLineas extends Fragment {
 
             cargarHeaderLineas();
         }
-
-
-
 
 
         super.onViewStateRestored(savedInstanceState);
@@ -206,7 +198,6 @@ public class FragmentLineas extends Fragment {
                 cargarListado();
 
 
-
             } else {
 
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
@@ -220,8 +211,6 @@ public class FragmentLineas extends Fragment {
                 actividad.lineasBus = buses;
 
                 cargarListado();
-
-
 
 
             }
@@ -260,7 +249,6 @@ public class FragmentLineas extends Fragment {
         }
 
 
-
     }
 
     /**
@@ -292,7 +280,6 @@ public class FragmentLineas extends Fragment {
 
             texto.setLinksClickable(true);
             texto.setAutoLinkMask(Linkify.WEB_URLS);
-
 
 
             // Combo de seleccion de datos
@@ -363,13 +350,10 @@ public class FragmentLineas extends Fragment {
             });
 
 
-
-
-
             // Filtrar resultados
             final TextView textoBuscar = (TextView) vheader.findViewById(R.id.texto_buscar);
 
-            if(actividad.infoLineaAdapter.getFiltro() != null && !actividad.infoLineaAdapter.getFiltro().equals("")){
+            if (actividad.infoLineaAdapter.getFiltro() != null && !actividad.infoLineaAdapter.getFiltro().equals("")) {
                 textoBuscar.setText(actividad.infoLineaAdapter.getFiltro());
             }
 
@@ -384,7 +368,6 @@ public class FragmentLineas extends Fragment {
                         actividad.infoLineaAdapter.setFiltro(s);
 
 
-
                     }
 
                 }
@@ -394,7 +377,6 @@ public class FragmentLineas extends Fragment {
                 }
 
                 public void afterTextChanged(Editable s) {
-
 
 
                 }
@@ -410,12 +392,6 @@ public class FragmentLineas extends Fragment {
                     }
                 }
             });*/
-
-
-
-
-
-
 
 
             actividad.lineasView = (ListView) actividad.findViewById(R.id.infolinea_lista_lineas);
@@ -524,14 +500,17 @@ public class FragmentLineas extends Fragment {
 
         String url = "";
 
-        if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
+        /*if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
             url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
         } else {
             url = UtilidadesTAM.getKMLParadasV3(actividad.getLinea().getIdlinea());
-        }
+        }*/
 
         DatosInfoLinea datos = new DatosInfoLinea();
-        datos.setUrl(url);
+        //datos.setUrl(url);
+        datos.setLinea(actividad.getLinea().getNumLinea());
+        datos.setSublinea("1");
+        datos.setContext(actividad);
 
         // Control de disponibilidad de conexion
         ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -778,9 +757,9 @@ public class FragmentLineas extends Fragment {
 
                     datosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
-                    cursorRecorrido.moveToNext();
+                    //cursorRecorrido.moveToNext();
 
-                    datosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                    //datosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
                 }
 

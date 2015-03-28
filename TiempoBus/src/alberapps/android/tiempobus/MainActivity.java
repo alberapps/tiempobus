@@ -153,7 +153,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     public DatosPantallaPrincipal datosPantallaPrincipal;
 
-    GestionarFondo gestionarFondo;
+    public GestionarFondo gestionarFondo;
 
     public GestionarAlarmas gestionarAlarmas;
 
@@ -247,6 +247,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
 
     }
+
+
 
     /**
      * Drawer Layout

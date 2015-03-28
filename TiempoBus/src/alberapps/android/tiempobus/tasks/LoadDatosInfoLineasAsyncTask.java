@@ -21,10 +21,8 @@ package alberapps.android.tiempobus.tasks;
 import android.os.AsyncTask;
 
 import alberapps.android.tiempobus.infolineas.DatosInfoLinea;
-import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.mapas.ProcesarMapaService;
-import alberapps.java.tam.mapas.ProcesarMapaServiceV3;
+import alberapps.java.tam.webservice.estructura.ProcesarEstructura;
 
 /**
  * Consulta asincrona del track de la linea
@@ -46,17 +44,20 @@ public class LoadDatosInfoLineasAsyncTask extends AsyncTask<DatosInfoLinea, Void
         DatosInfoLinea datosVuelta = new DatosInfoLinea();
         try {
 
-            if (datos != null && datos.length > 0 && datos[0].getUrl() != null) {
+            if (datos != null && datos.length > 0 && datos[0].getLinea() != null) {
 
-                if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
-                    datosVuelta.setResult(ProcesarMapaService.getDatosMapa(datos[0].getUrl()));
-                } else {
+                //DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
 
-                    DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
+                //Nuevo acceso por servicio web
+                DatosMapa[] paradas = ProcesarEstructura.getDatosLineas(datos[0].getLinea(), datos[0].getSublinea(), true);
 
-                    datosVuelta.setResultIda(paradas[0]);
-                    datosVuelta.setResultVuelta(paradas[1]);
-                }
+                //Cargar transbordos de base de datos local
+                ProcesarEstructura.cargarDatosTransbordosBD(paradas[0], datos[0].getContext());
+                ProcesarEstructura.cargarDatosTransbordosBD(paradas[1], datos[0].getContext());
+
+
+                datosVuelta.setResultIda(paradas[0]);
+                datosVuelta.setResultVuelta(paradas[1]);
 
             } else {
                 return null;

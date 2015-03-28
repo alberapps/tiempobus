@@ -15,35 +15,35 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.webservice.estructura;
+package alberapps.java.tam.webservice.estructura.polylinea;
 
 import java.io.Serializable;
 
-public class InfoLinea implements Serializable {
+public class InfoCoord implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -765272789806627206L;
 
-	private String label;
+	private String x;
 
-	private String nombre;
+	private String y;
 
-	public String getLabel() {
-		return label;
-	}
+    public InfoCoord(String x, String y) {
+        this.x = x;
+        this.y = y;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public String getX() {
+        return x;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setX(String x) {
+        this.x = x;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getY() {
+        return y;
+    }
 
+    public void setY(String y) {
+        this.y = y;
+    }
 }

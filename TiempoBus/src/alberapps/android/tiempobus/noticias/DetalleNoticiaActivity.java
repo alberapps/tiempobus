@@ -50,6 +50,7 @@ import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.Noticias;
+import alberapps.java.util.Utilidades;
 
 /**
  * Detalle de la noticia
@@ -285,7 +286,7 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
         TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
         TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
 
-        cabFecha.setText(noticia.getFecha());
+        cabFecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
         cabTitulo.setText(noticia.getNoticia());
         cabLinea.setText("");
 

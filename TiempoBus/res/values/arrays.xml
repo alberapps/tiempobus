@@ -168,4 +168,14 @@
     </string-array>
 
 
+    <string-array name="tarjeta_clima_value">
+        <item>Yahoo! Weather</item>
+        <item>OpenWeatherMap</item>
+    </string-array>
+
+    <string-array name="tarjeta_clima_key">
+        <item>yw</item>
+        <item>owm</item>
+    </string-array>
+
 </resources>
