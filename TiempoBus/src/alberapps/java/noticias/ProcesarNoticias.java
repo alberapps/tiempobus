@@ -62,7 +62,9 @@ public class ProcesarNoticias {
             String h2 = seccionLink.get(0).select("h2").text();
             String p = seccionLink.get(0).select("p").text();
 
-            String noticiaTexto = h2 + "\n\n" + p;
+            String noticiaTexto = h2;
+
+            String noticiaLineas = p;
 
             String link = seccionLink.get(0).attr("abs:href");
 
@@ -74,6 +76,8 @@ public class ProcesarNoticias {
             noticia.setDescLink(new ArrayList<String>());
             noticia.getLinks().add(link);
             noticia.getDescLink().add(noticiaTexto);
+            noticia.setNoticiaLineas(noticiaLineas);
+
 
             noticias.add(noticia);
 

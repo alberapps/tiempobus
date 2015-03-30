@@ -183,7 +183,7 @@ public class GestionVuelta {
             textoNumLinea.setText(context.linea.getNumLinea());
 
             //Formato colores
-            DatosPantallaPrincipal.formatoLinea(context, textoNumLinea, context.linea.getNumLinea());
+            DatosPantallaPrincipal.formatoLinea(context, textoNumLinea, context.linea.getNumLinea(), true);
 
             //Linea
             TextView textoLinea = (TextView) vueltaView.findViewById(R.id.datos_desc_linea);

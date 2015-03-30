@@ -132,25 +132,25 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 tag.busLinea.setText(bus.getLinea().trim());
                 tag.busDestino.setText(bus.getDestino().trim());
 
-                tag.tiempoPrincipal.setText(controlAviso(bus.getProximo(), true).trim());
+                tag.tiempoPrincipal.setText(controlAviso(bus.getProximo(), true, false).trim());
 
                 //Formato colores
-                DatosPantallaPrincipal.formatoLinea(contexto, tag.busLinea, bus.getLinea());
+                DatosPantallaPrincipal.formatoLinea(contexto, tag.busLinea, bus.getLinea(), true);
 
 
                 // tag.busProximo.setText(bus.getProximo());
 
                 if (bus.getSegundoTram() != null) {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
 
                 } else if (bus.getSegundoBus() != null) {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
 
                 } else {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
                 }
 
             }
@@ -338,7 +338,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
      * @param proximo
      * @return
      */
-    private String controlAviso(String proximo, boolean primero) {
+    private String controlAviso(String proximo, boolean primero, boolean segundo) {
 
         String traducido = "";
 
@@ -401,10 +401,17 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             nuevoLiteral = traducido;
 
-        } else {
+        } else if (segundo) {
+
+            traducido = contexto.getString(R.string.tiempo_m_3) + " " + tiempo2.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "- ").replace(")", "");
+
+            nuevoLiteral = traducido;
+
+        }
+        else {
 
 
-            traducido = tiempo1 + " " + contexto.getResources().getText(R.string.tiempo_m_3) + " " + tiempo2;
+            traducido = tiempo1 + " " + contexto.getString(R.string.tiempo_m_3) + " " + tiempo2;
 
             //traducido = "> " + tiempo1 + "\n> " + tiempo2;
 

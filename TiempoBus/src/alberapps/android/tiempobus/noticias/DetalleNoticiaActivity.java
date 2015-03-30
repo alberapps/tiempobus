@@ -254,7 +254,16 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
 
         cabFecha.setText(noticia.getFechaCabecera());
         cabTitulo.setText(noticia.getTituloCabecera());
-        cabLinea.setText(noticia.getLineaCabecera());
+
+        String noticiaLineas = "";
+
+        if(noticia.getLineaCabecera().length() > 400){
+            noticiaLineas = noticia.getLineaCabecera().substring(0,400) + "...";
+        }else{
+            noticiaLineas = noticia.getLineaCabecera();
+        }
+
+        cabLinea.setText(noticiaLineas);
 
         TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
 

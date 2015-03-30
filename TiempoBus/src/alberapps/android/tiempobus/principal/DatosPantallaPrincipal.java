@@ -1346,7 +1346,7 @@ public class DatosPantallaPrincipal {
      * @param busLinea
      * @param linea
      */
-    public static void formatoLinea(Context contexto, TextView busLinea, String linea) {
+    public static void formatoLinea(Context contexto, TextView busLinea, String linea, boolean cambiarSize) {
 
         //Color circulo
         if (linea.trim().equals("L1")) {
@@ -1397,10 +1397,12 @@ public class DatosPantallaPrincipal {
 
 
         //Size
-        if (linea.length() > 2) {
-            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        } else {
-            busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+        if(cambiarSize) {
+            if (linea.length() > 2) {
+                busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            } else {
+                busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            }
         }
 
 

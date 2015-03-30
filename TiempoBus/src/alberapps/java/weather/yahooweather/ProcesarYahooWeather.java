@@ -256,11 +256,12 @@ public class ProcesarYahooWeather {
             data.setJson(forecastJsonStr);
 
             //Link
-            Uri.Builder builderLink = new Uri.Builder();
+            //Uri.Builder builderLink = new Uri.Builder();
             //builderLink.scheme("http").authority("openweathermap.org").appendPath("city").appendPath(idCiudad);
-            Uri urlLink = builderLink.build();
-            data.setLink(builderLink.toString());
+            //Uri urlLink = builderLink.build();
+            //data.setLink(builderLink.toString());
 
+            data.setLink("weather.yahoo.com");
 
             listaWeather.add(data);
 

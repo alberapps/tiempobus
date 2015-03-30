@@ -239,7 +239,7 @@ public class DatosBackup {
      * @param out
      * @throws IOException
      */
-    private static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
+    public static void copyFile(FileInputStream in, FileOutputStream out) throws IOException {
 
         byte[] buffer = new byte[1024];
         int read;
@@ -250,7 +250,7 @@ public class DatosBackup {
 
     }
 
-    private static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
+    public static void copyFileI(InputStream in, FileOutputStream out) throws IOException {
 
         byte[] buffer = new byte[1024];
         int read;

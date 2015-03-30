@@ -32,6 +32,8 @@ public class Noticias implements Serializable, Comparable<Noticias> {
     private Date fecha;
     private String noticia;
 
+    private String noticiaLineas;
+
     private List<String> links;
 
     private List<String> descLink;
@@ -43,6 +45,38 @@ public class Noticias implements Serializable, Comparable<Noticias> {
     private String tituloCabecera;
 
     private String lineaCabecera;
+
+    private boolean sinDatos;
+
+    private boolean errorServicio;
+
+    public boolean isSinDatos() {
+        return sinDatos;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getNoticiaLineas() {
+        return noticiaLineas;
+    }
+
+    public void setNoticiaLineas(String noticiaLineas) {
+        this.noticiaLineas = noticiaLineas;
+    }
+
+    public void setSinDatos(boolean sinDatos) {
+        this.sinDatos = sinDatos;
+    }
+
+    public boolean isErrorServicio() {
+        return errorServicio;
+    }
+
+    public void setErrorServicio(boolean errorServicio) {
+        this.errorServicio = errorServicio;
+    }
 
     public String getLineaCabecera() {
         return lineaCabecera;

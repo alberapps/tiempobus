@@ -101,7 +101,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
 
             //Formato colores
-            DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea());
+            DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea(), true);
 
 
             TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
@@ -109,7 +109,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
                 // Carga de horarios bus
                 // Link informacion
-                informacionText.setOnClickListener(new OnClickListener() {
+                /*informacionText.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View view) {
 
@@ -121,9 +121,14 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                     }
 
-                });
+                });*/
+
+                informacionText.setVisibility(View.INVISIBLE);
+
 
             } else {
+
+                informacionText.setVisibility(View.VISIBLE);
 
                 informacionText.setText(R.string.infolinea_horarios_pdf);
 

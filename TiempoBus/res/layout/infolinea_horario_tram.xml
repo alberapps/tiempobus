@@ -25,13 +25,13 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@id/contenedor_infolinea_vuelta"
+        android:id="@+id/contenedor_infolinea_horario_tram"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          >
 		
 		 <ListView
-		     android:id="@+id/infolinea_lista_vuelta"
+		     android:id="@+id/infolinea_lista_horario_tram"
 		     android:layout_width="match_parent"
 		     android:layout_height="match_parent"
 		     android:cacheColorHint="#00000000"
@@ -40,7 +40,7 @@
 		     android:scrollingCache="true" />
 
         <TextView
-            android:id="@+id/infolinea_vuelta_empty"
+            android:id="@+id/infolinea_horario_tram_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/infolinea_lista_vuelta"

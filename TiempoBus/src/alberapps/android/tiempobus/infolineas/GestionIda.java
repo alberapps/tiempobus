@@ -235,7 +235,7 @@ public class GestionIda {
             textoNumLinea.setText(context.linea.getNumLinea());
 
             //Formato colores
-            DatosPantallaPrincipal.formatoLinea(context, textoNumLinea, context.linea.getNumLinea());
+            DatosPantallaPrincipal.formatoLinea(context, textoNumLinea, context.linea.getNumLinea(), true);
 
             //Linea
             TextView textoLinea = (TextView) idaView.findViewById(R.id.datos_desc_linea);

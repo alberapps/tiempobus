@@ -37,11 +37,11 @@ import alberapps.java.util.Conectividad;
  */
 public class DescargarActualizaBD {
 
-    public static final String URL_CONTROL_ACTUALIZA = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/infoupdate.txt";
+    public static final String URL_CONTROL_ACTUALIZA = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/infoupdate.txt";
 
-    public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineas";
-    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido";
-    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/gh-pages/update/precargainfolineasrecorrido2";
+    public static final String URL_PRECARGA_INFOLINEAS = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineas";
+    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_1 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido";
+    public static final String URL_PRECARGA_INFOLINEAS_RECORRIDO_2 = "https://raw.github.com/alberapps/tiempobus/master/TiempoBus/res/raw/precargainfolineasrecorrido2";
 
     public static final String PRECARGA_INFOLINEAS = "precargainfolineas_dw";
     public static final String PRECARGA_INFOLINEAS_RECORRIDO_1 = "precargainfolineasrecorrido_dw";

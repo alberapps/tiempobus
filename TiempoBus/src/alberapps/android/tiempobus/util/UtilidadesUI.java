@@ -54,11 +54,22 @@ public class UtilidadesUI {
         int inSampleSize = 1;
 
         if (height > reqHeight || width > reqWidth) {
-            if (width > height) {
+            /*if (width > height) {
                 inSampleSize = Math.round((float) height / (float) reqHeight);
             } else {
                 inSampleSize = Math.round((float) width / (float) reqWidth);
+            }*/
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
             }
+
         }
         return inSampleSize;
     }
@@ -72,6 +83,16 @@ public class UtilidadesUI {
      * @return
      */
     public static Bitmap decodeBitmapFromFile(String res, int reqWidth, int reqHeight) {
+
+        if (reqHeight > 400 || reqWidth > 400) {
+
+            int ratio = reqHeight / reqWidth;
+
+            reqWidth = 400;
+            reqHeight = 400 * ratio;
+
+        }
+
 
         // First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -95,33 +116,41 @@ public class UtilidadesUI {
      */
     public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
 
-        if (!fondoGaleria.equals("")) {
+        try {
 
-            Drawable dr = null;
+            if (!fondoGaleria.equals("")) {
 
-            // Bitmap bitmapCargado = BitmapFactory.decodeFile(fondo_galeria);
+                Drawable dr = null;
 
-            DisplayMetrics displaymetrics = new DisplayMetrics();
-            actividad.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-            int height = displaymetrics.heightPixels;
-            int width = displaymetrics.widthPixels;
+                // Bitmap bitmapCargado = BitmapFactory.decodeFile(fondo_galeria);
 
-            Bitmap bitmapCargado = UtilidadesUI.decodeBitmapFromFile(fondoGaleria, width, height);
+                DisplayMetrics displaymetrics = new DisplayMetrics();
+                actividad.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                int height = displaymetrics.heightPixels;
+                int width = displaymetrics.widthPixels;
 
-            // Bitmap bitmapRecortado = recortarBitmap(bitmap);
-            if (bitmapCargado != null)
-                dr = new BitmapDrawable(bitmapCargado);
+                Bitmap bitmapCargado = UtilidadesUI.decodeBitmapFromFile(fondoGaleria, width, height);
 
-            if (dr != null) {
-                contenedorPrincipal.setBackgroundDrawable(dr);
+                // Bitmap bitmapRecortado = recortarBitmap(bitmap);
+                if (bitmapCargado != null)
+                    dr = new BitmapDrawable(bitmapCargado);
+
+                if (dr != null) {
+                    contenedorPrincipal.setBackgroundDrawable(dr);
+                } else {
+                    contenedorPrincipal.setBackgroundResource(R.color.background_material_light);
+                }
+
             } else {
+
                 contenedorPrincipal.setBackgroundResource(R.color.background_material_light);
+
             }
 
-        } else {
+        } catch (Exception e) {
 
             contenedorPrincipal.setBackgroundResource(R.color.background_material_light);
-
+            e.printStackTrace();
         }
 
     }
@@ -277,8 +306,7 @@ public class UtilidadesUI {
                 idioma = "_es";
             } else if (locale.substring(0, 2).equals("ca")) {
                 idioma = "_vl";
-            }
-             else {
+            } else {
                 idioma = "_es";
             }
 

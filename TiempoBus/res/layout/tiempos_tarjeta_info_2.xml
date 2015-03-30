@@ -69,7 +69,6 @@
                     android:layout_marginLeft="5sp"
                     android:layout_marginRight="5sp"
                     android:gravity="center"
-                    android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/primary_material_dark"
                     android:textStyle="bold" />
@@ -89,9 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-
                         android:textStyle="bold" />
 
                     <TextView
@@ -99,7 +96,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
 
                         android:textStyle="italic" />
@@ -196,7 +192,6 @@
                                     android:layout_marginLeft="5sp"
                                     android:layout_marginRight="5sp"
                                     android:gravity="center_vertical"
-                                    android:text="@string/guion"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
                                     android:textColor="@color/primary_material_dark"
                                     android:textStyle="bold" />
@@ -207,7 +202,6 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:maxLines="2"
-                                    android:text="@string/guion"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
                                     android:textStyle="italic" />
 
@@ -223,7 +217,6 @@
                                 android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:text="@string/guion"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textStyle="italic" />
 
@@ -238,7 +231,6 @@
                                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:text="@string/guion"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textStyle="italic" />
                         </LinearLayout>
@@ -330,8 +322,6 @@
                             android:lines="3"
                             android:scrollHorizontally="true"
                             android:scrollbars="horizontal"
-                            android:text="@string/guion"
-
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle="italic" />
 

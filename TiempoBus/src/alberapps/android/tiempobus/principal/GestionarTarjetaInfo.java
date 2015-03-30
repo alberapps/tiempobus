@@ -439,6 +439,16 @@ public class GestionarTarjetaInfo {
 
         final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 
+        TextView textoCabecera = (TextView) v.findViewById(R.id.desc_tarjeta_clima);
+
+        if (proveedor.equals("yw")) {
+            textoCabecera.setText(R.string.eltiempo);
+        } else if (proveedor.equals("owm")) {
+            textoCabecera.setText(R.string.eltiempoOWM);
+        }
+
+
+
         // Verificar si ya disponemos de los datos
         /*if (datosWeather != null) {
 
@@ -1003,8 +1013,9 @@ public class GestionarTarjetaInfo {
 
             Date ahora = new Date();
 
-            //Si la diferencia es menor a 48 horas. No continuar
-            if (ahora.getTime() - fecha.getTime() < 48 * 60 * 60 * 1000) {
+            //Si la diferencia es menor a 48 horas. No continuar 48 * 60 * 60 * 1000
+            //Verificar una vez a la semana
+            if (ahora.getTime() - fecha.getTime() < 7 * 24 * 60 * 60 * 1000) {
                 return;
             } else {
                 String control = String.valueOf((new Date()).getTime());

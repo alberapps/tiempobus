@@ -60,9 +60,9 @@
                         android:background="@drawable/circulo_azul"
                         android:gravity="center"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/abc_primary_text_disable_only_material_dark"
-                        android:textSize="12sp"
+
                         android:textStyle="bold" />
                 </FrameLayout>
 
@@ -83,7 +83,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-
+                        android:textColor="@color/primary_dark_material_light"
                         android:textStyle="bold" />
 
                     <TextView

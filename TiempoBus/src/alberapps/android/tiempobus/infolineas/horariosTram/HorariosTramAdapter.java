@@ -121,7 +121,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 datosInfo.setText(horas.getDatoInfo());
 
                 //Formato colores
-                DatosPantallaPrincipal.formatoLinea(contexto, datosGrupoHora, horas.getLinea());
+                DatosPantallaPrincipal.formatoLinea(contexto, datosGrupoHora, horas.getLinea(), false);
             }
 
 

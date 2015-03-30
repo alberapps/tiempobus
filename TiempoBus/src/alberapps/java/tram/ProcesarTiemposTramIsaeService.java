@@ -316,6 +316,7 @@ public class ProcesarTiemposTramIsaeService {
 
                 BusLlegada busAux = null;
 
+                //Recuperar el dato de la parada 3
                 for (int i = 0; i < busesListAux.size(); i++) {
 
                     if (busesListAux.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesListAux.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
@@ -342,16 +343,27 @@ public class ProcesarTiemposTramIsaeService {
 
                 }
 
+                //Si disponible
                 if (busAux != null) {
 
+                    //Sustituir el actual
+                    boolean encontrado = false;
                     for (int i = 0; i < busesList.size(); i++) {
 
                         if (busesList.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesList.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
 
                             busesList.set(i, busAux);
 
+                            encontrado = true;
+                            break;
+
                         }
                     }
+
+                    if(!encontrado){
+                        busesList.add(busAux);
+                    }
+
                 }
 
             } catch (Exception e) {

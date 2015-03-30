@@ -22,19 +22,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.data.backup.DatosBackup;
 
 /**
  * Gestion de la imagen de fondo de la aplicacion
@@ -80,8 +82,8 @@ public class GestionarFondo {
                         intent.putExtra("crop", "true");
 
                         intent.setType("image/*");
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                        //intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                        //intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
                         context.startActivityForResult(intent, MainActivity.CARGAR_IMAGEN);
 
@@ -185,6 +187,76 @@ public class GestionarFondo {
         }
 
     }
+
+
+    /**
+     * Activar fondo para nuevas versiones de la galeria
+     *
+     * @param uri
+     */
+    public void activarNuevoFondo19(Uri uri) {
+
+        InputStream origen = null;
+
+        File tempFile = null;
+
+        FileOutputStream destino = null;
+
+        try {
+
+            // Uri de la nueva imagen
+            tempFile = getTempFile();
+
+            //Fichero seleccionado en la galeria
+            origen = context.getContentResolver().openInputStream(uri);
+
+            destino = new FileOutputStream(tempFile);
+
+            //Copiar el archivo a la ruta de la aplicacion
+            DatosBackup.copyFileI(origen, destino);
+
+
+            //Guardar configuracion y activar nuevo fondo
+            if (tempFile != null && uri != null) {
+
+                String filePath = tempFile.getPath();
+
+                // Guardar
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putString("image_galeria", filePath);
+                editor.commit();
+
+                setupFondoAplicacion();
+
+                Toast.makeText(context, context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
+
+            }
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+            try {
+
+                if (origen != null) {
+                    origen.close();
+                }
+                if (destino != null) {
+                    destino.close();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
 
     /**
      * Seleccion del fondo de la galeria en el arranque

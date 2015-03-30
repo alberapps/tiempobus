@@ -56,18 +56,6 @@
                             android:src="@drawable/ic_tiempobus_4"
                             android:layout_gravity="center"/>
 
-                        <!--TextView
-                            android:id="@+id/num_linea"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/circulo_azul"
-                            android:gravity="center"
-                            android:text="@string/guion"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="@color/abc_primary_text_disable_only_material_dark"
-                            android:textSize="20sp"
-                            android:textStyle="bold" /-->
                     </FrameLayout>
 
                     <LinearLayout
@@ -99,6 +87,18 @@
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/mi_material_blue_indigo"
                             android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/datos_link"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:text="@string/app_autor_web"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="10dp"
+                            android:textColor="@color/mi_material_blue_indigo"
+                            android:autoLink="web"
                             />
 
 

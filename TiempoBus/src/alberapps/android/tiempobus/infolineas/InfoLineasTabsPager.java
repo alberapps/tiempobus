@@ -192,6 +192,21 @@ public class InfoLineasTabsPager extends ActionBarActivity {
 
                 Log.d("infolinea", "eliminar panel vuelta");
 
+            }else{
+
+                FragmentManager fragmentManager = this.getSupportFragmentManager();
+
+                Fragment fragVuelta = fragmentManager.findFragmentById(R.id.infolinea_4_fragment);
+
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                ft.hide(fragVuelta);
+
+                ft.commit();
+
+                Log.d("infolinea", "eliminar panel horarios tram");
+
+
             }
 
 

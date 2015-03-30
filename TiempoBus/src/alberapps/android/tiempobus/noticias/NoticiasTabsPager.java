@@ -410,8 +410,17 @@ public class NoticiasTabsPager extends ActionBarActivity {
                 } else {
 
                     noticiasRecuperadas = null;
+
+                    Noticias noticia = new Noticias();
+                    noticia.setErrorServicio(true);
+
+                    noticiasRecuperadas = new ArrayList<Noticias>();
+                    noticiasRecuperadas.add(noticia);
+
                     // Error al recuperar datos
-                    cargarListado(noticias, false);
+                    //cargarListado(noticias, false);
+
+                    cargarListado(noticiasRecuperadas, true);
 
                 }
 

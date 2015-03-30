@@ -1210,8 +1210,10 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                     Uri selectedImage = data.getData();
 
+
+
                     // Cargamos imagen seleccionada
-                    gestionarFondo.activarNuevoFondo(selectedImage);
+                    gestionarFondo.activarNuevoFondo19(selectedImage);
                 } catch (Exception e) {
 
                     Toast.makeText(this, getString(R.string.error_fichero), Toast.LENGTH_SHORT).show();

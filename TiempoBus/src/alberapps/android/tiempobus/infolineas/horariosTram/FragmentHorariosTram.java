@@ -72,8 +72,6 @@ public class FragmentHorariosTram extends Fragment {
     int mCurCheckPosition = 0;
 
 
-
-
     InfoLineaParadasAdapter infoLineaParadasAdapter;
 
     SharedPreferences preferencias;
@@ -89,6 +87,7 @@ public class FragmentHorariosTram extends Fragment {
 
         PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
 
     }
 
@@ -113,6 +112,14 @@ public class FragmentHorariosTram extends Fragment {
             actividad.dialog.dismiss();
         }*/
 
+        iniciar();
+
+
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    private void iniciar() {
+
         setupFondoAplicacion();
 
         // Consultar si es necesario, si ya lo tiene carga la lista
@@ -125,8 +132,8 @@ public class FragmentHorariosTram extends Fragment {
 
         } else {
 
-            ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
-            TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+            ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
+            TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
             lineasVi.setEmptyView(vacio);
 
             //cargarHorarios();
@@ -143,11 +150,8 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-
-
-
-        super.onViewStateRestored(savedInstanceState);
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -160,7 +164,7 @@ public class FragmentHorariosTram extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.infolinea_vuelta, container, false);
+        return inflater.inflate(R.layout.infolinea_horario_tram, container, false);
     }
 
     private void cargarHorarios() {
@@ -218,7 +222,7 @@ public class FragmentHorariosTram extends Fragment {
     /**
      * Cargar el listado de horarios
      */
-   private void cargarListado() {
+    private void cargarListado() {
 
         if (actividad.datosHorariosTram != null) {
 
@@ -229,12 +233,12 @@ public class FragmentHorariosTram extends Fragment {
 
 
             // Controlar pulsacion
-            actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+            actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
 
             if (actividad.horariosTramView != null) {
                 //actividad.lineasView.setOnItemClickListener(lineasClickedHandler);
 
-                TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+                TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
                 actividad.horariosTramView.setEmptyView(vacio);
 
                 cargarHeaderHorarios();
@@ -244,7 +248,6 @@ public class FragmentHorariosTram extends Fragment {
             }
 
         }
-
 
 
     }
@@ -272,7 +275,6 @@ public class FragmentHorariosTram extends Fragment {
             });
 
 
-
             // Combo de seleccion de origen
             final Spinner spinnerEstOrigen = (Spinner) vheader.findViewById(R.id.spinner_estacion_origen);
             ArrayAdapter<CharSequence> adapter = null;
@@ -282,7 +284,7 @@ public class FragmentHorariosTram extends Fragment {
 
 
             //Cargar datos iniciales
-            if(actividad.consultaHorarioTram == null ) {
+            if (actividad.consultaHorarioTram == null) {
 
                 Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
 
@@ -300,7 +302,6 @@ public class FragmentHorariosTram extends Fragment {
 
                 actividad.consultaHorarioTram.setCodEstacionDestino(UtilidadesTRAM.HORARIOS_COD_ESTACION[1]);
                 actividad.consultaHorarioTram.setEstacionDestinoSeleccion(1);
-
 
 
             }
@@ -356,7 +357,6 @@ public class FragmentHorariosTram extends Fragment {
             });
 
 
-
             // boton fecha
 
             TextView fecha = (TextView) vheader.findViewById(R.id.campo_fecha);
@@ -402,8 +402,7 @@ public class FragmentHorariosTram extends Fragment {
             });
 
 
-
-            actividad.horariosTramView = (ListView) actividad.findViewById(R.id.infolinea_lista_vuelta);
+            actividad.horariosTramView = (ListView) actividad.findViewById(R.id.infolinea_lista_horario_tram);
 
             actividad.horariosTramView.addHeaderView(vheader);
 
@@ -419,13 +418,13 @@ public class FragmentHorariosTram extends Fragment {
         if (actividad.horariosTramAdapter != null) {
 
             // Controlar pulsacion
-            actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_vuelta);
+            actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
 
             if (actividad.horariosTramView != null) {
 
                 //actividad.horariosTramView.setOnItemClickListener(lineasClickedHandler);
 
-                TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_vuelta_empty);
+                TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
                 actividad.horariosTramView.setEmptyView(vacio);
 
                 cargarHeaderHorarios();
@@ -439,15 +438,6 @@ public class FragmentHorariosTram extends Fragment {
     }
 
 
-
-
-
-
-
-
-
-
-
     /**
      * Seleccion del fondo de la galeria en el arranque
      */
@@ -458,14 +448,11 @@ public class FragmentHorariosTram extends Fragment {
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 
-        View contenedor_principal = getActivity().findViewById(R.id.contenedor_infolinea_vuelta);
+        View contenedor_principal = getActivity().findViewById(R.id.contenedor_infolinea_horario_tram);
 
         UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 
     }
-
-
-
 
 
     public static class DatePickerFragment extends DialogFragment

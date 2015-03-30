@@ -99,7 +99,7 @@
                             android:layout_gravity="left"
                             android:background="@drawable/actionbar_compat_item"
                             android:text="@string/launch_preferences"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Button"
                             android:textColor="@color/link_text_material_dark"
                             android:textStyle="italic|bold" />
 
@@ -116,7 +116,7 @@
                                 android:background="@drawable/actionbar_compat_item"
                                 android:gravity="right"
                                 android:text="@string/mapa_ir_parada"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Button"
                                 android:textColor="@color/link_text_material_dark"
                                 android:textStyle="italic|bold" />
 

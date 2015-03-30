@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 dependencies {
     //compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':workspace:google-play-services_lib')
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:cardview-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:cardview-v7:22.0.0'
     //compile 'com.android.support:recyclerview-v7:21.0.1'
     //compile 'com.android.support:gridlayout-v7:21.0.1'
 
