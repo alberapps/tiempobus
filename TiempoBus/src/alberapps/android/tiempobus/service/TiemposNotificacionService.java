@@ -285,6 +285,8 @@ public class TiemposNotificacionService extends Service {
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             Toast.makeText(getApplicationContext(), getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
 
         }

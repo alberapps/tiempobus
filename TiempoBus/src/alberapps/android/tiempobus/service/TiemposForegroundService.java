@@ -396,13 +396,14 @@ public class TiemposForegroundService extends Service {
             if (aviso != null && !aviso.equals("")) {
 
                 String[] datos = aviso.split(";");
+                //linea;parada;hora;tiempo;item;milisegundos;destino
 
                 // Control de disponibilidad de conexion
                 ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected()) {
 
-                    if (DatosPantallaPrincipal.esTram(datos[0])) {
+                    if (DatosPantallaPrincipal.esLineaTram(datos[0])) {
 
                         Log.d("TiemposService", "Recalculando para TRAM");
 
@@ -418,6 +419,8 @@ public class TiemposForegroundService extends Service {
             }
 
         } catch (Exception e) {
+
+            e.printStackTrace();
 
             Toast.makeText(getApplicationContext(), getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
 
@@ -535,6 +538,8 @@ public class TiemposForegroundService extends Service {
         //String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
         String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + " (" + mins + " " + context.getString(R.string.literal_min) + ")" + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
+
+        //linea;parada;hora;tiempo;item;milisegundos;destino
 
         Log.d("TiemposService", "Tiempo actualizado a: " + horaT);
 

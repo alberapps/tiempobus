@@ -59,12 +59,12 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Bus
         BusLlegada llegadasBus = null;
         try {
 
-            if (DatosPantallaPrincipal.esTram(datos[0])) {
-
+            if (DatosPantallaPrincipal.esLineaTram(datos[0])) {
+                //linea, parada, destino
                 llegadasBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(datos[0], datos[1], datos[2]);
 
             } else {
-
+                //linea, parada
                 llegadasBus = ProcesarTiemposService.procesaTiemposLlegadaConParadaLinea(datos[0], datos[1]);
             }
         } catch (Exception e) {

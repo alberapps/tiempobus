@@ -52,6 +52,16 @@ public class ProcesarEstructura {
         DatosMapa[] datosMapa = {null, null};
 
 
+        //PARCHE 11
+        /*if(linea.equals("11")){
+            sublinea = "2";
+        }
+
+        if(linea.equals("11H")){
+            linea = "11";
+            sublinea = "3";
+        }*/
+
         try {
 
 
