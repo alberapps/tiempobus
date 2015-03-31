@@ -22,8 +22,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Toast;
 
@@ -82,8 +84,8 @@ public class GestionarFondo {
                         intent.putExtra("crop", "true");
 
                         intent.setType("image/*");
-                        //intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                        //intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 
                         context.startActivityForResult(intent, MainActivity.CARGAR_IMAGEN);
 

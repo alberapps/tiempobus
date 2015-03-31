@@ -403,7 +403,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         } else if (segundo) {
 
-            traducido = contexto.getString(R.string.tiempo_m_3) + " " + tiempo2.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "- ").replace(")", "");
+            traducido = tiempo2.replaceAll("min.", contexto.getString(R.string.literal_min)).replace("(", "- ").replace(")", "");
 
             nuevoLiteral = traducido;
 

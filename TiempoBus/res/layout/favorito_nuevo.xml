@@ -97,7 +97,7 @@
                     android:layout_gravity="center"
                     android:background="@drawable/actionbar_compat_item"
                     android:text="@string/nuevo_guardar"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/link_text_material_dark"
                     android:textStyle="italic|bold"
                     />

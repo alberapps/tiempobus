@@ -1055,11 +1055,11 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
             View vheader = li2.inflate(R.layout.noticias_tram_ultimas_item, null);
 
-            TextView titulo = (TextView) vheader.findViewById(R.id.titulo);
+            TextView titulo = (TextView) vheader.findViewById(R.id.titulo_ultima_tram);
 
             titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
 
-            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
 
             StringBuffer textoHeader = new StringBuffer();
 
@@ -1080,18 +1080,26 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
             View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
 
-            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+            TextView fecha_1 = (TextView) vheader.findViewById(R.id.fecha_ultima_tram_1);
+            TextView fecha_2 = (TextView) vheader.findViewById(R.id.fecha_ultima_tram_2);
+            TextView descripcion_1 = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
+            TextView descripcion_2 = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_2);
 
-            StringBuffer textoHeader = new StringBuffer();
+            //StringBuffer textoHeader = new StringBuffer();
 
-            textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
+            //textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
+
+            fecha_1.setText(noticias.get(0).getFecha());
+            descripcion_1.setText(noticias.get(0).getMensaje());
 
             if (noticias.size() > 1) {
-                textoHeader.append("\n");
-                textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
+                //textoHeader.append("\n");
+                //textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
+                fecha_2.setText(noticias.get(1).getFecha());
+                descripcion_2.setText(noticias.get(1).getMensaje());
             }
 
-            descripcion.setText(textoHeader.toString());
+            //descripcion.setText(textoHeader.toString());
 
         }
 
@@ -1194,9 +1202,15 @@ public class NoticiasTabsPager extends ActionBarActivity {
 
                     View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
 
-                    TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion);
+                    TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
+                    TextView descripcion2 = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_2);
+                    TextView fecha1 = (TextView) vheader.findViewById(R.id.fecha_ultima_tram_1);
+                    TextView fecha2 = (TextView) vheader.findViewById(R.id.fecha_ultima_tram_2);
 
                     descripcion.setText(getString(R.string.main_no_items));
+                    descripcion2.setText("");
+                    fecha1.setText("");
+                    fecha2.setText("");
 
                 }
             }

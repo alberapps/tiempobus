@@ -532,7 +532,9 @@ public class TiemposForegroundService extends Service {
 
         String horaT = ft.format(milisegundos);
 
-        String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
+        //String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
+
+        String alertaDialog = theBus.getLinea() + ";" + parada + ";" + horaT + " (" + mins + " " + context.getString(R.string.literal_min) + ")" + ";" + tiempo + ";" + item + ";" + milisegundos + ";" + theBus.getDestino();
 
         Log.d("TiemposService", "Tiempo actualizado a: " + horaT);
 

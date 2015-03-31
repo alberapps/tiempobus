@@ -104,8 +104,7 @@
                         android:layout_gravity="left"
                         android:background="@drawable/actionbar_compat_item"
                         android:text="@string/infolinea_horarios"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Button"
-
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/link_text_material_dark"
                         android:textStyle="italic|bold"
                         />
@@ -123,7 +122,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:gravity="right"
                             android:text="@string/infolinea_paradas"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
 
                             android:textColor="@color/link_text_material_dark"
                             android:textStyle="italic|bold" />

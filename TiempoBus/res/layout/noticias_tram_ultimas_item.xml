@@ -44,22 +44,57 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/titulo"
+                android:id="@+id/titulo_ultima_tram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:text="@string/guion"
+
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primary_dark_material_light"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/descripcion"
+                android:id="@+id/fecha_ultima_tram_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_dark_material_light"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/descripcion_ultima_tram_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:text="@string/guion"
+
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/mi_material_blue_indigo"/>
+                android:textColor="@color/mi_material_blue_indigo"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/fecha_ultima_tram_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_dark_material_light"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/descripcion_ultima_tram_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/mi_material_blue_indigo"
+                android:textStyle="italic"/>
+
         </LinearLayout>
 
 

@@ -196,10 +196,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         Conectividad.activarCache(this, preferencias);
 
 
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-             actionBar.setElevation(0);
+            actionBar.setElevation(0);
         }
 
         // Delegate gestion
@@ -212,7 +211,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         cambiarLocale(false);
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            iniciarDrawer(savedInstanceState);
+        iniciarDrawer(savedInstanceState);
         //}
 
         // Verificar si hay parada por defecto
@@ -241,13 +240,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         gestionarAlarmas = new GestionarAlarmas(this, preferencias, alarmManager);
 
 
-
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
 
     }
-
 
 
     /**
@@ -277,7 +274,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
         mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -327,11 +323,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-            // If the nav drawer is open, hide action items related to the
-            // content view
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-            menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
-            //menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
+        // If the nav drawer is open, hide action items related to the
+        // content view
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
+        //menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
         //}
 
         return super.onPrepareOptionsMenu(menu);
@@ -390,7 +386,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 gestionarFondo.seleccionarFondo();
 
                 break;
-
 
 
             case 8:
@@ -650,7 +645,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         datosPantallaPrincipal.controlMostrarNovedades();
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            mDrawerToggle.syncState();
+        mDrawerToggle.syncState();
         //}
 
     }
@@ -673,8 +668,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         super.onConfigurationChanged(newConfig);
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            // Pass any configuration change to the drawer toggls
-            mDrawerToggle.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggls
+        mDrawerToggle.onConfigurationChanged(newConfig);
         //}
     }
 
@@ -682,15 +677,15 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            if (mDrawerToggle.onOptionsItemSelected(item)) {
-                return true;
-            }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         //}
 
         switch (item.getItemId()) {
             //case android.R.id.home:
-                // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-              //  break;
+            // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
+            //  break;
 
             /*case R.id.menu_refresh:
 
@@ -773,7 +768,6 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private void setupView() {
 
 
-
         // Fondo
         gestionarFondo.setupFondoAplicacion();
 
@@ -793,7 +787,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         datosParada = (TextView) findViewById(R.id.datos_parada);
 
         // Progreso inicial
-		/*
+        /*
 		 * TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 		 * vacio.setVisibility(View.INVISIBLE); ProgressBar lpb = (ProgressBar)
 		 * findViewById(R.id.tiempos_progreso); lpb.setIndeterminate(true);
@@ -817,7 +811,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     busSeleccionado = bus;
                     // openContextMenu(getListView());
 
-                    if(!busSeleccionado.isErrorServicio() && !busSeleccionado.isSinDatos()) {
+                    if (!busSeleccionado.isErrorServicio() && !busSeleccionado.isSinDatos()) {
                         opcionesLineaSeleccionada();
                     }
 
@@ -1210,10 +1204,17 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                     Uri selectedImage = data.getData();
 
-
-
                     // Cargamos imagen seleccionada
-                    gestionarFondo.activarNuevoFondo19(selectedImage);
+
+                    if (selectedImage != null) {
+                        //Nueva galeria Fotos
+                        gestionarFondo.activarNuevoFondo19(selectedImage);
+                    } else {
+                        //Galeria de Android
+                        gestionarFondo.activarNuevoFondo(selectedImage);
+                    }
+
+
                 } catch (Exception e) {
 
                     Toast.makeText(this, getString(R.string.error_fichero), Toast.LENGTH_SHORT).show();
@@ -1336,12 +1337,12 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             b1.setErrorServicio(true);
                             buses.add(b1);
 
-                            if(tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
+                            if (tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
                                 int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
 
                                 for (int i = 0; i < n; i++) {
 
-                                    if(!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
+                                    if (!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
                                         buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
                                     }
                                 }
@@ -1388,12 +1389,12 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 b1.setErrorServicio(true);
                 buses.add(b1);
 
-                if(tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
+                if (tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
                     int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
 
                     for (int i = 0; i < n; i++) {
 
-                        if(!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
+                        if (!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
                             buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
                         }
                     }
@@ -1429,7 +1430,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 case MSG_ERROR_TIEMPOS:
 
-                    if (laActividad != null){
+                    if (laActividad != null) {
                         Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                         laActividad.showProgressBar(false);
@@ -1549,10 +1550,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             });
 
 
-
                         }
-
-
 
 
                         if (cabdatos.equals("")) {
@@ -1626,9 +1624,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         break;
 
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
 
-                        if(laActividad != null) {
+                        if (laActividad != null) {
                             Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
                         }
 
