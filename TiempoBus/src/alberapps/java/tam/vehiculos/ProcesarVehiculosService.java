@@ -41,7 +41,13 @@ public class ProcesarVehiculosService {
 
         List<InfoVehiculo> vehiculosList = null;
 
-        vehiculosList = service.consultarServicio(linea, tiemposCache).getInfoVehiculoList();
+        //PARCHE 11
+        String lineab = linea;
+        if(linea.equals("11H")){
+            lineab = "11";
+        }
+
+        vehiculosList = service.consultarServicio(lineab, tiemposCache).getInfoVehiculoList();
 
         return vehiculosList;
     }

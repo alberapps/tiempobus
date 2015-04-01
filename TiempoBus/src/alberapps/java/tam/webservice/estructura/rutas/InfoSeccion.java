@@ -20,26 +20,36 @@ package alberapps.java.tam.webservice.estructura.rutas;
 import java.util.List;
 
 
-public class InfoRuta {
+public class InfoSeccion {
 
 
-    private String nombre;
+    private String seccion;
 
-    private List<InfoSeccion> infoSeccion;
+    private String longitud;
 
-    public String getNombre() {
-        return nombre;
+    private List<InfoNodoSeccion> nodos;
+
+    public String getSeccion() {
+        return seccion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setSeccion(String seccion) {
+        this.seccion = seccion;
     }
 
-    public List<InfoSeccion> getInfoSeccion() {
-        return infoSeccion;
+    public String getLongitud() {
+        return longitud;
     }
 
-    public void setInfoSeccion(List<InfoSeccion> infoSeccion) {
-        this.infoSeccion = infoSeccion;
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+    public List<InfoNodoSeccion> getNodos() {
+        return nodos;
+    }
+
+    public void setNodos(List<InfoNodoSeccion> nodos) {
+        this.nodos = nodos;
     }
 }

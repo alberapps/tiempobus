@@ -192,7 +192,7 @@ public class EstructuraGetRutasSublineaParser {
                 nombre = readNombre(parser);
             } else if (name.equals("secciones")) {
 
-                infoRuta = readSecciones(parser);
+                infoRuta.setInfoSeccion(readSecciones(parser));
                 infoRuta.setNombre(nombre);
 
             } else {
@@ -209,9 +209,9 @@ public class EstructuraGetRutasSublineaParser {
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException
      */
-    private InfoRuta readSecciones(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private List<InfoSeccion> readSecciones(XmlPullParser parser) throws XmlPullParserException, IOException {
 
-        InfoRuta infoRuta = new InfoRuta();
+        List<InfoSeccion> infoSeccionList = new ArrayList<InfoSeccion>();
 
         parser.require(XmlPullParser.START_TAG, ns, "secciones");
 
@@ -222,21 +222,24 @@ public class EstructuraGetRutasSublineaParser {
             String name = parser.getName();
             // Starts by looking for the PasoParada tag
             if (name.equals("InfoSeccion")) {
-                infoRuta = readInfoSeccion(parser);
+                infoSeccionList.add(readInfoSeccion(parser));
 
 
             } else {
                 skip(parser);
             }
         }
-        return infoRuta;
+        return infoSeccionList;
     }
 
-    private InfoRuta readInfoSeccion(XmlPullParser parser) throws XmlPullParserException, IOException {
+    private InfoSeccion readInfoSeccion(XmlPullParser parser) throws XmlPullParserException, IOException {
 
-        InfoRuta infoRuta = new InfoRuta();
+        InfoSeccion infoSeccion = new InfoSeccion();
 
         parser.require(XmlPullParser.START_TAG, ns, "InfoSeccion");
+
+        String seccion = null;
+
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -244,16 +247,20 @@ public class EstructuraGetRutasSublineaParser {
             }
             String name = parser.getName();
             // Starts by looking for the PasoParada tag
-            if (name.equals("nodos")) {
+            if (name.equals("seccion")) {
 
-                infoRuta.setNodos(readInfoNodoSeccion(parser));
+                seccion = readSeccion(parser);
 
+            }else if (name.equals("nodos")) {
+
+                infoSeccion.setNodos(readInfoNodoSeccion(parser));
+                infoSeccion.setSeccion(seccion);
 
             } else {
                 skip(parser);
             }
         }
-        return infoRuta;
+        return infoSeccion;
     }
 
 
@@ -349,6 +356,13 @@ public class EstructuraGetRutasSublineaParser {
         return distancia;
     }
 
+    // Processes title tags in the feed.
+    private String readSeccion(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "seccion");
+        String seccion = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "seccion");
+        return seccion;
+    }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {

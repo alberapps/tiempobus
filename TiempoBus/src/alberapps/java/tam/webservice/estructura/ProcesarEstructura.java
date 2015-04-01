@@ -51,23 +51,26 @@ public class ProcesarEstructura {
 
         DatosMapa[] datosMapa = {null, null};
 
+        boolean parche11 = false;
+
+        String lineab = linea;
 
         //PARCHE 11
-        /*if(linea.equals("11")){
-            sublinea = "2";
+        if (linea.equals("11")) {
+            parche11 = true;
         }
 
-        if(linea.equals("11H")){
-            linea = "11";
-            sublinea = "3";
-        }*/
+        if (linea.equals("11H")) {
+            lineab = "11";
+            parche11 = false;
+        }
 
         try {
 
 
             EstructuraGetRutasSublineaParser parser = new EstructuraGetRutasSublineaParser();
 
-            GetRutaSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
+            GetRutaSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
 
 
             if (datos != null && datos.getInfoRutaList() != null && !datos.getInfoRutaList().isEmpty()) {
@@ -78,20 +81,31 @@ public class ProcesarEstructura {
 
                 List<PlaceMark> listaIda = new ArrayList<PlaceMark>();
 
-                for (int i = 0; i < datos.getInfoRutaList().get(0).getNodos().size(); i++) {
+                for (int j = 0; j < datos.getInfoRutaList().get(0).getInfoSeccion().size(); j++) {
 
-                    pm = new PlaceMark();
-
-                    if (datos.getInfoRutaList().get(0).getNodos().get(i).getTipo().equals("3") || datos.getInfoRutaList().get(0).getNodos().get(i).getTipo().equals("1")) {
-
-                        pm.setCodigoParada(datos.getInfoRutaList().get(0).getNodos().get(i).getNodo());
-                        pm.setTitle(datos.getInfoRutaList().get(0).getNodos().get(i).getNombre());
-                        pm.setLineas("");
-                        pm.setObservaciones("");
-                        pm.setSentido(datos.getInfoRutaList().get(0).getNombre());
+                    if (parche11) {
+                        if (!datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getSeccion().equals("1")) {
+                            continue;
+                        }
+                    }
 
 
-                        listaIda.add(pm);
+                    for (int i = 0; i < datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().size(); i++) {
+
+                        pm = new PlaceMark();
+
+                        if (datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getTipo().equals("3") || datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getTipo().equals("1")) {
+
+                            pm.setCodigoParada(datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getNodo());
+                            pm.setTitle(datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getNombre());
+                            pm.setLineas("");
+                            pm.setObservaciones("");
+                            pm.setSentido(datos.getInfoRutaList().get(0).getNombre());
+
+
+                            listaIda.add(pm);
+
+                        }
 
                     }
 
@@ -115,22 +129,33 @@ public class ProcesarEstructura {
 
                 List<PlaceMark> listaIda = new ArrayList<PlaceMark>();
 
-                for (int i = 0; i < datos.getInfoRutaList().get(1).getNodos().size(); i++) {
+                for (int j = 0; j < datos.getInfoRutaList().get(1).getInfoSeccion().size(); j++) {
 
-                    if (datos.getInfoRutaList().get(1).getNodos().get(i).getTipo().equals("3") || datos.getInfoRutaList().get(1).getNodos().get(i).getTipo().equals("1")) {
+                    if (parche11) {
+                        if (datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getSeccion().equals("4") || datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getSeccion().equals("5")) {
 
-                        pm = new PlaceMark();
-
-                        pm.setCodigoParada(datos.getInfoRutaList().get(1).getNodos().get(i).getNodo());
-                        pm.setTitle(datos.getInfoRutaList().get(1).getNodos().get(i).getNombre());
-                        pm.setLineas("");
-                        pm.setObservaciones("");
-                        pm.setSentido(datos.getInfoRutaList().get(1).getNombre());
-
-                        listaIda.add(pm);
-
+                        } else {
+                            continue;
+                        }
                     }
 
+                    for (int i = 0; i < datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().size(); i++) {
+
+                        if (datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getTipo().equals("3") || datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getTipo().equals("1")) {
+
+                            pm = new PlaceMark();
+
+                            pm.setCodigoParada(datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getNodo());
+                            pm.setTitle(datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getNombre());
+                            pm.setLineas("");
+                            pm.setObservaciones("");
+                            pm.setSentido(datos.getInfoRutaList().get(1).getNombre());
+
+                            listaIda.add(pm);
+
+                        }
+
+                    }
                 }
 
                 datosMapa[1].setPlacemarks(listaIda);
@@ -164,11 +189,18 @@ public class ProcesarEstructura {
 
         DatosMapa[] datosMapa = {null, null};
 
+
         try {
 
             EstructuraGetNodosMapSublineaParser parser = new EstructuraGetNodosMapSublineaParser();
 
-            GetNodosMapSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
+            //PARCHE 11
+            String lineab = linea;
+            if (linea.equals("11H")) {
+                lineab = "11";
+            }
+
+            GetNodosMapSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
 
 
             if (datos != null && datos.getInfoNodoMapList() != null && !datos.getInfoNodoMapList().isEmpty()) {
@@ -253,7 +285,13 @@ public class ProcesarEstructura {
 
             EstructuraGetPolylineaSublineaParser parser = new EstructuraGetPolylineaSublineaParser();
 
-            GetPolylineaSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
+            //PARCHE 11
+            String lineab = linea;
+            if (linea.equals("11H")) {
+                lineab = "11";
+            }
+
+            GetPolylineaSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
 
 
             if (datos != null && datos.getInfoCoordList() != null && !datos.getInfoCoordList().isEmpty()) {
