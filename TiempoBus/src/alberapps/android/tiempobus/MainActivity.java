@@ -100,6 +100,8 @@ import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
 import alberapps.java.exception.TiempoBusException;
+import alberapps.java.noticias.Noticias;
+import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tram.UtilidadesTRAM;
@@ -176,6 +178,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     private String[] mDrawerIcons;
 
     AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
+    public AsyncTask<Object, Void, List<Noticias>> nuevasNoticiasTask;
+    public AsyncTask<Object, Void, List<TwResultado>> nuevasNoticasTramTask;
 
     public View avisoPie = null;
 
@@ -594,6 +598,22 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         }
 
+        if (nuevasNoticiasTask != null && nuevasNoticiasTask.getStatus() == Status.RUNNING) {
+
+            nuevasNoticiasTask.cancel(true);
+
+            Log.d("tiempos", "Cancelada task nuevas noticias");
+
+        }
+
+        if (nuevasNoticasTramTask != null && nuevasNoticasTramTask.getStatus() == Status.RUNNING) {
+
+            nuevasNoticasTramTask.cancel(true);
+
+            Log.d("tiempos", "Cancelada task nuevas noticias tram");
+
+        }
+
     }
 
     @Override
@@ -909,6 +929,11 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
             }
         });
+
+
+
+
+
 
         // Swipe para recargar
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
@@ -1557,16 +1582,23 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                             cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
                         }
 
+                        ImageButton botonHorarios = (ImageButton) laActividad.findViewById(R.id.aviso_header_horario);
+
                         if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
                             cabdatos = "TRAM " + cabdatos;
 
                             // Estadisticas tram
                             analyticsTram(laActividad);
 
+                            botonHorarios.setVisibility(View.VISIBLE);
+
+                        }else {
+                            botonHorarios.setVisibility(View.INVISIBLE);
                         }
 
                         // Historial
                         laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual);
+                        laActividad.datosPantallaPrincipal.actualizarAnteriorHistorial();
 
                         laActividad.datosParada.setText(cabdatos);
 

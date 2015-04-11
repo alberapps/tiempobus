@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.util;
 
@@ -107,8 +107,8 @@ public class Conectividad {
                 urlConnection.addRequestProperty("Cache-Control", "max-age=0");
                 Log.d("CONEXION", "Con cache Tiempos");
             } else {*/
-                urlConnection.addRequestProperty("Cache-Control", "no-cache");
-                //Log.d("CONEXION", "Sin cache Tiempos");
+            urlConnection.addRequestProperty("Cache-Control", "no-cache");
+            //Log.d("CONEXION", "Sin cache Tiempos");
             //}
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -190,8 +190,8 @@ public class Conectividad {
                 urlConnection.addRequestProperty("Cache-Control", "max-age=0");
                 Log.d("CONEXION", "Con cache Tiempos");
             } else {*/
-                urlConnection.addRequestProperty("Cache-Control", "no-cache");
-                //Log.d("CONEXION", "Sin cache Tiempos");
+            urlConnection.addRequestProperty("Cache-Control", "no-cache");
+            //Log.d("CONEXION", "Sin cache Tiempos");
             //}
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -236,7 +236,7 @@ public class Conectividad {
      * @param usarCache
      * @return string
      */
-    public static String conexionGetIso(String urlGet, boolean usarCache, boolean userAgent, boolean utf8) throws Exception {
+    public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
 
         // Para Froyo
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
@@ -263,9 +263,11 @@ public class Conectividad {
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
 
-            //if (userAgent) {
-            urlConnection.setRequestProperty("User-Agent", USER_AGENT);
-            //}
+            if (userAgent == null) {
+                urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+            } else {
+                urlConnection.setRequestProperty("User-Agent", userAgent);
+            }
 
             if (!usarCache) {
                 urlConnection.addRequestProperty("Cache-Control", "no-cache");
@@ -310,7 +312,7 @@ public class Conectividad {
      */
     public static InputStream conexionGetIsoStream(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, false));
 
     }
 
@@ -320,14 +322,14 @@ public class Conectividad {
      */
     public static String conexionGetIsoString(String urlGet) throws Exception {
 
-        return conexionGetIso(urlGet, true, false, false);
+        return conexionGetIso(urlGet, true, null, false);
 
     }
 
 
     public static InputStream conexionGetUtf8Stream(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, false, true));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, true));
 
     }
 
@@ -337,7 +339,13 @@ public class Conectividad {
      */
     public static String conexionGetUtf8String(String urlGet, Boolean usarCache) throws Exception {
 
-        return conexionGetIso(urlGet, usarCache, false, true);
+        return conexionGetIso(urlGet, usarCache, null, true);
+
+    }
+
+    public static String conexionGetUtf8StringUserAgent(String urlGet, Boolean usarCache, String userAgent) throws Exception {
+
+        return conexionGetIso(urlGet, usarCache, userAgent, true);
 
     }
 
@@ -348,7 +356,7 @@ public class Conectividad {
      * @param usarCache
      * @return stream
      */
-    public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, Boolean userAgent) throws Exception {
+    public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, String userAgent) throws Exception {
 
         return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
 
@@ -363,7 +371,7 @@ public class Conectividad {
      */
     public static InputStream conexionGetIsoStreamNoCache(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, false, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, null, false));
 
     }
 
@@ -411,7 +419,7 @@ public class Conectividad {
      * @param url
      * @return
      */
-    public static String conexionGetIsoFroyo(String url, boolean userAgent) throws Exception {
+    public static String conexionGetIsoFroyo(String url, String userAgent) throws Exception {
 
         HttpGet request = new HttpGet(url);
 
@@ -426,9 +434,11 @@ public class Conectividad {
             int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
             HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
-            //if (userAgent) {
-            request.setHeader("User-Agent", USER_AGENT);
-            //}
+            if (userAgent == null) {
+                request.setHeader("User-Agent", USER_AGENT);
+            } else {
+                request.setHeader("User-Agent", userAgent);
+            }
 
             DefaultHttpClient client = new DefaultHttpClient(httpParam);
 

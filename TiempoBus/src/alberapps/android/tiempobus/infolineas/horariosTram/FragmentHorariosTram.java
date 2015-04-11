@@ -55,6 +55,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
+import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.horarios.DatoTransbordo;
@@ -113,6 +114,7 @@ public class FragmentHorariosTram extends Fragment {
         }*/
 
         iniciar();
+
 
 
         super.onViewStateRestored(savedInstanceState);
@@ -271,6 +273,22 @@ public class FragmentHorariosTram extends Fragment {
                     cargarHorarios();
                     cargarHeaderHorarios();
 
+                    //Guardar seleccion
+                    StringBuffer guardar = new StringBuffer("");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+
+                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+
                 }
             });
 
@@ -292,17 +310,36 @@ public class FragmentHorariosTram extends Fragment {
                 actividad.consultaHorarioTram.setDia(Utilidades.getFechaStringSinHora(calendar.getTime()));
                 actividad.consultaHorarioTram.setDiaDate(calendar.getTime());
 
-                actividad.consultaHorarioTram.setHoraDesde(Utilidades.getHoraString(calendar.getTime()));
 
-                calendar.add(Calendar.HOUR_OF_DAY, 2);
-                actividad.consultaHorarioTram.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+                //Verificar si hay cache
+                String datosAnteriores = PreferencesUtil.getCache(actividad, "datos_horarios_tram");
+                if(datosAnteriores != null && !datosAnteriores.equals("")){
 
-                actividad.consultaHorarioTram.setCodEstacionOrigen(UtilidadesTRAM.HORARIOS_COD_ESTACION[0]);
-                actividad.consultaHorarioTram.setEstacionOrigenSeleccion(0);
+                    String[] datos = datosAnteriores.split(";;");
 
-                actividad.consultaHorarioTram.setCodEstacionDestino(UtilidadesTRAM.HORARIOS_COD_ESTACION[1]);
-                actividad.consultaHorarioTram.setEstacionDestinoSeleccion(1);
+                    actividad.consultaHorarioTram.setHoraDesde(datos[4]);
 
+                    actividad.consultaHorarioTram.setHoraHasta(datos[5]);
+
+                    actividad.consultaHorarioTram.setCodEstacionOrigen(Integer.parseInt(datos[1]));
+                    actividad.consultaHorarioTram.setEstacionOrigenSeleccion(Integer.parseInt(datos[3]));
+
+                    actividad.consultaHorarioTram.setCodEstacionDestino(Integer.parseInt(datos[0]));
+                    actividad.consultaHorarioTram.setEstacionDestinoSeleccion(Integer.parseInt(datos[2]));
+
+                }else {
+
+                    actividad.consultaHorarioTram.setHoraDesde(Utilidades.getHoraString(calendar.getTime()));
+
+                    calendar.add(Calendar.HOUR_OF_DAY, 2);
+                    actividad.consultaHorarioTram.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+
+                    actividad.consultaHorarioTram.setCodEstacionOrigen(UtilidadesTRAM.HORARIOS_COD_ESTACION[0]);
+                    actividad.consultaHorarioTram.setEstacionOrigenSeleccion(0);
+
+                    actividad.consultaHorarioTram.setCodEstacionDestino(UtilidadesTRAM.HORARIOS_COD_ESTACION[1]);
+                    actividad.consultaHorarioTram.setEstacionDestinoSeleccion(1);
+                }
 
             }
 

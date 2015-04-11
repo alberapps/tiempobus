@@ -18,7 +18,11 @@
  */
 package alberapps.java.util;
 
+import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -464,6 +469,25 @@ public class Utilidades {
 
         return is;
 
+    }
+
+
+    /**
+     * User Agent por defecto
+     * @param contexto
+     * @return
+     */
+    public static String getAndroidUserAgent(Context contexto){
+
+        String userAgent = "";
+
+        if(Build.VERSION.SDK_INT >= 17){
+            userAgent = WebSettings.getDefaultUserAgent(contexto);
+        }else{
+            userAgent = new WebView(contexto).getSettings().getUserAgentString();
+        }
+
+        return userAgent;
     }
 
 

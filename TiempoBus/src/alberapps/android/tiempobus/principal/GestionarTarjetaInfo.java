@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.principal;
 
@@ -448,7 +448,6 @@ public class GestionarTarjetaInfo {
         }
 
 
-
         // Verificar si ya disponemos de los datos
         /*if (datosWeather != null) {
 
@@ -608,6 +607,10 @@ public class GestionarTarjetaInfo {
 
             textoWeather.setText(sb.toString());
 
+            datosWeather = null;
+
+
+
         }
 
     }
@@ -681,38 +684,6 @@ public class GestionarTarjetaInfo {
                         iv.setVisibility(ImageView.INVISIBLE);
                     }
 
-/*
-                    int draw = Integer.parseInt(weather.getListaDatos().get(0).getIcon());
-
-                    if (draw.equals("01d") || draw.equals("01n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clear));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("02d") || draw.equals("02n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_clouds));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("03d") || draw.equals("03n") || draw.equals("04d") || draw.equals("04n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clouds));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("09d") || draw.equals("09n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_rain));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("10d") || draw.equals("10n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_rain));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("11d") || draw.equals("11n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_storm));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw >= 14 || draw <= 16) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_snow));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else if (draw.equals("50d") || draw.equals("50n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_fog));
-                        iv.setVisibility(ImageView.VISIBLE);
-                    } else {
-                        iv.setVisibility(ImageView.INVISIBLE);
-                    }
-*/
-
 
                     //iv.setScaleType(ImageView.ScaleType.MATRIX);
 
@@ -780,6 +751,8 @@ public class GestionarTarjetaInfo {
             TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
             textoWeather.setText(sb.toString());
+
+            datosWeather = null;
 
         }
 
@@ -871,6 +844,8 @@ public class GestionarTarjetaInfo {
             TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
 
             textoWeather.setText(sb.toString());
+
+            datosWeather = null;
 
         }
 

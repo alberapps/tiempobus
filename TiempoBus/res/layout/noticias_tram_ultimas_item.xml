@@ -72,7 +72,8 @@
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_indigo"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:autoLink="web"/>
 
             <TextView
                 android:id="@+id/fecha_ultima_tram_2"
@@ -93,7 +94,8 @@
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_indigo"
-                android:textStyle="italic"/>
+                android:textStyle="italic"
+                android:autoLink="web"/>
 
         </LinearLayout>
 

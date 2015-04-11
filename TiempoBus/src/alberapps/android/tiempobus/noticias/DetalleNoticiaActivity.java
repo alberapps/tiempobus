@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.noticias;
 
@@ -65,7 +65,7 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
 
     String link;
 
-    AsyncTask<String, Void, Noticias> taskDetalle = null;
+    AsyncTask<Object, Void, Noticias> taskDetalle = null;
 
     SharedPreferences preferencias = null;
 
@@ -131,7 +131,10 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link);
+
+            String userAgentDefault = Utilidades.getAndroidUserAgent(this);
+
+            taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link, userAgentDefault);
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
             if (dialog != null && dialog.isShowing()) {
@@ -257,9 +260,9 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
 
         String noticiaLineas = "";
 
-        if(noticia.getLineaCabecera().length() > 400){
-            noticiaLineas = noticia.getLineaCabecera().substring(0,400) + "...";
-        }else{
+        if (noticia.getLineaCabecera().length() > 400) {
+            noticiaLineas = noticia.getLineaCabecera().substring(0, 400) + "...";
+        } else {
             noticiaLineas = noticia.getLineaCabecera();
         }
 
@@ -280,7 +283,7 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
 
             //mWebView.loadData(noticia.getContenidoHtml(), "text/html", "utf-8");
 
-            mWebView.loadDataWithBaseURL(null, noticia.getContenidoHtml(), "text/html", "utf-8", null );
+            mWebView.loadDataWithBaseURL(null, noticia.getContenidoHtml(), "text/html", "utf-8", null);
 
         }
 

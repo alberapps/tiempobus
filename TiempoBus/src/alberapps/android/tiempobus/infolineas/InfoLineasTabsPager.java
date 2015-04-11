@@ -136,6 +136,8 @@ public class InfoLineasTabsPager extends ActionBarActivity {
         this.linea = linea;
     }
 
+    public String modoHorario = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +159,25 @@ public class InfoLineasTabsPager extends ActionBarActivity {
             modoRed = preferencias.getInt("infolinea_modo", 0);
 
         }
+
+        modoHorario = null;
+
+        //Al entrar a horarios directamente
+        if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("HORARIOS")) {
+
+            if((this.getIntent().getExtras().getString("HORARIOS")).equals("TRAM")) {
+
+                modoRed = MODO_RED_TRAM_OFFLINE;
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putInt("infolinea_modo", MODO_RED_TRAM_OFFLINE);
+                editor.commit();
+
+                modoHorario = "TRAM";
+                this.getIntent().removeExtra("HORARIOS");
+            }
+
+        }
+
 
         setContentView(R.layout.infolinea_contenedor);
 

@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.principal;
 
@@ -36,7 +36,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,6 +55,7 @@ import java.util.List;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.appinfo.AppInfoActivity;
+import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
@@ -60,6 +63,7 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
@@ -234,6 +238,19 @@ public class DatosPantallaPrincipal {
 
         }
 
+        return cargarDescripcionBDFavoritos(parada);
+
+    }
+
+
+    /**
+     * Si la parada esta en favoritos mostramos su titulo
+     *
+     * @param parada
+     * @return
+     */
+    public String cargarDescripcionBDFavoritos(String parada) {
+
         try {
             HashMap<String, String> datosFav = new HashMap<String, String>();
 
@@ -261,6 +278,7 @@ public class DatosPantallaPrincipal {
 
     }
 
+
     /**
      * Gestiona el historial
      *
@@ -275,8 +293,10 @@ public class DatosPantallaPrincipal {
 
             Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
+            List<Parada> listaParadas = null;
+
             if (cursor != null) {
-                List<Parada> listaParadas = new ArrayList<Parada>();
+                listaParadas = new ArrayList<Parada>();
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
@@ -295,54 +315,57 @@ public class DatosPantallaPrincipal {
                     listaParadas.add(par);
                 }
 
-                // Comprueba si ya existe la parada para sustituirla
-                Integer id = cargarIdParadaHistorial(Integer.toString(paradaActual));
-
-                // Almacenar historial
-                ContentValues values = new ContentValues();
-
-                Date fechaActual = new Date();
-
-                values.put(HistorialDB.Historial.TITULO, Utilidades.getFechaString(fechaActual));
-
-                StringBuffer descripcion = new StringBuffer("");
-
-                if (listaParadas != null && !listaParadas.isEmpty() && listaParadas.get(0).getDireccion() != null) {
-                    descripcion.append(listaParadas.get(0).getDireccion());
-                    descripcion.append("\n");
-                    descripcion.append("T: ");
-                    descripcion.append(listaParadas.get(0).getConexion());
-                }
-
-                // Descripcion del favorito
-                String favorito = cargarDescripcion(Integer.toString(paradaActual));
-
-                if (favorito != null && !favorito.equals("")) {
-                    if (descripcion.length() > 1) {
-                        descripcion.append("\n");
-                    }
-                    descripcion.append("\"");
-                    descripcion.append(favorito);
-                    descripcion.append("\"");
-                }
-
-                values.put(HistorialDB.Historial.DESCRIPCION, descripcion.toString());
-
-                values.put(HistorialDB.Historial.PARADA, paradaActual);
-                values.put(HistorialDB.Historial.FECHA, Utilidades.getFechaSQL(fechaActual));
-
-                if (id != null) {
-                    // La actualiza
-                    Uri miUriM = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, id);
-
-                    context.getContentResolver().update(miUriM, values, null, null);
-
-                } else {
-                    // Una nueva
-                    context.getContentResolver().insert(HistorialDB.Historial.CONTENT_URI, values);
-                }
-
             }
+
+            // Comprueba si ya existe la parada para sustituirla
+            Integer id = cargarIdParadaHistorial(Integer.toString(paradaActual));
+
+            // Almacenar historial
+            ContentValues values = new ContentValues();
+
+            Date fechaActual = new Date();
+
+            values.put(HistorialDB.Historial.TITULO, Utilidades.getFechaString(fechaActual));
+
+            StringBuffer descripcion = new StringBuffer("");
+
+            if (listaParadas != null && !listaParadas.isEmpty() && listaParadas.get(0).getDireccion() != null) {
+                descripcion.append(listaParadas.get(0).getDireccion());
+                descripcion.append("\n");
+                descripcion.append("T: ");
+                descripcion.append(listaParadas.get(0).getConexion());
+            } else{
+                descripcion.append(context.getString(R.string.main_no_items));
+            }
+
+            // Descripcion del favorito
+            String favorito = cargarDescripcion(Integer.toString(paradaActual));
+
+            if (favorito != null && !favorito.equals("")) {
+                if (descripcion.length() > 1) {
+                    descripcion.append("\n");
+                }
+                descripcion.append("\"");
+                descripcion.append(favorito);
+                descripcion.append("\"");
+            }
+
+            values.put(HistorialDB.Historial.DESCRIPCION, descripcion.toString());
+
+            values.put(HistorialDB.Historial.PARADA, paradaActual);
+            values.put(HistorialDB.Historial.FECHA, Utilidades.getFechaSQL(fechaActual));
+
+            if (id != null) {
+                // La actualiza
+                Uri miUriM = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, id);
+
+                context.getContentResolver().update(miUriM, values, null, null);
+
+            } else {
+                // Una nueva
+                context.getContentResolver().insert(HistorialDB.Historial.CONTENT_URI, values);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -495,7 +518,10 @@ public class DatosPantallaPrincipal {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute();
+
+            String userAgentDefault = Utilidades.getAndroidUserAgent(context);
+
+            context.nuevasNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(true, userAgentDefault);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
@@ -623,7 +649,7 @@ public class DatosPantallaPrincipal {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
+            context.nuevasNoticasTramTask = new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
@@ -834,6 +860,143 @@ public class DatosPantallaPrincipal {
 
         context.tiemposView.addHeaderView(vheader);
 
+
+        // //Horarios
+
+        ImageButton botonHorarios = (ImageButton) vheader.findViewById(R.id.aviso_header_horario);
+
+        botonHorarios.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+
+                context.detenerTodasTareas();
+
+                Intent i = new Intent(context, InfoLineasTabsPager.class);
+                i.putExtra("HORARIOS", "TRAM");
+
+                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+
+            }
+        });
+
+        if (esTram(context.paradaActual)) {
+
+            botonHorarios.setVisibility(View.VISIBLE);
+
+
+
+        }else{
+            botonHorarios.setVisibility(View.INVISIBLE);
+        }
+
+
+        actualizarAnteriorHistorial();
+
+
+
+    }
+
+    /**
+     * Datos anterior del historial en la tarjeta
+     */
+    public void actualizarAnteriorHistorial(){
+
+        //Historial
+        TextView botonHistorial = (TextView) context.findViewById(R.id.aviso_header_historial);
+
+        List<Favorito> historial = cargarHistorialBD();
+
+        String anterior = "";
+
+        if(historial != null && !historial.isEmpty() && historial.size() > 1){
+
+            final String parada = historial.get(1).getNumParada();
+
+
+            anterior = cargarDescripcionBDFavoritos(parada);
+
+            if(anterior == null || (anterior != null && anterior.equals(""))){
+                anterior = cargarDescripcionBD(Integer.parseInt(parada));
+            }
+
+            if(anterior == null || (anterior != null && anterior.equals(""))){
+                anterior = parada;
+            }
+
+            if(anterior != null && !anterior.equals("")) {
+
+                botonHistorial.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View arg0) {
+
+                        context.paradaActual = Integer.parseInt(parada);
+
+                        // Poner en campo de poste
+                        EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                        txtPoste.setText(Integer.toString(context.paradaActual));
+
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putInt("parada_inicio", context.paradaActual);
+                        editor.commit();
+
+                        context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+
+
+                    }
+                });
+
+            }
+
+
+        }
+
+
+        botonHistorial.setText(anterior);
+
+    }
+
+
+    /**
+     * Carga del historial
+     *
+     *
+     * @return
+     */
+    public List<Favorito> cargarHistorialBD() {
+
+        List<Favorito> anteriorHisList = new ArrayList<Favorito>();
+
+        Favorito anteriorHis = null;
+
+        try {
+
+
+            Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER);
+
+            if (cursor != null) {
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+                    anteriorHis = new Favorito();
+
+                    anteriorHis.setNumParada(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.PARADA)));
+                    anteriorHis.setTitulo(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.TITULO)));
+                    anteriorHis.setDescripcion(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.DESCRIPCION)));
+                    anteriorHisList.add(anteriorHis);
+
+                }
+
+            }
+
+            if (!anteriorHisList.isEmpty()) {
+
+                return anteriorHisList;
+
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
 
     }
 
@@ -1397,7 +1560,7 @@ public class DatosPantallaPrincipal {
 
 
         //Size
-        if(cambiarSize) {
+        if (cambiarSize) {
             if (linea.length() > 2) {
                 busLinea.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             } else {

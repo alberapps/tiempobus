@@ -57,13 +57,16 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
     @Override
     protected WeatherQuery doInBackground(Object... datos) {
         WeatherQuery weather = null;
+
+        Context context = null;
+
         try {
 
             String lat = (String) datos[0];
             String lon = (String) datos[1];
 
             //Control cache
-            Context context = (Context) datos[2];
+            context = (Context) datos[2];
             String paradaWeather = (String) datos[3];
 
             String proveedor = (String) datos[4];
@@ -149,6 +152,11 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
         } catch (Exception e) {
 
             e.printStackTrace();
+
+            //Se descartan los datos en caso de error
+            PreferencesUtil.putCache(context, "cache_clima_json", "");
+            PreferencesUtil.putCache(context, "cache_clima_fecha", "");
+            PreferencesUtil.putCache(context, "cache_clima_parada", "");
 
             return null;
 
