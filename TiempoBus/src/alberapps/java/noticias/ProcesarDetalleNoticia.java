@@ -79,7 +79,26 @@ public class ProcesarDetalleNoticia {
 
             //Fecha
             Elements fecha = seccionNoticia.select("div.notif-date");
-            noticias.setFechaCabecera(Utilidades.getFechaStringSinHora(Utilidades.getFechaDateCorta(fecha.first().text())));
+
+            String fechaTexto = fecha.first().text();
+
+            String fechaTextoSalida = null;
+
+            if(fechaTexto.length() > 8){
+
+                //del 09/03/15 al 09/06/15
+
+                fechaTextoSalida = fechaTexto;
+
+            }else {
+
+                fechaTextoSalida = Utilidades.getFechaStringSinHora(Utilidades.getFechaDateCorta(fechaTexto));
+
+            }
+
+
+
+            noticias.setFechaCabecera(fechaTextoSalida);
 
             //Titulo
             Elements titulo = seccionNoticia.select("div.notif-title");

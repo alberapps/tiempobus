@@ -69,7 +69,11 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                     TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
                     TextView noticiaLineasText = (TextView) v.findViewById(R.id.noticia_lineas);
 
-                    fecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
+                    if(noticia.getFechaDoble() != null){
+                        fecha.setText(noticia.getFechaDoble());
+                    }else if(noticia.getFecha() != null) {
+                        fecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
+                    }
                     noticiaText.setText(noticia.getNoticia().trim());
 
                     String noticiaLineas = "";

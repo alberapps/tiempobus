@@ -70,7 +70,27 @@ public class ProcesarNoticias {
 
             noticia = new Noticias();
 
+            String fechaDoble = null;
+
+            if(fecha.length() > 8){
+
+                //del 09/03/15 al 09/06/15
+
+                fechaDoble = fecha;
+
+                String[] fechaString = fechaDoble.split(" ");
+
+                fecha = fechaString[1];
+
+            }
+
+
             noticia.setFecha(Utilidades.getFechaDateCorta(fecha));
+
+            if(fechaDoble != null){
+                noticia.setFechaDoble(fechaDoble);
+            }
+
             noticia.setNoticia(noticiaTexto);
             noticia.setLinks(new ArrayList<String>());
             noticia.setDescLink(new ArrayList<String>());

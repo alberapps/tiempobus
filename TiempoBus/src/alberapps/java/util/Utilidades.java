@@ -472,8 +472,11 @@ public class Utilidades {
     }
 
 
+    public static String DEFAULT_USERAGENT = "Mozilla/5.0 (Linux; Android 4.4.2; Android SDK built for x86 Build/KK) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36";
+
     /**
      * User Agent por defecto
+     *
      * @param contexto
      * @return
      */
@@ -481,10 +484,21 @@ public class Utilidades {
 
         String userAgent = "";
 
-        if (Build.VERSION.SDK_INT >= 17) {
-            userAgent = WebSettings.getDefaultUserAgent(contexto);
-        } else {
-            userAgent = new WebView(contexto).getSettings().getUserAgentString();
+        try {
+
+            if (Build.VERSION.SDK_INT >= 17) {
+                userAgent = WebSettings.getDefaultUserAgent(contexto);
+            } else {
+                userAgent = new WebView(contexto).getSettings().getUserAgentString();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            //Para algunas versiones que dan error al recupera el useragent
+
+            userAgent = DEFAULT_USERAGENT;
+
         }
 
         return userAgent;

@@ -39,6 +39,8 @@ public class ProcesarTiemposTramIsaeService {
     private static DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
 
 
+    public static int TIEMPO_MAXIMO = 120;
+
     /**
      * Procesa tiempos
      *
@@ -218,12 +220,12 @@ public class ProcesarTiemposTramIsaeService {
 
             BusLlegada bus = new BusLlegada(serviceResult.getPasoParadaList().get(i).getLinea(), serviceResult.getPasoParadaList().get(i).getRuta(), infoSalidas);
 
-            if (bus.getSiguienteMinutos() > 60) {
+            if (bus.getSiguienteMinutos() > TIEMPO_MAXIMO) {
                 bus.cambiarSiguiente(9999);
             }
 
             // >60min
-            if (bus.getProximoMinutos() > 60) {
+            if (bus.getProximoMinutos() > TIEMPO_MAXIMO) {
                 // Quitar
             } else {
                 buses.add(bus);
@@ -346,22 +348,37 @@ public class ProcesarTiemposTramIsaeService {
                 //Si disponible
                 if (busAux != null) {
 
+                    if (busAux.getSiguienteMinutos() > TIEMPO_MAXIMO) {
+                        busAux.cambiarSiguiente(9999);
+                    }
+
+                    // >60min
+                    if (busAux.getProximoMinutos() > TIEMPO_MAXIMO) {
+                        // Quitar
+                        busAux = null;
+                    }
+
                     //Sustituir el actual
                     boolean encontrado = false;
-                    for (int i = 0; i < busesList.size(); i++) {
+                    if(busAux != null) {
+                        for (int i = 0; i < busesList.size(); i++) {
 
-                        if (busesList.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesList.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
+                            if (busesList.get(i).getLinea().equals(UtilidadesTRAM.LINEAS_A_CONSULTAR[3]) && busesList.get(i).getDestino().contains(UtilidadesTRAM.L2_SANTVICENT)) {
 
-                            busesList.set(i, busAux);
+                                busesList.set(i, busAux);
 
-                            encontrado = true;
-                            break;
+                                encontrado = true;
+                                break;
 
+                            }
                         }
                     }
 
                     if(!encontrado){
-                        busesList.add(busAux);
+
+                            busesList.add(busAux);
+
+
                     }
 
                 }

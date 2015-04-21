@@ -46,6 +46,16 @@ public class Noticias implements Serializable, Comparable<Noticias> {
 
     private String lineaCabecera;
 
+    public String getFechaDoble() {
+        return fechaDoble;
+    }
+
+    public void setFechaDoble(String fechaDoble) {
+        this.fechaDoble = fechaDoble;
+    }
+
+    private String fechaDoble;
+
     private boolean sinDatos;
 
     private boolean errorServicio;
