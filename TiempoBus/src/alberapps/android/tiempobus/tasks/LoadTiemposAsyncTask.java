@@ -138,6 +138,13 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                     llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2, cacheTiempos);
 
                     datosRespuesta.setListaBusLlegada(llegadasBus);
+                } catch (TiempoBusException e2) {
+
+                    datosRespuesta.setError(e2.getCodigo());
+                    datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
+
+                    e.printStackTrace();
+
                 } catch (Exception e1) {
 
                     e1.printStackTrace();
