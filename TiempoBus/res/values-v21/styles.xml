@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+
+    <!-- extend one of the Theme.AppCompat themes -->
+    <style name="Theme.TiempoBusTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/mi_material_blue_principal</item>
+        <item name="colorPrimaryDark">@color/mi_material_blue_principal_700</item>
+        <item name="colorAccent">@color/mi_material_blue_principal</item>
+
+        <!--item name="actionBarStyle">@style/Header.Material</item-->
+
+        <item name="android:windowContentOverlay">@null</item>
+
+
+        <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
+
+    </style>
+
+    <style name="Theme.TiempoBusThemeActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/mi_material_blue_principal</item>
+        <item name="colorPrimaryDark">@color/mi_material_blue_principal_700</item>
+        <item name="colorAccent">@color/mi_material_blue_principal</item>
+
+        <!--item name="actionBarStyle">@style/Header.Material</item-->
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
+
+
+    </style>
+
+
+    <style name="Theme.TiempoBusThemeTab" parent="Theme.AppCompat.Light.DarkActionBar">
+
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/mi_material_blue_principal</item>
+        <item name="colorPrimaryDark">@color/mi_material_blue_principal_700</item>
+        <item name="colorAccent">@color/mi_material_blue_principal</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
+
+
+
+    </style>
+
+
+</resources>

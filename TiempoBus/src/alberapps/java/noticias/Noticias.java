@@ -156,9 +156,17 @@ public class Noticias implements Serializable, Comparable<Noticias> {
     @Override
     public int compareTo(Noticias another) {
 
-        Date fecha1 = getFecha();
-        Date fecha2 = another.getFecha();
+        if(getFecha() != null && another.getFecha()!= null) {
 
-        return fecha2.compareTo(fecha1);
+            Date fecha1 = getFecha();
+            Date fecha2 = another.getFecha();
+
+            return fecha2.compareTo(fecha1);
+        }else{
+            return 1;
+        }
     }
+
+
+
 }

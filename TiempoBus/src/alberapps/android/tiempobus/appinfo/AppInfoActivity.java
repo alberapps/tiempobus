@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +39,7 @@ import alberapps.java.tram.UtilidadesTRAM;
 /**
  * Informacion de la app
  */
-public class AppInfoActivity extends ActionBarActivity {
+public class AppInfoActivity extends AppCompatActivity {
 
     SharedPreferences preferencias = null;
 

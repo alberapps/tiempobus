@@ -65,6 +65,9 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
             noticiasList = ProcesarNoticias.getTamNews(usarCache, userAgent);
 
         } catch (Exception e) {
+
+            e.printStackTrace();
+
             return null;
         }
 

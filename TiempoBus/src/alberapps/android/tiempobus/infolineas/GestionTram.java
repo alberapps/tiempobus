@@ -18,17 +18,22 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.tasks.LoadPdfAsyncTask;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.util.Utilidades;
 
 /**
  * Gestion de datos del tram
@@ -147,5 +152,45 @@ public class GestionTram {
         }
 
     }
+
+    ////// HORARIOS BUS PDF
+
+    public void abrirPdfBus(String linea){
+
+
+        LoadPdfAsyncTask.LoadPdfAsyncTaskResponder loadPdfAsyncTaskResponder = new LoadPdfAsyncTask.LoadPdfAsyncTaskResponder() {
+            public void PdfLoaded(Object pdf) {
+
+                if (pdf != null && pdf.equals(true)) {
+
+
+                }else{
+                    Toast.makeText(context, context.getString(R.string.error_pdf), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            String userAgentDefault = Utilidades.getAndroidUserAgent(context);
+
+            new LoadPdfAsyncTask(loadPdfAsyncTaskResponder).execute(linea, context,userAgentDefault);
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+    }
+
+
+
+
+
 
 }

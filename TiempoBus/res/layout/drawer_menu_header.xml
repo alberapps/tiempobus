@@ -85,7 +85,7 @@
                             android:gravity="top"
                             android:text="@string/bus_tram"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/mi_material_blue_indigo"
+                            android:textColor="@color/mi_material_blue_principal"
                             android:textStyle="bold"
                             />
 
@@ -97,7 +97,7 @@
                             android:text="@string/app_autor_web"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textSize="10dp"
-                            android:textColor="@color/mi_material_blue_indigo"
+                            android:textColor="@color/mi_material_blue_principal"
                             android:autoLink="web"
                             />
 

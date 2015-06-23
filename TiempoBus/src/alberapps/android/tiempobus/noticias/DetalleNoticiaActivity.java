@@ -29,7 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
@@ -55,7 +55,7 @@ import alberapps.java.util.Utilidades;
 /**
  * Detalle de la noticia
  */
-public class DetalleNoticiaActivity extends ActionBarActivity {
+public class DetalleNoticiaActivity extends AppCompatActivity {
 
     private ProgressDialog dialog;
 
@@ -255,7 +255,11 @@ public class DetalleNoticiaActivity extends ActionBarActivity {
         TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
         TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
 
-        cabFecha.setText(noticia.getFechaCabecera());
+        if(noticia.getFechaCabecera() != null && !noticia.getFechaCabecera().trim().equals("")) {
+           cabFecha.setText(noticia.getFechaCabecera());
+        }else{
+            cabFecha.setText(getString(R.string.sin_fecha));
+        }
         cabTitulo.setText(noticia.getTituloCabecera());
 
         String noticiaLineas = "";

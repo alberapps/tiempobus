@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.noticias;
 
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,7 +40,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -90,7 +90,7 @@ import alberapps.java.util.Utilidades;
 /**
  * Noticias con tabs
  */
-public class NoticiasTabsPager extends ActionBarActivity {
+public class NoticiasTabsPager extends AppCompatActivity {
 
     public ViewPager mViewPager;
 

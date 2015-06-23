@@ -123,12 +123,26 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 });*/
 
-                informacionText.setVisibility(View.INVISIBLE);
+                //informacionText.setVisibility(View.INVISIBLE);
+
+                informacionText.setText(R.string.infolinea_horarios_pdf);
+
+                // Carga de horarios tram
+                // Link informacion
+                informacionText.setOnClickListener(new OnClickListener() {
+
+                    public void onClick(View view) {
+
+                        contexto.gestionTram.abrirPdfBus(bus.getNumLinea());
+
+                    }
+
+                });
 
 
             } else {
 
-                informacionText.setVisibility(View.VISIBLE);
+                //informacionText.setVisibility(View.VISIBLE);
 
                 informacionText.setText(R.string.infolinea_horarios_pdf);
 

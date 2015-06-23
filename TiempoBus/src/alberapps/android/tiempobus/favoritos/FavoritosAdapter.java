@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,23 +60,59 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
         final Favorito favorito = getItem(position);
 
+        String datosHorario = null;
+
         // Si no tenemos la vista de la fila creada componemos una
-        // if (v == null) {
-        Context ctx = this.getContext().getApplicationContext();
-        LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (v == null) {
+            Context ctx = this.getContext().getApplicationContext();
+            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        v = vi.inflate(R.layout.favoritos_item, null);
+            v = vi.inflate(R.layout.favoritos_item, null);
 
-        v.setTag(new ViewHolder(v));
-        // }
+            v.setTag(new ViewHolder(v));
+        }
 
         // Accedemos a la vista cacheada y la rellenamos
         ViewHolder tag = (ViewHolder) v.getTag();
 
         if (favorito != null) {
-            tag.numParada.setText(favorito.getNumParada().trim());
-            tag.titulo.setText(favorito.getTitulo().trim());
-            tag.descripcion.setText(favorito.getDescripcion().trim());
+
+            if(favorito.getNumParada().equals("0")){
+
+                tag.numParada.setText("TRAM");
+
+                TextView texto = (TextView) v.findViewById(R.id.numParadaFav);
+
+                texto.setTextColor(contexto.getResources().getColor(R.color.tram_l3));
+                texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                //texto.setTextAppearance(contexto, android.R.style.TextAppearance_Medium);
+
+                tag.titulo.setText(favorito.getTitulo().trim());
+
+                String[] desc = favorito.getDescripcion().trim().split("::");
+                datosHorario = desc[1];
+
+                tag.descripcion.setText(desc[0]);
+
+                ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
+
+                compartir.setVisibility(View.INVISIBLE);
+
+            }else {
+
+                tag.numParada.setText(favorito.getNumParada().trim());
+
+                TextView texto = (TextView) v.findViewById(R.id.numParadaFav);
+
+                texto.setTextColor(contexto.getResources().getColor(R.color.mi_material_blue_principal));
+                //texto.setTextAppearance(contexto, android.R.style.TextAppearance_Large);
+
+                tag.titulo.setText(favorito.getTitulo().trim());
+                tag.descripcion.setText(favorito.getDescripcion().trim());
+
+            }
+
+
 
         }
 
@@ -139,7 +176,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
         TextView descripcion;
 
         public ViewHolder(View v) {
-            numParada = (TextView) v.findViewById(R.id.poste);
+            numParada = (TextView) v.findViewById(R.id.numParadaFav);
             titulo = (TextView) v.findViewById(R.id.titulo);
             descripcion = (TextView) v.findViewById(R.id.descripcion);
         }

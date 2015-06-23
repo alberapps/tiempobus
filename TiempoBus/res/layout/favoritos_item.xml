@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/poste"
+                    android:id="@+id/numParadaFav"
                     android:layout_width="55sp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5sp"
@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/primary_material_dark"
+                    android:textColor="@color/mi_material_blue_principal"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -99,7 +99,7 @@
                             android:id="@+id/compartir_img"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="30dp"
+                            android:layout_marginRight="40dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Compartir"
                             android:src="@drawable/ic_share_grey600_18dp" />
@@ -108,7 +108,7 @@
                             android:id="@+id/favorito_editar"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="30dp"
+                            android:layout_marginRight="40dp"
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Modificar"
                             android:src="@drawable/ic_mode_edit_grey600_18dp" />

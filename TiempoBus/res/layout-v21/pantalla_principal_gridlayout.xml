@@ -93,7 +93,7 @@
             android:contentDescription="Guardar favorito"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-
+            android:layout_margin="10dp"
             >
 
 

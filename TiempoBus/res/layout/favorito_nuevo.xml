@@ -89,7 +89,7 @@
                 android:layout_marginTop="10dp">
 
 
-                <TextView
+                <!--TextView
                     android:id="@+id/boton_go"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,13 +100,29 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/link_text_material_dark"
                     android:textStyle="italic|bold"
-                    />
+
+
+                    /-->
+
+
 
 
             </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nuevo_guardar"
+                android:id="@+id/boton_go"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                />
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
+
+
 
 </LinearLayout>
 

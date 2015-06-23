@@ -73,6 +73,8 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                         fecha.setText(noticia.getFechaDoble());
                     }else if(noticia.getFecha() != null) {
                         fecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
+                    }else{
+                        fecha.setText(contexto.getString(R.string.sin_fecha));
                     }
                     noticiaText.setText(noticia.getNoticia().trim());
 

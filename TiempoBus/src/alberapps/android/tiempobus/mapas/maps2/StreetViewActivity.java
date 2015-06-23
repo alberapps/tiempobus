@@ -21,7 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,7 +38,7 @@ import alberapps.android.tiempobus.R;
 /**
  * Vista de streetview
  */
-public class StreetViewActivity extends ActionBarActivity {
+public class StreetViewActivity extends AppCompatActivity {
 
     SharedPreferences preferencias = null;
 
@@ -98,9 +98,15 @@ public class StreetViewActivity extends ActionBarActivity {
 
         }
 
+        //Cambio en mensaje
         if (datosMensaje != null && !datosMensaje.equals("")) {
 
-            datosMensaje = datosMensaje.substring(0, datosMensaje.lastIndexOf("\n"));
+            int index = datosMensaje.lastIndexOf("\n");
+
+            //En caso de encontrarlo
+            if(index > 0) {
+                datosMensaje = datosMensaje.substring(0, index);
+            }
 
             TextView pieMensaje = (TextView) findViewById(R.id.pie_descrip);
             pieMensaje.setText(datosMensaje);

@@ -477,5 +477,6 @@
 
     <string name="tarjeta">Tarjetas</string>
     <string name="tarjeta_clima">Clima</string>
+    <string name="sin_fecha">Sin fecha</string>
 
 </resources>

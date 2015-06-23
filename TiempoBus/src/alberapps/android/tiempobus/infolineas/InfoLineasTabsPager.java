@@ -35,7 +35,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -65,7 +65,7 @@ import alberapps.java.tram.horarios.HorarioTram;
  * Informacion de lineas con tabs
  */
 
-public class InfoLineasTabsPager extends ActionBarActivity {
+public class InfoLineasTabsPager extends AppCompatActivity {
 
     public ViewPager mViewPager;
 

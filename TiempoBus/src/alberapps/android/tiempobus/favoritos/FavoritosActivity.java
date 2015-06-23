@@ -19,7 +19,6 @@
  */
 package alberapps.android.tiempobus.favoritos;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
@@ -30,7 +29,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -61,7 +61,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 /**
  * Muestra los favoritos guardados
  */
-public class FavoritosActivity extends ActionBarActivity {
+public class FavoritosActivity extends AppCompatActivity {
 
     public static final int SUB_ACTIVITY_REQUEST_DRIVE = 1100;
 
@@ -200,6 +200,13 @@ public class FavoritosActivity extends ActionBarActivity {
 
             Intent intent = new Intent();
             Bundle b = new Bundle();
+
+            //Horarios
+            if(fav.getNumParada().equals("0")) {
+                String[] desc = fav.getDescripcion().trim().split("::");
+                b.putString("HORARIOS", desc[1]);
+            }
+
             b.putInt("POSTE", Integer.parseInt(fav.getNumParada()));
             intent.putExtras(b);
             setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);

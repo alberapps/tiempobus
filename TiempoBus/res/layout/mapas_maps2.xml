@@ -27,7 +27,7 @@
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mi_material_blue_indigo" >
+        android:background="@color/mi_material_blue_principal" >
 
         <TextView
             android:id="@+id/datos_linea"

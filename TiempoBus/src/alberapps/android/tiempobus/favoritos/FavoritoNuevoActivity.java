@@ -26,14 +26,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -52,13 +52,15 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 /**
  * Guarda un nuevo favorito
  */
-public class FavoritoNuevoActivity extends ActionBarActivity {
+public class FavoritoNuevoActivity extends AppCompatActivity {
     private EditText guiDescripcion;
     private EditText guiTitulo;
 
-    private String poste;
+    private String numParada;
 
     SharedPreferences preferencias = null;
+
+    private String datosHorario;
 
     /**
      * OnCreate....
@@ -86,13 +88,13 @@ public class FavoritoNuevoActivity extends ActionBarActivity {
     }
 
     /**
-     * Si no hay poste cerramos la actividad
+     * Si no hay numParada cerramos la actividad
      */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if ((poste == null) || poste.equals("")) {
+        if ((numParada == null) || numParada.equals("")) {
             Toast.makeText(FavoritoNuevoActivity.this, R.string.no_poste, Toast.LENGTH_SHORT).show();
 
             finish();
@@ -109,52 +111,71 @@ public class FavoritoNuevoActivity extends ActionBarActivity {
         // Fondo
         setupFondoAplicacion();
 
-        // Comprobamos si nos estan pasando como parametro el poste y la
+        // Comprobamos si nos estan pasando como parametro el numParada y la
         // descripcion
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            poste = "" + extras.getInt("POSTE");
 
-            // Buscar datos para la descripcion
-            Parada parada = cargarDescripcionBD();
+            //Favorito tipo horario
+            if(extras.containsKey("HTRAM")){
 
-            if (parada != null) {
+                numParada = "0";
 
-                StringBuffer desc = new StringBuffer();
+                String[] desc = extras.getString("DESCRIPCION").split("::");
+                datosHorario = desc[1];
+                guiDescripcion.setText("" + desc[0]);
 
-                if (parada.getDireccion() != null && !parada.getDireccion().trim().equals("")) {
-                    desc.append(getString(R.string.localizacion));
-                    desc.append(": ");
-                    desc.append(parada.getDireccion());
-                    desc.append("\n");
-                }
+                setTitle(getString(R.string.menu_save));
 
-                if (parada.getConexion() != null && !parada.getConexion().trim().equals("")) {
-                    desc.append(getString(R.string.conexiones));
-                    desc.append(": ");
-                    desc.append(parada.getConexion());
-                    desc.append("\n");
-                }
+            }else {
 
-                if (!desc.toString().trim().equals("")) {
-                    guiDescripcion.setText(desc.toString());
+                numParada = "" + extras.getInt("POSTE");
+
+                // Buscar datos para la descripcion
+                Parada parada = cargarDescripcionBD();
+
+                if (parada != null) {
+
+                    StringBuffer desc = new StringBuffer();
+
+                    if (parada.getDireccion() != null && !parada.getDireccion().trim().equals("")) {
+                        desc.append(getString(R.string.localizacion));
+                        desc.append(": ");
+                        desc.append(parada.getDireccion());
+                        desc.append("\n");
+                    }
+
+                    if (parada.getConexion() != null && !parada.getConexion().trim().equals("")) {
+                        desc.append(getString(R.string.conexiones));
+                        desc.append(": ");
+                        desc.append(parada.getConexion());
+                        desc.append("\n");
+                    }
+
+                    if (!desc.toString().trim().equals("")) {
+                        guiDescripcion.setText(desc.toString());
+                    } else {
+                        guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
+                    }
+
                 } else {
                     guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
                 }
 
-            } else {
-                guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
+                setTitle(String.format(getString(R.string.tit_guardar), numParada));
+
             }
         }
 
-        setTitle(String.format(getString(R.string.tit_guardar), poste));
+
 
 		/*
          * Asignamos el comprotamiento de los botones
 		 */
-        TextView guiGo = (TextView) findViewById(R.id.boton_go);
+        Button guiGo = (Button) findViewById(R.id.boton_go);
         guiGo.setOnClickListener(guiGoOnClickListener);
+
 
 		/*
 		 * Asignamos el comprotamiento de los botones
@@ -172,8 +193,17 @@ public class FavoritoNuevoActivity extends ActionBarActivity {
             ContentValues values = new ContentValues();
 
             values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
-            values.put(TiempoBusDb.Favoritos.DESCRIPCION, guiDescripcion.getText().toString());
-            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(poste));
+
+            //Para horarios tram
+            String desc = "";
+            if(datosHorario != null && !datosHorario.equals("")){
+                desc = guiDescripcion.getText().toString() + "::" + datosHorario;
+            }else{
+                desc = guiDescripcion.getText().toString();
+            }
+
+            values.put(TiempoBusDb.Favoritos.DESCRIPCION, desc);
+            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(numParada));
 
             getContentResolver().insert(TiempoBusDb.Favoritos.CONTENT_URI, values);
 
@@ -183,16 +213,7 @@ public class FavoritoNuevoActivity extends ActionBarActivity {
         }
     };
 
-    /**
-     * Escuchar� el bot�n de cancelar
-     */
-    OnClickListener guiCancelListener = new OnClickListener() {
-        public void onClick(View v) {
-            Intent intent = new Intent();
-            setResult(MainActivity.SUB_ACTIVITY_RESULT_CANCEL, intent);
-            finish();
-        }
-    };
+
 
     /**
      * Seleccion del fondo de la galeria en el arranque
@@ -232,7 +253,7 @@ public class FavoritoNuevoActivity extends ActionBarActivity {
 
         try {
 
-            String parametros[] = {poste};
+            String parametros[] = {numParada};
 
             Cursor cursor = managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 

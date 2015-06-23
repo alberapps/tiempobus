@@ -19,7 +19,7 @@
 package alberapps.android.tiempobus.alarma;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -413,7 +413,7 @@ public class GestionarAlarmas {
                     + (context.getString(R.string.alarma_auto_aviso, new Object[]{preferencias.getString("servicio_recarga", "60")}));
 
 
-            dialog.setIcon(R.drawable.ic_alarm_modal);
+            //dialog.setIcon(R.drawable.ic_alarm_modal);
 
             LayoutInflater li = context.getLayoutInflater();
             View vista = li.inflate(R.layout.alertas_info, null, false);

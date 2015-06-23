@@ -71,7 +71,7 @@
                 android:gravity="top"
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/mi_material_blue_indigo"
+                android:textColor="@color/mi_material_blue_principal"
                 android:textStyle="italic"
                 android:autoLink="web"/>
 
@@ -93,7 +93,7 @@
                 android:gravity="top"
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/mi_material_blue_indigo"
+                android:textColor="@color/mi_material_blue_principal"
                 android:textStyle="italic"
                 android:autoLink="web"/>
 

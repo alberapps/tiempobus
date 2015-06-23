@@ -29,7 +29,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,7 +53,7 @@ import alberapps.java.tram.UtilidadesTRAM;
 /**
  * Displays a word and its definition.
  */
-public class DatosParadaActivity extends ActionBarActivity {
+public class DatosParadaActivity extends AppCompatActivity {
 
     String paradaSel = "";
     String lineaSel = "";

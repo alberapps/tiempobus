@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.favoritos;
 
@@ -27,14 +27,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -47,15 +47,17 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 /**
  * Guarda un nuevo favorito
  */
-public class FavoritoModificarActivity extends ActionBarActivity {
+public class FavoritoModificarActivity extends AppCompatActivity {
     private EditText guiDescripcion;
     private EditText guiTitulo;
 
-    private String poste;
+    private String numParada;
 
     private long id_uri;
 
     SharedPreferences preferencias = null;
+
+    private String datosHorario;
 
     /**
      * OnCreate....
@@ -83,13 +85,13 @@ public class FavoritoModificarActivity extends ActionBarActivity {
     }
 
     /**
-     * Si no hay poste cerramos la actividad
+     * Si no hay numParada cerramos la actividad
      */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        if ((poste == null) || poste.equals("")) {
+        if ((numParada == null) || numParada.equals("")) {
             Toast.makeText(FavoritoModificarActivity.this, R.string.no_poste, Toast.LENGTH_SHORT).show();
 
             finish();
@@ -106,25 +108,41 @@ public class FavoritoModificarActivity extends ActionBarActivity {
         // Fondo
         setupFondoAplicacion();
 
-        // Comprobamos si nos estan pasando como par�metro el poste y la
+        // Comprobamos si nos estan pasando como par�metro el numParada y la
         // descripcion
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            poste = "" + extras.getInt("POSTE");
-            guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
+            numParada = "" + extras.getInt("POSTE");
+
+            if (numParada.equals("0")) {
+
+                String[] desc = extras.getString("DESCRIPCION").split("::");
+                datosHorario = desc[1];
+                guiDescripcion.setText("" + desc[0]);
+
+                setTitle(getString(R.string.menu_modificar));
+
+            } else {
+                guiDescripcion.setText("" + extras.getString("DESCRIPCION"));
+
+                setTitle(String.format(getString(R.string.tit_modificar), numParada));
+
+            }
+
+
             guiTitulo.setText("" + extras.getString("TITULO"));
 
             id_uri = extras.getLong("ID_URI");
 
         }
 
-        setTitle(String.format(getString(R.string.tit_modificar), poste));
+
 
 		/*
          * Asignamos el comprotamiento de los botones
 		 */
-        TextView guiGo = (TextView) findViewById(R.id.boton_go);
+        Button guiGo = (Button) findViewById(R.id.boton_go);
         guiGo.setOnClickListener(guiGoOnClickListener);
 
     }
@@ -137,8 +155,18 @@ public class FavoritoModificarActivity extends ActionBarActivity {
             ContentValues values = new ContentValues();
 
             values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
-            values.put(TiempoBusDb.Favoritos.DESCRIPCION, guiDescripcion.getText().toString());
-            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(poste));
+
+            //Para horarios tram
+            String desc = "";
+            if (datosHorario != null && !datosHorario.equals("")) {
+                desc = guiDescripcion.getText().toString() + "::" + datosHorario;
+            } else {
+                desc = guiDescripcion.getText().toString();
+            }
+
+            values.put(TiempoBusDb.Favoritos.DESCRIPCION, desc);
+
+            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(numParada));
 
             Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id_uri);
 

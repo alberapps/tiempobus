@@ -1,28 +1,27 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,14 +40,17 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,7 +91,6 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.principal.DrawerAdapter;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
 import alberapps.android.tiempobus.principal.GestionarFondo;
 import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
@@ -110,7 +111,7 @@ import alberapps.java.util.Conectividad;
 /**
  * Actividad principal de la aplicacion
  */
-public class MainActivity extends ActionBarActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
     public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -169,7 +170,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
     // drawer
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
+    private NavigationView mDrawerView;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mDrawerTitle;
@@ -199,6 +200,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         Conectividad.activarCache(this, preferencias);
 
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarid);
+        setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -259,16 +263,19 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     @SuppressLint("NewApi")
     private void iniciarDrawer(Bundle savedInstanceState) {
         mTitle = mDrawerTitle = getTitle();
-        mDrawerTitles = getResources().getStringArray(R.array.menu_array);
+        //mDrawerTitles = getResources().getStringArray(R.array.menu_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        //mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        mDrawerIcons = getResources().getStringArray(R.array.menu_icons_array);
+        mDrawerView = (NavigationView) findViewById(R.id.left_drawer);
+
+        //mDrawerIcons = getResources().getStringArray(R.array.menu_icons_array);
 
         //Header
-        LayoutInflater li2 = LayoutInflater.from(this);
-        View vheader = li2.inflate(R.layout.drawer_menu_header, null);
-        mDrawerList.addHeaderView(vheader);
+        //LayoutInflater li2 = LayoutInflater.from(this);
+        //View vheader = li2.inflate(R.layout.drawer_menu_header, null);
+        //mDrawerView.addHeaderView(vheader);
+        //mDrawerList.addHeaderView(vheader);
 
 
         // set a custom shadow that overlays the main content when the drawer
@@ -276,9 +283,18 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
         //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
-        mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        mDrawerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                selectItem(menuItem);
+
+                return false;
+            }
+        });
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
@@ -289,12 +305,16 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                 R.string.drawer_close /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to
                 // onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to
                 // onPrepareOptionsMenu()
@@ -313,13 +333,13 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     }
 
     /* The click listner for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+    /*private class DrawerItemClickListener implements ListView.OnItemClickListener {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
 
         }
-    }
+    }*/
 
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
@@ -329,7 +349,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         // If the nav drawer is open, hide action items related to the
         // content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerView);
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_refresh).setVisible(!drawerOpen);
         //}
@@ -341,13 +361,13 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
     /**
      * Seleccion del menu lateral
      *
-     * @param position
+     * @param item
      */
-    private void selectItem(int position) {
+    private void selectItem(MenuItem item) {
 
-        switch (position) {
+        switch (item.getItemId()) {
 
-            case 1:
+            case R.id.navigation_item_mapa:
 
                 if (datosPantallaPrincipal.servicesConnected()) {
 
@@ -358,41 +378,41 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                 break;
 
-            case 2:
+            case R.id.navigation_item_noticias:
 
                 detenerTodasTareas();
                 startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
                 break;
 
-            case 3:
+            case R.id.navigation_item_favoritos:
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
                 break;
 
-            case 4:
+            case R.id.navigation_item_guardar:
                 detenerTodasTareas();
                 nuevoFavorito();
                 break;
 
-            case 5:
+            case R.id.navigation_item_historial:
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
                 break;
 
-            case 6:
+            case R.id.navigation_item_preferencias:
 
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
                 break;
 
-            case 7:
+            case R.id.navigation_item_fondo:
 
                 gestionarFondo.seleccionarFondo();
 
                 break;
 
 
-            case 8:
+            case R.id.navigation_item_exportar:
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 
                 // configurar
@@ -410,8 +430,8 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         }
 
 
-        mDrawerList.setItemChecked(position, false);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        //mDrawerList.setItemChecked(position, false);
+        mDrawerLayout.closeDrawer(mDrawerView);
 
     }
 
@@ -808,7 +828,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
         // Progreso inicial
         /*
-		 * TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
+         * TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
 		 * vacio.setVisibility(View.INVISIBLE); ProgressBar lpb = (ProgressBar)
 		 * findViewById(R.id.tiempos_progreso); lpb.setIndeterminate(true);
 		 * tiemposView.setEmptyView(lpb);
@@ -931,13 +951,9 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
         });
 
 
-
-
-
-
         // Swipe para recargar
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
-        swipeRefresh.setColorSchemeResources(R.color.mi_material_blue_indigo, R.color.tram_l2, R.color.mi_material_blue_indigo, R.color.tram_l2);
+        swipeRefresh.setColorSchemeResources(R.color.mi_material_blue_principal, R.color.tram_l2, R.color.mi_material_blue_principal, R.color.tram_l2);
         swipeRefresh.setOnRefreshListener(this);
 
 
@@ -1123,6 +1139,23 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                     if (data.getExtras() != null) {
                         Bundle b = data.getExtras();
                         if (b.containsKey("POSTE")) {
+
+                            if (b.getInt("POSTE") == 0) {
+
+                                // //Horarios tram
+                                detenerTodasTareas();
+
+                                Intent i = new Intent(this, InfoLineasTabsPager.class);
+                                i.putExtra("HORARIOS", "TRAM");
+                                i.putExtra("HORARIOSDATA", b.getString("HORARIOS"));
+
+                                startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+
+                                break;
+
+
+                            }
+
                             paradaActual = b.getInt("POSTE");
                         }
                     }
@@ -1492,7 +1525,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
                         cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
                         ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
-                        ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
+                        FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
 
                         final MainActivity activ = mActividad.get();
 
@@ -1592,7 +1625,7 @@ public class MainActivity extends ActionBarActivity implements TextToSpeech.OnIn
 
                             botonHorarios.setVisibility(View.VISIBLE);
 
-                        }else {
+                        } else {
                             botonHorarios.setVisibility(View.INVISIBLE);
                         }
 

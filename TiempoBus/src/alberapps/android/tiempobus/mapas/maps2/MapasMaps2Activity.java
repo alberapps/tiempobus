@@ -18,7 +18,6 @@
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +29,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
@@ -73,7 +73,7 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 
 
-public class MapasMaps2Activity extends ActionBarActivity implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
+public class MapasMaps2Activity extends AppCompatActivity implements OnMarkerClickListener, OnInfoWindowClickListener, OnMarkerDragListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener,
         OnMyLocationButtonClickListener {
 
     public String lineaSeleccionada;

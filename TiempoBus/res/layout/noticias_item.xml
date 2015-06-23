@@ -73,7 +73,7 @@
                         android:gravity="top"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/mi_material_blue_indigo"
+                        android:textColor="@color/mi_material_blue_principal"
                         android:textStyle="italic" />
 
                     <TextView

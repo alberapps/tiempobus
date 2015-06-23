@@ -119,8 +119,12 @@ public class HorarioTram {
             String[] duracion1 = duracion.split(":");
             String[] tipoBillete1 = tipoBillete.split(":");
 
-            info.getInfoRecorrido().add(duracion1[1].trim());
-            info.getInfoRecorrido().add(tipoBillete1[1].trim());
+            if(duracion1.length > 0) {
+                info.getInfoRecorrido().add(duracion1[1].trim());
+            }
+            if(tipoBillete1.length > 0) {
+                info.getInfoRecorrido().add(tipoBillete1[1].trim());
+            }
 
 
 
@@ -153,7 +157,7 @@ public class HorarioTram {
             List<HorarioItem> items = datosTransbordos.get(i).getHorariosItem();
 
             for(int j = 0;j<items.size();j++){
-                if(lineasTransbordos != null && !lineasTransbordos.isEmpty()) {
+                if(lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > i) {
                     items.get(j).setLinea(lineasTransbordos.get(i));
                 }else{
                     items.get(j).setLinea("");

@@ -97,7 +97,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/mi_material_blue_indigo"
+                    android:textColor="@color/mi_material_blue_principal"
                     android:textStyle="bold" />
 
                 <TextView

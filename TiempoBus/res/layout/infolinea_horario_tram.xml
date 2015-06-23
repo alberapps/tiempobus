@@ -19,6 +19,7 @@
 --> 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="0"
@@ -48,6 +49,24 @@
             android:text="@string/main_no_items"
             android:textColor="@color/color_android"
             android:textStyle="bold" />
-	
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/boton_circular_fav_h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:src="@drawable/ic_bookmark_outline_white_24dp"
+            android:contentDescription="Guardar favorito"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+
+            >
+
+
+
+        </android.support.design.widget.FloatingActionButton>
+
+
 	</RelativeLayout>
 </LinearLayout>

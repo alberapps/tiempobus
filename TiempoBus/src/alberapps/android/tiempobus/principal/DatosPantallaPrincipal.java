@@ -19,7 +19,7 @@
 package alberapps.android.tiempobus.principal;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -446,6 +446,7 @@ public class DatosPantallaPrincipal {
 
                     String fecha_ultima = "";
                     boolean lanzarAviso = false;
+                    Date fechaComparar = null;
 
                     // Ver si se guardo la fecha de la ultima noticia
                     if (preferencias.contains("ultima_noticia")) {
@@ -459,32 +460,47 @@ public class DatosPantallaPrincipal {
 
                             // Contar nuevas noticias
 
+
+
                             for (int i = 0; i < noticias.size(); i++) {
 
-                                if (noticias.get(i).getFecha() != null) {
+                                if (noticias.get(i).getFecha() != null && !noticias.get(i).getFecha().equals("")) {
                                     if (noticias.get(i).getFecha().after(fechaUltima)) {
                                         nuevas++;
                                     }
+                                }
+
+                                if(fechaComparar == null && noticias.get(i).getFecha() != null){
+                                    fechaComparar = noticias.get(i).getFecha();
                                 }
 
                             }
 
                         }
 
-                        if (fechaUltima != null && !fechaUltima.equals(noticias.get(0).getFecha())) {
+                        if (fechaUltima != null && fechaComparar != null && !fechaUltima.equals(fechaComparar)) {
 
                             lanzarAviso = true;
 
                             SharedPreferences.Editor editor = preferencias.edit();
-                            editor.putString("ultima_noticia", Utilidades.getFechaES(noticias.get(0).getFecha()));
+                            editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
                             editor.commit();
 
                         }
 
                     } else {
 
+                        for (int i = 0; i < noticias.size(); i++) {
+
+                            if(fechaComparar == null && noticias.get(i).getFecha() != null){
+                                fechaComparar = noticias.get(i).getFecha();
+                                break;
+                            }
+
+                        }
+
                         SharedPreferences.Editor editor = preferencias.edit();
-                        editor.putString("ultima_noticia", Utilidades.getFechaES(noticias.get(0).getFecha()));
+                        editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
                         editor.commit();
 
                     }
@@ -1452,52 +1468,62 @@ public class DatosPantallaPrincipal {
      */
     public ArrayList<BusLlegada> ordenarTiemposPorTarjetaFija(ArrayList<BusLlegada> tiempos) {
 
+        try {
 
-        String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");
-        List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
+            if (tiempos != null && !tiempos.isEmpty()) {
 
-        if (fijarLista == null || fijarLista.isEmpty()) {
-            return tiempos;
-        }
+                String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");
+                List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
 
-        ArrayList<BusLlegada> tiemposCoincide = new ArrayList<BusLlegada>();
+                if (fijarLista == null || fijarLista.isEmpty()) {
+                    return tiempos;
+                }
 
-        ArrayList<BusLlegada> tiemposNoCoincide = new ArrayList<BusLlegada>();
+                ArrayList<BusLlegada> tiemposCoincide = new ArrayList<BusLlegada>();
 
-        boolean coincide = false;
+                ArrayList<BusLlegada> tiemposNoCoincide = new ArrayList<BusLlegada>();
 
-        for (int i = 0; i < tiempos.size(); i++) {
+                boolean coincide = false;
 
-            for (int j = 0; j < fijarLista.size(); j++) {
+                for (int i = 0; i < tiempos.size(); i++) {
 
-                if (tiempos.get(i).getLinea().equals(fijarLista.get(j).getLinea()) && tiempos.get(i).getDestino().equals(fijarLista.get(j).getDestino())) {
+                    for (int j = 0; j < fijarLista.size(); j++) {
 
-                    tiempos.get(i).setTarjetaFijada(true);
-                    tiemposCoincide.add(tiempos.get(i));
-                    coincide = true;
-                    break;
+                        if (tiempos.get(i).getLinea().equals(fijarLista.get(j).getLinea()) && tiempos.get(i).getDestino().equals(fijarLista.get(j).getDestino())) {
 
+                            tiempos.get(i).setTarjetaFijada(true);
+                            tiemposCoincide.add(tiempos.get(i));
+                            coincide = true;
+                            break;
+
+                        }
+
+                    }
+
+                    if (!coincide) {
+                        tiemposNoCoincide.add(tiempos.get(i));
+                    } else {
+                        coincide = false;
+                    }
+
+                }
+
+                if (tiemposCoincide.isEmpty()) {
+                    return tiempos;
+                } else {
+
+                    tiemposCoincide.addAll(tiemposNoCoincide);
+
+                    return tiemposCoincide;
                 }
 
             }
 
-            if (!coincide) {
-                tiemposNoCoincide.add(tiempos.get(i));
-            } else {
-                coincide = false;
-            }
-
+        }catch(Exception e){
+            Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
         }
 
-        if (tiemposCoincide.isEmpty()) {
-            return tiempos;
-        } else {
-
-            tiemposCoincide.addAll(tiemposNoCoincide);
-
-            return tiemposCoincide;
-        }
-
+        return tiempos;
 
     }
 

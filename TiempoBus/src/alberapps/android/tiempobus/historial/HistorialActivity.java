@@ -26,7 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -51,7 +51,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
  * Historial
  */
 
-public class HistorialActivity extends ActionBarActivity {
+public class HistorialActivity extends AppCompatActivity {
 
     public static final String[] PROJECTION = new String[]{HistorialDB.Historial._ID, // 0
             HistorialDB.Historial.PARADA, // 1
@@ -130,7 +130,7 @@ public class HistorialActivity extends ActionBarActivity {
 		 * Mapeamos las querys SQL a los campos de las vistas
 		 */
         String[] camposDb = new String[]{HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION};
-        int[] camposView = new int[]{R.id.poste, R.id.titulo, R.id.descripcion};
+        int[] camposView = new int[]{R.id.numParadaFav, R.id.titulo, R.id.descripcion};
 
         adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
 

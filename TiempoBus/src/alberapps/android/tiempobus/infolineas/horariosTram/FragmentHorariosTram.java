@@ -24,11 +24,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
@@ -51,7 +53,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
@@ -76,6 +80,8 @@ public class FragmentHorariosTram extends Fragment {
     InfoLineaParadasAdapter infoLineaParadasAdapter;
 
     SharedPreferences preferencias;
+
+    String datosHorario;
 
     /**
      * On Create
@@ -124,6 +130,13 @@ public class FragmentHorariosTram extends Fragment {
 
         setupFondoAplicacion();
 
+        //Si viene de favoritos
+        Bundle b = actividad.getIntent().getExtras();
+        if(b != null && b.containsKey("HORARIOSDATA")){
+            actividad.datosHorariosTram = null;
+        }
+
+
         // Consultar si es necesario, si ya lo tiene carga la lista
         if (actividad.datosHorariosTram != null && actividad.horariosTramView != null) {
             recargarListado();
@@ -150,6 +163,59 @@ public class FragmentHorariosTram extends Fragment {
 
             cargarHeaderHorarios();
         }
+
+
+        FloatingActionButton imgCircularFavorito = (FloatingActionButton) actividad.findViewById(R.id.boton_circular_fav_h);
+
+        // Para acceder a guardar favorito
+        imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                //Cargar datos
+                StringBuffer guardar = new StringBuffer("");
+                guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+                PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+                datosHorario = guardar.toString();
+
+
+                Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
+
+                Bundle extras = new Bundle();
+                extras.putString("HTRAM", "TRAM");
+                // Preparamos una descripcion automatica para el
+                // favorito
+
+
+                String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+
+                StringBuffer desc = new StringBuffer();
+                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
+                desc.append("\n");
+                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
+                desc.append("\n");
+                desc.append(actividad.consultaHorarioTram.getHoraDesde());
+                desc.append("->");
+                desc.append(actividad.consultaHorarioTram.getHoraHasta());
+                desc.append("::");
+                desc.append(datosHorario);
+
+                extras.putString("DESCRIPCION", desc.toString());
+
+                i.putExtras(extras);
+                actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+            }
+        });
+
 
 
     }
@@ -289,6 +355,8 @@ public class FragmentHorariosTram extends Fragment {
 
                     PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
 
+                    datosHorario = guardar.toString();
+
                 }
             });
 
@@ -311,8 +379,22 @@ public class FragmentHorariosTram extends Fragment {
                 actividad.consultaHorarioTram.setDiaDate(calendar.getTime());
 
 
-                //Verificar si hay cache
-                String datosAnteriores = PreferencesUtil.getCache(actividad, "datos_horarios_tram");
+                String datosAnteriores = null;
+
+                //Verificar si se viene desde favoritos
+                Bundle b = actividad.getIntent().getExtras();
+                if(b != null && b.containsKey("HORARIOSDATA")){
+                    datosAnteriores = b.getString("HORARIOSDATA");
+                    b.remove("HORARIOSDATA");
+
+                }else{
+
+                    //Verificar si hay cache
+                    datosAnteriores = PreferencesUtil.getCache(actividad, "datos_horarios_tram");
+
+                }
+
+
                 if(datosAnteriores != null && !datosAnteriores.equals("")){
 
                     String[] datos = datosAnteriores.split(";;");

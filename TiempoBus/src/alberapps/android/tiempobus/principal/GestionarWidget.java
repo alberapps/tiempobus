@@ -18,7 +18,7 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
