@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
@@ -56,10 +56,8 @@ import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Utilidades;
 
@@ -68,17 +66,11 @@ import alberapps.java.util.Utilidades;
  */
 public class FragmentLineas extends Fragment {
 
-    GetLineasResult lineasDummy = null;
-
-
     BusLinea linea = null;
 
     InfoLineasTabsPager actividad;
 
     int mCurCheckPosition = 0;
-
-
-    InfoLineaParadasAdapter infoLineaParadasAdapter;
 
     SharedPreferences preferencias;
 
@@ -156,7 +148,11 @@ public class FragmentLineas extends Fragment {
 
     private void cargarLineas() {
 
-        actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        if (actividad.dialog == null) {
+            actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        } else {
+            actividad.dialog.show();
+        }
 
         // Carga local de lineas
         String datosOffline = null;
@@ -264,17 +260,36 @@ public class FragmentLineas extends Fragment {
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
+            //Seleccion de grupos de lineas bus
+            final Spinner spinnerGrupos = (Spinner) vheader.findViewById(R.id.spinner_grupo_lineas);
+
+
+            ArrayAdapter<CharSequence> adaptergrupos = ArrayAdapter.createFromResource(getActivity(), R.array.grupos_lineas_bus, android.R.layout.simple_spinner_item);
+
+            spinnerGrupos.setAdapter(adaptergrupos);
+
+
+            if (actividad.filtroGrupo != null) {
+                spinnerGrupos.setSelection(Integer.parseInt(actividad.filtroGrupo));
+            }
+
             if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
                 texto.setText(R.string.aviso_offline);
+
+                spinnerGrupos.setEnabled(true);
 
             } else if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
                 texto.setText(R.string.aviso_buscador_offline_tram);
 
+                spinnerGrupos.setEnabled(false);
+
             } else {
 
                 texto.setText(R.string.aviso_buscador_online);
+
+                spinnerGrupos.setEnabled(true);
 
             }
 
@@ -284,6 +299,7 @@ public class FragmentLineas extends Fragment {
 
             // Combo de seleccion de datos
             final Spinner spinner = (Spinner) vheader.findViewById(R.id.spinner_datos_tarjeta);
+
 
             ArrayAdapter<CharSequence> adapter = null;
 
@@ -342,6 +358,26 @@ public class FragmentLineas extends Fragment {
 
                 }
 
+
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+
+                }
+
+            });
+
+            // Seleccion de grupo
+            spinnerGrupos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                    if (actividad.infoLineaAdapter != null) {
+                        actividad.filtroGrupo = Integer.toString(arg2);
+                        actividad.infoLineaAdapter.filtrarPorGrupo(Integer.toString(arg2));
+                    }
+                }
+
+
                 public void onNothingSelected(AdapterView<?> arg0) {
                     // TODO Auto-generated method stub
 
@@ -383,20 +419,10 @@ public class FragmentLineas extends Fragment {
             });
 
 
-            /*textoBuscar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(textoBuscar.getTextSize() > 0 && !hasFocus) {
-                        textoBuscar.requestFocus();
-
-                    }
-                }
-            });*/
-
-
             actividad.lineasView = (ListView) actividad.findViewById(R.id.infolinea_lista_lineas);
 
             actividad.lineasView.addHeaderView(vheader);
+
 
         }
 
@@ -462,6 +488,11 @@ public class FragmentLineas extends Fragment {
         }
     };
 
+    /**
+     * Cargar paradas de la linea seleccionada
+     *
+     * @param index
+     */
     void cargarParadas(int index) {
         mCurCheckPosition = index;
 
@@ -475,15 +506,19 @@ public class FragmentLineas extends Fragment {
         actividad.sentidoIda = null;
         actividad.sentidoVuelta = null;
 
-        actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        if (actividad.dialog == null) {
+            actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        } else {
+            actividad.dialog.show();
+        }
 
         // Control para el nuevo modo offline
         if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 
-            loadDatosMapa();
+            loadDatosLineaServicio();
         } else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
-            loadDatosMapaOffline();
+            loadDatosLineaOffline();
         } else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
             loadDatosMapaTRAMOffline();
@@ -492,22 +527,11 @@ public class FragmentLineas extends Fragment {
     }
 
     /**
-     * Carga las paradas de MAPAS
+     * Carga las paradas de la linea
      */
-    private void loadDatosMapa() {
-
-        // String url = "http://www.subus.es/Lineas/kml/ALC34ParadasVuelta.xml";
-
-        String url = "";
-
-        /*if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
-            url = UtilidadesTAM.getKMLParadasVuelta(actividad.getLinea().getIdlinea());
-        } else {
-            url = UtilidadesTAM.getKMLParadasV3(actividad.getLinea().getIdlinea());
-        }*/
+    private void loadDatosLineaServicio() {
 
         DatosInfoLinea datos = new DatosInfoLinea();
-        //datos.setUrl(url);
         datos.setLinea(actividad.getLinea().getNumLinea());
         datos.setSublinea("1");
         datos.setContext(actividad);
@@ -533,22 +557,7 @@ public class FragmentLineas extends Fragment {
     LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponder = new LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder() {
         public void datosInfoLineasLoaded(DatosInfoLinea datos) {
 
-            if (!UtilidadesTAM.ACTIVAR_MAPS_V3) {
-
-                if (datos != null && datos.getResult() != null) {
-
-                    actividad.datosVuelta = datos.getResult();
-
-                    actividad.gestionIda.loadDatosMapaIda(datos.getfIda());
-
-                } else {
-                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                    toast.show();
-                    actividad.dialog.dismiss();
-
-                }
-
-            } else {
+            try {
 
                 if (datos != null && datos.getResultIda() != null && datos.getResultVuelta() != null) {
 
@@ -569,26 +578,34 @@ public class FragmentLineas extends Fragment {
                     }
 
                 } else {
-                    Toast toast = Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                    toast.show();
-                    actividad.dialog.dismiss();
-
+                    Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
                 }
 
                 if (actividad.dialog != null && actividad.dialog.isShowing()) {
                     actividad.dialog.dismiss();
                 }
 
-            }
 
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+
+                if (actividad.dialog != null && actividad.dialog.isShowing()) {
+                    actividad.dialog.dismiss();
+                }
+
+
+            }
         }
     };
 
 
     /**
-     * Carga las paradas de MAPAS OFFLINE
+     * Carga las paradas de la base de datos OFFLINE
      */
-    private void loadDatosMapaOffline() {
+    private void loadDatosLineaOffline() {
 
         List<DatosInfoLinea> datosRecorridos = cargarDatosMapaBD(actividad.getLinea().getNumLinea());
 
@@ -622,7 +639,7 @@ public class FragmentLineas extends Fragment {
     }
 
     /**
-     * Carga las paradas de MAPAS OFFLINE
+     * Carga las paradas de TRAM desde la base de datos OFFLINE
      */
     private void loadDatosMapaTRAMOffline() {
 
@@ -756,10 +773,6 @@ public class FragmentLineas extends Fragment {
                     cursorRecorrido.moveToFirst();
 
                     datosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-
-                    //cursorRecorrido.moveToNext();
-
-                    //datosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
                 }
 

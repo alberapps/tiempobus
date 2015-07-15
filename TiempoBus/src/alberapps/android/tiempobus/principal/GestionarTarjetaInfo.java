@@ -18,7 +18,6 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -28,12 +27,14 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadLocationAsyncTask;
@@ -189,7 +191,7 @@ public class GestionarTarjetaInfo {
 
                 localizacion.setText(cursor.getString(direccionIndex));
 
-                datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
+                //datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
 
                 String observa = observaciones.toString();
 
@@ -197,7 +199,14 @@ public class GestionarTarjetaInfo {
 
                     datosParada.setText(datosParada.getText() + "\ni: " + observa);
 
+                }else {
+                    LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
+                    bloqueDatos.removeView(datosParada);
                 }
+
+                String conexiones = cursor.getString(conexionesIndex);
+                InfoLineaParadasAdapter.mostrarLineasParada(context, v, conexiones);
+
 
                 //}
 
@@ -608,7 +617,6 @@ public class GestionarTarjetaInfo {
             textoWeather.setText(sb.toString());
 
             datosWeather = null;
-
 
 
         }

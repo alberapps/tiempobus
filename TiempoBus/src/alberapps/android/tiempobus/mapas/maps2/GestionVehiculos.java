@@ -178,7 +178,7 @@ public class GestionVehiculos {
 
         boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
-        if (!vehiculosPref || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("")) {
+        if (!vehiculosPref || context.lineaSeleccionadaNum == null || context.lineaSeleccionadaNum.equals("") || context.lineaSeleccionadaNum.equals("-1")) {
             return;
         }
 

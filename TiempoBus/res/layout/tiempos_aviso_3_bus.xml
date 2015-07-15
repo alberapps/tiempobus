@@ -20,8 +20,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
 
@@ -43,51 +42,90 @@
 
             >
 
-
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/legal"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
-
-                    android:padding="2dip"
-                    android:text="@string/acercade_info_nuevo_bus"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="12sp" />
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp">
 
 
-                <TextView
-                    android:id="@+id/legal2"
+                    <TextView
+                        android:id="@+id/info_alberapps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="\@alberapps"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/info_mag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="\@magnoling_"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autoLink="web"
+                    android:orientation="vertical">
 
-                    android:padding="2dip"
-                    android:text="@string/acercade_info_nuevo_2"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/legal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
 
-                <TextView
-                    android:id="@+id/legal3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
+                        android:padding="2dip"
+                        android:text="@string/acercade_info_nuevo"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp" />
 
-                    android:padding="2dip"
-                    android:text="@string/aviso_infoapp"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="10sp"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/info_subus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="alicante.subus.es"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold"
+                        />
 
+
+                    <TextView
+                        android:id="@+id/legal3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+
+                        android:padding="2dip"
+                        android:text="@string/aviso_infoapp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
-
 
         </android.support.v7.widget.CardView>
 

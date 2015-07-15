@@ -41,6 +41,8 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
 
     private String grupo;
 
+    private String idGrupo;
+
     private boolean errorServicio = false;
 
     private boolean filtroSinDatos = false;
@@ -67,15 +69,25 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
         this.idlinea = idlinea;
     }
 
-    public BusLinea(String idlinea, String linea, String numLinea, String grupo) {
+    public String getIdGrupo() {
+        return idGrupo;
+    }
+
+    public void setIdGrupo(String idGrupo) {
+        this.idGrupo = idGrupo;
+    }
+
+    public BusLinea(String idlinea, String linea, String numLinea, String grupo, String idGrupo) {
         this(idlinea);
         this.linea = linea;
         this.numLinea = numLinea;
         this.grupo = grupo;
+
+        this.idGrupo = idGrupo;
     }
 
     public BusLinea(String idlinea, String linea, String numLinea, HashMap<String, String> destinos, ArrayList<BusParada> paradas) {
-        this(idlinea, linea, numLinea, null);
+        this(idlinea, linea, numLinea, null, "0");
 
         this.destinos = destinos;
         this.paradas = paradas;

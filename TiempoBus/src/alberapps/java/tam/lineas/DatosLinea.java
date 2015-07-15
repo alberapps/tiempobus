@@ -32,6 +32,8 @@ public class DatosLinea {
 
     private String grupoLinea;
 
+    private String grupoLineaId;
+
     public String getLineaDescripcion() {
         return lineaDescripcion;
     }
@@ -72,4 +74,11 @@ public class DatosLinea {
         this.grupoLinea = grupoLinea;
     }
 
+    public String getGrupoLineaId() {
+        return grupoLineaId;
+    }
+
+    public void setGrupoLineaId(String grupoLineaId) {
+        this.grupoLineaId = grupoLineaId;
+    }
 }

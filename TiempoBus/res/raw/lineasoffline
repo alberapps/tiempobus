@@ -6,27 +6,24 @@
 
 <select name="LineasBox" id="LineasBox" >
 	<option selected="selected" value="21">21 ALICANTE-P.S.JUAN-EL CAMPELLO</option>
-	<option value="22">22 ALICANTE-C. HUERTA-P.S. JUAN</option>
 	<option value="23">23 ALICANTE-SANT JOAN-MUTXAMEL</option>
 	<option value="24">24 ALICANTE-UNIVERSIDAD-S.VICENTE</option>
 	<option value="25">25 ALICANTE-VILLAFRANQUEZA</option>
-	<option value="26">26 ALICANTE-VILLAFRANQUEZA-TANGEL</option>
-	<option value="30">30 SAN VICENTE-LA ALCORAYA</option>	
+	<option value="26">26 VILLAFRANQUEZA-TANGEL</option>
+	<option value="30">30 SAN VICENTE-LA ALCORAYA</option>
 	<option value="31">31 MUTXAMEL-ST.JOAN-PLAYA S. JUAN</option>
 	<option value="30P">30P SAN VICENTE-PLAYA SAN JUAN</option>
 	<option value="36">36 SAN GABRIEL-UNIVERSIDAD</option>
 	<option value="38">38 ALBUFERET-H.S.JOAN-UNIVERSIDAD</option>
-	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
 	<option value="21N">21N ALICANTE-P.S.JUAN-EL CAMPELLO</option>
-	<option value="22N">22N ALICANTE- PLAYA SAN JUAN</option>
 	<option value="23N">23N ALICANTE-SANT JOAN- MUTXAMEL</option>
-	<option value="24N">24N ALICANTE-UNIVERSIDAD-S.VICENTE</option>	
+	<option value="24N">24N ALICANTE-UNIVERSIDAD-S.VICENTE</option>
 	<option value="123">123 ESPECIAL SANTA FAZ</option>
 	<option value="01">01 S. GABRIEL- JUAN XXIII  (1&#186;S)</option>
 	<option value="02">02 LA FLORIDA - SAGRADA FAMILIA</option>
 	<option value="03">03 CIUDAD AS&#205;S - COLONIA REQUENA</option>
 	<option value="04">04 CEMENTERIO - T&#211;MBOLA</option>
-	<option value="05">05 EXPLANADA - SAN AGUST&#205;N</option>
+	<option value="05">05 PLAZA DEL MAR - SAN AGUST&#205;N</option>
 	<option value="06">06 AUTOBUSES - JUAN XXIII (2&#186; S)</option>
 	<option value="07">07 AV.&#211;SCAR ESPL&#193; - EL REBOLLEDO</option>
 	<option value="8A">8A EXPLANADA -VIRGEN DEL REMEDIO</option>
@@ -34,10 +31,15 @@
 	<option value="10">10 EXPLANADA - VIA PARQUE</option>
 	<option value="11">11 V.REMEDIO-AV.DENIA-HOSP.S.JOAN</option>
 	<option value="12">12 PZA. LUCEROS - S.BLAS - PAU I</option>
-	<option value="13">13 ALICANTE - VILLAFRANQUEZA</option>
+	<option value="13">13 EXPLANADA - VILLAFRANQUEZA</option>
 	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
 	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
 	<option value="8B">8B EXPLANADA - VIRGEN DEL REMEDIO</option>
+	<option value="22">22 ALICANTE-C. HUERTA-P.S. JUAN</option>
+	<option value="27">27 ALICANTE (O. ESPLA) - URBANOVA</option>
+	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
+	<option value="22N">22N ALICANTE- PLAYA SAN JUAN</option>
+	<option value="13N">13N PZA. ESPA&#209;A - VILLAFRANQUEZA</option>
 	<option value="191">191 PL&#193; - CAROLINAS - RICO PEREZ</option>
 	<option value="192">192 C. ASIS - BENALUA - RICO PEREZ</option>
 	<option value="M">M MUTXAMEL-URBANITZACIONS</option>
@@ -47,9 +49,8 @@
 	<option value="C-51">C-51 MUTXAMEL - BUSOT</option>
 	<option value="C-52">C-52 BUSOT - EL CAMPELLO</option>
 	<option value="C-6">C-6 ALICANTE - AEROPUERTO</option>
-	<option value="27">27 ALICANTE(O.ESPLA) - URBANOVA</option>
 	<option value="C-55">C-55 EL CAMPELLO-UNIVERSIDAD</option>
-	<option value="35">35 ALICANTE-PAULINAS-MUTXAMEL</option>
+	<option value="35">35 HOSPITAL SANT JOAN - TANGEL</option>
 	<option value="C-53">C-53 HOSPITAL SANT JOAN-EL CAMPELLO</option>
 	<option value="C-54">C-54 UNIVERSIDAD-HOSP. SANT JOAN</option>
 	<option value="C-6*">C-6* ALICANTE-URBANOVA-AEROPUERTO</option>

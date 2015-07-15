@@ -17,7 +17,7 @@
  
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/datos_contenedor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,9 +35,9 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
-            card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardCornerRadius="1dp"
+            app:cardElevation="@dimen/cardview_default_elevation"
 
             >
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp">
 
-                    <TextView
+                    <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/buttonT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -146,14 +146,14 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
 
                         android:textColor="@color/link_text_material_dark"
-                        android:textStyle="italic|bold" />
+                        app:textAllCaps="true"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
+                        <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/buttonM"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
                             android:textAppearance="?android:attr/textAppearanceSmall"
 
                             android:textColor="@color/link_text_material_dark"
-                            android:textStyle="italic|bold" />
+                            app:textAllCaps="true"/>
 
                     </LinearLayout>
 

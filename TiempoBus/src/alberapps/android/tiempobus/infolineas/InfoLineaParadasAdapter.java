@@ -1,29 +1,35 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,18 +82,25 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         descParada = (TextView) v.findViewById(R.id.desc_parada);
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
+        datos.setText("");
+
         final PlaceMark bus = getItem(position);
 
         if (bus != null) {
             numParada.setText(bus.getCodigoParada());
             descParada.setText(bus.getTitle());
-            datos.setText("T: ".concat(bus.getLineas()));
+            //datos.setText("T: ".concat(bus.getLineas()));
 
             if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
 
                 datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
 
+            } else {
+                LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
+                bloqueDatos.removeView(datos);
             }
+
+            mostrarLineasParada(contexto, v, bus.getLineas());
 
         }
 
@@ -171,6 +184,89 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         for (int i = 0; i < parada.size(); i++) {
             add(parada.get(i));
         }
+    }
+
+    /**
+     * Cargar lineas con conexion
+     *
+     * @param contexto
+     * @param v
+     * @param conexiones
+     */
+    public static void mostrarLineasParada(Context contexto, View v, String conexiones) {
+
+        //Lineas con parada
+        LinearLayout lineasParada = (LinearLayout) v.findViewById(R.id.lineas_parada);
+        LinearLayout lineasParada2 = (LinearLayout) v.findViewById(R.id.lineas_parada_2);
+
+        lineasParada.removeAllViews();
+        lineasParada2.removeAllViews();
+
+
+        String[] conexionesList = conexiones.split(",");
+
+        int posicionMax = conexionesList.length;
+
+        if (conexionesList.length > 5) {
+            posicionMax = 5;
+        }
+
+        for (int i = 0; i < posicionMax; i++) {
+            lineasParada.addView(incluirTexto(contexto, conexionesList[i]));
+        }
+
+        if (posicionMax != conexionesList.length) {
+
+            for (int i = posicionMax; i < conexionesList.length; i++) {
+                lineasParada2.addView(incluirTexto(contexto, conexionesList[i]));
+            }
+
+        }
+
+
+    }
+
+
+    /**
+     * Construir textview de la linea
+     *
+     * @param contexto
+     * @param conexion
+     * @return
+     */
+    public static FrameLayout incluirTexto(Context contexto, String conexion) {
+
+        FrameLayout fl = new FrameLayout(contexto);
+        fl.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fl.setPadding(2, 5, 5, 2);
+
+        AppCompatTextView texto = new AppCompatTextView(contexto);
+        texto.setText(conexion.trim());
+        texto.setTextAppearance(contexto, R.style.TextAppearance_AppCompat_Small);
+        texto.setTextColor(contexto.getResources().getColor(R.color.abc_primary_text_disable_only_material_dark));
+
+        int size50 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, contexto.getResources().getDisplayMetrics());
+
+        texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
+        texto.setGravity(Gravity.CENTER);
+        //texto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        texto.setTypeface(Typeface.DEFAULT_BOLD);
+
+        DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
+
+        //Size
+        if (conexion.trim().length() > 2) {
+            texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        } else {
+            texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        }
+
+
+        fl.addView(texto);
+
+        return fl;
+
+
     }
 
 }

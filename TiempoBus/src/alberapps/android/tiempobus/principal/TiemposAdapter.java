@@ -1,31 +1,33 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
 import alberapps.java.tam.BusLlegada;
 
@@ -104,13 +107,15 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
     @Override
     public View getView(int position, View v, ViewGroup parent) {
 
+        final MainActivity actividad = (MainActivity) contexto;
+
         final BusLlegada bus = getItem(position);
 
         if (!bus.isSinDatos() && !bus.isErrorServicio()) {
 
             TextView busLinea = null;
 
-            if(v != null) {
+            if (v != null) {
                 busLinea = (TextView) v.findViewById(R.id.bus_linea);
             }
 
@@ -286,7 +291,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
 
@@ -297,7 +305,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+
+            if (actividad.datosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+                v = vi.inflate(R.layout.tiempos_item_sin_datos_tram, null);
+            } else {
+                v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
+            }
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
 
@@ -312,10 +325,30 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             String aviso = "";
 
-            MainActivity actividad = (MainActivity) contexto;
 
             if (actividad.datosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
                 aviso = ctx.getString(R.string.tlf_tram);
+
+
+                // //Horarios
+
+                AppCompatTextView botonHorarios = (AppCompatTextView) v.findViewById(R.id.boton_horarios);
+                botonHorarios.setText(botonHorarios.getText().toString().toUpperCase());
+
+                botonHorarios.setOnClickListener(new Button.OnClickListener() {
+                    public void onClick(View arg0) {
+
+                        actividad.detenerTodasTareas();
+
+                        Intent i = new Intent(actividad, InfoLineasTabsPager.class);
+                        i.putExtra("HORARIOS", "TRAM");
+
+                        actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+
+                    }
+                });
+
+
             } else {
                 aviso = ctx.getString(R.string.tlf_subus);
             }
@@ -407,8 +440,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             nuevoLiteral = traducido;
 
-        }
-        else {
+        } else {
 
 
             traducido = tiempo1 + " " + contexto.getString(R.string.tiempo_m_3) + " " + tiempo2;

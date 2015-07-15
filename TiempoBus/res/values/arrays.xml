@@ -178,4 +178,24 @@
         <item>owm</item>
     </string-array>
 
+    <string-array name="grupos_lineas_bus">
+        <item>Todos los grupos</item>
+        <item>Urbano TAM: Todo el año</item>
+        <item>Interurbano TAM: Todo el año</item>
+        <item>Urbano TAM: Especiales Mercadillo</item>
+        <item>Interurbano TAM: Universidad</item>
+        <item>Urbano TAM: Especiales Fútbol</item>
+        <item>Interurbano TAM: Servicios Verano</item>
+        <item>El Campello Urbano</item>
+        <item>Interurbano TAM: Nocturnos</item>
+        <item>Mutxamel Urbano</item>
+        <item>Interurbano: Todo el año</item>
+        <item>San Vicente Urbano</item>
+        <item>Urbano Especiales</item>
+        <item>Xixona Urbano</item>
+        <item>Playas</item>
+        <item>Urbano TAM Nocturnos</item>
+    </string-array>
+
+
 </resources>

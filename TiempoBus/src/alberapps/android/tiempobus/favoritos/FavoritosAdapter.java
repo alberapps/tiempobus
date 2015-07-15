@@ -18,7 +18,6 @@
 package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,12 +78,12 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
             if(favorito.getNumParada().equals("0")){
 
-                tag.numParada.setText("TRAM");
+                tag.numParada.setText("HT");
 
                 TextView texto = (TextView) v.findViewById(R.id.numParadaFav);
 
                 texto.setTextColor(contexto.getResources().getColor(R.color.tram_l3));
-                texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                //texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                 //texto.setTextAppearance(contexto, android.R.style.TextAppearance_Medium);
 
                 tag.titulo.setText(favorito.getTitulo().trim());

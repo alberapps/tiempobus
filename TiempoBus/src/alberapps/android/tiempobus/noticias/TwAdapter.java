@@ -244,6 +244,16 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
         }
     }
 
+    /**
+     * No mostrar las dos primeras
+     */
+    public void quitarIniciales(){
+
+        remove(getItem(1));
+        remove(getItem(0));
+
+    }
+
     private static class ViewHolder {
         public TextView usuario;
         public TextView noticiaText;

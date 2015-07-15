@@ -265,7 +265,11 @@ public class GestionHorariosIda {
         context.datosHorarios = null;
         context.linkHorario = ProcesarHorarios.LINEA_URL + linea.getIdlinea();
 
-        context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+        if(context.dialog == null) {
+            context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
+        }else{
+            context.dialog.show();
+        }
 
         loadHorarios(linea);
 

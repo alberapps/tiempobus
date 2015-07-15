@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
@@ -45,7 +46,11 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
     List<BusLinea> listaOriginal;
 
+    List<BusLinea> listaOriginalSinGrupo;
+
     CharSequence filtro;
+
+    List<String> descripcionesGrupo;
 
     /**
      * Constructor
@@ -57,6 +62,10 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
         super(context, textViewResourceId);
 
         this.contexto = ((InfoLineasTabsPager) context);
+
+        String[] arrayGrupos = context.getResources().getStringArray(R.array.grupos_lineas_bus);
+
+        descripcionesGrupo = new ArrayList<String>(Arrays.asList(arrayGrupos));
 
     }
 
@@ -75,7 +84,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
         }
 
         //Control de vista correcta por el filtro
-        if(v.findViewById(R.id.bus_linea) == null){
+        if (v.findViewById(R.id.bus_linea) == null) {
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -97,7 +106,6 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             busLinea.setText(bus.getNumLinea());
             descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
 
-            datosLinea.setText(bus.getGrupo());
 
 
             //Formato colores
@@ -123,6 +131,17 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 });*/
 
+                int id = Integer.parseInt(bus.getIdGrupo());
+
+                String descripcion = "";
+
+                if (descripcionesGrupo != null && id < descripcionesGrupo.size()) {
+                    descripcion = descripcionesGrupo.get(id);
+                }
+
+                datosLinea.setText(descripcion);
+
+
                 //informacionText.setVisibility(View.INVISIBLE);
 
                 informacionText.setText(R.string.infolinea_horarios_pdf);
@@ -144,6 +163,8 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 //informacionText.setVisibility(View.VISIBLE);
 
+                datosLinea.setText(bus.getGrupo());
+
                 informacionText.setText(R.string.infolinea_horarios_pdf);
 
                 // Carga de horarios tram
@@ -159,14 +180,13 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                 });
 
             }
-        }else if (bus != null && bus.isErrorServicio()) {
+        } else if (bus != null && bus.isErrorServicio()) {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-
 
 
             text.setText(ctx.getString(R.string.error_tiempos));
@@ -188,12 +208,10 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             imagenAviso.setImageResource(R.drawable.alerts_warning);
 
 
-
             textAviso.setText(aviso);
 
 
-
-        }else if (bus != null && bus.isFiltroSinDatos()) {
+        } else if (bus != null && bus.isFiltroSinDatos()) {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -211,13 +229,10 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             //imagenAviso.setImageResource(R.drawable.alerts_warning);
 
 
-
             textAviso.setText(aviso);
 
 
-
         }
-
 
 
         return v;
@@ -238,10 +253,59 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
         }
 
         listaOriginal = new ArrayList<BusLinea>(busLinea);
+        listaOriginalSinGrupo = new ArrayList<BusLinea>(busLinea);
     }
 
     /**
+     * Aplicar filtro de grupo
+     *
+     * @param grupo
+     */
+    public void filtrarPorGrupo(String grupo) {
+
+        if (listaOriginalSinGrupo == null || listaOriginalSinGrupo.isEmpty()) {
+            return;
+        }
+
+        notifyDataSetChanged();
+        clear();
+
+        listaOriginal.clear();
+
+        if (grupo.equals("0")) {
+
+            addAll(listaOriginalSinGrupo);
+
+        } else {
+
+            for (int i = 0; i < listaOriginalSinGrupo.size(); i++) {
+
+                if (listaOriginalSinGrupo.get(i).getIdGrupo().equals(grupo)) {
+                    listaOriginal.add(listaOriginalSinGrupo.get(i));
+                    add(listaOriginalSinGrupo.get(i));
+                }
+
+            }
+
+        }
+        if (listaOriginal.isEmpty()) {
+            BusLinea b1 = new BusLinea();
+            b1.setFiltroSinDatos(true);
+            add(b1);
+        }
+
+        notifyDataSetInvalidated();
+
+        final TextView textoBuscar = (TextView) contexto.findViewById(R.id.texto_buscar);
+        textoBuscar.setText("");
+
+
+    }
+
+
+    /**
      * Para filtros del listado
+     *
      * @return filtro
      */
     @Override
@@ -291,7 +355,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                     add(lista.get(i));
                 }
 
-                if(getCount() == 0){
+                if (getCount() == 0) {
                     BusLinea b1 = new BusLinea();
                     b1.setFiltroSinDatos(true);
                     add(b1);

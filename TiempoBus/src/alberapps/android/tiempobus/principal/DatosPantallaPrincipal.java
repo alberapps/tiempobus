@@ -19,7 +19,6 @@
 package alberapps.android.tiempobus.principal;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -32,6 +31,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -334,7 +335,7 @@ public class DatosPantallaPrincipal {
                 descripcion.append("\n");
                 descripcion.append("T: ");
                 descripcion.append(listaParadas.get(0).getConexion());
-            } else{
+            } else {
                 descripcion.append(context.getString(R.string.main_no_items));
             }
 
@@ -461,7 +462,6 @@ public class DatosPantallaPrincipal {
                             // Contar nuevas noticias
 
 
-
                             for (int i = 0; i < noticias.size(); i++) {
 
                                 if (noticias.get(i).getFecha() != null && !noticias.get(i).getFecha().equals("")) {
@@ -470,7 +470,7 @@ public class DatosPantallaPrincipal {
                                     }
                                 }
 
-                                if(fechaComparar == null && noticias.get(i).getFecha() != null){
+                                if (fechaComparar == null && noticias.get(i).getFecha() != null) {
                                     fechaComparar = noticias.get(i).getFecha();
                                 }
 
@@ -492,7 +492,7 @@ public class DatosPantallaPrincipal {
 
                         for (int i = 0; i < noticias.size(); i++) {
 
-                            if(fechaComparar == null && noticias.get(i).getFecha() != null){
+                            if (fechaComparar == null && noticias.get(i).getFecha() != null) {
                                 fechaComparar = noticias.get(i).getFecha();
                                 break;
                             }
@@ -899,8 +899,7 @@ public class DatosPantallaPrincipal {
             botonHorarios.setVisibility(View.VISIBLE);
 
 
-
-        }else{
+        } else {
             botonHorarios.setVisibility(View.INVISIBLE);
         }
 
@@ -908,13 +907,12 @@ public class DatosPantallaPrincipal {
         actualizarAnteriorHistorial();
 
 
-
     }
 
     /**
      * Datos anterior del historial en la tarjeta
      */
-    public void actualizarAnteriorHistorial(){
+    public void actualizarAnteriorHistorial() {
 
         //Historial
         TextView botonHistorial = (TextView) context.findViewById(R.id.aviso_header_historial);
@@ -923,22 +921,22 @@ public class DatosPantallaPrincipal {
 
         String anterior = "";
 
-        if(historial != null && !historial.isEmpty() && historial.size() > 1){
+        if (historial != null && !historial.isEmpty() && historial.size() > 1) {
 
             final String parada = historial.get(1).getNumParada();
 
 
             anterior = cargarDescripcionBDFavoritos(parada);
 
-            if(anterior == null || (anterior != null && anterior.equals(""))){
+            if (anterior == null || (anterior != null && anterior.equals(""))) {
                 anterior = cargarDescripcionBD(Integer.parseInt(parada));
             }
 
-            if(anterior == null || (anterior != null && anterior.equals(""))){
+            if (anterior == null || (anterior != null && anterior.equals(""))) {
                 anterior = parada;
             }
 
-            if(anterior != null && !anterior.equals("")) {
+            if (anterior != null && !anterior.equals("")) {
 
                 botonHistorial.setOnClickListener(new Button.OnClickListener() {
                     public void onClick(View arg0) {
@@ -972,7 +970,6 @@ public class DatosPantallaPrincipal {
 
     /**
      * Carga del historial
-     *
      *
      * @return
      */
@@ -1025,11 +1022,13 @@ public class DatosPantallaPrincipal {
             context.tiemposView.removeFooterView(context.avisoPie);
         }
 
+        View v = null;
+
         if (!esTram(context.paradaActual)) {
 
             LayoutInflater li = LayoutInflater.from(context);
 
-            View v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
+            v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
 
             TextView infoapp = (TextView) v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
@@ -1039,6 +1038,16 @@ public class DatosPantallaPrincipal {
 
                 }
             });
+
+            TextView twSb = (TextView) v.findViewById(R.id.info_subus);
+            twSb.setOnClickListener(new TextView.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    UtilidadesUI.openWebPage(context, "http://www.alicante.subus.es/");
+
+                }
+            });
+
 
             context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
@@ -1050,7 +1059,7 @@ public class DatosPantallaPrincipal {
 
             LayoutInflater li = LayoutInflater.from(context);
 
-            View v = li.inflate(R.layout.tiempos_aviso_3, null);
+            v = li.inflate(R.layout.tiempos_aviso_3, null);
 
             ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
             imgTram.setOnClickListener(new TextView.OnClickListener() {
@@ -1087,6 +1096,26 @@ public class DatosPantallaPrincipal {
             context.avisoPie = v;
 
         }
+
+
+        TextView twAlberapps = (TextView) v.findViewById(R.id.info_alberapps);
+        twAlberapps.setOnClickListener(new TextView.OnClickListener() {
+            public void onClick(View arg0) {
+
+                UtilidadesUI.openWebPage(context, "http://twitter.com/alberapps");
+
+            }
+        });
+
+        TextView twMg = (TextView) v.findViewById(R.id.info_mag);
+        twMg.setOnClickListener(new TextView.OnClickListener() {
+            public void onClick(View arg0) {
+
+                UtilidadesUI.openWebPage(context, "http://twitter.com/Magnoling_");
+
+            }
+        });
+
 
     }
 
@@ -1519,7 +1548,7 @@ public class DatosPantallaPrincipal {
 
             }
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
         }
 
@@ -1541,46 +1570,47 @@ public class DatosPantallaPrincipal {
         if (linea.trim().equals("L1")) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l1, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l1));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l1, null));
             }
+
         } else if (linea.trim().equals("L2")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l2, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l2));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l2, null));
             }
 
         } else if (linea.trim().equals("L3")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l3, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l3));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l3, null));
             }
         } else if (linea.trim().equals("L4")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l4, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l4));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l4, null));
             }
         } else if (linea.trim().equals("L9")) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_l9));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l9, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_l9));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l9, null));
             }
         } else if (UtilidadesTAM.isBusUrbano(linea.trim())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_rojo, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_rojo));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_rojo, null));
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_azul, null));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_azul, null));
             }
         }
 

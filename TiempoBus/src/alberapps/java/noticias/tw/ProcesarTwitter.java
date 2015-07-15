@@ -278,7 +278,7 @@ public class ProcesarTwitter {
             procesar4j.setUp();
 
             // Tram
-            listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 5);
+            listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 15);
 
             // Eliminar las que sean de conversacion y retweet
             for (int i = 0; i < listaInicial.size(); i++) {
@@ -293,7 +293,7 @@ public class ProcesarTwitter {
 
                 lista.clear();
 
-                listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 15);
+                listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 25);
 
                 // Eliminar las que sean de conversacion y retweet
                 for (int i = 0; i < listaInicial.size(); i++) {

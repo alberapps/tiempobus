@@ -224,12 +224,19 @@ public class ProcesarTiemposTramIsaeService {
                 bus.cambiarSiguiente(9999);
             }
 
+            //Control L9
+            if(bus.getLinea().equals("L9") && parada.equals(UtilidadesTRAM.CODIGO_TRAM_BENIDORM)){
+                continue;
+            }
+
             // >60min
             if (bus.getProximoMinutos() > TIEMPO_MAXIMO) {
                 // Quitar
             } else {
                 buses.add(bus);
             }
+
+
 
 
             // Filtrar repetidos

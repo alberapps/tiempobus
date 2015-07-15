@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2013 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2013 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.mapas.maps2;
 
@@ -158,7 +158,7 @@ public class SelectorLinea {
 
     }
 
-    public void seleccionModo(View vista){
+    public void seleccionModo(View vista) {
 
         // Combo de seleccion de datos
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_datos);
@@ -273,7 +273,6 @@ public class SelectorLinea {
     }
 
 
-
     public void cargarDatosLineasModal() {
 
         loadBuses();
@@ -329,10 +328,14 @@ public class SelectorLinea {
             if (buses != null) {
                 context.lineasBus = buses;
 
+
+
                 for (int i = 0; i < buses.size(); i++) {
-
                     listaSpinner.add(new SpinnerItem(i, buses.get(i).getLinea()));
+                }
 
+                if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+                    listaSpinner.add(new SpinnerItem(-1, context.getString(R.string.noticias_todas)));
                 }
 
                 context.dialog.dismiss();
@@ -364,28 +367,58 @@ public class SelectorLinea {
             context.mMap.clear();
         }
 
-        context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
-        context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
-
-        context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
-
         Log.d("SELECTOR", "linea: " + context.lineaSeleccionadaNum);
 
         context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 
+            context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
+            context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+
+            context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+
             context.gestionarLineas.loadDatosMapaV3();
 
         } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
-            context.mapasOffline.loadDatosMapaOffline();
 
+            context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
+            context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+
+            context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+
+            context.mapasOffline.loadDatosMapaOffline();
             context.gestionVehiculos.loadDatosVehiculos();
 
         } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            context.mapasOffline.loadDatosMapaTRAMOffline();
 
-            context.gestionVehiculos.loadDatosVehiculos();
+
+            if (posicion == -1) {
+
+                context.lineaSeleccionada = "-1";
+                context.lineaSeleccionadaDesc = "TRAM";
+
+                context.lineaSeleccionadaNum = "-1";
+
+                context.mapasOffline.loadDatosMapaTRAMOffline("L1");
+                context.mapasOffline.loadDatosMapaTRAMOffline("L2");
+                context.mapasOffline.loadDatosMapaTRAMOffline("L4");
+                context.mapasOffline.loadDatosMapaTRAMOffline("L9");
+                context.mapasOffline.loadDatosMapaTRAMOffline("L3");
+
+            } else {
+
+                context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
+                context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+
+                context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+
+                context.mapasOffline.loadDatosMapaTRAMOffline(null);
+
+                context.gestionVehiculos.loadDatosVehiculos();
+
+            }
+
 
         }
 

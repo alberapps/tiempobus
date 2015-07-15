@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas.horariosTram;
 
@@ -119,8 +119,9 @@ public class FragmentHorariosTram extends Fragment {
             actividad.dialog.dismiss();
         }*/
 
-        iniciar();
-
+        if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            iniciar();
+        }
 
 
         super.onViewStateRestored(savedInstanceState);
@@ -132,7 +133,7 @@ public class FragmentHorariosTram extends Fragment {
 
         //Si viene de favoritos
         Bundle b = actividad.getIntent().getExtras();
-        if(b != null && b.containsKey("HORARIOSDATA")){
+        if (b != null && b.containsKey("HORARIOSDATA")) {
             actividad.datosHorariosTram = null;
         }
 
@@ -217,6 +218,11 @@ public class FragmentHorariosTram extends Fragment {
         });
 
 
+        if (actividad.datosHorariosTram == null || actividad.datosHorariosTram.getHorariosItemCombinados() == null || actividad.datosHorariosTram.getHorariosItemCombinados().isEmpty()
+                || (!actividad.datosHorariosTram.getHorariosItemCombinados().isEmpty() && actividad.datosHorariosTram.getHorariosItemCombinados().get(0).isSinDatos())) {
+            consultarDatos();
+        }
+
 
     }
 
@@ -240,8 +246,11 @@ public class FragmentHorariosTram extends Fragment {
         //actividad.datosHorariosTram = new HorarioTram();
         //cargarListado();
 
-
-        actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        if(actividad.dialog == null) {
+            actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
+        }else{
+            actividad.dialog.show();
+        }
 
         ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -332,30 +341,11 @@ public class FragmentHorariosTram extends Fragment {
             View vheader = li2.inflate(R.layout.infolinea_horarios_tram_header, null);
 
             // boton consultar
-            ImageButton botonConsultar = (ImageButton) vheader.findViewById(R.id.boton_consultar);
+            Button botonConsultar = (Button) vheader.findViewById(R.id.boton_consultar);
             botonConsultar.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    cargarHorarios();
-                    cargarHeaderHorarios();
-
-                    //Guardar seleccion
-                    StringBuffer guardar = new StringBuffer("");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
-
-                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
-
-                    datosHorario = guardar.toString();
+                    consultarDatos();
 
                 }
             });
@@ -383,11 +373,11 @@ public class FragmentHorariosTram extends Fragment {
 
                 //Verificar si se viene desde favoritos
                 Bundle b = actividad.getIntent().getExtras();
-                if(b != null && b.containsKey("HORARIOSDATA")){
+                if (b != null && b.containsKey("HORARIOSDATA")) {
                     datosAnteriores = b.getString("HORARIOSDATA");
                     b.remove("HORARIOSDATA");
 
-                }else{
+                } else {
 
                     //Verificar si hay cache
                     datosAnteriores = PreferencesUtil.getCache(actividad, "datos_horarios_tram");
@@ -395,7 +385,7 @@ public class FragmentHorariosTram extends Fragment {
                 }
 
 
-                if(datosAnteriores != null && !datosAnteriores.equals("")){
+                if (datosAnteriores != null && !datosAnteriores.equals("")) {
 
                     String[] datos = datosAnteriores.split(";;");
 
@@ -409,7 +399,7 @@ public class FragmentHorariosTram extends Fragment {
                     actividad.consultaHorarioTram.setCodEstacionDestino(Integer.parseInt(datos[0]));
                     actividad.consultaHorarioTram.setEstacionDestinoSeleccion(Integer.parseInt(datos[2]));
 
-                }else {
+                } else {
 
                     actividad.consultaHorarioTram.setHoraDesde(Utilidades.getHoraString(calendar.getTime()));
 
@@ -528,6 +518,37 @@ public class FragmentHorariosTram extends Fragment {
         }
 
     }
+
+
+    /**
+     * Iniciar consulta de datos
+     */
+    private void consultarDatos() {
+
+        cargarHorarios();
+        cargarHeaderHorarios();
+
+        //Guardar seleccion
+        StringBuffer guardar = new StringBuffer("");
+        guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+        guardar.append(";;");
+        guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+        guardar.append(";;");
+        guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+        guardar.append(";;");
+        guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+        guardar.append(";;");
+        guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+        guardar.append(";;");
+        guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+
+        PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+
+        datosHorario = guardar.toString();
+
+
+    }
+
 
     /**
      * Recarga al restaurar la vista

@@ -36,10 +36,7 @@
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            >
-
-
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
             <LinearLayout
@@ -53,12 +50,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:orientation="vertical"
 
                     >
 
+
                     <Spinner
                         android:id="@+id/spinner_datos_tarjeta"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+
+                        android:gravity="center" />
+
+                    <Spinner
+                        android:id="@+id/spinner_grupo_lineas"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="5dp"
@@ -72,8 +81,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    >
+                    android:layout_margin="5dp">
 
                     <EditText
                         android:id="@+id/texto_buscar"
@@ -93,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autoLink="web"
-                    android:padding="2dip"
+                    android:padding="2dp"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="italic" />

@@ -88,17 +88,43 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/mi_material_blue_principal"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/datos_parada"
+                    <LinearLayout
+                        android:id="@+id/bloque_datos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:orientation="vertical">
 
-                        android:textStyle="italic" />
+                        <LinearLayout
+                            android:id="@+id/lineas_parada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lineas_parada_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/datos_parada"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/primary_dark_material_light"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

@@ -135,6 +135,7 @@ public class ProcesarHorariosTram {
         Elements td = null;
         List<String> fila = null;
         String filaId = "";
+        String filaIdAnterior = "";
 
 
         //Recorre las tablas de horarios
@@ -147,10 +148,15 @@ public class ProcesarHorariosTram {
             horarioTram.getDatosTransbordos().get(i).setTablaHoras(new TablaHoras());
             horarioTram.getDatosTransbordos().get(i).getTablaHoras().setDatosHoras(new LinkedHashMap<String, List<String>>());
 
+            filaIdAnterior = "";
+
             //Horas de cada fila
             for (int j = 0; j < tr.size(); j++) {
 
                 fila = new ArrayList<String>();
+                if(!filaId.equals("") && !filaId.equals("__")) {
+                    filaIdAnterior = filaId;
+                }
                 filaId = "";
 
                 td = tr.get(j).select("td");
@@ -167,8 +173,13 @@ public class ProcesarHorariosTram {
 
                     }
 
-                    //Guardar la fila con su grupo
-                    horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().put(filaId, fila);
+                    if(filaId.equals("__")){
+                        //Si la nueva fila sigue siendo de la misma hora
+                        horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().get(filaIdAnterior).addAll(fila);
+                    }else {
+                        //Guardar la fila con su grupo
+                        horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().put(filaId, fila);
+                    }
 
                 }
 

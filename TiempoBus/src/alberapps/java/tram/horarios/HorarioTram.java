@@ -119,10 +119,10 @@ public class HorarioTram {
             String[] duracion1 = duracion.split(":");
             String[] tipoBillete1 = tipoBillete.split(":");
 
-            if(duracion1.length > 0) {
+            if(duracion1.length > 1) {
                 info.getInfoRecorrido().add(duracion1[1].trim());
             }
-            if(tipoBillete1.length > 0) {
+            if(tipoBillete1.length > 1) {
                 info.getInfoRecorrido().add(tipoBillete1[1].trim());
             }
 

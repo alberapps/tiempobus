@@ -106,7 +106,7 @@ public class GestionarLineas {
                 context.datosMapaCargadosIda = datos[0];
                 context.datosMapaCargadosVuelta = datos[1];
 
-                cargarMapa();
+                cargarMapa(null);
 
                 context.gestionVehiculos.loadDatosVehiculos();
 
@@ -125,20 +125,42 @@ public class GestionarLineas {
         }
     };
 
+
+    public void cargarMapaTramTodas(){
+
+    }
+
+
     /**
      * Cargar el mapa con las paradas de la linea
      */
-    public void cargarMapa() {
+    public void cargarMapa(String linea) {
 
         // Cargar datos cabecera
         String cabdatos = context.lineaSeleccionadaDesc;
+
+        Integer colorTram = null;
 
         context.datosLinea.setText(cabdatos);
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             context.drawableIda = R.drawable.tramway;
+
+            if(linea.equals("L1")){
+                colorTram = context.getResources().getColor(R.color.tram_l1);
+            }else if(linea.equals("L2")){
+                colorTram = context.getResources().getColor(R.color.tram_l2);
+            }else if(linea.equals("L3")){
+                colorTram = context.getResources().getColor(R.color.tram_l3);
+            }else if(linea.equals("L4")){
+                colorTram = context.getResources().getColor(R.color.tram_l4);
+            }else if(linea.equals("L9")){
+                colorTram = context.getResources().getColor(R.color.tram_l9);
+            }
+
         } else {
             context.drawableIda = R.drawable.busstop_blue;
+            colorTram = null;
         }
 
         context.drawableVuelta = R.drawable.busstop_green;
@@ -167,7 +189,7 @@ public class GestionarLineas {
         // Recorrido ida
         if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
 
-            String colorRecorrido = "#157087";
+
 
             // if
             // (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum))
@@ -176,8 +198,12 @@ public class GestionarLineas {
             // }
 
             // Recorrido
-            drawPath(context.datosMapaCargadosIda, Color.parseColor(colorRecorrido));
 
+            if(colorTram != null) {
+                drawPath(context.datosMapaCargadosIda, colorTram);
+            }else{
+                drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
+            }
         }
 
         MarkerOptions posicionSelecionada = null;
@@ -186,7 +212,11 @@ public class GestionarLineas {
         if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
             // Recorrido
-            drawPath(context.datosMapaCargadosIda, Color.parseColor("#157087"));
+            if(colorTram != null) {
+                drawPath(context.datosMapaCargadosIda, colorTram);
+            }else{
+                drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
+            }
 
             for (int i = 0; i < context.datosMapaCargadosIda.getPlacemarks().size(); i++) {
 
@@ -256,7 +286,7 @@ public class GestionarLineas {
         if (context.datosMapaCargadosVuelta != null && context.datosMapaCargadosVuelta.getRecorrido() != null && !context.datosMapaCargadosVuelta.getRecorrido().equals("")) {
 
             // Recorrido
-            drawPath(context.datosMapaCargadosVuelta, Color.parseColor("#6C8715"));
+            drawPath(context.datosMapaCargadosVuelta, context.getResources().getColor(R.color.tram_l2));
 
         }
 
@@ -467,7 +497,7 @@ public class GestionarLineas {
 
                 if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
                     context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
-                    context.mapasOffline.loadDatosMapaTRAMOffline();
+                    context.mapasOffline.loadDatosMapaTRAMOffline(null);
                 } else {
                     context.modoRed = InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE;
                     context.mapasOffline.loadDatosMapaOffline();
@@ -497,7 +527,7 @@ public class GestionarLineas {
 
             if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
                 context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
-                context.mapasOffline.loadDatosMapaTRAMOffline();
+                context.mapasOffline.loadDatosMapaTRAMOffline(null);
             } else {
 
                 if (context.getIntent().getExtras().containsKey("LINEA_MAPA_FICHA_ONLINE")) {
@@ -745,26 +775,65 @@ public class GestionarLineas {
 
         if (context.datosMapaCargadosIda != null) {
 
-            if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
-                context.datosMapaCargadosIdaAux = new DatosMapa();
-                context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
-                context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
+            if(!context.lineaSeleccionadaNum.equals("-1")) {
 
-                context.flagIda = false;
+                if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
+                    context.datosMapaCargadosIdaAux = new DatosMapa();
+                    context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
+                    context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
 
-            } else if (context.datosMapaCargadosIdaAux != null) {
-                context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
+                    context.flagIda = false;
 
-                context.flagIda = true;
+                } else if (context.datosMapaCargadosIdaAux != null) {
+                    context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
+
+                    context.flagIda = true;
+
+                }
+
+                // Limpiar lista anterior para nuevas busquedas
+                if (context.mMap != null) {
+                    context.mMap.clear();
+                }
+
+
+                cargarMapa(null);
+
+
+            }else{
+
+                /*if (context.flagIda) {
+                    context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
+                    context.flagIda = false;
+
+                } else {
+
+                    context.flagIda = true;
+
+                }
+
+                // Limpiar lista anterior para nuevas busquedas
+                if (context.mMap != null) {
+                    context.mMap.clear();
+                }
+
+                if (context.flagIda && context.lineaSeleccionadaNum.equals("-1")) {
+                    context.mapasOffline.loadDatosMapaTRAMOffline("L1");
+                    context.mapasOffline.loadDatosMapaTRAMOffline("L2");
+                    context.mapasOffline.loadDatosMapaTRAMOffline("L4");
+                    context.mapasOffline.loadDatosMapaTRAMOffline("L9");
+                    context.mapasOffline.loadDatosMapaTRAMOffline("L3");
+                } else if (!context.flagIda && context.lineaSeleccionadaNum.equals("-1")) {
+                    cargarMapa("L1");
+                    cargarMapa("L2");
+                    cargarMapa("L4");
+                    cargarMapa("L9");
+                    cargarMapa("L3");
+                } else {
+                    cargarMapa(null);
+                }*/
 
             }
-
-            // Limpiar lista anterior para nuevas busquedas
-            if (context.mMap != null) {
-                context.mMap.clear();
-            }
-
-            cargarMapa();
 
             context.gestionVehiculos.loadDatosVehiculos();
         }
@@ -796,7 +865,7 @@ public class GestionarLineas {
                 context.mMap.clear();
             }
 
-            cargarMapa();
+            cargarMapa(null);
 
             context.gestionVehiculos.loadDatosVehiculos();
 

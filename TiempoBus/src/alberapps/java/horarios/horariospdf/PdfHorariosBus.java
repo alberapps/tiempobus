@@ -105,14 +105,26 @@ public class PdfHorariosBus {
 
 
 
-                if(linkSecciones.get(i).attr("abs:href").contains(linea + ".pdf")){
+                //if(linkSecciones.get(i).attr("abs:href").contains("L" + linea + ".pdf")
+                  //      || linkSecciones.get(i).attr("abs:href").contains("L" + linea + "sh" +".pdf")){
+
+                if(linea.equals("11H")){
+                    linea = "11";
+                }else if(linea.equals("C-6*")){
+                    linea="C-6";
+                }
+
+                if(linkSecciones.get(i).attr("abs:title").contains("Línea " + linea)
+                        || linkSecciones.get(i).attr("abs:title").contains("Línea " + linea.replace("-",""))
+                        || linkSecciones.get(i).attr("abs:title").contains("Línea " + linea.replace("C-",""))
+                        || (linea.equals("TURI") && linkSecciones.get(i).attr("abs:title").contains("TURIBUS"))){
 
 
 
                     if (!horario){
                         link = linkSecciones.get(i).attr("abs:href");
                         break;
-                    }else if(horario && linkSecciones.get(i).attr("abs:href").contains("Horario")){
+                    }else if(horario){
                         link = linkSecciones.get(i).attr("abs:href");
                         break;
                     }else {

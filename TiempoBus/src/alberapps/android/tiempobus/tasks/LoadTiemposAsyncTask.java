@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.tasks;
 
@@ -31,6 +31,7 @@ import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.tram.linea9.ProcesarTiemposTramL9Texto;
 import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
 import alberapps.java.util.Utilidades;
 
@@ -63,7 +64,10 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
      */
     @Override
     protected DatosRespuesta doInBackground(Object... datos) {
+
         ArrayList<BusLlegada> llegadasBus = null;
+        ArrayList<BusLlegada> llegadasDiesel = null;
+
         DatosRespuesta datosRespuesta = new DatosRespuesta();
 
         String parada = null;
@@ -108,7 +112,28 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         try {
 
-            if (DatosPantallaPrincipal.esTram(parada)) {
+            if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_BENIDORM)) {
+
+                try {
+                    //Tiempos isae tram diesel
+                    llegadasDiesel = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+                } catch (Exception e) {
+                    llegadasDiesel = null;
+                }
+
+                //Tiempos isae tram
+                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
+
+
+                if (llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
+                    llegadasBus.addAll(llegadasDiesel);
+                }
+
+            } else if (UtilidadesTRAM.esParadaL9(parada)) {
+
+                llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+
+            } else if (DatosPantallaPrincipal.esTram(parada)) {
 
                 llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
             } else {
@@ -136,6 +161,10 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                     Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
 
                     llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2, cacheTiempos);
+
+                    if (UtilidadesTRAM.esParadaL9(parada) && llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
+                        llegadasBus.addAll(llegadasDiesel);
+                    }
 
                     datosRespuesta.setListaBusLlegada(llegadasBus);
                 } catch (TiempoBusException e2) {

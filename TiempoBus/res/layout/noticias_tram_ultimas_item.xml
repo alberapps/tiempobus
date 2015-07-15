@@ -97,6 +97,15 @@
                 android:textStyle="italic"
                 android:autoLink="web"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/noticias_todas"
+                android:id="@+id/boton_ver_todas"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                />
+
         </LinearLayout>
 
 

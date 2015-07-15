@@ -86,6 +86,8 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
     public ProgressDialog dialog = null;
 
+    public ProgressDialog dialogHorarios = null;
+
     View vistaPieHorarioIda = null;
     View vistaPieHorarioVuelta = null;
     View vistaPieAvisoIda = null;
@@ -137,6 +139,8 @@ public class InfoLineasTabsPager extends AppCompatActivity {
     }
 
     public String modoHorario = null;
+
+    public String filtroGrupo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

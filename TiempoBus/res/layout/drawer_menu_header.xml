@@ -25,88 +25,18 @@
     <LinearLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:orientation="vertical"
-        android:background="@color/cardview_light_background">
+        android:background="@color/mi_material_blue_principal">
 
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:orientation="vertical"
-                android:baselineAligned="false">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5sp"
-                        android:layout_marginRight="5sp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_tiempobus_4"
-                            android:layout_gravity="center"/>
-
-                    </FrameLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="7dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="3dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/datos_desc_linea"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:text="@string/bus_tram_titulo"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/datos_desc_linea_sentido"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top"
-                            android:text="@string/bus_tram"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/mi_material_blue_principal"
-                            android:textStyle="bold"
-                            />
-
-                        <TextView
-                            android:id="@+id/datos_link"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="top"
-                            android:text="@string/app_autor_web"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="10dp"
-                            android:textColor="@color/mi_material_blue_principal"
-                            android:autoLink="web"
-                            />
-
-
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
+        <ImageView
+            android:id="@+id/imgAlberapps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Link TRAM"
+            android:src="@drawable/promo_alberapps_1000" />
 
 
 

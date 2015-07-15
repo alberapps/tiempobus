@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tam.lineas;
 
@@ -27,8 +27,11 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
@@ -106,16 +109,17 @@ public class ProcesarDatosLineasIsaeService {
                     datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
 
                     datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
+                    datosLinea.setGrupoLineaId(Integer.toString(UtilidadesTAM.TIPO[posicion]));
 
                 } else if (esTram && posicion >= 0) {
 
                     datosLinea.setGrupoLinea(UtilidadesTRAM.DESC_TIPO[UtilidadesTRAM.TIPO[posicion]]);
+                    datosLinea.setGrupoLineaId(Integer.toString(UtilidadesTRAM.TIPO[posicion]));
 
                 } else {
                     datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().concat("\n[**Sin información]"));
+                    datosLinea.setGrupoLineaId("1000");
                 }
-
-
 
 
                 lineas.add(datosLinea);
@@ -130,6 +134,7 @@ public class ProcesarDatosLineasIsaeService {
                     datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
 
                     datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
+                    datosLineaH.setGrupoLineaId(Integer.toString(UtilidadesTAM.TIPO[posicionH]));
 
                     lineas.add(datosLineaH);
 
@@ -182,7 +187,8 @@ public class ProcesarDatosLineasIsaeService {
             // Datos recuperados con exito
             for (int i = 0; i < datosRecuperados.size(); i++) {
 
-                lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), datosRecuperados.get(i).getGrupoLinea()));
+                lineasBus.add(new BusLinea(datosRecuperados.get(i).getLineaCodigoKML(), datosRecuperados.get(i).getLineaDescripcion(), datosRecuperados.get(i).getLineaNum(), datosRecuperados.get(i).getGrupoLinea(), datosRecuperados.get(i).getGrupoLineaId()));
+
 
             }
         } else {
@@ -190,7 +196,44 @@ public class ProcesarDatosLineasIsaeService {
 
         }
 
-        return lineasBus;
+        return ordenarPorGrupo(lineasBus);
+    }
+
+
+    /**
+     * Ordenar por id de grupo
+     *
+     * @param lineas
+     * @return
+     */
+    private static ArrayList<BusLinea> ordenarPorGrupo(ArrayList<BusLinea> lineas) {
+
+        if (lineas == null || lineas.isEmpty()) {
+            return lineas;
+        }else if(DatosPantallaPrincipal.esLineaTram(lineas.get(0).getNumLinea())){
+            return lineas;
+        }else {
+
+            Comparator<BusLinea> comparator = new Comparator<BusLinea>() {
+                @Override
+                public int compare(BusLinea lhs, BusLinea rhs) {
+                    if (lhs.getIdGrupo() != null && rhs.getIdGrupo() != null) {
+                        Integer c1 = Integer.parseInt(lhs.getIdGrupo());
+                        Integer c2 = Integer.parseInt(rhs.getIdGrupo());
+                        return c1.compareTo(c2);
+                    } else {
+                        return -1;
+                    }
+                }
+            };
+
+            Collections.sort(lineas, comparator);
+
+        }
+
+        return lineas;
+
+
     }
 
 }

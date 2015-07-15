@@ -52,6 +52,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -122,6 +123,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
     List<NoticiaRss> noticiasRss;
 
     TwAdapter twAdapter;
+
+    TwAdapter twTramAdapter;
 
     NoticiasRssAdapter noticiasRssAdapter;
 
@@ -1019,7 +1022,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             LayoutInflater li2 = LayoutInflater.from(this);
 
-            View vheader = li2.inflate(R.layout.noticias_header, null);
+            View vheader = li2.inflate(R.layout.noticias_tram_header, null);
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
@@ -1049,7 +1052,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
     /**
      * Ultimas noticias tram
      */
-    public void cargarHeaderUltimasNoticiasTram(List<TwResultado> noticias) {
+    public void cargarHeaderUltimasNoticiasTram(final List<TwResultado> noticias) {
 
         if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 1 && noticias == null) {
 
@@ -1062,6 +1065,23 @@ public class NoticiasTabsPager extends AppCompatActivity {
             TextView titulo = (TextView) vheader.findViewById(R.id.titulo_ultima_tram);
 
             titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
+
+            // Link de acceso a twitter
+            titulo.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View view) {
+
+                    String url = ProcesarTwitter.tw_tram_ruta;
+
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+
+                }
+
+            });
+
 
             TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
 
@@ -1089,21 +1109,91 @@ public class NoticiasTabsPager extends AppCompatActivity {
             TextView descripcion_1 = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
             TextView descripcion_2 = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_2);
 
-            //StringBuffer textoHeader = new StringBuffer();
-
-            //textoHeader.append(noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje());
-
             fecha_1.setText(noticias.get(0).getFecha());
             descripcion_1.setText(noticias.get(0).getMensaje());
 
             if (noticias.size() > 1) {
-                //textoHeader.append("\n");
-                //textoHeader.append(noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje());
                 fecha_2.setText(noticias.get(1).getFecha());
                 descripcion_2.setText(noticias.get(1).getMensaje());
             }
 
-            //descripcion.setText(textoHeader.toString());
+
+
+
+            //Boton cargar todas las noticias
+            Button BotonTodas = (Button) vheader.findViewById(R.id.boton_ver_todas);
+            BotonTodas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    cargarListadoTodasTram(noticias);
+
+                }
+            });
+
+        }
+
+    }
+
+
+    /**
+     * Cargar el listado de noticias tw del tram
+     * @param noticias
+     */
+    public void cargarListadoTodasTram(final List<TwResultado> noticias) {
+
+        try {
+
+            twTramAdapter = new TwAdapter(this, R.layout.avisostw_item);
+
+            noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
+
+            TextView vacio = (TextView) findViewById(R.id.vacio_noticias_rss);
+            noticiasRssView.setEmptyView(vacio);
+
+            noticiasRssView.setAdapter(twTramAdapter);
+
+            if (noticias != null) {
+
+                twTramAdapter.addAll(noticias);
+                twTramAdapter.quitarIniciales();
+                twTramAdapter.notifyDataSetChanged();
+
+            }
+
+
+            View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
+
+            //Boton cargar todas las noticias
+            final Button botonTodas = (Button) vheader.findViewById(R.id.boton_ver_todas);
+
+            botonTodas.setText(getString(R.string.noticias_no_todas));
+
+            botonTodas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    cargarListadoRss();
+
+                    botonTodas.setText(getString(R.string.noticias_todas));
+
+                    //Boton cargar todas las noticias
+                    botonTodas.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            cargarListadoTodasTram(noticias);
+
+                        }
+                    });
+
+                }
+            });
+
+        } catch (Exception e) {
+
+            // Para evitar fallos en caso de volver antes de terminar
+            e.printStackTrace();
 
         }
 

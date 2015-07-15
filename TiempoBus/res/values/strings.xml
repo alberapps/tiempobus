@@ -175,7 +175,7 @@
     <string name="aviso_noticia">Si el contenido no se visualiza correctamente, pulsa el link para acceder a la web</string>
     <string name="noticias_links">Enlaces posibles</string>
     <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de subus.es.</string>
+    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de alicante.subus.es.</string>
     <string name="horarios_tram_aviso">Los recorridos se recuperan directamente de la web de tramalicante.es</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
@@ -478,5 +478,9 @@
     <string name="tarjeta">Tarjetas</string>
     <string name="tarjeta_clima">Clima</string>
     <string name="sin_fecha">Sin fecha</string>
+    <string name="noticias_todas">Ver todas</string>
+    <string name="noticias_no_todas">Ocultar</string>
+
+    <string name="grupos_todos">Todos los grupos</string>
 
 </resources>

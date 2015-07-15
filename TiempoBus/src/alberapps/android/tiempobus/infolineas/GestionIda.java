@@ -1,27 +1,24 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2013 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2013 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +29,6 @@ import android.widget.Toast;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**
@@ -104,71 +100,6 @@ public class GestionIda {
 
     }
 
-
-    /**
-     * Paradas ida
-     *
-     * @param fIda
-     */
-    public void loadDatosMapaIda(FragmentIda fIda) {
-
-        // String url = "http://www.subus.es/Lineas/kml/ALC34ParadasIda.xml";
-
-        //String url = UtilidadesTAM.getKMLParadasIda(context.getLinea().getIdlinea());
-
-        DatosInfoLinea datos = new DatosInfoLinea();
-        //datos.setUrl(url);
-        // datos.setfIda(fIda);
-
-        datos.setLinea(context.getLinea().getNumLinea());
-        datos.setSublinea("1");
-
-
-        // Control de disponibilidad de conexion
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            context.taskInfoLineaIda = new LoadDatosInfoLineasAsyncTask(loadDatosInfoLineasAsyncTaskResponderIda).execute(datos);
-        } else {
-            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            if (context.dialog != null && context.dialog.isShowing()) {
-                context.dialog.dismiss();
-            }
-        }
-
-    }
-
-
-    LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder loadDatosInfoLineasAsyncTaskResponderIda = new LoadDatosInfoLineasAsyncTask.LoadDatosInfoLineasAsyncTaskResponder() {
-        public void datosInfoLineasLoaded(DatosInfoLinea datos) {
-
-            if (datos != null && datos.getResult() != null) {
-
-                context.datosIda = datos.getResult();
-
-                cargarHeaderIda(true, false, false);
-
-                cargarListadoIda();
-
-                context.cambiarTab();
-
-                if (context.datosIda == null || context.datosVuelta == null || context.datosIda.equals(context.datosVuelta)) {
-
-                    Toast.makeText(context, context.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
-
-                }
-
-            } else {
-                Toast toast = Toast.makeText(context, context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                toast.show();
-                context.dialog.dismiss();
-
-            }
-
-            context.dialog.dismiss();
-
-        }
-    };
 
     public void cargarListadoIda() {
 

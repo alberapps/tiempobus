@@ -167,17 +167,15 @@
 
                 </LinearLayout>
 
-                <ImageButton
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/menu_search"
                     android:id="@+id/boton_consultar"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_gravity="right"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:contentDescription="Cargar horarios"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_refresh_grey600_24dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    />
 
 
                 <TextView

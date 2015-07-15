@@ -30,7 +30,7 @@ public class UtilidadesTRAM {
 
     public static boolean ACTIVADO_TRAM = true;
 
-    public static boolean ACTIVADO_L9 = false;
+    public static boolean ACTIVADO_L9 = true;
 
     // Para la carga en BD
     public static String[] LINEAS_NUM = {"L1", "L3", "L4", "L9", "4L", "L2"};
@@ -76,6 +76,8 @@ public class UtilidadesTRAM {
     public static final String CODIGO_TRAM_LUCEROS = "2";
 
     public static final String CODIGO_TRAM_MERCADO = "3";
+
+    public static final String CODIGO_TRAM_BENIDORM = "33";
 
     public static final String L2_SANTVICENT = "SANT VICENT";
 

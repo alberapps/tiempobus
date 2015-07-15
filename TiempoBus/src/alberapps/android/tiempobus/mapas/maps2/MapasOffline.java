@@ -143,7 +143,7 @@ public class MapasOffline {
                     //context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
                     // Cargar datos en el mapa
-                    context.gestionarLineas.cargarMapa();
+                    context.gestionarLineas.cargarMapa(null);
 
                 } else {
                     Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
@@ -164,11 +164,19 @@ public class MapasOffline {
     /**
      * Cargar datos en modo offline
      */
-    public void loadDatosMapaTRAMOffline() {
+    public void loadDatosMapaTRAMOffline(String linea) {
 
         DatosMapa datosIda = new DatosMapa();
 
-        String parametros[] = {context.lineaSeleccionadaNum};
+        String lineaSel = null;
+
+        if(linea == null) {
+            lineaSel = context.lineaSeleccionadaNum;
+        }else{
+            lineaSel = linea;
+        }
+
+        String parametros[] = {lineaSel};
 
         Cursor cursorParadas = null;
 
@@ -230,7 +238,7 @@ public class MapasOffline {
                 //context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
                 // Cargar datos en el mapa
-                context.gestionarLineas.cargarMapa();
+                context.gestionarLineas.cargarMapa(lineaSel);
 
             } else {
                 Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
