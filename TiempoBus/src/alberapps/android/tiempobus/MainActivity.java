@@ -100,6 +100,7 @@ import alberapps.android.tiempobus.principal.TiemposAdapter;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.tw.TwResultado;
@@ -328,6 +329,18 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         if (savedInstanceState == null) {
             // selectItem(0);
+        }
+
+        ImageView imgCabecera = (ImageView) mDrawerLayout.findViewById(R.id.imgAlberapps);
+
+        if(imgCabecera != null) {
+            imgCabecera.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    UtilidadesUI.openWebPage(MainActivity.this, "http://alberapps.blogspot.com.es");
+
+                }
+            });
         }
 
     }

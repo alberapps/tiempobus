@@ -82,7 +82,9 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         descParada = (TextView) v.findViewById(R.id.desc_parada);
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
-        datos.setText("");
+        if(datos != null) {
+            datos.setText("");
+        }
 
         final PlaceMark bus = getItem(position);
 
@@ -91,13 +93,17 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
             descParada.setText(bus.getTitle());
             //datos.setText("T: ".concat(bus.getLineas()));
 
-            if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
+            if(datos != null) {
+                if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
 
-                datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
 
-            } else {
-                LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
-                bloqueDatos.removeView(datos);
+                    datos.setText(datos.getText() + "\ni: " + bus.getObservaciones());
+
+
+                } else {
+                    LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
+                    bloqueDatos.removeView(datos);
+                }
             }
 
             mostrarLineasParada(contexto, v, bus.getLineas());
