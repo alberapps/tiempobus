@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2015 Alberto Montiel
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas.horariosTram;
 
@@ -59,10 +59,10 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
         final HorarioItem horas = getItem(position);
 
-        if(horas != null && !horas.isErrorServicio() && !horas.isSinDatos() && horas != null) {
+        if (horas != null && !horas.isErrorServicio() && !horas.isSinDatos() && horas != null) {
 
 
-            if(horas.getInfoRecorrido() != null && !horas.getInfoRecorrido().isEmpty()){
+            if (horas.getInfoRecorrido() != null && !horas.getInfoRecorrido().isEmpty()) {
 
                 Context ctx = this.getContext().getApplicationContext();
                 LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,9 +72,9 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
                 StringBuffer datos = new StringBuffer("");
 
-                for(int i = 0; i< horas.getInfoRecorrido().size();i++) {
+                for (int i = 0; i < horas.getInfoRecorrido().size(); i++) {
 
-                    if(i>0){
+                    if (i > 0) {
                         datos.append("\n");
                     }
 
@@ -85,11 +85,11 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 text.setText(datos.toString());
 
 
-            }else {
+            } else {
 
 
                 // Si no tenemos la vista de la fila creada componemos una
-                if (v == null ) {
+                if (v == null) {
                     Context ctx = this.getContext().getApplicationContext();
                     LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -125,7 +125,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             }
 
 
-        }else if (horas != null && horas.isErrorServicio()) {
+        } else if (horas != null && horas.isErrorServicio()) {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -144,7 +144,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
             textAviso.setText(aviso);
 
-        }else if (horas != null && horas.isSinDatos()) {
+        } else if (horas != null && horas.isSinDatos()) {
 
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

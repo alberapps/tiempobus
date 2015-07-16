@@ -894,14 +894,14 @@ public class DatosPantallaPrincipal {
             }
         });
 
-        if (esTram(context.paradaActual)) {
+        /*if (esTram(context.paradaActual)) {
 
             botonHorarios.setVisibility(View.VISIBLE);
 
 
         } else {
             botonHorarios.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
 
         actualizarAnteriorHistorial();
@@ -924,7 +924,6 @@ public class DatosPantallaPrincipal {
         if (historial != null && !historial.isEmpty() && historial.size() > 1) {
 
             final String parada = historial.get(1).getNumParada();
-
 
             anterior = cargarDescripcionBDFavoritos(parada);
 

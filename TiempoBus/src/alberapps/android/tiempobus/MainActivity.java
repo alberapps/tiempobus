@@ -1409,7 +1409,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                             handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
                         }
-						/*
+                        /*
 						 * // Quitar barra progreso inicial ProgressBar lpb =
 						 * (ProgressBar) findViewById(R.id.tiempos_progreso);
 						 * lpb.clearAnimation();
@@ -1615,7 +1615,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             cabdatos = laActividad.getString(R.string.share_0b) + " " + laActividad.paradaActual;
                         }
 
-                        ImageButton botonHorarios = (ImageButton) laActividad.findViewById(R.id.aviso_header_horario);
+                        //ImageButton botonHorarios = (ImageButton) laActividad.findViewById(R.id.aviso_header_horario);
 
                         if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
                             cabdatos = "TRAM " + cabdatos;
@@ -1623,10 +1623,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             // Estadisticas tram
                             analyticsTram(laActividad);
 
-                            botonHorarios.setVisibility(View.VISIBLE);
+                            //botonHorarios.setVisibility(View.VISIBLE);
 
                         } else {
-                            botonHorarios.setVisibility(View.INVISIBLE);
+                            //botonHorarios.setVisibility(View.INVISIBLE);
                         }
 
                         // Historial

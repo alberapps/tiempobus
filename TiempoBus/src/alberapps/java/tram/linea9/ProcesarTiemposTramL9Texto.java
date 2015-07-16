@@ -1,6 +1,6 @@
 /**
  * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- * Copyright (C) 2012 Alberto Montiel
+ * Copyright (C) 2015 Alberto Montiel
  * <p/>
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -59,8 +59,6 @@ public class ProcesarTiemposTramL9Texto {
         InputStream is = null;
 
         String url = DatosTRAM.URL_L9 + Integer.toString(parada);
-
-
 
 
         try {
@@ -207,10 +205,6 @@ public class ProcesarTiemposTramL9Texto {
                 //tren.setProximo("TRAM;" + tiempoHora);
 
 
-
-
-
-
             }
 
             return listaTren;
@@ -251,7 +245,7 @@ public class ProcesarTiemposTramL9Texto {
                 }
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
 

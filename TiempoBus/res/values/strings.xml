@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">3.6.2.1</string>
+    <string name="app_version" translatable="false">3.7</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2015)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -11,14 +11,14 @@
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
     <string name="untitled">sin título</string>
-    
+
     <string name="tit_buses">Líneas&#8230;</string>
     <string name="tit_direccion">Dirección&#8230;</string>
     <string name="tit_paradas">Parada&#8230;</string>
     <string name="tit_guardar">Guardar parada %1$s</string>
     <string name="tit_choose_alarm">Avisarme cuando falten&#8230;</string>
     <string name="menu_alarma">Alarma</string>
-    
+
     <string name="alarm_bus">El bus %1$s se acerca a la parada %2$s</string>
     <string name="no_favs">No hay paradas guardadas.\nUsa el botón de añadir
 		favorito para crear tu lista.</string>
@@ -88,7 +88,7 @@
     <string name="configuracion_alarmas_tono_titulo">Tono de Aviso</string>
     <string name="configuracion_alarmas_tono_desc">Seleccionar el tono de aviso</string>
     <string name="mapa_lineas">Cambiar Línea</string>
-    
+
     <string name="mapa_ida">Ida (on/off)</string>
     <string name="mapa_vuelta">Vuelta (on/off)</string>
     <string name="mapa_aviso_vacio">El mapa quedaría vacio</string>
@@ -182,10 +182,10 @@
     <string name="guion">-</string>
     <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
-    
+
     <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
-    
-  
+
+
     <string name="alarma_auto_error">Problema al actualizar Alarma</string>
     <string name="alarma_auto_actualizada">Alarma Actualizada</string>
     <string name="err_bus_sin">No se puede fijar una alarma.\nNo hay estimación.</string>
@@ -194,95 +194,94 @@
     <string name="alarma_preferencias_refrescar_desc">Comprueba si hay que actualizar la alarma, cuando se realiza una recarga de tiempos</string>
     <string name="error_generico_1">En este momento no se puede mostrar la información</string>
     <string name="error_tiempos">No se han podido recuperar los datos.\nIntentalo en unos minutos.</string>
-    
+
     <string name="error_gcode">Cargando lista de líneas local</string>
-    
+
     <string name="error_tabs">No se han podido cargar los datos. Vuelve a intentarlo.</string>
     <string name="error_datos_offline">No se han podido cargar los datos. Vuelve a intentarlo o usa la consulta online.</string>
-    
+
     <string name="error_fichero">Error de acceso al sistema de archivos</string>
-    
-    
-    
+
+
     <string name="error_red">El acceso a Internet no está disponible. Verifica tu conexión</string>
-    
+
     <string name="foreground_service_started">Verifica tiempo cada %s segundos</string>
     <string name="foreground_service">TiempoBus: Servicio Alertas</string>
-    
+
     <string name="tab_noticias">Web Subús</string>
     <string name="tab_tw">Twitter</string>
-    
+
     <string name="dato_tw">Tweets más recientes de:</string>
     <string name="tw1">\@alberapps \@TramdeAlicante \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configurable en Preferencias</string>
-   
-    
+
+
     <string name="error_codigo">El código de parada no es valido</string>
-    
+
     <string name="alarma_checkbox">Activar Servicio</string>
-    
+
     <string name="carga_noticias_msg">Cargando Noticias Web</string>
     <string name="carga_tw_msg">Cargando Twitter</string>
-    
-    
+
+
     <!-- NUEVOS TEXTOS -->
     <string name="recarga_bd">TiempoBus</string>
     <string name="recarga_bd_desc">Actualizando Base de Datos. Espera&#8230;</string>
-    
+
     <string name="recarga_bd_desc_final">Base de Datos Actualizada Correctamente</string>
-    
+
     <string name="recarga_bd_desc_error">Error en la recarga de la Base de Datos</string>
-    
+
     <string name="traducciones">Traducciones</string>
     <string name="traducciones_tit">Soporte de Idioma</string>
     <string name="traducciones_cambiar">Cambiar "locale"</string>
     <string name="traducciones_locale">locale</string>
     <string name="traducciones_desc">Información y autores</string>
-    
-    
+
+
     <string name="menu_widget">>>TiempoBus Widget</string>
     <string name="widget_instalar">¿Quieres acceder a Google Play para instalar TiempoBus Widgets?</string>
     <string name="widget_market">Google Play no está instalado en el dispositivo</string>
-    
+
     <string name="ir_tw">>>Twitter</string>
-    
+
     <string name="observaciones">Observaciones:</string>
-    
+
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Máximos de cada uno</string>
-    
+
     <string name="parada_tram">Parada</string>
-    
+
     <string name="rss_tram">TRAM</string>
     <string name="carga_rss_tram_msg">Cargando RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
-    
-    
+
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
-    
+
+
     <string name="aviso_offline">*En modo offline pueden aparecer líneas sin servicio o recorridos no actualizados.</string>
-    
-    
+
+
     <string name="error_status">El servicio no ha devuelto resultados</string>
-    
+
     <string name="infolinea_horarios">Horarios</string>
     <string name="infolinea_paradas">Paradas</string>
-    
-    
+
+
     <string name="historial_titulo">Historial</string>
     <string name="historial_borrar_todo">Borrar Todo</string>
     <string name="hist_info_borrar">Historial borrado</string>
     <string name="menu_export_qr">Exportar QR</string>
-    
+
     <string name="mapas_vehiculo_on">Vehículos</string>
     <string name="mapas_vehiculo_off">Vehículos</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
-    
+
     <string name="conf_tiempo_recarga">Frecuencia</string>
     <string name="conf_tiempo_recarga_desc">Frecuencia con la que se realizan las recargas</string>
     <string name="conf_tiempo_recarga_titulo">Frecuencia (En segundos)</string>
-    
+
     <string name="aviso_buscador_offline_tram">Recorridos precargados con datos obtenidos de tramalicante.es</string>
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
@@ -290,8 +289,8 @@
         
     <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
-	<string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Desarrollo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraducciones:\nmagnoling.com - twitter.com/Magnoling_</string>
+    <string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+    <string name="acercade_info_nuevo_2">Desarrollo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraducciones:\nmagnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Traducciones: magnoling.com</string>
     
@@ -308,16 +307,16 @@
 	
 	<string name="aviso_header_listado">
 		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
-	</string>    
-    
+	</string>
+
     <string name="error_pdf">El PDF no se puede cargar</string>
     <string name="infolinea_horarios_pdf">Horarios(PDF)</string>
-    
+
     <string name="nuevas_noticias_bus">BUS: Hay nuevos Avisos</string>
     <string name="nuevas_noticias_tram">TRAM: Hay nuevos Avisos</string>
     <string name="nuevas_tram">TRAM</string>
     <string name="preferencias_noticias_auto_tram">Comprobar Noticias TRAM</string>
-    
+
     <string name="probar">Probar TRAM</string>
     
     <string name="info_tram_inicio">El TRAM llega a TiempoBus\n- Ya puedes acceder a la información y los tiempos de paso del TRAM.
@@ -327,12 +326,11 @@
     \n- El GPS te indicará las paradas próximas de ambos sistemas.
     \n- Recibirás notificaciones de nuevos avisos del TRAM provenientes de su Twitter oficial.(Puedes modificarlo en preferencias).
     </string>
-    
+
     <string name="leer_1_tram">El tranvía de la línea</string>
-    
-     
-    
-     <string name="error_gps">ERROR GPS</string>
+
+
+    <string name="error_gps">ERROR GPS</string>
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
     <string name="legal_sin_tram">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM.
@@ -341,26 +339,26 @@
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx)
 		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
-	
+
     <string name="literal_min">min</string>
-    
+
     <!-- fin nuevos -->
-    
+
     <string name="error_maps_gpservices">No se puede acceder a los mapas. Problema al inicializar Google Play Services</string>
-    
+
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permitir el envío de estadísticas anónimas de uso y control de errores</string>
     <string name="analytics_on_desc_inicial">¿Quieres ayudar a mejorar TiempoBus?, permite el envio de estadísticas(anónimas), mediante Google Analytics.\nEstos datos \"anónimos de uso de la app\" se emplearán para mejorar las funciones más usadas, y para aumentar la información sobre errores y problemas.
     \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.
     \nAviso legal en Preferencias</string>
-    
+
     <string name="error_exportar_drive">ERROR: No se han podido exportar los favoritos a Google Drive</string>
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
-    
+
     <string name="drive_modal">Google Drive</string>
-    
+
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     
@@ -370,7 +368,7 @@
 	La información que genera acerca de su uso de la aplicación (incluyendo su dirección IP) será directamente transmitida y archivada por Google en los servidores de Estados Unidos. Google usará esta información por cuenta nuestra con el propósito de seguir la pista de su uso de la aplicación, recopilando informes de la actividad de la aplicación y prestando otros servicios relacionados con la actividad de la aplicación y el uso de Internet. Google podrá transmitir dicha información a terceros cuando así se lo requiera la legislación, o cuando dichos terceros procesen la información por cuenta de Google. Google no asociará su dirección IP con ningún otro dato del que disponga Google.
 	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
     </string>
-    
+
     <string name="conf_conectividad_titulo">Conectividad</string>
     <string name="conf_bd_titulo">Base de Datos</string>
     <string name="conf_avanzado_titulo">Avanzado</string>
@@ -382,39 +380,38 @@
     <string name="conf_db_recargar_desc">Reinicia la base de datos de líneas. Usar en caso de problemas tras actualizar la app</string>
     <string name="conf_db_actualizar">Actualizar BD líneas</string>
     <string name="conf_db_actualizar_desc">Descarga de la Base de Datos desde GitHub y se actualiza.</string>
-    
-    
-    
+
+
     <string name="reconocimiento_voz_sin_datos">No se han encontrado coincidencias</string>
     <string name="reconocimiento_voz_error">Error en el reconocimiento de voz</string>
     <string name="reconocimiento_voz_no">Reconocimiento de voz no disponible en tu dispositivo</string>
     <string name="reconocimiento_voz_titulo">Posibilidades</string>
-    
+
     <string name="wikipedia">Wikipedia</string>
     <string name="eltiempo">Yahoo! Weather</string>
     <string name="eltiempoOWM" translatable="false">OpenWeatherMap</string>
-    
+
     <string name="error_descarga_actualizacion">Se ha producido un error en la descarga de la actualización</string>
-    
+
     <string name="actualizacion_aviso">* Hay disponible una actualización de la base de datos. Selecciona para aceptar o descartar.</string>
-    
+
     <string name="actualizacion_titulo">Actualización Base de Datos</string>
-    
+
     <string name="actualizacion_desc">Si aceptas se descargará desde GitHub y se actualizará la base de datos local. Si descartas se ocultará el aviso.</string>
-    
+
     <string name="voz_texto">Favorito o número de parada</string>
-    
+
     <string name="foreground_service_started_2">Verifica tiempo cada 60 segundos</string>
-    
+
     <string name="app_name_b">TiempoBus</string>
-    
+
     <string name="error_horarios_modal">No se han podido cargar los horarios. ¿Quieres verlo en el navegador?</string>
-    
+
     <string name="twitter4j">Powered by Twitter4J</string>
-    
+
     <string name="pref_control_actualizar_titulo">Verificar Actualizaciones</string>
     <string name="pref_control_actualizar_desc">Al iniciar la aplicación, verificar si hay actualizaciones de la base de datos</string>
-    
+
     <string name="twitter_activar">Twitter Activo</string>
     
     <string name="detalle_licencia">    
@@ -434,15 +431,15 @@
    You should have received a copy of the GNU General Public License\n
    along with this program.  If not, see http://www.gnu.org/licenses.\n
  
-   </string> 
-   
+   </string>
+
     <string name="error_voz">No se ha podido inicializar TextToSpeech</string>
-    
+
     <string name="noticia_zoom_aumenta">Zoom(+)</string>
     <string name="noticia_zoom_reducir">Zoom(-)</string>
-    
+
     <string name="error_no_definido" translatable="false">Error!</string>
-    
+
     <string name="mensaje_borrar_pregunta">¿Borrar el dato?</string>
 
     <string name="tlf_tram" translatable="false">TRAM: 900 720 472</string>
@@ -470,7 +467,7 @@
         Mapicons mapicons.nicolasmollet.com;
         Logo de la App compuesto con http://www.elegantthemes.com/blog/freebie-of-the-week/flat-icon-collection-update (http://www.gnu.org/licenses/gpl-2.0.html)
 	</string>
-    <string name="compatibilidad">* AVISO: Al usar Android 2.2 (Froyo) puede que las secciones que usen Google Play Services no funcionen </string>
+    <string name="compatibilidad">* AVISO para Android 2.2 (Froyo): Google Play Services ya no es totalmente compatible. Pueden producirse fallos en la app.</string>
 
     <string name="conf_conectividad_titulo_check_tiempos">Activar Caché Tiempos</string>
     <string name="conf_conectividad_titulo_desc_tiempos">Activar Caché de acceso a Internet en tiempos.(Android 4.0+)</string>

@@ -1,10 +1,28 @@
+/**
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2015 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package alberapps.java.tram.horarios;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by albert on 06/03/15.
+ * Horarios TRAM
  */
 public class HorarioTram {
 
@@ -35,9 +53,6 @@ public class HorarioTram {
     }
 
 
-
-
-
     public List<DatoTransbordo> getDatosTransbordos() {
         return datosTransbordos;
     }
@@ -45,9 +60,6 @@ public class HorarioTram {
     public void setDatosTransbordos(List<DatoTransbordo> datosTransbordos) {
         this.datosTransbordos = datosTransbordos;
     }
-
-
-
 
 
     public String getEstacionOrigen() {
@@ -107,11 +119,11 @@ public class HorarioTram {
     }
 
 
-    public List<HorarioItem> getHorariosItemCombinados(){
+    public List<HorarioItem> getHorariosItemCombinados() {
 
         List<HorarioItem> listado = new ArrayList<HorarioItem>();
 
-        if(datosTransbordos != null && !datosTransbordos.isEmpty() && !datosTransbordos.get(0).isErrorServicio() && !datosTransbordos.get(0).isSinDatos()) {
+        if (datosTransbordos != null && !datosTransbordos.isEmpty() && !datosTransbordos.get(0).isErrorServicio() && !datosTransbordos.get(0).isSinDatos()) {
 
             HorarioItem info = new HorarioItem();
             info.setInfoRecorrido(new ArrayList<String>());
@@ -119,22 +131,21 @@ public class HorarioTram {
             String[] duracion1 = duracion.split(":");
             String[] tipoBillete1 = tipoBillete.split(":");
 
-            if(duracion1.length > 1) {
+            if (duracion1.length > 1) {
                 info.getInfoRecorrido().add(duracion1[1].trim());
             }
-            if(tipoBillete1.length > 1) {
+            if (tipoBillete1.length > 1) {
                 info.getInfoRecorrido().add(tipoBillete1[1].trim());
             }
 
 
-
-            if(lineasTransbordos != null && !lineasTransbordos.isEmpty()){
+            if (lineasTransbordos != null && !lineasTransbordos.isEmpty()) {
 
                 StringBuffer transbordos = new StringBuffer("");
 
-                for(int i = 0;i<lineasTransbordos.size();i++){
+                for (int i = 0; i < lineasTransbordos.size(); i++) {
 
-                    if(i > 0){
+                    if (i > 0) {
                         transbordos.append(" -> ");
                     }
 
@@ -147,19 +158,18 @@ public class HorarioTram {
             }
 
 
-
             listado.add(info);
 
         }
 
-        for(int i = 0; i < datosTransbordos.size();i++){
+        for (int i = 0; i < datosTransbordos.size(); i++) {
 
             List<HorarioItem> items = datosTransbordos.get(i).getHorariosItem();
 
-            for(int j = 0;j<items.size();j++){
-                if(lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > i) {
+            for (int j = 0; j < items.size(); j++) {
+                if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > i) {
                     items.get(j).setLinea(lineasTransbordos.get(i));
-                }else{
+                } else {
                     items.get(j).setLinea("");
                 }
             }
@@ -173,9 +183,6 @@ public class HorarioTram {
 
 
     }
-
-
-
 
 
 }

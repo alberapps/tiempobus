@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2015 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2015 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tram.horarios;
 
@@ -57,7 +57,6 @@ public class ProcesarHorariosTram {
         Uri urlHorarios = builder.build();
 
 
-
         InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
 
         Document doc = Jsoup.parse(is, "UTF-8", urlHorarios.toString());
@@ -77,21 +76,21 @@ public class ProcesarHorariosTram {
         horarioTram.setDuracion(liList.get(4).text());
         horarioTram.setTipoBillete(liList.get(5).text());
 
-        if(liList.size() > 6) {
+        if (liList.size() > 6) {
             horarioTram.setTransbordos(liList.get(6).text());
 
             Elements imgList = liList.get(6).select("img");
 
-            for(int i = 0;i<imgList.size();i++) {
+            for (int i = 0; i < imgList.size(); i++) {
 
-                if(horarioTram.getLineasTransbordos() == null){
+                if (horarioTram.getLineasTransbordos() == null) {
                     horarioTram.setLineasTransbordos(new ArrayList<String>());
                 }
 
                 String linea = imgList.get(i).attr("title");
 
-                if(!horarioTram.getLineasTransbordos().contains("L"+linea)) {
-                    horarioTram.getLineasTransbordos().add("L"+linea);
+                if (!horarioTram.getLineasTransbordos().contains("L" + linea)) {
+                    horarioTram.getLineasTransbordos().add("L" + linea);
                 }
 
 
@@ -154,14 +153,14 @@ public class ProcesarHorariosTram {
             for (int j = 0; j < tr.size(); j++) {
 
                 fila = new ArrayList<String>();
-                if(!filaId.equals("") && !filaId.equals("__")) {
+                if (!filaId.equals("") && !filaId.equals("__")) {
                     filaIdAnterior = filaId;
                 }
                 filaId = "";
 
                 td = tr.get(j).select("td");
 
-                if(td.size() > 0) {
+                if (td.size() > 0) {
                     for (int k = 0; k < td.size(); k++) {
 
                         //La primera corresponde al grupo de horas
@@ -173,10 +172,10 @@ public class ProcesarHorariosTram {
 
                     }
 
-                    if(filaId.equals("__")){
+                    if (filaId.equals("__")) {
                         //Si la nueva fila sigue siendo de la misma hora
                         horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().get(filaIdAnterior).addAll(fila);
-                    }else {
+                    } else {
                         //Guardar la fila con su grupo
                         horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().put(filaId, fila);
                     }
@@ -186,18 +185,12 @@ public class ProcesarHorariosTram {
             }
 
 
-
-
         }
 
 
         return horarioTram;
 
     }
-
-
-
-
 
 
 }

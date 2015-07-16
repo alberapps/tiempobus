@@ -11,14 +11,14 @@
     <string name="main_no_items">No information</string>
     <string name="ok">ok</string>
     <string name="untitled">no title</string>
-    
+
     <string name="tit_buses">Lines&#8230;</string>
     <string name="tit_direccion">Address&#8230;</string>
     <string name="tit_paradas">Stop&#8230;</string>
     <string name="tit_guardar">Save stop %1$s</string>
     <string name="tit_choose_alarm">Alert me before arrival&#8230;</string>
     <string name="menu_alarma">Set alarm</string>
-    
+
     <string name="alarm_bus">Bus %1$s arrives at the stop %2$s</string>
     <string name="no_favs">There are no stops saved. \nUse the Add button to create your favorite list.</string>
     <string name="no_poste">Before saving, the stop must be loaded</string>
@@ -87,7 +87,7 @@
     <string name="configuracion_alarmas_tono_titulo">Notification Tone</string>
     <string name="configuracion_alarmas_tono_desc">Select the tone for notification</string>
     <string name="mapa_lineas">Change Line</string>
-    
+
     <string name="mapa_ida">Forward (on/off)</string>
     <string name="mapa_vuelta">Backward (on/off)</string>
     <string name="mapa_aviso_vacio">The map would be empty</string>
@@ -180,10 +180,10 @@
     <string name="guion">-</string>
     <string name="url_subus">www.subus.es</string>
     <string name="hora_inicial">0:00</string>
-    
+
     <string name="alarma_auto_aviso">* With this option enabled, time is updated automatically every %s seconds.</string>
-    
-  
+
+
     <string name="alarma_auto_error">Problem Updating Alarm</string>
     <string name="alarma_auto_actualizada">Alarm Updated</string>
     <string name="err_bus_sin">Alarm setting not possible.\nNo estimation available.</string>
@@ -192,95 +192,94 @@
     <string name="alarma_preferencias_refrescar_desc">Checks to update the alarm when performing a time recharge</string>
     <string name="error_generico_1">Information cannot be displayed right now</string>
     <string name="error_tiempos">Failed to retrieve data.\nTry again in a few minutes.</string>
-    
+
     <string name="error_gcode">Loading local list of lines</string>
-    
+
     <string name="error_tabs">Unable to load data. Please try again.</string>
     <string name="error_datos_offline">Unable to load data. Please try again or use the online access.</string>
-    
+
     <string name="error_fichero">Error accessing file system</string>
-    
-    
-    
+
+
     <string name="error_red">Internet access is not available. Please verify your connection</string>
-    
+
     <string name="foreground_service_started">Verify time every %s seconds</string>
     <string name="foreground_service">TiempoBus: Alert Service</string>
-    
+
     <string name="tab_noticias">Subús Web</string>
     <string name="tab_tw">Twitter</string>
-    
+
     <string name="dato_tw">Most recent tweets from:</string>
     <string name="tw1">\@alberapps \@TramdeAlicante \@Alicante_City \@campelloturismo \@aytoraspeig \@sant_joan\n*Configure accounts on Settings</string>
-   
-    
+
+
     <string name="error_codigo">The bus stop code is not correct</string>
-    
+
     <string name="alarma_checkbox">Activate service</string>
-    
+
     <string name="carga_noticias_msg">Loading web news</string>
     <string name="carga_tw_msg">Loading Twitter</string>
-    
-    
+
+
     <!-- NUEVOS TEXTOS -->
     <string name="recarga_bd">TiempoBus</string>
     <string name="recarga_bd_desc">Updating Database. Please wait&#8230;</string>
-    
+
     <string name="recarga_bd_desc_final">Database updated successfully</string>
-    
+
     <string name="recarga_bd_desc_error">Database Error</string>
-    
+
     <string name="traducciones">Translations</string>
     <string name="traducciones_tit">Language Support</string>
     <string name="traducciones_cambiar">Change "locale"</string>
     <string name="traducciones_locale">locale</string>
     <string name="traducciones_desc">Information and authors</string>
-    
-    
+
+
     <string name="menu_widget">>>TiempoBus Widget</string>
     <string name="widget_instalar">Do you want to install TiempoBus Widgets from Google Play?</string>
     <string name="widget_market">Google Play is not installed on the device</string>
-    
+
     <string name="ir_tw">>>Twitter</string>
-    
+
     <string name="observaciones">Remarks:</string>
-    
+
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Maximum of each item</string>
-    
+
     <string name="parada_tram">Stop</string>
-    
+
     <string name="rss_tram">TRAM</string>
     <string name="carga_rss_tram_msg">Loading RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
-    
-    
+
+
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    
-    
+
+
     <string name="aviso_offline">*In offline mode lines without service or outdated data may appear</string>
-    
-    
+
+
     <string name="error_status">The service did not return results</string>
-    
+
     <string name="infolinea_horarios">Timetable</string>
     <string name="infolinea_paradas">Stops</string>
-    
-    
+
+
     <string name="historial_titulo">History</string>
     <string name="historial_borrar_todo">Delete all</string>
     <string name="hist_info_borrar">History was deleted</string>
     <string name="menu_export_qr">QR Export</string>
-    
+
     <string name="mapas_vehiculo_on">Vehicles</string>
     <string name="mapas_vehiculo_off">Vehicles</string>
     <string name="mapas_vehiculo_titulo">Bus</string>
-    
+
     <string name="conf_tiempo_recarga">Frequency</string>
     <string name="conf_tiempo_recarga_desc">Frequency of reloads</string>
     <string name="conf_tiempo_recarga_titulo">Frequency (in seconds)</string>
-    
+
     <string name="aviso_buscador_offline_tram">Pre-loaded routes obtained from tramalicante.es</string>
     <string name="alarm_tram">Tram %1$s arrives at the stop %2$s</string>
     <string name="notification_title_tram">Tram Alert!</string>
@@ -288,8 +287,8 @@
         
     <string name="acercade_info_nuevo">This application is UNofficial and its development is independent.
 		\nLines and times data offered and maintained by:</string>
-	<string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Development:\nalberapps.blogspot.com - twitter.com/alberapps\nTranslations:\nmagnoling.com - twitter.com/Magnoling_</string>
+    <string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
+    <string name="acercade_info_nuevo_2">Development:\nalberapps.blogspot.com - twitter.com/alberapps\nTranslations:\nmagnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Translations: magnoling.com</string>
     
@@ -306,16 +305,16 @@
 	
 	<string name="aviso_header_listado">
 		BUS and TRAM functions may be used simultaneously. Select the net to look up at this moment in search and maps. 
-	</string>    
-    
+	</string>
+
     <string name="error_pdf">PDF cannot be loaded</string>
     <string name="infolinea_horarios_pdf">Timetable (PDF)</string>
-    
+
     <string name="nuevas_noticias_bus">BUS: There are new Notices</string>
     <string name="nuevas_noticias_tram">TRAM: There are new Notices</string>
     <string name="nuevas_tram">TRAM</string>
     <string name="preferencias_noticias_auto_tram">Check TRAM News</string>
-    
+
     <string name="probar">Try TRAM</string>
     
     <string name="info_tram_inicio">TRAM arrives to TiempoBus\n- You can now access to TRAM information and times.
@@ -325,13 +324,12 @@
     \n- GPS will show the nearest stops for both systems.
     \n- You will get notifications of TRAM notices from its official Twitter (it can be modified on Settings)
     </string>
-    
+
     <string name="leer_1_tram">A tram of the line</string>
-    
-     
-    
-     <string name="error_gps">ERROR GPS</string>
-     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+
+
+    <string name="error_gps">ERROR GPS</string>
+    <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
     <string name="legal_sin_tram">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM networks.
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
@@ -339,26 +337,26 @@
 	    \nThis application is UNofficial and its development is independent.
 		\nLines data and times obtained from:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx)
 		\nLearn more: alberapps.blogspot.com and twitter.com/alberapps</string>
-    
+
     <string name="literal_min">min</string>
-    
-     <!-- fin nuevos -->
-    
+
+    <!-- fin nuevos -->
+
     <string name="error_maps_gpservices">No se puede acceder a los mapas. Problema al inicializar Google Play Services</string>
-    
+
     <string name="analytics_on">Google Analytics</string>
     <string name="analytics_on_desc">Permitir el envío de estadísticas anónimas de uso y control de errores</string>
     <string name="analytics_on_desc_inicial">¿Quieres ayudar a mejorar TiempoBus, permitiendo el envio de estadísticas(anónimas), mediante Google Analytics? \nEstos datos \"anónimos de uso de la app\" se emplearán para ver las funciones más usadas, y para mejorar la información sobre errores y problemas.
     \nEn cualquier momento puedes cambiar tu decisión en la pantalla de preferencias.
     \nPuedes consultar el aviso legal en Preferencias</string>
-    
+
     <string name="error_exportar_drive">ERROR: No se han podido exportar los favoritos a Google Drive</string>
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
-    
+
     <string name="drive_modal">Google Drive</string>
-    
+
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     
@@ -368,11 +366,10 @@
 	La información que genera acerca de su uso de la aplicación (incluyendo su dirección IP) será directamente transmitida y archivada por Google en los servidores de Estados Unidos. Google usará esta información por cuenta nuestra con el propósito de seguir la pista de su uso de la aplicación, recopilando informes de la actividad de la aplicación y prestando otros servicios relacionados con la actividad de la aplicación y el uso de Internet. Google podrá transmitir dicha información a terceros cuando así se lo requiera la legislación, o cuando dichos terceros procesen la información por cuenta de Google. Google no asociará su dirección IP con ningún otro dato del que disponga Google.
 	Puede Usted rechazar el tratamiento de los datos o la información rechazando el uso de esta función mediante la selección de la configuración apropiada en las preferencias de la aplicación, sin embargo, esto dificultará al desarrollador el estudio de nuevas funciones y el análisis de errores. Al utilizar esta aplicación Usted consiente el tratamiento de información acerca de Usted por Google en la forma y para los fines arriba indicados. 
     </string>
-    
-    
+
+
     <string name="foreground_service_started_2">Verify time every 60 seconds</string>
     <string name="bus_tram">Bus and Tram</string>
     <string name="horarios_tram_aviso">Tours are retrieved directly from the site tramalicante.es</string>
-
 
 </resources>

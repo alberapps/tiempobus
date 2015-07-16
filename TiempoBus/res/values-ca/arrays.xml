@@ -82,5 +82,25 @@
         <item>60</item>
         <item>120</item>                    
     </string-array>
-    
+
+    <string-array name="grupos_lineas_bus">
+        <item>Tots els grups</item>
+        <item>Urbà TAM: Tot l\'any</item>
+        <item>Interurbà TAM: Tot l\'any</item>
+        <item>Urbà TAM: Especials Mercadillo</item>
+        <item>Interurbà TAM: Universitat</item>
+        <item>Urbà TAM: Especials Futbol</item>
+        <item>Interurbà TAM: Serveis Estiu</item>
+        <item>El Campello Urbà</item>
+        <item>Interurbà TAM: Nocturns</item>
+        <item>Mutxamel Urbà</item>
+        <item>Interurbà: Tot l\'any</item>
+        <item>Sant Vicent Urbà</item>
+        <item>Urbà Especials</item>
+        <item>Xixona Urbà</item>
+        <item>Platges</item>
+        <item>Urbà TAM Nocturns</item>
+    </string-array>
+
+
 </resources>

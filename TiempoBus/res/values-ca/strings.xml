@@ -452,5 +452,9 @@ favorit per crear la teua llista.</string>
     <string name="sin_fecha">Sense data</string>
     <string name="noticias_todas">Veure totes</string>
     <string name="noticias_no_todas">Amagar</string>
+    <string name="grupos_todos">Tots els grups</string>
+    <string name="compatibilidad">* AVÍS per Android 2.2 (Froyo): Google Play Services ja no és totalment compatible. Es poden produir errors en l\'app.</string>
+    <string name="tarjeta">Targetes</string>
+    <string name="tarjeta_clima">Clima</string>
 
 </resources>
