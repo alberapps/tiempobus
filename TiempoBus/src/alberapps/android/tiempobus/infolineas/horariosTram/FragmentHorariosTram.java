@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -166,56 +167,114 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-        FloatingActionButton imgCircularFavorito = (FloatingActionButton) actividad.findViewById(R.id.boton_circular_fav_h);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            FloatingActionButton imgCircularFavorito = (FloatingActionButton) actividad.findViewById(R.id.boton_circular_fav_h);
 
-        // Para acceder a guardar favorito
-        imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            // Para acceder a guardar favorito
+            imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
 
-                //Cargar datos
-                StringBuffer guardar = new StringBuffer("");
-                guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getHoraDesde());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getHoraHasta());
-                PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
-                datosHorario = guardar.toString();
-
-
-                Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
-
-                Bundle extras = new Bundle();
-                extras.putString("HTRAM", "TRAM");
-                // Preparamos una descripcion automatica para el
-                // favorito
+                    //Cargar datos
+                    StringBuffer guardar = new StringBuffer("");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+                    datosHorario = guardar.toString();
 
 
-                String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+                    Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
 
-                StringBuffer desc = new StringBuffer();
-                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
-                desc.append("\n");
-                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
-                desc.append("\n");
-                desc.append(actividad.consultaHorarioTram.getHoraDesde());
-                desc.append("->");
-                desc.append(actividad.consultaHorarioTram.getHoraHasta());
-                desc.append("::");
-                desc.append(datosHorario);
+                    Bundle extras = new Bundle();
+                    extras.putString("HTRAM", "TRAM");
+                    // Preparamos una descripcion automatica para el
+                    // favorito
 
-                extras.putString("DESCRIPCION", desc.toString());
 
-                i.putExtras(extras);
-                actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
-            }
-        });
+                    String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+
+                    StringBuffer desc = new StringBuffer();
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
+                    desc.append("\n");
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
+                    desc.append("\n");
+                    desc.append(actividad.consultaHorarioTram.getHoraDesde());
+                    desc.append("->");
+                    desc.append(actividad.consultaHorarioTram.getHoraHasta());
+                    desc.append("::");
+                    desc.append(datosHorario);
+
+                    extras.putString("DESCRIPCION", desc.toString());
+
+                    i.putExtras(extras);
+                    actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+                }
+            });
+
+
+        }else{
+
+            ImageButton imgCircularFavorito = (ImageButton) actividad.findViewById(R.id.boton_circular_fav_h);
+
+            // Para acceder a guardar favorito
+            imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    //Cargar datos
+                    StringBuffer guardar = new StringBuffer("");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+                    datosHorario = guardar.toString();
+
+
+                    Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
+
+                    Bundle extras = new Bundle();
+                    extras.putString("HTRAM", "TRAM");
+                    // Preparamos una descripcion automatica para el
+                    // favorito
+
+
+                    String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+
+                    StringBuffer desc = new StringBuffer();
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
+                    desc.append("\n");
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
+                    desc.append("\n");
+                    desc.append(actividad.consultaHorarioTram.getHoraDesde());
+                    desc.append("->");
+                    desc.append(actividad.consultaHorarioTram.getHoraHasta());
+                    desc.append("::");
+                    desc.append(datosHorario);
+
+                    extras.putString("DESCRIPCION", desc.toString());
+
+                    i.putExtras(extras);
+                    actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+                }
+            });
+
+
+        }
 
 
         if (actividad.datosHorariosTram == null || actividad.datosHorariosTram.getHorariosItemCombinados() == null || actividad.datosHorariosTram.getHorariosItemCombinados().isEmpty()

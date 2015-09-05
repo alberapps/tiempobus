@@ -27,7 +27,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.mapas.maps2.UtilidadesGeo;
+import alberapps.android.tiempobus.mapas.UtilidadesGeo;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tam.webservice.estructura.nodosmap.EstructuraGetNodosMapSublineaParser;

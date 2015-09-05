@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.principal;
 
@@ -23,9 +23,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -38,6 +40,8 @@ public class FragmentSecundarioTablet extends Fragment {
 
     MainActivity actividad;
 
+    SharedPreferences preferencias;
+
     /**
      * On Create
      */
@@ -47,12 +51,55 @@ public class FragmentSecundarioTablet extends Fragment {
 
         actividad = (MainActivity) getActivity();
 
+        PreferenceManager.setDefaultValues(actividad, R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(actividad);
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+
+        //Activacion o no de tarjetas
+        boolean activadaTarjetaWiki = preferencias.getBoolean("tarjeta_wiki_on", true);
+        boolean activadaTarjetaClima = preferencias.getBoolean("tarjeta_clima_on", true);
+
+
+        if (!activadaTarjetaWiki) {
+
+            if (UtilidadesUI.pantallaTabletHorizontal(actividad)) {
+
+                LinearLayout tarjetasTablet = (LinearLayout) view.findViewById(R.id.contenedor_secundario);
+
+                CardView tarjetaWiki = (CardView) tarjetasTablet.findViewById(R.id.tarjetaWiki);
+
+                if (tarjetaWiki != null) {
+
+                    tarjetasTablet.removeView(tarjetaWiki);
+                }
+
+            }
+
+        }
+
+        if (!activadaTarjetaClima) {
+
+            if (UtilidadesUI.pantallaTabletHorizontal(actividad)) {
+
+                LinearLayout tarjetasTablet = (LinearLayout) view.findViewById(R.id.contenedor_secundario);
+
+                CardView tarjetaClima = (CardView) tarjetasTablet.findViewById(R.id.tarjetaClima);
+
+                if (tarjetaClima != null) {
+
+                    tarjetasTablet.removeView(tarjetaClima);
+                }
+
+            }
+
+        }
+
 
     }
 
@@ -83,65 +130,7 @@ public class FragmentSecundarioTablet extends Fragment {
      * Actualizar datos ficha tablet
      */
     public void actualizarDatos() {
-/*
-        String parametros[] = { Integer.toString(actividad.paradaActual) };
 
-		try {
-
-			Cursor cursor = actividad.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-
-			if (cursor == null) {
-
-			} else {
-
-				StringBuffer observaciones = new StringBuffer();
-
-				// Observaciones
-				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-					int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
-					int numLineaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LINEA_NUM);
-
-					String observa = cursor.getString(observacionesIndex);
-					String linea = cursor.getString(numLineaIndex);
-
-					if (observa != null && !observa.trim().equals("")) {
-
-						if (observaciones.length() > 0) {
-							observaciones.append("\n");
-						}
-
-						observaciones.append(linea);
-						observaciones.append(": ");
-						observaciones.append(observa);
-					}
-
-				}
-
-				cursor.moveToFirst();
-
-				TextView parada = (TextView) actividad.findViewById(R.id.parada);
-				TextView localizacion = (TextView) actividad.findViewById(R.id.localizacion);
-				TextView conexiones = (TextView) actividad.findViewById(R.id.conexiones);
-
-				TextView observac = (TextView) actividad.findViewById(R.id.observaciones);
-
-				int paradaIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_PARADA);
-
-				int direccionIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_DIRECCION);
-				int conexionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_CONEXION);
-
-				parada.setText(cursor.getString(paradaIndex));
-
-				localizacion.setText(cursor.getString(direccionIndex));
-				conexiones.setText(cursor.getString(conexionesIndex));
-
-				observac.setText(observaciones);
-			}
-
-		} catch (Exception e) {
-
-		}
-*/
     }
 
     @Override

@@ -126,7 +126,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:text="@string/launch_preferences"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/link_text_material_dark"
+                            android:textColor="@color/mi_material_blue_principal"
                             app:textAllCaps="true" />
 
                         <LinearLayout
@@ -143,7 +143,7 @@
                                 android:gravity="right"
                                 android:text="@string/mapa_ir_parada"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/link_text_material_dark"
+                                android:textColor="@color/mi_material_blue_principal"
                                 app:textAllCaps="true" />
 
                         </LinearLayout>

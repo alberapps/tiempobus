@@ -17,7 +17,9 @@
  
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tiempobus="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contenedor_tarjetas_tablet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -149,15 +151,29 @@
                     android:textStyle="italic" />
 
 
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/mapInformacionTablet"
+                    android:name="alberapps.android.tiempobus.principal.InformacionMapaFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    map:cameraZoom="14"
+                    map:liteMode="true"
+                    map:mapType="normal"
+                    tools:ignore="MissingPrefix" />
+
+
             </LinearLayout>
 
 
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tarjetaClima"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
@@ -310,9 +326,11 @@
 
         <!-- A CardView that contains a TextView -->
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tarjetaWiki"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+
             android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"

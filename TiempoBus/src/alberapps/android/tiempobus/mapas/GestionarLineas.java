@@ -1,22 +1,22 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2013 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2013 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -32,9 +32,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -49,8 +49,8 @@ import java.util.List;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask;
-import alberapps.android.tiempobus.tasks.LoadDatosMapaV3AsyncTask.LoadDatosMapaV3AsyncTaskResponder;
+import alberapps.android.tiempobus.tasks.LoadDatosRecorridosAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadDatosRecorridosAsyncTask.LoadDatosRecorridosAsyncTaskResponder;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
@@ -61,11 +61,13 @@ import alberapps.java.tram.UtilidadesTRAM;
  */
 public class GestionarLineas {
 
-    private MapasMaps2Activity context;
+    private MapasActivity context;
 
     private SharedPreferences preferencias;
 
-    public GestionarLineas(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    Integer colorTram = null;
+
+    public GestionarLineas(MapasActivity contexto, SharedPreferences preferencia) {
 
         context = contexto;
 
@@ -86,7 +88,7 @@ public class GestionarLineas {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            context.taskDatosMapaV3 = new LoadDatosMapaV3AsyncTask(loadDatosMapaV3AsyncTaskResponderIda).execute(context.lineaSeleccionadaNum, "1", context);
+            context.taskDatosMapaV3 = new LoadDatosRecorridosAsyncTask(loadDatosRecorridosAsyncTaskResponderIda).execute(context.lineaSeleccionadaNum, "1", context);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
             if (context.dialog != null && context.dialog.isShowing()) {
@@ -99,8 +101,8 @@ public class GestionarLineas {
     /**
      * Se llama cuando las paradas hayan sido cargadas
      */
-    LoadDatosMapaV3AsyncTaskResponder loadDatosMapaV3AsyncTaskResponderIda = new LoadDatosMapaV3AsyncTaskResponder() {
-        public void datosMapaV3Loaded(DatosMapa[] datos) {
+    LoadDatosRecorridosAsyncTaskResponder loadDatosRecorridosAsyncTaskResponderIda = new LoadDatosRecorridosAsyncTaskResponder() {
+        public void datosRecorridosLoaded(DatosMapa[] datos) {
 
             if (datos != null) {
                 context.datosMapaCargadosIda = datos[0];
@@ -126,7 +128,68 @@ public class GestionarLineas {
     };
 
 
-    public void cargarMapaTramTodas(){
+    public void cargarMapaTramTodas() {
+
+    }
+
+
+    public BitmapDescriptor markerTram() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
+
+        return marker;
+
+    }
+
+    public BitmapDescriptor markerTramPosicion() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway_2);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+
+        return marker;
+
+    }
+
+    public BitmapDescriptor markerBusAzul() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
+
+        return marker;
+
+    }
+
+    public BitmapDescriptor markerBusVerde() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_green);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+
+        return marker;
+
+    }
+
+    public BitmapDescriptor markerBusMedio() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_medio);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
+
+        return marker;
+
+    }
+
+    public BitmapDescriptor markerBusPosicion() {
+
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.bus);
+
+        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
+
+        return marker;
 
     }
 
@@ -139,32 +202,31 @@ public class GestionarLineas {
         // Cargar datos cabecera
         String cabdatos = context.lineaSeleccionadaDesc;
 
-        Integer colorTram = null;
 
         context.datosLinea.setText(cabdatos);
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            context.drawableIda = R.drawable.tramway;
+            context.drawableIda = markerTram();
 
-            if(linea.equals("L1")){
+            if (linea != null && linea.equals("L1")) {
                 colorTram = context.getResources().getColor(R.color.tram_l1);
-            }else if(linea.equals("L2")){
+            } else if (linea != null && linea.equals("L2")) {
                 colorTram = context.getResources().getColor(R.color.tram_l2);
-            }else if(linea.equals("L3")){
+            } else if (linea != null && linea.equals("L3")) {
                 colorTram = context.getResources().getColor(R.color.tram_l3);
-            }else if(linea.equals("L4")){
+            } else if (linea != null && linea.equals("L4")) {
                 colorTram = context.getResources().getColor(R.color.tram_l4);
-            }else if(linea.equals("L9")){
+            } else if (linea != null && linea.equals("L9")) {
                 colorTram = context.getResources().getColor(R.color.tram_l9);
             }
 
         } else {
-            context.drawableIda = R.drawable.busstop_blue;
+            context.drawableIda = markerBusAzul();
             colorTram = null;
         }
 
-        context.drawableVuelta = R.drawable.busstop_green;
-        context.drawableMedio = R.drawable.busstop_medio;
+        context.drawableVuelta = markerBusVerde();
+        context.drawableMedio = markerBusMedio();
         context.markersIda = new ArrayList<MarkerOptions>();
         context.markersVuelta = new ArrayList<MarkerOptions>();
         context.markersMedio = new ArrayList<MarkerOptions>();
@@ -190,7 +252,6 @@ public class GestionarLineas {
         if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
 
 
-
             // if
             // (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum))
             // {
@@ -199,9 +260,9 @@ public class GestionarLineas {
 
             // Recorrido
 
-            if(colorTram != null) {
+            if (colorTram != null) {
                 drawPath(context.datosMapaCargadosIda, colorTram);
-            }else{
+            } else {
                 drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
             }
         }
@@ -212,9 +273,9 @@ public class GestionarLineas {
         if (context.datosMapaCargadosIda != null && !context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
 
             // Recorrido
-            if(colorTram != null) {
+            if (colorTram != null) {
                 drawPath(context.datosMapaCargadosIda, colorTram);
-            }else{
+            } else {
                 drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
             }
 
@@ -258,7 +319,7 @@ public class GestionarLineas {
 
                 context.markersIda.add(new MarkerOptions().position(point)
                         .title("[" + context.datosMapaCargadosIda.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosIda.getPlacemarks().get(i).getTitle().trim()).snippet(descripcionAlert)
-                        .icon(BitmapDescriptorFactory.fromResource(context.drawableIda)));
+                        .icon(context.drawableIda));
 
                 listaPuntos.add(point);
 
@@ -357,13 +418,13 @@ public class GestionarLineas {
 
                     context.markersMedio.add(new MarkerOptions().position(point)
                             .title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
-                            .snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableMedio)));
+                            .snippet(descripcionAlert).icon(context.drawableMedio));
 
                 } else {
 
                     context.markersVuelta.add(new MarkerOptions().position(point)
                             .title("[" + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCodigoParada().trim() + "] " + context.datosMapaCargadosVuelta.getPlacemarks().get(i).getTitle().trim())
-                            .snippet(descripcionAlert).icon(BitmapDescriptorFactory.fromResource(context.drawableVuelta)));
+                            .snippet(descripcionAlert).icon(context.drawableVuelta));
 
                 }
 
@@ -407,7 +468,7 @@ public class GestionarLineas {
                     // We check which build version we are using.
                     public void onGlobalLayout() {
 
-                        Builder ltb = new LatLngBounds.Builder();
+                        Builder ltb = new Builder();
 
                         for (int i = 0; i < listaPuntos.size(); i++) {
                             ltb.include(listaPuntos.get(i));
@@ -476,14 +537,13 @@ public class GestionarLineas {
                 if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
 
                     // context.lineaSeleccionada =
-                    // UtilidadesTRAM.LINEAS_CODIGO_KML[lineaPos];
+
                     context.lineaSeleccionadaDesc = UtilidadesTRAM.DESC_LINEA[lineaPos];
 
                     context.lineaSeleccionadaNum = UtilidadesTRAM.LINEAS_NUM[lineaPos];
 
                 } else {
 
-                    context.lineaSeleccionada = UtilidadesTAM.LINEAS_CODIGO_KML[lineaPos];
                     context.lineaSeleccionadaDesc = UtilidadesTAM.LINEAS_DESCRIPCION[lineaPos];
 
                     context.lineaSeleccionadaNum = UtilidadesTAM.LINEAS_NUM[lineaPos];
@@ -550,7 +610,7 @@ public class GestionarLineas {
 
 
         // Control de boton vehiculos
-        final ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
+        final android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
 
         boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
@@ -593,7 +653,7 @@ public class GestionarLineas {
 
 
         //Botones ida y vuelta
-        final ToggleButton botonIda = (ToggleButton) context.findViewById(R.id.mapaIdaButton);
+        final android.support.v7.widget.SwitchCompat botonIda = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapaIdaButton);
 
 
         if (context.flagIda) {
@@ -612,7 +672,7 @@ public class GestionarLineas {
             }
         });
 
-        final ToggleButton botonVuelta = (ToggleButton) context.findViewById(R.id.mapaVueltaButton);
+        final android.support.v7.widget.SwitchCompat botonVuelta = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapaVueltaButton);
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             botonVuelta.setEnabled(false);
@@ -775,7 +835,7 @@ public class GestionarLineas {
 
         if (context.datosMapaCargadosIda != null) {
 
-            if(!context.lineaSeleccionadaNum.equals("-1")) {
+            if (!context.lineaSeleccionadaNum.equals("-1")) {
 
                 if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
                     context.datosMapaCargadosIdaAux = new DatosMapa();
@@ -800,7 +860,7 @@ public class GestionarLineas {
                 cargarMapa(null);
 
 
-            }else{
+            } else {
 
                 /*if (context.flagIda) {
                     context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());

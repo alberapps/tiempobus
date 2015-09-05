@@ -26,8 +26,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -96,12 +98,16 @@ public class GestionarTarjetaInfo {
     AsyncTask<Object, Void, WikiQuery> wikiTask = null;
     AsyncTask<Object, Void, Localizacion> localizacionTask = null;
 
+    View v = null;
+
+    TextView datosParada;
+
     /**
      * Tarjeta con informacion de la parada
      */
     public void cargarTarjetaInfo() {
 
-        View v = null;
+        //View v = null;
 
         boolean tablet = false;
 
@@ -122,9 +128,11 @@ public class GestionarTarjetaInfo {
 
             tablet = false;
 
-            LayoutInflater li = LayoutInflater.from(context);
+            if (v == null) {
+                LayoutInflater li = LayoutInflater.from(context);
 
-            v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
+                v = li.inflate(R.layout.tiempos_tarjeta_info_2, null);
+            }
 
         }
 
@@ -141,6 +149,8 @@ public class GestionarTarjetaInfo {
             } else {
 
                 StringBuffer observaciones = new StringBuffer();
+
+                boolean iniciarObservaciones = true;
 
                 // Observaciones
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -185,7 +195,11 @@ public class GestionarTarjetaInfo {
                 TextView parada = (TextView) v.findViewById(R.id.parada);
                 TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
 
-                TextView datosParada = (TextView) v.findViewById(R.id.datos_parada);
+                TextView datosParadaAux = (TextView) v.findViewById(R.id.datos_parada);
+
+                if(datosParadaAux != null){
+                    datosParada = datosParadaAux;
+                }
 
                 parada.setText(cursor.getString(paradaIndex));
 
@@ -197,9 +211,20 @@ public class GestionarTarjetaInfo {
 
                 if (observa != null && !observa.trim().equals("")) {
 
-                    datosParada.setText(datosParada.getText() + "\ni: " + observa);
+                    if (datosParadaAux == null) {
+                        LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
+                        bloqueDatos.addView(datosParada);
+                    }
 
-                }else {
+                    if(iniciarObservaciones){
+                        datosParada.setText(observa);
+                    }else {
+                        datosParada.setText(datosParada.getText() + "\ni: " + observa);
+                    }
+
+                    iniciarObservaciones = false;
+
+                } else {
                     LinearLayout bloqueDatos = (LinearLayout) v.findViewById(R.id.bloque_datos);
                     bloqueDatos.removeView(datosParada);
                 }
@@ -214,6 +239,40 @@ public class GestionarTarjetaInfo {
                 String lon = cursor.getString(lonIndex);
 
 
+                //Actualizar datos mapa lite
+                context.latitudInfo = Double.toString((Integer.parseInt(lat) / 1E6));
+                context.longitudInfo = Double.toString((Integer.parseInt(lon) / 1E6));
+
+
+                try {
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+
+                        InformacionMapaFragment mapFragment = null;
+
+                        if (UtilidadesUI.pantallaTabletHorizontal(context)) {
+
+                            FragmentSecundarioTablet secundario =
+                                    (FragmentSecundarioTablet) context.getSupportFragmentManager().findFragmentById(R.id.detalle_fragment);
+
+                            mapFragment =
+                                    (InformacionMapaFragment) secundario.getChildFragmentManager().findFragmentById(R.id.mapInformacionTablet);
+
+                        } else {
+
+                            mapFragment =
+                                    (InformacionMapaFragment) context.getSupportFragmentManager().findFragmentById(R.id.mapInformacion);
+
+
+                        }
+
+                        mapFragment.actualizarPosicion();
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 final View vista = v;
 
 
@@ -226,8 +285,10 @@ public class GestionarTarjetaInfo {
 
 
                             sb.append(localizacion.getDireccion());
-                            sb.append(", ");
-                            sb.append(localizacion.getLocalidad());
+                            if (localizacion.getLocalidad() != null) {
+                                sb.append(", ");
+                                sb.append(localizacion.getLocalidad());
+                            }
 
 
                             // Cargar titulos en textView
@@ -299,6 +360,9 @@ public class GestionarTarjetaInfo {
                 }
 
 
+                //Cargar mapa lite
+
+
                 // Cargar info wikipedia
                 if (lat != null && !lat.equals("") && !lon.equals("")) {
                     context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
@@ -316,6 +380,7 @@ public class GestionarTarjetaInfo {
 
         } catch (Exception e) {
 
+            e.printStackTrace();
             return;
 
         }
@@ -335,6 +400,30 @@ public class GestionarTarjetaInfo {
      * Cargar la informacion de la wikipedia para la parada
      */
     public void cargarInfoWikipedia(String lat, String lon, final View v) {
+
+        //Activacion o no de la tarjeta
+        boolean activadaTarjeta = preferencias.getBoolean("tarjeta_wiki_on", true);
+
+        if (!activadaTarjeta) {
+
+            if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
+
+                CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
+
+                if (tarjetaWiki != null) {
+
+                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+
+                    bloqueTarjetas.removeView(tarjetaWiki);
+
+                }
+
+            }
+
+
+            return;
+        }
+
 
         // Verificar si ya disponemos de los datos
         if (paradaWiki != null && datosWiki != null && paradaWiki.equals(Integer.toString(context.paradaActual))) {
@@ -446,6 +535,30 @@ public class GestionarTarjetaInfo {
      */
     public void cargarInfoWeather(String lat, String lon, final View v, final String proveedor) {
 
+        //Activacion o no de la tarjeta
+        boolean activadaTarjeta = preferencias.getBoolean("tarjeta_clima_on", true);
+
+        if (!activadaTarjeta) {
+
+
+            if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
+
+                CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);
+
+                if (tarjetaClima != null) {
+
+                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+
+                    bloqueTarjetas.removeView(tarjetaClima);
+
+                }
+
+            }
+
+            return;
+        }
+
+
         final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);
 
         TextView textoCabecera = (TextView) v.findViewById(R.id.desc_tarjeta_clima);
@@ -456,24 +569,6 @@ public class GestionarTarjetaInfo {
             textoCabecera.setText(R.string.eltiempoOWM);
         }
 
-
-        // Verificar si ya disponemos de los datos
-        /*if (datosWeather != null) {
-
-			try {
-
-				mostrarElTiempoYW(datosWeather, iv, v);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			return;
-
-		} else {
-			// datosWeather =;
-			// datosWiki = null;
-		}*/
 
         if (paradaWeather != null && datosWeather != null && paradaWeather.equals(Integer.toString(context.paradaActual))) {
 

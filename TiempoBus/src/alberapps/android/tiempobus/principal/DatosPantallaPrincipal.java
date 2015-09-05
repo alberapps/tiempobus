@@ -102,6 +102,9 @@ public class DatosPantallaPrincipal {
 
     }
 
+    View vPieTram = null;
+    View vPieBus = null;
+
     /**
      * Modal con informacion de la parada
      */
@@ -1025,9 +1028,13 @@ public class DatosPantallaPrincipal {
 
         if (!esTram(context.paradaActual)) {
 
-            LayoutInflater li = LayoutInflater.from(context);
-
-            v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
+            if (vPieBus != null) {
+                v = vPieBus;
+            } else {
+                LayoutInflater li = LayoutInflater.from(context);
+                v = li.inflate(R.layout.tiempos_aviso_3_bus, null);
+                vPieBus = v;
+            }
 
             TextView infoapp = (TextView) v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
@@ -1056,9 +1063,13 @@ public class DatosPantallaPrincipal {
 
         } else {
 
-            LayoutInflater li = LayoutInflater.from(context);
-
-            v = li.inflate(R.layout.tiempos_aviso_3, null);
+            if (vPieTram != null) {
+                v = vPieTram;
+            } else {
+                LayoutInflater li = LayoutInflater.from(context);
+                v = li.inflate(R.layout.tiempos_aviso_3, null);
+                vPieTram = v;
+            }
 
             ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
             imgTram.setOnClickListener(new TextView.OnClickListener() {

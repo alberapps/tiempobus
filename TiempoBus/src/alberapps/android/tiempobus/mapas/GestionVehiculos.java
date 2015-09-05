@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,18 +25,13 @@ import android.net.NetworkInfo;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,13 +46,13 @@ import alberapps.java.tam.mapas.DatosMapa;
  */
 public class GestionVehiculos {
 
-    private MapasMaps2Activity context;
+    private MapasActivity context;
 
     private SharedPreferences preferencias;
 
     List<Marker> markersVehiculos;
 
-    public GestionVehiculos(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public GestionVehiculos(MapasActivity contexto, SharedPreferences preferencia) {
 
         context = contexto;
 
@@ -74,10 +69,10 @@ public class GestionVehiculos {
             context.gestionarLineas.quitarMarkers(markersVehiculos);
         }
 
-        if (((MapasMaps2Activity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            context.drawableVehiculo = R.drawable.tramway_2;
+        if (((MapasActivity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            context.drawableVehiculo = context.gestionarLineas.markerTramPosicion();
         } else {
-            context.drawableVehiculo = R.drawable.bus;
+            context.drawableVehiculo = context.gestionarLineas.markerBusPosicion();
         }
 
         context.markersVehiculos = new ArrayList<MarkerOptions>();
@@ -145,7 +140,7 @@ public class GestionVehiculos {
                 String descripcionAlert = "";
 
                 context.markersVehiculos.add(new MarkerOptions().position(point).title(context.datosMapaCargadosIda.getVehiculosList().get(i).getVehiculo().trim()).snippet(descripcionAlert)
-                        .icon(BitmapDescriptorFactory.fromResource(context.drawableVehiculo)));
+                        .icon(context.drawableVehiculo));
 
 				/*
 				 * // 19240000,-99120000
@@ -239,15 +234,15 @@ public class GestionVehiculos {
                 }
 
                 //Actualizar hora
-                ToggleButton botonVehiculos = (ToggleButton) context.findViewById(R.id.mapasVehiculosButton);
+                //android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
 
-                final Calendar c = Calendar.getInstance();
+                //final Calendar c = Calendar.getInstance();
 
-                SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
+                //SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
 
-                String updated = df.format(c.getTime()).toString();
+                //String updated = df.format(c.getTime()).toString();
 
-                botonVehiculos.setText(context.getString(R.string.mapas_vehiculo_on) +  ": " + updated );
+                //botonVehiculos.setText(context.getString(R.string.mapas_vehiculo_on) +  ": " + updated );
 
 
             } else {

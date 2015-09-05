@@ -175,6 +175,11 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             return;
         }
 
+        //Control error al recuperar los datos
+        if(horarios.size() == 1 && horarios.get(0).getHoras() == null){
+            horarios.get(0).setErrorServicio(true);
+        }
+
         for (int i = 0; i < horarios.size(); i++) {
             add(horarios.get(i));
         }

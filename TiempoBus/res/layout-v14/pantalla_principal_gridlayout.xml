@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2014 Alberto Montiel
 
@@ -29,46 +28,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshPrincipal"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/lista_tiempos"
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshPrincipal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="#00000000"
-                android:divider="#00000000"
-                android:fastScrollEnabled="true"
-                android:scrollingCache="true" />
+                android:layout_height="match_parent">
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+                <ListView
+                    android:id="@+id/lista_tiempos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="#00000000"
+                    android:divider="#00000000"
+                    android:fastScrollEnabled="true"
+                    android:scrollingCache="true" />
 
-        
+            </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    </FrameLayout>
-
+        </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/boton_circular_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabSize="normal"
-            android:src="@drawable/ic_bookmark_outline_white_24dp"
-            android:contentDescription="Guardar favorito"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
+            android:contentDescription="Guardar favorito"
+            android:src="@drawable/ic_bookmark_outline_white_24dp"
             app:backgroundTint="@color/mi_material_blue_principal"
-            >
+            app:fabSize="normal"
 
+            >
 
 
         </android.support.design.widget.FloatingActionButton>

@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
 import java.math.BigDecimal;
 

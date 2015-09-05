@@ -105,7 +105,7 @@
                         android:background="@drawable/actionbar_compat_item"
                         android:text="@string/infolinea_horarios"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/link_text_material_dark"
+                        android:textColor="@color/mi_material_blue_principal"
                         app:textAllCaps="true"
                         />
 
@@ -123,7 +123,7 @@
                             android:gravity="right"
                             android:text="@string/infolinea_paradas"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/link_text_material_dark"
+                            android:textColor="@color/mi_material_blue_principal"
                             app:textAllCaps="true"/>
 
                     </LinearLayout>

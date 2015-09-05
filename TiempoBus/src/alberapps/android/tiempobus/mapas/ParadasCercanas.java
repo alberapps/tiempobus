@@ -1,36 +1,36 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2013 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2013 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Toast;
 
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.LatLngBounds.Builder;
@@ -49,7 +49,7 @@ import alberapps.android.tiempobus.database.Parada;
  */
 public class ParadasCercanas {
 
-    private MapasMaps2Activity context;
+    private MapasActivity context;
 
     private SharedPreferences preferencias;
 
@@ -57,7 +57,7 @@ public class ParadasCercanas {
     public static final String DISTACIA_MEDIA = "-0.002";
     public static final String DISTACIA_LEJOS = "-0.004";
 
-    public ParadasCercanas(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public ParadasCercanas(MapasActivity contexto, SharedPreferences preferencia) {
 
         context = contexto;
 
@@ -144,9 +144,9 @@ public class ParadasCercanas {
             for (int i = 0; i < listaParadas.size(); i++) {
 
                 if (listaParadas.get(i).getRed().equals(DatosLineasDB.RED_TRAM)) {
-                    context.drawableIda = R.drawable.tramway;
+                    context.drawableIda = context.gestionarLineas.markerTram();
                 } else {
-                    context.drawableIda = R.drawable.busstop_blue;
+                    context.drawableIda = context.gestionarLineas.markerBusAzul();
                 }
 
                 context.markersIda = new ArrayList<MarkerOptions>();
@@ -162,7 +162,7 @@ public class ParadasCercanas {
                 }
 
                 context.markersIda.add(new MarkerOptions().position(point).title("[" + listaParadas.get(i).getParada().trim() + "] " + listaParadas.get(i).getDireccion().trim()).snippet(descripcionAlert)
-                        .icon(BitmapDescriptorFactory.fromResource(context.drawableIda)));
+                        .icon(context.drawableIda));
 
                 context.gestionarLineas.cargarMarkers(context.markersIda, null);
 
@@ -234,18 +234,18 @@ public class ParadasCercanas {
 
             }
 
-            if (context.mLocationClient != null && context.mLocationClient.isConnected()) {
+            if (context.conectadoLocation) {
                 // String msg = "Location = " +
                 // context.mLocationClient.getLastLocation();
                 // Toast.makeText(context.getApplicationContext(), msg,
                 // Toast.LENGTH_SHORT).show();
             } else {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage(context.getString(R.string.gps_on)).setCancelable(false).setPositiveButton(context.getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        context.enableLocationSettings();
+                        //context.enableLocationSettings();
 
                     }
                 }).setNegativeButton(context.getString(R.string.barcode_no), new DialogInterface.OnClickListener() {
@@ -256,7 +256,7 @@ public class ParadasCercanas {
                 });
                 AlertDialog alert = builder.create();
 
-                alert.show();
+                alert.show();*/
 
                 return;
 
@@ -266,7 +266,12 @@ public class ParadasCercanas {
 
             Toast.makeText(context, context.getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
 
-            Location location = context.mLocationClient.getLastLocation();
+            Location location = LocationServices.FusedLocationApi.getLastLocation(context.mGoogleApiClient);
+
+            if(location == null){
+                Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             double latitud = location.getLatitude();
             double longitud = location.getLongitude();
@@ -301,7 +306,7 @@ public class ParadasCercanas {
                             // We check which build version we are using.
                             public void onGlobalLayout() {
 
-                                Builder ltb = new LatLngBounds.Builder();
+                                Builder ltb = new Builder();
 
                                 for (int i = 0; i < listaPuntos.size(); i++) {
                                     ltb.include(listaPuntos.get(i));

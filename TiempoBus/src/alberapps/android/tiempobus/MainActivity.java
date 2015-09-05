@@ -42,6 +42,7 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -88,7 +89,7 @@ import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.principal.FragmentSecundarioTablet;
@@ -145,6 +146,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public TiemposUpdater tiemposUpdater = new TiemposUpdater();
     AlarmManager alarmManager;
     private ImageButton botonCargaTiempos;
+
+    public String latitudInfo = null;
+    public String longitudInfo = null;
 
     public BusLlegada busSeleccionado = null;
 
@@ -333,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         ImageView imgCabecera = (ImageView) mDrawerLayout.findViewById(R.id.imgAlberapps);
 
-        if(imgCabecera != null) {
+        if (imgCabecera != null) {
             imgCabecera.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -383,15 +387,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             case R.id.navigation_item_mapa:
 
                 if (datosPantallaPrincipal.servicesConnected()) {
-
                     detenerTodasTareas();
-                    startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
-
+                    startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
                 }
 
                 break;
 
             case R.id.navigation_item_noticias:
+
+                item.setChecked(false);
 
                 detenerTodasTareas();
                 startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
@@ -442,6 +446,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         }
 
+
+        item.setChecked(false);
 
         //mDrawerList.setItemChecked(position, false);
         mDrawerLayout.closeDrawer(mDrawerView);
@@ -536,28 +542,39 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
         txtPoste.setText(Integer.toString(paradaActual));
 
-        datosPantallaPrincipal.controlMostrarAnalytics();
 
-        if (preferencias.getBoolean("analytics_on", false)) {
-            controlInicialAnalytics = true;
-            // EasyTracker.getInstance(this).activityStart(this);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
 
-            // Activar
-            GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
+            datosPantallaPrincipal.controlMostrarAnalytics();
 
-            // Inicia tracker
-            Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+            if (preferencias.getBoolean("analytics_on", false)) {
+                controlInicialAnalytics = true;
 
-            // Envia inicio actividad
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
+                // Activar
+                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
 
-            Log.d("PRINCIPAL", "Analytics activo");
+                // Inicia tracker
+                Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+                // Envia inicio actividad
+                GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+                Log.d("PRINCIPAL", "Analytics activo");
+
+            } else {
+                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
+
+                Log.d("PRINCIPAL", "Analytics inactivo");
+
+            }
 
         } else {
-            GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
 
-            Log.d("PRINCIPAL", "Analytics inactivo");
+            //Ya no funciona en Froyo
 
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putBoolean("analytics_on", false);
+            editor.commit();
         }
 
     }
@@ -570,7 +587,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         handler.removeMessages(MSG_RECARGA);
 
         if (preferencias.getBoolean("analytics_on", true) || controlInicialAnalytics) {
-            // EasyTracker.getInstance(this).activityStop(this);
 
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
 
@@ -729,22 +745,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        //}
+
 
         switch (item.getItemId()) {
-            //case android.R.id.home:
-            // Toast.makeText(this, "Tapped home", Toast.LENGTH_SHORT).show();
-            //  break;
-
-            /*case R.id.menu_refresh:
-
-                recargarTiempos();
-
-                break;*/
 
             case R.id.menu_search:
 
@@ -753,63 +760,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 break;
 
-            /*
-            case R.id.menu_preferencias:
 
-                detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
-                break;
-
-            case R.id.menu_guardar:
-                detenerTodasTareas();
-                nuevoFavorito();
-                break;
-
-            case R.id.menu_favoritos:
-                detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
-                break;
-            case R.id.menu_noticias:
-
-                detenerTodasTareas();
-                startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
-                break;
-            case R.id.menu_mapas:
-
-                if (datosPantallaPrincipal.servicesConnected()) {
-                    detenerTodasTareas();
-                    startActivityForResult(new Intent(MainActivity.this, MapasMaps2Activity.class), SUB_ACTIVITY_REQUEST_POSTE);
-                }
-
-                break;
-
-            case R.id.menu_fondo:
-
-                gestionarFondo.seleccionarFondo();
-
-                break;
-
-            case R.id.menu_hitorial:
-                detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
-                break;
-
-            case R.id.menu_exportar_qr:
-                // detenerTareaTiempos();
-
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-
-                // configurar integrator.setTitleByID(R.string.barcode_titulo);
-                integrator.setMessageByID(R.string.barcode_mensaje);
-                integrator.setButtonYesByID(R.string.barcode_si);
-                integrator.setButtonNoByID(R.string.barcode_no);
-
-                String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
-
-                integrator.shareText(paradaCodificada);
-
-                break;
-*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -1041,7 +992,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         if (datosPantallaPrincipal.servicesConnected()) {
 
                             if (busSeleccionado != null && busSeleccionado.getLinea() != null && !busSeleccionado.getLinea().equals("")) {
-                                Intent i = new Intent(MainActivity.this, MapasMaps2Activity.class);
+                                Intent i = new Intent(MainActivity.this, MapasActivity.class);
                                 i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
                                 i.putExtra("LINEA_MAPA_PARADA", Integer.toString(paradaActual));
                                 startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
@@ -1423,7 +1374,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
                         }
                         /*
-						 * // Quitar barra progreso inicial ProgressBar lpb =
+                         * // Quitar barra progreso inicial ProgressBar lpb =
 						 * (ProgressBar) findViewById(R.id.tiempos_progreso);
 						 * lpb.clearAnimation();
 						 * lpb.setVisibility(View.INVISIBLE);
@@ -1538,7 +1489,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
                         ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
-                        FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
+
 
                         final MainActivity activ = mActividad.get();
 
@@ -1547,7 +1498,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             cabdatos = cabdatos2;
 
                             // Si no es favorito
-                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_grey600_18dp));
+                            imgFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_grey600_18dp, null));
 
                             // Para acceder a guardar favorito
                             imgFavorito.setOnClickListener(new OnClickListener() {
@@ -1571,34 +1522,66 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             });
 
 
-                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_outline_white_24dp));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                                FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
 
-                            // Para acceder a guardar favorito
-                            imgCircularFavorito.setOnClickListener(new OnClickListener() {
-                                public void onClick(View v) {
-                                    // TODO Auto-generated method stub
-                                    Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
 
-                                    Bundle extras = new Bundle();
-                                    extras.putInt("POSTE", activ.paradaActual);
-                                    // Preparamos una descripcion automatica para el
-                                    // favorito
-                                    HashSet<String> h = new HashSet<String>();
-                                    for (BusLlegada bus : activ.buses) {
-                                        h.add(bus.getLinea() + " a " + bus.getDestino());
+                                // Para acceder a guardar favorito
+                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                    public void onClick(View v) {
+                                        // TODO Auto-generated method stub
+                                        Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+
+                                        Bundle extras = new Bundle();
+                                        extras.putInt("POSTE", activ.paradaActual);
+                                        // Preparamos una descripcion automatica para el
+                                        // favorito
+                                        HashSet<String> h = new HashSet<String>();
+                                        for (BusLlegada bus : activ.buses) {
+                                            h.add(bus.getLinea() + " a " + bus.getDestino());
+                                        }
+                                        extras.putString("DESCRIPCION", h.toString());
+
+                                        i.putExtras(extras);
+                                        activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
                                     }
-                                    extras.putString("DESCRIPCION", h.toString());
+                                });
 
-                                    i.putExtras(extras);
-                                    activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
-                                }
-                            });
+                            } else {
+
+                                ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
+
+                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
+
+                                // Para acceder a guardar favorito
+                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                    public void onClick(View v) {
+                                        // TODO Auto-generated method stub
+                                        Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+
+                                        Bundle extras = new Bundle();
+                                        extras.putInt("POSTE", activ.paradaActual);
+                                        // Preparamos una descripcion automatica para el
+                                        // favorito
+                                        HashSet<String> h = new HashSet<String>();
+                                        for (BusLlegada bus : activ.buses) {
+                                            h.add(bus.getLinea() + " a " + bus.getDestino());
+                                        }
+                                        extras.putString("DESCRIPCION", h.toString());
+
+                                        i.putExtras(extras);
+                                        activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+                                    }
+                                });
+
+                            }
 
 
                         } else {
 
                             // Si hay favorito cambiar indicador favorito
-                            imgFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_grey600_18dp));
+                            imgFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_grey600_18dp, null));
 
                             // Para acceder al listado de favoritos
                             imgFavorito.setOnClickListener(new OnClickListener() {
@@ -1609,16 +1592,38 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             });
 
 
-                            imgCircularFavorito.setImageDrawable(laActividad.getResources().getDrawable(R.drawable.ic_bookmark_white_24dp));
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+
+                                FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
 
 
-                            // Para acceder al listado de favoritos
-                            imgCircularFavorito.setOnClickListener(new OnClickListener() {
-                                public void onClick(View v) {
-                                    activ.detenerTodasTareas();
-                                    activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
-                                }
-                            });
+                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_white_24dp, null));
+
+
+                                // Para acceder al listado de favoritos
+                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                    public void onClick(View v) {
+                                        activ.detenerTodasTareas();
+                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                    }
+                                });
+                            } else {
+
+                                ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
+
+
+                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_white_24dp, null));
+
+
+                                // Para acceder al listado de favoritos
+                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                    public void onClick(View v) {
+                                        activ.detenerTodasTareas();
+                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                    }
+                                });
+
+                            }
 
 
                         }
@@ -1703,7 +1708,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
                     } catch (Exception e) {
-
+                        e.printStackTrace();
                         if (laActividad != null) {
                             Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
                         }
@@ -1842,7 +1847,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         return t;
 
 		/*
-		 * try { Tracker t = activity.getTracker();
+         * try { Tracker t = activity.getTracker();
 		 * 
 		 * t.send(new HitBuilders.ExceptionBuilder().setDescription(new
 		 * StandardExceptionParser(activity,

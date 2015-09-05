@@ -16,9 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
-import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +26,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -55,13 +55,13 @@ import alberapps.java.util.Utilidades;
  */
 public class SelectorLinea {
 
-    private MapasMaps2Activity context;
+    private MapasActivity context;
 
     private SharedPreferences preferencias;
 
     private LinkedList<SpinnerItem> listaSpinner = new LinkedList<SpinnerItem>();
 
-    public SelectorLinea(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public SelectorLinea(MapasActivity contexto, SharedPreferences preferencia) {
 
         context = contexto;
 

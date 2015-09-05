@@ -18,13 +18,12 @@
  */
 package alberapps.java.tram.linea9;
 
-import org.apache.http.protocol.HTTP;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,7 +83,7 @@ public class ProcesarTiemposTramL9Texto {
 
             if (is != null) {
 
-                BufferedReader input = new BufferedReader(new InputStreamReader(is, HTTP.UTF_8));
+                BufferedReader input = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
                 String l = "";
 

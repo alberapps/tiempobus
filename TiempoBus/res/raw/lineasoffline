@@ -26,7 +26,7 @@
 	<option value="05">05 PLAZA DEL MAR - SAN AGUST&#205;N</option>
 	<option value="06">06 AUTOBUSES - JUAN XXIII (2&#186; S)</option>
 	<option value="07">07 AV.&#211;SCAR ESPL&#193; - EL REBOLLEDO</option>
-	<option value="8A">8A EXPLANADA -VIRGEN DEL REMEDIO</option>
+	<option value="08">08 EXPLANADA -VIRGEN DEL REMEDIO</option>
 	<option value="09">09 AV.&#211;SCAR ESPL&#193; - AV. NACIONES</option>
 	<option value="10">10 EXPLANADA - VIA PARQUE</option>
 	<option value="11">11 V.REMEDIO-AV.DENIA-HOSP.S.JOAN</option>
@@ -34,7 +34,6 @@
 	<option value="13">13 EXPLANADA - VILLAFRANQUEZA</option>
 	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
 	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
-	<option value="8B">8B EXPLANADA - VIRGEN DEL REMEDIO</option>
 	<option value="22">22 ALICANTE-C. HUERTA-P.S. JUAN</option>
 	<option value="27">27 ALICANTE (O. ESPLA) - URBANOVA</option>
 	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
@@ -56,7 +55,7 @@
 	<option value="C-6*">C-6* ALICANTE-URBANOVA-AEROPUERTO</option>
 	<option value="45">45 HOSPITAL-GIRASOLES-MANCHEGOS</option>
 	<option value="46A">46A HOSPITAL-VILLAMONTES-S.ANTONIO</option>
-	<option value="46B">46B HOSPITAL-P.CANASTELL-P.COTXETA</option>
+	<option value="46B">46B HOSPITAL-P.CANASTELL-CONTXETA</option>
 	<option value="SE">SE ESPECIAL SAN VICENTE</option>
 	<option value="TURI">TURI BUS TUR&#205;STICO (TURIBUS)</option>
 

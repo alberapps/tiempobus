@@ -479,5 +479,6 @@
     <string name="noticias_no_todas">Ocultar</string>
 
     <string name="grupos_todos">Todos los grupos</string>
+    <string name="tarjeta_clima_pref_desc">Fuente de datos</string>
 
 </resources>

@@ -37,7 +37,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
@@ -194,7 +194,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
         if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
             if (linea != null && !linea.equals("")) {
-                Intent i = new Intent(this, MapasMaps2Activity.class);
+                Intent i = new Intent(this, MapasActivity.class);
                 i.putExtra("LINEA_MAPA_FICHA", linea);
                 i.putExtra("LINEA_MAPA_FICHA_ONLINE", "true");
                 i.putExtra("LINEA_MAPA_FICHA_KML", datosLinea.getIdlinea());

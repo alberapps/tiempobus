@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.mapas.maps2;
+package alberapps.android.tiempobus.mapas;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -37,11 +37,11 @@ import alberapps.java.tam.mapas.PlaceMark;
  */
 public class MapasOffline {
 
-    private MapasMaps2Activity context;
+    private MapasActivity context;
 
     private SharedPreferences preferencias;
 
-    public MapasOffline(MapasMaps2Activity contexto, SharedPreferences preferencia) {
+    public MapasOffline(MapasActivity contexto, SharedPreferences preferencia) {
 
         context = contexto;
 

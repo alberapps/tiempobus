@@ -25,19 +25,6 @@ import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -70,11 +57,11 @@ public class Conectividad {
     public static String conexionPostUtf8(String urlPost, String post, Boolean cacheTiempos) throws Exception {
 
         // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+        /*if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
             return conexionPostUtf8Froyo(urlPost, post);
 
-        }
+        }*/
 
 
         // Abrir Conexion
@@ -150,11 +137,11 @@ public class Conectividad {
     public static String conexionPostUtf8NoKeepAlive(String urlPost, String post, Boolean cacheTiempos) throws Exception {
 
         // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+        /*if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
             return conexionPostUtf8Froyo(urlPost, post);
 
-        }
+        }*/
 
 
         // Abrir Conexion
@@ -239,11 +226,11 @@ public class Conectividad {
     public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
 
         // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+        /*if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
 
             return conexionGetIsoFroyo(urlGet, userAgent);
 
-        }
+        }*/
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -419,6 +406,7 @@ public class Conectividad {
      * @param url
      * @return
      */
+    /*
     public static String conexionGetIsoFroyo(String url, String userAgent) throws Exception {
 
         HttpGet request = new HttpGet(url);
@@ -464,6 +452,7 @@ public class Conectividad {
         //return null;
 
     }
+    */
 
     /**
      * Conexion con Apache para Froyo
@@ -471,6 +460,7 @@ public class Conectividad {
      * @param url
      * @return
      */
+    /*
     public static String conexionPostUtf8Froyo(String url, String post) throws Exception {
 
         HttpPost request = new HttpPost(url);
@@ -519,6 +509,7 @@ public class Conectividad {
         //return null;
 
     }
+    */
 
     /**
      * Activar el uso de cache si la plataforma lo permite

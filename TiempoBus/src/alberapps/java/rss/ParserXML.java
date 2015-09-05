@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.rss;
 
@@ -67,17 +67,27 @@ public class ParserXML {
                     String name = property.getNodeName();
                     if (name.equalsIgnoreCase("title")) {
 
-                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = "";
+
+                        if (property.getFirstChild() != null && property.getFirstChild().getNodeValue() != null) {
+                            textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        }
 
                         noticia.setTitulo(textoProc);
 
                     } else if (name.equalsIgnoreCase("link")) {
 
-                        noticia.setLink(property.getFirstChild().getNodeValue());
+                        if (property.getFirstChild() != null && property.getFirstChild().getNodeValue() != null) {
+                            noticia.setLink(property.getFirstChild().getNodeValue());
+                        }
 
                     } else if (name.equalsIgnoreCase("description")) {
 
-                        String textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        String textoProc = "";
+
+                        if (property.getFirstChild() != null && property.getFirstChild().getNodeValue() != null) {
+                            textoProc = (Html.fromHtml(property.getFirstChild().getNodeValue())).toString();
+                        }
 
                         noticia.setDescripcion(textoProc);
 
@@ -87,6 +97,9 @@ public class ParserXML {
                 listaNoticias.add(noticia);
             }
         } catch (Exception e) {
+
+            e.printStackTrace();
+
             throw new RuntimeException(e);
         } finally {
 

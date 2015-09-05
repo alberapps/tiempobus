@@ -142,6 +142,19 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="italic" />
 
+
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:map="http://schemas.android.com/apk/res-auto"
+                android:name="alberapps.android.tiempobus.principal.InformacionMapaFragment"
+                android:id="@+id/mapInformacion"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                map:cameraZoom="14"
+                map:mapType="normal"
+                map:liteMode="true"
+                tools:ignore="MissingPrefix" />
+
+
         </LinearLayout>
 
 

@@ -145,7 +145,7 @@
                         android:text="@string/mapa_ir_parada"
                         android:textAppearance="?android:attr/textAppearanceSmall"
 
-                        android:textColor="@color/link_text_material_dark"
+                        android:textColor="@color/mi_material_blue_principal"
                         app:textAllCaps="true"/>
 
                     <LinearLayout
@@ -163,7 +163,7 @@
                             android:text="@string/menu_mapa"
                             android:textAppearance="?android:attr/textAppearanceSmall"
 
-                            android:textColor="@color/link_text_material_dark"
+                            android:textColor="@color/mi_material_blue_principal"
                             app:textAllCaps="true"/>
 
                     </LinearLayout>

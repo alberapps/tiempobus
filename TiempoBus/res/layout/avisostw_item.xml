@@ -39,11 +39,13 @@
 
             <ImageView
                 android:id="@+id/imagenTw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:contentDescription="Imagen twitter"
-                android:src="@drawable/ic_tiempobus_4" />
+                android:src="@drawable/ic_tiempobus_4"
+                android:gravity="top"
+                />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"

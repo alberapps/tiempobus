@@ -802,7 +802,9 @@ public class DatosLineasDB {
 
                         strings[6] = transbordo.toString();
 
-                        if (strings[0].equals("L9")) {
+                        strings[7] = "";
+
+                        /*if (strings[0].equals("L9")) {
                             strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
                             // } else if (strings[0].equals("L1") ||
                             // strings[0].equals("L3")) {
@@ -813,7 +815,7 @@ public class DatosLineasDB {
                             // UtilidadesTRAM.getObservacionesL1enL4(strings[3]);
                         } else {
                             strings[7] = "";
-                        }
+                        }*/
 
                         strings[8] = "TRAM";
 

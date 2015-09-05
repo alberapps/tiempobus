@@ -1,6 +1,6 @@
 /**
  *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
+ *  Copyright (C) 2013 Alberto Montiel
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -16,31 +16,33 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.java.tam.mapas;
+package alberapps.android.tiempobus.mapas;
 
-import java.util.List;
+/**
+ * Spinner de lineas
+ */
+public class SpinnerItem {
 
-public class Datos {
+	int id;
+	String descripcion;
+	
+	public SpinnerItem(int idP, String descripcionP) {
+		
+		id= idP;
+		descripcion = descripcionP;
+		
+	}
+	
+	@Override
+	public String toString() {
+		
+		return descripcion;
+	}
 
-    private List<PlaceMark> placeMarksIda;
-
-    private List<PlaceMark> placeMarksVuelta;
-
-    public List<PlaceMark> getPlaceMarksIda() {
-        return placeMarksIda;
-    }
-
-    public void setPlaceMarksIda(List<PlaceMark> placeMarksIda) {
-        this.placeMarksIda = placeMarksIda;
-    }
-
-    public List<PlaceMark> getPlaceMarksVuelta() {
-        return placeMarksVuelta;
-    }
-
-    public void setPlaceMarksVuelta(List<PlaceMark> placeMarksVuelta) {
-        this.placeMarksVuelta = placeMarksVuelta;
-    }
-
+	public int getId() {
+		return id;
+	}
+	
+	
 
 }

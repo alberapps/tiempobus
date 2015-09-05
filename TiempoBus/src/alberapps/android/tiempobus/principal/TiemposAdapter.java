@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.java.tam.BusLlegada;
 
 /**
@@ -143,19 +143,24 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 DatosPantallaPrincipal.formatoLinea(contexto, tag.busLinea, bus.getLinea(), true);
 
 
-                // tag.busProximo.setText(bus.getProximo());
+                if (bus.getLinea().equals("L9")) {
 
-                if (bus.getSegundoTram() != null) {
-
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
-
-                } else if (bus.getSegundoBus() != null) {
-
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
+                    tag.busProximo.setText("");
 
                 } else {
 
-                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
+                    if (bus.getSegundoTram() != null) {
+
+                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
+
+                    } else if (bus.getSegundoBus() != null) {
+
+                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
+
+                    } else {
+
+                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
+                    }
                 }
 
             }
@@ -217,7 +222,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                     if (actividad.datosPantallaPrincipal.servicesConnected()) {
 
-                        Intent i = new Intent(actividad, MapasMaps2Activity.class);
+                        Intent i = new Intent(actividad, MapasActivity.class);
                         i.putExtra("LINEA_MAPA", bus.getLinea());
                         i.putExtra("LINEA_MAPA_PARADA", Integer.toString(actividad.paradaActual));
                         actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);

@@ -105,8 +105,7 @@ public class ProcesarDatosLineasIsaeService {
 
                 }
 
-                if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_CODIGO_KML.length) {
-                    datosLinea.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicion]);
+                if (!esTram && posicion >= 0 && posicion < UtilidadesTAM.LINEAS_NUM.length) {
 
                     datosLinea.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicion]]);
                     datosLinea.setGrupoLineaId(Integer.toString(UtilidadesTAM.TIPO[posicion]));
@@ -130,7 +129,6 @@ public class ProcesarDatosLineasIsaeService {
                     DatosLinea datosLineaH = new DatosLinea();
                     datosLineaH.setLineaNum("11H");
                     int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
-                    datosLineaH.setLineaCodigoKML(UtilidadesTAM.LINEAS_CODIGO_KML[posicionH]);
                     datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
 
                     datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
@@ -210,9 +208,9 @@ public class ProcesarDatosLineasIsaeService {
 
         if (lineas == null || lineas.isEmpty()) {
             return lineas;
-        }else if(DatosPantallaPrincipal.esLineaTram(lineas.get(0).getNumLinea())){
+        } else if (DatosPantallaPrincipal.esLineaTram(lineas.get(0).getNumLinea())) {
             return lineas;
-        }else {
+        } else {
 
             Comparator<BusLinea> comparator = new Comparator<BusLinea>() {
                 @Override

@@ -44,7 +44,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.mapas.maps2.MapasMaps2Activity;
+import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.UtilidadesTAM;
@@ -193,7 +193,7 @@ public class DatosParadaActivity extends AppCompatActivity {
             if (linea != null && !linea.equals("")) {
 
                 try {
-                    Intent i = new Intent(this, MapasMaps2Activity.class);
+                    Intent i = new Intent(this, MapasActivity.class);
                     i.putExtra("LINEA_MAPA_FICHA", linea);
 
                     if (UtilidadesTRAM.esLineaTram(linea)) {
@@ -207,7 +207,7 @@ public class DatosParadaActivity extends AppCompatActivity {
 
                         int pos = UtilidadesTAM.getIdLinea(linea);
 
-                        i.putExtra("LINEA_MAPA_FICHA_KML", UtilidadesTAM.LINEAS_CODIGO_KML[pos]);
+                        i.putExtra("LINEA_MAPA_FICHA_KML", "");
                         i.putExtra("LINEA_MAPA_FICHA_DESC", UtilidadesTAM.LINEAS_DESCRIPCION[pos]);
 
                     }

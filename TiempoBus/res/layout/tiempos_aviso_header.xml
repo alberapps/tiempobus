@@ -97,14 +97,14 @@
                                 android:gravity="center"
                                 android:orientation="vertical">
 
-                                <TextView
+                                <!--TextView
                                     android:id="@+id/textView1"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/updated_at"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
 
-                                    android:textSize="10sp" />
+                                    android:textSize="10sp" /-->
 
                                 <TextView
                                     android:id="@+id/ultima_act"
@@ -112,9 +112,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
                                     android:gravity="right"
-                                    android:text="@string/hora_inicial"
+                                    android:text="00:00"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-
+                                    android:drawableLeft="@drawable/ic_schedule_grey600_18dp"
                                     android:textSize="18sp" />
                             </LinearLayout>
                         </FrameLayout>

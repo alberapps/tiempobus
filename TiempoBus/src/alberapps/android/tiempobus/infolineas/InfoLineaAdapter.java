@@ -272,7 +272,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         listaOriginal.clear();
 
-        if (grupo.equals("0")) {
+        if (grupo == null || grupo.equals("0")) {
 
             addAll(listaOriginalSinGrupo);
 
