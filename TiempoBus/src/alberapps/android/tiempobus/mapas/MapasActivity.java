@@ -206,7 +206,7 @@ public class MapasActivity extends AppCompatActivity
         gestionVehiculos = new GestionVehiculos(this, preferencias);
         gestionMapa = new GestionMapa(this, preferencias);
 
-        gestionarLineas.inicializarMapa();
+
 
 
 
@@ -236,6 +236,8 @@ public class MapasActivity extends AppCompatActivity
         map.setOnMyLocationButtonClickListener(this);
 
         buildLocationSettingsRequest();
+
+        gestionarLineas.inicializarMapa();
 
     }
 

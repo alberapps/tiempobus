@@ -36,6 +36,11 @@
         >
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
 
         <LinearLayout
@@ -111,96 +116,91 @@
 
                     />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp">
 
-                    <ImageView
-                        android:id="@+id/tiempos_alerta_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="35dp"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:contentDescription="Establecer alerta"
-                        android:src="@drawable/ic_alarm_grey600_18dp" />
-
-                    <ImageView
-                        android:id="@+id/compartir_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="35dp"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:contentDescription="Compartir parada"
-                        android:src="@drawable/ic_share_grey600_18dp" />
-
-                    <ImageView
-                        android:id="@+id/mapa_tarjeta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="35dp"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:contentDescription="Mapa parada"
-                        android:src="@drawable/ic_map_grey600_18dp" />
-
-                    <ImageView
-                        android:id="@+id/audio_img"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:contentDescription="Leer tiempo"
-                        android:src="@drawable/ic_volume_up_grey600_18dp" />
-
-                    <TextView
-                        android:id="@+id/tiempos_alerta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:background="@drawable/actionbar_compat_item"
-                        android:text=""
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="12sp"
-                        android:textStyle="italic|bold" />
-
-
-                </LinearLayout>
 
             </LinearLayout>
 
+        </LinearLayout>
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="7dp"
-                android:layout_marginRight="4dp"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/mi_material_grey_200">
 
                 <ImageView
                     android:id="@+id/fijar_img"
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right|top"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Fijar linea"
                     android:src="@drawable/fijar" />
 
+                <ImageView
+                    android:id="@+id/tiempos_alerta_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Establecer alerta"
+                    android:src="@drawable/ic_alarm_grey600_18dp"
+                    android:layout_marginLeft="30dp"/>
+
+                <ImageView
+                    android:id="@+id/compartir_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Compartir parada"
+                    android:src="@drawable/ic_share_grey600_18dp" />
+
+                <ImageView
+                    android:id="@+id/mapa_tarjeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="45dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Mapa parada"
+                    android:src="@drawable/ic_map_grey600_18dp" />
+
+                <ImageView
+                    android:id="@+id/audio_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Leer tiempo"
+                    android:src="@drawable/ic_volume_up_grey600_18dp" />
+
+                <TextView
+                    android:id="@+id/tiempos_alerta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="12sp"
+                    android:textStyle="italic|bold" />
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    >
 
                     <ImageView
                         android:id="@+id/tiempos_opciones"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="right"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Mas opciones"
                         android:src="@drawable/ic_more_vert_grey600_18dp" />
 
                 </FrameLayout>
 
-
             </LinearLayout>
+
 
         </LinearLayout>
 

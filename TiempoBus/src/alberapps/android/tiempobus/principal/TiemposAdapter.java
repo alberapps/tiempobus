@@ -235,7 +235,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             //Fijar
-            ImageView fijar = (ImageView) v.findViewById(R.id.fijar_img);
+            final ImageView fijar = (ImageView) v.findViewById(R.id.fijar_img);
 
 
             if (bus.isTarjetaFijada()) {
@@ -248,7 +248,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                         MainActivity actividad = (MainActivity) contexto;
 
-
                         actividad.datosPantallaPrincipal.eliminarTarjeta(bus);
 
                         actividad.buses.get(getPosition(bus)).setTarjetaFijada(false);
@@ -256,6 +255,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         actividad.buses = actividad.datosPantallaPrincipal.ordenarTiemposPorTarjetaFija(actividad.buses);
 
                         actividad.handler.sendEmptyMessage(MainActivity.MSG_FRECUENCIAS_ACTUALIZADAS);
+
+                        fijar.setImageResource(R.drawable.fijar);
 
                         notifyDataSetChanged();
 
@@ -273,7 +274,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                     public void onClick(View view) {
 
                         MainActivity actividad = (MainActivity) contexto;
-
 
                         actividad.datosPantallaPrincipal.fijarTarjeta(bus);
 
