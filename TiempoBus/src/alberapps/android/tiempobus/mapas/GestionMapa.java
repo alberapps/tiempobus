@@ -84,9 +84,11 @@ public class GestionMapa {
         }
 
         if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
-            dialog.setIcon(R.drawable.tramway_2);
+            //dialog.setIcon(R.drawable.tramway_2);
+            dialog.setIcon(R.mipmap.ic_tram1);
         } else {
-            dialog.setIcon(R.drawable.bus);
+            //dialog.setIcon(R.drawable.bus);
+            dialog.setIcon(R.mipmap.ic_bus_blue1);
         }
 
         context.setParadaSeleccionada(marker.getTitle());

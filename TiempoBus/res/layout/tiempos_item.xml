@@ -66,7 +66,7 @@
                     android:gravity="center"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/abc_primary_text_disable_only_material_dark"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </FrameLayout>
@@ -112,7 +112,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/primary_dark_material_light"
+                    android:textColor="@color/mi_material_blue_grey"
 
                     />
 

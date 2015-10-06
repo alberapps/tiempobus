@@ -25,6 +25,7 @@ import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
+import alberapps.java.tram.linea9.ProcesarTiemposTramL9Texto;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos para una linea y
@@ -56,10 +57,21 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Bus
      */
     @Override
     protected BusLlegada doInBackground(String... datos) {
+
         BusLlegada llegadasBus = null;
+
         try {
 
-            if (DatosPantallaPrincipal.esLineaTram(datos[0])) {
+            int paradaI = Integer.parseInt(datos[1]);
+
+            String linea = datos[0];
+
+            if(linea.equals("L9")){
+
+                //Tiempos isae tram diesel
+                llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegadaConLineaConDestino(datos[0],paradaI, datos[2]);
+
+            } else if (DatosPantallaPrincipal.esLineaTram(datos[0])) {
                 //linea, parada, destino
                 llegadasBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(datos[0], datos[1], datos[2]);
 
@@ -67,6 +79,8 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Bus
                 //linea, parada
                 llegadasBus = ProcesarTiemposService.procesaTiemposLlegadaConParadaLinea(datos[0], datos[1]);
             }
+
+
         } catch (Exception e) {
             return null;
         }

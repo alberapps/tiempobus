@@ -106,42 +106,6 @@
             android:layout_gravity="center"
             />
 
-<!--
-        <ToggleButton
-            android:id="@+id/mapaIdaButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textOff="@string/ida"
-            android:textOn="@string/ida"
-            android:backgroundTint="@color/mi_material_grey_300"
-            />
-
-
-        <ToggleButton
-            android:id="@+id/mapaVueltaButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textOff="@string/vuelta"
-            android:textOn="@string/vuelta"
-            android:layout_marginLeft="5dp"
-            android:backgroundTint="@color/mi_material_grey_300"/>
-
-
-
-
-        <ToggleButton
-            android:id="@+id/mapasVehiculosButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textOff="@string/mapas_vehiculo_off"
-            android:textOn="@string/mapas_vehiculo_on"
-            android:layout_marginLeft="5dp"
-            android:backgroundTint="@color/mi_material_grey_300"/>
--->
-
 
     </LinearLayout>
 

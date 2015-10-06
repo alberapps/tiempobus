@@ -18,6 +18,8 @@
  */
 package alberapps.java.tram.linea9;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -297,6 +299,52 @@ public class ProcesarTiemposTramL9Texto {
         formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
 
         return formatoMinHora;
+
+    }
+
+
+    /**
+     *
+     * @param linea
+     * @param parada
+     * @param destino
+     * @return
+     * @throws Exception
+     */
+    public static BusLlegada procesaTiemposLlegadaConLineaConDestino(String linea, Integer parada, String destino) throws Exception {
+
+
+        BusLlegada buses = null;
+
+        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+
+        try {
+
+            busesList =  procesaTiemposLlegada(parada);
+
+            for (int i = 0; i < busesList.size(); i++) {
+
+                if (busesList.get(i).getLinea().equals(linea) && busesList.get(i).getDestino().equals(destino)) {
+
+                    if (busesList.get(i).getProximoMinutos() > -1 && busesList.get(i).getProximoMinutos() < 60) {
+
+                        buses = busesList.get(i);
+
+                        Log.d("TIEMPOS TRAM", "tiempo valido: " + buses.getProximo());
+
+                    }
+
+                }
+
+            }
+
+        } catch (Exception e) {
+
+
+            buses = null;
+        }
+
+        return buses;
 
     }
 

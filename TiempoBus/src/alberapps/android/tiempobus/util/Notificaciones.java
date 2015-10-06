@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.util;
 
@@ -30,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.res.ResourcesCompat;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -83,7 +84,7 @@ public class Notificaciones {
 
             mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
                     .setContentText(contexto.getString(R.string.recarga_bd_desc))
-                    .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap());
+                    .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_4, null)).getBitmap());
 
             mBuilder.setAutoCancel(false);
 
@@ -178,7 +179,7 @@ public class Notificaciones {
 
         mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas)
-                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_4, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         mBuilder.setAutoCancel(true);
@@ -267,7 +268,7 @@ public class Notificaciones {
 
         mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
-                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_4, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         mBuilder.setAutoCancel(true);
@@ -363,9 +364,9 @@ public class Notificaciones {
         }
 
         mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
-                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_4, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         // Led
@@ -446,7 +447,7 @@ public class Notificaciones {
 
 
         mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
-                .setLargeIcon(((BitmapDrawable) contexto.getResources().getDrawable(R.drawable.ic_tiempobus_4)).getBitmap())
+                .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_4, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 

@@ -121,11 +121,28 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                     llegadasDiesel = null;
                 }
 
-                //Tiempos isae tram
-                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
+                try {
+                    //Tiempos isae tram
+                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
+
+                } catch (Exception e) {
+
+                    //En caso de error en servicio de tram pero ok en servcio diesel
+
+                    if (llegadasDiesel == null) {
+                        throw e;
+                    }
+
+                    e.printStackTrace();
+                }
 
 
                 if (llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
+
+                    if (llegadasBus == null) {
+                        llegadasBus = new ArrayList<BusLlegada>();
+                    }
+
                     llegadasBus.addAll(llegadasDiesel);
                 }
 
@@ -142,7 +159,6 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             datosRespuesta.setListaBusLlegada(llegadasBus);
 
-            //ProcesarHorariosTram.getHorarios();
 
         } catch (TiempoBusException e) {
 

@@ -197,7 +197,7 @@ public class GestionarTarjetaInfo {
 
                 TextView datosParadaAux = (TextView) v.findViewById(R.id.datos_parada);
 
-                if(datosParadaAux != null){
+                if (datosParadaAux != null) {
                     datosParada = datosParadaAux;
                 }
 
@@ -216,9 +216,9 @@ public class GestionarTarjetaInfo {
                         bloqueDatos.addView(datosParada);
                     }
 
-                    if(iniciarObservaciones){
+                    if (iniciarObservaciones) {
                         datosParada.setText(observa);
-                    }else {
+                    } else {
                         datosParada.setText(datosParada.getText() + "\ni: " + observa);
                     }
 
@@ -425,6 +425,28 @@ public class GestionarTarjetaInfo {
         }
 
 
+        //Desactivar tarjeta
+        final android.support.v7.widget.SwitchCompat wikiSwitch = (android.support.v7.widget.SwitchCompat) v.findViewById(R.id.wikiSwitch);
+
+        wikiSwitch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View vb) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("tarjeta_wiki_on", false);
+                editor.commit();
+
+                CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
+
+                if (tarjetaWiki != null) {
+                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+                    bloqueTarjetas.removeView(tarjetaWiki);
+                }
+
+            }
+        });
+
+
         // Verificar si ya disponemos de los datos
         if (paradaWiki != null && datosWiki != null && paradaWiki.equals(Integer.toString(context.paradaActual))) {
 
@@ -557,6 +579,28 @@ public class GestionarTarjetaInfo {
 
             return;
         }
+
+
+        //Desactivar tarjeta
+        final android.support.v7.widget.SwitchCompat climaSwitch = (android.support.v7.widget.SwitchCompat) v.findViewById(R.id.climaSwitch);
+
+        climaSwitch.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View vb) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("tarjeta_clima_on", false);
+                editor.commit();
+
+                CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);
+
+                if (tarjetaClima != null) {
+                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+                    bloqueTarjetas.removeView(tarjetaClima);
+                }
+
+            }
+        });
 
 
         final ImageView iv = (ImageView) v.findViewById(R.id.imageWeather);

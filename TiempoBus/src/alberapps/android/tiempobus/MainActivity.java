@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
@@ -194,6 +195,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     SwipeRefreshLayout swipeRefresh = null;
 
     MenuItem refresh = null;
+
+    public static final int REQUEST_CODE_STORAGE = 4;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1894,5 +1897,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CODE_STORAGE) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // success!
+                gestionarFondo.seleccionarFondoPermisos();
+            } else {
+                // Permission was denied or request was cancelled
+
+                Toast.makeText(getApplicationContext(), getString(R.string.error_fichero), Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
 
 }

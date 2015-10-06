@@ -27,12 +27,11 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import alberapps.android.tiempobus.MainActivity;
-import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.mapas.GestionarLineas;
 
 /**
  * Mapa lite tarjeta info
@@ -85,9 +84,11 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
             BitmapDescriptor marker = null;
 
             if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual)) {
-                marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway);
+                marker = GestionarLineas.markerTram();
+                //BitmapDescriptorFactory.fromResource(R.drawable.tramway);
             } else {
-                marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
+                marker = GestionarLineas.markerBusAzul();
+                //BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
             }
 
 
@@ -123,9 +124,11 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
             BitmapDescriptor marker = null;
 
             if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual)) {
-                marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway);
+                marker = GestionarLineas.markerTram();
+                //BitmapDescriptorFactory.fromResource(R.drawable.tramway);
             } else {
-                marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
+                marker = GestionarLineas.markerBusAzul();
+                //BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
             }
 
             mMap.addMarker(new MarkerOptions().position(nueva).icon(marker));
