@@ -436,11 +436,21 @@ public class GestionarTarjetaInfo {
                 editor.putBoolean("tarjeta_wiki_on", false);
                 editor.commit();
 
-                CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
+                if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
+                    CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
 
-                if (tarjetaWiki != null) {
-                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
-                    bloqueTarjetas.removeView(tarjetaWiki);
+                    if (tarjetaWiki != null) {
+                        LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+                        bloqueTarjetas.removeView(tarjetaWiki);
+                    }
+                } else {
+
+                    CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
+
+                    if (tarjetaWiki != null) {
+                        LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_secundario);
+                        bloqueTarjetas.removeView(tarjetaWiki);
+                    }
                 }
 
             }
@@ -592,11 +602,22 @@ public class GestionarTarjetaInfo {
                 editor.putBoolean("tarjeta_clima_on", false);
                 editor.commit();
 
-                CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);
+                if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
+                    CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);
 
-                if (tarjetaClima != null) {
-                    LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
-                    bloqueTarjetas.removeView(tarjetaClima);
+                    if (tarjetaClima != null) {
+                        LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_tarjetas);
+                        bloqueTarjetas.removeView(tarjetaClima);
+                    }
+                } else {
+
+                    CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);
+
+                    if (tarjetaClima != null) {
+                        LinearLayout bloqueTarjetas = (LinearLayout) v.findViewById(R.id.contenedor_secundario);
+                        bloqueTarjetas.removeView(tarjetaClima);
+                    }
+
                 }
 
             }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+   Copyright (C) 2015 Alberto Montiel
+         
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+ 
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+ 
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/tarjeta_margin"
+
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
+            >
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/desc_origen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/origen"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/desc_destino"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="@string/destino"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+
+
+
+                    <TextView
+                        android:id="@+id/desc_mas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dip"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/rutas_info_c"
+                        android:textSize="8sp" />
+
+                    <TextView
+                        android:id="@+id/desc_c"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dip"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="8sp"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/tarjeta_margin"
+
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="@dimen/cardview_default_elevation"
+            >
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical"
+                android:layout_margin="2dp">
+
+                <TextView
+                    android:id="@+id/txt_aviso_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+
+                    android:padding="2dip"
+                    android:text="@string/aviso_header_rutas"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="10sp"
+                    android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

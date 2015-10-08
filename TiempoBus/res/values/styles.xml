@@ -246,6 +246,9 @@
 		<item name="android:textStyle">normal</item>
 		<item name="android:paddingLeft">4sp</item>
 	</style>
+    <style name="Theme.TiempoBusTheme.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.TiempoBusTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 	
 	
 	

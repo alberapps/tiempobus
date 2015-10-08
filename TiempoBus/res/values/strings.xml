@@ -465,7 +465,8 @@
         zgzBus code.google.com/p/zgzbus (GPLv3. http://www.gnu.org/licenses/gpl.html);
         ZXing Team code.google.com/p/zxing (Apache http://www.apache.org/licenses/LICENSE-2.0);
         Mapicons mapicons.nicolasmollet.com;
-        Logo de la App compuesto con http://www.elegantthemes.com/blog/freebie-of-the-week/flat-icon-collection-update (http://www.gnu.org/licenses/gpl-2.0.html)
+        Logo de la App compuesto con http://www.elegantthemes.com/blog/freebie-of-the-week/flat-icon-collection-update (http://www.gnu.org/licenses/gpl-2.0.html);
+        Marcadores mapa por Freepik de www.flaticon.com (http://creativecommons.org/licenses/by/3.0/)
 	</string>
     <string name="compatibilidad">* AVISO para Android 2.2 (Froyo): Google Play Services ya no es totalmente compatible. Pueden producirse fallos en la app.</string>
 
@@ -480,5 +481,15 @@
 
     <string name="grupos_todos">Todos los grupos</string>
     <string name="tarjeta_clima_pref_desc">Fuente de datos</string>
+    <string name="title_activity_rutas">Rutas</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="origen">Origen</string>
+    <string name="aviso_header_rutas">IMPORTANTE: Esta funcionalidad está en desarrollo. Pueden producirse errores que se revisarán en próximas versiones.</string>
+    <string name="menu_rutas">Cálculo de Rutas</string>
+    <string name="error_ruta">Error al calcular la ruta</string>
+    <string name="rutas_info_c" translatable="false">Tram Alicante\nSubus - Vectalia\nRenfe Cercanias\nPowered by Google Maps Directions</string>
+    <string name="andar">Andar</string>
+    <string name="cercanias">CERCANÍAS</string>
 
 </resources>

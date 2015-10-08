@@ -290,6 +290,39 @@ public class UtilidadesUI {
     }
 
 
+    public static String getIdiomaRutas() {
+
+        String idioma = null;
+
+        try {
+            String locale = Locale.getDefault().getLanguage();
+
+            if (locale.substring(0, 2).equals("es")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("ca")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("en")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("fr")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("it")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("de")) {
+                idioma = locale;
+            } else if (locale.substring(0, 2).equals("ru")) {
+                idioma = locale;
+            } else {
+                idioma = "es";
+            }
+
+        } catch (Exception e) {
+            idioma = "es";
+        }
+
+        return idioma;
+
+    }
+
     /**
      * Idioma para la wikipedia
      *

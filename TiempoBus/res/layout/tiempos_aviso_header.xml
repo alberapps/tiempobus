@@ -212,6 +212,18 @@
                         android:contentDescription="Horario TRAM"
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_today_grey600_24dp"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/aviso_header_rutas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Rutas"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_navigation_grey600_24dp"
                         android:layout_marginRight="20dp"
                         />
 

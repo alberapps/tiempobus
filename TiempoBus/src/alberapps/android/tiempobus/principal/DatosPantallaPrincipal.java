@@ -66,6 +66,7 @@ import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
+import alberapps.android.tiempobus.rutas.RutasActivity;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
@@ -893,6 +894,19 @@ public class DatosPantallaPrincipal {
                 i.putExtra("HORARIOS", "TRAM");
 
                 context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+
+            }
+        });
+
+        // //Rutas
+
+        ImageButton botonRutas = (ImageButton) vheader.findViewById(R.id.aviso_header_rutas);
+
+        botonRutas.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+
+                context.detenerTodasTareas();
+                context.startActivity(new Intent(context, RutasActivity.class));
 
             }
         });

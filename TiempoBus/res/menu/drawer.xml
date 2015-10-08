@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_map_grey600_48dp"
             android:title="@string/menu_mapa"/>
         <item
+            android:id="@+id/navigation_item_rutas"
+            android:icon="@drawable/ic_navigation_grey600_48dp"
+            android:title="@string/menu_rutas"/>
+        <item
             android:id="@+id/navigation_item_noticias"
             android:icon="@drawable/ic_my_library_books_grey600_48dp"
             android:title="@string/tit_noticias"/>
@@ -34,6 +38,7 @@
             android:id="@+id/navigation_item_exportar"
             android:icon="@drawable/ic_add_to_photos_grey600_48dp"
             android:title="@string/menu_export_qr"/>
+
     </group>
 
 </menu>

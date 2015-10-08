@@ -456,5 +456,13 @@ favorit per crear la teua llista.</string>
     <string name="compatibilidad">* AVÍS per Android 2.2 (Froyo): Google Play Services ja no és totalment compatible. Es poden produir errors en l\'app.</string>
     <string name="tarjeta">Targetes</string>
     <string name="tarjeta_clima">Clima</string>
+    <string name="aviso_header_rutas">IMPORTANT: Esta funcionalitat està en desenvolupament. Es poden produir errors que es revisaran en un futur.</string>
+    <string name="error_ruta">Error al carregar l\'itinerari</string>
+    <string name="tarjeta_clima_pref_desc">Font de dades</string>
+    <string name="title_activity_rutas">Rutes</string>
+    <string name="menu_rutas">Càlcul de Rutes</string>
+    <string name="cercanias"> RODALIES</string>
+    <string name="andar">Caminar</string>
+    <string name="origen">Origen</string>
 
 </resources>

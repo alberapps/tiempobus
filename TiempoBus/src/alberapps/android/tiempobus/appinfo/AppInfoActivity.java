@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.appinfo;
 
@@ -50,20 +50,17 @@ public class AppInfoActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-        /*if (!UtilidadesTRAM.ACTIVADO_TRAM) {
-            setContentView(R.layout.infoapp_3_bus);
-        } else {*/
-            setContentView(R.layout.infoapp_3);
-        //}
+
+        setContentView(R.layout.infoapp_3);
 
 
-		ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
-			//actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            //actionBar.setDisplayHomeAsUpEnabled(true);
 
             actionBar.setElevation(0);
 
-		}
+        }
 
 
         ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
@@ -75,14 +72,6 @@ public class AppInfoActivity extends AppCompatActivity {
             }
         });
 
-        /*Button botonLink = (Button) findViewById(R.id.buttonLinks);
-        botonLink.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-
-                links();
-
-            }
-        });*/
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
@@ -107,32 +96,6 @@ public class AppInfoActivity extends AppCompatActivity {
 
     }
 
-    /*private void links() {
-
-        final CharSequence[] items = {"zgzBus\nhttp://code.google.com/p/zgzbus", "ksoap2-android\nhttp://code.google.com/p/ksoap2-android/", "ZXing Team\nhttp://code.google.com/p/zxing",
-                "Iconspedia(Yankoa)\nhttp://www.iconspedia.com/community/yankoa", "Mapicons\nhttp://mapicons.nicolasmollet.com", "JSoup\nhttp://jsoup.org", "google-gson\nhttp://code.google.com/p/google-gson",
-                "twitter4j\nhttp://twitter4j.org"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.referencias);
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
-
-                if (item == 0) {
-
-                } else if (item == 1) {
-
-                }
-
-            }
-        });
-
-        AlertDialog alert = builder.create();
-
-        alert.show();
-
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,7 +118,6 @@ public class AppInfoActivity extends AppCompatActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -165,7 +127,6 @@ public class AppInfoActivity extends AppCompatActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

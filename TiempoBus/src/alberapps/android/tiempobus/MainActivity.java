@@ -99,6 +99,7 @@ import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
 import alberapps.android.tiempobus.principal.GestionarVoz;
 import alberapps.android.tiempobus.principal.GestionarWidget;
 import alberapps.android.tiempobus.principal.TiemposAdapter;
+import alberapps.android.tiempobus.rutas.RutasActivity;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
@@ -446,7 +447,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 integrator.shareText(paradaCodificada);
 
                 break;
+            case R.id.navigation_item_rutas:
 
+
+                detenerTodasTareas();
+                startActivity(new Intent(MainActivity.this, RutasActivity.class));
+
+
+                break;
         }
 
 
