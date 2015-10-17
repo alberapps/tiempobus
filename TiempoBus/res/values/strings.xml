@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">3.7.1</string>
+    <string name="app_version" translatable="false">3.8</string>
     <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor">Alberto Montiel (2015)</string>
     <string name="app_autor_mail">alberapps@gmail.com</string>
@@ -488,7 +488,7 @@
     <string name="aviso_header_rutas">IMPORTANTE: Esta funcionalidad está en desarrollo. Pueden producirse errores que se revisarán en próximas versiones.</string>
     <string name="menu_rutas">Cálculo de Rutas</string>
     <string name="error_ruta">Error al calcular la ruta</string>
-    <string name="rutas_info_c" translatable="false">Tram Alicante\nSubus - Vectalia\nRenfe Cercanias\nPowered by Google Maps Directions</string>
+    <string name="rutas_info_c" translatable="false">Tram Alicante\nSubús - Vectalia\nRenfe Cercanías\nPowered by Google Maps Directions</string>
     <string name="andar">Andar</string>
     <string name="cercanias">CERCANÍAS</string>
 

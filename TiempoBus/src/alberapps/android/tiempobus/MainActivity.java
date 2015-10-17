@@ -227,9 +227,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         cambiarLocale(false);
 
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
         iniciarDrawer(savedInstanceState);
-        //}
+
 
         // Verificar si hay parada por defecto
         if (preferencias.contains("parada_inicio")) {
@@ -1879,27 +1878,31 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     public static void analyticsTram(MainActivity actividad) {
 
-        try {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
 
-            int parada = actividad.preferencias.getInt("parada_tram", 0);
+            try {
 
-            if (parada != actividad.paradaActual) {
+                int parada = actividad.preferencias.getInt("parada_tram", 0);
 
-                SharedPreferences.Editor editor = actividad.preferencias.edit();
-                editor.putInt("parada_tram", actividad.paradaActual);
-                editor.commit();
+                if (parada != actividad.paradaActual) {
 
-                // Get tracker.
-                Tracker t = ((ApplicationTiempoBus) actividad.getApplication()).getTracker(TrackerName.APP_TRACKER);
+                    SharedPreferences.Editor editor = actividad.preferencias.edit();
+                    editor.putInt("parada_tram", actividad.paradaActual);
+                    editor.commit();
 
-                // Build and send an Event.
-                t.send(new HitBuilders.EventBuilder().setCategory("EVENTOS").setAction("TRAM").setLabel("TIEMPO_TRAM").build());
+                    // Get tracker.
+                    Tracker t = ((ApplicationTiempoBus) actividad.getApplication()).getTracker(TrackerName.APP_TRACKER);
 
-                Log.d("PRINCIPAL", "Enviado tram a analytics");
+                    // Build and send an Event.
+                    t.send(new HitBuilders.EventBuilder().setCategory("EVENTOS").setAction("TRAM").setLabel("TIEMPO_TRAM").build());
+
+                    Log.d("PRINCIPAL", "Enviado tram a analytics");
+
+                }
+
+            } catch (Exception e) {
 
             }
-
-        } catch (Exception e) {
 
         }
 

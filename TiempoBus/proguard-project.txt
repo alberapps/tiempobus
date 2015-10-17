@@ -138,8 +138,11 @@
 
 -repackageclasses 'android.support.v7'
 
--keep class !android.support.v7.** { *; }
--keep interface !android.support.v7.** { *; }
+-keep class !android.support.**,!android.support.v7.**,!jsoup.**,!com.google.** { *; }
+-keep interface !android.support.**,!android.support.v7.**,!jsoup.**,!com.google.** { *; }
+
+#-keep class !android.support.v7.** { *; }
+#-keep interface !android.support.v7.** { *; }
 
 
 #-dontwarn android.support.v7

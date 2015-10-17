@@ -88,7 +88,7 @@
                         android:padding="2dip"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/rutas_info_c"
-                        android:textSize="8sp" />
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/desc_c"
