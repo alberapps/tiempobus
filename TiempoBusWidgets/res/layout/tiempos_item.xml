@@ -111,8 +111,9 @@
                 android:gravity="center_vertical"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/mi_material_blue_indigo"
+                android:textColor="@color/mi_material_blue_principal"
                 android:textStyle="bold" />
+
 
             <TextView
                 android:id="@+id/bus_proximo"
@@ -121,7 +122,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/primary_dark_material_light"
+                android:textColor="@color/mi_material_blue_grey"
 
                 />
 
