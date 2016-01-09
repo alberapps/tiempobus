@@ -491,5 +491,6 @@
     <string name="rutas_info_c" translatable="false">Tram Alicante\nSubús - Vectalia\nRenfe Cercanías\nPowered by Google Maps Directions</string>
     <string name="andar">Andar</string>
     <string name="cercanias">CERCANÍAS</string>
+    <string name="notiemporeal">Horario (No es en Tiempo Real)</string>
 
 </resources>

@@ -517,10 +517,31 @@ public class DatosPantallaPrincipal {
 
                         String[] extendido = new String[2];
 
-                        extendido[0] = Utilidades.getFechaStringSinHora(noticias.get(0).getFecha()) + ": " + noticias.get(0).getNoticia();
+                        //Control fecha
+                        String fechaString0 = "";
+                        if (noticias.get(0).getFechaDoble() != null) {
+                            fechaString0 = noticias.get(0).getFechaDoble();
+                        } else if (noticias.get(0).getFecha() != null) {
+                            fechaString0 = Utilidades.getFechaStringSinHora(noticias.get(0).getFecha());
+                        } else {
+                            fechaString0 = context.getString(R.string.sin_fecha);
+                        }
+
+                        extendido[0] = fechaString0 + ": " + noticias.get(0).getNoticia();
 
                         if (noticias.size() > 1) {
-                            extendido[1] = Utilidades.getFechaStringSinHora(noticias.get(1).getFecha()) + ": " + noticias.get(1).getNoticia();
+
+                            //Control fecha
+                            String fechaString1 = "";
+                            if (noticias.get(1).getFechaDoble() != null) {
+                                fechaString1 = noticias.get(1).getFechaDoble();
+                            } else if (noticias.get(1).getFecha() != null) {
+                                fechaString1 = Utilidades.getFechaStringSinHora(noticias.get(1).getFecha());
+                            } else {
+                                fechaString1 = context.getString(R.string.sin_fecha);
+                            }
+
+                            extendido[1] = fechaString1 + ": " + noticias.get(1).getNoticia();
                         } else {
                             extendido[1] = "";
                         }
@@ -1136,6 +1157,24 @@ public class DatosPantallaPrincipal {
             public void onClick(View arg0) {
 
                 UtilidadesUI.openWebPage(context, "http://twitter.com/Magnoling_");
+
+            }
+        });
+
+        TextView blogAlberapps = (TextView) v.findViewById(R.id.info_alberapps_blog);
+        blogAlberapps.setOnClickListener(new TextView.OnClickListener() {
+            public void onClick(View arg0) {
+
+                UtilidadesUI.openWebPage(context, "http://alberapps.blogspot.com");
+
+            }
+        });
+
+        TextView fbAlberapps = (TextView) v.findViewById(R.id.info_alberapps_fb);
+        fbAlberapps.setOnClickListener(new TextView.OnClickListener() {
+            public void onClick(View arg0) {
+
+                UtilidadesUI.openWebPage(context, "https://facebook.com/alberapps");
 
             }
         });

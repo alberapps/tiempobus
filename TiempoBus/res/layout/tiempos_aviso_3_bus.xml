@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="5dp"
                     android:paddingTop="10dp">
 
 
@@ -80,6 +80,47 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="1dp">
+
+
+                    <TextView
+                        android:id="@+id/info_alberapps_blog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="alberapps.blogspot.com"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp">
+
+
+                    <TextView
+                        android:id="@+id/info_alberapps_fb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="facebook.com/alberapps"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
 
@@ -106,8 +147,7 @@
                         android:text="alicante.subus.es"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
 
                     <TextView

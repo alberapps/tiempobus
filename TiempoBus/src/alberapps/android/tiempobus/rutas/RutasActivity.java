@@ -20,6 +20,7 @@ package alberapps.android.tiempobus.rutas;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -35,11 +36,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +68,9 @@ import alberapps.java.directions.Step;
  */
 public class RutasActivity extends AppCompatActivity {
 
+
+    private static int PLACE_AUTOCOMPLETE_REQUEST_ORIGEN_CODE = 1;
+    private static int PLACE_AUTOCOMPLETE_REQUEST_DESTINO_CODE = 2;
 
     private ProgressDialog dialog;
 
@@ -154,6 +167,103 @@ public class RutasActivity extends AppCompatActivity {
 
         }
 
+
+        //Autocompletado con places
+        ImageButton botonOrigen = (ImageButton) findViewById(R.id.boton_origen);
+        botonOrigen.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                cargarAutocompletar(PLACE_AUTOCOMPLETE_REQUEST_ORIGEN_CODE);
+            }
+        });
+
+        ImageButton botonDestino = (ImageButton) findViewById(R.id.boton_destino);
+        botonDestino.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                cargarAutocompletar(PLACE_AUTOCOMPLETE_REQUEST_DESTINO_CODE);
+            }
+        });
+
+    }
+
+    private void cargarAutocompletar(int sentido) {
+
+        try {
+            Intent intent =
+                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(this);
+            startActivityForResult(intent, sentido);
+        } catch (GooglePlayServicesRepairableException e) {
+            // Indicates that Google Play Services is either not installed or not up to date. Prompt
+            // the user to correct the issue.
+            GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(),
+                    0 /* requestCode */).show();
+
+        } catch (GooglePlayServicesNotAvailableException e) {
+            // Indicates that Google Play Services is not available and the problem is not easily
+            // resolvable.
+            String message = "Google Play Services is not available: " +
+                    GoogleApiAvailability.getInstance().getErrorString(e.errorCode);
+
+            Log.e("RUTAS", message);
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Check that the result was from the autocomplete widget.
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_ORIGEN_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get the user's selected place from the Intent.
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                Log.i("RUTAS", "Place Selected: " + place.getName());
+
+
+                // Display attributions if required.
+                /*CharSequence attributions = place.getAttributions();
+                if (!TextUtils.isEmpty(attributions)) {
+                    mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
+                } else {
+                    mPlaceAttribution.setText("");
+                }*/
+
+
+                origen = place.getAddress().toString();
+                TextView textoOrigen = (TextView) findViewById(R.id.ruta_origen);
+                textoOrigen.setText(origen);
+
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.e("RUTAS", "Error: Status = " + status.toString());
+            } else if (resultCode == RESULT_CANCELED) {
+                // Indicates that the activity closed before a selection was made. For example if
+                // the user pressed the back button.
+            }
+
+        } else if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_DESTINO_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Get the user's selected place from the Intent.
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                Log.i("RUTAS", "Place Selected: " + place.getName());
+
+                destino = place.getAddress().toString();
+                TextView textoDestino = (TextView) findViewById(R.id.ruta_destino);
+                textoDestino.setText(destino);
+
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.e("RUTAS", "Error: Status = " + status.toString());
+            } else if (resultCode == RESULT_CANCELED) {
+                // Indicates that the activity closed before a selection was made. For example if
+                // the user pressed the back button.
+            }
+
+        }
     }
 
     /**

@@ -143,11 +143,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 DatosPantallaPrincipal.formatoLinea(contexto, tag.busLinea, bus.getLinea(), true);
 
 
-                if (bus.getLinea().equals("L9")) {
+                /*if (bus.getLinea().equals("L9")) {
 
                     tag.busProximo.setText("");
 
-                } else {
+                } else {*/
 
                     if (bus.getSegundoTram() != null) {
 
@@ -161,7 +161,17 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                         tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
                     }
+               // }
+
+
+                //Mensaje tiempo real
+                TextView textoTiempoReal = (TextView) v.findViewById(R.id.tiempo_aviso);
+                if(bus.isTiempoReal()){
+                    textoTiempoReal.setVisibility(View.GONE);
+                }else {
+                    textoTiempoReal.setVisibility(View.VISIBLE);
                 }
+
 
             }
 

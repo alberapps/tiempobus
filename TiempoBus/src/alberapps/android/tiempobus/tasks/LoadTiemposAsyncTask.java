@@ -30,8 +30,8 @@ import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.ProcesarTiemposTramIsaeService;
+import alberapps.java.tram.ProcesarTiemposTramPorHorarios;
 import alberapps.java.tram.UtilidadesTRAM;
-import alberapps.java.tram.linea9.ProcesarTiemposTramL9Texto;
 import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
 import alberapps.java.util.Utilidades;
 
@@ -116,7 +116,10 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
                 try {
                     //Tiempos isae tram diesel
-                    llegadasDiesel = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+                    //llegadasDiesel = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+
+                    llegadasDiesel = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI);
+
                 } catch (Exception e) {
                     llegadasDiesel = null;
                 }
@@ -148,7 +151,8 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             } else if (UtilidadesTRAM.esParadaL9(parada)) {
 
-                llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+                //llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
+                llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI);
 
             } else if (DatosPantallaPrincipal.esTram(parada)) {
 

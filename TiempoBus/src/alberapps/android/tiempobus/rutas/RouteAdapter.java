@@ -162,6 +162,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         // Get element from your dataset at this position and replace the contents of the view
         // with that element
 
+
         if (viewHolder instanceof ItemViewHolder) {
 
             Leg leg = null;

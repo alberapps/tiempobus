@@ -53,10 +53,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -856,26 +858,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         botonCargaTiempos.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
-                EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
-
-                try {
-                    int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
-                    if (tmpPoste > 0 && tmpPoste < 9999) {
-                        paradaActual = tmpPoste;
-
-                        SharedPreferences.Editor editor = preferencias.edit();
-                        editor.putInt("parada_inicio", paradaActual);
-                        editor.commit();
-
-                        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-
-                    }
-                } catch (NumberFormatException e) {
-                    // Si no ha metido un numero correcto no hacemos nada
-                }
+                accionCargar();
 
             }
         });
+
 
         // //Barcode
 
@@ -930,6 +917,46 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         swipeRefresh.setColorSchemeResources(R.color.mi_material_blue_principal, R.color.tram_l2, R.color.mi_material_blue_principal, R.color.tram_l2);
         swipeRefresh.setOnRefreshListener(this);
 
+
+        //Control desde teclado
+        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        txtPoste.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    accionCargar();
+                    return false;
+                }
+
+                return false;
+            }
+        });
+
+
+    }
+
+    /**
+     * Cargar al pulsar boton o otra accion
+     */
+    private void accionCargar() {
+
+        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+
+        try {
+            int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
+            if (tmpPoste > 0 && tmpPoste < 9999) {
+                paradaActual = tmpPoste;
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putInt("parada_inicio", paradaActual);
+                editor.commit();
+
+                handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+            }
+        } catch (NumberFormatException e) {
+            // Si no ha metido un numero correcto no hacemos nada
+        }
 
     }
 
@@ -1532,33 +1559,33 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             });
 
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                                FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
+                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                            FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
 
-                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
+                            imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
 
-                                // Para acceder a guardar favorito
-                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
-                                    public void onClick(View v) {
-                                        // TODO Auto-generated method stub
-                                        Intent i = new Intent(activ, FavoritoNuevoActivity.class);
+                            // Para acceder a guardar favorito
+                            imgCircularFavorito.setOnClickListener(new OnClickListener() {
+                                public void onClick(View v) {
+                                    // TODO Auto-generated method stub
+                                    Intent i = new Intent(activ, FavoritoNuevoActivity.class);
 
-                                        Bundle extras = new Bundle();
-                                        extras.putInt("POSTE", activ.paradaActual);
-                                        // Preparamos una descripcion automatica para el
-                                        // favorito
-                                        HashSet<String> h = new HashSet<String>();
-                                        for (BusLlegada bus : activ.buses) {
-                                            h.add(bus.getLinea() + " a " + bus.getDestino());
-                                        }
-                                        extras.putString("DESCRIPCION", h.toString());
-
-                                        i.putExtras(extras);
-                                        activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+                                    Bundle extras = new Bundle();
+                                    extras.putInt("POSTE", activ.paradaActual);
+                                    // Preparamos una descripcion automatica para el
+                                    // favorito
+                                    HashSet<String> h = new HashSet<String>();
+                                    for (BusLlegada bus : activ.buses) {
+                                        h.add(bus.getLinea() + " a " + bus.getDestino());
                                     }
-                                });
+                                    extras.putString("DESCRIPCION", h.toString());
 
-                            } else {
+                                    i.putExtras(extras);
+                                    activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+                                }
+                            });
+
+                            /*} else {
 
                                 ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
 
@@ -1585,7 +1612,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                     }
                                 });
 
-                            }
+                            }*/
 
 
                         } else {

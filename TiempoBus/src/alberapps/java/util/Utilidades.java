@@ -34,10 +34,12 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -115,7 +117,7 @@ public class Utilidades {
 
         Date fechaDate = null;
 
-        if (fecha != null) {
+        if (fecha != null && !fecha.equals("")) {
             try {
                 fechaDate = df.parse(fecha);
 
@@ -265,6 +267,47 @@ public class Utilidades {
 
     }
 
+    /**
+     * Fecha de hoy con la hora indicada
+     *
+     * @param hora
+     * @return
+     */
+    public static Date getFechaActualConHora(String hora) {
+
+        String[] horas = hora.split(":");
+
+        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horas[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(horas[1]));
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+
+    }
+
+    /**
+     * Diferencia en minutos entre dos fechas
+     *
+     * @param fecha1
+     * @param fecha2
+     * @return
+     */
+    public static String getMinutosDiferencia(Date fecha1, Date fecha2) {
+
+        /*long secs = (fecha2.getTime() - fecha1.getTime()) / 1000;
+        long hours = secs / 3600;
+        secs = secs % 3600;
+        long mins = secs / 60;
+        secs = secs % 60;*/
+
+        long diff = fecha2.getTime() - fecha1.getTime();
+        long diffMinutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+
+        return Long.toString(diffMinutes);
+
+    }
 
     /**
      * String desde date

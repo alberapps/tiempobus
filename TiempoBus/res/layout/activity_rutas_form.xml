@@ -28,85 +28,110 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-            <LinearLayout
+        <LinearLayout
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    >
-                    <FrameLayout
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/origen"
-                        android:textStyle="bold"
                         android:gravity="left"
-                        android:textColor="@color/white"/>
+                        android:text="@string/origen"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
-                    </FrameLayout>
-
-                    <EditText
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:id="@+id/ruta_origen"
-                        android:background="@color/white"
-                        android:textColor="@color/mi_material_blue_principal"/>
-
-
-                </LinearLayout>
+                </FrameLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    >
-
-                    <FrameLayout
-                        android:layout_width="220dp"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/destino"
-                            android:textStyle="bold"
-                            android:gravity="left"
-                            android:textColor="@color/white"/>
-
-                    </FrameLayout>
+                    android:layout_width="220dp"
+                    android:layout_height="25dp">
 
                     <EditText
-                        android:layout_width="220dp"
+                        android:id="@+id/ruta_origen"
+                        android:layout_width="190dp"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:id="@+id/ruta_destino"
                         android:background="@color/white"
-                        android:textColor="@color/mi_material_blue_principal"/>
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:singleLine="true"/>
 
-
+                    <ImageButton
+                        android:id="@+id/boton_origen"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Origen"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_place_white_24dp" />
                 </LinearLayout>
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
+                <FrameLayout
+                    android:layout_width="220dp"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:text="@string/destino"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="220dp"
+                    android:layout_height="25dp">
+
+                    <EditText
+                        android:id="@+id/ruta_destino"
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:singleLine="true"/>
+
+                    <ImageButton
+                        android:id="@+id/boton_destino"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Destino"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_place_white_24dp" />
+                </LinearLayout>
 
             </LinearLayout>
 
 
+        </LinearLayout>
+
 
     </LinearLayout>
+
 
 </LinearLayout>
