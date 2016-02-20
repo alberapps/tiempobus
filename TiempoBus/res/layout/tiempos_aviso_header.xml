@@ -47,14 +47,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/linearLayout1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp">
 
                         <ImageView
                             android:id="@+id/indicador_favorito"
@@ -193,6 +194,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/mi_material_grey_200">
 
                     <ImageButton

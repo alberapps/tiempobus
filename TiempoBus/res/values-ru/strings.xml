@@ -3,10 +3,6 @@
 
     <string name="app_name">TiempoBus y Tram</string>
 
-    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2015)</string>
-    <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Код автобусной остановки…</string>
     <string name="main_no_items">Без информации</string>
     <string name="ok">ОК</string>
@@ -178,11 +174,8 @@
     <string name="aviso_buscador_online">Маршруты получены непосредственно из сайта subus.es.</string>
     <string name="streetview_ko">Ошибка при доступе к Street View. Пожалуйста, проверьте, если приложение установлено.</string>
     <string name="streetview_boton">Street View</string>
-    <string name="guion">-</string>
-    <string name="url_subus">www.subus.es</string>
-    <string name="hora_inicial">0:00</string>
-   
-    
+
+
     <string name="alarma_auto_aviso">* Если этот параметр включен, время будет автоматически обновляться каждые %s секунд.</string>
     <string name="alarma_auto_error">Ошибка при обновление сигнала</string>
     <string name="alarma_auto_actualizada">Сигнал обновлен</string>
@@ -240,17 +233,14 @@
     <string name="menu_widget">&gt;&gt;Виджет TiempoBus</string>
     <string name="widget_instalar">Хотите ли Вы установить виджет TiempoBus с Google Play?</string>
     <string name="widget_market">Google Play не установлен на устройстве</string>
-    
-    <string name="ir_tw">&gt;&gt;Twitter</string>
-    
+
     <string name="observaciones">Замечания:</string>
     
     <string name="tw_maximo">Твиты</string>
     <string name="tw_maximo_desc">Максимальное количество каждого элемента</string>
     
      <string name="parada_tram">Автобусная остановка</string>
-    
-    <string name="rss_tram">TRAM</string>
+
     <string name="carga_rss_tram_msg">Загрузка RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
     
@@ -289,7 +279,6 @@
     <string name="acercade_info_nuevo">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны:</string>
 	<string name="acercade_info_nuevo_bus">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны: subus.es - isaealicante.subus.es/movil/index.aspx</string>
 	<string name="acercade_info_nuevo_2">Разработка:\nalberapps.blogspot.com - twitter.com/alberapps\nПеревод:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="aviso_infoapp">&gt;InfoApp</string>
     <string name="infoapp_trad">Перевод: magnoling.com</string>
     
     <string name="legal">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM и TRAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
@@ -311,10 +300,8 @@
     <string name="info_tram_inicio">TRAM прибывает в TiempoBus\n- Теперь вы можете получить доступ к информации и расписанию TRAM. \n- Просто измените на TRAM или на BUS, в списке под поисковиком и картами. \n- Избранное будет работать одновременно в обоих режимах. \n- Войдите в раздел новостей, чтобы просмотреть новости и твитер TRAM. \n- Навигатор GPS укажет Вам ближайшие остановки обоих сетей. \n- Вы будите получать уведомления о новых объявлениях TRAM из официального Twitter компании. (Вы можете изменить это в настройках).</string>
    
     <string name="leer_1_tram">Трамвай линии</string>
-    
-   
-    
-    <string name="error_gps">ERROR GPS</string>
+
+
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
 	
@@ -337,9 +324,7 @@
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
-    
-    <string name="drive_modal">Google Drive</string>
-    
+
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     

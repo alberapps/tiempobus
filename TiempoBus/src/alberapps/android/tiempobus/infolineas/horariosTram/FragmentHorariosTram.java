@@ -904,12 +904,15 @@ public class FragmentHorariosTram extends Fragment {
                 return favoritosList;
 
             } else {
-                return null;
+                //return null;
             }
 
         } catch (Exception e) {
-            return null;
+            //return null;
         }
+
+
+        return favoritosList;
 
     }
 

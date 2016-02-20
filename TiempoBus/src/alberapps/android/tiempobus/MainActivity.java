@@ -273,28 +273,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @SuppressLint("NewApi")
     private void iniciarDrawer(Bundle savedInstanceState) {
         mTitle = mDrawerTitle = getTitle();
-        //mDrawerTitles = getResources().getStringArray(R.array.menu_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         mDrawerView = (NavigationView) findViewById(R.id.left_drawer);
-
-        //mDrawerIcons = getResources().getStringArray(R.array.menu_icons_array);
-
-        //Header
-        //LayoutInflater li2 = LayoutInflater.from(this);
-        //View vheader = li2.inflate(R.layout.drawer_menu_header, null);
-        //mDrawerView.addHeaderView(vheader);
-        //mDrawerList.addHeaderView(vheader);
-
 
         // set a custom shadow that overlays the main content when the drawer
         // opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles));
-        //mDrawerList.setAdapter(new DrawerAdapter<String>(this, R.layout.drawer_list_item, mDrawerTitles, mDrawerIcons));
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         mDrawerView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -319,7 +304,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to
-                // onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
@@ -327,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu(); // creates call to
-                // onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -354,14 +337,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
-    /* The click listner for ListView in the navigation drawer */
-    /*private class DrawerItemClickListener implements ListView.OnItemClickListener {
-
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-
-        }
-    }*/
 
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
@@ -1334,13 +1309,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             swipeRefresh.setRefreshing(true);
 
-            //Toast.makeText(this, getResources().getText(R.string.aviso_recarga), Toast.LENGTH_SHORT).show();
-
-
-            //Recarga en boton barra superior
-           /* if (refresh != null) {
-                MenuItemCompat.setActionView(refresh, R.layout.actionbar_indeterminate_progress);
-            }*/
 
         } else {
 
@@ -1349,9 +1317,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 swipeRefresh.setRefreshing(false);
             }
 
-            /*if (refresh != null) {
-                MenuItemCompat.setActionView(refresh, null);
-            }*/
 
         }
     }
@@ -1584,35 +1549,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                     activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
                                 }
                             });
-
-                            /*} else {
-
-                                ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
-
-                                imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
-
-                                // Para acceder a guardar favorito
-                                imgCircularFavorito.setOnClickListener(new OnClickListener() {
-                                    public void onClick(View v) {
-                                        // TODO Auto-generated method stub
-                                        Intent i = new Intent(activ, FavoritoNuevoActivity.class);
-
-                                        Bundle extras = new Bundle();
-                                        extras.putInt("POSTE", activ.paradaActual);
-                                        // Preparamos una descripcion automatica para el
-                                        // favorito
-                                        HashSet<String> h = new HashSet<String>();
-                                        for (BusLlegada bus : activ.buses) {
-                                            h.add(bus.getLinea() + " a " + bus.getDestino());
-                                        }
-                                        extras.putString("DESCRIPCION", h.toString());
-
-                                        i.putExtras(extras);
-                                        activ.startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
-                                    }
-                                });
-
-                            }*/
 
 
                         } else {
@@ -1882,19 +1818,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
 
         return t;
-
-		/*
-         * try { Tracker t = activity.getTracker();
-		 * 
-		 * t.send(new HitBuilders.ExceptionBuilder().setDescription(new
-		 * StandardExceptionParser(activity,
-		 * null).getDescription(Thread.currentThread().getName(),
-		 * e)).setFatal(false).build());
-		 * 
-		 * } catch (Exception ex) {
-		 * 
-		 * }
-		 */
 
     }
 

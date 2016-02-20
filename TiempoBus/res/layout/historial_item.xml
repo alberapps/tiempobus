@@ -55,7 +55,7 @@
                     android:gravity="center"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/primary_material_dark"
+                    android:textColor="@color/mi_material_blue_principal"
                     android:textStyle="bold" />
 
                 <LinearLayout

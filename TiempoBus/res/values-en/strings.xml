@@ -3,10 +3,6 @@
 
     <string name="app_name">TiempoBus y Tram</string>
 
-    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2015)</string>
-    <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Stop code&#8230; </string>
     <string name="main_no_items">No information</string>
     <string name="ok">ok</string>
@@ -177,9 +173,6 @@
     <string name="aviso_buscador_online">Tours are retrieved directly from the site alicante.subus.es.</string>
     <string name="streetview_ko">Error accessing Street View. Please check if it is installed.</string>
     <string name="streetview_boton">Street View</string>
-    <string name="guion">-</string>
-    <string name="url_subus">www.subus.es</string>
-    <string name="hora_inicial">0:00</string>
 
     <string name="alarma_auto_aviso">* With this option enabled, time is updated automatically every %s seconds.</string>
 
@@ -240,8 +233,6 @@
     <string name="widget_instalar">Do you want to install TiempoBus Widgets from Google Play?</string>
     <string name="widget_market">Google Play is not installed on the device</string>
 
-    <string name="ir_tw">>>Twitter</string>
-
     <string name="observaciones">Remarks:</string>
 
     <string name="tw_maximo">Tweets</string>
@@ -249,7 +240,6 @@
 
     <string name="parada_tram">Stop</string>
 
-    <string name="rss_tram">TRAM</string>
     <string name="carga_rss_tram_msg">Loading RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
 
@@ -289,7 +279,6 @@
 		\nLines and times data offered and maintained by:</string>
     <string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
     <string name="acercade_info_nuevo_2">Development:\nalberapps.blogspot.com - twitter.com/alberapps\nTranslations:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Translations: magnoling.com</string>
     
     <string name="legal">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TRAM and TAM networks.
@@ -328,7 +317,6 @@
     <string name="leer_1_tram">A tram of the line</string>
 
 
-    <string name="error_gps">ERROR GPS</string>
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
     <string name="legal_sin_tram">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TAM networks.
@@ -355,8 +343,6 @@
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
 
-    <string name="drive_modal">Google Drive</string>
-
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     
@@ -371,5 +357,10 @@
     <string name="foreground_service_started_2">Verify time every 60 seconds</string>
     <string name="bus_tram">Bus and Tram</string>
     <string name="horarios_tram_aviso">Tours are retrieved directly from the site tramalicante.es</string>
+    <string name="notiemporeal">Timetable (It is not realtime)</string>
+    <string name="noticias_no_todas">Hide</string>
+    <string name="noticias_todas">See all</string>
+    <string name="sin_fecha">No date</string>
+    <string name="title_activity_rutas">Routes</string>
 
 </resources>

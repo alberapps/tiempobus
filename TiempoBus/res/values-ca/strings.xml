@@ -3,10 +3,6 @@
 
     <string name="app_name">TempsBus i Tram</string>
 
-    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2015)</string>
-    <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Nº de parada&#8230;</string>
     <string name="main_no_items">Sense Informació </string>
     <string name="ok">ok</string>
@@ -176,11 +172,8 @@ favorit per crear la teua llista.</string>
     <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de alicante.subus.es.</string>
     <string name="streetview_ko">Error en intentar accedir a Street View, comprova si està instal·lat.</string>
     <string name="streetview_boton">Street View</string>
-    <string name="guion">-</string>
-    <string name="url_subus">www.subus.es</string>
-    <string name="hora_inicial">0:00</string>
 
-    
+
     <string name="alarma_auto_aviso">* Amb esta opció, el temps s\'actualitza automàticament cada %s segons, per ajustar-se als canvis.</string>
     <string name="alarma_auto_error">Problema en actualitzar Alarma</string>
     <string name="alarma_auto_actualizada">Alarma Actualitzada</string>
@@ -240,18 +233,15 @@ favorit per crear la teua llista.</string>
     <string name="menu_widget">>>TiempoBus Widget</string>
     <string name="widget_instalar">Vols accedir a Google Play per instal·lar TiempoBus Widgets?</string>
     <string name="widget_market">Google Play no està instal·lat al dispositiu</string>
-    
-    <string name="ir_tw">>>Twitter</string>
-    
+
     <string name="observaciones">Observacions:</string>
     
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Màxims de cadascun</string>
     
     <string name="parada_tram">Parada</string>
-    
-    
-    <string name="rss_tram">TRAM</string>
+
+
     <string name="carga_rss_tram_msg">Carregant RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
     
@@ -292,7 +282,6 @@ favorit per crear la teua llista.</string>
 		\nDades de línies i temps oferits i mantinguts per:</string>
 	<string name="acercade_info_nuevo_bus">Esta aplicació NO és oficial i es desenvolupa de forma independent.\nDades de línies i temps oferits i mantinguts per: subus.es - isaealicante.subus.es/movil/index.aspx</string>
 	<string name="acercade_info_nuevo_2">Desenvolupament:\nalberapps.blogspot.com - twitter.com/alberapps\nTraduccions:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Traduccions: magnoling.com</string>
     
     
@@ -331,11 +320,9 @@ favorit per crear la teua llista.</string>
     </string>
 	
 	<string name="leer_1_tram">El tramvia de la línia</string>
-				
-   
-    
-     <string name="error_gps">ERROR GPS</string>
-     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+
+
+    <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
      <string name="legal_sin_tram">Temps obtinguts del sistema ISAE, que oferix, en TEMPS REAL, la ESTIMACIÓ de temps de pas de la xarxa TAM.
         Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
@@ -360,9 +347,7 @@ favorit per crear la teua llista.</string>
     <string name="ok_exportar_drive">Els favorits s\'han exportat correctament a Google Drive</string>
     <string name="error_importar_drive">ERROR: No s\'ha pogut importar des de Google Drive</string>
     <string name="ok_importar_drive">Favorits importats correctament des de Google Drive</string>
-    
-    <string name="drive_modal">Google Drive</string>
-    
+
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     
@@ -393,8 +378,7 @@ favorit per crear la teua llista.</string>
     <string name="reconocimiento_voz_titulo">Possibilitats</string>
     
     <string name="wikipedia">Viquipèdia</string>
-    <string name="eltiempo">Yahoo! Weather.</string>
-    
+
     <string name="error_descarga_actualizacion">S\'ha produït un error en la descàrrega de l\'actualització</string>
     
     <string name="actualizacion_aviso">* Hi ha disponible una actualització de la base de dades. Selecciona per acceptar o descartar.</string>
@@ -410,9 +394,7 @@ favorit per crear la teua llista.</string>
     <string name="app_name_b">TempsBus(TiempoBus)</string>
     
     <string name="error_horarios_modal">No s\'han pogut carregar els horaris. Vols veure-ho al navegador?</string>
-    
-    <string name="twitter4j">Powered by Twitter4J</string>
-    
+
     <string name="pref_control_actualizar_titulo">Verificar Actualitzacions</string>
     <string name="pref_control_actualizar_desc">En iniciar l\'aplicació, verificar si hi ha actualitzacions de la base de dades</string>
     
@@ -438,9 +420,7 @@ favorit per crear la teua llista.</string>
    </string> 
    
     <string name="error_voz">No se ha podido inicializar TextToSpeech</string>
-    
-    <string name="noticia_zoom_aumenta">Zoom(+)</string>
-    <string name="noticia_zoom_reducir">Zoom(-)</string>
+
     <string name="bus_tram">Bus i Tram</string>
     <string name="bus_tram_titulo">AlberApps: TempsBus</string>
     <string name="conf_conectividad_titulo_check_tiempos">Activar memòria cau temps</string>
@@ -464,5 +444,10 @@ favorit per crear la teua llista.</string>
     <string name="cercanias"> RODALIES</string>
     <string name="andar">Caminar</string>
     <string name="origen">Origen</string>
+    <string name="duracion">Temps</string>
+    <string name="tipo_billete">Bitllet per a zones</string>
+    <string name="transbordos">Transbords</string>
+    <string name="notiemporeal">Horari (No és en temps real)</string>
+    <string name="twitter4j" translatable="false"></string>
 
 </resources>

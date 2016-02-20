@@ -2,11 +2,11 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">3.8</string>
-    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2015)</string>
-    <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">alberapps.blogspot.com</string>
+    <string name="app_version" translatable="false">3.8.5</string>
+    <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
+    <string name="app_autor" translatable="false">Alberto Montiel (2016)</string>
+    <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
+    <string name="app_autor_web" translatable="false">alberapps.blogspot.com</string>
     <string name="poste">Nº de parada&#8230;</string>
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
@@ -179,9 +179,9 @@
     <string name="horarios_tram_aviso">Los recorridos se recuperan directamente de la web de tramalicante.es</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
-    <string name="guion">-</string>
-    <string name="url_subus">www.subus.es</string>
-    <string name="hora_inicial">0:00</string>
+    <string name="guion" translatable="false">-</string>
+    <string name="url_subus" translatable="false">alicante.subus.es</string>
+    <string name="hora_inicial" translatable="false">0:00</string>
 
     <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
 
@@ -242,7 +242,7 @@
     <string name="widget_instalar">¿Quieres acceder a Google Play para instalar TiempoBus Widgets?</string>
     <string name="widget_market">Google Play no está instalado en el dispositivo</string>
 
-    <string name="ir_tw">>>Twitter</string>
+    <string name="ir_tw" translatable="false">>>Twitter</string>
 
     <string name="observaciones">Observaciones:</string>
 
@@ -251,7 +251,7 @@
 
     <string name="parada_tram">Parada</string>
 
-    <string name="rss_tram">TRAM</string>
+    <string name="rss_tram" translatable="false">TRAM</string>
     <string name="carga_rss_tram_msg">Cargando RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
 
@@ -291,7 +291,7 @@
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
     <string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
     <string name="acercade_info_nuevo_2">Desarrollo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraducciones:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="aviso_infoapp">>InfoApp</string>
+    <string name="aviso_infoapp" translatable="false">InfoApp</string>
     <string name="infoapp_trad">Traducciones: magnoling.com</string>
     
     <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
@@ -330,7 +330,7 @@
     <string name="leer_1_tram">El tranvía de la línea</string>
 
 
-    <string name="error_gps">ERROR GPS</string>
+    <string name="error_gps" translatable="false">ERROR GPS</string>
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
     <string name="legal_sin_tram">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM.
@@ -357,7 +357,7 @@
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
 
-    <string name="drive_modal">Google Drive</string>
+    <string name="drive_modal" translatable="false">Google Drive</string>
 
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
@@ -388,7 +388,7 @@
     <string name="reconocimiento_voz_titulo">Posibilidades</string>
 
     <string name="wikipedia">Wikipedia</string>
-    <string name="eltiempo">Yahoo! Weather</string>
+    <string name="eltiempo" translatable="false">Yahoo! Weather</string>
     <string name="eltiempoOWM" translatable="false">OpenWeatherMap</string>
 
     <string name="error_descarga_actualizacion">Se ha producido un error en la descarga de la actualización</string>
@@ -407,7 +407,7 @@
 
     <string name="error_horarios_modal">No se han podido cargar los horarios. ¿Quieres verlo en el navegador?</string>
 
-    <string name="twitter4j">Powered by Twitter4J</string>
+    <string name="twitter4j" translatable="false">Powered by Twitter4J</string>
 
     <string name="pref_control_actualizar_titulo">Verificar Actualizaciones</string>
     <string name="pref_control_actualizar_desc">Al iniciar la aplicación, verificar si hay actualizaciones de la base de datos</string>
@@ -435,8 +435,7 @@
 
     <string name="error_voz">No se ha podido inicializar TextToSpeech</string>
 
-    <string name="noticia_zoom_aumenta">Zoom(+)</string>
-    <string name="noticia_zoom_reducir">Zoom(-)</string>
+    <string name="noticia_zoom_reducir" translatable="false">Zoom(-)</string>
 
     <string name="error_no_definido" translatable="false">Error!</string>
 
@@ -496,5 +495,6 @@
     <string name="duracion">Duración</string>
     <string name="tipo_billete">Billete para zonas</string>
     <string name="transbordos">Transbordos</string>
+    <string name="noticia_zoom_aumenta" translatable="false">Zoom(+)</string>
 
 </resources>

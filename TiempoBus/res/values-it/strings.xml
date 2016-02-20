@@ -3,10 +3,6 @@
 
     <string name="app_name">TiempoBus y Tram</string>
 
-    <string name="app_licencia">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor">Alberto Montiel (2015)</string>
-    <string name="app_autor_mail">alberapps@gmail.com</string>
-    <string name="app_autor_web">alberapps.blogspot.com</string>
     <string name="poste">Numero di fermata&#8230;</string>
     <string name="main_no_items">Senza informazione</string>
     <string name="ok">ok</string>
@@ -177,10 +173,7 @@
     <string name="aviso_buscador_online">I percorsi si recuperano direttamente dalla web da subus.es</string>
     <string name="streetview_ko">Errore nell\'accesso a Street View. Controlla se è installato.</string>
     <string name="streetview_boton">Street View</string>
-    <string name="guion">-</string>
-    <string name="url_subus">www.subus.es</string>
-    <string name="hora_inicial">0:00</string>
-    
+
     <string name="alarma_auto_aviso">* Con questa scelta, il tempo si aggiorna automaticamente ogni %s secondi.</string>
     
   
@@ -240,17 +233,14 @@
     <string name="menu_widget">>>TiempoBus Widget</string>
     <string name="widget_instalar">Vuoi accedere a Google Play per installare TiempoBus Widgets?</string>
     <string name="widget_market">Google Play non è installato sul dispositivo</string>
-    
-    <string name="ir_tw">>>Twitter</string>
-    
+
     <string name="observaciones">Osservazioni:</string>
     
     <string name="tw_maximo">Tweets</string>
     <string name="tw_maximo_desc">Massimo per ciascuno</string>
     
     <string name="parada_tram">Fermata</string>
-    
-    <string name="rss_tram">TRAM</string>
+
     <string name="carga_rss_tram_msg">Caricando RSS</string>
     <!-- cambiar aviso_buscador_online buscador_online-->
     
@@ -290,7 +280,6 @@
 		\nDati di linee e tempi offerti e mantenuti da:</string>
 	<string name="acercade_info_nuevo_bus">Questa applicazione NON è ufficiale e si sviluppa in modo indipendente.\nDati di linee e tempi offerti e mantenuti da: subus.es - isaealicante.subus.es/movil/index.aspx</string>
 	<string name="acercade_info_nuevo_2">Sviluppo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraduzioni:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="aviso_infoapp">>InfoApp</string>
     <string name="infoapp_trad">Traduzioni: magnoling.com</string>
     
     <string name="legal">Tempi ottenuti dal sistema ISAE, che offre, in TEMPO REALE, la PREVISIONE dei tempi di arrivo delle reti TAM e TRAM.
@@ -327,11 +316,9 @@
     </string>
     
     <string name="leer_1_tram">Il tram della linea</string>
-    
-   
-    
-     <string name="error_gps">ERROR GPS</string>
-     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
+
+
+    <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
     <string name="legal_sin_tram">Tempi ottenuti dal sistema ISAE, che offre, in TEMPO REALE, la PREVISIONE dei tempi di arrivo delle reti TAM.
         \nQuesti tempi possono variare per motivi diversi aliene dalla applicazione, come il traffico, modifiche nel percorso, etc.
@@ -356,9 +343,7 @@
     <string name="ok_exportar_drive">Los favoritos se han exportado correctamente a Google Drive</string>
     <string name="error_importar_drive">ERROR: No se ha podido importar desde Google Drive</string>
     <string name="ok_importar_drive">Favoritos importados correctamente desde Google Drive</string>
-    
-    <string name="drive_modal">Google Drive</string>
-    
+
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
     
@@ -372,6 +357,7 @@
     <string name="foreground_service_started_2">Verifica tempo ogni 60 secondi.</string>
     <string name="bus_tram">Bus e Tram</string>
     <string name="horarios_tram_aviso">I percorsi si recuperano direttamente dalla web da tramalicante.es</string>
+    <string name="url_subus" translatable="false"></string>
 
 
 </resources>
