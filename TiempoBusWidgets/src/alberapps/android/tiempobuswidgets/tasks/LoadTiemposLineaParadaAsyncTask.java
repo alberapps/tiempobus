@@ -87,9 +87,9 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 
 					llegadaBus = ProcesarTiemposService.getPosteConLinea(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada());
 				}
-				
-				
-				
+
+
+
 				
 				if (llegadaBus == null) {
 

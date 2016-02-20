@@ -319,19 +319,22 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
         }
 
-        if (procesa[1].equals("enlaparada")) {
+        if(procesa.length > 1) {
 
-            tiempo2 = (String) mContext.getResources().getText(R.string.tiempo_m_1);
+            if (procesa[1].equals("enlaparada")) {
 
-        } else if (procesa[1].equals("sinestimacion")) {
+                tiempo2 = (String) mContext.getResources().getText(R.string.tiempo_m_1);
 
-            tiempo2 = (String) mContext.getResources().getText(R.string.tiempo_m_2);
+            } else if (procesa[1].equals("sinestimacion")) {
+
+                tiempo2 = (String) mContext.getResources().getText(R.string.tiempo_m_2);
 
 
-        } else {
+            } else {
 
-            tiempo2 = procesa[1];
+                tiempo2 = procesa[1];
 
+            }
         }
 
         String nuevoLiteral = "";
