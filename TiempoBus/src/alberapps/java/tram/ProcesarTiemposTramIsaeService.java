@@ -54,16 +54,7 @@ public class ProcesarTiemposTramIsaeService {
 
         ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
 
-        // ProcesarTiemposTramService.enviarDebug("Inicia proceso para parada= "
-        // + parada);
-
-        // for (int i = 0; i < UtilidadesTRAM.LINEAS_A_CONSULTAR.length; i++) {
-
         try {
-
-            // busesList =
-            // getParadaConLineaTRAM(UtilidadesTRAM.LINEAS_A_CONSULTAR[i],
-            // Integer.toString(parada), consulta);
 
             // Nuevo modo de consulta. * recupera todas las lineas
             busesList = getParadaConLineaTRAM("*", Integer.toString(parada), consulta, cacheTiempos);
@@ -71,9 +62,6 @@ public class ProcesarTiemposTramIsaeService {
         } catch (Exception e) {
 
             Log.d("TIEMPOS TRAM", "TRAM: " + e.getMessage());
-
-            // ProcesarTiemposTramService.enviarDebug("Error procesado= " +
-            // e.getMessage() + " - " + e.getClass());
 
             busesList = null;
 
@@ -83,11 +71,6 @@ public class ProcesarTiemposTramIsaeService {
         if (busesList != null) {
             buses.addAll(busesList);
         }
-
-        // }
-
-        // ProcesarTiemposTramService.enviarDebug("Proceso finalizado para: " +
-        // parada + " resultados= " + buses.size());
 
         // Control errores del status
         if (buses == null || buses.isEmpty()) {
@@ -187,6 +170,14 @@ public class ProcesarTiemposTramIsaeService {
 
 
         GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, consulta, cacheTiempos);
+
+        // Control errores del status
+        if (serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && (serviceResult.getStatus() != null && serviceResult.getStatus().equals("-1"))) {
+
+            throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
+
+        }
+
 
         for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 

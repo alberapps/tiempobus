@@ -78,6 +78,20 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                         datos.append("\n");
                     }
 
+                    if (i == 0) {
+                        datos.append("- ");
+                        datos.append(ctx.getString(R.string.duracion));
+                        datos.append(": ");
+                    } else if (i == 1) {
+                        datos.append("- ");
+                        datos.append(ctx.getString(R.string.tipo_billete));
+                        datos.append(": ");
+                    }else if (i == 2) {
+                        datos.append("- ");
+                        datos.append(ctx.getString(R.string.transbordos));
+                        datos.append(": ");
+                    }
+
                     datos.append(horas.getInfoRecorrido().get(i));
 
                 }
@@ -176,7 +190,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
         }
 
         //Control error al recuperar los datos
-        if(horarios.size() == 1 && horarios.get(0).getHoras() == null){
+        if (horarios.size() == 1 && horarios.get(0).getHoras() == null) {
             horarios.get(0).setErrorServicio(true);
         }
 

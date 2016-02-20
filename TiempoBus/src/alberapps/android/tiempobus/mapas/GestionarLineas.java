@@ -629,6 +629,7 @@ public class GestionarLineas {
             botonVehiculos.setChecked(true);
         }
 
+
         botonVehiculos.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {

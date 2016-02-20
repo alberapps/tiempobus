@@ -45,6 +45,7 @@
                 android:id="@+id/txt_datos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_gravity="left"
                 android:text="@string/main_no_items"
                 android:textAppearance="?android:attr/textAppearanceSmall"

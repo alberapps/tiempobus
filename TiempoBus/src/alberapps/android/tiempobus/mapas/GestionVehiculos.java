@@ -37,6 +37,7 @@ import java.util.TimerTask;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
 import alberapps.java.tam.mapas.DatosMapa;
@@ -64,6 +65,23 @@ public class GestionVehiculos {
      * Cargar el mapa con las paradas de la linea
      */
     public void cargarVehiculosMapa() {
+
+        //Desactivacion tram
+        final android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
+        if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+            botonVehiculos.setChecked(false);
+
+            if (context.timer != null) {
+                context.timer.cancel();
+            }
+
+            botonVehiculos.setEnabled(false);
+
+            return;
+
+        }
+        //
+
 
         if (markersVehiculos != null && !markersVehiculos.isEmpty()) {
             context.gestionarLineas.quitarMarkers(markersVehiculos);

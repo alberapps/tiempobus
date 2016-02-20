@@ -91,6 +91,7 @@ public class GestionarTarjetaInfo {
     private String datosWiki = null;
     private String datosLocalizacion = null;
     private String paradaLocaliza = null;
+    private Localizacion localizacionInfo = null;
 
     AsyncTask<Object, Void, WeatherQuery> weatherTask = null;
     AsyncTask<Object, Void, String> actualizarTask = null;
@@ -235,8 +236,8 @@ public class GestionarTarjetaInfo {
 
                 //}
 
-                String lat = cursor.getString(latIndex);
-                String lon = cursor.getString(lonIndex);
+                final String lat = cursor.getString(latIndex);
+                final String lon = cursor.getString(lonIndex);
 
 
                 //Actualizar datos mapa lite
@@ -301,6 +302,7 @@ public class GestionarTarjetaInfo {
 
                                     // Datos para siguiente pasada
                                     datosLocalizacion = sb.toString();
+                                    localizacionInfo = localizacion;
 
                                 } catch (Exception e) {
 
@@ -322,6 +324,18 @@ public class GestionarTarjetaInfo {
                             textoLocation.setText("");
 
                         }
+
+
+
+                        if (lat != null && !lat.equals("") && !lon.equals("")) {
+
+                            // Cargar informacion del tiempo
+                            String proveedor = preferencias.getString("tarjeta_clima", "yw");
+                            cargarInfoWeather(lat, lon, v, proveedor, localizacionInfo);
+
+                        }
+
+
                     }
 
                 };
@@ -366,13 +380,6 @@ public class GestionarTarjetaInfo {
                 // Cargar info wikipedia
                 if (lat != null && !lat.equals("") && !lon.equals("")) {
                     context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
-
-                    // Cargar informacion del tiempo
-
-                    String proveedor = preferencias.getString("tarjeta_clima", "yw");
-
-                    context.gestionarTarjetaInfo.cargarInfoWeather(lat, lon, v, proveedor);
-
                 }
 
 
@@ -565,7 +572,7 @@ public class GestionarTarjetaInfo {
     /**
      * Cargar la informacion del clima
      */
-    public void cargarInfoWeather(String lat, String lon, final View v, final String proveedor) {
+    public void cargarInfoWeather(String lat, String lon, final View v, final String proveedor, Localizacion localizacionInfo) {
 
         //Activacion o no de la tarjeta
         boolean activadaTarjeta = preferencias.getBoolean("tarjeta_clima_on", true);
@@ -699,7 +706,7 @@ public class GestionarTarjetaInfo {
             TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
             textoWeather.setText(context.getString(R.string.aviso_recarga));
 
-            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon, context, paradaWeather, proveedor);
+            weatherTask = new LoadWeatherAsyncTask(loadWeatherAsyncTaskResponder).execute(lat, lon, context, paradaWeather, proveedor, localizacionInfo);
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }

@@ -36,10 +36,7 @@
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="1dp"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
-            >
-
-
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
             <LinearLayout
@@ -53,8 +50,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    >
+                    android:gravity="center_horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_favoritos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+
+                        android:gravity="center" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal">
 
                     <Spinner
                         android:id="@+id/spinner_estacion_origen"
@@ -73,8 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    >
+                    android:gravity="center_horizontal">
 
                     <Spinner
                         android:id="@+id/spinner_estacion_destino"
@@ -93,15 +108,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    >
+                    android:gravity="center_horizontal">
 
                     <EditText
+                        android:id="@+id/campo_fecha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="8"
-                        android:id="@+id/campo_fecha"
-                        android:focusable="false"/>
+                        android:focusable="false" />
 
                     <ImageButton
                         android:id="@+id/boton_fecha"
@@ -119,15 +133,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    >
+                    android:gravity="center_horizontal">
 
                     <EditText
+                        android:id="@+id/campo_hora_desde"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="8"
-                        android:id="@+id/campo_hora_desde"
-                        android:focusable="false"/>
+                        android:focusable="false" />
 
                     <ImageButton
                         android:id="@+id/boton_hora_desde"
@@ -145,15 +158,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_horizontal"
-                    >
+                    android:gravity="center_horizontal">
 
                     <EditText
+                        android:id="@+id/campo_hora_hasta"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ems="8"
-                        android:id="@+id/campo_hora_hasta"
-                        android:focusable="false"/>
+                        android:focusable="false" />
 
                     <ImageButton
                         android:id="@+id/boton_hora_hasta"
@@ -169,13 +181,12 @@
 
 
                 <Button
+                    android:id="@+id/boton_consultar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/menu_search"
-                    android:id="@+id/boton_consultar"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@android:color/white"
-                    />
+                    android:text="@string/menu_search"
+                    android:textColor="@android:color/white" />
 
 
                 <TextView
@@ -185,8 +196,7 @@
                     android:padding="2dip"
                     android:text="@string/horarios_tram_aviso"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="italic"
-                    />
+                    android:textStyle="italic" />
 
             </LinearLayout>
 

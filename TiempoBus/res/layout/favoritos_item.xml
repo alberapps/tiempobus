@@ -44,116 +44,100 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/numParadaFav"
-                    android:layout_width="55sp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginRight="5sp"
-                    android:gravity="center"
-                    android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/mi_material_blue_principal"
-                    android:textStyle="bold" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/titulo"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
+                        android:id="@+id/numParadaFav"
+                        android:layout_width="55sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
+                        android:gravity="center"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/primary_dark_material_light"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/mi_material_blue_principal"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/descripcion"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="italic" />
-
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp">
-
-                        <ImageView
-                            android:id="@+id/compartir_img"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="40dp"
-                            android:background="@drawable/actionbar_compat_item"
-                            android:contentDescription="Compartir"
-                            android:src="@drawable/ic_share_grey600_18dp" />
-
-                        <ImageView
-                            android:id="@+id/favorito_editar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="40dp"
-                            android:background="@drawable/actionbar_compat_item"
-                            android:contentDescription="Modificar"
-                            android:src="@drawable/ic_mode_edit_grey600_18dp" />
-
-                        <ImageView
-                            android:id="@+id/favorito_borrar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/actionbar_compat_item"
-                            android:contentDescription="Borrar"
-                            android:src="@drawable/ic_delete_grey600_18dp" />
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tiempos_alerta"
+                            android:id="@+id/titulo"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:background="@drawable/actionbar_compat_item"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@android:color/darker_gray"
-                            android:textSize="12sp"
-                            android:textStyle="italic|bold" />
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_light"
+                            android:textStyle="bold" />
 
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/descripcion"
+
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="2dp"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content"
+                            android:gravity="top"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textColor="@color/primary_dark_material_light"
+                            android:textStyle="italic" />
 
-                            <TextView
-                                android:id="@+id/tiempos_opciones"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:background="@drawable/actionbar_compat_item"
-                                android:gravity="right"
-                                android:text=">>"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@android:color/darker_gray"
-                                android:textSize="12sp"
-                                android:textStyle="italic|bold" />
-                        </LinearLayout>
                     </LinearLayout>
 
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/mi_material_grey_200">
+
+
+                    <ImageView
+                        android:id="@+id/favorito_editar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Modificar"
+                        android:src="@drawable/ic_mode_edit_grey600_18dp" />
+
+                    <ImageView
+                        android:id="@+id/favorito_borrar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Borrar"
+                        android:src="@drawable/ic_delete_grey600_18dp" />
+
+                    <ImageView
+                        android:id="@+id/compartir_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:contentDescription="Compartir"
+                        android:src="@drawable/ic_share_grey600_18dp" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
         </android.support.v7.widget.CardView>

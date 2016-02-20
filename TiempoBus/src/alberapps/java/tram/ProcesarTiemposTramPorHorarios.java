@@ -55,14 +55,28 @@ public class ProcesarTiemposTramPorHorarios {
 
         try {
             //Lineas de la parada
-            //if(UtilidadesTRAM.esParadaL9(Integer.toString(parada))) {
+            //if (UtilidadesTRAM.esParadaL9(Integer.toString(parada))) {
             busesList.addAll(obtenerTiemposDesdeHorariosL9(parada));
             //}
 
+
+            /*if (UtilidadesTRAM.esParadaL1(Integer.toString(parada))) {
+                busesList.addAll(obtenerTiemposDesdeHorariosL1(parada));
+            }
+
             //Para otras lineas
-            /*if(UtilidadesTRAM.esParadaL2(Integer.toString(parada))) {
+            if (UtilidadesTRAM.esParadaL2(Integer.toString(parada))) {
                 busesList.addAll(obtenerTiemposDesdeHorariosL2(parada));
-            }*/
+            }
+
+            if (UtilidadesTRAM.esParadaL3(Integer.toString(parada))) {
+                busesList.addAll(obtenerTiemposDesdeHorariosL3(parada));
+            }
+
+            if (UtilidadesTRAM.esParadaL4(Integer.toString(parada))) {
+                busesList.addAll(obtenerTiemposDesdeHorariosL4(parada));
+            }
+            */
 
 
         } catch (Exception e) {
@@ -239,6 +253,255 @@ public class ProcesarTiemposTramPorHorarios {
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("SANT VICENT");
             vuelta.setLinea("L2");
+            vuelta.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasListVuelta = horarioTramVuelta.getHorariosItemCombinados();
+            HorarioItem horasVuelta = horasListVuelta.get(1);
+
+            if (horasVuelta.getHoras() != null && !horasVuelta.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasListVuelta, vuelta);
+            }
+
+            vuelta.setTiempoReal(false);
+
+            listado.add(vuelta);
+        }
+
+
+        if (listado != null && !listado.isEmpty()) {
+            return listado;
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Obtener tiempos desde los datos de horarios
+     *
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL3(int parada) throws Exception {
+
+        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+
+        DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
+
+        Date hoy = new Date();
+
+
+        datosConsulta.setCodEstacionOrigen(parada);
+        datosConsulta.setDiaDate(hoy);
+        datosConsulta.setHoraDesde(Utilidades.getHoraString(hoy));
+        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+        int day1 = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+        //Control cambio de dia
+        if (day1 == day2) {
+            datosConsulta.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+        } else {
+            datosConsulta.setHoraHasta("23:59");
+        }
+
+        //Ida
+        if (parada != 2) {
+            datosConsulta.setCodEstacionDestino(2);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada ida = new BusLlegada();
+            ida.setDestino("LUCEROS");
+            ida.setLinea("L3");
+            ida.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasList = horarioTramIda.getHorariosItemCombinados();
+            HorarioItem horas = horasList.get(1);
+
+            if (horas.getHoras() != null && !horas.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasList, ida);
+            }
+
+            ida.setTiempoReal(false);
+
+            listado.add(ida);
+        }
+
+        if (parada != 17) {
+            //Vuelta
+            datosConsulta.setCodEstacionDestino(17);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada vuelta = new BusLlegada();
+            vuelta.setDestino("EL CAMPELLO");
+            vuelta.setLinea("L3");
+            vuelta.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasListVuelta = horarioTramVuelta.getHorariosItemCombinados();
+            HorarioItem horasVuelta = horasListVuelta.get(1);
+
+            if (horasVuelta.getHoras() != null && !horasVuelta.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasListVuelta, vuelta);
+            }
+
+            vuelta.setTiempoReal(false);
+
+            listado.add(vuelta);
+        }
+
+
+        if (listado != null && !listado.isEmpty()) {
+            return listado;
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Obtener tiempos desde los datos de horarios
+     *
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL1(int parada) throws Exception {
+
+        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+
+        DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
+
+        Date hoy = new Date();
+
+
+        datosConsulta.setCodEstacionOrigen(parada);
+        datosConsulta.setDiaDate(hoy);
+        datosConsulta.setHoraDesde(Utilidades.getHoraString(hoy));
+        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+        int day1 = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+        //Control cambio de dia
+        if (day1 == day2) {
+            datosConsulta.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+        } else {
+            datosConsulta.setHoraHasta("23:59");
+        }
+
+        //Ida
+        if (parada != 2) {
+            datosConsulta.setCodEstacionDestino(2);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada ida = new BusLlegada();
+            ida.setDestino("LUCEROS");
+            ida.setLinea("L1");
+            ida.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasList = horarioTramIda.getHorariosItemCombinados();
+            HorarioItem horas = horasList.get(1);
+
+            if (horas.getHoras() != null && !horas.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasList, ida);
+            }
+
+            ida.setTiempoReal(false);
+
+            listado.add(ida);
+        }
+
+        if (parada != 33) {
+            //Vuelta
+            datosConsulta.setCodEstacionDestino(33);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada vuelta = new BusLlegada();
+            vuelta.setDestino("BENIDORM");
+            vuelta.setLinea("L1");
+            vuelta.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasListVuelta = horarioTramVuelta.getHorariosItemCombinados();
+            HorarioItem horasVuelta = horasListVuelta.get(1);
+
+            if (horasVuelta.getHoras() != null && !horasVuelta.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasListVuelta, vuelta);
+            }
+
+            vuelta.setTiempoReal(false);
+
+            listado.add(vuelta);
+        }
+
+
+        if (listado != null && !listado.isEmpty()) {
+            return listado;
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
+     * Obtener tiempos desde los datos de horarios
+     *
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL4(int parada) throws Exception {
+
+        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+
+        DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
+
+        Date hoy = new Date();
+
+
+        datosConsulta.setCodEstacionOrigen(parada);
+        datosConsulta.setDiaDate(hoy);
+        datosConsulta.setHoraDesde(Utilidades.getHoraString(hoy));
+        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+        int day1 = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+        //Control cambio de dia
+        if (day1 == day2) {
+            datosConsulta.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+        } else {
+            datosConsulta.setHoraHasta("23:59");
+        }
+
+        //Ida
+        if (parada != 2) {
+            datosConsulta.setCodEstacionDestino(2);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada ida = new BusLlegada();
+            ida.setDestino("LUCEROS");
+            ida.setLinea("L4");
+            ida.setProximo("sinestimacion;sinestimacion");
+
+            List<HorarioItem> horasList = horarioTramIda.getHorariosItemCombinados();
+            HorarioItem horas = horasList.get(1);
+
+            if (horas.getHoras() != null && !horas.getHoras().equals("")) {
+                calcularTiempoPorHora(hoy, horasList, ida);
+            }
+
+            ida.setTiempoReal(false);
+
+            listado.add(ida);
+        }
+
+        if (parada != 113) {
+            //Vuelta
+            datosConsulta.setCodEstacionDestino(113);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+            BusLlegada vuelta = new BusLlegada();
+            vuelta.setDestino("HOLANDA");
+            vuelta.setLinea("L4");
             vuelta.setProximo("sinestimacion;sinestimacion");
 
             List<HorarioItem> horasListVuelta = horarioTramVuelta.getHorariosItemCombinados();

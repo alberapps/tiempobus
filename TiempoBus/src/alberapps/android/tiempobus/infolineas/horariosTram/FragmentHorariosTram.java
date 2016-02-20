@@ -26,6 +26,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -53,10 +54,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.data.Favorito;
+import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
+import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
@@ -410,6 +415,8 @@ public class FragmentHorariosTram extends Fragment {
             });
 
 
+            cargarSpinnerFavoritos(vheader);
+
             // Combo de seleccion de origen
             final Spinner spinnerEstOrigen = (Spinner) vheader.findViewById(R.id.spinner_estacion_origen);
             ArrayAdapter<CharSequence> adapter = null;
@@ -574,7 +581,109 @@ public class FragmentHorariosTram extends Fragment {
 
             actividad.horariosTramView.addHeaderView(vheader);
 
+            cargarFooterHotrarios();
+
         }
+
+
+
+    }
+
+
+    /**
+     * Pie del listado
+     */
+    public void cargarFooterHotrarios(){
+
+        LayoutInflater li2 = LayoutInflater.from(actividad);
+
+        View vheader = li2.inflate(R.layout.infolinea_horarios_tram_footer, null);
+
+        actividad.horariosTramView.addFooterView(vheader);
+
+    }
+
+
+    /**
+     * Spinner con favoritos de tipo horario
+     *
+     * @param vheader
+     */
+    private void cargarSpinnerFavoritos(final View vheader){
+
+        // Combo de seleccion de favorito
+        final Spinner spinnerFavorito = (Spinner) vheader.findViewById(R.id.spinner_favoritos);
+
+        List<Favorito> favoritos =  cargarFavoritosBD();
+        final List<Favorito> favoritosHorarios = new ArrayList<>();
+        List<String> favoritosString = new ArrayList<>();
+
+        favoritosString.add(actividad.getString(R.string.menu_favoritos));
+
+        for(int i = 0; i< favoritos.size(); i++){
+
+            if(favoritos.get(i).getNumParada().equals("0")){
+
+                favoritosHorarios.add(favoritos.get(i));
+                favoritosString.add(favoritos.get(i).getTitulo());
+
+            }
+
+        }
+
+
+        ArrayAdapter<String> adapterFavoritos = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, favoritosString);
+        adapterFavoritos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerFavorito.setAdapter(adapterFavoritos);
+
+
+
+        // Seleccion
+        spinnerFavorito.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+
+                //Evitar primer elemento
+                if (arg2 > 0 ) {
+
+                    String[] datos = favoritosHorarios.get(arg2 - 1).getDescripcion().split("::")[1].split(";;");
+
+                    actividad.consultaHorarioTram.setHoraDesde(datos[4]);
+
+                    actividad.consultaHorarioTram.setHoraHasta(datos[5]);
+
+                    actividad.consultaHorarioTram.setCodEstacionOrigen(Integer.parseInt(datos[1]));
+                    actividad.consultaHorarioTram.setEstacionOrigenSeleccion(Integer.parseInt(datos[3]));
+
+                    actividad.consultaHorarioTram.setCodEstacionDestino(Integer.parseInt(datos[0]));
+                    actividad.consultaHorarioTram.setEstacionDestinoSeleccion(Integer.parseInt(datos[2]));
+
+                    final Spinner spinnerEstOrigen = (Spinner) vheader.findViewById(R.id.spinner_estacion_origen);
+                    spinnerEstOrigen.setSelection(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                    final Spinner spinnerEstDest = (Spinner) vheader.findViewById(R.id.spinner_estacion_destino);
+                    spinnerEstDest.setSelection(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                    TextView horaDesde = (TextView) vheader.findViewById(R.id.campo_hora_desde);
+                    horaDesde.setText(actividad.consultaHorarioTram.getHoraDesde());
+                    TextView horaHasta = (TextView) vheader.findViewById(R.id.campo_hora_hasta);
+                    horaHasta.setText(actividad.consultaHorarioTram.getHoraHasta());
+
+                    consultarDatos();
+
+
+                }
+
+
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
+
 
     }
 
@@ -758,6 +867,52 @@ public class FragmentHorariosTram extends Fragment {
 
         }
     }
+
+
+    /**
+     * Listado de favoritos
+     * @return
+     */
+    public List<Favorito> cargarFavoritosBD() {
+
+        List<Favorito> favoritosList = new ArrayList<Favorito>();
+
+        Favorito favorito = null;
+
+        try {
+
+
+            Cursor cursor = actividad.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+
+            if (cursor != null) {
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+                    favorito = new Favorito();
+
+                    favorito.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
+                    favorito.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
+                    favorito.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
+                    favoritosList.add(favorito);
+
+                }
+
+            }
+
+            if (!favoritosList.isEmpty()) {
+
+                return favoritosList;
+
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
 
 
 }

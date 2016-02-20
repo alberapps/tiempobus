@@ -493,4 +493,8 @@
     <string name="cercanias">CERCANÍAS</string>
     <string name="notiemporeal">Horario (No es en Tiempo Real)</string>
 
+    <string name="duracion">Duración</string>
+    <string name="tipo_billete">Billete para zonas</string>
+    <string name="transbordos">Transbordos</string>
+
 </resources>

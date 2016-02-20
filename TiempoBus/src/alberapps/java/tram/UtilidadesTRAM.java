@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tram;
 
@@ -81,7 +81,7 @@ public class UtilidadesTRAM {
 
     public static final String L2_SANTVICENT = "SANT VICENT";
 
-    public static final Integer[] HORARIOS_COD_ESTACION = {7,2,49,38,20,108,106,33,44,115,31,107,22,42,35,51,40,11,121,9,10,29,21,28,50,34,37,17,14,43,116,39,119,46,113,117,48,30,111,36,114,6,27,47,13,109,8,118,4,3,103,12,41,112,26,16,110,19,15,5,124,122,104,32,45,105,123,25,120};
+    public static final Integer[] HORARIOS_COD_ESTACION = {7, 2, 49, 38, 20, 108, 106, 33, 44, 115, 31, 107, 22, 42, 35, 51, 40, 11, 121, 9, 10, 29, 21, 28, 50, 34, 37, 17, 14, 43, 116, 39, 119, 46, 113, 117, 48, 30, 111, 36, 114, 6, 27, 47, 13, 109, 8, 118, 4, 3, 103, 12, 41, 112, 26, 16, 110, 19, 15, 5, 124, 122, 104, 32, 45, 105, 123, 25, 120};
 
 
     /**
@@ -297,5 +297,61 @@ public class UtilidadesTRAM {
 
     }
 
+    /**
+     * Es una parada de la L3
+     *
+     * @param parada
+     * @return boolean
+     */
+    public static boolean esParadaL3(String parada) {
+
+        for (int i = 0; i < L3_ORDEN.length; i++) {
+            if (parada.equals(Integer.toString(L3_ORDEN[i]))) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Es una parada de la L1
+     *
+     * @param parada
+     * @return boolean
+     */
+    public static boolean esParadaL1(String parada) {
+
+        for (int i = 0; i < L1_ORDEN.length; i++) {
+            if (parada.equals(Integer.toString(L1_ORDEN[i]))) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Es una parada de la L4
+     *
+     * @param parada
+     * @return boolean
+     */
+    public static boolean esParadaL4(String parada) {
+
+        for (int i = 0; i < L4_ORDEN.length; i++) {
+            if (parada.equals(Integer.toString(L4_ORDEN[i]))) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
 
 }
