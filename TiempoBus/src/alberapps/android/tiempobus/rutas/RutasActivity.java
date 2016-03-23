@@ -128,7 +128,7 @@ public class RutasActivity extends AppCompatActivity {
 
         }
 
-        datosRutas = new ArrayList<Route>();
+        datosRutas = new ArrayList<>();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -364,7 +364,7 @@ public class RutasActivity extends AppCompatActivity {
 
         posicionActual = position - 1;
 
-        List<Step> steps = new ArrayList<Step>(datosRutas.get(position - 1).getLegs().get(0).getSteps());
+        List<Step> steps = new ArrayList<>(datosRutas.get(position - 1).getLegs().get(0).getSteps());
 
         if (stepAdapter == null) {
             stepAdapter = new StepAdapter(this, steps);

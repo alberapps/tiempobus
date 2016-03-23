@@ -30,7 +30,7 @@ import alberapps.java.tam.BusLinea;
 public class LoadHorariosInfoLineasAsyncTask extends AsyncTask<Object, Void, DatosHorarios> {
 
     public interface LoadHorariosInfoLineasAsyncTaskResponder {
-        public void datosHorariosInfoLineasLoaded(DatosHorarios datos);
+        void datosHorariosInfoLineasLoaded(DatosHorarios datos);
     }
 
     private LoadHorariosInfoLineasAsyncTaskResponder responder;

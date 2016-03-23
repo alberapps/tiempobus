@@ -42,7 +42,7 @@ public class ProcesarCochesService {
         GetCochesXmlWebservice service = new GetCochesXmlWebservice();
 
         List<InfoCoche> cochesList = null;
-        List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
+        List<InfoVehiculo> vehiculosList = new ArrayList<>();
 
         cochesList = service.consultarServicio(linea, consulta, tiemposCache).getInfoVehiculoList();
 

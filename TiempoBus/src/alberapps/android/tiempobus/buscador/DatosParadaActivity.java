@@ -107,21 +107,28 @@ public class DatosParadaActivity extends AppCompatActivity {
 
             int observacionesIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_OBSERVACIONES);
 
+            assert parada != null;
             parada.setText(cursor.getString(paradaIndex));
 
             paradaSel = cursor.getString(paradaIndex);
             lineaSel = cursor.getString(numLineaIndex);
 
+            assert linea != null;
             linea.setText(cursor.getString(lineaIndex));
+            assert destino != null;
             destino.setText(cursor.getString(destinoIndex));
+            assert localizacion != null;
             localizacion.setText(cursor.getString(direccionIndex));
+            assert conexiones != null;
             conexiones.setText(cursor.getString(conexionesIndex));
 
+            assert observaciones != null;
             observaciones.setText(cursor.getString(observacionesIndex));
         }
 
         // boton parada
         TextView botonPoste = (TextView) findViewById(R.id.buttonT);
+        assert botonPoste != null;
         botonPoste.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
 
@@ -149,6 +156,7 @@ public class DatosParadaActivity extends AppCompatActivity {
 
         // boton mapa
         TextView botonMapa = (TextView) findViewById(R.id.buttonM);
+        assert botonMapa != null;
         botonMapa.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
 

@@ -25,20 +25,20 @@
         android:id="@id/menu_cercanas_img"
         android:icon="@drawable/ic_place_white_24dp"
         android:orderInCategory="0"
-        tiempobus:showAsAction="always"
+        tiempobus:showAsAction="ifRoom"
         android:title="@string/cercanas"></item>
     <item
         android:id="@id/menu_satelite"
         android:icon="@drawable/ic_satellite_white_24dp"
 
         android:orderInCategory="1"
-        tiempobus:showAsAction="always"
+        tiempobus:showAsAction="ifRoom"
         android:title="@string/menu_search"></item>
     <item
         android:id="@id/menu_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="3"
-        tiempobus:showAsAction="always"
+        tiempobus:showAsAction="ifRoom"
         android:title="@string/menu_search"></item>
 
 

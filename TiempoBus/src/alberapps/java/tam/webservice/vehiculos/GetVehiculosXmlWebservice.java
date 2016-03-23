@@ -100,7 +100,7 @@ public class GetVehiculosXmlWebservice {
 	public GetVehiculosResult parse(InputStream is) {
 		// Instanciamos la fábrica para DOM
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
+		List<InfoVehiculo> vehiculosList = new ArrayList<>();
 
 		GetVehiculosResult resultados = new GetVehiculosResult();
 

@@ -132,7 +132,7 @@ public class DomGetPasoParadaXmlWebservice {
     public GetPasoParadaResult parse(InputStream is) {
         // Instanciamos la fábrica para DOM
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
+        List<PasoParada> pasoParadaList = new ArrayList<>();
 
         GetPasoParadaResult resultados = new GetPasoParadaResult();
 

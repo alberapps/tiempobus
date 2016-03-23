@@ -143,7 +143,7 @@ public class FavoritosActivity extends AppCompatActivity {
 		 */
         Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
 
-        List<Favorito> listaFavoritos = new ArrayList<Favorito>();
+        List<Favorito> listaFavoritos = new ArrayList<>();
 
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 

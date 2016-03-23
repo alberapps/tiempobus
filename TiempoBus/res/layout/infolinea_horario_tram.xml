@@ -44,26 +44,13 @@
             android:id="@+id/infolinea_horario_tram_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/infolinea_lista_vuelta"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items"
             android:textColor="@color/color_android"
             android:textStyle="bold" />
 
 
-        <ImageButton
-            android:id="@+id/boton_circular_fav_h"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:contentDescription="Guardar favorito"
-            android:src="@drawable/ic_bookmark_outline_white_24dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/circulo_fav"
-            android:layout_margin="10dp"/>
-
-
-        <!--android.support.design.widget.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/boton_circular_fav_h"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +64,7 @@
 
 
 
-        </android.support.design.widget.FloatingActionButton-->
+        </android.support.design.widget.FloatingActionButton>
 
 
 	</RelativeLayout>

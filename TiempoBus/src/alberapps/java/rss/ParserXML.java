@@ -45,7 +45,7 @@ public class ParserXML {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
-        List<NoticiaRss> listaNoticias = new ArrayList<NoticiaRss>();
+        List<NoticiaRss> listaNoticias = new ArrayList<>();
         NoticiaRss noticia = null;
 
         InputStream st = null;

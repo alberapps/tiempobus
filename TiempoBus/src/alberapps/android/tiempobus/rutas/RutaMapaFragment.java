@@ -78,7 +78,7 @@ public class RutaMapaFragment extends SupportMapFragment implements OnMapReadyCa
 
         Leg leg = contexto.getLegActual();
 
-        final List<LatLng> listaPuntos = new ArrayList<LatLng>();
+        final List<LatLng> listaPuntos = new ArrayList<>();
 
         LatLng origen = new LatLng(Double.parseDouble(leg.getStartLat()), Double.parseDouble(leg.getStartLng()));
         mMap.addMarker(new MarkerOptions().position(origen));

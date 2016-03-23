@@ -32,7 +32,7 @@ public class LoadWikipediaAsyncTask extends AsyncTask<Object, Void, WikiQuery> {
      *
      */
     public interface LoadWikipediaAsyncTaskResponder {
-        public void WikipediaLoaded(WikiQuery Wikipedia);
+        void WikipediaLoaded(WikiQuery Wikipedia);
     }
 
     private LoadWikipediaAsyncTaskResponder responder;

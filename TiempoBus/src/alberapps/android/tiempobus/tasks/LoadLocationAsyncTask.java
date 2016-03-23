@@ -33,7 +33,7 @@ public class LoadLocationAsyncTask extends AsyncTask<Object, Void, Localizacion>
      *
      */
     public interface LoadLocationAsyncTaskResponder {
-        public void LocationLoaded(Localizacion localizacion);
+        void LocationLoaded(Localizacion localizacion);
     }
 
     private LoadLocationAsyncTaskResponder responder;

@@ -36,7 +36,7 @@ import alberapps.java.util.Utilidades;
 public class LoadVehiculosMapaAsyncTask extends AsyncTask<Object, Void, DatosMapa> {
 
     public interface LoadVehiculosMapaAsyncTaskResponder {
-        public void vehiculosMapaLoaded(DatosMapa datosMapa);
+        void vehiculosMapaLoaded(DatosMapa datosMapa);
     }
 
     private LoadVehiculosMapaAsyncTaskResponder responder;

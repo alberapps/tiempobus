@@ -33,7 +33,7 @@ public class LoadDirectionsAsyncTask extends AsyncTask<Object, Void, Direction> 
      *
      */
     public interface LoadDirectionsAsyncTaskResponder {
-        public void directionsLoaded(Direction direction);
+        void directionsLoaded(Direction direction);
     }
 
     private LoadDirectionsAsyncTaskResponder responder;

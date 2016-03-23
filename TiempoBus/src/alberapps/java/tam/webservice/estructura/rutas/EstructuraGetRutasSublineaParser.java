@@ -152,7 +152,7 @@ public class EstructuraGetRutasSublineaParser {
      * @throws java.io.IOException
      */
     private List<InfoRuta> readGetPasoParadaResult(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<InfoRuta> infoRutaList = new ArrayList<InfoRuta>();
+        List<InfoRuta> infoRutaList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "GetRutasSublineaResult");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -211,7 +211,7 @@ public class EstructuraGetRutasSublineaParser {
      */
     private List<InfoSeccion> readSecciones(XmlPullParser parser) throws XmlPullParserException, IOException {
 
-        List<InfoSeccion> infoSeccionList = new ArrayList<InfoSeccion>();
+        List<InfoSeccion> infoSeccionList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "secciones");
 
@@ -265,7 +265,7 @@ public class EstructuraGetRutasSublineaParser {
 
 
     private List<InfoNodoSeccion> readInfoNodoSeccion(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<InfoNodoSeccion> infoNodoSeccionList = new ArrayList<InfoNodoSeccion>();
+        List<InfoNodoSeccion> infoNodoSeccionList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "nodos");
         while (parser.next() != XmlPullParser.END_TAG) {

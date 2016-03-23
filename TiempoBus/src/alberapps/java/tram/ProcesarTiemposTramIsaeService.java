@@ -50,9 +50,9 @@ public class ProcesarTiemposTramIsaeService {
      */
     public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, int consulta, Boolean cacheTiempos) throws Exception {
 
-        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<>();
 
-        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> busesList = new ArrayList<>();
 
         try {
 
@@ -158,7 +158,7 @@ public class ProcesarTiemposTramIsaeService {
      */
     public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta, Boolean cacheTiempos) throws Exception {
 
-        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<>();
 
 
         //TODO PARCHE PARA PARADA LONDRES
@@ -256,7 +256,7 @@ public class ProcesarTiemposTramIsaeService {
 
         BusLlegada buses = null;
 
-        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> busesList = new ArrayList<>();
 
         try {
 
@@ -310,7 +310,7 @@ public class ProcesarTiemposTramIsaeService {
 
             try {
 
-                ArrayList<BusLlegada> busesListAux = new ArrayList<BusLlegada>();
+                ArrayList<BusLlegada> busesListAux = new ArrayList<>();
 
                 busesListAux = getParadaConLineaTRAM("*", UtilidadesTRAM.CODIGO_TRAM_MERCADO, DomGetPasoParadaXmlWebservice.URL1, false);
 

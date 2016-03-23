@@ -95,7 +95,7 @@ public class FragmentLineas extends Fragment {
         if (actividad.lineasBus == null && savedInstanceState != null && savedInstanceState.getSerializable("LINEAS_INSTANCE") != null) {
             List lineasBusAux = (ArrayList) savedInstanceState.getSerializable("LINEAS_INSTANCE");
 
-            actividad.lineasBus = new ArrayList<BusLinea>();
+            actividad.lineasBus = new ArrayList<>();
 
             for (int i = 0; i < lineasBusAux.size(); i++) {
                 actividad.lineasBus.add((BusLinea) lineasBusAux.get(i));
@@ -199,7 +199,7 @@ public class FragmentLineas extends Fragment {
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
                 toast.show();
 
-                buses = new ArrayList<BusLinea>();
+                buses = new ArrayList<>();
                 BusLinea b1 = new BusLinea();
                 b1.setErrorServicio(true);
                 buses.add(b1);
@@ -721,9 +721,9 @@ public class FragmentLineas extends Fragment {
         }
 
         if (cursorParadas != null) {
-            List<Parada> listaParadasIda = new ArrayList<Parada>();
+            List<Parada> listaParadasIda = new ArrayList<>();
 
-            List<Parada> listaParadasVuelta = new ArrayList<Parada>();
+            List<Parada> listaParadasVuelta = new ArrayList<>();
 
             String destinoIda = "";
             String destinoVuelta = "";
@@ -777,7 +777,7 @@ public class FragmentLineas extends Fragment {
                 }
 
                 // Datos a la estructura esperada
-                datosInfoLinea = new ArrayList<DatosInfoLinea>();
+                datosInfoLinea = new ArrayList<>();
                 DatosInfoLinea datoIda = new DatosInfoLinea();
                 datoIda.setResult(datosIda);
                 DatosInfoLinea datoVuelta = new DatosInfoLinea();
@@ -823,7 +823,7 @@ public class FragmentLineas extends Fragment {
         }
 
         if (cursorParadas != null) {
-            List<Parada> listaParadasIda = new ArrayList<Parada>();
+            List<Parada> listaParadasIda = new ArrayList<>();
 
             for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
 
@@ -847,7 +847,7 @@ public class FragmentLineas extends Fragment {
             datosIda = mapearDatosModelo(listaParadasIda);
 
             // Datos a la estructura esperada
-            datosInfoLinea = new ArrayList<DatosInfoLinea>();
+            datosInfoLinea = new ArrayList<>();
             DatosInfoLinea datoIda = new DatosInfoLinea();
             datoIda.setResult(datosIda);
 

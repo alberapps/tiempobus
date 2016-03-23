@@ -51,7 +51,7 @@
                 android:text="@string/notiemporeal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/primary_dark_material_light"
-                android:textSize="11dp"
+                android:textSize="11sp"
                 android:visibility="visible" />
 
             <LinearLayout

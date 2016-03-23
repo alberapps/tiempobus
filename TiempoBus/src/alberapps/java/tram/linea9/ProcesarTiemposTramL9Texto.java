@@ -55,7 +55,7 @@ public class ProcesarTiemposTramL9Texto {
 
     public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listaTrenes = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listaTrenes = new ArrayList<>();
 
         InputStream is = null;
 
@@ -89,7 +89,7 @@ public class ProcesarTiemposTramL9Texto {
 
                 String l = "";
 
-                ArrayList<String> lineasFichero = new ArrayList<String>();
+                ArrayList<String> lineasFichero = new ArrayList<>();
 
 
                 while ((l = input.readLine()) != null) {
@@ -159,7 +159,7 @@ public class ProcesarTiemposTramL9Texto {
 
                 // Sin datos
                 if (lineasFichero.size() == 1 && linea.length > 0 && linea.length < 2) {
-                    return new ArrayList<BusLlegada>();
+                    return new ArrayList<>();
                 } else if (linea.length < 2) {
                     // Segundo tiempo con salto de linea
                     // listaTren.get(i - 1).setProximo(listaTren.get(i -
@@ -190,7 +190,7 @@ public class ProcesarTiemposTramL9Texto {
                     tren.cambiarProximo(Integer.parseInt(tiempoHora));
 
                     if (listaTren == null) {
-                        listaTren = new ArrayList<BusLlegada>();
+                        listaTren = new ArrayList<>();
                     }
 
                     listaTren.add(tren);
@@ -316,7 +316,7 @@ public class ProcesarTiemposTramL9Texto {
 
         BusLlegada buses = null;
 
-        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> busesList = new ArrayList<>();
 
         try {
 

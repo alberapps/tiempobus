@@ -73,9 +73,9 @@ public class MapasOffline {
         }
 
         if (cursorParadas != null) {
-            List<Parada> listaParadasIda = new ArrayList<Parada>();
+            List<Parada> listaParadasIda = new ArrayList<>();
 
-            List<Parada> listaParadasVuelta = new ArrayList<Parada>();
+            List<Parada> listaParadasVuelta = new ArrayList<>();
 
             String destinoIda = "";
             String destinoVuelta = "";
@@ -191,7 +191,7 @@ public class MapasOffline {
         }
 
         if (cursorParadas != null) {
-            List<Parada> listaParadasIda = new ArrayList<Parada>();
+            List<Parada> listaParadasIda = new ArrayList<>();
 
             for (cursorParadas.moveToFirst(); !cursorParadas.isAfterLast(); cursorParadas.moveToNext()) {
 

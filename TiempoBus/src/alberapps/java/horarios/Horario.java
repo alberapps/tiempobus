@@ -27,7 +27,7 @@ public class Horario {
 
     private String tituloHorario = "";
 
-    private List<String> horarios = new ArrayList<String>();
+    private List<String> horarios = new ArrayList<>();
 
     public String getLinkHorario() {
         return linkHorario;

@@ -190,14 +190,7 @@ public class UtilidadesUI {
 
             Configuration config = contexto.getResources().getConfiguration();
 
-            if (config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-
-                return true;
-
-            } else {
-
-                return false;
-            }
+            return config.smallestScreenWidthDp >= 600 && config.orientation == Configuration.ORIENTATION_LANDSCAPE;
         } else {
             return false;
         }

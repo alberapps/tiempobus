@@ -104,7 +104,7 @@ public class ProcesarOWMCurrect {
     public static List<WeatherData> parsea(String forecastJsonStr) {
 
 
-        List<WeatherData> listaWeather = new ArrayList<WeatherData>();
+        List<WeatherData> listaWeather = new ArrayList<>();
         WeatherData data = null;
 
 

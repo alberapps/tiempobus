@@ -179,7 +179,7 @@ public class MapasActivity extends AppCompatActivity
 
     private static final String STATE_RESOLVING_ERROR = "resolving_error";
 
-    private static final int REQUEST_CODE_LOCATION = 2;
+    public static final int REQUEST_CODE_LOCATION = 2;
 
 
     // These settings are the same as the settings for the map. They will in fact give you updates
@@ -249,6 +249,15 @@ public class MapasActivity extends AppCompatActivity
         mMap = map;
 
         setUpMap();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // Request missing location permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION);
+
+            return;
+        }
         map.setMyLocationEnabled(true);
         map.setOnMyLocationButtonClickListener(this);
 
@@ -281,13 +290,13 @@ public class MapasActivity extends AppCompatActivity
      * Button to get current Location. This demonstrates how to get the current Location as required
      * without needing to register a LocationListener.
      */
-    public void showMyLocation(View view) {
+    /*public void showMyLocation(View view) {
         if (mGoogleApiClient.isConnected()) {
             String msg = "Location = "
                     + LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     /**
      * Implementation of {@link LocationListener}.
@@ -305,6 +314,13 @@ public class MapasActivity extends AppCompatActivity
 
         Log.d("mapas", "location conectado");
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request missing location permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION);
+            return;
+        }
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient,
                 REQUEST,
@@ -462,15 +478,15 @@ public class MapasActivity extends AppCompatActivity
 
                 if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
                     //badge = R.drawable.tramway_2;
-                    badge = R.mipmap.ic_tram1;
+                    badge = R.drawable.ic_tram1;
                 } else {
                     //badge = R.drawable.bus;
-                    badge = R.mipmap.ic_bus_blue1;
+                    badge = R.drawable.ic_bus_blue1;
                 }
 
             } else {
                 //badge = R.drawable.bus;
-                badge = R.mipmap.ic_bus_blue1;
+                badge = R.drawable.ic_bus_blue1;
             }
 
             ((ImageView) view.findViewById(R.id.badge)).setImageResource(badge);
@@ -690,7 +706,7 @@ public class MapasActivity extends AppCompatActivity
     public void checkLocationSettings() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Request missing location permission.
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},

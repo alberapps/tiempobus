@@ -32,7 +32,7 @@ public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, List<TwResu
 
 
     public interface LoadAvisosTramAsyncTaskResponder {
-        public void AvisosTramLoaded(List<TwResultado> Twitter);
+        void AvisosTramLoaded(List<TwResultado> Twitter);
     }
 
     private LoadAvisosTramAsyncTaskResponder responder;

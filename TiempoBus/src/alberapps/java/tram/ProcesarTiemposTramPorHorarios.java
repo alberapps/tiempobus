@@ -48,9 +48,9 @@ public class ProcesarTiemposTramPorHorarios {
      */
     public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
 
-        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<>();
 
-        ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> busesList = new ArrayList<>();
 
 
         try {
@@ -115,7 +115,7 @@ public class ProcesarTiemposTramPorHorarios {
      */
     private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL9(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listado = new ArrayList<>();
 
         //Lineas
         //if(UtilidadesTRAM.es)
@@ -202,7 +202,7 @@ public class ProcesarTiemposTramPorHorarios {
      */
     private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL2(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listado = new ArrayList<>();
 
         DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
 
@@ -285,7 +285,7 @@ public class ProcesarTiemposTramPorHorarios {
      */
     private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL3(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listado = new ArrayList<>();
 
         DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
 
@@ -368,7 +368,7 @@ public class ProcesarTiemposTramPorHorarios {
      */
     private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL1(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listado = new ArrayList<>();
 
         DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
 
@@ -451,7 +451,7 @@ public class ProcesarTiemposTramPorHorarios {
      */
     private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL4(int parada) throws Exception {
 
-        ArrayList<BusLlegada> listado = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> listado = new ArrayList<>();
 
         DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
 

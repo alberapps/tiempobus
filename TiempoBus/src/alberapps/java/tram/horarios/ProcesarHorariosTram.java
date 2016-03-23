@@ -106,7 +106,7 @@ public class ProcesarHorariosTram {
 
         DatoTransbordo datoTransbordo = null;
 
-        List<DatoTransbordo> datosTransbordo = new ArrayList<DatoTransbordo>();
+        List<DatoTransbordo> datosTransbordo = new ArrayList<>();
 
         for (int i = 0; i < spanList.size(); i++) {
 
@@ -152,7 +152,7 @@ public class ProcesarHorariosTram {
             //Horas de cada fila
             for (int j = 0; j < tr.size(); j++) {
 
-                fila = new ArrayList<String>();
+                fila = new ArrayList<>();
                 if (!filaId.equals("") && !filaId.equals("__")) {
                     filaIdAnterior = filaId;
                 }

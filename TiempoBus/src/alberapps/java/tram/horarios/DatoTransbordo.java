@@ -83,23 +83,23 @@ public class DatoTransbordo {
         List<HorarioItem> horarioList = null;
 
         if (isSinDatos()) {
-            horarioList = new ArrayList<HorarioItem>();
+            horarioList = new ArrayList<>();
             HorarioItem horario = new HorarioItem();
             horario.setSinDatos(true);
             horarioList.add(horario);
 
         } else if (isErrorServicio()) {
-            horarioList = new ArrayList<HorarioItem>();
+            horarioList = new ArrayList<>();
             HorarioItem horario = new HorarioItem();
             horario.setErrorServicio(true);
             horarioList.add(horario);
         } else if (getTablaHoras() != null && getTablaHoras().getDatosHoras() != null) {
 
-            horarioList = new ArrayList<HorarioItem>();
+            horarioList = new ArrayList<>();
 
             HorarioItem horarioItem = null;
 
-            List<String> keys = new ArrayList<String>();
+            List<String> keys = new ArrayList<>();
             keys.addAll(getTablaHoras().getDatosHoras().keySet());
 
             List<String> listaHoras = null;

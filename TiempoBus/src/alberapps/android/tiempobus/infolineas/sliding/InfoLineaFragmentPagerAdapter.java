@@ -34,7 +34,7 @@ public class InfoLineaFragmentPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
 
-    private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+    private final ArrayList<TabInfo> mTabs = new ArrayList<>();
 
     static final class TabInfo {
         private final String tag;

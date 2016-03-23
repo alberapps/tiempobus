@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public static final int MSG_RECARGA = 203;
     public static final long DELAY_RECARGA = 750;
 
-    public ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+    public ArrayList<BusLlegada> buses = new ArrayList<>();
     private TiemposAdapter tiemposAdapter;
     private TextView guiHora;
     private TextView datosParada;
@@ -961,7 +961,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void opcionesLineaSeleccionada() {
 
-        List<CharSequence> itemsL = new ArrayList<CharSequence>();
+        List<CharSequence> itemsL = new ArrayList<>();
         itemsL.add(getString(R.string.menu_alarma));
         itemsL.add(getString(R.string.menu_share));
         itemsL.add(getString(R.string.menu_ver_en_mapa));
@@ -1289,7 +1289,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Bundle extras = new Bundle();
         extras.putInt("POSTE", paradaActual); // Pasamos el poste actual
         // Preparamos una descripcion automatica para el favorito
-        HashSet<String> h = new HashSet<String>();
+        HashSet<String> h = new HashSet<>();
         for (BusLlegada bus : buses) {
             h.add(bus.getLinea() + " a " + bus.getDestino());
         }
@@ -1356,7 +1356,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             // Error al recuperar datos
                             showProgressBar(false);
 
-                            buses = new ArrayList<BusLlegada>();
+                            buses = new ArrayList<>();
                             BusLlegada b1 = new BusLlegada();
                             b1.setErrorServicio(true);
                             buses.add(b1);
@@ -1408,7 +1408,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             } catch (Exception e) {
 
-                buses = new ArrayList<BusLlegada>();
+                buses = new ArrayList<>();
                 BusLlegada b1 = new BusLlegada();
                 b1.setErrorServicio(true);
                 buses.add(b1);
@@ -1441,7 +1441,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         ParadaActualHandler(MainActivity actividad) {
 
-            mActividad = new WeakReference<MainActivity>(actividad);
+            mActividad = new WeakReference<>(actividad);
 
         }
 
@@ -1512,7 +1512,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                     extras.putInt("POSTE", activ.paradaActual);
                                     // Preparamos una descripcion automatica para el
                                     // favorito
-                                    HashSet<String> h = new HashSet<String>();
+                                    HashSet<String> h = new HashSet<>();
                                     for (BusLlegada bus : activ.buses) {
                                         h.add(bus.getLinea() + " a " + bus.getDestino());
                                     }
@@ -1539,7 +1539,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                     extras.putInt("POSTE", activ.paradaActual);
                                     // Preparamos una descripcion automatica para el
                                     // favorito
-                                    HashSet<String> h = new HashSet<String>();
+                                    HashSet<String> h = new HashSet<>();
                                     for (BusLlegada bus : activ.buses) {
                                         h.add(bus.getLinea() + " a " + bus.getDestino());
                                     }
@@ -1630,7 +1630,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
 
-                        String updated = df.format(c.getTime()).toString();
+                        String updated = df.format(c.getTime());
 
                         laActividad.guiHora.setText(updated);
 
@@ -1727,11 +1727,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         result = mTts.setLanguage(loc);
 
-                        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                            lecturaAlternativa = false;
-                        } else {
-                            lecturaAlternativa = true;
-                        }
+                        lecturaAlternativa = !(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED);
 
                     } catch (Exception e) {
                         lecturaAlternativa = false;

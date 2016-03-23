@@ -258,7 +258,7 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
             Cursor cursor = managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
             if (cursor != null) {
-                List<Parada> listaParadas = new ArrayList<Parada>();
+                List<Parada> listaParadas = new ArrayList<>();
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 

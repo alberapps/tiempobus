@@ -34,7 +34,7 @@ public class BusLinea implements Comparable<BusLinea>, Serializable {
     private static final long serialVersionUID = 7404099850060654141L;
     private String idlinea;
     private String linea;
-    private HashMap<String, String> destinos = new HashMap<String, String>();
+    private HashMap<String, String> destinos = new HashMap<>();
     private ArrayList<BusParada> paradas;
 
     private String numLinea;

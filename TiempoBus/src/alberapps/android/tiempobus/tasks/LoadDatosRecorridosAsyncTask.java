@@ -29,7 +29,7 @@ import alberapps.java.tam.webservice.estructura.ProcesarEstructura;
 public class LoadDatosRecorridosAsyncTask extends AsyncTask<Object, Void, DatosMapa[]> {
 
     public interface LoadDatosRecorridosAsyncTaskResponder {
-        public void datosRecorridosLoaded(DatosMapa[] datosMapa);
+        void datosRecorridosLoaded(DatosMapa[] datosMapa);
     }
 
     private LoadDatosRecorridosAsyncTaskResponder responder;

@@ -174,7 +174,7 @@ public class GestionarVoz {
 
         HashMap<String, String> datosFav = cargarDatosFavoritos();
 
-        List<DatosVoz> datosVoz = new ArrayList<DatosVoz>();
+        List<DatosVoz> datosVoz = new ArrayList<>();
 
         DatosVoz dato = null;
 
@@ -296,7 +296,7 @@ public class GestionarVoz {
     private HashMap<String, String> cargarDatosFavoritos() {
 
         try {
-            HashMap<String, String> datosFav = new HashMap<String, String>();
+            HashMap<String, String> datosFav = new HashMap<>();
 
             Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
 

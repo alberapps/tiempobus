@@ -150,7 +150,7 @@ public class FavoritosProvider extends ContentProvider {
         // Long now = Long.valueOf(System.currentTimeMillis());
 
         // Make sure that the fields are all set
-        if (values.containsKey(TiempoBusDb.Favoritos.DESCRIPCION) == false) {
+        if (!values.containsKey(Favoritos.DESCRIPCION)) {
             values.put(TiempoBusDb.Favoritos.DESCRIPCION, Resources.getSystem().getString(android.R.string.untitled));
         }
 
@@ -226,7 +226,7 @@ public class FavoritosProvider extends ContentProvider {
         sUriMatcher.addURI(TiempoBusDb.AUTHORITY, "favoritos/#", FAVORITOS_ID);
         sUriMatcher.addURI(TiempoBusDb.AUTHORITY, "favoritos", FAVORITOS);
 
-        sFavoritosProjectionMap = new HashMap<String, String>();
+        sFavoritosProjectionMap = new HashMap<>();
         sFavoritosProjectionMap.put(Favoritos._ID, Favoritos._ID);
         sFavoritosProjectionMap.put(Favoritos.POSTE, Favoritos.POSTE);
         sFavoritosProjectionMap.put(Favoritos.TITULO, Favoritos.TITULO);

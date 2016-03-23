@@ -106,75 +106,6 @@ public class DatosPantallaPrincipal {
     View vPieTram = null;
     View vPieBus = null;
 
-    /**
-     * Modal con informacion de la parada
-     */
-    public void cargarModalInfo(int parada) {
-
-        try {
-
-            String parametros[] = {Integer.toString(parada)};
-
-            Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-
-            if (cursor != null) {
-                List<Parada> listaParadas = new ArrayList<Parada>();
-
-                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-
-                    Parada par = new Parada();
-
-                    par.setLineaNum(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_NUM)));
-                    par.setLineaDesc(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_LINEA_DESC)));
-                    par.setConexion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_CONEXION)));
-                    par.setCoordenadas(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
-                    par.setDestino(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DESTINO)));
-                    par.setDireccion(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_DIRECCION)));
-                    par.setLatitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LATITUD)));
-                    par.setLongitud(cursor.getInt(cursor.getColumnIndex(DatosLineasDB.COLUMN_LONGITUD)));
-                    par.setParada(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_PARADA)));
-
-                    par.setObservaciones(cursor.getString(cursor.getColumnIndex(DatosLineasDB.COLUMN_OBSERVACIONES)));
-
-                    listaParadas.add(par);
-                }
-
-                String descripcionAlert = context.getString(R.string.localizacion) + ": " + listaParadas.get(0).getDireccion() + "\n" + context.getString(R.string.lineas) + " ";
-
-                if (listaParadas.get(0).getConexion() != null) {
-                    descripcionAlert += listaParadas.get(0).getConexion().trim();
-                }
-
-                descripcionAlert += "\n" + context.getString(R.string.observaciones);
-
-                // Observaciones
-                for (int i = 0; i < listaParadas.size(); i++) {
-
-                    if (listaParadas.get(i).getObservaciones() != null && !listaParadas.get(i).getObservaciones().trim().equals("")) {
-                        descripcionAlert += "\n[" + listaParadas.get(i).getLineaNum() + "] " + listaParadas.get(i).getObservaciones().trim() + "\n";
-                    }
-
-                }
-
-                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-
-                dialog.setTitle(context.getString(R.string.share_0b) + " " + listaParadas.get(0).getParada());
-                dialog.setMessage(descripcionAlert);
-                dialog.setIcon(R.drawable.ic_info_modal);
-
-                dialog.show();
-
-            } else {
-
-                Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
-
-            }
-
-        } catch (Exception e) {
-            Toast.makeText(context, context.getString(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
     /**
      * @param paradaActual
@@ -189,7 +120,7 @@ public class DatosPantallaPrincipal {
             Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
 
             if (cursor != null) {
-                List<Parada> listaParadas = new ArrayList<Parada>();
+                List<Parada> listaParadas = new ArrayList<>();
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
@@ -257,7 +188,7 @@ public class DatosPantallaPrincipal {
     public String cargarDescripcionBDFavoritos(String parada) {
 
         try {
-            HashMap<String, String> datosFav = new HashMap<String, String>();
+            HashMap<String, String> datosFav = new HashMap<>();
 
             Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
 
@@ -301,7 +232,7 @@ public class DatosPantallaPrincipal {
             List<Parada> listaParadas = null;
 
             if (cursor != null) {
-                listaParadas = new ArrayList<Parada>();
+                listaParadas = new ArrayList<>();
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
@@ -459,28 +390,27 @@ public class DatosPantallaPrincipal {
 
                         Date fechaUltima = null;
 
-                        if (fecha_ultima != null) {
 
-                            fechaUltima = Utilidades.getFechaDate(fecha_ultima);
+                        fechaUltima = Utilidades.getFechaDate(fecha_ultima);
 
-                            // Contar nuevas noticias
+                        // Contar nuevas noticias
 
 
-                            for (int i = 0; i < noticias.size(); i++) {
+                        for (int i = 0; i < noticias.size(); i++) {
 
-                                if (noticias.get(i).getFecha() != null && !noticias.get(i).getFecha().equals("")) {
-                                    if (noticias.get(i).getFecha().after(fechaUltima)) {
-                                        nuevas++;
-                                    }
+                            if (noticias.get(i).getFecha() != null) {
+                                assert fechaUltima != null;
+                                if (noticias.get(i).getFecha().after(fechaUltima)) {
+                                    nuevas++;
                                 }
+                            }
 
-                                if (fechaComparar == null && noticias.get(i).getFecha() != null) {
-                                    fechaComparar = noticias.get(i).getFecha();
-                                }
-
+                            if (fechaComparar == null && noticias.get(i).getFecha() != null) {
+                                fechaComparar = noticias.get(i).getFecha();
                             }
 
                         }
+
 
                         if (fechaUltima != null && fechaComparar != null && !fechaUltima.equals(fechaComparar)) {
 
@@ -623,27 +553,8 @@ public class DatosPantallaPrincipal {
                     if (preferencias.contains("ultima_noticia_tram")) {
                         fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
 
-                        if (fecha_ultima != null) {
 
-                            // Date fechaUltima =
-                            // Utilidades.getFechaDate(fecha_ultima);
-
-                            // Contar nuevas noticias
-
-							/*
-                             * for (int i = 0; i < noticias.size(); i++) {
-							 * 
-							 * if (noticias.get(i).getFechaDate() != null) { if
-							 * (
-							 * noticias.get(i).getFechaDate().after(fechaUltima)
-							 * ) { nuevas++; } }
-							 * 
-							 * }
-							 */
-
-                        }
-
-                        if (fecha_ultima != null && !fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
+                        if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
 
                             lanzarAviso = true;
 
@@ -705,11 +616,7 @@ public class DatosPantallaPrincipal {
 
         if (Integer.toString(paradaActual).length() < 4 || Integer.toString(paradaActual).charAt(0) == '1') {
             return true;
-        } else if (UtilidadesTRAM.esParadaL2(Integer.toString(paradaActual))) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return UtilidadesTRAM.esParadaL2(Integer.toString(paradaActual));
 
     }
 
@@ -721,11 +628,7 @@ public class DatosPantallaPrincipal {
 
         if (paradaActual.length() < 4 || paradaActual.charAt(0) == '1') {
             return true;
-        } else if (UtilidadesTRAM.esParadaL2(paradaActual)) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return UtilidadesTRAM.esParadaL2(paradaActual);
 
     }
 
@@ -735,11 +638,7 @@ public class DatosPantallaPrincipal {
             return false;
         }
 
-        if (UtilidadesTRAM.esLineaTram(lineaActual)) {
-            return true;
-        } else {
-            return false;
-        }
+        return UtilidadesTRAM.esLineaTram(lineaActual);
 
     }
 
@@ -864,7 +763,7 @@ public class DatosPantallaPrincipal {
             if (avisoTram) {
 
                 if (avisoBus) {
-                    estadoAvisos.append(" " + context.getString(R.string.tiempo_m_3) + " ");
+                    estadoAvisos.append(" ").append(context.getString(R.string.tiempo_m_3)).append(" ");
                 }
 
                 estadoAvisos.append("tram");
@@ -899,6 +798,7 @@ public class DatosPantallaPrincipal {
 
         context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
+        assert context.tiemposView != null;
         context.tiemposView.addHeaderView(vheader);
 
 
@@ -973,8 +873,9 @@ public class DatosPantallaPrincipal {
                 anterior = parada;
             }
 
-            if (anterior != null && !anterior.equals("")) {
+            if (!anterior.equals("")) {
 
+                assert botonHistorial != null;
                 botonHistorial.setOnClickListener(new Button.OnClickListener() {
                     public void onClick(View arg0) {
 
@@ -982,6 +883,7 @@ public class DatosPantallaPrincipal {
 
                         // Poner en campo de poste
                         EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                        assert txtPoste != null;
                         txtPoste.setText(Integer.toString(context.paradaActual));
 
                         SharedPreferences.Editor editor = preferencias.edit();
@@ -1000,6 +902,7 @@ public class DatosPantallaPrincipal {
         }
 
 
+        assert botonHistorial != null;
         botonHistorial.setText(anterior);
 
     }
@@ -1012,7 +915,7 @@ public class DatosPantallaPrincipal {
      */
     public List<Favorito> cargarHistorialBD() {
 
-        List<Favorito> anteriorHisList = new ArrayList<Favorito>();
+        List<Favorito> anteriorHisList = new ArrayList<>();
 
         Favorito anteriorHis = null;
 
@@ -1092,6 +995,7 @@ public class DatosPantallaPrincipal {
 
             context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
+            assert context.tiemposView != null;
             context.tiemposView.addFooterView(v);
 
             context.avisoPie = v;
@@ -1136,6 +1040,7 @@ public class DatosPantallaPrincipal {
 
             context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
+            assert context.tiemposView != null;
             context.tiemposView.addFooterView(v);
 
             context.avisoPie = v;
@@ -1224,6 +1129,7 @@ public class DatosPantallaPrincipal {
 
                         EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
 
+                        assert txtPoste != null;
                         txtPoste.setText("2");
 
                         SharedPreferences.Editor editor = preferencias.edit();
@@ -1499,7 +1405,7 @@ public class DatosPantallaPrincipal {
         List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
 
         if (fijarLista == null) {
-            fijarLista = new ArrayList<Datos>();
+            fijarLista = new ArrayList<>();
         }
 
         //Nuevo dato fijado
@@ -1531,7 +1437,7 @@ public class DatosPantallaPrincipal {
         List<Datos> fijarLista = GestionarDatos.listaDatos(tarjetasFijasPref);
 
         if (fijarLista == null) {
-            fijarLista = new ArrayList<Datos>();
+            fijarLista = new ArrayList<>();
         }
 
 
@@ -1571,9 +1477,9 @@ public class DatosPantallaPrincipal {
                     return tiempos;
                 }
 
-                ArrayList<BusLlegada> tiemposCoincide = new ArrayList<BusLlegada>();
+                ArrayList<BusLlegada> tiemposCoincide = new ArrayList<>();
 
-                ArrayList<BusLlegada> tiemposNoCoincide = new ArrayList<BusLlegada>();
+                ArrayList<BusLlegada> tiemposNoCoincide = new ArrayList<>();
 
                 boolean coincide = false;
 

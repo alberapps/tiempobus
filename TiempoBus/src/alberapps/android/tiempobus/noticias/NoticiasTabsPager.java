@@ -245,7 +245,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
         private final Context mContext;
         private final TabHost mTabHost;
         private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+        private final ArrayList<TabInfo> mTabs = new ArrayList<>();
 
         static final class TabInfo {
             private final String tag;
@@ -418,7 +418,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                     Noticias noticia = new Noticias();
                     noticia.setErrorServicio(true);
 
-                    noticiasRecuperadas = new ArrayList<Noticias>();
+                    noticiasRecuperadas = new ArrayList<>();
                     noticiasRecuperadas.add(noticia);
 
                     // Error al recuperar datos
@@ -775,7 +775,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
 
             // Cargar lista de elementos a consultar
-            List<Boolean> listaTW = new ArrayList<Boolean>();
+            List<Boolean> listaTW = new ArrayList<>();
 
             listaTW.add(preferencias.getBoolean("tw_2", true));
             listaTW.add(preferencias.getBoolean("tw_3", true));

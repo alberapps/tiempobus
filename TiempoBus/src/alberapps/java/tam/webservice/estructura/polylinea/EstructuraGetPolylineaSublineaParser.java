@@ -152,7 +152,7 @@ public class EstructuraGetPolylineaSublineaParser {
      * @throws java.io.IOException
      */
     private List<InfoCoord> readGetPolylineaSublineaResult(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<InfoCoord> infoCoordList = new ArrayList<InfoCoord>();
+        List<InfoCoord> infoCoordList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "GetPolylineaSublineaResult");
         while (parser.next() != XmlPullParser.END_TAG) {

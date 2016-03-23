@@ -44,7 +44,7 @@ public class ProcesarTiemposService {
      */
     public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Boolean cacheTiempos) throws Exception {
 
-        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<>();
 
         //GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
         DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
@@ -169,7 +169,7 @@ public class ProcesarTiemposService {
      */
     public static BusLlegada procesaTiemposLlegadaConParadaLinea(String linea, String parada) throws Exception {
 
-        ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+        ArrayList<BusLlegada> buses = new ArrayList<>();
 
         //GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
         DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();

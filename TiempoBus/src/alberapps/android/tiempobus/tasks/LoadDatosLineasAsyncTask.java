@@ -31,7 +31,7 @@ public class LoadDatosLineasAsyncTask extends AsyncTask<String, Void, ArrayList<
 
 
     public interface LoadDatosLineasAsyncTaskResponder {
-        public void busesLoaded(ArrayList<BusLinea> buses);
+        void busesLoaded(ArrayList<BusLinea> buses);
     }
 
     private LoadDatosLineasAsyncTaskResponder responder;

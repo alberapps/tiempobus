@@ -69,7 +69,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         if (parada.equals(paradaActual)) {
             return buses;
         } else {
-            buses = new ArrayList<BusLlegada>();
+            buses = new ArrayList<>();
             paradaActual = "";
         }
 
@@ -321,7 +321,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (actividad.datosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
                 v = vi.inflate(R.layout.tiempos_item_sin_datos_tram, null);
             } else {
                 v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
@@ -341,7 +341,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             String aviso = "";
 
 
-            if (actividad.datosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
                 aviso = ctx.getString(R.string.tlf_tram);
 
 

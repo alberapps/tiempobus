@@ -92,9 +92,8 @@ public class Datos {
 
         Datos datos = (Datos) o;
 
-        if (parada != null ? !parada.equals(datos.parada) : datos.parada != null) return false;
+        return !(parada != null ? !parada.equals(datos.parada) : datos.parada != null);
 
-        return true;
     }
 
     @Override

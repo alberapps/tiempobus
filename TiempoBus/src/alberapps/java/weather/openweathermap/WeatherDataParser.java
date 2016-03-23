@@ -69,7 +69,7 @@ public class WeatherDataParser {
 // it must be converted to milliseconds in order to be converted to valid date.
         Date date = new Date(time * 1000);
         SimpleDateFormat format = new SimpleDateFormat("E, MMM d");
-        return format.format(date).toString();
+        return format.format(date);
     }
 
     /**

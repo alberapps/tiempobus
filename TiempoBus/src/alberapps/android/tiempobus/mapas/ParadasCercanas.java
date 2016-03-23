@@ -18,12 +18,15 @@
  */
 package alberapps.android.tiempobus.mapas;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -87,7 +90,7 @@ public class ParadasCercanas {
         context.lineaSeleccionadaDesc = null;
         context.lineaSeleccionadaNum = null;
 
-        final List<LatLng> listaPuntos = new ArrayList<LatLng>();
+        final List<LatLng> listaPuntos = new ArrayList<>();
 
         // String query =
         // Integer.toString(BuscadorLineasProvider.GET_PARADAS_PROXIMAS);
@@ -121,7 +124,7 @@ public class ParadasCercanas {
         }
 
         if (cursor != null) {
-            List<Parada> listaParadas = new ArrayList<Parada>();
+            List<Parada> listaParadas = new ArrayList<>();
 
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
@@ -144,12 +147,12 @@ public class ParadasCercanas {
             for (int i = 0; i < listaParadas.size(); i++) {
 
                 if (listaParadas.get(i).getRed().equals(DatosLineasDB.RED_TRAM)) {
-                    context.drawableIda = context.gestionarLineas.markerTram();
+                    context.drawableIda = GestionarLineas.markerTram();
                 } else {
-                    context.drawableIda = context.gestionarLineas.markerBusAzul();
+                    context.drawableIda = GestionarLineas.markerBusAzul();
                 }
 
-                context.markersIda = new ArrayList<MarkerOptions>();
+                context.markersIda = new ArrayList<>();
 
                 LatLng point = null;
 
@@ -266,9 +269,18 @@ public class ParadasCercanas {
 
             Toast.makeText(context, context.getString(R.string.gps_recuperando), Toast.LENGTH_SHORT).show();
 
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                // Request missing location permission.
+                ActivityCompat.requestPermissions(context,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MapasActivity.REQUEST_CODE_LOCATION);
+
+                return;
+            }
             Location location = LocationServices.FusedLocationApi.getLastLocation(context.mGoogleApiClient);
 
-            if(location == null){
+            if (location == null) {
                 Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
                 return;
             }

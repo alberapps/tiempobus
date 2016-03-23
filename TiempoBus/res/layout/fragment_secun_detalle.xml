@@ -17,7 +17,6 @@
  
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contenedor_tarjetas_tablet"
     android:layout_width="match_parent"
@@ -185,154 +184,139 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
+                android:layout_marginTop="1dp"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp">
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/desc_tarjeta_clima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/eltiempoOWM"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/climaSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:checked="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="2dp">
+
+                    <ImageView
+                        android:id="@+id/imageWeather"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="Imagen clima"
+                        android:src="@drawable/art_clear"
+                        android:visibility="invisible" />
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/desc_tarjeta_clima"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/eltiempoOWM"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="12sp"
-                            android:textStyle="italic|bold" />
-
-                        <android.support.v7.widget.SwitchCompat
-                            android:id="@+id/climaSwitch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_weight="1"
-                            android:checked="true"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                            android:layout_marginTop="2dp">
-
-                            <ImageView
-                                android:id="@+id/imageWeather"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:layout_gravity="center"
-                                android:contentDescription="Imagen clima"
-                                android:src="@drawable/art_clear"
-                                android:visibility="invisible" />
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/TextTemperatura"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="5sp"
-                                        android:layout_marginRight="5sp"
-                                        android:gravity="center_vertical"
-                                        android:textAppearance="?android:attr/textAppearanceLarge"
-                                        android:textColor="@color/primary_material_dark"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/textoWeather"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center_vertical"
-                                        android:maxLines="2"
-                                        android:text="@string/main_no_items"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:textStyle="italic" />
-
-                                </LinearLayout>
-
-
-                                <TextView
-                                    android:id="@+id/textoWeatherTexto"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="1dp"
-                                    android:layout_marginLeft="5sp"
-                                    android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"
-                                    android:gravity="top"
-                                    android:maxLines="4"
-
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textStyle="italic" />
-
-
-                                <TextView
-                                    android:id="@+id/textoWeatherTexto2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="2dp"
-                                    android:layout_marginLeft="5sp"
-                                    android:layout_marginTop="1dp"
-                                    android:drawableLeft="@drawable/ic_place_grey600_18dp"
-                                    android:gravity="top"
-                                    android:maxLines="4"
-
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textStyle="italic" />
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="5dp"
-                            android:layout_marginRight="7dp"
-
-
-                            >
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/textoWeatherTexto3"
+                                android:id="@+id/TextTemperatura"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5sp"
+                                android:layout_marginRight="5sp"
+                                android:gravity="center_vertical"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textColor="@color/primary_material_dark"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textoWeather"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:autoLink="web"
-                                android:gravity="top|right"
+                                android:gravity="center_vertical"
                                 android:maxLines="2"
-                                android:text="@string/guion"
+                                android:text="@string/main_no_items"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textSize="10sp"
                                 android:textStyle="italic" />
+
                         </LinearLayout>
 
 
+                        <TextView
+                            android:id="@+id/textoWeatherTexto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="1dp"
+                            android:layout_marginLeft="5sp"
+                            android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"
+                            android:gravity="top"
+                            android:maxLines="4"
+
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+
+
+                        <TextView
+                            android:id="@+id/textoWeatherTexto2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="5sp"
+                            android:layout_marginTop="1dp"
+                            android:drawableLeft="@drawable/ic_place_grey600_18dp"
+                            android:gravity="top"
+                            android:maxLines="4"
+
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="italic" />
+
+
                     </LinearLayout>
+
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="7dp">
+
+                    <TextView
+                        android:id="@+id/textoWeatherTexto3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:gravity="top|right"
+                        android:maxLines="2"
+                        android:text="@string/guion"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -357,68 +341,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="4dp"
+                android:layout_marginTop="1dp"
                 android:orientation="vertical">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/infoparada_wiki"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:text="@string/wikipedia"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
 
-                        <TextView
-                            android:id="@+id/infoparada_wiki"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/wikipedia"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="12sp"
-                            android:textStyle="italic|bold" />
-
-                        <android.support.v7.widget.SwitchCompat
-                            android:id="@+id/wikiSwitch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_weight="1"
-                            android:checked="true"/>
-
-                    </LinearLayout>
-
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fadeScrollbars="false">
-
-                            <TextView
-                                android:id="@+id/datos_wiki"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fadeScrollbars="false"
-                                android:gravity="top"
-                                android:lines="3"
-                                android:scrollHorizontally="true"
-                                android:scrollbars="horizontal"
-                                android:text="@string/main_no_items"
-
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textStyle="italic" />
-
-                        </HorizontalScrollView>
-
-
-                    </LinearLayout>
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/wikiSwitch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:checked="true" />
 
                 </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fadeScrollbars="false">
+
+                    <TextView
+                        android:id="@+id/datos_wiki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fadeScrollbars="false"
+                        android:gravity="top"
+                        android:lines="3"
+                        android:scrollHorizontally="true"
+                        android:scrollbars="horizontal"
+                        android:text="@string/main_no_items"
+
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="italic" />
+
+                </HorizontalScrollView>
 
 
             </LinearLayout>

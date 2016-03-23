@@ -31,7 +31,7 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 
 
     public interface LoadNoticiasAsyncTaskResponder {
-        public void noticiasLoaded(List<Noticias> noticias);
+        void noticiasLoaded(List<Noticias> noticias);
     }
 
     private LoadNoticiasAsyncTaskResponder responder;

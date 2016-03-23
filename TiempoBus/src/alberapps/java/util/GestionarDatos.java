@@ -41,7 +41,7 @@ public class GestionarDatos {
 
 		String[] listaS = lista.split(";");
 
-		List<Datos> datosNuevo = new ArrayList<Datos>();
+		List<Datos> datosNuevo = new ArrayList<>();
 		Datos dato = null;
 
 		for (int i = 0; i < listaS.length; i++) {

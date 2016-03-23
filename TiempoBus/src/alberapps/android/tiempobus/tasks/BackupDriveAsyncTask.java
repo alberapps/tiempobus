@@ -32,7 +32,7 @@ import alberapps.java.data.backup.DatosDriveBackup;
 public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
     public interface BackupDriveAsyncTaskResponder {
-        public void backupLoaded(Boolean result);
+        void backupLoaded(Boolean result);
     }
 
     private BackupDriveAsyncTaskResponder responder;
@@ -84,11 +84,7 @@ public class BackupDriveAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
                 com.google.android.gms.common.api.Status status = driveContents.commit(context.getGoogleApiClient(), null).await();
 
-                if (resultado && status.getStatus().isSuccess()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return resultado && status.getStatus().isSuccess();
 
             }
 

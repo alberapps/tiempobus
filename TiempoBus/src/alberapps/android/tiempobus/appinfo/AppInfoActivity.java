@@ -41,7 +41,7 @@ import alberapps.java.tram.UtilidadesTRAM;
  */
 public class AppInfoActivity extends AppCompatActivity {
 
-    SharedPreferences preferencias = null;
+    private SharedPreferences preferencias = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class AppInfoActivity extends AppCompatActivity {
 
 
         ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
+        assert botonGpl != null;
         botonGpl.setOnClickListener(new ImageView.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -75,6 +76,7 @@ public class AppInfoActivity extends AppCompatActivity {
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
+            assert botonFGV != null;
             botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -84,6 +86,7 @@ public class AppInfoActivity extends AppCompatActivity {
             });
 
             ImageView botonTram = (ImageView) findViewById(R.id.imageLogoTram);
+            assert botonTram != null;
             botonTram.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
 

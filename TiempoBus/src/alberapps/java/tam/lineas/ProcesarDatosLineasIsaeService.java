@@ -71,7 +71,7 @@ public class ProcesarDatosLineasIsaeService {
 
             DatosLinea datosLinea = null;
 
-            lineas = new ArrayList<DatosLinea>();
+            lineas = new ArrayList<>();
 
             for (int i = 0; i < option.size(); i++) {
 
@@ -176,7 +176,7 @@ public class ProcesarDatosLineasIsaeService {
      */
     public static ArrayList<BusLinea> getLineasBus(String offline) throws IOException {
 
-        ArrayList<BusLinea> lineasBus = new ArrayList<BusLinea>();
+        ArrayList<BusLinea> lineasBus = new ArrayList<>();
 
         List<DatosLinea> datosRecuperados = getLineasInfo(offline);
 

@@ -33,7 +33,7 @@ public class GetVehiculosResult implements Serializable {
 
 	public GetVehiculosResult() {
 
-		infoVehiculoList = new ArrayList<InfoVehiculo>();
+		infoVehiculoList = new ArrayList<>();
 
 	}
 

@@ -121,7 +121,7 @@ public class HorarioTram {
 
     public List<HorarioItem> getHorariosItemCombinados() {
 
-        List<HorarioItem> listado = new ArrayList<HorarioItem>();
+        List<HorarioItem> listado = new ArrayList<>();
 
         if (datosTransbordos != null && !datosTransbordos.isEmpty() && !datosTransbordos.get(0).isErrorServicio() && !datosTransbordos.get(0).isSinDatos()) {
 

@@ -59,7 +59,7 @@ public class SelectorLinea {
 
     private SharedPreferences preferencias;
 
-    private LinkedList<SpinnerItem> listaSpinner = new LinkedList<SpinnerItem>();
+    private LinkedList<SpinnerItem> listaSpinner = new LinkedList<>();
 
     public SelectorLinea(MapasActivity contexto, SharedPreferences preferencia) {
 
@@ -89,7 +89,7 @@ public class SelectorLinea {
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
 
 
-        final ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<SpinnerItem>(context, android.R.layout.simple_spinner_item, listaSpinner);
+        final ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaSpinner);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

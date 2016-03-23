@@ -178,9 +178,7 @@ public class GestionarFondo {
 
     private boolean isSDCARDMounted() {
         String status = Environment.getExternalStorageState();
-        if (status.equals(Environment.MEDIA_MOUNTED))
-            return true;
-        return false;
+        return status.equals(Environment.MEDIA_MOUNTED);
     }
 
     /**

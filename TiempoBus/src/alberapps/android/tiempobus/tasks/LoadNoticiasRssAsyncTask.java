@@ -33,7 +33,7 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
 
 
     public interface LoadNoticiasRssAsyncTaskResponder {
-        public void noticiasRssLoaded(List<NoticiaRss> noticias);
+        void noticiasRssLoaded(List<NoticiaRss> noticias);
     }
 
     private LoadNoticiasRssAsyncTaskResponder responder;

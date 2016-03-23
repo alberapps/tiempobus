@@ -99,11 +99,7 @@ public class UtilidadesTAM {
      */
     public static boolean isBusUrbano(String linea) {
 
-        if (lineasUrbanas.contains(linea)) {
-            return true;
-        } else {
-            return false;
-        }
+        return lineasUrbanas.contains(linea);
 
     }
 

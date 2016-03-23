@@ -30,7 +30,7 @@ import alberapps.java.tam.webservice.estructura.ProcesarEstructura;
 public class LoadDatosInfoLineasAsyncTask extends AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> {
 
     public interface LoadDatosInfoLineasAsyncTaskResponder {
-        public void datosInfoLineasLoaded(DatosInfoLinea datos);
+        void datosInfoLineasLoaded(DatosInfoLinea datos);
     }
 
     private LoadDatosInfoLineasAsyncTaskResponder responder;

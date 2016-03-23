@@ -33,13 +33,13 @@ public class DatosMapa implements Serializable {
      */
     private static final long serialVersionUID = 623708931441052658L;
 
-    private List<PlaceMark> placemarks = new ArrayList<PlaceMark>();
+    private List<PlaceMark> placemarks = new ArrayList<>();
     private PlaceMark currentPlacemark;
     private PlaceMark routePlacemark;
 
-    private List<PlaceMark> placemarksInversa = new ArrayList<PlaceMark>();
+    private List<PlaceMark> placemarksInversa = new ArrayList<>();
 
-    List<InfoVehiculo> vehiculosList = new ArrayList<InfoVehiculo>();
+    List<InfoVehiculo> vehiculosList = new ArrayList<>();
 
     // Recorrido
     private String recorrido;
@@ -97,7 +97,7 @@ public class DatosMapa implements Serializable {
     public List<PlaceMark> getPlacemarksInversa() {
 
         // Reordenar
-        placemarksInversa = new ArrayList<PlaceMark>(placemarks);
+        placemarksInversa = new ArrayList<>(placemarks);
         Collections.reverse(placemarksInversa);
 
         return placemarksInversa;

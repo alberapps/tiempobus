@@ -361,11 +361,7 @@ public class Utilidades {
 
         Log.d("RANDOM", "RANDOM: " + random);
 
-        if (random == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return random == 0;
 
     }
 

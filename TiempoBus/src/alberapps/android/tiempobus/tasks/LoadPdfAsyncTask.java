@@ -32,7 +32,7 @@ public class LoadPdfAsyncTask extends AsyncTask<Object, Void, Object> {
      *
      */
     public interface LoadPdfAsyncTaskResponder {
-        public void PdfLoaded(Object result);
+        void PdfLoaded(Object result);
     }
 
     private LoadPdfAsyncTaskResponder responder;

@@ -29,7 +29,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -172,114 +171,57 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            FloatingActionButton imgCircularFavorito = (FloatingActionButton) actividad.findViewById(R.id.boton_circular_fav_h);
+        FloatingActionButton imgCircularFavorito = (FloatingActionButton) actividad.findViewById(R.id.boton_circular_fav_h);
 
-            // Para acceder a guardar favorito
-            imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+        // Para acceder a guardar favorito
+        assert imgCircularFavorito != null;
+        imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-                    //Cargar datos
-                    StringBuffer guardar = new StringBuffer("");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
-                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
-                    datosHorario = guardar.toString();
-
-
-                    Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
-
-                    Bundle extras = new Bundle();
-                    extras.putString("HTRAM", "TRAM");
-                    // Preparamos una descripcion automatica para el
-                    // favorito
+                //Cargar datos
+                StringBuffer guardar = new StringBuffer("");
+                guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                guardar.append(";;");
+                guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+                PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+                datosHorario = guardar.toString();
 
 
-                    String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+                Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
 
-                    StringBuffer desc = new StringBuffer();
-                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
-                    desc.append("\n");
-                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
-                    desc.append("\n");
-                    desc.append(actividad.consultaHorarioTram.getHoraDesde());
-                    desc.append("->");
-                    desc.append(actividad.consultaHorarioTram.getHoraHasta());
-                    desc.append("::");
-                    desc.append(datosHorario);
-
-                    extras.putString("DESCRIPCION", desc.toString());
-
-                    i.putExtras(extras);
-                    actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
-                }
-            });
+                Bundle extras = new Bundle();
+                extras.putString("HTRAM", "TRAM");
+                // Preparamos una descripcion automatica para el
+                // favorito
 
 
-        }else{
+                String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
 
-            ImageButton imgCircularFavorito = (ImageButton) actividad.findViewById(R.id.boton_circular_fav_h);
+                StringBuffer desc = new StringBuffer();
+                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
+                desc.append("\n");
+                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
+                desc.append("\n");
+                desc.append(actividad.consultaHorarioTram.getHoraDesde());
+                desc.append("->");
+                desc.append(actividad.consultaHorarioTram.getHoraHasta());
+                desc.append("::");
+                desc.append(datosHorario);
 
-            // Para acceder a guardar favorito
-            imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+                extras.putString("DESCRIPCION", desc.toString());
 
-                    //Cargar datos
-                    StringBuffer guardar = new StringBuffer("");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
-                    guardar.append(";;");
-                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
-                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
-                    datosHorario = guardar.toString();
-
-
-                    Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
-
-                    Bundle extras = new Bundle();
-                    extras.putString("HTRAM", "TRAM");
-                    // Preparamos una descripcion automatica para el
-                    // favorito
-
-
-                    String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
-
-                    StringBuffer desc = new StringBuffer();
-                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
-                    desc.append("\n");
-                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
-                    desc.append("\n");
-                    desc.append(actividad.consultaHorarioTram.getHoraDesde());
-                    desc.append("->");
-                    desc.append(actividad.consultaHorarioTram.getHoraHasta());
-                    desc.append("::");
-                    desc.append(datosHorario);
-
-                    extras.putString("DESCRIPCION", desc.toString());
-
-                    i.putExtras(extras);
-                    actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
-                }
-            });
-
-
-        }
+                i.putExtras(extras);
+                actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+            }
+        });
 
 
         if (actividad.datosHorariosTram == null || actividad.datosHorariosTram.getHorariosItemCombinados() == null || actividad.datosHorariosTram.getHorariosItemCombinados().isEmpty()
@@ -310,9 +252,9 @@ public class FragmentHorariosTram extends Fragment {
         //actividad.datosHorariosTram = new HorarioTram();
         //cargarListado();
 
-        if(actividad.dialog == null) {
+        if (actividad.dialog == null) {
             actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
-        }else{
+        } else {
             actividad.dialog.show();
         }
 
@@ -586,14 +528,13 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-
     }
 
 
     /**
      * Pie del listado
      */
-    public void cargarFooterHotrarios(){
+    public void cargarFooterHotrarios() {
 
         LayoutInflater li2 = LayoutInflater.from(actividad);
 
@@ -609,20 +550,20 @@ public class FragmentHorariosTram extends Fragment {
      *
      * @param vheader
      */
-    private void cargarSpinnerFavoritos(final View vheader){
+    private void cargarSpinnerFavoritos(final View vheader) {
 
         // Combo de seleccion de favorito
         final Spinner spinnerFavorito = (Spinner) vheader.findViewById(R.id.spinner_favoritos);
 
-        List<Favorito> favoritos =  cargarFavoritosBD();
+        List<Favorito> favoritos = cargarFavoritosBD();
         final List<Favorito> favoritosHorarios = new ArrayList<>();
         List<String> favoritosString = new ArrayList<>();
 
         favoritosString.add(actividad.getString(R.string.menu_favoritos));
 
-        for(int i = 0; i< favoritos.size(); i++){
+        for (int i = 0; i < favoritos.size(); i++) {
 
-            if(favoritos.get(i).getNumParada().equals("0")){
+            if (favoritos.get(i).getNumParada().equals("0")) {
 
                 favoritosHorarios.add(favoritos.get(i));
                 favoritosString.add(favoritos.get(i).getTitulo());
@@ -632,10 +573,9 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-        ArrayAdapter<String> adapterFavoritos = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, favoritosString);
+        ArrayAdapter<String> adapterFavoritos = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, favoritosString);
         adapterFavoritos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFavorito.setAdapter(adapterFavoritos);
-
 
 
         // Seleccion
@@ -645,7 +585,7 @@ public class FragmentHorariosTram extends Fragment {
 
 
                 //Evitar primer elemento
-                if (arg2 > 0 ) {
+                if (arg2 > 0) {
 
                     String[] datos = favoritosHorarios.get(arg2 - 1).getDescripcion().split("::")[1].split(";;");
 
@@ -682,7 +622,6 @@ public class FragmentHorariosTram extends Fragment {
             }
 
         });
-
 
 
     }
@@ -871,11 +810,12 @@ public class FragmentHorariosTram extends Fragment {
 
     /**
      * Listado de favoritos
+     *
      * @return
      */
     public List<Favorito> cargarFavoritosBD() {
 
-        List<Favorito> favoritosList = new ArrayList<Favorito>();
+        List<Favorito> favoritosList = new ArrayList<>();
 
         Favorito favorito = null;
 
@@ -915,7 +855,6 @@ public class FragmentHorariosTram extends Fragment {
         return favoritosList;
 
     }
-
 
 
 }

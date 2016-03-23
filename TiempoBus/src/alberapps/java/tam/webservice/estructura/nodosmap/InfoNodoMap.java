@@ -102,9 +102,8 @@ public class InfoNodoMap implements Serializable {
 
         InfoNodoMap that = (InfoNodoMap) o;
 
-        if (nodo != null ? !nodo.equals(that.nodo) : that.nodo != null) return false;
+        return !(nodo != null ? !nodo.equals(that.nodo) : that.nodo != null);
 
-        return true;
     }
 
     @Override

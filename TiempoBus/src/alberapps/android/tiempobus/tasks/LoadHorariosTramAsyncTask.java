@@ -30,7 +30,7 @@ import alberapps.java.tram.horarios.ProcesarHorariosTram;
 public class LoadHorariosTramAsyncTask extends AsyncTask<Object, Void, HorarioTram> {
 
     public interface LoadHorariosTramAsyncTaskResponder {
-        public void datosHorariosTramLoaded(HorarioTram datos);
+        void datosHorariosTramLoaded(HorarioTram datos);
     }
 
     private LoadHorariosTramAsyncTaskResponder responder;

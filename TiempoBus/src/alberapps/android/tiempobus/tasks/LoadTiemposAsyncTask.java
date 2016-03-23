@@ -45,7 +45,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
      * como callback una vez termine la tarea asincrona
      */
     public interface LoadTiemposAsyncTaskResponder {
-        public void tiemposLoaded(DatosRespuesta buses);
+        void tiemposLoaded(DatosRespuesta buses);
     }
 
     private LoadTiemposAsyncTaskResponder responder;
@@ -143,7 +143,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                 if (llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
 
                     if (llegadasBus == null) {
-                        llegadasBus = new ArrayList<BusLlegada>();
+                        llegadasBus = new ArrayList<>();
                     }
 
                     llegadasBus.addAll(llegadasDiesel);

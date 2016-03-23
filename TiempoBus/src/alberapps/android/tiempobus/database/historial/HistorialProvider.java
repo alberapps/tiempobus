@@ -19,10 +19,6 @@
  */
 package alberapps.android.tiempobus.database.historial;
 
-import java.util.HashMap;
-
-import alberapps.android.tiempobus.data.TiempoBusDb.Favoritos;
-import alberapps.android.tiempobus.database.historial.HistorialDB.Historial;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -37,6 +33,11 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.util.HashMap;
+
+import alberapps.android.tiempobus.data.TiempoBusDb.Favoritos;
+import alberapps.android.tiempobus.database.historial.HistorialDB.Historial;
 
 /**
  * Proveedor de la base datos de historial
@@ -149,7 +150,7 @@ public class HistorialProvider extends ContentProvider {
 		}
 
 		// Make sure that the fields are all set
-		if (values.containsKey(HistorialDB.Historial.DESCRIPCION) == false) {
+		if (!values.containsKey(Historial.DESCRIPCION)) {
 			values.put(HistorialDB.Historial.DESCRIPCION, Resources.getSystem().getString(android.R.string.untitled));
 		}
 
@@ -225,7 +226,7 @@ public class HistorialProvider extends ContentProvider {
 		sUriMatcher.addURI(HistorialDB.AUTHORITY, "historial/#", HISTORIAL_ID);
 		sUriMatcher.addURI(HistorialDB.AUTHORITY, "historial", HISTORIAL);
 
-		sHistorialProjectionMap = new HashMap<String, String>();
+		sHistorialProjectionMap = new HashMap<>();
 		sHistorialProjectionMap.put(Historial._ID, Historial._ID);
 		sHistorialProjectionMap.put(Historial.PARADA, Historial.PARADA);
 		sHistorialProjectionMap.put(Historial.TITULO, Historial.TITULO);

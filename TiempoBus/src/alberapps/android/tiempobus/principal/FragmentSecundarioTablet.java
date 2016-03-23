@@ -123,7 +123,7 @@ public class FragmentSecundarioTablet extends Fragment {
 
     // Container Activity must implement this interface
     public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(int position);
+        void onArticleSelected(int position);
     }
 
     /**

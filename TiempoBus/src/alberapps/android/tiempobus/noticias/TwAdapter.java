@@ -49,7 +49,7 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
         super(context, textViewResourceId);
     }
 
-    public HashMap<String, Bitmap> imagenesCache = new HashMap<String, Bitmap>();
+    public HashMap<String, Bitmap> imagenesCache = new HashMap<>();
 
 
     public View getView(final int position, View v, ViewGroup parent) {

@@ -137,7 +137,7 @@ public class GestionarLineas {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway);
 
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_tram1);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_tram1);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
 
@@ -148,7 +148,7 @@ public class GestionarLineas {
     public static BitmapDescriptor markerTramPosicion() {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway_2);
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_tram_black1);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_tram_black1);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
@@ -160,7 +160,7 @@ public class GestionarLineas {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
 
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_bus_blue1);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_blue1);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
 
@@ -172,7 +172,7 @@ public class GestionarLineas {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_green);
 
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_bus_green1);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_green1);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 
@@ -184,7 +184,7 @@ public class GestionarLineas {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_medio);
 
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_bus_green2);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_green2);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
 
@@ -196,7 +196,7 @@ public class GestionarLineas {
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.bus);
 
-        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.mipmap.ic_bus_black1);
+        BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_black1);
 
         //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
@@ -238,14 +238,14 @@ public class GestionarLineas {
 
         context.drawableVuelta = markerBusVerde();
         context.drawableMedio = markerBusMedio();
-        context.markersIda = new ArrayList<MarkerOptions>();
-        context.markersVuelta = new ArrayList<MarkerOptions>();
-        context.markersMedio = new ArrayList<MarkerOptions>();
+        context.markersIda = new ArrayList<>();
+        context.markersVuelta = new ArrayList<>();
+        context.markersMedio = new ArrayList<>();
 
         // -0.510017579,38.386057662,0
         // 38.386057662,-0.510017579
 
-        final List<LatLng> listaPuntos = new ArrayList<LatLng>();
+        final List<LatLng> listaPuntos = new ArrayList<>();
 
         /**
          * 38.344820, -0.483320‎ +38° 20' 41.35", -0° 28' 59.95"
@@ -745,7 +745,7 @@ public class GestionarLineas {
      */
     public List<Marker> cargarMarkersCtr(List<MarkerOptions> markers) {
 
-        List<Marker> listaMarker = new ArrayList<Marker>();
+        List<Marker> listaMarker = new ArrayList<>();
 
         if (markers != null) {
             for (int i = 0; i < markers.size(); i++) {

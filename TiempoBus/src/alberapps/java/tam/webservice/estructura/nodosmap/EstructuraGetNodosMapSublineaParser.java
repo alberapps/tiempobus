@@ -152,7 +152,7 @@ public class EstructuraGetNodosMapSublineaParser {
      * @throws java.io.IOException
      */
     private List<InfoNodoMap> readGetNodosMapSublineaResult(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<InfoNodoMap> infoNodoMapList = new ArrayList<InfoNodoMap>();
+        List<InfoNodoMap> infoNodoMapList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "GetNodosMapSublineaResult");
         while (parser.next() != XmlPullParser.END_TAG) {

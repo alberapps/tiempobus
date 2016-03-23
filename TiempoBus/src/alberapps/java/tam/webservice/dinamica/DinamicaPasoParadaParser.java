@@ -161,7 +161,7 @@ public class DinamicaPasoParadaParser {
      * @throws IOException
      */
     private List<PasoParada> readGetPasoParadaResult(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
+        List<PasoParada> pasoParadaList = new ArrayList<>();
 
         parser.require(XmlPullParser.START_TAG, ns, "GetPasoParadaResult");
         while (parser.next() != XmlPullParser.END_TAG) {

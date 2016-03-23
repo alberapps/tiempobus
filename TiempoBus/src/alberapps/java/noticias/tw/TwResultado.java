@@ -177,9 +177,8 @@ public class TwResultado implements Comparable<TwResultado> {
 
         TwResultado that = (TwResultado) o;
 
-        if (usuario != null ? !usuario.equals(that.usuario) : that.usuario != null) return false;
+        return !(usuario != null ? !usuario.equals(that.usuario) : that.usuario != null);
 
-        return true;
     }
 
     @Override

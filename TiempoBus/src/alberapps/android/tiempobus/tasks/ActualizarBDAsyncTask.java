@@ -31,7 +31,7 @@ public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, String> {
      *
      */
     public interface LoadActualizarBDAsyncTaskResponder {
-        public void ActualizarBDLoaded(String resultado);
+        void ActualizarBDLoaded(String resultado);
     }
 
     private LoadActualizarBDAsyncTaskResponder responder;
@@ -53,13 +53,7 @@ public class ActualizarBDAsyncTask extends AsyncTask<Object, Void, String> {
 
         boolean control = true;
 
-        if (datos != null && datos.length > 0 && datos[0] != null && ((Boolean) datos[0]).equals(true)) {
-
-            control = true;
-
-        } else {
-            control = false;
-        }
+        control = datos != null && datos.length > 0 && datos[0] != null && ((Boolean) datos[0]).equals(true);
 
         try {
 

@@ -34,7 +34,7 @@ public class GetPasoParadaResult implements Serializable {
 
 	public GetPasoParadaResult() {
 
-		pasoParadaList = new ArrayList<PasoParada>();
+		pasoParadaList = new ArrayList<>();
 
 	}
 

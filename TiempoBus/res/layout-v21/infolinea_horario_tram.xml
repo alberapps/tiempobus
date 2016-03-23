@@ -44,7 +44,6 @@
             android:id="@+id/infolinea_horario_tram_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/infolinea_lista_vuelta"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/main_no_items"
             android:textColor="@color/color_android"

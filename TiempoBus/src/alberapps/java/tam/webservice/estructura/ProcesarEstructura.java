@@ -79,7 +79,7 @@ public class ProcesarEstructura {
 
                 PlaceMark pm = null;
 
-                List<PlaceMark> listaIda = new ArrayList<PlaceMark>();
+                List<PlaceMark> listaIda = new ArrayList<>();
 
                 for (int j = 0; j < datos.getInfoRutaList().get(0).getInfoSeccion().size(); j++) {
 
@@ -127,7 +127,7 @@ public class ProcesarEstructura {
 
                 PlaceMark pm = null;
 
-                List<PlaceMark> listaIda = new ArrayList<PlaceMark>();
+                List<PlaceMark> listaIda = new ArrayList<>();
 
                 for (int j = 0; j < datos.getInfoRutaList().get(1).getInfoSeccion().size(); j++) {
 

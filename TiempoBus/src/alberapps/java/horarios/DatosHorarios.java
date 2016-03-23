@@ -33,9 +33,9 @@ public class DatosHorarios {
 
     private StringBuffer comentariosVuelta;
 
-    private List<Horario> horariosIda = new ArrayList<Horario>();
+    private List<Horario> horariosIda = new ArrayList<>();
 
-    private List<Horario> horariosVuelta = new ArrayList<Horario>();
+    private List<Horario> horariosVuelta = new ArrayList<>();
 
     public List<Horario> getHorariosIda() {
         return horariosIda;

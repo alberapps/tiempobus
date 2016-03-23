@@ -38,7 +38,7 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Bus
      * como callback una vez termine la tarea asincrona
      */
     public interface LoadTiemposLineaParadaAsyncTaskResponder {
-        public void tiemposLoaded(BusLlegada buses);
+        void tiemposLoaded(BusLlegada buses);
     }
 
     private LoadTiemposLineaParadaAsyncTaskResponder responder;

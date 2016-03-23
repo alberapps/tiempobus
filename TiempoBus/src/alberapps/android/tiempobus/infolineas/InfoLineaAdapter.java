@@ -65,7 +65,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         String[] arrayGrupos = context.getResources().getStringArray(R.array.grupos_lineas_bus);
 
-        descripcionesGrupo = new ArrayList<String>(Arrays.asList(arrayGrupos));
+        descripcionesGrupo = new ArrayList<>(Arrays.asList(arrayGrupos));
 
     }
 
@@ -252,8 +252,8 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             add(busLinea.get(i));
         }
 
-        listaOriginal = new ArrayList<BusLinea>(busLinea);
-        listaOriginalSinGrupo = new ArrayList<BusLinea>(busLinea);
+        listaOriginal = new ArrayList<>(busLinea);
+        listaOriginalSinGrupo = new ArrayList<>(busLinea);
     }
 
     /**
@@ -318,7 +318,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 FilterResults results = new FilterResults();
 
-                List<BusLinea> filtrada = new ArrayList<BusLinea>();
+                List<BusLinea> filtrada = new ArrayList<>();
 
                 if (constraint != null && !constraint.toString().equals("")) {
 
@@ -380,7 +380,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
      */
     public List<BusLinea> getListaFiltrada() {
 
-        List<BusLinea> lista = new ArrayList<BusLinea>();
+        List<BusLinea> lista = new ArrayList<>();
 
         for (int i = 0; i < getCount(); i++) {
 

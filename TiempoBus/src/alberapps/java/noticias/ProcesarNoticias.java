@@ -38,7 +38,7 @@ public class ProcesarNoticias {
 
     public static List<Noticias> getTamNews(Boolean usarCache, String userAgentDefault) throws Exception {
 
-        List<Noticias> noticias = new ArrayList<Noticias>();
+        List<Noticias> noticias = new ArrayList<>();
 
         Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(URL_SUBUS_NOTICIAS, usarCache, userAgentDefault)), "UTF-8", URL_SUBUS_NOTICIAS);
 

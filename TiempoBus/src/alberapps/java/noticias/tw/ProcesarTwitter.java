@@ -107,7 +107,7 @@ public class ProcesarTwitter {
             resultado.setError(Integer.toString(e.getErrorCode()));
             resultado.setMensajeError(e.getErrorMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 
@@ -119,7 +119,7 @@ public class ProcesarTwitter {
             resultado.setError("100");
             resultado.setMensajeError(e.getMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 
@@ -154,7 +154,7 @@ public class ProcesarTwitter {
 
             //lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
 
-            List<TwResultado> listaBorrar = new ArrayList<TwResultado>();
+            List<TwResultado> listaBorrar = new ArrayList<>();
 
 
             if (!cargar.get(0)) {
@@ -236,7 +236,7 @@ public class ProcesarTwitter {
             resultado.setError(Integer.toString(e.getErrorCode()));
             resultado.setMensajeError(e.getErrorMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 
@@ -248,7 +248,7 @@ public class ProcesarTwitter {
             resultado.setError("100");
             resultado.setMensajeError(e.getMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 
@@ -267,7 +267,7 @@ public class ProcesarTwitter {
      */
     public static List<TwResultado> procesarTram() {
 
-        List<TwResultado> lista = new ArrayList<TwResultado>();
+        List<TwResultado> lista = new ArrayList<>();
 
 
         try {
@@ -324,7 +324,7 @@ public class ProcesarTwitter {
             resultado.setError(Integer.toString(e.getErrorCode()));
             resultado.setMensajeError(e.getErrorMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 
@@ -336,7 +336,7 @@ public class ProcesarTwitter {
             resultado.setError("100");
             resultado.setMensajeError(e.getMessage());
 
-            lista = new ArrayList<TwResultado>();
+            lista = new ArrayList<>();
 
             lista.add(resultado);
 

@@ -126,7 +126,7 @@ public class ProcesarDatosWikipediaService {
     public static WikiQuery parse(InputStream is) {
         // Instanciamos la fábrica para DOM
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<WikiData> wikiDataList = new ArrayList<WikiData>();
+        List<WikiData> wikiDataList = new ArrayList<>();
 
         WikiQuery resultados = new WikiQuery();
 

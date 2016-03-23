@@ -40,7 +40,7 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
      *
      */
     public interface LoadWeatherAsyncTaskResponder {
-        public void WeatherLoaded(WeatherQuery Wikipedia);
+        void WeatherLoaded(WeatherQuery Wikipedia);
     }
 
     private LoadWeatherAsyncTaskResponder responder;

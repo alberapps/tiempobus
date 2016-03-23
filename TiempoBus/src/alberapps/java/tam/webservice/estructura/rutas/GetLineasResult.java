@@ -36,9 +36,9 @@ public class GetLineasResult implements Serializable {
 	
 	public GetLineasResult() {
 
-		infoLineaList = new ArrayList<InfoLinea>();
+		infoLineaList = new ArrayList<>();
 		
-		hashDatosParadas = new HashMap<String, HashMap<String,List<String>>>();
+		hashDatosParadas = new HashMap<>();
 		
 		
 	}

@@ -104,7 +104,7 @@ public class DatosLineasDB {
      * real column names and create the alias itself.
      */
     private static HashMap<String, String> buildColumnMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         map.put(KEY_WORD, KEY_WORD);
         map.put(KEY_DEFINITION, KEY_DEFINITION);
         map.put(BaseColumns._ID, "rowid AS " + BaseColumns._ID);
@@ -129,7 +129,7 @@ public class DatosLineasDB {
     }
 
     private static HashMap<String, String> buildColumnMapRecorrido() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
 
         map.put(COLUMN_COORDENADAS, COLUMN_COORDENADAS);
         map.put(COLUMN_DESTINO, COLUMN_DESTINO);
@@ -508,7 +508,7 @@ public class DatosLineasDB {
             try {
 
                 //Carga de datos
-                List<Datos> datosList = new ArrayList<Datos>();
+                List<Datos> datosList = new ArrayList<>();
                 Datos dato = null;
 
                 String line;
@@ -579,6 +579,7 @@ public class DatosLineasDB {
 
                     long id = addWord(datosList.get(i).getWord(), datosList.get(i).getDefinition(), datosList.get(i).getDatos(), tb);
                     if (id < 0) {
+                        assert dato != null;
                         Log.e(TAG, "unable to add line: " + dato.getLinea());
                     }
 

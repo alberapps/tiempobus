@@ -64,9 +64,8 @@ public class Datos {
 
         if (destino != null ? !destino.equals(datos.destino) : datos.destino != null) return false;
         if (linea != null ? !linea.equals(datos.linea) : datos.linea != null) return false;
-        if (parada != null ? !parada.equals(datos.parada) : datos.parada != null) return false;
+        return !(parada != null ? !parada.equals(datos.parada) : datos.parada != null);
 
-        return true;
     }
 
     @Override

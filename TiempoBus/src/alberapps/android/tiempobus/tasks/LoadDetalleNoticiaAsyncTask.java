@@ -28,7 +28,7 @@ import alberapps.java.noticias.ProcesarDetalleNoticia;
 public class LoadDetalleNoticiaAsyncTask extends AsyncTask<Object, Void, Noticias> {
 
     public interface LoadDetalleNoticiaAsyncTaskResponder {
-        public void detalleNoticiaLoaded(Noticias noticias);
+        void detalleNoticiaLoaded(Noticias noticias);
     }
 
     private LoadDetalleNoticiaAsyncTaskResponder responder;

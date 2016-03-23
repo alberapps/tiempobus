@@ -27,7 +27,7 @@ import alberapps.java.data.backup.DatosBackup;
 public class BackupAsyncTask extends AsyncTask<String, Void, Boolean> {
 
     public interface BackupAsyncTaskResponder {
-        public void backupLoaded(Boolean result);
+        void backupLoaded(Boolean result);
     }
 
     private BackupAsyncTaskResponder responder;

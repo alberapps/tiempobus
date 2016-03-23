@@ -32,7 +32,7 @@ public class LoadTwitterAsyncTask extends AsyncTask<Object, Void, List<TwResulta
 
 
     public interface LoadTwitterAsyncTaskResponder {
-        public void TwitterLoaded(List<TwResultado> Twitter);
+        void TwitterLoaded(List<TwResultado> Twitter);
     }
 
     private LoadTwitterAsyncTaskResponder responder;

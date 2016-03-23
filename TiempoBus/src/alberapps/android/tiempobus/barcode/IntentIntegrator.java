@@ -191,7 +191,7 @@ public class IntentIntegrator {
 		buttonYes = DEFAULT_YES;
 		buttonNo = DEFAULT_NO;
 		targetApplications = TARGET_ALL_KNOWN;
-		moreExtras = new HashMap<String, Object>(3);
+		moreExtras = new HashMap<>(3);
 	}
 
 	public String getTitle() {

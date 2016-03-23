@@ -88,12 +88,12 @@ public class GestionVehiculos {
         }
 
         if (((MapasActivity) context).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-            context.drawableVehiculo = context.gestionarLineas.markerTramPosicion();
+            context.drawableVehiculo = GestionarLineas.markerTramPosicion();
         } else {
-            context.drawableVehiculo = context.gestionarLineas.markerBusPosicion();
+            context.drawableVehiculo = GestionarLineas.markerBusPosicion();
         }
 
-        context.markersVehiculos = new ArrayList<MarkerOptions>();
+        context.markersVehiculos = new ArrayList<>();
 
         LatLng point = null;
 

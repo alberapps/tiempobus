@@ -145,6 +145,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
         TextView zoomMas = (TextView) findViewById(R.id.noticia_zoom_aumenta);
 
+        assert zoomMas != null;
         zoomMas.setOnClickListener(new OnClickListener() {
 
             public void onClick(View view) {
@@ -184,6 +185,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
         TextView zoomMenos = (TextView) findViewById(R.id.noticia_zoom_reduc);
 
+        assert zoomMenos != null;
         zoomMenos.setOnClickListener(new OnClickListener() {
 
             public void onClick(View view) {
@@ -256,10 +258,13 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
 
         if(noticia.getFechaCabecera() != null && !noticia.getFechaCabecera().trim().equals("")) {
-           cabFecha.setText(noticia.getFechaCabecera());
+            assert cabFecha != null;
+            cabFecha.setText(noticia.getFechaCabecera());
         }else{
+            assert cabFecha != null;
             cabFecha.setText(getString(R.string.sin_fecha));
         }
+        assert cabTitulo != null;
         cabTitulo.setText(noticia.getTituloCabecera());
 
         String noticiaLineas = "";
@@ -270,10 +275,12 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
             noticiaLineas = noticia.getLineaCabecera();
         }
 
+        assert cabLinea != null;
         cabLinea.setText(noticiaLineas);
 
         TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
 
+        assert accederNoticia != null;
         accederNoticia.setLinksClickable(true);
         accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
 
@@ -282,6 +289,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         if (noticia.getContenidoHtml() != null) {
             mWebView = (WebView) findViewById(R.id.webViewDetalle);
 
+            assert mWebView != null;
             WebSettings settings = mWebView.getSettings();
             settings.setDefaultTextEncodingName("utf-8");
 
@@ -302,12 +310,16 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
         TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
 
+        assert cabFecha != null;
         cabFecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
+        assert cabTitulo != null;
         cabTitulo.setText(noticia.getNoticia());
+        assert cabLinea != null;
         cabLinea.setText("");
 
         TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
 
+        assert accederNoticia != null;
         accederNoticia.setLinksClickable(true);
         accederNoticia.setAutoLinkMask(Linkify.WEB_URLS);
 

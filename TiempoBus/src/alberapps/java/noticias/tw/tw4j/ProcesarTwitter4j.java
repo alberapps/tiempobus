@@ -116,7 +116,7 @@ public class ProcesarTwitter4j {
 
             List<Status> timeline = resultados.getTweets();
 
-            listaResultados = new ArrayList<TwResultado>();
+            listaResultados = new ArrayList<>();
 
             TwResultado resultado = null;
 
@@ -159,7 +159,7 @@ public class ProcesarTwitter4j {
      */
     public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) throws Exception {
 
-        List<TwResultado> listaResultados = new ArrayList<TwResultado>();
+        List<TwResultado> listaResultados = new ArrayList<>();
 
 
         Paging pagina = new Paging();
@@ -168,7 +168,7 @@ public class ProcesarTwitter4j {
 
         ResponseList<Status> timeline = twitter.getUserTimeline(twuser, pagina);
 
-        listaResultados = new ArrayList<TwResultado>();
+        listaResultados = new ArrayList<>();
 
         Status linea = timeline.get(0);
 
@@ -221,7 +221,7 @@ public class ProcesarTwitter4j {
      */
     public List<TwResultado> recuperarListaUsuario(String twuser, String url, int elementos) throws Exception {
 
-        List<TwResultado> listaResultados = new ArrayList<TwResultado>();
+        List<TwResultado> listaResultados = new ArrayList<>();
 
 
         Paging pagina = new Paging(1, 25);
@@ -234,7 +234,7 @@ public class ProcesarTwitter4j {
         ResponseList<Status> timeline = twitter.getUserListStatuses(userList.getId(), pagina);
 
 
-        listaResultados = new ArrayList<TwResultado>();
+        listaResultados = new ArrayList<>();
 
         Status linea = timeline.get(0);
 

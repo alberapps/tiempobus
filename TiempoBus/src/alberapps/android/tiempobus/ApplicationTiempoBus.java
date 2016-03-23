@@ -33,7 +33,7 @@ public class ApplicationTiempoBus extends Application {
         APP_TRACKER
     }
 
-    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+    private HashMap<TrackerName, Tracker> mTrackers = new HashMap<>();
 
     public ApplicationTiempoBus() {
 
