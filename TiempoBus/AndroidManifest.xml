@@ -1,18 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="alberapps.android.tiempobus"
     android:installLocation="auto"
-    android:versionCode="52"
-    android:versionName="3.5.2.1">
+    >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="21" />
+        tools:overrideLibrary="com.google.android.gms,
+        com.google.android.gms.base, com.google.android.gms.maps,
+        com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics" />
+
 
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />
+        android:xlargeScreens="true"
+        tools:ignore="UnusedAttribute" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -22,57 +27,52 @@
     <!-- MAPS 2 -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-    <!-- 
+    <!--
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="false"/>
     -->
-
     <!--  -->
-
-
     <application
         android:name=".ApplicationTiempoBus"
         android:allowBackup="false"
-        android:icon="@drawable/ic_tiempobus_4"
+        android:icon="@mipmap/ic_tiempobus_4"
         android:label="@string/app_name"
         android:theme="@style/Theme.TiempoBusTheme">
-        //android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         >
-
-
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|locale"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.TiempoBusTheme"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".favoritos.FavoritosActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/favoritosN"
-            android:parentActivityName=".MainActivity">
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
         <activity
             android:name=".favoritos.FavoritoNuevoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/favoritosN"
-            android:parentActivityName=".MainActivity">
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -80,59 +80,50 @@
         <activity
             android:name=".favoritos.FavoritoModificarActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/favoritosN"
-            android:parentActivityName=".favoritos.FavoritosActivity">
-
+            android:parentActivityName=".favoritos.FavoritosActivity"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".favoritos.FavoritosActivity" />
         </activity>
-
         <activity
             android:name=".favoritos.drive.FavoritoDriveActivity"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/favoritosN"
             android:theme="@android:style/Theme.Dialog" />
-
-
         <activity
-            android:name="PreferencesFromXml"
-            android:label="@string/preferences_from_xml"
-            ></activity>
-
-
+            android:name=".PreferencesFromXml"
+            android:label="@string/preferences_from_xml" />
         <activity
             android:name=".noticias.NoticiasTabsPager"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/tit_noticias"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.TiempoBusThemeTab">
+            android:theme="@style/Theme.TiempoBusThemeTab"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
-
-
         <activity
             android:name=".noticias.DetalleNoticiaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/tit_noticias"
-            android:parentActivityName=".noticias.NoticiasTabsPager">
-
+            android:parentActivityName=".noticias.NoticiasTabsPager"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".noticias.NoticiasTabsPager" />
-
-
         </activity>
 
-
         <receiver
-            android:name="alberapps.android.tiempobus.alarma.AlarmReceiver"
+            android:name=".alarma.AlarmReceiver"
             android:permission="android.permission.VIBRATE"
             android:process=":remote" />
 
@@ -141,52 +132,48 @@
             android:authorities="alberapps.android.tiempobus"
             android:exported="false" />
 
-
         <!-- displays search results. -->
         <activity
             android:name=".buscador.BuscadorLineas"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/busqueda"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
-            android:theme="@style/Theme.TiempoBusThemeTab">
-
+            android:theme="@style/Theme.TiempoBusThemeTab"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.InfoLineasTabsPager" />
 
-
             <!-- Receives the search request. -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-                <!-- No category needed, because the Intent will specify this class component-->
+                <!-- No category needed, because the Intent will specify this class component -->
             </intent-filter>
 
             <!-- Points to searchable meta data. -->
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-
         </activity>
 
         <!-- Displays the definition of a word. -->
         <activity
             android:name=".buscador.DatosParadaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/datos_parada"
-            android:parentActivityName=".buscador.BuscadorLineas">
-
+            android:parentActivityName=".buscador.BuscadorLineas"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".buscador.BuscadorLineas" />
-
-
         </activity>
 
         <!-- Provides search suggestions for words and their definitions. -->
         <provider
-            android:name="alberapps.android.tiempobus.database.BuscadorLineasProvider"
+            android:name=".database.BuscadorLineasProvider"
             android:authorities="alberapps.android.tiempobus.buscador.BuscadorLineasProvider"
             android:exported="false" />
 
@@ -195,72 +182,68 @@
             android:name="android.app.default_searchable"
             android:value=".buscador.BuscadorLineas" />
 
-
         <activity
             android:name=".appinfo.AppInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:exported="false"
-            android:icon="@drawable/ic_tiempobus_4"
-            android:label="@string/app_name">
+            android:icon="@mipmap/ic_tiempobus_4"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TiempoBusThemeActionBar">
             <intent-filter>
                 <action android:name=".appinfo.AppInfoActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".appinfo.TraduccionesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:exported="false"
-            android:icon="@drawable/ic_tiempobus_4"
-            android:label="@string/app_name">
+            android:icon="@mipmap/ic_tiempobus_4"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TiempoBusThemeActionBar">
             <intent-filter>
                 <action android:name=".appinfo.TraduccionesActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".infolineas.InfoLineasTabsPager"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/buscador_online"
             android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TiempoBusThemeTab"
             android:windowSoftInputMode="stateHidden"
-            android:theme="@style/Theme.TiempoBusThemeTab">
-
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
-
         <activity
             android:name=".infolineas.InfoLineasDatosParadaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/datos_parada"
-            android:parentActivityName=".infolineas.InfoLineasTabsPager">
+            android:parentActivityName=".infolineas.InfoLineasTabsPager"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.InfoLineasTabsPager" />
-
         </activity>
-
-
         <activity
             android:name=".historial.HistorialActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/historial_titulo"
-            android:parentActivityName=".MainActivity">
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
 
         <provider
@@ -268,59 +251,59 @@
             android:authorities="alberapps.android.tiempobus.historial.HistorialProvider"
             android:exported="false" />
 
-
-        <service android:name="alberapps.android.tiempobus.service.TiemposForegroundService" />
-
+        <service android:name=".service.TiemposForegroundService" />
 
         <!-- MAPS 2 -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <!-- PLACES -->
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="KEY" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key" />
 
         <activity
-            android:name=".mapas.maps2.MapasMaps2Activity"
+            android:name=".mapas.MapasActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/menu_mapa"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.TiempoBusThemeTab">
-
+            android:theme="@style/Theme.TiempoBusThemeTab"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-
         </activity>
-
         <activity
-            android:name=".mapas.maps2.StreetViewActivity"
+            android:name=".mapas.streetview.StreetViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
-            android:icon="@drawable/ic_tiempobus_4"
+            android:icon="@mipmap/ic_tiempobus_4"
             android:label="@string/menu_mapa"
-            android:parentActivityName=".mapas.maps2.MapasMaps2Activity"
-            android:theme="@style/Theme.TiempoBusThemeTab">
-
+            android:parentActivityName=".mapas.MapasActivity"
+            android:theme="@style/Theme.TiempoBusThemeTab"
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".mapas.maps2.MapasMaps2Activity" />
-
+                android:value=".mapas.MapasActivity" />
         </activity>
 
-
         <!-- FIN MAPS 2 -->
-
 
         <meta-data
             android:name="com.google.android.gms.analytics.globalConfigResource"
             android:resource="@xml/analytics_global_config" />
 
-
+        <activity
+            android:name=".rutas.RutasActivity"
+            android:label="@string/title_activity_rutas"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.TiempoBusTheme"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="alberapps.android.tiempobus.MainActivity" />
+        </activity>
     </application>
 
-
 </manifest>
-
-
