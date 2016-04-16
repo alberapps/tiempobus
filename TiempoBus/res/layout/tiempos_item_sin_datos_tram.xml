@@ -64,11 +64,10 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/primary_dark_material_light"
-                />
+                android:textColor="@color/primary_dark_material_light" />
 
 
-            <android.support.v7.widget.AppCompatTextView
+            <!--android.support.v7.widget.AppCompatTextView
                 android:id="@+id/boton_horarios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +80,7 @@
                 android:layout_margin="5dp"
                 app:textAllCaps="true"
                 android:drawableLeft="@drawable/ic_today_grey600_24dp"
-                />
+                /-->
 
 
         </LinearLayout>

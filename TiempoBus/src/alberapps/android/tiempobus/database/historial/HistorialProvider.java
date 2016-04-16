@@ -46,7 +46,7 @@ import alberapps.android.tiempobus.database.historial.HistorialDB.Historial;
 public class HistorialProvider extends ContentProvider {
 
 	private static final String DATABASE_NAME = "historial.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 	private static final String TABLA_HISTORIAL = "historial";
 
 	private static final UriMatcher sUriMatcher;
@@ -232,6 +232,7 @@ public class HistorialProvider extends ContentProvider {
 		sHistorialProjectionMap.put(Historial.TITULO, Historial.TITULO);
 		sHistorialProjectionMap.put(Historial.DESCRIPCION, Historial.DESCRIPCION);
 		sHistorialProjectionMap.put(Historial.FECHA, Historial.FECHA);
+		sHistorialProjectionMap.put(Historial.HORARIO_SELECCIONADO, Historial.HORARIO_SELECCIONADO);
 	}
 
 	/**
@@ -258,7 +259,7 @@ public class HistorialProvider extends ContentProvider {
 				db = getWritableDatabase();
 			}
 			db.execSQL("CREATE TABLE " + TABLA_HISTORIAL + " (" + Historial._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + Historial.PARADA + " INTEGER," + Historial.TITULO + " TEXT," + Historial.DESCRIPCION + " TEXT,"
-					+ Historial.FECHA + " DATETIME" + ");");
+					+ Historial.HORARIO_SELECCIONADO + " TEXT DEFAULT ''," + Historial.FECHA + " DATETIME" + ");");
 		}
 
 		/**
@@ -269,10 +270,16 @@ public class HistorialProvider extends ContentProvider {
 			if (db.isReadOnly()) {
 				db = getWritableDatabase();
 			}
-			Log.w("HistorialProvider", "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-			db = getWritableDatabase();
-			db.execSQL("DROP TABLE IF EXISTS " + TABLA_HISTORIAL);
-			onCreate(db);
+			Log.w("HistorialProvider", "Upgrading database from version " + oldVersion + " to " + newVersion);
+			//db = getWritableDatabase();
+			//db.execSQL("DROP TABLE IF EXISTS " + TABLA_HISTORIAL);
+			//onCreate(db);
+
+			if(oldVersion == 1) {
+				//Actualizar columnas
+				db.execSQL("ALTER TABLE " + TABLA_HISTORIAL + " ADD COLUMN " + Historial.HORARIO_SELECCIONADO + " TEXT DEFAULT ''");
+			}
+
 		}
 	}
 

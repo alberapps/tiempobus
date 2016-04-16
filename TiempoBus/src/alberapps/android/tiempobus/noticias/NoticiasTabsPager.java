@@ -86,6 +86,8 @@ import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.tram.avisos.Aviso;
+import alberapps.java.tram.avisos.AvisosTram;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -1211,7 +1213,9 @@ public class NoticiasTabsPager extends AppCompatActivity {
          * Sera llamado cuando la tarea de cargar las noticias
          */
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
-            public void AvisosTramLoaded(List<TwResultado> noticias) {
+            public void AvisosTramLoaded(AvisosTram avisosTram) {
+
+                List<TwResultado> noticias = avisosTram.getAvisosTw();
 
                 if (errorTwitter(getApplicationContext(), noticias)) {
 
@@ -1307,6 +1311,12 @@ public class NoticiasTabsPager extends AppCompatActivity {
                     fecha2.setText("");
 
                 }
+
+
+                cargarAvisosWebTram(avisosTram.getAvisosWeb());
+
+
+
             }
         };
 
@@ -1314,12 +1324,33 @@ public class NoticiasTabsPager extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute();
+            new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute("TRAM_WEB");
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
 
     }
+
+    private void cargarAvisosWebTram(List<Aviso> avisosWeb){
+
+        if(avisosWeb != null){
+
+            View vheader = noticiasRssView.findViewById(R.id.layout_avisos_tram);
+
+            TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_aviso_tram);
+
+            //descripcion.setText(Html.fromHtml(avisosWeb.get(0).getDescripcion()));
+
+            descripcion.setText(avisosWeb.get(0).getDescripcion());
+
+
+        }
+
+
+
+    }
+
+
 
     /**
      * Listener encargado de gestionar las pulsaciones sobre los items

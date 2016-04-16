@@ -51,204 +51,45 @@
     </style>
 
 
-
-    <!--style name="Header.Material" parent="Widget.AppCompat.Light.ActionBar">
-        <item name="android:background">?android:selectableItemBackground</item>
-        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
-        <item name="android:divider">@null</item>
-        <item name="android:dividerHeight">0dp</item>
-        <item name="android:overlapAnchor">true</item>
-
-
-
-
-        <item name="android:dividerHeight">0dp</item>
-
-    </style-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- anteriores -->
-
-
-    <style name="AppThemeCompat" parent="@style/Theme.AppCompat.Light">
-        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
-        <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
-
-
-    </style>
-
-
-
-
-
-	<style name="TitlebarBackgroundStyle">
-        <item name="android:background">@drawable/bg_title</item>
-         
-        
-    </style>
-    <style name="Theme.Mapa" parent="android:style/Theme.Light"> 
-       <item name="android:windowTitleBackgroundStyle">@style/TitlebarBackgroundStyle</item>
-        
-       
-       
-       
-    </style>	
-
-    <style name="Dialogo" parent="android:style/Theme.Dialog"> 
-       <item name="android:windowTitleBackgroundStyle">@style/TitlebarBackgroundStyle</item>
-        
-       
-       
-       
-    </style>
-    
-
-	<style name="Alert" parent="android:Theme.Dialog">
-		<item name="android:windowBackground">@null</item>
-	</style>
-
-	<style name="InfoPoste" parent="android:TextAppearance">
-	</style>
-
-	<style name="InfoPoste.Titulo">
-		<item name="android:textColor">@android:color/white</item>
-		<item name="android:background">#AA0000</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:padding">2sp</item>
-	</style>
-
-
-	<style name="InfoPoste.Destino">
-		<item name="android:paddingLeft">4sp</item>
-	</style>
-
-	<style name="InfoPoste.Proximo">
-		<item name="android:paddingLeft">4sp</item>
-	</style>
-
-	<style name="InfoPoste.Hora">
-		<item name="android:textSize">10sp</item>
-		<item name="android:textColor">@color/legal</item>
-		<item name="android:gravity">right</item>
-	</style>
-
-	<style name="InfoPoste.Legal">
-		<item name="android:textSize">10sp</item>
-		<item name="android:textStyle">italic</item>
-		<item name="android:padding">4sp</item>
-
-		<item name="android:textColor">@color/legal</item>
-	</style>
-
-
-	<style name="Favoritos" parent="android:TextAppearance">
-	</style>
-
-	<style name="Favoritos.poste">
-		<item name="android:textSize">20sp</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:padding">4sp</item>
-		<item name="android:width">50sp</item>
-
-		<item name="android:textColor">@android:color/white</item>
-		<item name="android:background">#AA0000</item>
-		 <item name="android:shadowColor">#ff335e80</item>
-    <item name="android:shadowDx">1</item>
-    <item name="android:shadowDy">1</item>
-    <item name="android:shadowRadius">1</item>
-  
-	</style>
-
-	<style name="Favoritos.favorito">
-		<item name="android:textStyle">bold</item>
-		<item name="android:padding">2sp</item>
-	</style>
-
-	<style name="Favoritos.descripcion">
-		<item name="android:textSize">10sp</item>
-		<item name="android:textStyle">italic</item>
-		<item name="android:paddingLeft">4sp</item>
-	</style>
-
-	
-	
-	
-	<!-- ESTILOS ICS -->
-	 <style name="AppTheme" parent="android:style/Theme.Light">
-        <item name="android:windowTitleSize">@dimen/actionbar_compat_height</item>
-        <item name="android:windowTitleBackgroundStyle">@style/ActionBarCompat</item>
-        <item name="android:windowContentOverlay">@drawable/actionbar_shadow</item>
-
-        <!-- for programmatic instantiation -->
-        <item name="actionbarCompatTitleStyle">@style/ActionBarCompatTitle</item>
-        <item name="actionbarCompatItemStyle">@style/ActionBarCompatItem</item>
-        <item name="actionbarCompatItemHomeStyle">@style/ActionBarCompatHomeItem</item>
-        <item name="actionbarCompatProgressIndicatorStyle">@style/ActionBarCompatProgressIndicator</item>
-    </style>
-
-    <style name="ActionBarCompat">
-        <item name="android:background">#eee</item>
-    </style>
-
-    <style name="ActionBarCompatItemBase">
-        <!-- layout_width/height must be set in code -->
-        <item name="android:scaleType">center</item>
-        <item name="android:background">@drawable/actionbar_compat_item</item>
-    </style>
-
-    <style name="ActionBarCompatProgressIndicator" parent="android:style/Widget.ProgressBar.Large">
-        <item name="android:indeterminate">true</item>
-    </style>
-
-    <style name="ActionBarCompatTitleBase">
-        <item name="android:id">@id/actionbar_compat_title</item>
-        <!-- layout_width/height/weight must be set in code -->
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:paddingLeft">6dp</item>
-        <item name="android:paddingRight">6dp</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
-    </style>
-
-    <style name="ActionBarCompatTitle" parent="style/ActionBarCompatTitleBase">
-        <item name="android:textColor">@color/actionbar_title_color</item>
-    </style>
-
-    <style name="ActionBarCompatItem" parent="style/ActionBarCompatItemBase">
-    </style>
-
-    <style name="ActionBarCompatHomeItem" parent="style/ActionBarCompatItemBase">
-    </style><style name="Noticias">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textStyle">normal</item>
-		<item name="android:paddingLeft">4sp</item>
-	</style>
     <style name="Theme.TiempoBusTheme.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.TiempoBusTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="drawerColor" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/white</item>
+    </style>
+
+
+<!-- Galeria -->
+
+    <style name="Theme.ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="background">@android:color/transparent</item>
+
+
+    </style>
+
+    <style name="Theme.TiempoBusTheme.FullScreen" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/Theme.ActionBar</item>
+        <item name="actionBarStyle">@style/Theme.ActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <!--style name="Theme.TiempoBusTheme.FullScreen" parent="Theme.TiempoBusTheme.FullScreen"/>
+    @android:style/Theme.Black.NoTitleBar.Fullscreen" />-->
+
+    <style name="PhotoGridLayout">
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:listSelector">@drawable/photogrid_list_selector</item>
+    </style>
+
 	
 	
 	

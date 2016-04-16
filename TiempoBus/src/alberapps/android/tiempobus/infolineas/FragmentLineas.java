@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
+import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity;
 import alberapps.android.tiempobus.tasks.LoadDatosInfoLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask.LoadDatosLineasAsyncTaskResponder;
@@ -259,6 +261,21 @@ public class FragmentLineas extends Fragment {
             View vheader = li2.inflate(R.layout.infolinea_lineas_header, null);
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+            /////PDF
+            TextView pdfRecorrido = (TextView) vheader.findViewById(R.id.lineas_informacion);
+            pdfRecorrido.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    Intent i = new Intent(getActivity(), ImageGridActivity.class);
+                    getActivity().startActivity(i);
+
+                }
+            });
+
+
+
+            /////
 
             //Seleccion de grupos de lineas bus
             final Spinner spinnerGrupos = (Spinner) vheader.findViewById(R.id.spinner_grupo_lineas);

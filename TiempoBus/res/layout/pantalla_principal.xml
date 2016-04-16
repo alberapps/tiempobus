@@ -45,7 +45,8 @@
             android:minHeight="?actionBarSize"
             android:background="?colorPrimary"
             android:title="@string/app_name"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+
 
 
 

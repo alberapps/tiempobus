@@ -221,6 +221,44 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <!--activity
+            android:name=".infolineas.pdf.PdfActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
+            android:icon="@mipmap/ic_tiempobus_4"
+            android:label="@string/buscador_online"
+            android:parentActivityName=".infolineas.InfoLineasTabsPager"
+            android:theme="@style/Theme.TiempoBusThemeTab"
+            android:windowSoftInputMode="stateHidden"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".infolineas.InfoLineasTabsPager" />
+        </activity-->
+
+        <activity android:name=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity"
+            android:label="@string/launch_preferences"
+            android:icon="@mipmap/ic_tiempobus_4"
+            android:parentActivityName=".infolineas.InfoLineasTabsPager"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".infolineas.InfoLineasTabsPager" />
+        </activity>
+
+        <activity
+            android:name=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageDetailActivity"
+            android:label="@string/launch_preferences"
+            android:icon="@mipmap/ic_tiempobus_4"
+            android:parentActivityName=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity"
+            android:theme="@style/Theme.TiempoBusTheme.FullScreen"
+            tools:ignore="UnusedAttribute">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity" />
+        </activity>
+
+
+
         <activity
             android:name=".infolineas.InfoLineasDatosParadaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"

@@ -27,6 +27,9 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -50,6 +53,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
+import alberapps.android.tiempobus.principal.horariotram.PrincipalHorarioTramFragment;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadLocationAsyncTask;
@@ -78,6 +82,8 @@ public class GestionarTarjetaInfo {
     private MainActivity context;
 
     private SharedPreferences preferencias;
+
+    private Fragment fragHorarios = null;
 
     public GestionarTarjetaInfo(MainActivity contexto, SharedPreferences preferencia) {
 
@@ -324,7 +330,6 @@ public class GestionarTarjetaInfo {
                             textoLocation.setText("");
 
                         }
-
 
 
                         if (lat != null && !lat.equals("") && !lon.equals("")) {
@@ -1403,6 +1408,71 @@ public class GestionarTarjetaInfo {
         if (localizacionTask != null && localizacionTask.getStatus() == Status.RUNNING) {
 
             localizacionTask.cancel(true);
+
+        }
+
+
+    }
+
+
+    public void controlFragmentHorarios() {
+
+        FragmentManager fragmentManager = context.getSupportFragmentManager();
+
+        if (fragHorarios == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            fragHorarios = new PrincipalHorarioTramFragment();
+
+        }
+
+        Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
+
+        if (fragHorariosAux != null && !DatosPantallaPrincipal.esTram(context.paradaActual)) {
+
+
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.remove(fragHorariosAux);
+            ft.commit();
+
+
+        } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+
+            if(context.findViewById(R.id.contenedor_fragment_horarios) != null) {
+
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.add(R.id.contenedor_fragment_horarios, fragHorarios, "FRAGMENT_HORARIOS_PRINC_TRAM");
+                ft.commit();
+
+            }else{
+                fragHorarios = null;
+            }
+
+        } else if(DatosPantallaPrincipal.esTram(context.paradaActual)){
+
+            ((PrincipalHorarioTramFragment) fragHorariosAux).recargarHorarios();
+
+
+        }
+
+
+    }
+
+
+    public void reconstruirFragment() {
+
+        if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+
+            FragmentManager fragmentManager = context.getSupportFragmentManager();
+
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+
+            Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
+
+            if(fragHorariosAux != null) {
+
+                ft.remove(fragHorariosAux);
+                ft.commit();
+
+            }
 
         }
 

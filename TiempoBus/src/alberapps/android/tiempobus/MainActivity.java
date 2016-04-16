@@ -101,6 +101,7 @@ import alberapps.android.tiempobus.principal.GestionarTarjetaInfo;
 import alberapps.android.tiempobus.principal.GestionarVoz;
 import alberapps.android.tiempobus.principal.GestionarWidget;
 import alberapps.android.tiempobus.principal.TiemposAdapter;
+import alberapps.android.tiempobus.principal.horariotram.PrincipalHorarioTramFragment;
 import alberapps.android.tiempobus.rutas.RutasActivity;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
@@ -108,16 +109,16 @@ import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTa
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.noticias.Noticias;
-import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.tram.avisos.AvisosTram;
 import alberapps.java.util.Conectividad;
 
 /**
  * Actividad principal de la aplicacion
  */
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener {
 
     public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
     public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
     public AsyncTask<Object, Void, List<Noticias>> nuevasNoticiasTask;
-    public AsyncTask<Object, Void, List<TwResultado>> nuevasNoticasTramTask;
+    public AsyncTask<Object, Void, AvisosTram> nuevasNoticasTramTask;
 
     public View avisoPie = null;
 
@@ -1098,6 +1099,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (savedInstanceState != null) {
             paradaActual = savedInstanceState.getInt("poste");
 
+            gestionarTarjetaInfo.reconstruirFragment();
         }
     }
 
@@ -1321,6 +1323,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
     }
 
+
     /**
      * Actualizar datos tiempos
      */
@@ -1375,19 +1378,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                             handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
                         }
-                        /*
-                         * // Quitar barra progreso inicial ProgressBar lpb =
-						 * (ProgressBar) findViewById(R.id.tiempos_progreso);
-						 * lpb.clearAnimation();
-						 * lpb.setVisibility(View.INVISIBLE);
-						 * 
-						 * if (tiempos == null || tiempos.isEmpty()) { TextView
-						 * vacio = (TextView) findViewById(R.id.tiempos_vacio);
-						 * tiemposView.setEmptyView(vacio); }
-						 */
+
                         if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
 
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -1621,7 +1615,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         }
 
                         // Historial
-                        laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual);
+                        laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual, null);
                         laActividad.datosPantallaPrincipal.actualizarAnteriorHistorial();
 
                         laActividad.datosParada.setText(cabdatos);
@@ -1660,6 +1654,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         // Pie para la lista de resultados
                         laActividad.gestionarTarjetaInfo.cargarTarjetaInfo();
                         laActividad.datosPantallaPrincipal.cargarPie();
+
+                        //Cargar fragment horarios en funcion de si es tram o bus
+                        laActividad.gestionarTarjetaInfo.controlFragmentHorarios();
 
                         laActividad.tiemposAdapter.notifyDataSetChanged();
 
@@ -1868,6 +1865,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             }
         }
+    }
+
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
 }

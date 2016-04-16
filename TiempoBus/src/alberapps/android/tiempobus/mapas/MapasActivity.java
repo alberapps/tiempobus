@@ -726,11 +726,17 @@ public class MapasActivity extends AppCompatActivity
             if (grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // success!
-                PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, mLocationSettingsRequest);
-                result.setResultCallback(this);
+                //PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, mLocationSettingsRequest);
+                //result.setResultCallback(this);
+
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+
             } else {
                 // Permission was denied or request was cancelled
                 conectadoLocation = false;
+                finish();
             }
         }
     }

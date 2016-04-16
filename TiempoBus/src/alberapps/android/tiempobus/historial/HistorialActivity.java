@@ -58,6 +58,7 @@ public class HistorialActivity extends AppCompatActivity {
             HistorialDB.Historial.TITULO, // 2
             HistorialDB.Historial.DESCRIPCION, // 3
             HistorialDB.Historial.FECHA, // 4
+            HistorialDB.Historial.HORARIO_SELECCIONADO, // 5
     };
 
     private static final int MENU_BORRAR = 2;

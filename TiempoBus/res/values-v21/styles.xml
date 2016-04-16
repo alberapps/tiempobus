@@ -18,6 +18,8 @@
 
         <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
 
+        <!--item name="drawerArrowStyle">@style/drawerColor</item-->
+
     </style>
 
     <style name="Theme.TiempoBusThemeActionBar" parent="Theme.AppCompat.Light.DarkActionBar">

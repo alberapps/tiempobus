@@ -18,21 +18,23 @@
 package alberapps.android.tiempobus.tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.List;
 
 import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
+import alberapps.java.tram.avisos.Aviso;
+import alberapps.java.tram.avisos.AvisosTram;
+import alberapps.java.tram.avisos.ProcesarAvisosTram;
 
 /**
  * Tarea asincrona que se encarga de consultar los avisos del tram
  */
-public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, List<TwResultado>> {
+public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, AvisosTram> {
 
 
     public interface LoadAvisosTramAsyncTaskResponder {
-        void AvisosTramLoaded(List<TwResultado> Twitter);
+        void AvisosTramLoaded(AvisosTram avisosTram);
     }
 
     private LoadAvisosTramAsyncTaskResponder responder;
@@ -44,30 +46,72 @@ public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, List<TwResu
 
 
     @Override
-    protected List<TwResultado> doInBackground(Object... datos) {
+    protected AvisosTram doInBackground(Object... datos) {
+
+        boolean consultarWeb = false;
+
+        if(datos.length > 0){
+
+            if(((String)datos[0]).equals("TRAM_WEB")){
+                consultarWeb = true;
+            }
+
+        }
+
+        AvisosTram avisosTram = new AvisosTram();
+
+        //Avisos TW
         List<TwResultado> twList = null;
         try {
 
             twList = ProcesarTwitter.procesarTram();
 
-            Log.d("tw", "lista: " + twList.size());
+            avisosTram.setAvisosTw(twList);
 
 
         } catch (Exception e) {
 
             e.printStackTrace();
 
-            return null;
+            avisosTram.setAvisosTw(null);
+
+            //return null;
 
 
         }
 
-        return twList;
+        //Consultar alertas en la web
+        if(consultarWeb) {
+            //Avisos WEB
+            List<Aviso> avisoList = null;
+            try {
+
+                avisoList = ProcesarAvisosTram.getAvisosTram();
+
+                avisosTram.setAvisosWeb(avisoList);
+
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                avisosTram.setAvisosWeb(null);
+
+                //return null;
+
+
+            }
+
+        }
+
+
+
+        return avisosTram;
     }
 
 
     @Override
-    protected void onPostExecute(List<TwResultado> result) {
+    protected void onPostExecute(AvisosTram result) {
         if (responder != null) {
             responder.AvisosTramLoaded(result);
         }

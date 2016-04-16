@@ -62,6 +62,8 @@
     <color name="bus_blue">#1565c0</color>
 
 
+    <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
 
 
 

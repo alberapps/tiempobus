@@ -21,13 +21,11 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +33,6 @@ import java.util.ArrayList;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.java.tam.BusLlegada;
 
@@ -149,26 +146,26 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                 } else {*/
 
-                    if (bus.getSegundoTram() != null) {
+                if (bus.getSegundoTram() != null) {
 
-                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
 
-                    } else if (bus.getSegundoBus() != null) {
+                } else if (bus.getSegundoBus() != null) {
 
-                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
 
-                    } else {
+                } else {
 
-                        tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
-                    }
-               // }
+                    tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim());
+                }
+                // }
 
 
                 //Mensaje tiempo real
                 TextView textoTiempoReal = (TextView) v.findViewById(R.id.tiempo_aviso);
-                if(bus.isTiempoReal()){
+                if (bus.isTiempoReal()) {
                     textoTiempoReal.setVisibility(View.GONE);
-                }else {
+                } else {
                     textoTiempoReal.setVisibility(View.VISIBLE);
                 }
 
@@ -347,7 +344,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                 // //Horarios
 
-                AppCompatTextView botonHorarios = (AppCompatTextView) v.findViewById(R.id.boton_horarios);
+                /*AppCompatTextView botonHorarios = (AppCompatTextView) v.findViewById(R.id.boton_horarios);
                 botonHorarios.setText(botonHorarios.getText().toString().toUpperCase());
 
                 botonHorarios.setOnClickListener(new Button.OnClickListener() {
@@ -361,7 +358,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
 
                     }
-                });
+                });*/
 
 
             } else {

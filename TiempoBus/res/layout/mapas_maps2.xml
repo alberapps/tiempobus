@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -19,16 +18,16 @@
 -->
 
 <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
- <LinearLayout
+    <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mi_material_blue_principal" >
+        android:background="@color/mi_material_blue_principal">
 
         <TextView
             android:id="@+id/datos_linea"
@@ -40,77 +39,71 @@
             android:textColor="@color/white"
             android:textStyle="bold" />
 
-       
-    </LinearLayout>   
-    
-<RelativeLayout
-    android:id="@+id/mainlayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     android:layout_marginBottom="45dip"
-    android:orientation="vertical" >
 
-    
-    <fragment
-  android:id="@+id/map"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  class="com.google.android.gms.maps.SupportMapFragment"/>
-    
-</RelativeLayout>
+    </LinearLayout>
 
-<LinearLayout
+    <RelativeLayout
+        android:id="@+id/mainlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dip"
+        android:orientation="vertical">
+
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="47dp"
         android:layout_marginTop="-46dip"
         android:background="@color/background_material_light"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
 
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="horizontal">
-
-
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/mapaIdaButton"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ida"
-            android:layout_marginRight="15dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            />
+            android:orientation="horizontal">
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/mapaVueltaButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/vuelta"
-            android:layout_marginRight="15dp"
-            android:layout_gravity="center"
-            />
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/mapasVehiculosButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/mapas_vehiculo_on"
-            android:layout_gravity="center"
-            />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/mapaIdaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:text="@string/ida" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/mapaVueltaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:text="@string/vuelta" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/mapasVehiculosButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="@string/mapas_vehiculo_on" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-     </LinearLayout>
 
 </LinearLayout>
 

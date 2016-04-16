@@ -18,6 +18,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -95,6 +96,44 @@
 
                 </LinearLayout>
 
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/lineas_informacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/launch_preferences"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    app:textAllCaps="true"
+                    android:drawableLeft="@drawable/ic_photo_library_black_24dp"
+                    android:textColor="@color/mi_material_blue_principal"
+                    />
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/tarjeta_margin"
+
+            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardCornerRadius="1dp"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_noticias_header"
@@ -104,11 +143,13 @@
                     android:padding="2dp"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"
+                    android:layout_margin="7dp"/>
 
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
 
     </LinearLayout>
 

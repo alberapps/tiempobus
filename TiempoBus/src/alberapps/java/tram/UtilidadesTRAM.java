@@ -55,6 +55,8 @@ public class UtilidadesTRAM {
 
     public static int[] L2_ORDEN = {2, 3, 4, 1201, 1202, 1203, 1204, 1205, 1206, 1207, 1208, 1209, 1210, 1211};
 
+    public static int[] L2_ORDEN_HORARIOS = {2, 3, 4, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124};
+
     public static String[] DESC_TIPO = {"", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2"};
 
     public static String[] DESC_LINEA = {"", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente"};
@@ -353,5 +355,27 @@ public class UtilidadesTRAM {
         return false;
 
     }
+
+
+    /**
+     * Codigo de parada para tener en cuenta que en horarios los codigos de la L2 cambian
+     *
+     * @param parada
+     * @return
+     */
+    public static Integer getParadaParaHorarios(Integer parada){
+
+
+        for (int i = 0; i < L2_ORDEN.length; i++) {
+            if (parada.equals(L2_ORDEN[i])) {
+                return L2_ORDEN_HORARIOS[i];
+            }
+
+        }
+
+        return parada;
+
+    }
+
 
 }

@@ -81,5 +81,10 @@ public class HistorialDB {
 		 */
 		public static final String FECHA = "fecha";
 
+		/**
+		 * Horario seleccionado
+		 */
+		public static final String HORARIO_SELECCIONADO = "horario_tram";
+
 	}
 }

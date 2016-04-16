@@ -79,6 +79,7 @@ import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
+import alberapps.java.tram.avisos.AvisosTram;
 import alberapps.java.util.Datos;
 import alberapps.java.util.GestionarDatos;
 import alberapps.java.util.Utilidades;
@@ -220,7 +221,7 @@ public class DatosPantallaPrincipal {
      *
      * @param paradaActual
      */
-    public void gestionarHistorial(int paradaActual) {
+    public void gestionarHistorial(int paradaActual, String destinoHorario) {
 
         try {
 
@@ -290,6 +291,11 @@ public class DatosPantallaPrincipal {
 
             values.put(HistorialDB.Historial.PARADA, paradaActual);
             values.put(HistorialDB.Historial.FECHA, Utilidades.getFechaSQL(fechaActual));
+
+            if (destinoHorario != null) {
+                values.put(HistorialDB.Historial.HORARIO_SELECCIONADO, destinoHorario);
+            }
+
 
             if (id != null) {
                 // La actualiza
@@ -533,7 +539,9 @@ public class DatosPantallaPrincipal {
          * Sera llamado cuando la tarea de cargar las noticias
          */
         LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
-            public void AvisosTramLoaded(List<TwResultado> noticias) {
+            public void AvisosTramLoaded(AvisosTram avisosTram) {
+
+                List<TwResultado> noticias = avisosTram.getAvisosTw();
 
                 if (NoticiasTabsPager.errorTwitter(context.getApplicationContext(), noticias)) {
 
@@ -608,7 +616,7 @@ public class DatosPantallaPrincipal {
 
     }
 
-    public boolean esTram(int paradaActual) {
+    public static boolean esTram(int paradaActual) {
 
         if (!UtilidadesTRAM.ACTIVADO_TRAM) {
             return false;
@@ -953,6 +961,7 @@ public class DatosPantallaPrincipal {
 
     }
 
+
     /**
      * Cargar pie listado
      */
@@ -1075,14 +1084,14 @@ public class DatosPantallaPrincipal {
             }
         });
 
-        TextView fbAlberapps = (TextView) v.findViewById(R.id.info_alberapps_fb);
+        /*TextView fbAlberapps = (TextView) v.findViewById(R.id.info_alberapps_fb);
         fbAlberapps.setOnClickListener(new TextView.OnClickListener() {
             public void onClick(View arg0) {
 
                 UtilidadesUI.openWebPage(context, "https://facebook.com/alberapps");
 
             }
-        });
+        });*/
 
 
     }
