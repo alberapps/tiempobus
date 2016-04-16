@@ -82,6 +82,8 @@ public class Conectividad {
 
         String datos = null;
 
+        InputStream in = null;
+
         try {
 
 
@@ -103,18 +105,13 @@ public class Conectividad {
 
             urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-            /*if (cacheTiempos != null && cacheTiempos) {
-                urlConnection.addRequestProperty("Cache-Control", "max-age=0");
-                Log.d("CONEXION", "Con cache Tiempos");
-            } else {*/
+
             urlConnection.addRequestProperty("Cache-Control", "no-cache");
-            //Log.d("CONEXION", "Sin cache Tiempos");
-            //}
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
             Utilidades.writeIt(out, post);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            in = new BufferedInputStream(urlConnection.getInputStream());
             datos = Utilidades.obtenerStringDeStreamUTF8(in);
         } catch (IOException e) {
 
@@ -124,11 +121,27 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
+
             throw new Exception("Error al acceder al servicio");
 
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
             }
         }
 
@@ -162,11 +175,10 @@ public class Conectividad {
 
         String datos = null;
 
+        InputStream in = null;
+
         try {
 
-            /*if (cacheTiempos != null && cacheTiempos) {
-                System.setProperty("http.keepAlive", "false");
-            }*/
 
             // Crear url
             URL url = new URL(urlPost);
@@ -174,7 +186,7 @@ public class Conectividad {
             urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setDoOutput(true);
-            // urlConnection.setChunkedStreamingMode(0);
+
             urlConnection.setFixedLengthStreamingMode(post.length());
 
             urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
@@ -186,18 +198,14 @@ public class Conectividad {
 
             urlConnection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
-            /*if (cacheTiempos != null && cacheTiempos) {
-                urlConnection.addRequestProperty("Cache-Control", "max-age=0");
-                Log.d("CONEXION", "Con cache Tiempos");
-            } else {*/
+
             urlConnection.addRequestProperty("Cache-Control", "no-cache");
-            //Log.d("CONEXION", "Sin cache Tiempos");
-            //}
+
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
             Utilidades.writeIt(out, post);
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            in = new BufferedInputStream(urlConnection.getInputStream());
             datos = Utilidades.obtenerStringDeStreamUTF8(in);
         } catch (IOException e) {
 
@@ -207,9 +215,13 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
-            /*if (cacheTiempos != null && cacheTiempos) {
-                System.setProperty("http.keepAlive", "true");
-            }*/
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
 
             throw new Exception("Error al acceder al servicio");
 
@@ -218,9 +230,13 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
-            /*if (cacheTiempos != null && cacheTiempos) {
-                System.setProperty("http.keepAlive", "true");
-            }*/
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
+            }
 
         }
 
@@ -250,6 +266,8 @@ public class Conectividad {
 
         String datos = null;
 
+        InputStream in = null;
+
         try {
 
             // Crear url
@@ -276,7 +294,7 @@ public class Conectividad {
                 Log.d("CONEXION", "Con cache");
             }
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            in = new BufferedInputStream(urlConnection.getInputStream());
 
             if (utf8) {
                 datos = Utilidades.obtenerStringDeStreamUTF8(in);
@@ -292,12 +310,29 @@ public class Conectividad {
                 urlConnection.disconnect();
             }
 
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
+
             throw new Exception("Error al acceder al servicio");
 
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
+            }
+
         }
 
         return datos;
