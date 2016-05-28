@@ -30,7 +30,7 @@
     <!--
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="false"/>
+        android:required="true"/>
     -->
     <!--  -->
     <application
@@ -47,12 +47,22 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.TiempoBusTheme"
             android:windowSoftInputMode="stateHidden">
+            <!--intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter-->
+        </activity>
+        <activity
+            android:name=".principal.SplashActivity"
+            android:theme="@style/Theme.TiempoBusThemeSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".favoritos.FavoritosActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
@@ -60,7 +70,8 @@
             android:label="@string/favoritosN"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeActionBar"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -104,7 +115,8 @@
             android:label="@string/tit_noticias"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -140,7 +152,8 @@
             android:label="@string/busqueda"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.InfoLineasTabsPager" />

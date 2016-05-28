@@ -448,5 +448,7 @@ favorit per crear la teua llista.</string>
     <string name="tipo_billete">Bitllet per a zones</string>
     <string name="transbordos">Transbords</string>
     <string name="notiemporeal">Horari (No és en temps real)</string>
+    <string name="sin_novedades">Sense novetats</string>
+    <string name="avisos_web_tram">Avisos Web Tram</string>
 
 </resources>

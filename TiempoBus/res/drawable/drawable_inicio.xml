@@ -1,0 +1,12 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/mi_material_blue_principal" />
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ic_tiempobus_4_acercade"
+            />
+    </item>
+
+
+</layer-list>

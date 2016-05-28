@@ -232,7 +232,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         Intent i = new Intent(actividad, MapasActivity.class);
                         i.putExtra("LINEA_MAPA", bus.getLinea());
                         i.putExtra("LINEA_MAPA_PARADA", Integer.toString(actividad.paradaActual));
-                        actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+                        actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                     }
 
@@ -355,7 +355,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         Intent i = new Intent(actividad, InfoLineasTabsPager.class);
                         i.putExtra("HORARIOS", "TRAM");
 
-                        actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+                        actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                     }
                 });*/
@@ -460,7 +460,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             //traducido = "> " + tiempo1 + "\n> " + tiempo2;
 
             // min.
-            nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));//.replace("(", "\"").replace(")", "\"");
+            nuevoLiteral = traducido.replaceAll("min.", contexto.getString(R.string.literal_min));
+
+            nuevoLiteral = nuevoLiteral.replaceAll("[(]", "- ").replaceAll("[)]", "");
 
 
         }

@@ -18,13 +18,17 @@
  */
 package alberapps.java.tram.avisos;
 
+import android.net.Uri;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.util.Conectividad;
 
 /**
@@ -38,7 +42,17 @@ public class ProcesarAvisosTram {
 
         List<Aviso> avisos = new ArrayList<>();
 
-        Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(URL_TRAM_AVISOS), "UTF-8", URL_TRAM_AVISOS);
+        String idioma = UtilidadesUI.getIdiomaRssTram();
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http").authority("www.tramalicante.es").appendPath("page.php")
+                .appendQueryParameter("page", "144")
+                .appendQueryParameter("idioma", idioma);
+
+        Uri urlNoticias = builder.build();
+
+
+        Document doc = Jsoup.parse(Conectividad.conexionGetIsoStream(urlNoticias.toString()), "UTF-8", urlNoticias.toString());
 
 
         //Seccion de noticias
@@ -47,14 +61,27 @@ public class ProcesarAvisosTram {
         //Listado de noticias
         Elements lineasList = seccionIncidencias.select("div.linea");
 
-        for(int i = 0; i < lineasList.size();i++){
+        for (int i = 0; i < lineasList.size(); i++) {
 
-            if(lineasList.get(i).select("div.alert").size() > 0){
+            if (lineasList.get(i).select("div.alert").size() > 0) {
 
-                //String safe = Jsoup.clean(lineasList.get(i).html(), URL_TRAM_AVISOS, Whitelist.basic());
+                //String safe = Jsoup.clean(lineasList.get(i).html(), URL_TRAM_AVISOS, Whitelist.basicWithImages());
+                String safe = Jsoup.clean(lineasList.get(i).html(), urlNoticias.toString(), Whitelist.basicWithImages().addTags("h3", "h4", "table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
+
 
                 Aviso aviso = new Aviso();
-                aviso.setDescripcion(lineasList.get(i).text());
+                aviso.setDescripcion(safe);
+                if (i == 0) {
+                    aviso.setTitulo("L1");
+                } else if (i == 1) {
+                    aviso.setTitulo("L3");
+                } else if (i == 2) {
+                    aviso.setTitulo("L4");
+                } else if (i == 3) {
+                    aviso.setTitulo("L9");
+                } else if (i == 4) {
+                    aviso.setTitulo("L2");
+                }
                 avisos.add(aviso);
 
 

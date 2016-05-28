@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context="alberapps.android.tiempobus.principal.horariotram.PrincipalHorarioTramFragment">
+    tools:context="alberapps.android.tiempobus.principal.horariotram.PrincipalHorarioTramFragment"
+    android:id="@+id/contenedor_fragment_horario_tram"
+    >
 
 
     <android.support.v7.widget.CardView

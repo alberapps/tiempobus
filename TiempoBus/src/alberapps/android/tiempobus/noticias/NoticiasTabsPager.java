@@ -26,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -37,13 +38,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.util.Linkify;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +58,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
@@ -68,6 +75,7 @@ import java.util.List;
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
@@ -88,6 +96,7 @@ import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.avisos.Aviso;
 import alberapps.java.tram.avisos.AvisosTram;
+import alberapps.java.tram.avisos.ProcesarAvisosTram;
 import alberapps.java.util.Utilidades;
 
 /**
@@ -346,6 +355,9 @@ public class NoticiasTabsPager extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
 
             case R.id.menu_refresh:
 
@@ -1120,8 +1132,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
             }
 
 
-
-
             //Boton cargar todas las noticias
             Button BotonTodas = (Button) vheader.findViewById(R.id.boton_ver_todas);
             BotonTodas.setOnClickListener(new View.OnClickListener() {
@@ -1140,6 +1150,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     /**
      * Cargar el listado de noticias tw del tram
+     *
      * @param noticias
      */
     public void cargarListadoTodasTram(final List<TwResultado> noticias) {
@@ -1316,7 +1327,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 cargarAvisosWebTram(avisosTram.getAvisosWeb());
 
 
-
             }
         };
 
@@ -1331,26 +1341,129 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     }
 
-    private void cargarAvisosWebTram(List<Aviso> avisosWeb){
+    /**
+     * Cargar los avisos recuperados de la web del tram
+     *
+     * @param avisosWeb
+     */
+    private void cargarAvisosWebTram(List<Aviso> avisosWeb) {
 
-        if(avisosWeb != null){
+        View vheader = noticiasRssView.findViewById(R.id.layout_avisos_tram);
 
-            View vheader = noticiasRssView.findViewById(R.id.layout_avisos_tram);
+        if (avisosWeb != null && !avisosWeb.isEmpty()) {
+
+            String lineasAvisos = "";
+            for (int i = 0; i < avisosWeb.size(); i++) {
+                lineasAvisos = lineasAvisos + avisosWeb.get(i).getTitulo() + ",";
+            }
+
+            //String lineas = "L1,L2,L3,L4,L9";
+
+            mostrarLineasAlerta(this, vheader, lineasAvisos, avisosWeb);
+
+
+        } else {
 
             TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_aviso_tram);
-
-            //descripcion.setText(Html.fromHtml(avisosWeb.get(0).getDescripcion()));
-
-            descripcion.setText(avisosWeb.get(0).getDescripcion());
-
+            descripcion.setText(getString(R.string.sin_novedades));
 
         }
 
+
+    }
+
+    /**
+     * Mostrar las lineas con avisos
+     *
+     * @param contexto
+     * @param v
+     * @param conexiones
+     * @param avisos
+     */
+    private void mostrarLineasAlerta(Context contexto, View v, String conexiones, List<Aviso> avisos) {
+
+        //Lineas con parada
+        LinearLayout lineasParada = (LinearLayout) v.findViewById(R.id.lineas_parada);
+
+        lineasParada.removeAllViews();
+
+
+        String[] conexionesList = conexiones.split(",");
+
+        int posicionMax = conexionesList.length;
+
+
+        for (int i = 0; i < posicionMax; i++) {
+            lineasParada.addView(incluirTexto(contexto, conexionesList[i], avisos.get(i)));
+        }
 
 
     }
 
 
+    /**
+     * Visualizacion con estilos de las lineas con avisos
+     *
+     * @param contexto
+     * @param conexion
+     * @param aviso
+     * @return
+     */
+    private FrameLayout incluirTexto(Context contexto, String conexion, final Aviso aviso) {
+
+        FrameLayout fl = new FrameLayout(contexto);
+        fl.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fl.setPadding(2, 5, 5, 2);
+
+        AppCompatTextView texto = new AppCompatTextView(contexto);
+        texto.setText(conexion.trim());
+        texto.setTextAppearance(contexto, R.style.TextAppearance_AppCompat_Small);
+        texto.setTextColor(contexto.getResources().getColor(R.color.abc_primary_text_disable_only_material_dark));
+
+        int size50 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, contexto.getResources().getDisplayMetrics());
+
+        texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
+        texto.setGravity(Gravity.CENTER);
+        //texto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        texto.setTypeface(Typeface.DEFAULT_BOLD);
+
+        DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
+
+        //Size
+        if (conexion.trim().length() > 2) {
+            texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+        } else {
+            texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        }
+
+        texto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Noticias noticia = new Noticias();
+                noticia.setTituloCabecera(getString(R.string.rss_tram));
+                noticia.setContenidoHtml(aviso.getDescripcion());
+                noticia.setLineaCabecera(aviso.getTitulo());
+
+                List<String> link = new ArrayList<String>();
+                link.add(ProcesarAvisosTram.URL_TRAM_AVISOS);
+                noticia.setLinks(link);
+
+                Intent i = new Intent(NoticiasTabsPager.this, DetalleNoticiaActivity.class);
+                i.putExtra("NOTICIA_SELECCIONADA", noticia);
+                i.putExtra("POSICION_LINK", -1);
+                startActivity(i);
+
+            }
+        });
+
+
+        fl.addView(texto);
+
+        return fl;
+
+
+    }
 
     /**
      * Listener encargado de gestionar las pulsaciones sobre los items

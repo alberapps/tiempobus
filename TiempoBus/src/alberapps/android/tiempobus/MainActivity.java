@@ -120,7 +120,7 @@ import alberapps.java.util.Conectividad;
  */
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener {
 
-    public static final int SUB_ACTIVITY_REQUEST_POSTE = 1000;
+    public static final int SUB_ACTIVITY_REQUEST_PARADA = 1000;
     public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
     public static final int SUB_ACTIVITY_RESULT_OK = 1002;
     public static final int SUB_ACTIVITY_RESULT_CANCEL = 1003;
@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Gestionar alarmas
         gestionarAlarmas = new GestionarAlarmas(this, preferencias, alarmManager);
 
+        controlesIniciales();
 
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
@@ -265,6 +266,64 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
+
+    private boolean controlInicialAnalytics = false;
+
+
+    /**
+     * Cargas iniciales y control de analytics
+     */
+    private void controlesIniciales() {
+
+        // Verificar si hay parada por defecto
+        if (preferencias.contains("parada_inicio")) {
+            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
+        }
+
+        Log.d("PRINCIPAL", "inicia: " + buses.size());
+
+        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+        // Poner en campo de poste
+        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        txtPoste.setText(Integer.toString(paradaActual));
+
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+
+            datosPantallaPrincipal.controlMostrarAnalytics();
+
+            if (preferencias.getBoolean("analytics_on", false)) {
+                controlInicialAnalytics = true;
+
+                // Activar
+                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
+
+                // Inicia tracker
+                Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+                // Envia inicio actividad
+                GoogleAnalytics.getInstance(this).reportActivityStart(this);
+
+                Log.d("PRINCIPAL", "Analytics activo");
+
+            } else {
+                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
+
+                Log.d("PRINCIPAL", "Analytics inactivo");
+
+            }
+
+        } else {
+
+            //Ya no funciona en Froyo
+
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putBoolean("analytics_on", false);
+            editor.commit();
+        }
+
+    }
 
     /**
      * Drawer Layout
@@ -369,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 if (datosPantallaPrincipal.servicesConnected()) {
                     detenerTodasTareas();
-                    startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                    startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                 }
 
                 break;
@@ -379,12 +438,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 item.setChecked(false);
 
                 detenerTodasTareas();
-                startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
+                //startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
+                startActivityForResult(new Intent(MainActivity.this, NoticiasTabsPager.class), SUB_ACTIVITY_REQUEST_PARADA);
                 break;
 
             case R.id.navigation_item_favoritos:
                 detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                 break;
 
             case R.id.navigation_item_guardar:
@@ -394,7 +454,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             case R.id.navigation_item_historial:
                 detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                 break;
 
             case R.id.navigation_item_preferencias:
@@ -428,7 +488,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
                 detenerTodasTareas();
-                startActivity(new Intent(MainActivity.this, RutasActivity.class));
+                //startActivity(new Intent(MainActivity.this, RutasActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, RutasActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
 
 
                 break;
@@ -506,64 +567,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 	 * return super.onCreateView(name, context, attrs); }
 	 */
 
-    private boolean controlInicialAnalytics = false;
-
-    /**
-     * Una vez este creada la actividad obtenemos el servicio para fijar las
-     * alarmas
-     */
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        // Verificar si hay parada por defecto
-        if (preferencias.contains("parada_inicio")) {
-            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
-        }
-
-        Log.d("PRINCIPAL", "inicia: " + buses.size());
-
-        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-
-        // Poner en campo de poste
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
-        txtPoste.setText(Integer.toString(paradaActual));
-
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
-
-            datosPantallaPrincipal.controlMostrarAnalytics();
-
-            if (preferencias.getBoolean("analytics_on", false)) {
-                controlInicialAnalytics = true;
-
-                // Activar
-                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
-
-                // Inicia tracker
-                Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
-
-                // Envia inicio actividad
-                GoogleAnalytics.getInstance(this).reportActivityStart(this);
-
-                Log.d("PRINCIPAL", "Analytics activo");
-
-            } else {
-                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
-
-                Log.d("PRINCIPAL", "Analytics inactivo");
-
-            }
-
-        } else {
-
-            //Ya no funciona en Froyo
-
-            SharedPreferences.Editor editor = preferencias.edit();
-            editor.putBoolean("analytics_on", false);
-            editor.commit();
-        }
 
     }
 
@@ -696,14 +704,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        // Una vez cargado todo... recargamos datos
+        // Una vez cargado, recargamos datos
         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
         datosPantallaPrincipal.controlMostrarNovedades();
 
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
         mDrawerToggle.syncState();
-        //}
+
 
     }
 
@@ -744,7 +751,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             case R.id.menu_search:
 
                 detenerTodasTareas();
-                startActivityForResult(new Intent(MainActivity.this, InfoLineasTabsPager.class), SUB_ACTIVITY_REQUEST_POSTE);
+                startActivityForResult(new Intent(MainActivity.this, InfoLineasTabsPager.class), SUB_ACTIVITY_REQUEST_PARADA);
 
                 break;
 
@@ -1008,7 +1015,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 Intent i = new Intent(MainActivity.this, MapasActivity.class);
                                 i.putExtra("LINEA_MAPA", busSeleccionado.getLinea());
                                 i.putExtra("LINEA_MAPA_PARADA", Integer.toString(paradaActual));
-                                startActivityForResult(i, SUB_ACTIVITY_REQUEST_POSTE);
+                                startActivityForResult(i, SUB_ACTIVITY_REQUEST_PARADA);
                             }
 
                             busSeleccionado = null;
@@ -1112,7 +1119,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         if (resultCode == SUB_ACTIVITY_RESULT_OK) {
             switch (requestCode) {
-                case SUB_ACTIVITY_REQUEST_POSTE:
+                case SUB_ACTIVITY_REQUEST_PARADA:
 
                     if (data.getExtras() != null) {
                         Bundle b = data.getExtras();
@@ -1127,7 +1134,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 i.putExtra("HORARIOS", "TRAM");
                                 i.putExtra("HORARIOSDATA", b.getString("HORARIOS"));
 
-                                startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+                                startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                                 break;
 
@@ -1149,7 +1156,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
                     break;
                 case SUB_ACTIVITY_REQUEST_ADDFAV:
-                    startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                    startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                     break;
 
                 case SUB_ACTIVITY_REQUEST_PREFERENCIAS:
@@ -1554,7 +1561,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             imgFavorito.setOnClickListener(new OnClickListener() {
                                 public void onClick(View v) {
                                     activ.detenerTodasTareas();
-                                    activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                    activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                                 }
                             });
 
@@ -1571,7 +1578,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 imgCircularFavorito.setOnClickListener(new OnClickListener() {
                                     public void onClick(View v) {
                                         activ.detenerTodasTareas();
-                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                                     }
                                 });
                             } else {
@@ -1586,7 +1593,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 imgCircularFavorito.setOnClickListener(new OnClickListener() {
                                     public void onClick(View v) {
                                         activ.detenerTodasTareas();
-                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_POSTE);
+                                        activ.startActivityForResult(new Intent(activ, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                                     }
                                 });
 

@@ -822,7 +822,7 @@ public class DatosPantallaPrincipal {
                 Intent i = new Intent(context, InfoLineasTabsPager.class);
                 i.putExtra("HORARIOS", "TRAM");
 
-                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
             }
         });
@@ -1107,7 +1107,7 @@ public class DatosPantallaPrincipal {
     public void controlMostrarNovedades() {
         // Mostrar novedades
 
-        if (UtilidadesTRAM.ACTIVADO_TRAM) {
+        /*if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
             int revAviso = preferencias.getInt("revAviso", 0);
 
@@ -1162,7 +1162,7 @@ public class DatosPantallaPrincipal {
 
             }
 
-        }
+        }*/
 
         // Control Analytics
 

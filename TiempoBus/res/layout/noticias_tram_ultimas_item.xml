@@ -36,23 +36,38 @@
 
 
         <LinearLayout
+            android:id="@+id/layout_avisos_tram"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="5dp"
-            android:id="@+id/layout_avisos_tram"
             android:orientation="vertical">
 
-            <!--TextView
+            <TextView
                 android:id="@+id/titulo_aviso_tram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-android:text="@string/avisos"
+                android:text="@string/avisos_web_tram"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/primary_dark_material_light"
-                android:textStyle="bold" /-->
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/bloque_datos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/lineas_parada"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
 
 
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/descripcion_aviso_tram"
@@ -60,18 +75,15 @@ android:text="@string/avisos"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10dp"
                 android:textColor="@color/primary_dark_material_light"
-                />
-
-
+                android:textSize="10sp"
+                android:text="@string/noticias_instrucciones"/>
 
 
         </LinearLayout>
 
 
     </android.support.v7.widget.CardView>
-
 
 
     <android.support.v7.widget.CardView
@@ -111,19 +123,18 @@ android:text="@string/avisos"
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary_dark_material_light"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/descripcion_ultima_tram_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
+                android:autoLink="web"
 
+                android:gravity="top"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_principal"
-                android:textStyle="italic"
-                android:autoLink="web"/>
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/fecha_ultima_tram_2"
@@ -133,28 +144,26 @@ android:text="@string/avisos"
 
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary_dark_material_light"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/descripcion_ultima_tram_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
+                android:autoLink="web"
 
+                android:gravity="top"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_principal"
-                android:textStyle="italic"
-                android:autoLink="web"/>
+                android:textStyle="italic" />
 
             <Button
+                android:id="@+id/boton_ver_todas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/noticias_todas"
-                android:id="@+id/boton_ver_todas"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                />
+                android:text="@string/noticias_todas"
+                android:textColor="@android:color/white" />
 
         </LinearLayout>
 

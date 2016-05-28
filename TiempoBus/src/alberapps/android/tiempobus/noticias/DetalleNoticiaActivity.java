@@ -28,6 +28,7 @@ import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.util.Linkify;
@@ -97,49 +98,61 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
             int posicion = extras.getInt("POSICION_LINK");
 
-            link = noticia.getLinks().get(posicion);
 
-        }
+            // Fondo
+            setupFondoAplicacion();
 
-        // Fondo
-        setupFondoAplicacion();
+            /**
+             * Sera llamado cuando la tarea de cargar las noticias
+             */
+            LoadDetalleNoticiaAsyncTaskResponder loadDetalleNoticiaAsyncTaskResponder = new LoadDetalleNoticiaAsyncTaskResponder() {
+                public void detalleNoticiaLoaded(Noticias noticia) {
 
-        /**
-         * Sera llamado cuando la tarea de cargar las noticias
-         */
-        LoadDetalleNoticiaAsyncTaskResponder loadDetalleNoticiaAsyncTaskResponder = new LoadDetalleNoticiaAsyncTaskResponder() {
-            public void detalleNoticiaLoaded(Noticias noticia) {
+                    if (noticia != null) {
 
-                if (noticia != null) {
+                        cargarDetalle(noticia);
+                        dialog.dismiss();
 
-                    cargarDetalle(noticia);
-                    dialog.dismiss();
+                    } else {
+                        // Error al recuperar datos
 
-                } else {
-                    // Error al recuperar datos
+                        cargarDetalleError();
 
-                    cargarDetalleError();
+                        Toast.makeText(getApplicationContext(), getString(R.string.ko_noticia), Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.ko_noticia), Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-
+                    }
                 }
-            }
-        };
+            };
 
-        // Control de disponibilidad de conexion
-        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
 
-            String userAgentDefault = Utilidades.getAndroidUserAgent(this);
+            if (posicion >= 0) {
+                link = noticia.getLinks().get(posicion);
 
-            taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link, userAgentDefault);
-        } else {
-            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
-            if (dialog != null && dialog.isShowing()) {
+
+                // Control de disponibilidad de conexion
+                ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()) {
+
+                    String userAgentDefault = Utilidades.getAndroidUserAgent(this);
+
+                    taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link, userAgentDefault);
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+
+            } else {
+                link = noticia.getLinks().get(0);
+
+                cargarDetalle(noticia);
                 dialog.dismiss();
+
             }
+
         }
 
 
@@ -257,10 +270,10 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
         TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
 
-        if(noticia.getFechaCabecera() != null && !noticia.getFechaCabecera().trim().equals("")) {
+        if (noticia.getFechaCabecera() != null && !noticia.getFechaCabecera().trim().equals("")) {
             assert cabFecha != null;
             cabFecha.setText(noticia.getFechaCabecera());
-        }else{
+        } else {
             assert cabFecha != null;
             cabFecha.setText(getString(R.string.sin_fecha));
         }
@@ -338,6 +351,11 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
 
@@ -349,7 +367,6 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -359,7 +376,6 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

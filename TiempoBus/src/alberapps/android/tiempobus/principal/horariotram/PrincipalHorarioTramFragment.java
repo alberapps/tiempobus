@@ -2,12 +2,14 @@ package alberapps.android.tiempobus.principal.horariotram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -113,6 +115,8 @@ public class PrincipalHorarioTramFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setupFondoAplicacion();
+
         ImageButton botonHorarios = (ImageButton) view.findViewById(R.id.tarjeta_horario_ir);
 
         final MainActivity context = (MainActivity) getActivity();
@@ -140,7 +144,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                 i.putExtra("HORARIOSDATA", dato.toString());
 
-                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_POSTE);
+                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
             }
         });
@@ -434,6 +438,24 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         } catch (Exception e) {
             return null;
+        }
+
+    }
+
+    /**
+     * Seleccion del fondo de la galeria en el arranque
+     */
+    private void setupFondoAplicacion() {
+
+        PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String fondo_galeria = preferencias.getString("image_galeria", "");
+
+        View contenedor_principal = getActivity().findViewById(R.id.contenedor_fragment_horario_tram);
+
+        if(contenedor_principal != null) {
+            UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
         }
 
     }

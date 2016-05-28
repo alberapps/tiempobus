@@ -90,6 +90,12 @@
         <item name="android:listSelector">@drawable/photogrid_list_selector</item>
     </style>
 
+
+    <style name="Theme.TiempoBusThemeSplash" parent="Theme.TiempoBusTheme">
+        <item name="android:windowBackground">@drawable/drawable_inicio</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
 	
 	
 	
