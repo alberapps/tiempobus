@@ -381,46 +381,63 @@ public class DatosPantallaPrincipal {
          */
         LoadNoticiasAsyncTaskResponder loadNoticiasAsyncTaskResponder = new LoadNoticiasAsyncTaskResponder() {
             public void noticiasLoaded(List<Noticias> noticias) {
+                try {
+                    if (noticias != null && !noticias.isEmpty()) {
 
-                if (noticias != null && !noticias.isEmpty()) {
+                        int nuevas = 0;
 
-                    int nuevas = 0;
+                        String fecha_ultima = "";
+                        boolean lanzarAviso = false;
+                        Date fechaComparar = null;
 
-                    String fecha_ultima = "";
-                    boolean lanzarAviso = false;
-                    Date fechaComparar = null;
+                        // Ver si se guardo la fecha de la ultima noticia
+                        if (preferencias.contains("ultima_noticia")) {
+                            fecha_ultima = preferencias.getString("ultima_noticia", "");
 
-                    // Ver si se guardo la fecha de la ultima noticia
-                    if (preferencias.contains("ultima_noticia")) {
-                        fecha_ultima = preferencias.getString("ultima_noticia", "");
-
-                        Date fechaUltima = null;
-
-
-                        fechaUltima = Utilidades.getFechaDate(fecha_ultima);
-
-                        // Contar nuevas noticias
+                            Date fechaUltima = null;
 
 
-                        for (int i = 0; i < noticias.size(); i++) {
+                            fechaUltima = Utilidades.getFechaDate(fecha_ultima);
 
-                            if (noticias.get(i).getFecha() != null) {
-                                assert fechaUltima != null;
-                                if (noticias.get(i).getFecha().after(fechaUltima)) {
-                                    nuevas++;
+                            // Contar nuevas noticias
+
+
+                            for (int i = 0; i < noticias.size(); i++) {
+
+                                if (noticias.get(i).getFecha() != null) {
+                                    assert fechaUltima != null;
+                                    if (noticias.get(i).getFecha().after(fechaUltima)) {
+                                        nuevas++;
+                                    }
                                 }
+
+                                if (fechaComparar == null && noticias.get(i).getFecha() != null) {
+                                    fechaComparar = noticias.get(i).getFecha();
+                                }
+
                             }
 
-                            if (fechaComparar == null && noticias.get(i).getFecha() != null) {
-                                fechaComparar = noticias.get(i).getFecha();
+
+                            if (fechaUltima != null && fechaComparar != null && !fechaUltima.equals(fechaComparar)) {
+
+                                lanzarAviso = true;
+
+                                SharedPreferences.Editor editor = preferencias.edit();
+                                editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
+                                editor.commit();
+
                             }
 
-                        }
+                        } else {
 
+                            for (int i = 0; i < noticias.size(); i++) {
 
-                        if (fechaUltima != null && fechaComparar != null && !fechaUltima.equals(fechaComparar)) {
+                                if (fechaComparar == null && noticias.get(i).getFecha() != null) {
+                                    fechaComparar = noticias.get(i).getFecha();
+                                    break;
+                                }
 
-                            lanzarAviso = true;
+                            }
 
                             SharedPreferences.Editor editor = preferencias.edit();
                             editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
@@ -428,66 +445,56 @@ public class DatosPantallaPrincipal {
 
                         }
 
-                    } else {
+                        // Si se guardo la fecha y no coincide con la ultima, lanzar
+                        // aviso
+                        if (lanzarAviso) {
 
-                        for (int i = 0; i < noticias.size(); i++) {
+                            // Extendido
 
-                            if (fechaComparar == null && noticias.get(i).getFecha() != null) {
-                                fechaComparar = noticias.get(i).getFecha();
-                                break;
-                            }
-
-                        }
-
-                        SharedPreferences.Editor editor = preferencias.edit();
-                        editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
-                        editor.commit();
-
-                    }
-
-                    // Si se guardo la fecha y no coincide con la ultima, lanzar
-                    // aviso
-                    if (lanzarAviso) {
-
-                        // Extendido
-
-                        String[] extendido = new String[2];
-
-                        //Control fecha
-                        String fechaString0 = "";
-                        if (noticias.get(0).getFechaDoble() != null) {
-                            fechaString0 = noticias.get(0).getFechaDoble();
-                        } else if (noticias.get(0).getFecha() != null) {
-                            fechaString0 = Utilidades.getFechaStringSinHora(noticias.get(0).getFecha());
-                        } else {
-                            fechaString0 = context.getString(R.string.sin_fecha);
-                        }
-
-                        extendido[0] = fechaString0 + ": " + noticias.get(0).getNoticia();
-
-                        if (noticias.size() > 1) {
+                            String[] extendido = new String[2];
 
                             //Control fecha
-                            String fechaString1 = "";
-                            if (noticias.get(1).getFechaDoble() != null) {
-                                fechaString1 = noticias.get(1).getFechaDoble();
-                            } else if (noticias.get(1).getFecha() != null) {
-                                fechaString1 = Utilidades.getFechaStringSinHora(noticias.get(1).getFecha());
+                            String fechaString0 = "";
+                            if (noticias.get(0).getFechaDoble() != null) {
+                                fechaString0 = noticias.get(0).getFechaDoble();
+                            } else if (noticias.get(0).getFecha() != null) {
+                                fechaString0 = Utilidades.getFechaStringSinHora(noticias.get(0).getFecha());
                             } else {
-                                fechaString1 = context.getString(R.string.sin_fecha);
+                                fechaString0 = context.getString(R.string.sin_fecha);
                             }
 
-                            extendido[1] = fechaString1 + ": " + noticias.get(1).getNoticia();
-                        } else {
-                            extendido[1] = "";
-                        }
+                            extendido[0] = fechaString0 + ": " + noticias.get(0).getNoticia();
 
-                        Notificaciones.notificacionNoticias(context.getApplicationContext(), extendido, nuevas);
+                            if (noticias.size() > 1) {
+
+                                //Control fecha
+                                String fechaString1 = "";
+                                if (noticias.get(1).getFechaDoble() != null) {
+                                    fechaString1 = noticias.get(1).getFechaDoble();
+                                } else if (noticias.get(1).getFecha() != null) {
+                                    fechaString1 = Utilidades.getFechaStringSinHora(noticias.get(1).getFecha());
+                                } else {
+                                    fechaString1 = context.getString(R.string.sin_fecha);
+                                }
+
+                                extendido[1] = fechaString1 + ": " + noticias.get(1).getNoticia();
+                            } else {
+                                extendido[1] = "";
+                            }
+
+                            Notificaciones.notificacionNoticias(context.getApplicationContext(), extendido, nuevas);
+
+                        }
+                    } else {
 
                     }
-                } else {
+
+                } catch (Exception e) {
+
+                    e.printStackTrace();
 
                 }
+
             }
         };
 

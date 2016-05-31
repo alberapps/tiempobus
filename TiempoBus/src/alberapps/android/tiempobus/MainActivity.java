@@ -573,6 +573,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onStart();
 
 
+        // Verificar si hay parada por defecto
+        if (preferencias.contains("parada_inicio")) {
+            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
+        }
+
+        Log.d("PRINCIPAL", "inicia: " + buses.size());
+
+        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+        // Poner en campo de poste
+        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        txtPoste.setText(Integer.toString(paradaActual));
+
+
     }
 
     @Override
