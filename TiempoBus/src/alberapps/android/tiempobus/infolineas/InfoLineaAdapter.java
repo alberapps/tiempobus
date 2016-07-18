@@ -263,7 +263,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
      */
     public void filtrarPorGrupo(String grupo) {
 
-        if (listaOriginalSinGrupo == null || listaOriginalSinGrupo.isEmpty()) {
+        if (listaOriginalSinGrupo == null || listaOriginalSinGrupo.isEmpty() || listaOriginalSinGrupo.get(0).isErrorServicio()) {
             return;
         }
 

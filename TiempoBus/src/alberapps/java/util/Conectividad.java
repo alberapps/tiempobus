@@ -96,8 +96,8 @@ public class Conectividad {
             // urlConnection.setChunkedStreamingMode(0);
             urlConnection.setFixedLengthStreamingMode(post.length());
 
-            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
 
@@ -189,8 +189,8 @@ public class Conectividad {
 
             urlConnection.setFixedLengthStreamingMode(post.length());
 
-            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoInput(true);
 
@@ -275,8 +275,8 @@ public class Conectividad {
 
             urlConnection = (HttpURLConnection) url.openConnection();
 
-            urlConnection.setReadTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
-            urlConnection.setConnectTimeout(Comunes.TIMEOUT_HTTP_READ);
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
 
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
@@ -427,8 +427,8 @@ public class Conectividad {
             URLConnection con = url.openConnection();
 
             // timeout
-            con.setReadTimeout(Comunes.TIMEOUT_HTTP_READ);
-            con.setConnectTimeout(Comunes.TIMEOUT_HTTP_CONNECT);
+            con.setReadTimeout(Comunes.CONNECT_TIMEOUT);
+            con.setConnectTimeout(Comunes.READ_TIMEOUT);
 
             is = con.getInputStream();
 
@@ -462,12 +462,12 @@ public class Conectividad {
         try {
 
             // Timeout para establecer conexion
-            int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+            int timeout = Comunes.READ_TIMEOUT;
             HttpParams httpParam = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
             // Timeout para recibir datos
-            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
             HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
             if (userAgent == null) {
@@ -516,12 +516,12 @@ public class Conectividad {
         try {
 
             // Timeout para establecer conexion
-            int timeout = Comunes.TIMEOUT_HTTP_CONNECT;
+            int timeout = Comunes.READ_TIMEOUT;
             HttpParams httpParam = new BasicHttpParams();
             HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
 
             // Timeout para recibir datos
-            int timeoutSocket = Comunes.TIMEOUT_HTTP_READ;
+            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
             HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
 
             request.setHeader("User-Agent", USER_AGENT);

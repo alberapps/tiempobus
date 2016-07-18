@@ -73,6 +73,8 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -1195,6 +1197,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     break;
 
+
             }
 
         } else {
@@ -1299,6 +1302,30 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 Toast.makeText(this, getString(R.string.reconocimiento_voz_error), Toast.LENGTH_SHORT).show();
             }
         }
+
+
+        if (requestCode == GestionarTarjetaInfo.PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(this, data);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+
+
+                // Create a Uri from an intent string. Use the result to create an Intent.
+                Uri gmmIntentUri = Uri.parse("geo:" + place.getLatLng().latitude + "," + place.getLatLng().longitude+"?z=20&q=" + Uri.encode(place.getName().toString() + ", " + place.getAddress()));
+
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                // Make the Intent explicit by setting the Google Maps package
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Attempt to start an activity that can handle the Intent
+                startActivity(mapIntent);
+
+
+            }
+        }
+
 
     }
 

@@ -44,6 +44,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -108,6 +114,8 @@ public class GestionarTarjetaInfo {
     View v = null;
 
     TextView datosParada;
+
+    public static final int PLACE_PICKER_REQUEST = 5000;
 
     /**
      * Tarjeta con informacion de la parada
@@ -284,7 +292,7 @@ public class GestionarTarjetaInfo {
 
 
                 LoadLocationAsyncTask.LoadLocationAsyncTaskResponder loadLocationAsyncTaskResponder = new LoadLocationAsyncTask.LoadLocationAsyncTaskResponder() {
-                    public void LocationLoaded(Localizacion localizacion) {
+                    public void LocationLoaded(final Localizacion localizacion) {
 
                         if (localizacion != null) {
 
@@ -309,6 +317,35 @@ public class GestionarTarjetaInfo {
                                     // Datos para siguiente pasada
                                     datosLocalizacion = sb.toString();
                                     localizacionInfo = localizacion;
+
+
+                                    TextView infoCercana = (TextView) vista.findViewById(R.id.info_cercana);
+
+                                    infoCercana.setOnClickListener(new TextView.OnClickListener() {
+                                        public void onClick(View arg0) {
+
+                                            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                                            LatLngBounds.Builder latLong = new LatLngBounds.Builder();
+
+                                            LatLng ll = new LatLng(Double.parseDouble(context.latitudInfo), Double.parseDouble(context.longitudInfo));
+
+                                            latLong.include(ll);
+
+                                            builder.setLatLngBounds(latLong.build());
+
+
+
+                                            try {
+                                                context.startActivityForResult(builder.build(context), PLACE_PICKER_REQUEST);
+                                            } catch (GooglePlayServicesRepairableException e) {
+                                                e.printStackTrace();
+                                            } catch (GooglePlayServicesNotAvailableException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+                                    });
+
 
                                 } catch (Exception e) {
 
@@ -1290,7 +1327,7 @@ public class GestionarTarjetaInfo {
         dialog.setTitle(context.getString(R.string.actualizacion_titulo));
 
         dialog.setMessage(context.getString(R.string.actualizacion_desc));
-        dialog.setIcon(R.drawable.ic_tiempobus_4);
+        dialog.setIcon(R.drawable.ic_tiempobus_5);
 
         dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

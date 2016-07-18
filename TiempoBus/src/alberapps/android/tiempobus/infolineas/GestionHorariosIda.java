@@ -128,7 +128,7 @@ public class GestionHorariosIda {
             dialog.setTitle(context.getString(R.string.infolinea_horarios));
 
             dialog.setMessage(context.getString(R.string.error_horarios_modal));
-            dialog.setIcon(R.drawable.ic_tiempobus_4);
+            dialog.setIcon(R.drawable.ic_tiempobus_5);
 
             dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

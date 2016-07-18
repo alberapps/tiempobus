@@ -125,7 +125,7 @@ public class FragmentLineas extends Fragment {
             TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
             lineasVi.setEmptyView(vacio);
 
-            cargarLineas();
+            cargarLineas(false);
 
             cargarHeaderLineas();
         }
@@ -148,7 +148,7 @@ public class FragmentLineas extends Fragment {
         return inflater.inflate(R.layout.infolinea_lineas, container, false);
     }
 
-    private void cargarLineas() {
+    private void cargarLineas(boolean usarOffline) {
 
         if (actividad.dialog == null) {
             actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
@@ -158,7 +158,7 @@ public class FragmentLineas extends Fragment {
 
         // Carga local de lineas
         String datosOffline = null;
-        if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+        if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE || usarOffline) {
 
             Resources resources = getResources();
             InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
@@ -201,14 +201,17 @@ public class FragmentLineas extends Fragment {
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
                 toast.show();
 
-                buses = new ArrayList<>();
+                /*buses = new ArrayList<>();
                 BusLinea b1 = new BusLinea();
                 b1.setErrorServicio(true);
                 buses.add(b1);
 
-                actividad.lineasBus = buses;
+                actividad.lineasBus = buses;*/
 
-                cargarListado();
+                //En caso de error en la web, cargar el listado offline
+                cargarLineas(true);
+
+                //cargarListado();
 
 
             }
@@ -272,7 +275,6 @@ public class FragmentLineas extends Fragment {
 
                 }
             });
-
 
 
             /////

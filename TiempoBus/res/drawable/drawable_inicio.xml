@@ -4,7 +4,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_tiempobus_4"
+            android:src="@drawable/tiempobus5_inicial"
             />
     </item>
 

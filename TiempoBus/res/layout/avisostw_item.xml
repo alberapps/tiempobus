@@ -43,7 +43,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:contentDescription="Imagen twitter"
-                android:src="@drawable/ic_tiempobus_4"
+                android:src="@drawable/ic_tiempobus_5"
                 android:gravity="top"
                 />
 

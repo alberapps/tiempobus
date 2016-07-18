@@ -484,6 +484,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="origen">Origen</string>
+    <string name="origen_destino">Origen y Destino</string>
     <string name="aviso_header_rutas">IMPORTANTE: Esta funcionalidad está en desarrollo. Pueden producirse errores que se revisarán en próximas versiones.</string>
     <string name="menu_rutas">Cálculo de Rutas</string>
     <string name="error_ruta">Error al calcular la ruta</string>
@@ -503,6 +504,7 @@
     <string name="no_network_connection_toast">No network connection found</string>
     <string name="avisos_web_tram">Avisos Web Tram</string>
     <string name="sin_novedades">Sin novedades</string>
+    <string name="que_hay_cerca">¿Qué hay cerca?</string>
 
 
 </resources>

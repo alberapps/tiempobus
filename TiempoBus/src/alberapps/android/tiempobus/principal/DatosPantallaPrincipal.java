@@ -1125,7 +1125,7 @@ public class DatosPantallaPrincipal {
                 dialog.setTitle(context.getString(R.string.novedades_titulo));
 
                 dialog.setMessage(context.getString(R.string.info_tram_inicio));
-                dialog.setIcon(R.drawable.ic_tiempobus_4);
+                dialog.setIcon(R.drawable.ic_tiempobus_5);
 
                 dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
@@ -1182,7 +1182,7 @@ public class DatosPantallaPrincipal {
             dialog.setTitle(context.getString(R.string.analytics_on));
 
             dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
-            dialog.setIcon(R.drawable.ic_tiempobus_4);
+            dialog.setIcon(R.drawable.ic_tiempobus_5);
 
             dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
@@ -1235,7 +1235,7 @@ public class DatosPantallaPrincipal {
             dialog.setTitle(context.getString(R.string.analytics_on));
 
             dialog.setMessage(context.getString(R.string.analytics_on_desc_inicial));
-            dialog.setIcon(R.drawable.ic_tiempobus_4);
+            dialog.setIcon(R.drawable.ic_tiempobus_5);
 
             dialog.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 

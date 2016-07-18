@@ -153,6 +153,18 @@
 
 
                 <TextView
+                    android:id="@+id/info_cercana"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5sp"
+                    android:gravity="top"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:text="@string/que_hay_cerca"
+                    android:textColor="@color/mi_material_blue_principal"/>
+
+                <TextView
                     android:id="@+id/datos_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -23,7 +23,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="30dp"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_tiempobus_4_acercade" />
+                android:src="@drawable/ic_tiempobus_5_acercade" />
 
             <LinearLayout
                 android:id="@+id/linearLayout1"

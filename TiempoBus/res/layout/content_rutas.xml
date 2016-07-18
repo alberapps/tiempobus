@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+   Copyright (C) 2015 Alberto Montiel
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,67 +25,9 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_rutas"
+    tools:showIn="@layout/activity_rutas_2"
     tools:context="alberapps.android.tiempobus.rutas.RutasActivity"/>
 
-
-<!--android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_rutas"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="alberapps.android.tiempobus.rutas.RutasActivity"
-
-    >
-
-    android:fillViewport = "true"-->
-<!--
-<android.support.v7.widget.RecyclerView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:id="@+id/rutas_lista_pasos"
-    android:scrollbars="vertical"
-    />
--->
-
-
-
-        <!--FrameLayout
-            android:id="@+id/sample_content_fragment"
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" /-->
-
-
-
-
-
-    <!--
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ListView
-            android:id="@+id/rutas_lista_pasos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="#00000000"
-            android:divider="#00000000"
-            android:fastScrollEnabled="true"
-            android:scrollingCache="true" />
-
-    </android.support.design.widget.CoordinatorLayout>
--->
-
-
-
-
-
-
-<!--/android.support.v4.widget.NestedScrollView-->
 
 
 

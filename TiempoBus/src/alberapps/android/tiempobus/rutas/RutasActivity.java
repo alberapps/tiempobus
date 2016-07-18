@@ -27,7 +27,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -35,7 +34,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -98,11 +96,11 @@ public class RutasActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_rutas);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_rutas_2);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +110,15 @@ public class RutasActivity extends AppCompatActivity {
                 cargarDatosRutas();
 
 
+            }
+        });*/
+
+        Button botonBuscar = (Button) findViewById(R.id.boton_buscar);
+
+        botonBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarDatosRutas();
             }
         });
 
@@ -230,8 +237,22 @@ public class RutasActivity extends AppCompatActivity {
                     mPlaceAttribution.setText("");
                 }*/
 
+                origen = "";
 
-                origen = place.getAddress().toString();
+                if (place.getName() != null && !place.getName().equals("")) {
+                    origen = place.getName().toString();
+                }
+
+                if (place.getAddress() != null && !place.getAddress().equals("")) {
+
+                    if (!origen.equals("")) {
+                        origen = origen + ", ";
+                    }
+
+                    origen = origen + place.getAddress().toString();
+                }
+
+
                 TextView textoOrigen = (TextView) findViewById(R.id.ruta_origen);
                 textoOrigen.setText(origen);
 
@@ -250,7 +271,23 @@ public class RutasActivity extends AppCompatActivity {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 Log.i("RUTAS", "Place Selected: " + place.getName());
 
-                destino = place.getAddress().toString();
+
+                destino = "";
+
+                if (place.getName() != null && !place.getName().equals("")) {
+                    destino = place.getName().toString();
+                }
+
+                if (place.getAddress() != null && !place.getAddress().equals("")) {
+
+                    if (!destino.equals("")) {
+                        destino = destino + ", ";
+                    }
+
+                    destino = destino + place.getAddress().toString();
+                }
+
+
                 TextView textoDestino = (TextView) findViewById(R.id.ruta_destino);
                 textoDestino.setText(destino);
 
@@ -416,7 +453,7 @@ public class RutasActivity extends AppCompatActivity {
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 
-        View contenedor_principal = findViewById(R.id.recyclerView);
+        View contenedor_principal = findViewById(R.id.contenedor_rutas);
 
         UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 

@@ -26,10 +26,10 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/contenedor_fragment_horarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/contenedor_fragment_horarios">
+        android:orientation="vertical">
 
         <!--fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
@@ -147,6 +147,17 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/info_cercana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5sp"
+                android:gravity="top"
+                android:text="@string/que_hay_cerca"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/datos_location"
@@ -227,7 +238,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_weight="1"
-                            android:checked="true"/>
+                            android:checked="true" />
 
                     </LinearLayout>
 
@@ -394,7 +405,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:layout_weight="1"
-                            android:checked="true"/>
+                            android:checked="true" />
 
                     </LinearLayout>
 

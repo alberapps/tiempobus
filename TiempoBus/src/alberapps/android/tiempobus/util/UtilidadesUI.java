@@ -138,18 +138,18 @@ public class UtilidadesUI {
                 if (dr != null) {
                     contenedorPrincipal.setBackgroundDrawable(dr);
                 } else {
-                    contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_200);
+                    contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
                 }
 
             } else {
 
-                contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_200);
+                contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
 
             }
 
         } catch (Exception e) {
 
-            contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_200);
+            contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
             e.printStackTrace();
         }
 
