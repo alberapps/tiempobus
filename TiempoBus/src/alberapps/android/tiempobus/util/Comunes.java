@@ -26,4 +26,7 @@ public class Comunes {
 
 	public static final int READ_TIMEOUT = 7000;
 
+	//Activar y desactivar actualizacion remota de datos de lineas
+	public static final boolean ACTUALIZACIONES_REMOTAS = false;
+
 }

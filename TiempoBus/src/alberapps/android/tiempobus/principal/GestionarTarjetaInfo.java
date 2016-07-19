@@ -67,6 +67,7 @@ import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadWeatherAsyncTask.LoadWeatherAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadWikipediaAsyncTask.LoadWikipediaAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Comunes;
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -332,7 +333,6 @@ public class GestionarTarjetaInfo {
                                             latLong.include(ll);
 
                                             builder.setLatLngBounds(latLong.build());
-
 
 
                                             try {
@@ -1185,6 +1185,10 @@ public class GestionarTarjetaInfo {
      */
     public void controlActualizarDB(final TextView tw) {
 
+        //Control de activacion de las actualizaciones
+        if (!Comunes.ACTUALIZACIONES_REMOTAS) {
+            return;
+        }
 
         // Verificar si hay que consultar la version
         boolean verificar = preferencias.getBoolean("control_verificar_actualiza", true);
@@ -1473,17 +1477,17 @@ public class GestionarTarjetaInfo {
 
         } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
 
-            if(context.findViewById(R.id.contenedor_fragment_horarios) != null) {
+            if (context.findViewById(R.id.contenedor_fragment_horarios) != null) {
 
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.add(R.id.contenedor_fragment_horarios, fragHorarios, "FRAGMENT_HORARIOS_PRINC_TRAM");
                 ft.commit();
 
-            }else{
+            } else {
                 fragHorarios = null;
             }
 
-        } else if(DatosPantallaPrincipal.esTram(context.paradaActual)){
+        } else if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
 
             ((PrincipalHorarioTramFragment) fragHorariosAux).recargarHorarios();
 
@@ -1504,7 +1508,7 @@ public class GestionarTarjetaInfo {
 
             Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
 
-            if(fragHorariosAux != null) {
+            if (fragHorariosAux != null) {
 
                 ft.remove(fragHorariosAux);
                 ft.commit();

@@ -156,11 +156,11 @@
                     android:title="@string/conf_conectividad_titulo_check_tiempos" />-->
             </PreferenceCategory>
             <PreferenceCategory android:title="@string/conf_bd_titulo" >
-                 <CheckBoxPreference
+                 <!--CheckBoxPreference
                     android:defaultValue="true"
                     android:key="control_verificar_actualiza"
                     android:summary="@string/pref_control_actualizar_desc"
-                    android:title="@string/pref_control_actualizar_titulo" />
+                    android:title="@string/pref_control_actualizar_titulo" /-->
                 <PreferenceScreen
                     android:key="reiniciar_db"
                     android:summary="@string/conf_db_recargar_desc"
