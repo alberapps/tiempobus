@@ -214,6 +214,15 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
         return datosRespuesta;
     }
 
+
+    @Override
+    protected void onCancelled(DatosRespuesta datosRespuesta) {
+
+        datosRespuesta = null;
+
+        super.onCancelled(datosRespuesta);
+    }
+
     /**
      * Se ha terminado la ejecucion comunicamos el resultado al llamador
      */

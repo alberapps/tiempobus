@@ -53,6 +53,23 @@
         </FrameLayout>
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/boton_circular_cancelar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="false"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="Guardar favorito"
+            android:src="@drawable/ic_cancel_white_24dp"
+            app:backgroundTint="@color/tram_l1"
+            app:fabSize="normal"
+
+            >
+
+        </android.support.design.widget.FloatingActionButton>
+
+
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/boton_circular_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

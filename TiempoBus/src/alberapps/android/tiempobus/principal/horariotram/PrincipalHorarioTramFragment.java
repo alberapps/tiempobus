@@ -150,6 +150,19 @@ public class PrincipalHorarioTramFragment extends Fragment {
         });
 
 
+        ImageButton botonCompartir = (ImageButton) view.findViewById(R.id.tarjeta_horario_compartir);
+
+
+        botonCompartir.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+
+                TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
+                TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
+
+                context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
+
+            }
+        });
 
 
         cargaInicial();

@@ -150,14 +150,15 @@
                     android:contentDescription="Establecer alerta"
                     android:src="@drawable/ic_alarm_grey600_18dp" /-->
 
-                <!--ImageView
-                    android:id="@+id/compartir_img"
+                <ImageButton
+                    android:id="@+id/tarjeta_horario_compartir"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="45dp"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Compartir horario"
-                    android:src="@drawable/ic_share_grey600_18dp" /-->
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_share_grey600_18dp" />
 
 
                 <!--ImageView

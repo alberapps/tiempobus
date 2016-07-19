@@ -725,9 +725,26 @@ public class DatosPantallaPrincipal {
 
         // String devuelto
 
-        String mensaje = context.getResources().getText(R.string.share_0) + " " + context.getResources().getText(R.string.share_0b) + " " + paradaActual + " " + context.getResources().getText(R.string.share_1) + " "
-                + busSeleccionado.getLinea() + " " + context.getResources().getText(R.string.share_2) + " " + busSeleccionado.getDestino() + " " + context.getResources().getText(R.string.share_3) + " "
+        String mensaje = context.getString(R.string.share_0) + " " + context.getString(R.string.share_0b) + " " + paradaActual + " " + context.getString(R.string.share_1) + " "
+                + busSeleccionado.getLinea() + " " + context.getString(R.string.share_2) + " " + busSeleccionado.getDestino() + " " + context.getString(R.string.share_3) + " "
                 + formatearShare(busSeleccionado.getProximo());
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.menu_share)));
+
+    }
+
+    /**
+     * Compartir informacion del horario del tram
+     */
+    public void shareHorario(String datosHoras, String datosInfo) {
+
+        // String devuelto
+
+        String mensaje = context.getString(R.string.share_0) + " " + context.getString(R.string.infolinea_horarios) + " " + context.getString(R.string.rss_tram) + ", " + context.getString(R.string.share_0b) + " " + context.paradaActual + ", " + datosInfo + ": " + datosHoras;
 
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);

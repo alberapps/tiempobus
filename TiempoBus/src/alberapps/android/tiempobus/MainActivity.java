@@ -1312,7 +1312,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
                 // Create a Uri from an intent string. Use the result to create an Intent.
-                Uri gmmIntentUri = Uri.parse("geo:" + place.getLatLng().latitude + "," + place.getLatLng().longitude+"?z=20&q=" + Uri.encode(place.getName().toString() + ", " + place.getAddress()));
+                Uri gmmIntentUri = Uri.parse("geo:" + place.getLatLng().latitude + "," + place.getLatLng().longitude + "?z=20&q=" + Uri.encode(place.getName().toString() + ", " + place.getAddress()));
 
                 // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -1359,6 +1359,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             swipeRefresh.setRefreshing(true);
 
+            FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
+            imgCancelar.setVisibility(View.VISIBLE);
+
+            imgCancelar.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    detenerTareaTiempos();
+                    errorTiempos();
+                    showProgressBar(false);
+                }
+            });
+
 
         } else {
 
@@ -1367,8 +1378,36 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 swipeRefresh.setRefreshing(false);
             }
 
+            FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
+            imgCancelar.setVisibility(View.INVISIBLE);
+
 
         }
+    }
+
+
+    //Error al recuperar los tiempos. Mostrar y recuperar ultimos datos si hay
+    public void errorTiempos() {
+
+        buses = new ArrayList<>();
+        BusLlegada b1 = new BusLlegada();
+        b1.setErrorServicio(true);
+        buses.add(b1);
+
+        if (tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
+            int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
+
+            for (int i = 0; i < n; i++) {
+
+                if (!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
+                    buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
+                }
+            }
+
+        }
+
+        handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
+
     }
 
 
@@ -1407,24 +1446,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             // Error al recuperar datos
                             showProgressBar(false);
 
-                            buses = new ArrayList<>();
-                            BusLlegada b1 = new BusLlegada();
-                            b1.setErrorServicio(true);
-                            buses.add(b1);
+                            errorTiempos();
 
-                            if (tiemposAdapter != null && tiemposAdapter.getBuses(Integer.toString(paradaActual)) != null) {
-                                int n = tiemposAdapter.getBuses(Integer.toString(paradaActual)).size();
-
-                                for (int i = 0; i < n; i++) {
-
-                                    if (!tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i).isErrorServicio()) {
-                                        buses.add(tiemposAdapter.getBuses(Integer.toString(paradaActual)).get(i));
-                                    }
-                                }
-
-                            }
-
-                            handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
                         }
 
                         if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
@@ -1566,7 +1589,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             });
 
 
-                            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                             FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
 
                             imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
