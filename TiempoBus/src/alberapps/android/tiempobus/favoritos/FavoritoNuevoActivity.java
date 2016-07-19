@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.favoritos;
 
@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -119,7 +120,7 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
         if (extras != null) {
 
             //Favorito tipo horario
-            if(extras.containsKey("HTRAM")){
+            if (extras.containsKey("HTRAM")) {
 
                 numParada = "0";
 
@@ -129,7 +130,7 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
                 setTitle(getString(R.string.menu_save));
 
-            }else {
+            } else {
 
                 numParada = "" + extras.getInt("POSTE");
 
@@ -179,7 +180,7 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
 
 		/*
-		 * Asignamos el comprotamiento de los botones
+         * Asignamos el comprotamiento de los botones
 		 */
         // Button guiCancel = (Button) findViewById(R.id.boton_cancel);
         // guiCancel.setOnClickListener(guiCancelListener);
@@ -197,9 +198,9 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
             //Para horarios tram
             String desc = "";
-            if(datosHorario != null && !datosHorario.equals("")){
+            if (datosHorario != null && !datosHorario.equals("")) {
                 desc = guiDescripcion.getText().toString() + "::" + datosHorario;
-            }else{
+            } else {
                 desc = guiDescripcion.getText().toString();
             }
 
@@ -213,7 +214,6 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
             finish();
         }
     };
-
 
 
     /**
@@ -257,11 +257,14 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
      */
     private Parada cargarDescripcionBD() {
 
+        Cursor cursor = null;
+
         try {
 
             String parametros[] = {numParada};
 
-            Cursor cursor = managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            //Cursor cursor = managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            cursor = ContentResolverCompat.query(getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
 
             if (cursor != null) {
                 List<Parada> listaParadas = new ArrayList<>();
@@ -292,6 +295,10 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
 
     }

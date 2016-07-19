@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -38,13 +39,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 
@@ -66,7 +70,7 @@ public class HistorialActivity extends AppCompatActivity {
 
     private ListView favoritosView;
 
-    SimpleCursorAdapter adapter;
+    HistorialAdapter adapter;
 
     SharedPreferences preferencias = null;
 
@@ -126,20 +130,43 @@ public class HistorialActivity extends AppCompatActivity {
          * Query "managed": la actividad se encargará de cerrar y volver a
 		 * cargar el cursor cuando sea necesario
 		 */
-        Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+        //Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, null, null, orden, null);
 
 		/*
-		 * Mapeamos las querys SQL a los campos de las vistas
+         * Mapeamos las querys SQL a los campos de las vistas
 		 */
-        String[] camposDb = new String[]{HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION};
-        int[] camposView = new int[]{R.id.numParadaFav, R.id.titulo, R.id.descripcion};
+        //String[] camposDb = new String[]{HistorialDB.Historial.PARADA, HistorialDB.Historial.TITULO, HistorialDB.Historial.DESCRIPCION};
+        //int[] camposView = new int[]{R.id.numParadaFav, R.id.titulo, R.id.descripcion};
 
-        adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
+        //adapter = new SimpleCursorAdapter(this, R.layout.historial_item, cursor, camposDb, camposView);
+        List<Favorito> listaHistorial = new ArrayList<>();
+        Favorito historial = null;
 
+        if (cursor != null) {
 
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+                historial = new Favorito();
+
+                historial.setId(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial._ID)));
+                historial.setNumParada(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.PARADA)));
+                historial.setTitulo(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.TITULO)));
+                historial.setDescripcion(cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.DESCRIPCION)));
+                listaHistorial.add(historial);
+
+            }
+
+            cursor.close();
+
+        }
+
+        // Nuevo adapter para favoritos
+        adapter = new HistorialAdapter(this, R.layout.historial_item);
+        adapter.addAll(listaHistorial);
 
 		/*
-		 * Preparamos las acciones a realizar cuando pulsen un favorito
+         * Preparamos las acciones a realizar cuando pulsen un favorito
 		 */
 
         favoritosView = (ListView) findViewById(android.R.id.list);
@@ -177,12 +204,15 @@ public class HistorialActivity extends AppCompatActivity {
          *            The row id of the item that was clicked
          */
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-            Cursor c = (Cursor) l.getItemAtPosition(position);
-            int poste = c.getInt(c.getColumnIndex(HistorialDB.Historial.PARADA));
+
+            Favorito fav = (Favorito) l.getItemAtPosition(position);
+
+            //Cursor c = (Cursor) l.getItemAtPosition(position);
+            //int poste = c.getInt(c.getColumnIndex(HistorialDB.Historial.PARADA));
 
             Intent intent = new Intent();
             Bundle b = new Bundle();
-            b.putInt("POSTE", poste);
+            b.putInt("POSTE", Integer.parseInt(fav.getNumParada()));
             intent.putExtras(b);
             setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
             finish();
@@ -209,12 +239,18 @@ public class HistorialActivity extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
+        Favorito historial = adapter.getItem((int) info.id);
+        long id = Long.parseLong(historial.getId());
+
+
         switch (item.getItemId()) {
 
             case MENU_BORRAR:
-                Uri miUri = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, info.id);
+                Uri miUri = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, id);
 
                 getContentResolver().delete(miUri, null, null);
+
+                consultarDatos(orden);
 
                 Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 
@@ -259,6 +295,8 @@ public class HistorialActivity extends AppCompatActivity {
             case R.id.menu_hist_borrar:
 
                 getContentResolver().delete(HistorialDB.Historial.CONTENT_URI, null, null);
+
+                consultarDatos(orden);
 
                 Toast.makeText(this, getResources().getText(R.string.hist_info_borrar), Toast.LENGTH_SHORT).show();
 

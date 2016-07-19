@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContentResolverCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,7 +216,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void recargarHorarios(){
+    public void recargarHorarios() {
 
         //cargarHorarios(destinoActual);
 
@@ -224,12 +225,12 @@ public class PrincipalHorarioTramFragment extends Fragment {
     }
 
 
-    private DatosConsultaHorariosTram getDatosConsulta(int destino){
+    private DatosConsultaHorariosTram getDatosConsulta(int destino) {
 
         Date hoy = new Date();
 
         //Codigo teniendo en cuenta si es de la L2
-        int codEstacionOrigen = UtilidadesTRAM.getParadaParaHorarios(((MainActivity)getActivity()).paradaActual);
+        int codEstacionOrigen = UtilidadesTRAM.getParadaParaHorarios(((MainActivity) getActivity()).paradaActual);
 
         DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
         datosConsulta.setCodEstacionOrigen(codEstacionOrigen);
@@ -280,7 +281,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         HorarioItem horas = null;
 
-        if(getView() != null) {
+        if (getView() != null) {
             TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
             TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
 
@@ -372,10 +373,10 @@ public class PrincipalHorarioTramFragment extends Fragment {
         spinnerEstDest.setAdapter(adapterEstDest);
 
         //Cargar si esta disponible, el ultimo destino seleccionado para esta parada
-        String paradaHist = cargarHorarioParadaHistorial(((MainActivity)getActivity()).paradaActual);
+        String paradaHist = cargarHorarioParadaHistorial(((MainActivity) getActivity()).paradaActual);
         int destino = UtilidadesTRAM.HORARIOS_COD_ESTACION[spinnerEstDest.getSelectedItemPosition()];
 
-        if(paradaHist != null && !paradaHist.equals("")){
+        if (paradaHist != null && !paradaHist.equals("")) {
             destino = Integer.parseInt(paradaHist);
 
             // Seleccion inicial
@@ -387,7 +388,6 @@ public class PrincipalHorarioTramFragment extends Fragment {
         }
 
         //cargarHorarios(destino);
-
 
 
         // Seleccion
@@ -415,9 +415,6 @@ public class PrincipalHorarioTramFragment extends Fragment {
         });
 
 
-
-
-
     }
 
 
@@ -429,7 +426,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
      */
     public String cargarHorarioParadaHistorial(Integer parada) {
 
-        if(parada == null){
+        if (parada == null) {
             return null;
         }
 
@@ -437,13 +434,17 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
             String parametros[] = {Integer.toString(parada)};
 
-            Cursor cursor = getActivity().managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
+            //Cursor cursor = getActivity().managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
+            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null, null);
 
             if (cursor != null) {
 
                 cursor.moveToFirst();
+                String value = cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.HORARIO_SELECCIONADO));
 
-                return cursor.getString(cursor.getColumnIndex(HistorialDB.Historial.HORARIO_SELECCIONADO));
+                cursor.close();
+
+                return value;
 
             } else {
                 return null;
@@ -467,7 +468,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         View contenedor_principal = getActivity().findViewById(R.id.contenedor_fragment_horario_tram);
 
-        if(contenedor_principal != null) {
+        if (contenedor_principal != null) {
             UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
         }
 

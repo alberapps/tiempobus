@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -142,20 +143,31 @@ public class FavoritosActivity extends AppCompatActivity {
          * Query "managed": la actividad se encargará de cerrar y volver a
 		 * cargar el cursor cuando sea necesario
 		 */
-        Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+        //Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
+
+        //Sustituir managedquery deprecated
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, null, null, orden, null);
 
         List<Favorito> listaFavoritos = new ArrayList<>();
 
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+        if(cursor != null) {
 
-            Favorito favorito = new Favorito();
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-            favorito.setId(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos._ID)));
-            favorito.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
-            favorito.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
-            favorito.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
+                Favorito favorito = new Favorito();
 
-            listaFavoritos.add(favorito);
+                favorito.setId(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos._ID)));
+                favorito.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
+                favorito.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
+                favorito.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
+
+                listaFavoritos.add(favorito);
+
+            }
+
+
+            cursor.close();
+
 
         }
 

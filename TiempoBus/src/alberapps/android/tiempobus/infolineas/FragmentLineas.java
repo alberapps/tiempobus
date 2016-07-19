@@ -29,6 +29,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContentResolverCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.util.Linkify;
@@ -730,7 +731,8 @@ public class FragmentLineas extends Fragment {
         Cursor cursorParadas = null;
 
         try {
-            cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+            //cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
         } catch (Exception e) {
 
             cursorParadas = null;
@@ -787,11 +789,14 @@ public class FragmentLineas extends Fragment {
 
                 // Recorrido
 
-                Cursor cursorRecorrido = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+                //Cursor cursorRecorrido = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
+                Cursor cursorRecorrido = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
                 if (cursorRecorrido != null) {
                     cursorRecorrido.moveToFirst();
 
                     datosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+                    cursorRecorrido.close();
 
                 }
 
@@ -807,6 +812,10 @@ public class FragmentLineas extends Fragment {
             } else {
                 Toast toast = Toast.makeText(getActivity(), getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);
                 toast.show();
+            }
+
+            if(cursorParadas != null){
+                cursorParadas.close();
             }
 
         } else {
@@ -832,7 +841,8 @@ public class FragmentLineas extends Fragment {
         Cursor cursorParadas = null;
 
         try {
-            cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+            //cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
+            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
         } catch (Exception e) {
 
             cursorParadas = null;
@@ -874,6 +884,8 @@ public class FragmentLineas extends Fragment {
 
             datosInfoLinea.add(datoIda);
             datosInfoLinea.add(datoVuelta);
+
+            cursorParadas.close();
 
         } else {
             Toast toast = Toast.makeText(getActivity(), getString(R.string.error_datos_offline), Toast.LENGTH_SHORT);

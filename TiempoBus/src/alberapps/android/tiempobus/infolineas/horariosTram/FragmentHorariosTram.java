@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContentResolverCompat;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -822,7 +823,8 @@ public class FragmentHorariosTram extends Fragment {
         try {
 
 
-            Cursor cursor = actividad.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            //Cursor cursor = actividad.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
 
             if (cursor != null) {
 
@@ -836,6 +838,8 @@ public class FragmentHorariosTram extends Fragment {
                     favoritosList.add(favorito);
 
                 }
+
+                cursor.close();
 
             }
 

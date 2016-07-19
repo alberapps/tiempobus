@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -114,7 +115,8 @@ public class ParadasCercanas {
         Cursor cursor = null;
 
         try {
-            cursor = context.managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
+            //cursor = context.managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
+            cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null, null);
 
         } catch (Exception e) {
 
@@ -172,6 +174,8 @@ public class ParadasCercanas {
                 listaPuntos.add(point);
 
             }
+
+            cursor.close();
 
         } else {
 

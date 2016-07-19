@@ -31,6 +31,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -156,7 +157,8 @@ public class GestionarTarjetaInfo {
 
         try {
 
-            Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
 
             if (cursor == null) {
 
@@ -206,7 +208,7 @@ public class GestionarTarjetaInfo {
                 int latIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LATITUD);
                 int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
 
-                //if (!tablet) {
+
 
                 TextView parada = (TextView) v.findViewById(R.id.parada);
                 TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
@@ -220,8 +222,6 @@ public class GestionarTarjetaInfo {
                 parada.setText(cursor.getString(paradaIndex));
 
                 localizacion.setText(cursor.getString(direccionIndex));
-
-                //datosParada.setText("T: ".concat(cursor.getString(conexionesIndex)));
 
                 String observa = observaciones.toString();
 
@@ -249,7 +249,7 @@ public class GestionarTarjetaInfo {
                 InfoLineaParadasAdapter.mostrarLineasParada(context, v, conexiones);
 
 
-                //}
+
 
                 final String lat = cursor.getString(latIndex);
                 final String lon = cursor.getString(lonIndex);
@@ -424,6 +424,8 @@ public class GestionarTarjetaInfo {
                     context.gestionarTarjetaInfo.cargarInfoWikipedia(lat, lon, v);
                 }
 
+
+                cursor.close();
 
             }
 

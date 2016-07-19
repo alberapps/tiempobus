@@ -31,6 +31,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -118,7 +119,8 @@ public class DatosPantallaPrincipal {
 
             String parametros[] = {Integer.toString(paradaActual)};
 
-            Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
 
             if (cursor != null) {
                 List<Parada> listaParadas = new ArrayList<>();
@@ -139,6 +141,8 @@ public class DatosPantallaPrincipal {
 
                     listaParadas.add(par);
                 }
+
+                cursor.close();
 
                 if (listaParadas.get(0).getDireccion() != null) {
                     return listaParadas.get(0).getDireccion();
@@ -191,13 +195,17 @@ public class DatosPantallaPrincipal {
         try {
             HashMap<String, String> datosFav = new HashMap<>();
 
-            Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            //Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
+
 
             if (cursor != null) {
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                     datosFav.put(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)), cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
                 }
+
+                cursor.close();
 
             }
 
@@ -228,7 +236,8 @@ public class DatosPantallaPrincipal {
             // Consultar datos
             String parametros[] = {Integer.toString(paradaActual)};
 
-            Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
 
             List<Parada> listaParadas = null;
 
@@ -251,6 +260,8 @@ public class DatosPantallaPrincipal {
 
                     listaParadas.add(par);
                 }
+
+                cursor.close();
 
             }
 
@@ -327,7 +338,8 @@ public class DatosPantallaPrincipal {
 
             String parametros[] = {parada};
 
-            Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
+            //Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null, null);
 
             if (cursor != null) {
 
@@ -335,7 +347,11 @@ public class DatosPantallaPrincipal {
 
                 Log.d("HISTORIAL", "historial: " + cursor.getInt(cursor.getColumnIndex(HistorialDB.Historial._ID)));
 
-                return cursor.getInt(cursor.getColumnIndex(HistorialDB.Historial._ID));
+                Integer id = cursor.getInt(cursor.getColumnIndex(HistorialDB.Historial._ID));
+
+                cursor.close();
+
+                return id;
 
             } else {
                 return null;
@@ -954,7 +970,8 @@ public class DatosPantallaPrincipal {
         try {
 
 
-            Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER);
+            //Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER, null);
 
             if (cursor != null) {
 
@@ -968,6 +985,8 @@ public class DatosPantallaPrincipal {
                     anteriorHisList.add(anteriorHis);
 
                 }
+
+                cursor.close();
 
             }
 

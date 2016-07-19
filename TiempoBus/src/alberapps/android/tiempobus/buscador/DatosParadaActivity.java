@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -82,7 +83,8 @@ public class DatosParadaActivity extends AppCompatActivity {
 
 
         Uri uri = getIntent().getData();
-        Cursor cursor = managedQuery(uri, null, null, null, null);
+        //Cursor cursor = managedQuery(uri, null, null, null, null);
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), uri, null, null, null, null, null);
 
         if (cursor == null) {
             finish();
@@ -124,6 +126,8 @@ public class DatosParadaActivity extends AppCompatActivity {
 
             assert observaciones != null;
             observaciones.setText(cursor.getString(observacionesIndex));
+
+            cursor.close();
         }
 
         // boton parada

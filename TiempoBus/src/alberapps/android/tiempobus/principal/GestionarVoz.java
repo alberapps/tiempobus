@@ -1,24 +1,23 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.principal;
 
-import android.support.v7.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +26,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.speech.RecognizerIntent;
+import android.support.v4.content.ContentResolverCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -298,13 +299,16 @@ public class GestionarVoz {
         try {
             HashMap<String, String> datosFav = new HashMap<>();
 
-            Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            //Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
 
             if (cursor != null) {
 
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
                     datosFav.put(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)), cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
                 }
+
+                cursor.close();
 
             }
 
