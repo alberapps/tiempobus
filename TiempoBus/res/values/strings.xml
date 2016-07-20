@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">3.9.1.1</string>
+    <string name="app_version" translatable="false">3.9.2</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2016)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -180,7 +180,7 @@
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion" translatable="false">-</string>
-    <string name="url_subus" translatable="false">alicante.subus.es</string>
+    <string name="url_subus" translatable="false">alicante.vectalia.es</string>
     <string name="hora_inicial" translatable="false">0:00</string>
 
     <string name="alarma_auto_aviso">* Con esta opción, el tiempo se actualiza automática cada %s segundos, para ajustarse a los cambios.</string>
@@ -442,7 +442,7 @@
     <string name="mensaje_borrar_pregunta">¿Borrar el dato?</string>
 
     <string name="tlf_tram" translatable="false">TRAM: 900 720 472</string>
-    <string name="tlf_subus" translatable="false">T.A.M: subus.es</string>
+    <string name="tlf_subus" translatable="false">T.A.M: alicante.vectalia.es</string>
 
     <string name="error_twitter">No se han podido recuperar datos de Twitter</string>
 

@@ -123,7 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="alicante.subus.es"
+                        android:text="@string/url_subus"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
                         android:textStyle="bold" />
