@@ -19,6 +19,8 @@
  */
 package alberapps.android.tiempobus;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -80,7 +82,6 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -133,8 +134,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public static final int CARGAR_IMAGEN = 2000;
 
-    protected static final int DIALOG_CARGANDO = 100;
-
     protected static final int MSG_CLOSE_CARGANDO = 200;
     protected static final int MSG_ERROR_TIEMPOS = 201;
     public static final int MSG_FRECUENCIAS_ACTUALIZADAS = 202;
@@ -146,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextView guiHora;
     private TextView datosParada;
 
-    Calendar ahora = new GregorianCalendar();
     public int paradaActual = 4450;
     public final ParadaActualHandler handler = new ParadaActualHandler(this);
 
@@ -167,17 +165,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public boolean lecturaAlternativa = false;
 
     public DatosPantallaPrincipal datosPantallaPrincipal;
-
     public GestionarFondo gestionarFondo;
-
     public GestionarAlarmas gestionarAlarmas;
-
     GestionarWidget gestionarWidget;
-
     GestionarVoz gestionarVoz;
-
     public GestionarTarjetaInfo gestionarTarjetaInfo;
-
     public ListView tiemposView;
 
     // drawer
@@ -187,8 +179,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private String[] mDrawerTitles;
-    private String[] mDrawerIcons;
 
     AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
     public AsyncTask<Object, Void, List<Noticias>> nuevasNoticiasTask;
@@ -199,8 +189,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public View avisoTarjetaInfo = null;
 
     SwipeRefreshLayout swipeRefresh = null;
-
-    MenuItem refresh = null;
 
     public static final int REQUEST_CODE_STORAGE = 4;
 
@@ -265,6 +253,32 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        // Verificar si hay parada por defecto
+        /*if (preferencias.contains("parada_inicio")) {
+            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
+        }*/
+
+        /*Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            paradaActual = extras.getInt("POSTE");
+        }
+
+        Log.d("PRINCIPAL", "inicia: " + buses.size());
+
+        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+        // Poner en campo de poste
+        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        txtPoste.setText(Integer.toString(paradaActual));
+        */
 
     }
 
@@ -555,41 +569,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
-	/*
-     * @Override public View onCreateView(String name, Context context,
-	 * AttributeSet attrs) { // TODO Auto-generated method stub
-	 * 
-	 * final String path = "principal";//getString(R.string.pr);
-	 * 
-	 * Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(
-	 * TrackerName.GLOBAL_TRACKER); t.setScreenName(path); t.send(new
-	 * HitBuilders.AppViewBuilder().build());
-	 * 
-	 * 
-	 * return super.onCreateView(name, context, attrs); }
-	 */
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-
-        // Verificar si hay parada por defecto
-        if (preferencias.contains("parada_inicio")) {
-            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
-        }
-
-        Log.d("PRINCIPAL", "inicia: " + buses.size());
-
-        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-
-        // Poner en campo de poste
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
-        txtPoste.setText(Integer.toString(paradaActual));
-
-
-    }
 
     @Override
     protected void onStop() {
@@ -1139,7 +1121,22 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     if (data.getExtras() != null) {
                         Bundle b = data.getExtras();
-                        if (b.containsKey("POSTE")) {
+
+                        if (b.containsKey("MODO_RED_INFO")) {
+                            Intent i = new Intent(this, InfoLineasTabsPager.class);
+                            i.putExtra("MODO_RED", b.getInt("MODO_RED_INFO"));
+                            startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+                            break;
+
+                        }
+                        else if (b.containsKey("MODO_RED_MAPA")) {
+                            Intent i = new Intent(this, MapasActivity.class);
+                            i.putExtra("MODO_RED", b.getInt("MODO_RED_MAPA"));
+                            startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+                            break;
+
+                        }
+                        else if (b.containsKey("POSTE")) {
 
                             if (b.getInt("POSTE") == 0) {
 
@@ -1362,6 +1359,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
             imgCancelar.setVisibility(View.VISIBLE);
 
+            //animar
+            imgCancelar.setAlpha(0.0f);
+            imgCancelar.animate().alpha(1.0f);
+
             imgCancelar.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     detenerTareaTiempos();
@@ -1378,8 +1379,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 swipeRefresh.setRefreshing(false);
             }
 
-            FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
-            imgCancelar.setVisibility(View.INVISIBLE);
+            final FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
+            imgCancelar.animate().alpha(0.0f).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    imgCancelar.setVisibility(View.INVISIBLE);
+                }
+            });
+
 
 
         }

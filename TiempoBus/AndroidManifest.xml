@@ -140,6 +140,11 @@
             android:permission="android.permission.VIBRATE"
             android:process=":remote" />
 
+        <receiver
+            android:name=".alarma.AlarmaDiariaReceiver"
+            android:permission="android.permission.VIBRATE"
+            android:process=":remote" />
+
         <provider
             android:name=".data.FavoritosProvider"
             android:authorities="alberapps.android.tiempobus"

@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadDatosLineasAsyncTask;
@@ -195,7 +196,7 @@ public class SelectorLinea {
                     // cambiar el modo de la actividad
                     if (arg2 == 0) {
 
-                        Intent intent2 = context.getIntent();
+                        /*Intent intent2 = context.getIntent();
                         intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
 
                         if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
@@ -212,11 +213,18 @@ public class SelectorLinea {
                         }
 
                         context.finish();
-                        context.startActivity(intent2);
+                        context.startActivity(intent2);*/
+
+                        Intent intent2 = new Intent();
+                        intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+
+                        context.setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
+                        context.finish();
+
 
                     } else if (arg2 == 1) {
 
-                        Intent intent2 = context.getIntent();
+                       /* Intent intent2 = context.getIntent();
                         intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
 
                         if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
@@ -234,10 +242,18 @@ public class SelectorLinea {
 
                         context.finish();
                         context.startActivity(intent2);
+                        */
+
+                        Intent intent2 = new Intent();
+                        intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+
+                        context.setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
+                        context.finish();
+
 
                     } else if (arg2 == 2) {
 
-                        Intent intent2 = context.getIntent();
+                        /*Intent intent2 = context.getIntent();
                         intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
 
                         if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
@@ -254,7 +270,13 @@ public class SelectorLinea {
                         }
 
                         context.finish();
-                        context.startActivity(intent2);
+                        context.startActivity(intent2);*/
+
+                        Intent intent2 = new Intent();
+                        intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+
+                        context.setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
+                        context.finish();
 
                     }
 
@@ -327,7 +349,6 @@ public class SelectorLinea {
         public void busesLoaded(ArrayList<BusLinea> buses) {
             if (buses != null) {
                 context.lineasBus = buses;
-
 
 
                 for (int i = 0; i < buses.size(); i++) {

@@ -142,6 +142,14 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 actividad.shareFavorito(favorito);
 
+
+                //AlarmaDiaria alarmaDiaria = new AlarmaDiaria(getContext());
+
+                //alarmaDiaria.establecerAlarma();
+
+
+                //AlarmaDiariaReceiver.cargarTiempos(getContext());
+
             }
 
         });

@@ -44,6 +44,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
+import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
@@ -105,12 +106,73 @@ public class BuscadorLineas extends AppCompatActivity {
             // word
             Intent wordIntent = new Intent(this, DatosParadaActivity.class);
             wordIntent.setData(intent.getData());
-            startActivity(wordIntent);
+            //startActivity(wordIntent);
+            irInformacion(wordIntent);
+
         } else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // handles a search query
             String query = intent.getStringExtra(SearchManager.QUERY);
             showResults(query);
         }
+    }
+
+    public void irInformacion(Intent wordIntent) {
+
+        startActivityForResult(wordIntent, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == MainActivity.SUB_ACTIVITY_RESULT_OK) {
+            switch (requestCode) {
+                case MainActivity.SUB_ACTIVITY_REQUEST_PARADA:
+
+                    if (data.getExtras() != null) {
+                        Bundle b = data.getExtras();
+                        if (b.containsKey("POSTE")) {
+
+                            cargarTiempos(b.getInt("POSTE"));
+
+                        }
+                    }
+            }
+        }
+    }
+
+    public void cargarTiempos(int codigo) {
+
+        //Devolver nueva parada
+       Intent intent = new Intent();
+        Bundle b = new Bundle();
+        b.putInt("POSTE", codigo);
+        intent.putExtras(b);
+
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt("parada_search", codigo);
+        editor.commit();
+
+        setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+        finish();
+
+        /*Intent intent = new Intent(this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("poste", codigo);
+        intent.putExtras(b);
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt("parada_inicio", codigo);
+        editor.commit();
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        startActivity(intent);*/
+
+
     }
 
     /**
@@ -159,7 +221,8 @@ public class BuscadorLineas extends AppCompatActivity {
                         Intent wordIntent = new Intent(getApplicationContext(), DatosParadaActivity.class);
                         Uri data = Uri.withAppendedPath(BuscadorLineasProvider.CONTENT_URI, String.valueOf(id));
                         wordIntent.setData(data);
-                        startActivity(wordIntent);
+                        //startActivity(wordIntent);
+                        irInformacion(wordIntent);
                     }
                 });
             }
@@ -167,11 +230,7 @@ public class BuscadorLineas extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(this, getResources().getText(R.string.error_generico_1), Toast.LENGTH_SHORT).show();
         }
-        /*finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }*/
+
     }
 
     @Override

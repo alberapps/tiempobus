@@ -78,7 +78,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -684,8 +683,8 @@ public class MapasActivity extends AppCompatActivity
     @Override
     public void finish() {
 
-        Intent intent = new Intent();
-        setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+        //Intent intent = new Intent();
+        //setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
         super.finish();
 
     }

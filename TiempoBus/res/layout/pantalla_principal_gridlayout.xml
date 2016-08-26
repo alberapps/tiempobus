@@ -59,7 +59,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="false"
             android:layout_centerHorizontal="true"
-            android:contentDescription="Guardar favorito"
+            android:contentDescription="Cancelar carga"
             android:src="@drawable/ic_cancel_white_24dp"
             app:backgroundTint="@color/tram_l1"
             app:fabSize="normal"

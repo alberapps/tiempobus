@@ -18,7 +18,6 @@
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.TypedValue;
@@ -82,7 +81,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         descParada = (TextView) v.findViewById(R.id.desc_parada);
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
-        if(datos != null) {
+        if (datos != null) {
             datos.setText("");
         }
 
@@ -93,7 +92,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
             descParada.setText(bus.getTitle());
             //datos.setText("T: ".concat(bus.getLineas()));
 
-            if(datos != null) {
+            if (datos != null) {
                 if (bus.getObservaciones() != null && !bus.getObservaciones().trim().equals("")) {
 
 
@@ -110,18 +109,6 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
         }
 
-        TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
-
-        // Link informacion
-        informacionText.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View view) {
-
-                ((InfoLineasTabsPager) contexto).irInformacion(bus);
-
-            }
-
-        });
 
         TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
 
@@ -159,18 +146,17 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
         }
 
+        TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
 
         // Link informacion
         informacionText.setOnClickListener(new OnClickListener() {
 
             public void onClick(View view) {
 
-                Intent i = new Intent(contexto, InfoLineasDatosParadaActivity.class);
-                i.putExtra("DATOS_PARADA", bus);
-                i.putExtra("DATOS_LINEA", ((InfoLineasTabsPager) contexto).linea);
-                contexto.startActivity(i);
+                ((InfoLineasTabsPager) contexto).irInformacion(bus);
 
             }
+
         });
 
 

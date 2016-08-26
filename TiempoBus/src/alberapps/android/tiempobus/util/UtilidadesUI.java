@@ -1,25 +1,24 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.util;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -31,6 +30,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 
@@ -114,15 +114,13 @@ public class UtilidadesUI {
      * @param contenedorPrincipal
      * @param actividad
      */
-    public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, Activity actividad) {
+    public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, FragmentActivity actividad) {
 
         try {
 
             if (!fondoGaleria.equals("")) {
 
                 Drawable dr = null;
-
-                // Bitmap bitmapCargado = BitmapFactory.decodeFile(fondo_galeria);
 
                 DisplayMetrics displaymetrics = new DisplayMetrics();
                 actividad.getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -131,25 +129,24 @@ public class UtilidadesUI {
 
                 Bitmap bitmapCargado = UtilidadesUI.decodeBitmapFromFile(fondoGaleria, width, height);
 
-                // Bitmap bitmapRecortado = recortarBitmap(bitmap);
                 if (bitmapCargado != null)
-                    dr = new BitmapDrawable(bitmapCargado);
+                    dr = new BitmapDrawable(actividad.getResources(), bitmapCargado);
 
                 if (dr != null) {
-                    contenedorPrincipal.setBackgroundDrawable(dr);
+                    contenedorPrincipal.setBackground(dr);
                 } else {
-                    contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
+                    contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_100);
                 }
 
             } else {
 
-                contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
+                contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_100);
 
             }
 
         } catch (Exception e) {
 
-            contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_50);
+            contenedorPrincipal.setBackgroundResource(R.color.mi_material_grey_100);
             e.printStackTrace();
         }
 

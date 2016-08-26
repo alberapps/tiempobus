@@ -135,11 +135,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerTram() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway);
-
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_tram1);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE);
 
         return marker;
 
@@ -147,10 +143,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerTramPosicion() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.tramway_2);
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_tram_black1);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
         return marker;
 
@@ -158,11 +151,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerBusAzul() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_blue);
-
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_blue1);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE);
 
         return marker;
 
@@ -170,11 +159,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerBusVerde() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_green);
-
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_green1);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 
         return marker;
 
@@ -182,11 +167,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerBusMedio() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.busstop_medio);
-
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_green2);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE);
 
         return marker;
 
@@ -194,11 +175,7 @@ public class GestionarLineas {
 
     public static BitmapDescriptor markerBusPosicion() {
 
-        //BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.bus);
-
         BitmapDescriptor marker = BitmapDescriptorFactory.fromResource(R.drawable.ic_bus_black1);
-
-        //BitmapDescriptor marker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED);
 
         return marker;
 

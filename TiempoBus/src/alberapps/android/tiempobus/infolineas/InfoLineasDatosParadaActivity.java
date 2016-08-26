@@ -168,7 +168,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
      */
     private void cargarTiempos(int codigo) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        /*Intent intent = new Intent(this, MainActivity.class);
         Bundle b = new Bundle();
         b.putInt("poste", codigo);
         intent.putExtras(b);
@@ -179,7 +179,16 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        startActivity(intent);
+        startActivity(intent);*/
+
+        //Devolver nueva parada
+        Intent intent = new Intent();
+        Bundle b = new Bundle();
+        b.putInt("POSTE", codigo);
+        intent.putExtras(b);
+
+        setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+        finish();
 
     }
 
@@ -203,9 +212,30 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
                 i.putExtra("LINEA_MAPA_PARADA", paradaSel);
 
 
-                startActivity(i);
+                //startActivity(i);
+                startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
             }
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == MainActivity.SUB_ACTIVITY_RESULT_OK) {
+            switch (requestCode) {
+                case MainActivity.SUB_ACTIVITY_REQUEST_PARADA:
+
+                    if (data.getExtras() != null) {
+                        Bundle b = data.getExtras();
+                        if (b.containsKey("POSTE")) {
+
+                            cargarTiempos(b.getInt("POSTE"));
+
+                        }
+                    }
+            }
         }
     }
 
@@ -247,7 +277,6 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -257,7 +286,6 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            //EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

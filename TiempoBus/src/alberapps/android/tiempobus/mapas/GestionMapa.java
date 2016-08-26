@@ -155,7 +155,7 @@ public class GestionMapa {
 
             }
 
-            Intent intent = new Intent(context, MainActivity.class);
+            /*Intent intent = new Intent(context, MainActivity.class);
             Bundle b = new Bundle();
             b.putInt("poste", codigo);
             intent.putExtras(b);
@@ -167,9 +167,19 @@ public class GestionMapa {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             context.startActivity(intent);
+            */
+
+            //Devolver nueva parada
+            Intent intent = new Intent();
+            Bundle b = new Bundle();
+            b.putInt("POSTE", codigo);
+            intent.putExtras(b);
+
+            context.setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+            context.finish();
 
         }
-        context.finish();
+        //context.finish();
 
     }
 

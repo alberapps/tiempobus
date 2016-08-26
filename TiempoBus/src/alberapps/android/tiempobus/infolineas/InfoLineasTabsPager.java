@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by The Android Open Source Project
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p/>
+ * based on code by The Android Open Source Project
+ * <p/>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p/>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p/>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
@@ -169,7 +169,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
         //Al entrar a horarios directamente
         if (this.getIntent().getExtras() != null && this.getIntent().getExtras().containsKey("HORARIOS")) {
 
-            if((this.getIntent().getExtras().getString("HORARIOS")).equals("TRAM")) {
+            if ((this.getIntent().getExtras().getString("HORARIOS")).equals("TRAM")) {
 
                 modoRed = MODO_RED_TRAM_OFFLINE;
                 SharedPreferences.Editor editor = preferencias.edit();
@@ -217,7 +217,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
                 Log.d("infolinea", "eliminar panel vuelta");
 
-            }else{
+            } else {
 
                 FragmentManager fragmentManager = this.getSupportFragmentManager();
 
@@ -326,9 +326,9 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
     public void cargarTiempos(int codigo) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        /*Intent intent = new Intent(this, MainActivity.class);
         Bundle b = new Bundle();
-        b.putInt("poste", codigo);
+        b.putInt("POSTE", codigo);
         intent.putExtras(b);
 
         SharedPreferences.Editor editor = preferencias.edit();
@@ -337,7 +337,17 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        startActivity(intent);
+        startActivity(intent);*/
+
+
+        //Devolver nueva parada
+        Intent intent = new Intent();
+        Bundle b = new Bundle();
+        b.putInt("POSTE", codigo);
+        intent.putExtras(b);
+
+        setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+        finish();
 
     }
 
@@ -346,8 +356,31 @@ public class InfoLineasTabsPager extends AppCompatActivity {
         Intent i = new Intent(this, InfoLineasDatosParadaActivity.class);
         i.putExtra("DATOS_PARADA", datosParada);
         i.putExtra("DATOS_LINEA", linea);
-        startActivity(i);
 
+        startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+        //startActivity(i);
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == MainActivity.SUB_ACTIVITY_RESULT_OK) {
+            switch (requestCode) {
+                case MainActivity.SUB_ACTIVITY_REQUEST_PARADA:
+
+                    if (data.getExtras() != null) {
+                        Bundle b = data.getExtras();
+                        if (b.containsKey("POSTE")) {
+
+                            cargarTiempos(b.getInt("POSTE"));
+
+                        }
+                    }
+            }
+        }
     }
 
 
@@ -413,6 +446,18 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
         if (preferencias.getBoolean("analytics_on", true)) {
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
+        }
+
+        //Para el buscador
+        if (preferencias.contains("parada_search")) {
+            int paradaSearch = preferencias.getInt("parada_search", -1);
+
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.remove("parada_search");
+            editor.commit();
+
+            cargarTiempos(paradaSearch);
+
         }
 
     }

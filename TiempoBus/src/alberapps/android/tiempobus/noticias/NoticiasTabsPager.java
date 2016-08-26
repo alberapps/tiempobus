@@ -34,9 +34,6 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
@@ -62,8 +59,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -91,8 +86,6 @@ import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.noticias.tw.ProcesarTwitter;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.tam.BusLinea;
-import alberapps.java.tam.mapas.DatosMapa;
-import alberapps.java.tam.webservice.estructura.rutas.GetLineasResult;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.avisos.Aviso;
 import alberapps.java.tram.avisos.AvisosTram;
@@ -106,16 +99,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     public ViewPager mViewPager;
 
-
     BusLinea linea = null;
-
-    String sentidoIda = "";
-    String sentidoVuelta = "";
-
-    GetLineasResult lineasMapas = null;
-
-    DatosMapa datosIda = null;
-    DatosMapa datosVuelta = null;
 
     SharedPreferences preferencias = null;
 
@@ -195,9 +179,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        /*if (!UtilidadesUI.pantallaTabletHorizontal(this) && mTabHost != null) {
-            outState.putString("tab", mTabHost.getCurrentTabTag());
-        }*/
     }
 
     @Override
@@ -241,105 +222,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
         super.onDestroy();
     }
 
-    /**
-     * This is a helper class that implements the management of tabs and all
-     * details of connecting a ViewPager with associated TabHost. It relies on a
-     * trick. Normally a tab host has a simple API for supplying a View or
-     * Intent that each tab will show. This is not sufficient for switching
-     * between pages. So instead we make the content part of the tab host 0dp
-     * high (it is not shown) and the TabsAdapter supplies its own dummy view to
-     * show as the tab content. It listens to changes in tabs, and takes care of
-     * switch to the correct paged in the ViewPager whenever the selected tab
-     * changes.
-     */
-    public static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
-        private final Context mContext;
-        private final TabHost mTabHost;
-        private final ViewPager mViewPager;
-        private final ArrayList<TabInfo> mTabs = new ArrayList<>();
-
-        static final class TabInfo {
-            private final String tag;
-            private final Class<?> clss;
-            private final Bundle args;
-
-            TabInfo(String _tag, Class<?> _class, Bundle _args) {
-                tag = _tag;
-                clss = _class;
-                args = _args;
-            }
-        }
-
-        static class DummyTabFactory implements TabHost.TabContentFactory {
-            private final Context mContext;
-
-            public DummyTabFactory(Context context) {
-                mContext = context;
-            }
-
-            public View createTabContent(String tag) {
-                View v = new View(mContext);
-                v.setMinimumWidth(0);
-                v.setMinimumHeight(0);
-                return v;
-            }
-        }
-
-        public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
-            super(activity.getSupportFragmentManager());
-            mContext = activity;
-            mTabHost = tabHost;
-            mViewPager = pager;
-            mTabHost.setOnTabChangedListener(this);
-            mViewPager.setAdapter(this);
-            mViewPager.setOnPageChangeListener(this);
-        }
-
-        public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-            tabSpec.setContent(new DummyTabFactory(mContext));
-            String tag = tabSpec.getTag();
-
-            TabInfo info = new TabInfo(tag, clss, args);
-            mTabs.add(info);
-            mTabHost.addTab(tabSpec);
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return mTabs.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            TabInfo info = mTabs.get(position);
-            return Fragment.instantiate(mContext, info.clss.getName(), info.args);
-        }
-
-        public void onTabChanged(String tabId) {
-            int position = mTabHost.getCurrentTab();
-            mViewPager.setCurrentItem(position);
-        }
-
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        }
-
-        public void onPageSelected(int position) {
-            // Unfortunately when TabHost changes the current tab, it kindly
-            // also takes care of putting focus on it when not in touch mode.
-            // The jerk.
-            // This hack tries to prevent this from pulling focus out of our
-            // ViewPager.
-            TabWidget widget = mTabHost.getTabWidget();
-            int oldFocusability = widget.getDescendantFocusability();
-            widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-            mTabHost.setCurrentTab(position);
-            widget.setDescendantFocusability(oldFocusability);
-        }
-
-        public void onPageScrollStateChanged(int state) {
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -825,25 +707,12 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             if (listTwWiew != null) {
 
-                // listTwWiew.setDrawingCacheEnabled(false);
-
                 cargarHeaderTwitter();
 
                 twAdapter = new TwAdapter(this, R.layout.avisostw_item);
-
-
                 twAdapter.addAll(avisosRecuperados);
-
                 listTwWiew.setAdapter(twAdapter);
-
-                //View emptyView = findViewById(R.id.vacio_tw);
-                //listTwWiew.setEmptyView(emptyView);
-
                 twAdapter.notifyDataSetChanged();
-
-
-                // lineasView.setOnItemClickListener(twClickedHandler);
-
 
             }
 
@@ -1073,11 +942,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
             // Cargar layout para noticias tram tw
 
             LayoutInflater li2 = LayoutInflater.from(this);
-
             View vheader = li2.inflate(R.layout.noticias_tram_ultimas_item, null);
-
             TextView titulo = (TextView) vheader.findViewById(R.id.titulo_ultima_tram);
-
             titulo.setText(getString(R.string.tab_tw) + ": @TramdeAlicante");
 
             // Link de acceso a twitter
@@ -1098,11 +964,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
 
             TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
-
             StringBuffer textoHeader = new StringBuffer();
-
             textoHeader.append(getString(R.string.aviso_recarga));
-
             descripcion.setLinksClickable(true);
             descripcion.setAutoLinkMask(Linkify.WEB_URLS);
 
@@ -1248,26 +1111,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
                     // Ver si se guardo la fecha de la ultima noticia
                     if (preferencias.contains("ultima_noticia_tram")) {
                         fecha_ultima = preferencias.getString("ultima_noticia_tram", "");
-
-                        if (fecha_ultima != null) {
-
-                            // Date fechaUltima =
-                            // Utilidades.getFechaDate(fecha_ultima);
-
-                            // Contar nuevas noticias
-
-							/*
-                             * for (int i = 0; i < noticias.size(); i++) {
-							 * 
-							 * if (noticias.get(i).getFechaDate() != null) { if
-							 * (
-							 * noticias.get(i).getFechaDate().after(fechaUltima)
-							 * ) { nuevas++; } }
-							 * 
-							 * }
-							 */
-
-                        }
 
                         if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
 
@@ -1424,7 +1267,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
         texto.setGravity(Gravity.CENTER);
-        //texto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         texto.setTypeface(Typeface.DEFAULT_BOLD);
 
         DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
@@ -1491,7 +1333,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
         super.onStart();
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStart(this);
             GoogleAnalytics.getInstance(this).reportActivityStart(this);
         }
 
@@ -1501,7 +1342,6 @@ public class NoticiasTabsPager extends AppCompatActivity {
     protected void onStop() {
 
         if (preferencias.getBoolean("analytics_on", true)) {
-            // EasyTracker.getInstance(this).activityStop(this);
             GoogleAnalytics.getInstance(this).reportActivityStop(this);
         }
 

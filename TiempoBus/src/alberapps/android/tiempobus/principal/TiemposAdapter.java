@@ -124,7 +124,13 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 v = vi.inflate(R.layout.tiempos_item, null);
 
                 v.setTag(new ViewHolder(v));
+
             }
+
+            //animar
+            v.setAlpha(0.0f);
+            v.animate().alpha(1.0f);
+
 
             // Accedemos a la vista cacheada y la rellenamos
             ViewHolder tag = (ViewHolder) v.getTag();
@@ -373,6 +379,16 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
         }
+
+        //animar
+        //v.setAlpha(1.0f);
+        //v.animate().alpha(0.0f).setDuration(800);
+        v.setAlpha(0.0f);
+        v.animate().alpha(1.0f).setDuration(800);
+
+        //Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.push_up);
+        //v.startAnimation(animation);
+
 
         return v;
     }

@@ -49,6 +49,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
@@ -202,18 +203,8 @@ public class FragmentLineas extends Fragment {
                 Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
                 toast.show();
 
-                /*buses = new ArrayList<>();
-                BusLinea b1 = new BusLinea();
-                b1.setErrorServicio(true);
-                buses.add(b1);
-
-                actividad.lineasBus = buses;*/
-
                 //En caso de error en la web, cargar el listado offline
                 cargarLineas(true);
-
-                //cargarListado();
-
 
             }
 
@@ -353,24 +344,36 @@ public class FragmentLineas extends Fragment {
                         // cambiar el modo de la actividad
                         if (arg2 == 0) {
 
-                            Intent intent2 = getActivity().getIntent();
-                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+                            //Intent intent2 = getActivity().getIntent();
+                            Intent intent2 = new Intent();
+                            intent2.putExtra("MODO_RED_INFO", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+
+                            getActivity().setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
                             getActivity().finish();
-                            startActivity(intent2);
+                            //startActivity(intent2);
+                            //startActivityForResult(intent2, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                         } else if (arg2 == 1) {
 
-                            Intent intent2 = getActivity().getIntent();
-                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+                            //Intent intent2 = getActivity().getIntent();
+                            Intent intent2 = new Intent();
+                            intent2.putExtra("MODO_RED_INFO", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
+
+                            getActivity().setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
                             getActivity().finish();
-                            startActivity(intent2);
+                            //startActivity(intent2);
+                            //startActivityForResult(intent2, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                         } else if (arg2 == 2) {
 
-                            Intent intent2 = getActivity().getIntent();
-                            intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+                            //Intent intent2 = getActivity().getIntent();
+                            Intent intent2 = new Intent();
+                            intent2.putExtra("MODO_RED_INFO", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
+
+                            getActivity().setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent2);
                             getActivity().finish();
-                            startActivity(intent2);
+                            //startActivity(intent2);
+                            //startActivityForResult(intent2, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                         }
 
@@ -492,13 +495,9 @@ public class FragmentLineas extends Fragment {
          */
         public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-            // linea = lineasBus.get(position);
-
             linea = actividad.infoLineaAdapter.getListaFiltrada().get(position - 1);
 
             actividad.setLinea(linea);
-
-            //actividad.setTitle(linea.getLinea());
 
             // Quitar de horarios
             actividad.gestionHorariosIda.limpiarHorariosIda();
@@ -814,7 +813,7 @@ public class FragmentLineas extends Fragment {
                 toast.show();
             }
 
-            if(cursorParadas != null){
+            if (cursorParadas != null) {
                 cursorParadas.close();
             }
 
