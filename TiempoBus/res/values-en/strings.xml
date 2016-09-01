@@ -367,5 +367,13 @@
     <string name="clear_cache_complete_toast">Caches have been cleared</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="no_network_connection_toast">No network connection found</string>
+    <string name="andar">Walk</string>
+    <string name="avisos_web_tram">Tram Notices - tramalicante.es</string>
+    <string name="duracion">Duration</string>
+    <string name="grupos_todos">All groups</string>
+    <string name="sin_novedades">No news</string>
+    <string name="tarjeta">Cards</string>
+    <string name="tarjeta_clima">Weather</string>
+    <string name="tarjeta_clima_pref_desc">Data source</string>
 
 </resources>

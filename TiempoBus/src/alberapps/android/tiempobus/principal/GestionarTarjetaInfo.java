@@ -209,7 +209,6 @@ public class GestionarTarjetaInfo {
                 int lonIndex = cursor.getColumnIndexOrThrow(DatosLineasDB.COLUMN_LONGITUD);
 
 
-
                 TextView parada = (TextView) v.findViewById(R.id.parada);
                 TextView localizacion = (TextView) v.findViewById(R.id.localizacion);
 
@@ -247,8 +246,6 @@ public class GestionarTarjetaInfo {
 
                 String conexiones = cursor.getString(conexionesIndex);
                 InfoLineaParadasAdapter.mostrarLineasParada(context, v, conexiones);
-
-
 
 
                 final String lat = cursor.getString(latIndex);
@@ -1460,40 +1457,47 @@ public class GestionarTarjetaInfo {
 
     public void controlFragmentHorarios() {
 
-        FragmentManager fragmentManager = context.getSupportFragmentManager();
+        //TODO revisar errores
+        try {
 
-        if (fragHorarios == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
-            fragHorarios = new PrincipalHorarioTramFragment();
+            FragmentManager fragmentManager = context.getSupportFragmentManager();
 
-        }
+            if (fragHorarios == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+                fragHorarios = new PrincipalHorarioTramFragment();
 
-        Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
-
-        if (fragHorariosAux != null && !DatosPantallaPrincipal.esTram(context.paradaActual)) {
-
-
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.remove(fragHorariosAux);
-            ft.commit();
-
-
-        } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
-
-            if (context.findViewById(R.id.contenedor_fragment_horarios) != null) {
-
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.add(R.id.contenedor_fragment_horarios, fragHorarios, "FRAGMENT_HORARIOS_PRINC_TRAM");
-                ft.commit();
-
-            } else {
-                fragHorarios = null;
             }
 
-        } else if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
 
-            ((PrincipalHorarioTramFragment) fragHorariosAux).recargarHorarios();
+            if (fragHorariosAux != null && !DatosPantallaPrincipal.esTram(context.paradaActual)) {
 
 
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.remove(fragHorariosAux);
+                ft.commit();
+
+
+            } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+
+                if (context.findViewById(R.id.contenedor_fragment_horarios) != null) {
+
+                    FragmentTransaction ft = fragmentManager.beginTransaction();
+                    ft.add(R.id.contenedor_fragment_horarios, fragHorarios, "FRAGMENT_HORARIOS_PRINC_TRAM");
+                    ft.commit();
+
+                } else {
+                    fragHorarios = null;
+                }
+
+            } else if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+
+                ((PrincipalHorarioTramFragment) fragHorariosAux).recargarHorarios();
+
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -1502,21 +1506,28 @@ public class GestionarTarjetaInfo {
 
     public void reconstruirFragment() {
 
-        if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+        //TODO revisar errores
+        try {
 
-            FragmentManager fragmentManager = context.getSupportFragmentManager();
+            if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
 
-            FragmentTransaction ft = fragmentManager.beginTransaction();
+                FragmentManager fragmentManager = context.getSupportFragmentManager();
 
-            Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
+                FragmentTransaction ft = fragmentManager.beginTransaction();
 
-            if (fragHorariosAux != null) {
+                Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
 
-                ft.remove(fragHorariosAux);
-                ft.commit();
+                if (fragHorariosAux != null) {
+
+                    ft.remove(fragHorariosAux);
+                    ft.commit();
+
+                }
 
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -128,8 +129,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             }
 
             //animar
-            v.setAlpha(0.0f);
-            v.animate().alpha(1.0f);
+            //v.setAlpha(0.0f);
+            //v.animate().alpha(1.0f);
+
+
 
 
             // Accedemos a la vista cacheada y la rellenamos
@@ -381,10 +384,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         }
 
         //animar
-        //v.setAlpha(1.0f);
         //v.animate().alpha(0.0f).setDuration(800);
-        v.setAlpha(0.0f);
-        v.animate().alpha(1.0f).setDuration(800);
+        ViewCompat.setAlpha(v, 0.0f);
+        ViewCompat.animate(v).alpha(1.0f).setDuration(800);
 
         //Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.push_up);
         //v.startAnimation(animation);
