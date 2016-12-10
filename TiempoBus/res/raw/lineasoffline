@@ -23,7 +23,7 @@
 	<option value="02">02 LA FLORIDA - SAGRADA FAMILIA</option>
 	<option value="03">03 CIUDAD AS&#205;S - COLONIA REQUENA</option>
 	<option value="04">04 CEMENTERIO - T&#211;MBOLA</option>
-	<option value="05">05 PLAZA DEL MAR - SAN AGUST&#205;N</option>
+	<option value="05">05 P. DEL MAR - SAN AGUST&#205;N</option>
 	<option value="06">06 AUTOBUSES - JUAN XXIII (2&#186; S)</option>
 	<option value="07">07 AV.&#211;SCAR ESPL&#193; - EL REBOLLEDO</option>
 	<option value="08">08 EXPLANADA -VIRGEN DEL REMEDIO</option>
@@ -35,10 +35,12 @@
 	<option value="16">16 PZA. ESPA&#209;A-MERCADILLO TEULADA</option>
 	<option value="17">17 ZONA NORTE-MERCADILLO TEULADA</option>
 	<option value="22">22 ALICANTE-C. HUERTA-P.S. JUAN</option>
-	<option value="27">27 ALICANTE (LUCEROS) - URBANOVA</option>
+	<option value="27">27 ALICANTE (O.ESPLA) - URBANOVA</option>
 	<option value="39">39 EXPLANADA - C. TECNIFICACI&#211;N</option>
 	<option value="22N">22N ALICANTE CENTRO-PLAYA SAN JUAN</option>
-	<option value="13N">13N PZA. ESPA&#209;A - VILLAFRANQUEZA</option>
+	<option value="03N">03N CIUDAD AS&#205;S - VILLAFRANQUEZA</option>
+	<option value="14A">14A CIRCULAR P. DEL MAR-GRAN VIA</option>
+	<option value="14B">14B CIRCULAR P. DEL MAR-GRAN VIA</option>
 	<option value="191">191 PL&#193; - CAROLINAS - RICO PEREZ</option>
 	<option value="192">192 C. ASIS - BENALUA - RICO PEREZ</option>
 	<option value="M">M MUTXAMEL-URBANITZACIONS</option>
@@ -52,7 +54,6 @@
 	<option value="35">35 HOSPITAL SANT JOAN - TANGEL</option>
 	<option value="C-53">C-53 HOSPITAL SANT JOAN-EL CAMPELLO</option>
 	<option value="C-54">C-54 UNIVERSIDAD-HOSP. SANT JOAN</option>
-	<option value="C-6*">C-6* ALICANTE-URBANOVA-AEROPUERTO</option>
 	<option value="45">45 HOSPITAL-GIRASOLES-MANCHEGOS</option>
 	<option value="46A">46A HOSPITAL-VILLAMONTES-S.ANTONIO</option>
 	<option value="46B">46B HOSPITAL-P.CANASTELL-CONTXETA</option>

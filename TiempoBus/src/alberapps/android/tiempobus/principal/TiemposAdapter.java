@@ -21,11 +21,12 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,6 +48,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
     private ArrayList<BusLlegada> buses;
 
     private String paradaActual = "";
+
+    private int lastPosition = -1;
 
     public String getParadaActual() {
         return paradaActual;
@@ -84,6 +87,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
     public void setBuses(ArrayList<BusLlegada> buses, int paradaActual) {
         this.buses = buses;
         this.paradaActual = Integer.toString(paradaActual);
+        lastPosition = -1;
     }
 
     /**
@@ -159,7 +163,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                     tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoTram().getProximo(), false, false).trim());
 
-                } else if (bus.getSegundoBus() != null) {
+                } else if (bus.getSegundoBus() != null && !bus.getSegundoBus().getProximo().equals("sinestimacion;sinestimacion")) {
 
                     tag.busProximo.setText(controlAviso(bus.getProximo(), false, true).trim() + "\n" + controlAviso(bus.getSegundoBus().getProximo(), false, false).trim());
 
@@ -384,13 +388,17 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         }
 
         //animar
-        //v.animate().alpha(0.0f).setDuration(800);
-        ViewCompat.setAlpha(v, 0.0f);
-        ViewCompat.animate(v).alpha(1.0f).setDuration(800);
 
-        //Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.push_up);
-        //v.startAnimation(animation);
+        if(position > lastPosition) {
+            //v.animate().alpha(0.0f).setDuration(800);
+            //ViewCompat.setAlpha(v, 0.0f);
+            //ViewCompat.animate(v).alpha(1.0f).setDuration(800);
 
+            Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.push_up);
+            v.startAnimation(animation);
+
+            lastPosition = position;
+        }
 
         return v;
     }

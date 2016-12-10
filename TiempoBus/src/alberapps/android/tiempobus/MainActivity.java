@@ -45,8 +45,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -1355,8 +1353,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             imgCancelar.setVisibility(View.VISIBLE);
 
             //animar
-            ViewCompat.setAlpha(imgCancelar, 0.0f);
-            ViewCompat.animate(imgCancelar).alpha(1.0f);
+            //ViewCompat.setAlpha(imgCancelar, 0.0f);
+            //ViewCompat.animate(imgCancelar).alpha(1.0f);
 
 
             imgCancelar.setOnClickListener(new OnClickListener() {
@@ -1379,7 +1377,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             //animar
 
-            ViewCompat.animate(imgCancelar).alpha(0.0f).setListener(new ViewPropertyAnimatorListener() {
+            /*ViewCompat.animate(imgCancelar).alpha(0.0f).setListener(new ViewPropertyAnimatorListener() {
                 @Override
                 public void onAnimationStart(View view) {
 
@@ -1394,7 +1392,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 public void onAnimationCancel(View view) {
 
                 }
-            });
+            });*/
+
+            imgCancelar.setVisibility(View.INVISIBLE);
 
             /*imgCancelar.animate().alpha(0.0f).setListener(new AnimatorListenerAdapter() {
                 @Override

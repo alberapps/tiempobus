@@ -800,40 +800,39 @@ public class DatosPantallaPrincipal {
 
         boolean avisoTram = preferencias.getBoolean("aviso_noticias_tram", true);
 
-        StringBuffer estadoAvisos = new StringBuffer();
+        //Botones ida y vuelta
+        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) vheader.findViewById(R.id.switchNoticiasBus);
+        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) vheader.findViewById(R.id.switchNoticiasTram);
 
-        if (UtilidadesTRAM.ACTIVADO_TRAM) {
-
-            if (avisoBus) {
-                estadoAvisos.append("bus");
-            }
-
-            if (avisoTram) {
-
-                if (avisoBus) {
-                    estadoAvisos.append(" ").append(context.getString(R.string.tiempo_m_3)).append(" ");
-                }
-
-                estadoAvisos.append("tram");
-            }
-
-            if (!avisoBus && !avisoTram) {
-                estadoAvisos.append("off");
-            }
-
-            texto.setText(texto.getText() + "\n- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
-
-        } else {
-
-            if (avisoBus) {
-                estadoAvisos.append("on");
-            } else {
-                estadoAvisos.append("off");
-            }
-
-            texto.setText("- " + context.getString(R.string.preferencias_noticias_auto) + ": " + estadoAvisos);
-
+        if (avisoBus) {
+            botonBus.setChecked(true);
         }
+
+        if (avisoTram) {
+            botonTram.setChecked(true);
+        }
+
+        botonBus.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("aviso_noticias", botonBus.isChecked());
+                editor.commit();
+
+            }
+        });
+
+        botonTram.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("aviso_noticias_tram", botonTram.isChecked());
+                editor.commit();
+
+            }
+        });
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
