@@ -19,6 +19,7 @@ package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -235,7 +236,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         AppCompatTextView texto = new AppCompatTextView(contexto);
         texto.setText(conexion.trim());
         texto.setTextAppearance(contexto, R.style.TextAppearance_AppCompat_Small);
-        texto.setTextColor(contexto.getResources().getColor(R.color.abc_primary_text_disable_only_material_dark));
+        texto.setTextColor(ContextCompat.getColor(contexto, R.color.abc_primary_text_disable_only_material_dark));
 
         int size50 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, contexto.getResources().getDisplayMetrics());
 

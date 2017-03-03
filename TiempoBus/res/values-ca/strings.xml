@@ -169,7 +169,7 @@ favorit per crear la teua llista.</string>
     <string name="aviso_noticia">Si el contingut no es visualitza correctament, selecciona l\'enllaç per accedir a la web</string>
     <string name="noticias_links">Enllaços possibles</string>
     <string name="noticias_instrucciones">Seleccionar l\'avís per obrir el seu detall.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de alicante.subus.es.</string>
+    <string name="aviso_buscador_online">Els recorreguts es recuperen directament de la web de alicante.vectalia.es.</string>
     <string name="streetview_ko">Error en intentar accedir a Street View, comprova si està instal·lat.</string>
     <string name="streetview_boton">Street View</string>
 
@@ -451,5 +451,9 @@ favorit per crear la teua llista.</string>
     <string name="sin_novedades">Sense novetats</string>
     <string name="avisos_web_tram">Avisos Tram - tramalicante.es</string>
     <string name="que_hay_cerca">Què hi ha a prop?</string>
+    <string name="satelite">Satèl·lit</string>
+    <string name="origen_destino">Origen i Destinació</string>
+    <string name="error_tiempos_tram">El servei en temps real del TRAM no respon. Mentre pots utilitzar el servei d\'horaris.</string>
+    <string name="tiempo_real">Temps Real</string>
 
 </resources>

@@ -37,7 +37,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
  */
 public class FragmentNoticias extends Fragment {
 
-    public static final String noticiasURL = "http://www.alicante.subus.es/alertas";
+    public static final String noticiasURL = "http://www.alicante.vectalia.es/alertas";
 
     private NoticiasTabsPager actividad;
 

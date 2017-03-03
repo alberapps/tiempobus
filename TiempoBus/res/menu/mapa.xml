@@ -33,42 +33,13 @@
 
         android:orderInCategory="1"
         tiempobus:showAsAction="ifRoom"
-        android:title="@string/menu_search"></item>
+        android:title="@string/satelite"></item>
     <item
         android:id="@id/menu_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="3"
-        tiempobus:showAsAction="ifRoom"
+        tiempobus:showAsAction="always"
         android:title="@string/menu_search"></item>
-
-
-<!--
-    <item
-        android:id="@id/menu_search_online"
-        android:orderInCategory="5"
-        tiempobus:showAsAction="never"
-        android:title="@string/mapa_lineas"></item>
-    <item
-        android:id="@id/menu_ida"
-        android:orderInCategory="6"
-        tiempobus:showAsAction="never"
-        android:title="@string/mapa_vuelta"></item>
-    <item
-        android:id="@id/menu_vuelta"
-        android:orderInCategory="7"
-        tiempobus:showAsAction="never"
-        android:title="@string/mapa_ida"></item>
-    <item
-        android:id="@id/menu_cercanas"
-        android:orderInCategory="4"
-        tiempobus:showAsAction="never"
-        android:title="@string/cercanas"></item>
-
-
-        -->
-    <!--
-    <item android:id="@id/menu_posicion" android:orderInCategory="1" android:title="@string/mapa_ida" android:showAsAction="always" android:icon="@drawable/device_access_location_found"></item>
-    -->
 
 
 </menu>

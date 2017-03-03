@@ -6,13 +6,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContentResolverCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +34,9 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
@@ -67,9 +69,15 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
     private HorarioTram horarioTramActual;
     private Integer destinoActual;
+    private String textoDestinoActual;
 
     private List<String> actualHoras;
     private DatosConsultaHorariosTram datosConsulta;
+
+    private boolean cambioDestino = false;
+    private boolean recargaExterna = true;
+
+    private SharedPreferences preferencias = null;
 
 
     public PrincipalHorarioTramFragment() {
@@ -102,6 +110,8 @@ public class PrincipalHorarioTramFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        PreferenceManager.setDefaultValues(getContext(), R.xml.preferences, false);
+        preferencias = PreferenceManager.getDefaultSharedPreferences(getContext());
 
     }
 
@@ -166,6 +176,31 @@ public class PrincipalHorarioTramFragment extends Fragment {
         });
 
 
+        boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+
+        //Botones ida y vuelta
+        final SwitchCompat botonTR = (SwitchCompat) view.findViewById(R.id.switchTiempoReal);
+
+
+        if (opcionTR) {
+            botonTR.setChecked(true);
+        }
+
+        botonTR.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("tram_opcion_tr", botonTR.isChecked());
+                editor.commit();
+
+                recargaExterna = false;
+                cargaInicial();
+
+            }
+        });
+
+
         cargaInicial();
 
 
@@ -178,9 +213,10 @@ public class PrincipalHorarioTramFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public void onCambioDestino(Integer destino, String textoDestino) {
+        if (mListener != null && !recargaExterna) {
+            cambioDestino = true;
+            mListener.onFragmentInteraction(destino, textoDestino);
         }
     }
 
@@ -213,14 +249,21 @@ public class PrincipalHorarioTramFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Integer destino, String textoDestino);
     }
 
     public void recargarHorarios() {
 
+        recargaExterna = true;
+
         //cargarHorarios(destinoActual);
 
-        cargaInicial();
+        //Desactivado para recargar primero horarios
+        if (!cambioDestino) {
+            cargaInicial();
+        } else {
+            cambioDestino = false;
+        }
 
     }
 
@@ -281,6 +324,11 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         HorarioItem horas = null;
 
+        View horariosPaso2 = getView().findViewById(R.id.horarios_paso2);
+        View horariosPaso3 = getView().findViewById(R.id.horarios_paso3);
+        View datosLineaC = getView().findViewById(R.id.datos_linea_c);
+        View datosLineasPosibles = getView().findViewById(R.id.datos_lineas_posibles);
+
         if (getView() != null) {
             TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
             TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
@@ -288,46 +336,114 @@ public class PrincipalHorarioTramFragment extends Fragment {
             if (recarga) {
                 datosHoras.setText(getString(R.string.aviso_recarga));
                 datosInfo.setText("");
+                horariosPaso2.setVisibility(View.GONE);
+                horariosPaso3.setVisibility(View.GONE);
+                datosLineasPosibles.setVisibility(View.GONE);
                 return;
             }
 
             if (datos != null && datos.getHorariosItemCombinados() != null && !datos.getHorariosItemCombinados().isEmpty() && datos.getHorariosItemCombinados().size() > 1) {
 
-                actualHoras = new ArrayList<>();
+                actualHoras = getActualHoras(datos, 0);
+                horas = datos.getHorariosItemCombinados(0).get(1);
 
-                horas = datos.getHorariosItemCombinados().get(1);
+                String stringHoras = getStringHoras(actualHoras);
+                datosHoras.setText(stringHoras);
+                datosInfo.setText(horas.getDatoInfo().replace("Paso ", ""));
 
-                for (int i = 1; i < datos.getHorariosItemCombinados().size(); i++) {
 
-                    if (datos.getHorariosItemCombinados().get(i).getDatoInfo().equals(horas.getDatoInfo())) {
+                if (datos.getHorariosItemCombinados(1).size() > 1) {
 
-                        actualHoras.addAll(Arrays.asList(datos.getHorariosItemCombinados().get(i).getHoras().split(" ")));
+                    datosLineaC.setVisibility(View.VISIBLE);
+                    TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
+                    datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
+                    //Formato colores
+                    DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, datos.getHorariosItemCombinados(0).get(1).getLinea(), false);
 
-                        if (actualHoras.size() > 5) {
-                            actualHoras = actualHoras.subList(0, 5);
-                            break;
-                        }
+                    TextView datosLinea2 = (TextView) getView().findViewById(R.id.datos_linea2);
+                    datosLinea2.setText(datos.getHorariosItemCombinados(1).get(1).getLinea());
+                    //Formato colores
+                    DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea2, datos.getHorariosItemCombinados(1).get(1).getLinea(), false);
+
+                    List<String> actualHorasPaso2 = getActualHoras(datos, 1);
+                    HorarioItem horasPaso2 = datos.getHorariosItemCombinados(1).get(1);
+
+                    String stringHorasPaso2 = getStringHoras(actualHorasPaso2);
+
+                    TextView datosHoras2 = (TextView) getView().findViewById(R.id.datos_horas_2);
+                    TextView datosInfo2 = (TextView) getView().findViewById(R.id.datos_info_2);
+                    datosHoras2.setText(stringHorasPaso2);
+                    datosInfo2.setText(horasPaso2.getDatoInfo().replace("Paso ", ""));
+
+
+                    horariosPaso2.setVisibility(View.VISIBLE);
+
+                    if (datos.getHorariosItemCombinados(2).size() > 1) {
+
+                        TextView datosLinea3 = (TextView) getView().findViewById(R.id.datos_linea3);
+                        datosLinea3.setText(datos.getHorariosItemCombinados(2).get(1).getLinea());
+                        //Formato colores
+                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea3, datos.getHorariosItemCombinados(2).get(1).getLinea(), false);
+
+                        List<String> actualHorasPaso3 = getActualHoras(datos, 2);
+                        HorarioItem horasPaso3 = datos.getHorariosItemCombinados(2).get(1);
+
+                        String stringHorasPaso3 = getStringHoras(actualHorasPaso3);
+
+                        TextView datosHoras3 = (TextView) getView().findViewById(R.id.datos_horas_3);
+                        TextView datosInfo3 = (TextView) getView().findViewById(R.id.datos_info_3);
+                        datosHoras3.setText(stringHorasPaso3);
+                        datosInfo3.setText(horasPaso3.getDatoInfo().replace("Paso ", ""));
+
+
+                        horariosPaso3.setVisibility(View.VISIBLE);
 
                     } else {
-                        break;
-                    }
-                }
-
-                String stringHoras = "";
-
-                for (int j = 0; j < actualHoras.size(); j++) {
-
-                    if (stringHoras.length() > 0) {
-                        stringHoras = stringHoras + " ";
+                        horariosPaso3.setVisibility(View.GONE);
                     }
 
-                    stringHoras = stringHoras + actualHoras.get(j);
+
+                } else {
+                    horariosPaso2.setVisibility(View.GONE);
+                    datosLineaC.setVisibility(View.GONE);
+
+                    String lineas = "";
+
+                    if (datos.getDatosTransbordos() != null && !datos.getDatosTransbordos().isEmpty()) {
+
+                        String[] grupo1 = datos.getDatosTransbordos().get(0).getTrenesDestino().split(":");
+                        if (grupo1.length == 2) {
+                            String[] grupo2 = grupo1[1].trim().split(",");
+
+                            if (grupo2.length > 0) {
+                                for (int i = 0; i < grupo2.length; i++) {
+
+                                    if (!lineas.equals("")) {
+                                        lineas += ",";
+                                    }
+
+                                    lineas += UtilidadesTRAM.getLineaHorario(grupo2[i].trim());
+
+                                }
+                            }
+
+                        }
+
+                    }
+
+                    //Lineas posibles
+                    if (!lineas.equals("") && lineas.contains(",")) {
+                        datosLineasPosibles.setVisibility(View.VISIBLE);
+                        InfoLineaParadasAdapter.mostrarLineasParada(getContext(), datosLineasPosibles, lineas);
+                    } else if (!lineas.equals("")) {
+                        datosLineaC.setVisibility(View.VISIBLE);
+                        TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
+                        datosLinea.setText(lineas);
+                        //Formato colores
+                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, lineas, false);
+                    }
+
                 }
-
-                datosHoras.setText(stringHoras);
-
-
-                datosInfo.setText(horas.getDatoInfo());
 
             } else {
 
@@ -337,6 +453,51 @@ public class PrincipalHorarioTramFragment extends Fragment {
             }
 
         }
+    }
+
+
+    private List<String> getActualHoras(HorarioTram datos, int paso) {
+
+
+        List<String> actualHorasList = new ArrayList<>();
+
+        HorarioItem horas = datos.getHorariosItemCombinados(paso).get(1);
+
+        for (int i = 1; i < datos.getHorariosItemCombinados(paso).size(); i++) {
+
+            if (datos.getHorariosItemCombinados(paso).get(i).getDatoInfo().equals(horas.getDatoInfo())) {
+
+                actualHorasList.addAll(Arrays.asList(datos.getHorariosItemCombinados(paso).get(i).getHoras().split(" ")));
+
+                if (actualHorasList.size() > 5) {
+                    actualHorasList = actualHorasList.subList(0, 5);
+                    break;
+                }
+
+            } else {
+                break;
+            }
+        }
+
+        return actualHorasList;
+
+    }
+
+    private String getStringHoras(List<String> actualHorasList) {
+
+        String stringHoras = "";
+
+        for (int j = 0; j < actualHorasList.size(); j++) {
+
+            if (stringHoras.length() > 0) {
+                stringHoras = stringHoras + " ";
+            }
+
+            stringHoras = stringHoras + actualHorasList.get(j);
+        }
+
+        return stringHoras;
+
     }
 
     /**
@@ -399,11 +560,19 @@ public class PrincipalHorarioTramFragment extends Fragment {
                 //actividad.consultaHorarioTram.setCodEstacionDestino(codigoEstacion);
                 //actividad.consultaHorarioTram.setEstacionDestinoSeleccion(arg2);
 
+                if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
+                    recargaExterna = false;
+                }
+
                 destinoActual = codigoEstacion;
 
                 ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
 
+                textoDestinoActual = (String) arg0.getItemAtPosition(arg2);
+
                 cargarHorarios(codigoEstacion, arg2);
+
+                onCambioDestino(destinoActual, textoDestinoActual);
 
             }
 
@@ -460,9 +629,6 @@ public class PrincipalHorarioTramFragment extends Fragment {
      * Seleccion del fondo de la galeria en el arranque
      */
     private void setupFondoAplicacion() {
-
-        PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, false);
-        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 

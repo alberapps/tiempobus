@@ -79,7 +79,8 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        />
                 </FrameLayout>
 
                 <LinearLayout

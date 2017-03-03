@@ -112,7 +112,7 @@ public class ProcesarDetalleNoticia {
             Elements contenido = seccionNoticia.select("div.notif-content");
 
             // Limpiar resultado
-            String safe = Jsoup.clean(contenido.first().html(), "http://www.alicante.subus.es/notificacion/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
+            String safe = Jsoup.clean(contenido.first().html(), "http://www.alicante.vectalia.es/notificacion/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
 
             String limpiar = safe;
 

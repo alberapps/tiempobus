@@ -19,11 +19,15 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.ArrayList;
 
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
@@ -77,7 +81,21 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         paradaI = (Integer) datos[0];
 
+        Context context = (Context) datos[1];
+        PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+
         Boolean cacheTiempos = (Boolean) datos[2];
+
+
+        Integer paradaDestinoTram = UtilidadesTRAM.HORARIOS_COD_ESTACION[0];
+        String paradaDestinoTramTexto = "";
+
+        if (datos.length >= 4 && !((String) datos[3]).equals("")) {
+            paradaDestinoTram = Integer.parseInt(((String) datos[3]).split(";")[0]);
+            paradaDestinoTramTexto = ((String) datos[3]).split(";")[1];
+        }
 
         int url1 = 1;
         int url2 = 1;
@@ -118,7 +136,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                     //Tiempos isae tram diesel
                     //llegadasDiesel = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
 
-                    llegadasDiesel = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI);
+                    llegadasDiesel = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, null, null);
 
                 } catch (Exception e) {
                     llegadasDiesel = null;
@@ -152,11 +170,19 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
             } else if (UtilidadesTRAM.esParadaL9(parada)) {
 
                 //llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
-                llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI);
+                //llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, null, null);
+                llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
 
             } else if (DatosPantallaPrincipal.esTram(parada)) {
 
-                llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
+
+                if (opcionTR) {
+                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
+                } else if (paradaDestinoTram != null) {
+                    llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
+                }
+
+
             } else {
                 llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI, cacheTiempos);
             }
@@ -173,8 +199,11 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         } catch (Exception e) {
 
+
+            e.printStackTrace();
+
             // Probar con acceso secundario
-            if (DatosPantallaPrincipal.esTram(parada)) {
+            if (DatosPantallaPrincipal.esTram(parada) && opcionTR) {
 
                 try {
 
@@ -207,7 +236,6 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
             }
 
-            e.printStackTrace();
 
         }
 

@@ -41,6 +41,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.res.ResourcesCompat;
@@ -52,6 +54,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -119,7 +122,8 @@ import alberapps.java.util.Conectividad;
 /**
  * Actividad principal de la aplicacion
  */
-public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener, SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener,
+        SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener {
 
     public static final int SUB_ACTIVITY_REQUEST_PARADA = 1000;
     public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public BusLlegada busSeleccionado = null;
 
-    SharedPreferences preferencias = null;
+    public SharedPreferences preferencias = null;
 
     private TextToSpeech mTts;
 
@@ -189,6 +193,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     SwipeRefreshLayout swipeRefresh = null;
 
     public static final int REQUEST_CODE_STORAGE = 4;
+
+    private BottomNavigationView bottomNavigation = null;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -397,7 +404,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             // selectItem(0);
         }
 
-        ImageView imgCabecera = (ImageView) mDrawerLayout.findViewById(R.id.imgAlberapps);
+        View mDrawerHeader = mDrawerView.getHeaderView(0).findViewById(R.id.drawer_header);
+
+        ImageView imgCabecera = (ImageView) mDrawerHeader.findViewById(R.id.imgAlberapps);
 
         if (imgCabecera != null) {
             imgCabecera.setOnClickListener(new Button.OnClickListener() {
@@ -408,6 +417,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
             });
         }
+
+        datosPantallaPrincipal.opcionesNotificacion(mDrawerHeader);
+
 
     }
 
@@ -516,6 +528,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         mDrawerLayout.closeDrawer(mDrawerView);
 
     }
+
 
     /**
      * Cambio de idioma
@@ -811,19 +824,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        /*tiemposView.setOnLongClickListener(new OnLongClickListener() {
-
-            public boolean onLongClick(View view) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-        });*/
 
         // Asignamos el adapter a la lista
         tiemposView.setAdapter(tiemposAdapter);
         tiemposAdapter.notifyDataSetChanged();
 
-        // registerForContextMenu(guiTitulo);
 
         /**
          * Definimos el comportamiento de los botones
@@ -905,6 +910,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
 
                 return false;
+            }
+        });
+
+
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                selectItem(item);
+
+                return true;
             }
         });
 
@@ -1484,11 +1502,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 Boolean cacheTiempos = preferencias.getBoolean("conectividad_cache_tiempos", false);
 
+                String paradaDestinoTram = preferencias.getString("parada_destino_tram", "");
+
                 // Control de disponibilidad de conexion
                 ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    loadTiemposTask = new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext(), cacheTiempos);
+
+
+                    loadTiemposTask = new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(paradaActual, getApplicationContext(), cacheTiempos, paradaDestinoTram);
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
                     showProgressBar(false);
@@ -1962,8 +1984,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(Integer destino, String textoDestino) {
+
+
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putString("parada_destino_tram", Integer.toString(destino) + ";" + textoDestino);
+        editor.commit();
+
+        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
 
     }
 
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
 }

@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -137,14 +138,19 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             //v.animate().alpha(1.0f);
 
 
-
-
             // Accedemos a la vista cacheada y la rellenamos
             ViewHolder tag = (ViewHolder) v.getTag();
 
             // BusLlegada bus = getItem(position);
             if (bus != null) {
-                tag.busLinea.setText(bus.getLinea().trim());
+
+                if (bus.getLinea() != null && !bus.getLinea().equals("") && !bus.getLinea().equals("-")) {
+                    tag.busLinea.setText(bus.getLinea().trim());
+                    tag.busLinea.setVisibility(View.VISIBLE);
+                } else {
+                    tag.busLinea.setVisibility(View.GONE);
+                }
+
                 tag.busDestino.setText(bus.getDestino().trim());
 
                 tag.tiempoPrincipal.setText(controlAviso(bus.getProximo(), true, false).trim());
@@ -325,6 +331,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             text.setText(ctx.getString(R.string.aviso_recarga));
 
+            ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
+
+            progressBar.show();
+
+
+
 
         } else {
 
@@ -341,7 +353,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             if (bus != null && bus.isErrorServicio()) {
-                text.setText(ctx.getString(R.string.error_tiempos));
+                boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
+                if(DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) && opcionTR){
+                    text.setText(ctx.getString(R.string.error_tiempos_tram));
+                }else {
+                    text.setText(ctx.getString(R.string.error_tiempos));
+                }
             } else {
                 text.setText(ctx.getString(R.string.main_no_items) + "\n" + ctx.getString(R.string.error_status));
             }
@@ -389,7 +406,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         //animar
 
-        if(position > lastPosition) {
+        if (position > lastPosition) {
             //v.animate().alpha(0.0f).setDuration(800);
             //ViewCompat.setAlpha(v, 0.0f);
             //ViewCompat.animate(v).alpha(1.0f).setDuration(800);

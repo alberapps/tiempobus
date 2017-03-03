@@ -40,7 +40,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,9 +64,7 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
-import alberapps.android.tiempobus.rutas.RutasActivity;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
 import alberapps.android.tiempobus.tasks.LoadNoticiasAsyncTask;
@@ -785,24 +782,18 @@ public class DatosPantallaPrincipal {
 
     }
 
-    /**
-     * Cargar cabecera listado
-     */
-    public void cargarHeader() {
 
-        LayoutInflater li2 = LayoutInflater.from(context);
+    public void opcionesNotificacion(View view) {
 
-        View vheader = li2.inflate(R.layout.tiempos_aviso_header, null);
-
-        TextView texto = (TextView) vheader.findViewById(R.id.txt_aviso_header);
+        TextView texto = (TextView) view.findViewById(R.id.txt_aviso_header);
 
         boolean avisoBus = preferencias.getBoolean("aviso_noticias", true);
 
         boolean avisoTram = preferencias.getBoolean("aviso_noticias_tram", true);
 
         //Botones ida y vuelta
-        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) vheader.findViewById(R.id.switchNoticiasBus);
-        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) vheader.findViewById(R.id.switchNoticiasTram);
+        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasBus);
+        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasTram);
 
         if (avisoBus) {
             botonBus.setChecked(true);
@@ -843,41 +834,24 @@ public class DatosPantallaPrincipal {
 
         context.gestionarTarjetaInfo.controlActualizarDB(texto);
 
+    }
+
+
+    /**
+     * Cargar cabecera listado
+     */
+    public void cargarHeader() {
+
+        LayoutInflater li2 = LayoutInflater.from(context);
+
+        View vheader = li2.inflate(R.layout.tiempos_aviso_header, null);
+
+
         context.tiemposView = (ListView) context.findViewById(R.id.lista_tiempos);
 
         assert context.tiemposView != null;
         context.tiemposView.addHeaderView(vheader);
 
-
-        // //Horarios
-
-        ImageButton botonHorarios = (ImageButton) vheader.findViewById(R.id.aviso_header_horario);
-
-        botonHorarios.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-
-                context.detenerTodasTareas();
-
-                Intent i = new Intent(context, InfoLineasTabsPager.class);
-                i.putExtra("HORARIOS", "TRAM");
-
-                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
-
-            }
-        });
-
-        // //Rutas
-
-        ImageButton botonRutas = (ImageButton) vheader.findViewById(R.id.aviso_header_rutas);
-
-        botonRutas.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-
-                context.detenerTodasTareas();
-                context.startActivity(new Intent(context, RutasActivity.class));
-
-            }
-        });
 
         /*if (esTram(context.paradaActual)) {
 
@@ -1038,7 +1012,7 @@ public class DatosPantallaPrincipal {
             twSb.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    UtilidadesUI.openWebPage(context, "http://www.alicante.subus.es/");
+                    UtilidadesUI.openWebPage(context, "http://www.alicante.vectalia.es/");
 
                 }
             });

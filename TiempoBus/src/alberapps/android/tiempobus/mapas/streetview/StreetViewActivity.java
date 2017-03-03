@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.mapas.streetview;
 
@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -44,7 +45,7 @@ public class StreetViewActivity extends AppCompatActivity {
     SharedPreferences preferencias = null;
 
     private LatLng coordenadas;
-    private StreetViewPanorama mSvp;
+    private SupportStreetViewPanoramaFragment mSvpFragment;
 
     //private String descLinea;
 
@@ -88,7 +89,8 @@ public class StreetViewActivity extends AppCompatActivity {
 
         // Si coordenadas cargadas
         if (coordenadas != null) {
-            setUpStreetViewPanoramaIfNeeded(savedInstanceState);
+            //setUpStreetViewPanoramaIfNeeded(savedInstanceState);
+            initSVFragment(savedInstanceState);
         }
 
         // Datos pie
@@ -105,7 +107,7 @@ public class StreetViewActivity extends AppCompatActivity {
             int index = datosMensaje.lastIndexOf("\n");
 
             //En caso de encontrarlo
-            if(index > 0) {
+            if (index > 0) {
                 datosMensaje = datosMensaje.substring(0, index);
             }
 
@@ -115,24 +117,48 @@ public class StreetViewActivity extends AppCompatActivity {
 
     }
 
+    private void initSVFragment(final Bundle savedInstanceState) {
+
+        mSvpFragment = ((SupportStreetViewPanoramaFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.streetviewpanorama));
+        mSvpFragment.getStreetViewPanoramaAsync(new OnStreetViewPanoramaReadyCallback() {
+            @Override
+            public void onStreetViewPanoramaReady(StreetViewPanorama streetViewPanorama) {
+                setUpStreetViewPanoramaIfNeeded(savedInstanceState, coordenadas);
+            }
+        });
+
+    }
+
+
     /**
      * StreetView
      *
      * @param savedInstanceState
      */
-    private void setUpStreetViewPanoramaIfNeeded(Bundle savedInstanceState) {
-        if (mSvp == null) {
-            mSvp = ((SupportStreetViewPanoramaFragment) getSupportFragmentManager().findFragmentById(R.id.streetviewpanorama)).getStreetViewPanorama();
-            if (mSvp != null) {
-                if (savedInstanceState == null) {
+    private void setUpStreetViewPanoramaIfNeeded(final Bundle savedInstanceState, final LatLng coordenadas) {
+
+
+        mSvpFragment.getStreetViewPanoramaAsync(new OnStreetViewPanoramaReadyCallback() {
+            @Override
+            public void onStreetViewPanoramaReady(StreetViewPanorama streetViewPanorama) {
+
+                if (streetViewPanorama != null && savedInstanceState == null) {
+
+                    streetViewPanorama.setPosition(coordenadas);
+                    streetViewPanorama.setUserNavigationEnabled(true);
+                    streetViewPanorama.setPanningGesturesEnabled(true);
+                    streetViewPanorama.setZoomGesturesEnabled(true);
 
                     Log.d("STREETVIEW", "coordenadas 2: " + coordenadas.latitude + " - " + coordenadas.longitude);
 
-                    mSvp.setPosition(coordenadas);
 
                 }
+
             }
-        }
+        });
+
+
     }
 
     @Override

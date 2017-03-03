@@ -118,12 +118,16 @@ public class HorarioTram {
         this.transbordos = transbordos;
     }
 
-
     public List<HorarioItem> getHorariosItemCombinados() {
+
+        return getHorariosItemCombinados(0);
+    }
+
+    public List<HorarioItem> getHorariosItemCombinados(Integer paso) {
 
         List<HorarioItem> listado = new ArrayList<>();
 
-        if (datosTransbordos != null && !datosTransbordos.isEmpty() && !datosTransbordos.get(0).isErrorServicio() && !datosTransbordos.get(0).isSinDatos()) {
+        if (datosTransbordos != null && !datosTransbordos.isEmpty() && datosTransbordos.size() > paso && !datosTransbordos.get(0).isErrorServicio() && !datosTransbordos.get(0).isSinDatos()) {
 
             HorarioItem info = new HorarioItem();
             info.setInfoRecorrido(new ArrayList<String>());
@@ -162,13 +166,15 @@ public class HorarioTram {
 
         }
 
-        for (int i = 0; i < datosTransbordos.size(); i++) {
+        //for (int i = 0; i < datosTransbordos.size(); i++) {
 
-            List<HorarioItem> items = datosTransbordos.get(i).getHorariosItem();
+        if(datosTransbordos.size() > paso) {
+
+            List<HorarioItem> items = datosTransbordos.get(paso).getHorariosItem();
 
             for (int j = 0; j < items.size(); j++) {
-                if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > i) {
-                    items.get(j).setLinea(lineasTransbordos.get(i));
+                if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > paso) {
+                    items.get(j).setLinea(lineasTransbordos.get(paso));
                 } else {
                     items.get(j).setLinea("");
                 }
@@ -177,6 +183,7 @@ public class HorarioTram {
             listado.addAll(items);
 
         }
+        //}
 
 
         return listado;

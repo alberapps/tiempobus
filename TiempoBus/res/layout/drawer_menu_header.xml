@@ -19,15 +19,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:id="@+id/drawer_header">
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:orientation="vertical"
-        android:background="@color/mi_material_blue_principal">
-
+        android:background="@color/mi_material_blue_principal"
+        android:orientation="vertical">
 
 
         <ImageView
@@ -38,6 +38,70 @@
             android:src="@drawable/promo_alberapps_1000" />
 
 
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="4dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="@string/preferencias_noticias_auto"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+
+                android:textSize="12sp"
+                android:textStyle="italic|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchNoticiasBus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:text="@string/mapas_vehiculo_titulo"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchNoticiasTram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:text="@string/tram_txt"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_aviso_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="9sp" />
 
     </LinearLayout>
 

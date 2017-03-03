@@ -34,7 +34,7 @@ import alberapps.java.util.Utilidades;
  */
 public class ProcesarNoticias {
 
-    public static String URL_SUBUS_NOTICIAS = "http://www.alicante.subus.es/alertas/";
+    public static String URL_SUBUS_NOTICIAS = "http://www.alicante.vectalia.es/alertas/";
 
     public static List<Noticias> getTamNews(Boolean usarCache, String userAgentDefault) throws Exception {
 

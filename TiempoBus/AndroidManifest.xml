@@ -6,11 +6,11 @@
     >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        tools:overrideLibrary="com.google.android.gms,
+        android:minSdkVersion="8"/>
+        <!--tools:overrideLibrary="com.google.android.gms,
         com.google.android.gms.base, com.google.android.gms.maps,
         com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,
-        com.google.android.gms.tasks" />
+        com.google.android.gms.tasks" /-->
 
 
     <supports-screens

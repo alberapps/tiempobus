@@ -20,6 +20,7 @@ package alberapps.java.tram;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Integer destino, String textoDestino) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<>();
 
@@ -54,29 +55,37 @@ public class ProcesarTiemposTramPorHorarios {
 
 
         try {
-            //Lineas de la parada
-            //if (UtilidadesTRAM.esParadaL9(Integer.toString(parada))) {
-            busesList.addAll(obtenerTiemposDesdeHorariosL9(parada));
-            //}
+
+            if (destino != null) {
+
+                busesList.addAll(obtenerTiemposDesdeHorariosConDestino(parada, destino, textoDestino));
+
+            } else {
+
+                //Lineas de la parada
+                //if (UtilidadesTRAM.esParadaL9(Integer.toString(parada))) {
+                busesList.addAll(obtenerTiemposDesdeHorariosL9(parada));
+                //}
 
 
-            /*if (UtilidadesTRAM.esParadaL1(Integer.toString(parada))) {
-                busesList.addAll(obtenerTiemposDesdeHorariosL1(parada));
+                /*if (UtilidadesTRAM.esParadaL1(Integer.toString(parada))) {
+                    busesList.addAll(obtenerTiemposDesdeHorariosL1(parada));
+                }
+
+                //Para otras lineas
+                if (UtilidadesTRAM.esParadaL2(Integer.toString(parada))) {
+                    busesList.addAll(obtenerTiemposDesdeHorariosL2(parada));
+                }
+
+                if (UtilidadesTRAM.esParadaL3(Integer.toString(parada))) {
+                    busesList.addAll(obtenerTiemposDesdeHorariosL3(parada));
+                }
+
+                if (UtilidadesTRAM.esParadaL4(Integer.toString(parada))) {
+                    busesList.addAll(obtenerTiemposDesdeHorariosL4(parada));
+                }
+                */
             }
-
-            //Para otras lineas
-            if (UtilidadesTRAM.esParadaL2(Integer.toString(parada))) {
-                busesList.addAll(obtenerTiemposDesdeHorariosL2(parada));
-            }
-
-            if (UtilidadesTRAM.esParadaL3(Integer.toString(parada))) {
-                busesList.addAll(obtenerTiemposDesdeHorariosL3(parada));
-            }
-
-            if (UtilidadesTRAM.esParadaL4(Integer.toString(parada))) {
-                busesList.addAll(obtenerTiemposDesdeHorariosL4(parada));
-            }
-            */
 
 
         } catch (Exception e) {
@@ -571,5 +580,143 @@ public class ProcesarTiemposTramPorHorarios {
 
     }
 
+    private static void calcularTiempoPorListaHoras(Date hoy, List<String> horasList, BusLlegada ida) {
+
+
+        //Calcular el tiempo a partir de la hora
+        String hora1 = horasList.get(0);
+        String hora2 = "";
+        Date hora1Fecha = Utilidades.getFechaActualConHora(hora1);
+        Date hora2Fecha = null;
+        String minutosTren2 = "";
+
+        String minutosTren1 = Utilidades.getMinutosDiferencia(hoy, hora1Fecha);
+
+        ida.cambiarProximo(Integer.parseInt(minutosTren1) + 1);
+
+        if (horasList.size() > 1) {
+
+            hora2 = horasList.get(1);
+            hora2Fecha = Utilidades.getFechaActualConHora(hora2);
+            minutosTren2 = Utilidades.getMinutosDiferencia(hoy, hora2Fecha);
+
+            ida.cambiarSiguiente(Integer.parseInt(minutosTren2) + 1);
+
+        }
+
+
+    }
+
+
+    /**
+     * Obtener tiempos desde los datos de horarios
+     *
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosConDestino(int parada, int destino, String textoDestino) throws Exception {
+
+        ArrayList<BusLlegada> listado = new ArrayList<>();
+
+        DatosConsultaHorariosTram datosConsulta = new DatosConsultaHorariosTram();
+
+        Date hoy = new Date();
+
+
+        datosConsulta.setCodEstacionOrigen(parada);
+        datosConsulta.setDiaDate(hoy);
+        datosConsulta.setHoraDesde(Utilidades.getHoraString(hoy));
+        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+        int day1 = calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.add(Calendar.HOUR_OF_DAY, 2);
+        int day2 = calendar.get(Calendar.DAY_OF_MONTH);
+        //Control cambio de dia
+        if (day1 == day2) {
+            datosConsulta.setHoraHasta(Utilidades.getHoraString(calendar.getTime()));
+        } else {
+            datosConsulta.setHoraHasta("23:59");
+        }
+
+        datosConsulta.setCodEstacionDestino(destino);
+        HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+
+
+        BusLlegada ida = new BusLlegada();
+        if (horarioTramIda.getDatosTransbordos() != null && !horarioTramIda.getDatosTransbordos().isEmpty()) {
+            String d1 = horarioTramIda.getDatosTransbordos().get(0).getTrenesDestino().split(":")[1].trim();
+            ida.setDestino(d1);
+
+            if(horarioTramIda.getLineasTransbordos() != null) {
+                ida.setLinea(horarioTramIda.getLineasTransbordos().get(0));
+            }else {
+                ida.setLinea("-");
+            }
+
+        } else {
+            ida.setDestino(textoDestino);
+            ida.setLinea("-");
+        }
+
+
+        ida.setProximo("sinestimacion;sinestimacion");
+
+
+        List<String> horariosList = cargarDatos(horarioTramIda);
+
+
+        if (horariosList != null && !horariosList.isEmpty()) {
+            calcularTiempoPorListaHoras(hoy, horariosList, ida);
+        }
+
+        ida.setTiempoReal(false);
+
+        listado.add(ida);
+
+
+        if (listado != null && !listado.isEmpty()) {
+            return listado;
+        } else {
+            return null;
+        }
+
+    }
+
+
+    private static List<String> cargarDatos(HorarioTram datos) {
+
+        HorarioItem horas = null;
+
+        List<String> actualHoras = null;
+
+        List<HorarioItem> datosCombinados = datos.getHorariosItemCombinados();
+
+        if (datos != null && datosCombinados != null && !datosCombinados.isEmpty() && datosCombinados.size() > 1) {
+
+            actualHoras = new ArrayList<>();
+
+            horas = datos.getHorariosItemCombinados().get(1);
+
+            for (int i = 1; i < datos.getHorariosItemCombinados().size(); i++) {
+
+                if (datos.getHorariosItemCombinados().get(i).getDatoInfo().equals(horas.getDatoInfo())) {
+
+                    actualHoras.addAll(Arrays.asList(datos.getHorariosItemCombinados().get(i).getHoras().split(" ")));
+
+                    if (actualHoras.size() > 5) {
+                        actualHoras = actualHoras.subList(0, 5);
+                        break;
+                    }
+
+                } else {
+                    break;
+                }
+            }
+
+
+        }
+
+        return actualHoras;
+    }
 
 }

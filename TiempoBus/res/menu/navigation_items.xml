@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_item_mapa"
+        android:icon="@drawable/ic_map_grey600_48dp"
+        android:title="@string/menu_mapa"
+        android:enabled="true"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/navigation_item_noticias"
+        android:icon="@drawable/ic_my_library_books_grey600_48dp"
+        android:title="@string/tit_noticias"
+        android:enabled="true"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/navigation_item_rutas"
+        android:icon="@drawable/ic_navigation_grey600_48dp"
+        android:title="@string/menu_rutas"
+        android:enabled="true"
+        app:showAsAction="never"/>
+    <!--item
+        android:id="@+id/navigation_item_favoritos"
+        android:icon="@drawable/ic_book_grey600_48dp"
+        android:title="@string/menu_favoritos"
+        android:enabled="true"
+        app:showAsAction="never"/-->
+
+</menu>

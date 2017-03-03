@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
+        <!--item
             android:id="@+id/navigation_item_mapa"
             android:icon="@drawable/ic_map_grey600_48dp"
             android:title="@string/menu_mapa"/>
@@ -13,7 +13,7 @@
         <item
             android:id="@+id/navigation_item_noticias"
             android:icon="@drawable/ic_my_library_books_grey600_48dp"
-            android:title="@string/tit_noticias"/>
+            android:title="@string/tit_noticias"/-->
         <item
             android:id="@+id/navigation_item_favoritos"
             android:icon="@drawable/ic_book_grey600_48dp"

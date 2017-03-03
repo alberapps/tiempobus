@@ -170,7 +170,7 @@
     <string name="aviso_noticia">If content is not displayed correctly, please click the link to access the web</string>
     <string name="noticias_links">Possible links</string>
     <string name="noticias_instrucciones">Click on the ad to open its detail.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Tours are retrieved directly from the site alicante.subus.es.</string>
+    <string name="aviso_buscador_online">Tours are retrieved directly from the site alicante.vectalia.es.</string>
     <string name="streetview_ko">Error accessing Street View. Please check if it is installed.</string>
     <string name="streetview_boton">Street View</string>
 
@@ -375,5 +375,7 @@
     <string name="tarjeta">Cards</string>
     <string name="tarjeta_clima">Weather</string>
     <string name="tarjeta_clima_pref_desc">Data source</string>
+    <string name="satelite">Satellite</string>
+    <string name="tiempo_real">Real Time</string>
 
 </resources>

@@ -85,6 +85,23 @@ public class UtilidadesTRAM {
 
     public static final Integer[] HORARIOS_COD_ESTACION = {7, 2, 49, 38, 20, 108, 106, 33, 44, 115, 31, 107, 22, 42, 35, 51, 40, 11, 121, 9, 10, 29, 21, 28, 50, 34, 37, 17, 14, 43, 116, 39, 119, 46, 113, 117, 48, 30, 111, 36, 114, 6, 27, 47, 13, 109, 8, 118, 4, 3, 103, 12, 41, 112, 26, 16, 110, 19, 15, 5, 124, 122, 104, 32, 45, 105, 123, 25, 120};
 
+    public static String[] LINEAS_HORARIOS = {"L1", "L3", "L4", "L2"};
+    public static String[] LINEAS_HORARIOS_DESC = {"Benidorm", "El Campello", "Plaza La Coruña", "Sant Vicent del Raspeig"};
+
+
+    public static String getLineaHorario(String buscar) {
+
+        for (int i = 0; i < LINEAS_HORARIOS_DESC.length; i++) {
+
+            if (LINEAS_HORARIOS_DESC[i].equals(buscar)) {
+                return LINEAS_HORARIOS[i];
+            }
+
+        }
+
+        return "";
+
+    }
 
     /**
      * Ordena las posiciones del recorrido del tram
@@ -363,7 +380,7 @@ public class UtilidadesTRAM {
      * @param parada
      * @return
      */
-    public static Integer getParadaParaHorarios(Integer parada){
+    public static Integer getParadaParaHorarios(Integer parada) {
 
 
         for (int i = 0; i < L2_ORDEN.length; i++) {

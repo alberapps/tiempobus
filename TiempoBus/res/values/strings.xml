@@ -175,7 +175,7 @@
     <string name="aviso_noticia">Si el contenido no se visualiza correctamente, pulsa el link para acceder a la web</string>
     <string name="noticias_links">Enlaces posibles</string>
     <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de alicante.subus.es.</string>
+    <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de alicante.vectalia.es.</string>
     <string name="horarios_tram_aviso">Los recorridos se recuperan directamente de la web de tramalicante.es</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
@@ -506,6 +506,12 @@
     <string name="sin_novedades">Sin novedades</string>
     <string name="que_hay_cerca">¿Qué hay cerca?</string>
     <string name="tram_txt" translatable="false">Tram</string>
+    <string name="tiempo_real">Tiempo Real</string>
+    <string name="tramalicante" translatable="false">tramalicante.es</string>
+
+    <string name="error_tiempos_tram">El servicio en Tiempo Real del TRAM no responde.\nMientras puedes usar el servicio de horarios.</string>
+
+    <string name="satelite">Satélite</string>
 
 
 </resources>

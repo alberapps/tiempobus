@@ -22,8 +22,10 @@ package alberapps.android.tiempobus.alarma;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -156,12 +158,16 @@ public class AlarmaDiariaReceiver extends BroadcastReceiver {
                 }
             };
 
+            PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+            SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+
+            String paradaDestinoTram = preferencias.getString("parada_destino_tram", "");
 
             // Control de disponibilidad de conexion
             ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(parada, context.getApplicationContext(), false);
+                new LoadTiemposAsyncTask(loadTiemposAsyncTaskResponder).execute(parada, context.getApplicationContext(), false, paradaDestinoTram);
             } else {
                 //Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 

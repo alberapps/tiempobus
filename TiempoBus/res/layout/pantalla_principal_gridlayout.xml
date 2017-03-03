@@ -52,39 +52,63 @@
 
         </FrameLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/boton_circular_cancelar"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="false"
-            android:layout_centerHorizontal="true"
-            android:contentDescription="Cancelar carga"
-            android:src="@drawable/ic_cancel_white_24dp"
-            app:backgroundTint="@color/tram_l1"
-            app:fabSize="normal"
+            android:orientation="vertical">
 
-            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </android.support.design.widget.FloatingActionButton>
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/boton_circular_cancelar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="Guardar favorito"
+                    android:src="@drawable/ic_cancel_white_24dp"
+                    app:backgroundTint="@color/tram_l1"
+                    app:fabSize="normal"
+
+                    >
+
+                </android.support.design.widget.FloatingActionButton>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/boton_circular_fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:contentDescription="Guardar favorito"
+                    android:src="@drawable/ic_bookmark_outline_white_24dp"
+                    app:backgroundTint="@color/mi_material_blue_principal"
+                    app:fabSize="normal">
 
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/boton_circular_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:contentDescription="Guardar favorito"
-            android:src="@drawable/ic_bookmark_outline_white_24dp"
-            app:backgroundTint="@color/mi_material_blue_principal"
-            app:fabSize="normal"
+                </android.support.design.widget.FloatingActionButton>
 
-            >
+            </FrameLayout>
 
+            <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:design="http://schema.android.com/apk/res/android.support.design"
+                android:id="@+id/bottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:itemBackground="@color/mi_material_blue_principal"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
+                app:menu="@menu/navigation_items"
+                />
 
-        </android.support.design.widget.FloatingActionButton>
+        </LinearLayout>
 
     </RelativeLayout>
+
+
 
 </LinearLayout>
