@@ -92,6 +92,7 @@ import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.Utilidades;
+import alberapps.android.tiempobus.barcodereader.BarcodeMainActivity;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
@@ -133,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     protected static final int SUB_ACTIVITY_REQUEST_NOTICIAS = 1005;
 
     protected static final int VOICE_CHECK_CODE = 3000;
+
+    protected static final int SUB_ACTIVITY_REQUEST_BARCODE = 3001;
 
     public static final int CARGAR_IMAGEN = 2000;
 
@@ -851,15 +854,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         botonBarcode.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                iniciarLectorCodigoQr();
 
-                // configurar
-                integrator.setTitleByID(R.string.barcode_titulo);
-                integrator.setMessageByID(R.string.barcode_mensaje);
-                integrator.setButtonYesByID(R.string.barcode_si);
-                integrator.setButtonNoByID(R.string.barcode_no);
-
-                integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
 
             }
         });
@@ -926,6 +922,46 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
+
+    }
+
+    public void iniciarLectorCodigoQr() {
+
+        final CharSequence[] items = {getString(R.string.barcode_opcion_1), getString(R.string.barcode_opcion_2)};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.barcode_opcion_titulo);
+
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (item == 0) {
+
+                    Intent i = new Intent(MainActivity.this, BarcodeMainActivity.class);
+                    startActivityForResult(i, SUB_ACTIVITY_REQUEST_BARCODE);
+
+                } else if (item == 1) {
+
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+
+                    // configurar
+                    integrator.setTitleByID(R.string.barcode_titulo);
+                    integrator.setMessageByID(R.string.barcode_mensaje);
+                    integrator.setButtonYesByID(R.string.barcode_si);
+                    integrator.setButtonNoByID(R.string.barcode_no);
+
+                    integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+
+
+                }
+
+
+            }
+        });
+
+        AlertDialog alert = builder.create();
+
+        alert.show();
 
     }
 
@@ -1246,6 +1282,44 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 } else {
 
                     Toast.makeText(this, getString(R.string.barcode_error), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        } else if (requestCode == SUB_ACTIVITY_REQUEST_BARCODE) {
+
+            //Nuevo barcode reader
+
+            if (resultCode == Activity.RESULT_OK) {
+
+                String result = data.getStringExtra("RESULTADO_BARCODE");
+
+
+                if (result != null) {
+
+
+                    String parada = Utilidades.parsearCodigoParada(result);
+
+                    if (parada != null) {
+
+                        Toast.makeText(this, "QR Code: " + parada, Toast.LENGTH_SHORT).show();
+
+                        paradaActual = Integer.parseInt(parada);
+
+                        // Poner en campo de poste
+                        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+                        txtPoste.setText(Integer.toString(paradaActual));
+
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putInt("parada_inicio", paradaActual);
+                        editor.commit();
+
+                        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
+
+                    } else {
+                        Toast.makeText(this, getString(R.string.barcode_error), Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
             }
 

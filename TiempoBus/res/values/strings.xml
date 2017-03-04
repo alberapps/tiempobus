@@ -514,4 +514,23 @@
     <string name="satelite">Satélite</string>
 
 
+
+    <string name="permission_camera_rationale">Se necesita acceso a la camara</string>
+    <string name="no_camera_permission">No se puede proceder ya que la app no dispone de permiso para acceder a la camara.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Lector de Códigos QR</string>
+    <string name="barcode_header">Pulsa para iniciar la lectura</string>
+    <string name="read_barcode">Leer Código QR</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Flash</string>
+    <string name="barcode_success">Código QR leido correctamente</string>
+    <string name="barcode_failure">Error al leer el Código QR</string>
+    <string name="barcode_error_2">"Error al leer el Código QR: %1$s"</string>
+
+    <string name="barcode_opcion_1">Lector QR de TiempoBus (Beta)</string>
+    <string name="barcode_opcion_2">Barcode Scanner de Zxing</string>
+    <string name="barcode_opcion_titulo">Selecciona lector</string>
+
+
+
 </resources>
