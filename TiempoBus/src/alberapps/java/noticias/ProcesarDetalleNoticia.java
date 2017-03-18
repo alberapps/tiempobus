@@ -18,8 +18,6 @@
  */
 package alberapps.java.noticias;
 
-import android.util.Log;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -38,15 +36,6 @@ import alberapps.java.util.Utilidades;
 public class ProcesarDetalleNoticia {
 
     public static Noticias getDetalleNoticia(String url, String userAgent) throws Exception {
-
-        // Distinguir distintos tipos de noticias
-        /*if (url.contains("/Lineas/Horario.asp")) {
-            // Tipo horario
-            return getDetalleNoticiaHorarios(url);
-        } else {
-            // Para el resto
-            return getDetalleNoticiaAvisoModificacion(url);
-        }*/
 
         return getDetalleNoticiaNuevo(url, userAgent);
 
@@ -84,18 +73,17 @@ public class ProcesarDetalleNoticia {
 
             String fechaTextoSalida = null;
 
-            if(fechaTexto.length() > 8){
+            if (fechaTexto.length() > 8) {
 
                 //del 09/03/15 al 09/06/15
 
                 fechaTextoSalida = fechaTexto;
 
-            }else {
+            } else {
 
                 fechaTextoSalida = Utilidades.getFechaStringSinHora(Utilidades.getFechaDateCorta(fechaTexto));
 
             }
-
 
 
             noticias.setFechaCabecera(fechaTextoSalida);
@@ -145,184 +133,5 @@ public class ProcesarDetalleNoticia {
         return noticias;
     }
 
-
-    /**
-     * Noticias de tipo Aviso y Modificacion
-     *
-     * @param url
-     * @return noticias
-     * @throws Exception
-     */
-    public static Noticias getDetalleNoticiaAvisoModificacion(String url) throws Exception {
-
-        InputStream st = null;
-
-        Noticias noticias = null;
-
-
-        try {
-
-            //st = Conectividad.conexionGetIsoStream(url);
-
-            String datos = Conectividad.conexionGetIsoString(url);
-
-            byte[] utf8 = datos.getBytes("UTF-8");
-
-            //Log.d("PRUEBA UTF-8", "html: " + new String(utf8));
-
-
-//            Document doc = Jsoup.parse(st, "ISO-8859-1", url);
-
-            Document doc = Jsoup.parse(new String(utf8), url);
-
-            noticias = new Noticias();
-
-            // String title = doc.title();
-
-            Elements tables = doc.select("table"); // a with href
-
-            Element tabla = tables.get(4);
-
-            Elements filas = tabla.select("tr");
-
-            Element filaDetalle = filas.get(7);
-
-            // Por si hay lineas extra
-            for (int i = 7; i < filas.size(); i++) {
-                if (filas.get(i).select("td").size() > 1) {
-                    filaDetalle = filas.get(i);
-                    break;
-                }
-            }
-
-            Elements cont1 = filaDetalle.select("td");
-
-            Element cont2 = cont1.get(1);
-
-            // Limpiar resultado
-            String safe = Jsoup.clean(cont2.html(), "http://www.subus.es/Lineas/", Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
-
-            // Problema caracteres
-            //String limpiar = safe.replace("", "-").replace("", "&euro;");
-            String limpiar = safe;
-
-            Log.d("NOTICIAS", "html: " + limpiar);
-
-            noticias.setContenidoHtml(limpiar);
-
-            // Cabecera
-            Element filaCabecera2 = filas.get(5);
-            Elements contCabecera2 = filaCabecera2.select("td");
-            noticias.setFechaCabecera(contCabecera2.get(0).text().trim());
-            noticias.setTituloCabecera(contCabecera2.get(1).text().trim());
-
-            // Cabecera linea
-            noticias.setLineaCabecera(filas.get(1).text().trim());
-
-        } catch (Exception e) {
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (IOException eb) {
-
-            }
-
-            throw e;
-
-        } finally {
-
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (IOException eb) {
-
-            }
-
-        }
-
-        return noticias;
-    }
-
-    /**
-     * Noticias del tipo horario
-     *
-     * @param url
-     * @return noticias
-     * @throws Exception
-     */
-    public static Noticias getDetalleNoticiaHorarios(String url) throws Exception {
-
-        InputStream st = null;
-
-        Noticias noticias = null;
-
-        try {
-
-            st = Conectividad.conexionGetIsoStream(url);
-
-            Document doc = Jsoup.parse(st, "ISO-8859-1", url);
-
-            noticias = new Noticias();
-
-            // String title = doc.title();
-
-            Elements tables = doc.select("table"); // a with href
-
-            Element tabla = tables.get(3);
-
-            Elements filas = tables.get(4).select("tr");
-
-            // Element filaDetalle = filas.get(7);
-
-            // Elements cont1 = filaDetalle.select("td");
-
-            // Element cont2 = cont1.get(1);
-
-            // Limpiar resultado
-            String safe = Jsoup.clean(tabla.html(), Whitelist.basic().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan"));
-
-            // Problema caracteres
-            String limpiar = safe.replace("", "-").replace("", "&euro;");
-
-            Log.d("NOTICIAS", "html: " + limpiar);
-
-            noticias.setContenidoHtml(limpiar);
-
-            // Cabecera
-            // Element filaCabecera2 = filas.get(5);
-            // Elements contCabecera2 = filaCabecera2.select("td");
-            noticias.setFechaCabecera("");
-            noticias.setTituloCabecera("");
-
-            // Cabecera linea
-            noticias.setLineaCabecera(filas.get(1).text().trim());
-
-        } catch (Exception e) {
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (IOException eb) {
-
-            }
-
-            throw e;
-
-        } finally {
-
-            try {
-                if (st != null) {
-                    st.close();
-                }
-            } catch (IOException eb) {
-
-            }
-
-        }
-
-        return noticias;
-    }
 
 }

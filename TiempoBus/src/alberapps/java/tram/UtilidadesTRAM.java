@@ -89,12 +89,32 @@ public class UtilidadesTRAM {
     public static String[] LINEAS_HORARIOS_DESC = {"Benidorm", "El Campello", "Plaza La Coruña", "Sant Vicent del Raspeig"};
 
 
-    public static String getLineaHorario(String buscar) {
+    public static String getLineaHorario(String buscar, int parada) {
 
-        for (int i = 0; i < LINEAS_HORARIOS_DESC.length; i++) {
+        if (!buscar.equals("Alicante-Luceros")) {
 
-            if (LINEAS_HORARIOS_DESC[i].equals(buscar)) {
-                return LINEAS_HORARIOS[i];
+            for (int i = 0; i < LINEAS_HORARIOS_DESC.length; i++) {
+
+                if (LINEAS_HORARIOS_DESC[i].equals(buscar)) {
+                    return LINEAS_HORARIOS[i];
+                }
+
+            }
+
+        } else {
+
+            if (esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
+                    && !esParadaL4(Integer.toString(parada))) {
+                return "L2";
+            } else if (!esParadaL2(Integer.toString(parada)) && esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
+                    && !esParadaL4(Integer.toString(parada))) {
+                return "L1";
+            } else if (!esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && esParadaL3(Integer.toString(parada))
+                    && !esParadaL4(Integer.toString(parada))) {
+                return "L3";
+            } else if (!esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
+                    && esParadaL4(Integer.toString(parada))) {
+                return "L4";
             }
 
         }

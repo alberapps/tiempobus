@@ -341,6 +341,36 @@ public class UtilidadesUI {
 
     }
 
+    /**
+     * Idioma para la web de subus
+     *
+     * @return idioma
+     */
+    public static String getIdiomaWebSubus() {
+
+        String idioma = null;
+
+        try {
+            String locale = Locale.getDefault().getLanguage();
+
+            if (locale.substring(0, 2).equals("es")) {
+                idioma = "";
+            } else if (locale.substring(0, 2).equals("ca")) {
+                idioma = "ca";
+            } else if (locale.substring(0, 2).equals("en")) {
+                idioma = "";
+            } else {
+                idioma = "";
+            }
+
+        } catch (Exception e) {
+            idioma = "";
+        }
+
+        return idioma;
+
+    }
+
 
     /**
      * Locale adecuado

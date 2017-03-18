@@ -39,6 +39,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.tram.ProcesarTiemposTramPorHorarios;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.horarios.DatosConsultaHorariosTram;
 import alberapps.java.tram.horarios.HorarioItem;
@@ -324,135 +325,120 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         HorarioItem horas = null;
 
-        View horariosPaso2 = getView().findViewById(R.id.horarios_paso2);
-        View horariosPaso3 = getView().findViewById(R.id.horarios_paso3);
-        View datosLineaC = getView().findViewById(R.id.datos_linea_c);
-        View datosLineasPosibles = getView().findViewById(R.id.datos_lineas_posibles);
+        try {
 
-        if (getView() != null) {
-            TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
-            TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
+            View horariosPaso2 = getView().findViewById(R.id.horarios_paso2);
+            View horariosPaso3 = getView().findViewById(R.id.horarios_paso3);
+            View datosLineaC = getView().findViewById(R.id.datos_linea_c);
+            View datosLineasPosibles = getView().findViewById(R.id.datos_lineas_posibles);
 
-            if (recarga) {
-                datosHoras.setText(getString(R.string.aviso_recarga));
-                datosInfo.setText("");
-                horariosPaso2.setVisibility(View.GONE);
-                horariosPaso3.setVisibility(View.GONE);
-                datosLineasPosibles.setVisibility(View.GONE);
-                return;
-            }
+            if (getView() != null) {
+                TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
+                TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
 
-            if (datos != null && datos.getHorariosItemCombinados() != null && !datos.getHorariosItemCombinados().isEmpty() && datos.getHorariosItemCombinados().size() > 1) {
+                if (recarga) {
+                    datosHoras.setText(getString(R.string.aviso_recarga));
+                    datosInfo.setText("");
+                    horariosPaso2.setVisibility(View.GONE);
+                    horariosPaso3.setVisibility(View.GONE);
+                    datosLineasPosibles.setVisibility(View.GONE);
+                    return;
+                }
 
-                actualHoras = getActualHoras(datos, 0);
-                horas = datos.getHorariosItemCombinados(0).get(1);
+                if (datos != null && datos.getHorariosItemCombinados() != null && !datos.getHorariosItemCombinados().isEmpty() && datos.getHorariosItemCombinados().size() > 1) {
 
-                String stringHoras = getStringHoras(actualHoras);
-                datosHoras.setText(stringHoras);
-                datosInfo.setText(horas.getDatoInfo().replace("Paso ", ""));
+                    actualHoras = getActualHoras(datos, 0);
+                    horas = datos.getHorariosItemCombinados(0).get(1);
 
-
-                if (datos.getHorariosItemCombinados(1).size() > 1) {
-
-                    datosLineaC.setVisibility(View.VISIBLE);
-                    TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
-                    datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
-                    //Formato colores
-                    DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, datos.getHorariosItemCombinados(0).get(1).getLinea(), false);
-
-                    TextView datosLinea2 = (TextView) getView().findViewById(R.id.datos_linea2);
-                    datosLinea2.setText(datos.getHorariosItemCombinados(1).get(1).getLinea());
-                    //Formato colores
-                    DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea2, datos.getHorariosItemCombinados(1).get(1).getLinea(), false);
-
-                    List<String> actualHorasPaso2 = getActualHoras(datos, 1);
-                    HorarioItem horasPaso2 = datos.getHorariosItemCombinados(1).get(1);
-
-                    String stringHorasPaso2 = getStringHoras(actualHorasPaso2);
-
-                    TextView datosHoras2 = (TextView) getView().findViewById(R.id.datos_horas_2);
-                    TextView datosInfo2 = (TextView) getView().findViewById(R.id.datos_info_2);
-                    datosHoras2.setText(stringHorasPaso2);
-                    datosInfo2.setText(horasPaso2.getDatoInfo().replace("Paso ", ""));
+                    String stringHoras = getStringHoras(actualHoras);
+                    datosHoras.setText(stringHoras);
+                    datosInfo.setText(horas.getDatoInfo().replace("Paso ", ""));
 
 
-                    horariosPaso2.setVisibility(View.VISIBLE);
+                    if (datos.getHorariosItemCombinados(1).size() > 1) {
 
-                    if (datos.getHorariosItemCombinados(2).size() > 1) {
-
-                        TextView datosLinea3 = (TextView) getView().findViewById(R.id.datos_linea3);
-                        datosLinea3.setText(datos.getHorariosItemCombinados(2).get(1).getLinea());
+                        datosLineaC.setVisibility(View.VISIBLE);
+                        TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
+                        datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
                         //Formato colores
-                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea3, datos.getHorariosItemCombinados(2).get(1).getLinea(), false);
+                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, datos.getHorariosItemCombinados(0).get(1).getLinea(), false);
 
-                        List<String> actualHorasPaso3 = getActualHoras(datos, 2);
-                        HorarioItem horasPaso3 = datos.getHorariosItemCombinados(2).get(1);
+                        TextView datosLinea2 = (TextView) getView().findViewById(R.id.datos_linea2);
+                        datosLinea2.setText(datos.getHorariosItemCombinados(1).get(1).getLinea());
+                        //Formato colores
+                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea2, datos.getHorariosItemCombinados(1).get(1).getLinea(), false);
 
-                        String stringHorasPaso3 = getStringHoras(actualHorasPaso3);
+                        List<String> actualHorasPaso2 = getActualHoras(datos, 1);
+                        HorarioItem horasPaso2 = datos.getHorariosItemCombinados(1).get(1);
 
-                        TextView datosHoras3 = (TextView) getView().findViewById(R.id.datos_horas_3);
-                        TextView datosInfo3 = (TextView) getView().findViewById(R.id.datos_info_3);
-                        datosHoras3.setText(stringHorasPaso3);
-                        datosInfo3.setText(horasPaso3.getDatoInfo().replace("Paso ", ""));
+                        String stringHorasPaso2 = getStringHoras(actualHorasPaso2);
+
+                        TextView datosHoras2 = (TextView) getView().findViewById(R.id.datos_horas_2);
+                        TextView datosInfo2 = (TextView) getView().findViewById(R.id.datos_info_2);
+                        datosHoras2.setText(stringHorasPaso2);
+                        datosInfo2.setText(horasPaso2.getDatoInfo().replace("Paso ", ""));
 
 
-                        horariosPaso3.setVisibility(View.VISIBLE);
+                        horariosPaso2.setVisibility(View.VISIBLE);
+
+                        if (datos.getHorariosItemCombinados(2).size() > 1) {
+
+                            TextView datosLinea3 = (TextView) getView().findViewById(R.id.datos_linea3);
+                            datosLinea3.setText(datos.getHorariosItemCombinados(2).get(1).getLinea());
+                            //Formato colores
+                            DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea3, datos.getHorariosItemCombinados(2).get(1).getLinea(), false);
+
+                            List<String> actualHorasPaso3 = getActualHoras(datos, 2);
+                            HorarioItem horasPaso3 = datos.getHorariosItemCombinados(2).get(1);
+
+                            String stringHorasPaso3 = getStringHoras(actualHorasPaso3);
+
+                            TextView datosHoras3 = (TextView) getView().findViewById(R.id.datos_horas_3);
+                            TextView datosInfo3 = (TextView) getView().findViewById(R.id.datos_info_3);
+                            datosHoras3.setText(stringHorasPaso3);
+                            datosInfo3.setText(horasPaso3.getDatoInfo().replace("Paso ", ""));
+
+
+                            horariosPaso3.setVisibility(View.VISIBLE);
+
+                        } else {
+                            horariosPaso3.setVisibility(View.GONE);
+                        }
+
 
                     } else {
-                        horariosPaso3.setVisibility(View.GONE);
-                    }
+                        horariosPaso2.setVisibility(View.GONE);
+                        datosLineaC.setVisibility(View.GONE);
 
+                        String lineas = ProcesarTiemposTramPorHorarios.getLineasPorNombreDestino(datos, ((MainActivity) getActivity()).paradaActual);
 
-                } else {
-                    horariosPaso2.setVisibility(View.GONE);
-                    datosLineaC.setVisibility(View.GONE);
-
-                    String lineas = "";
-
-                    if (datos.getDatosTransbordos() != null && !datos.getDatosTransbordos().isEmpty()) {
-
-                        String[] grupo1 = datos.getDatosTransbordos().get(0).getTrenesDestino().split(":");
-                        if (grupo1.length == 2) {
-                            String[] grupo2 = grupo1[1].trim().split(",");
-
-                            if (grupo2.length > 0) {
-                                for (int i = 0; i < grupo2.length; i++) {
-
-                                    if (!lineas.equals("")) {
-                                        lineas += ",";
-                                    }
-
-                                    lineas += UtilidadesTRAM.getLineaHorario(grupo2[i].trim());
-
-                                }
-                            }
-
+                        //Lineas posibles
+                        if (!lineas.equals("") && lineas.contains(",")) {
+                            datosLineasPosibles.setVisibility(View.VISIBLE);
+                            InfoLineaParadasAdapter.mostrarLineasParada(getContext(), datosLineasPosibles, lineas);
+                        } else if (!lineas.equals("")) {
+                            datosLineaC.setVisibility(View.VISIBLE);
+                            TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
+                            datosLinea.setText(lineas);
+                            //Formato colores
+                            DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, lineas, false);
                         }
 
                     }
 
-                    //Lineas posibles
-                    if (!lineas.equals("") && lineas.contains(",")) {
-                        datosLineasPosibles.setVisibility(View.VISIBLE);
-                        InfoLineaParadasAdapter.mostrarLineasParada(getContext(), datosLineasPosibles, lineas);
-                    } else if (!lineas.equals("")) {
-                        datosLineaC.setVisibility(View.VISIBLE);
-                        TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
-                        datosLinea.setText(lineas);
-                        //Formato colores
-                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, lineas, false);
-                    }
+                } else {
+
+                    datosHoras.setText(getString(R.string.aviso_error_datos));
+                    datosInfo.setText("");
 
                 }
 
-            } else {
-
-                datosHoras.setText(getString(R.string.aviso_error_datos));
-                datosInfo.setText("");
-
             }
 
+        }catch(Exception e) {
+            e.printStackTrace();
         }
+
     }
 
 

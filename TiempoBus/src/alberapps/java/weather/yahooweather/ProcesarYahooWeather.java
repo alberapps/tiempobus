@@ -65,20 +65,6 @@ public class ProcesarYahooWeather {
 
         try {
 
-
-            /*
-            select * from weather.forecast where woeid in (select woeid from geo.placefinder where text='38.349491,-0.50056' and gflags='LR' and locale='ES') and u = 'c'
-
-            https://query.yahooapis.com/v1/public/yql?q=
-
-            &format=json&diagnostics=true&callback=
-
-            https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.placefinder%20where%20text%3D'38.349491%2C-0.50056'%20and%20gflags%3D'LR'%20and%20locale%3D'ES')%20and%20u%20%3D%20'c'&format=json&callback=
-
-            */
-
-            //String query = "select * from weather.forecast where woeid in (select woeid from geo.placefinder where text='38.349491,-0.50056' and gflags='LR' and locale='ES') and u = 'c'";
-
             //Localizacion por google
             String textLocalizacion = "";
             if (localizacion != null && localizacion.getLocalidad() != null && !localizacion.getLocalidad().equals("")) {

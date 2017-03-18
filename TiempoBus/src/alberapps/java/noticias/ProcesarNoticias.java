@@ -18,6 +18,8 @@
  */
 package alberapps.java.noticias;
 
+import android.net.Uri;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
@@ -34,14 +37,18 @@ import alberapps.java.util.Utilidades;
  */
 public class ProcesarNoticias {
 
-    public static String URL_SUBUS_NOTICIAS = "http://www.alicante.vectalia.es/alertas/";
+    //public static String URL_SUBUS_NOTICIAS = "http://www.alicante.vectalia.es/alertas/";
 
     public static List<Noticias> getTamNews(Boolean usarCache, String userAgentDefault) throws Exception {
 
         List<Noticias> noticias = new ArrayList<>();
 
-        Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(URL_SUBUS_NOTICIAS, usarCache, userAgentDefault)), "UTF-8", URL_SUBUS_NOTICIAS);
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http").authority("www.alicante.vectalia.es");
+        builder.appendPath(UtilidadesUI.getIdiomaWebSubus());
+        builder.appendPath("alertas");
 
+        Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault)), "UTF-8", builder.toString());
 
         //Seccion de noticias
         Elements seccionNoticias = doc.select("div.novedades_alertas");
@@ -72,7 +79,7 @@ public class ProcesarNoticias {
 
             String fechaDoble = null;
 
-            if(fecha.length() > 8){
+            if (fecha.length() > 8) {
 
                 //del 09/03/15 al 09/06/15
 
@@ -87,7 +94,7 @@ public class ProcesarNoticias {
 
             noticia.setFecha(Utilidades.getFechaDateCorta(fecha));
 
-            if(fechaDoble != null){
+            if (fechaDoble != null) {
                 noticia.setFechaDoble(fechaDoble);
             }
 

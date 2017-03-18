@@ -623,8 +623,10 @@ public class ProcesarTiemposTramPorHorarios {
 
         Date hoy = new Date();
 
+        //Codigo teniendo en cuenta si es de la L2
+        int codEstacionOrigen = UtilidadesTRAM.getParadaParaHorarios(parada);
 
-        datosConsulta.setCodEstacionOrigen(parada);
+        datosConsulta.setCodEstacionOrigen(codEstacionOrigen);
         datosConsulta.setDiaDate(hoy);
         datosConsulta.setHoraDesde(Utilidades.getHoraString(hoy));
         Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
@@ -647,10 +649,22 @@ public class ProcesarTiemposTramPorHorarios {
             String d1 = horarioTramIda.getDatosTransbordos().get(0).getTrenesDestino().split(":")[1].trim();
             ida.setDestino(d1);
 
-            if(horarioTramIda.getLineasTransbordos() != null) {
+            if (horarioTramIda.getLineasTransbordos() != null) {
                 ida.setLinea(horarioTramIda.getLineasTransbordos().get(0));
-            }else {
-                ida.setLinea("-");
+            } else {
+
+                String lineas = ProcesarTiemposTramPorHorarios.getLineasPorNombreDestino(horarioTramIda, parada);
+
+                //Lineas posibles
+                if (!lineas.equals("") && lineas.contains(",")) {
+                    ida.setLinea("-");
+                } else if (!lineas.equals("")) {
+                    ida.setLinea(lineas);
+                } else {
+                    ida.setLinea("-");
+                }
+
+
             }
 
         } else {
@@ -717,6 +731,41 @@ public class ProcesarTiemposTramPorHorarios {
         }
 
         return actualHoras;
+    }
+
+
+    public static String getLineasPorNombreDestino(HorarioTram datos, int paradaActual) {
+
+        String lineas = "";
+
+        if (datos.getDatosTransbordos() != null && !datos.getDatosTransbordos().isEmpty()) {
+
+            String[] grupo1 = datos.getDatosTransbordos().get(0).getTrenesDestino().split(":");
+            if (grupo1.length == 2) {
+                String[] grupo2 = grupo1[1].trim().split(",");
+
+                if (grupo2.length > 0) {
+                    for (int i = 0; i < grupo2.length; i++) {
+
+                        if (!lineas.equals("")) {
+                            lineas += ",";
+                        }
+
+                        lineas += UtilidadesTRAM.getLineaHorario(grupo2[i].trim(), paradaActual);
+
+
+
+                    }
+                }
+
+            }
+
+        }
+
+
+
+        return lineas;
+
     }
 
 }
