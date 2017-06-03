@@ -33,6 +33,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLinea;
+import alberapps.java.tam.DatosTam;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
@@ -42,7 +43,7 @@ import alberapps.java.util.Conectividad;
  */
 public class ProcesarDatosLineasIsaeService {
 
-    public static final String URL_SUBUS_LINEAS = "http://isaealicante.subus.es/movil/estima.aspx";
+    //public static final String URL_SUBUS_LINEAS = "http://isaealicante.subus.es/movil/estima.aspx";
 
     public static List<DatosLinea> getLineasInfo(String offline) {
 
@@ -56,8 +57,8 @@ public class ProcesarDatosLineasIsaeService {
 
             // Carga desde internet o desde fichero local
             if (offline == null) {
-                st = Conectividad.conexionGetIsoStream(URL_SUBUS_LINEAS);
-                doc = Jsoup.parse(st, "ISO-8859-1", URL_SUBUS_LINEAS);
+                st = Conectividad.conexionGetIsoStream(DatosTam.URL_SERVIDOR_LINEAS);
+                doc = Jsoup.parse(st, "ISO-8859-1", DatosTam.URL_SERVIDOR_LINEAS);
             } else {
 
                 Log.d("lineas", "datos offline: " + offline);

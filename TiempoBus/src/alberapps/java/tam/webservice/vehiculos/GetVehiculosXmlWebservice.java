@@ -17,6 +17,13 @@
  */
 package alberapps.java.tam.webservice.vehiculos;
 
+import android.net.Uri;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,17 +31,13 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
+import alberapps.java.tam.DatosTam;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 public class GetVehiculosXmlWebservice {
 
-	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
+	//private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
 	/**
 	 * Consulta del servicioWeb y mapeo de la respuesta
@@ -52,7 +55,16 @@ public class GetVehiculosXmlWebservice {
 
 		try {
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea), tiemposCache));
+			//is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea), tiemposCache));
+
+			Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_DINAMICA_VEHICULOS).buildUpon();
+			builder.appendQueryParameter("linea", linea);
+			builder.build();
+
+			String resp = Conectividad.conexionGetUtf8(builder.toString());
+			resp = resp.substring(resp.indexOf("<soap:Envelope"));
+			is = Utilidades.stringToStream(resp);
+
 
 			if (is != null) {
 

@@ -1,22 +1,23 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2015 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2015 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tam.webservice.dinamica;
 
+import android.net.Uri;
 import android.util.Log;
 import android.util.Xml;
 
@@ -33,12 +34,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import alberapps.java.tam.DatosTam;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 public class DinamicaPasoParadaParser {
 
-    private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
+    //private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
     /**
      * Consulta del servicioWeb y mapeo de la respuesta
@@ -56,7 +58,18 @@ public class DinamicaPasoParadaParser {
 
         try {
 
-            is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada), cacheTiempos));
+            //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada), cacheTiempos));
+
+            Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_DINAMICA_PASOPARADA).buildUpon();
+            if (linea != null) {
+                builder.appendQueryParameter("linea", linea);
+            }
+            builder.appendQueryParameter("parada", parada);
+            builder.build();
+
+            String resp = Conectividad.conexionGetUtf8(builder.toString());
+            resp = resp.substring(resp.indexOf("<soap:Envelope"));
+            is = Utilidades.stringToStream(resp);
 
             if (is != null) {
 
@@ -119,6 +132,8 @@ public class DinamicaPasoParadaParser {
         } finally {
             in.close();
         }
+
+
     }
 
 

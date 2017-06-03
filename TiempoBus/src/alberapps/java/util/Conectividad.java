@@ -56,7 +56,7 @@ import alberapps.android.tiempobus.util.Comunes;
  */
 public class Conectividad {
 
-    public static final String USER_AGENT = "TiempoBus/3.5 (http://alberapps.blogspot.com; alberapps@gmail.com)";
+    public static final String USER_AGENT = "TiempoBus/4.0 (http://alberapps.blogspot.com; alberapps@gmail.com)";
 
     /**
      * Conexion con post y codificacion UTF-8
@@ -147,6 +147,20 @@ public class Conectividad {
 
 
         return datos;
+
+    }
+
+    /**
+     * Conexion con get y codificacion UTF-8
+     * <p/>
+     * Sin cache
+     *
+     * @param url
+     * @return
+     */
+    public static String conexionGetUtf8(String url) throws Exception {
+
+        return conexionGetIso(url, false, null, true);
 
     }
 

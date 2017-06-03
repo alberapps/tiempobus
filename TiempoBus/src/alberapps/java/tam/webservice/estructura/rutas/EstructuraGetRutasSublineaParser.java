@@ -17,6 +17,7 @@
  */
 package alberapps.java.tam.webservice.estructura.rutas;
 
+import android.net.Uri;
 import android.util.Log;
 import android.util.Xml;
 
@@ -28,12 +29,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import alberapps.java.tam.DatosTam;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 public class EstructuraGetRutasSublineaParser {
 
-    private String URL = "http://isaealicante.subus.es/services/estructura.asmx";
+    //private String URL = "http://isaealicante.subus.es/services/estructura.asmx";
 
     /**
      * Consulta del servicioWeb y mapeo de la respuesta
@@ -51,7 +53,17 @@ public class EstructuraGetRutasSublineaParser {
 
         try {
 
-            is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, sublinea), cache));
+            //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, sublinea), cache));
+
+            Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_ESTRUCTURA_RUTAS).buildUpon();
+            builder.appendQueryParameter("linea", linea);
+            builder.appendQueryParameter("sublinea", sublinea);
+            builder.build();
+
+            String resp = Conectividad.conexionGetUtf8(builder.toString());
+            resp = resp.substring(resp.indexOf("<soap:Envelope"));
+            is = Utilidades.stringToStream(resp);
+
 
             if (is != null) {
 
