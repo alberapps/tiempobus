@@ -1,21 +1,29 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tam.webservice;
+
+import android.net.Uri;
+import android.util.Log;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -28,213 +36,219 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
+import alberapps.java.tam.DatosTam;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
-import android.util.Log;
 
 public class GetPasoParadaXmlWebservice {
 
-	private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
+    //private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
-	/**
-	 * Consulta del servicioWeb y mapeo de la respuesta
-	 * 
-	 * @param linea
-	 * @param parada
-	 * @return
-	 * @throws Exception
-	 */
-	public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
+    /**
+     * Consulta del servicioWeb y mapeo de la respuesta
+     *
+     * @param linea
+     * @param parada
+     * @return
+     * @throws Exception
+     */
+    public GetPasoParadaResult consultarServicio(String linea, String parada) throws Exception {
 
-		InputStream is = null;
+        InputStream is = null;
 
-		GetPasoParadaResult resultados = new GetPasoParadaResult();
-		
-		try {
+        GetPasoParadaResult resultados = new GetPasoParadaResult();
 
-			is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada)));
+        try {
 
-			if (is != null) {
+            //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada)));
 
-				resultados = parse(is);
+            Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_DINAMICA_PASOPARADA).buildUpon();
+            if (linea != null) {
+                builder.appendQueryParameter("linea", linea);
+            }
+            builder.appendQueryParameter("parada", parada);
+            builder.build();
 
-			} else {
+            String resp = Conectividad.conexionGetUtf8(builder.toString());
+            resp = resp.substring(resp.indexOf("<soap:Envelope"));
+            is = Utilidades.stringToStream(resp);
 
-				// resultados
+            if (is != null) {
 
-			}
+                resultados = parse(is);
 
-		} catch (Exception e) {
+            } else {
 
-			Log.d("webservice", "Error consulta tiempos: " + linea + " - " + parada);
+                // resultados
 
-			e.printStackTrace();
+            }
 
-			try {
+        } catch (Exception e) {
 
-				is.close();
-			} catch (Exception ex) {
+            Log.d("webservice", "Error consulta tiempos: " + linea + " - " + parada);
 
-			}
+            e.printStackTrace();
 
-			// Respuesta no esperada del servicio
-			throw e;
+            try {
 
-		} finally {
-			try {
+                is.close();
+            } catch (Exception ex) {
 
-				is.close();
-			} catch (Exception e) {
+            }
 
-			}
-		}
+            // Respuesta no esperada del servicio
+            throw e;
 
-		return resultados;
+        } finally {
+            try {
 
-	}
+                is.close();
+            } catch (Exception e) {
 
-	/**
-	 * Parsear entrada
-	 * 
-	 * @param is
-	 * @return
-	 */
-	public GetPasoParadaResult parse(InputStream is) {
-		// Instanciamos la fábrica para DOM
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
+            }
+        }
 
-		GetPasoParadaResult resultados = new GetPasoParadaResult();
+        return resultados;
 
-		try {
-			// Creamos un nuevo parser DOM
-			DocumentBuilder builder = factory.newDocumentBuilder();
+    }
 
-			// Realizamos lalectura completa del XML
-			Document dom = builder.parse(is);
+    /**
+     * Parsear entrada
+     *
+     * @param is
+     * @return
+     */
+    public GetPasoParadaResult parse(InputStream is) {
+        // Instanciamos la fábrica para DOM
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
 
-			// Nos posicionamos en el nodo principal del árbol (<kml>)
-			Element root = dom.getDocumentElement();
+        GetPasoParadaResult resultados = new GetPasoParadaResult();
 
-			// Folder principal
-			NodeList pasoParadaResultList = root.getElementsByTagName("PasoParada");
+        try {
+            // Creamos un nuevo parser DOM
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-			for (int i = 0; i < pasoParadaResultList.getLength(); i++) {
+            // Realizamos lalectura completa del XML
+            Document dom = builder.parse(is);
 
-				// pasoParada
-				Node pasoParada = pasoParadaResultList.item(i);
+            // Nos posicionamos en el nodo principal del árbol (<kml>)
+            Element root = dom.getDocumentElement();
 
-				NodeList datosParada = pasoParada.getChildNodes();
+            // Folder principal
+            NodeList pasoParadaResultList = root.getElementsByTagName("PasoParada");
 
-				// e1 minutos
-				String minutos1 = datosParada.item(1).getChildNodes().item(0).getChildNodes().item(0).getNodeValue();
+            for (int i = 0; i < pasoParadaResultList.getLength(); i++) {
 
-				// e2 minutos
-				String minutos2 = datosParada.item(2).getChildNodes().item(0).getChildNodes().item(0).getNodeValue();
+                // pasoParada
+                Node pasoParada = pasoParadaResultList.item(i);
 
-				// linea
-				String linea = datosParada.item(3).getChildNodes().item(0).getNodeValue();
+                NodeList datosParada = pasoParada.getChildNodes();
 
-				// parada
-				String parada = datosParada.item(4).getChildNodes().item(0).getNodeValue();
+                // e1 minutos
+                String minutos1 = datosParada.item(1).getChildNodes().item(0).getChildNodes().item(0).getNodeValue();
 
-				// ruta
-				String ruta = datosParada.item(5).getChildNodes().item(0).getNodeValue();
+                // e2 minutos
+                String minutos2 = datosParada.item(2).getChildNodes().item(0).getChildNodes().item(0).getNodeValue();
 
-				PasoParada pasoP = new PasoParada();
+                // linea
+                String linea = datosParada.item(3).getChildNodes().item(0).getNodeValue();
 
-				pasoP.getE1().setMinutos(getFormatoTiempoEspera(minutos1));
+                // parada
+                String parada = datosParada.item(4).getChildNodes().item(0).getNodeValue();
 
-				pasoP.getE2().setMinutos(getFormatoTiempoEspera(minutos2));
+                // ruta
+                String ruta = datosParada.item(5).getChildNodes().item(0).getNodeValue();
 
-				pasoP.setLinea(linea);
-				pasoP.setParada(parada);
-				pasoP.setRuta(ruta);
+                PasoParada pasoP = new PasoParada();
 
-				pasoParadaList.add(pasoP);
+                pasoP.getE1().setMinutos(getFormatoTiempoEspera(minutos1));
 
-			}
+                pasoP.getE2().setMinutos(getFormatoTiempoEspera(minutos2));
 
-			NodeList statusList = root.getElementsByTagName("status");
+                pasoP.setLinea(linea);
+                pasoP.setParada(parada);
+                pasoP.setRuta(ruta);
 
-			// Status
-			String status = statusList.item(0).getChildNodes().item(0).getNodeValue();
+                pasoParadaList.add(pasoP);
 
-			resultados.setStatus(status);
+            }
 
-			resultados.setPasoParadaList(pasoParadaList);
+            NodeList statusList = root.getElementsByTagName("status");
 
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
+            // Status
+            String status = statusList.item(0).getChildNodes().item(0).getNodeValue();
 
-		return resultados;
-	}
+            resultados.setStatus(status);
 
-	/**
-	 * Construir post con parada o con linea-parada
-	 * 
-	 * @param linea
-	 * @param parada
-	 * @return string
-	 */
-	private String datosPost(String linea, String parada) {
+            resultados.setPasoParadaList(pasoParadaList);
 
-		StringBuffer sr = new StringBuffer("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
 
-		sr.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
-		sr.append("<soap:Body> <GetPasoParada xmlns=\"http://tempuri.org/\">");
+        return resultados;
+    }
 
-		// Linea
-		if (linea != null && !linea.equals("")) {
-			sr.append("<linea>");
-			sr.append(linea);
-			sr.append("</linea>");
-		}
+    /**
+     * Construir post con parada o con linea-parada
+     *
+     * @param linea
+     * @param parada
+     * @return string
+     */
+    private String datosPost(String linea, String parada) {
 
-		// '<linea>24</linea>'+
-		// '<parada>4450</parada>'+
+        StringBuffer sr = new StringBuffer("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 
-		// Parada
-		sr.append("<parada>");
-		sr.append(parada);
-		sr.append("</parada>");
+        sr.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
+        sr.append("<soap:Body> <GetPasoParada xmlns=\"http://tempuri.org/\">");
 
-		sr.append("<status>0</status>");
-		sr.append("</GetPasoParada> </soap:Body> </soap:Envelope>");
+        // Linea
+        if (linea != null && !linea.equals("")) {
+            sr.append("<linea>");
+            sr.append(linea);
+            sr.append("</linea>");
+        }
 
-		return sr.toString();
+        // '<linea>24</linea>'+
+        // '<parada>4450</parada>'+
 
-	}
+        // Parada
+        sr.append("<parada>");
+        sr.append(parada);
+        sr.append("</parada>");
 
-	/********************************************************************/
+        sr.append("<status>0</status>");
+        sr.append("</GetPasoParada> </soap:Body> </soap:Envelope>");
 
-	/**
-	 * Forma string con los minutos faltantes y la hora aproximada de llegada
-	 * 
-	 * @param minutosLlegada
-	 * @return
-	 */
-	private String getFormatoTiempoEspera(String minutosLlegada) {
+        return sr.toString();
 
-		String formatoMinHora = "";
+    }
 
-		GregorianCalendar cl = new GregorianCalendar();
-		cl.setTimeInMillis((new Date()).getTime());
-		cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
+    /********************************************************************/
 
-		SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
-		String horaString = sf.format(cl.getTime());
+    /**
+     * Forma string con los minutos faltantes y la hora aproximada de llegada
+     *
+     * @param minutosLlegada
+     * @return
+     */
+    private String getFormatoTiempoEspera(String minutosLlegada) {
 
-		formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
+        String formatoMinHora = "";
 
-		return formatoMinHora;
+        GregorianCalendar cl = new GregorianCalendar();
+        cl.setTimeInMillis((new Date()).getTime());
+        cl.add(Calendar.MINUTE, Integer.parseInt(minutosLlegada));
 
-	}
+        SimpleDateFormat sf = new SimpleDateFormat("HH:mm");
+        String horaString = sf.format(cl.getTime());
+
+        formatoMinHora = minutosLlegada + " min. (" + horaString + ")";
+
+        return formatoMinHora;
+
+    }
 
 }

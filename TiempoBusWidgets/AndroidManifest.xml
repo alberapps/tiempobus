@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -20,75 +19,98 @@
      own application, the package name must be changed from "com.example.*"
      to come from a domain that you own or have control over. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="alberapps.android.tiempobuswidgets"
-    android:versionCode="7"
-    android:versionName="2.0">
+    package="alberapps.android.tiempobuswidgets">
 
-    <uses-sdk android:minSdkVersion="11"
-              android:targetSdkVersion="23"/>
-    
-    
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    
-    
-    <application android:label="@string/app_name" android:allowBackup="false" android:icon="@drawable/ic_tiempobus_3"
-        >
+
+
+    <application
+        android:allowBackup="false"
+        android:icon="@drawable/ic_tiempobus_3"
+        android:label="@string/app_name">
         <!-- The widget provider -->
         <receiver android:name="alberapps.android.tiempobuswidgets.TiemposWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <!-- This specifies the widget provider info -->
-            <meta-data android:name="android.appwidget.provider"
-                    android:resource="@xml/widgetinfo" />
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widgetinfo" />
         </receiver>
 
         <!-- The service serving the RemoteViews to the collection widget -->
-        <service android:name="alberapps.android.tiempobuswidgets.TiemposWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />
+        <service
+            android:name="alberapps.android.tiempobuswidgets.TiemposWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- The content provider serving the (fake) weather data -->
-        <provider android:name="alberapps.android.tiempobuswidgets.TiemposDataProvider" android:exported="true"
-              android:authorities="alberapps.android.tiempobuswidgets.provider" />
-        
-        
-        <activity android:name="PreferencesFromXml" android:label="@string/app_name" >
+        <provider
+            android:name="alberapps.android.tiempobuswidgets.TiemposDataProvider"
+            android:authorities="alberapps.android.tiempobuswidgets.provider"
+            android:exported="true" />
+
+
+        <activity
+            android:name="PreferencesFromXml"
+            android:label="@string/app_name">
+
+            <!--intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter-->
+
         </activity>
-        
-        <activity android:name="ComunicacionActivity" android:exported="true" android:theme="@android:style/Theme.Holo.Light.Dialog"  android:label="@string/app_name" >
-            
-           
-            
+
+        <activity
+            android:name="ComunicacionActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+
+
         </activity>
-        
-        <activity android:name="EliminarDatoActivity" android:theme="@android:style/Theme.Holo.Light.Dialog"  android:label="@string/app_name" >
-        </activity>
-        
-        
+
+        <activity
+            android:name="EliminarDatoActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"></activity>
+
+
         <!-- DashClock -->
-        
-        <service android:name=".dashclock.TiempoBusExtension"
+
+        <service
+            android:name=".dashclock.TiempoBusExtension"
             android:icon="@drawable/tiempobus_dashclock"
             android:label="@string/extension_title"
             android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA">
             <intent-filter>
                 <action android:name="com.google.android.apps.dashclock.Extension" />
             </intent-filter>
-            <meta-data android:name="protocolVersion" android:value="2" />
-            <meta-data android:name="worldReadable" android:value="true" />
-            <meta-data android:name="description"
+
+            <meta-data
+                android:name="protocolVersion"
+                android:value="2" />
+            <meta-data
+                android:name="worldReadable"
+                android:value="true" />
+            <meta-data
+                android:name="description"
                 android:value="@string/extension_description" />
-            <meta-data android:name="settingsActivity"
+            <meta-data
+                android:name="settingsActivity"
                 android:value=".dashclock.TiempoBusSettingsActivity" />
         </service>
 
-        <activity android:name=".dashclock.TiempoBusSettingsActivity"
-            android:label="@string/title_settings"
-            android:exported="true" />
-        
-        
-        
+        <activity
+            android:name=".dashclock.TiempoBusSettingsActivity"
+            android:exported="true"
+            android:label="@string/title_settings" />
+
+
     </application>
 </manifest>
