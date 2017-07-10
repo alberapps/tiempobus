@@ -307,6 +307,14 @@ public class FragmentLineas extends Fragment {
             texto.setLinksClickable(true);
             texto.setAutoLinkMask(Linkify.WEB_URLS);
 
+            if (spinnerGrupos.isEnabled()) {
+
+                int seleccionIncial = preferencias.getInt("infolinea_bus_filtro1", 0);
+
+                spinnerGrupos.setSelection(seleccionIncial);
+
+            }
+
 
             // Combo de seleccion de datos
             final Spinner spinner = (Spinner) vheader.findViewById(R.id.spinner_datos_tarjeta);
@@ -398,6 +406,14 @@ public class FragmentLineas extends Fragment {
                         actividad.filtroGrupo = Integer.toString(arg2);
                         actividad.infoLineaAdapter.filtrarPorGrupo(Integer.toString(arg2));
                     }
+
+                    if (actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE
+                            || actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putInt("infolinea_bus_filtro1", arg2);
+                        editor.commit();
+                    }
+
                 }
 
 

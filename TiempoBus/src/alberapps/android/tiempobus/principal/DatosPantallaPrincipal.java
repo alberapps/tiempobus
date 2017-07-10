@@ -34,11 +34,13 @@ import android.os.Build;
 import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -51,6 +53,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
@@ -64,6 +67,7 @@ import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
+import alberapps.android.tiempobus.mapas.SpinnerItem;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadAvisosTramAsyncTask.LoadAvisosTramAsyncTaskResponder;
@@ -82,6 +86,8 @@ import alberapps.java.util.Datos;
 import alberapps.java.util.GestionarDatos;
 import alberapps.java.util.Utilidades;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Gestion de tiempos principal
  */
@@ -93,6 +99,8 @@ public class DatosPantallaPrincipal {
     private MainActivity context;
 
     private SharedPreferences preferencias;
+
+    private LinkedList<SpinnerItem> listaSpinner = new LinkedList<>();
 
     public DatosPantallaPrincipal(MainActivity contexto, SharedPreferences preferencia) {
 
@@ -868,63 +876,91 @@ public class DatosPantallaPrincipal {
 
     }
 
+
     /**
      * Datos anterior del historial en la tarjeta
      */
     public void actualizarAnteriorHistorial() {
 
-        //Historial
-        TextView botonHistorial = (TextView) context.findViewById(R.id.aviso_header_historial);
+        // Limpiar
+        if (listaSpinner != null && !listaSpinner.isEmpty()) {
+            listaSpinner.clear();
+        }
 
-        List<Favorito> historial = cargarHistorialBD();
+        final List<Favorito> historial = cargarHistorialBD();
+        final List<Favorito> spinnerValues = new ArrayList<>();
+
+
+        AppCompatSpinner spinner = (AppCompatSpinner) context.findViewById(R.id.spinner_historial);
+
+        ArrayAdapter adapter = new ArrayAdapter<>(context, R.layout.spinner_item, listaSpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Seleccion
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                if (arg2 > 0) {
+
+                    context.paradaActual = Integer.parseInt(spinnerValues.get(arg2).getNumParada());
+
+                    // Poner en campo de poste
+                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    assert txtPoste != null;
+                    txtPoste.setText(Integer.toString(context.paradaActual));
+
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("parada_inicio", context.paradaActual);
+                    editor.commit();
+
+                    context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+                }
+
+
+            }
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
 
         String anterior = "";
+        //listaSpinner.add(new SpinnerItem(0, context.getString(R.string.historial_titulo)));
 
-        if (historial != null && !historial.isEmpty() && historial.size() > 1) {
+        if (historial != null && !historial.isEmpty()) {
 
-            final String parada = historial.get(1).getNumParada();
+            for (int i = 0; i < historial.size() && i <= 5; i++) {
 
-            anterior = cargarDescripcionBDFavoritos(parada);
+                anterior = cargarDescripcionBDFavoritos(historial.get(i).getNumParada());
 
-            if (anterior == null || (anterior != null && anterior.equals(""))) {
-                anterior = cargarDescripcionBD(Integer.parseInt(parada));
-            }
+                if (anterior == null || (anterior != null && anterior.equals(""))) {
+                    anterior = cargarDescripcionBD(parseInt(historial.get(i).getNumParada()));
+                }
 
-            if (anterior == null || (anterior != null && anterior.equals(""))) {
-                anterior = parada;
-            }
+                if (anterior == null || (anterior != null && anterior.equals(""))) {
+                    anterior = historial.get(i).getNumParada();
+                }
 
-            if (!anterior.equals("")) {
+                if (!anterior.equals("")) {
 
-                assert botonHistorial != null;
-                botonHistorial.setOnClickListener(new Button.OnClickListener() {
-                    public void onClick(View arg0) {
+                    listaSpinner.add(new SpinnerItem(i, anterior));
+                    spinnerValues.add(historial.get(i));
 
-                        context.paradaActual = Integer.parseInt(parada);
-
-                        // Poner en campo de poste
-                        EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
-                        assert txtPoste != null;
-                        txtPoste.setText(Integer.toString(context.paradaActual));
-
-                        SharedPreferences.Editor editor = preferencias.edit();
-                        editor.putInt("parada_inicio", context.paradaActual);
-                        editor.commit();
-
-                        context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
-
-
-                    }
-                });
+                }
 
             }
 
+            spinner.setSelection(0);
 
         }
 
 
-        assert botonHistorial != null;
-        botonHistorial.setText(anterior);
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -1115,7 +1151,7 @@ public class DatosPantallaPrincipal {
     // Novedades
     private int REV_ACTUAL = 35;
 
-    // Fin novedades
+// Fin novedades
 
     /**
      * Dialogo con las novedades de la version
@@ -1345,7 +1381,7 @@ public class DatosPantallaPrincipal {
 
     }
 
-    // //Google play services
+// //Google play services
 
     /*
      * Define a request code to send to Google Play services This code is

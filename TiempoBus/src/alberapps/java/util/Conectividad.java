@@ -25,19 +25,6 @@ import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -68,13 +55,6 @@ public class Conectividad {
      * @return
      */
     public static String conexionPostUtf8(String urlPost, String post, Boolean cacheTiempos) throws Exception {
-
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionPostUtf8Froyo(urlPost, post);
-
-        }
 
 
         // Abrir Conexion
@@ -176,13 +156,6 @@ public class Conectividad {
      */
     public static String conexionPostUtf8NoKeepAlive(String urlPost, String post, Boolean cacheTiempos) throws Exception {
 
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionPostUtf8Froyo(urlPost, post);
-
-        }
-
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -268,12 +241,6 @@ public class Conectividad {
      */
     public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
 
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionGetIsoFroyo(urlGet, userAgent);
-
-        }
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -459,116 +426,6 @@ public class Conectividad {
         }
 
         return is;
-
-    }
-
-    /**
-     * Conexion con Apache para Froyo
-     *
-     * @param url
-     * @return
-     */
-
-    public static String conexionGetIsoFroyo(String url, String userAgent) throws Exception {
-
-        HttpGet request = new HttpGet(url);
-
-        try {
-
-            // Timeout para establecer conexion
-            int timeout = Comunes.READ_TIMEOUT;
-            HttpParams httpParam = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
-
-            // Timeout para recibir datos
-            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
-            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-
-            if (userAgent == null) {
-                request.setHeader("User-Agent", USER_AGENT);
-            } else {
-                request.setHeader("User-Agent", userAgent);
-            }
-
-            DefaultHttpClient client = new DefaultHttpClient(httpParam);
-
-            HttpResponse response = client.execute(request);
-
-            final int statusCode = response.getStatusLine().getStatusCode();
-
-            if (statusCode != HttpStatus.SC_OK) {
-
-                return null;
-            }
-
-            HttpEntity responseEntity = response.getEntity();
-
-            return EntityUtils.toString(responseEntity, HTTP.ISO_8859_1);
-
-        } catch (IOException e) {
-            request.abort();
-
-            throw new Exception("Error al acceder al servicio");
-        }
-
-        //return null;
-
-    }
-
-
-    /**
-     * Conexion con Apache para Froyo
-     *
-     * @param url
-     * @return
-     */
-
-    public static String conexionPostUtf8Froyo(String url, String post) throws Exception {
-
-        HttpPost request = new HttpPost(url);
-
-        try {
-
-            // Timeout para establecer conexion
-            int timeout = Comunes.READ_TIMEOUT;
-            HttpParams httpParam = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
-
-            // Timeout para recibir datos
-            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
-            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-
-            request.setHeader("User-Agent", USER_AGENT);
-
-            DefaultHttpClient client = new DefaultHttpClient(httpParam);
-
-            // Datos
-            StringEntity ent = new StringEntity(post, HTTP.UTF_8);
-            ent.setContentType("text/xml; charset=utf-8");
-
-            request.setEntity(ent);
-
-            HttpResponse response = client.execute(request);
-
-            final int statusCode = response.getStatusLine().getStatusCode();
-
-            if (statusCode != HttpStatus.SC_OK) {
-
-                return null;
-            }
-
-            HttpEntity responseEntity = response.getEntity();
-
-            return EntityUtils.toString(responseEntity, HTTP.UTF_8);
-
-        } catch (IOException e) {
-            request.abort();
-
-            throw new Exception("Error al acceder al servicio");
-
-        }
-
-        //return null;
 
     }
 

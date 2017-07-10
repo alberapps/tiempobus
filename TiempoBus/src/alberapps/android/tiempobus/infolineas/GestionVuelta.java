@@ -205,7 +205,7 @@ public class GestionVuelta {
 
 
             if (context.datosVuelta != null && context.datosVuelta.getCurrentPlacemark() != null && context.datosVuelta.getCurrentPlacemark().getSentido() != null) {
-                texto.setText(">> " + context.datosVuelta.getCurrentPlacemark().getSentido());
+                texto.setText(context.datosVuelta.getCurrentPlacemark().getSentido());
             } else {
                 texto.setText("-");
             }

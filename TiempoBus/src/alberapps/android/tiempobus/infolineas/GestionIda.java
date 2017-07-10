@@ -194,7 +194,7 @@ public class GestionIda {
             context.gestionHorariosIda.limpiarHorariosIda();
 
             if (esBus && context.datosIda != null && context.datosIda.getCurrentPlacemark() != null && context.datosIda.getCurrentPlacemark().getSentido() != null) {
-                texto.setText(">> " + context.datosIda.getCurrentPlacemark().getSentido());
+                texto.setText(context.datosIda.getCurrentPlacemark().getSentido());
             } else if (esTram && context.datosIda != null && context.datosIda.getCurrentPlacemark() != null && context.datosIda.getCurrentPlacemark().getSentido() != null) {
 
                 int posicion = UtilidadesTRAM.getIdLinea(context.getLinea().getNumLinea());
@@ -204,7 +204,7 @@ public class GestionIda {
                 texto.setText(desc);
 
             } else if (esBusOffline && context.datosIda != null && context.datosIda.getCurrentPlacemark() != null && context.datosIda.getCurrentPlacemark().getSentido() != null) {
-                texto.setText(">> " + context.datosIda.getCurrentPlacemark().getSentido());
+                texto.setText(context.datosIda.getCurrentPlacemark().getSentido());
             } else {
                 texto.setText("-");
             }

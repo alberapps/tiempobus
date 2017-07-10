@@ -41,6 +41,7 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -61,6 +62,11 @@ public class SelectorLinea {
     private SharedPreferences preferencias;
 
     private LinkedList<SpinnerItem> listaSpinner = new LinkedList<>();
+
+    List<BusLinea> listaSinFiltroGrupo;
+    List<BusLinea> listaConFiltroGrupo = new ArrayList<>();
+
+    ArrayAdapter<SpinnerItem> adapter = null;
 
     public SelectorLinea(MapasActivity contexto, SharedPreferences preferencia) {
 
@@ -90,7 +96,7 @@ public class SelectorLinea {
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
 
 
-        final ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaSpinner);
+        adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaSpinner);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -160,6 +166,63 @@ public class SelectorLinea {
     }
 
     public void seleccionModo(View vista) {
+
+
+        //Seleccion de grupos de lineas bus
+        final Spinner spinnerGrupos = (Spinner) vista.findViewById(R.id.spinner_grupo_lineas);
+
+        ArrayAdapter<CharSequence> adaptergrupos = ArrayAdapter.createFromResource(context, R.array.grupos_lineas_bus, android.R.layout.simple_spinner_item);
+
+        spinnerGrupos.setAdapter(adaptergrupos);
+
+
+        /*if (actividad.filtroGrupo != null) {
+            spinnerGrupos.setSelection(Integer.parseInt(actividad.filtroGrupo));
+        }*/
+
+
+        if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
+            spinnerGrupos.setEnabled(true);
+        } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            spinnerGrupos.setEnabled(false);
+        } else {
+            spinnerGrupos.setEnabled(true);
+        }
+
+        if (spinnerGrupos.isEnabled()) {
+            int seleccionIncial = preferencias.getInt("infolinea_bus_filtro1", 0);
+            spinnerGrupos.setSelection(seleccionIncial);
+        }
+
+        // Seleccion de grupo
+        spinnerGrupos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                /*if (context.infoLineaAdapter != null) {
+                    context.filtroGrupo = Integer.toString(arg2);
+                    context.infoLineaAdapter.filtrarPorGrupo(Integer.toString(arg2));
+                }*/
+
+                filtrarPorGrupo(Integer.toString(arg2));
+
+                if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE
+                        || context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("infolinea_bus_filtro1", arg2);
+                    editor.commit();
+                }
+
+            }
+
+
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
 
         // Combo de seleccion de datos
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_datos);
@@ -442,6 +505,46 @@ public class SelectorLinea {
 
 
         }
+
+    }
+
+
+    public void filtrarPorGrupo(String grupo) {
+
+        listaSinFiltroGrupo = context.lineasBus;
+
+        if (listaSinFiltroGrupo == null || listaSinFiltroGrupo.isEmpty()) {
+            return;
+        }
+
+        listaConFiltroGrupo.clear();
+
+        if (grupo == null || grupo.equals("0")) {
+
+            listaConFiltroGrupo.addAll(listaSinFiltroGrupo);
+
+        } else {
+
+            for (int i = 0; i < listaSinFiltroGrupo.size(); i++) {
+
+                if (listaSinFiltroGrupo.get(i).getIdGrupo().equals(grupo)) {
+                    listaConFiltroGrupo.add(listaSinFiltroGrupo.get(i));
+                }
+
+            }
+
+            listaSpinner.clear();
+
+            for (int i = 0; i < listaConFiltroGrupo.size(); i++) {
+                listaSpinner.add(new SpinnerItem(i, listaConFiltroGrupo.get(i).getLinea()));
+            }
+
+            Log.d("SELECTOR_LINEA", "por grupo: " + grupo + " lista: " + listaSpinner.size());
+
+            adapter.notifyDataSetChanged();
+
+        }
+
 
     }
 

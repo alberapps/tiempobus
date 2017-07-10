@@ -532,5 +532,7 @@
     <string name="barcode_opcion_titulo">Selecciona lector</string>
 
 
+    <string name="avisos_push_tiempobus">Aviso de AlberApps</string>
+
 
 </resources>

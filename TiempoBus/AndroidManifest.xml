@@ -377,6 +377,15 @@
             android:label="Read Barcode"/>
 
 
+        <!--service android:name=".mensajes.TiempoBusFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+            </intent-filter>
+        </service-->
+
+        <!--meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_tiempobus_4" /-->
+
     </application>
 
 </manifest>

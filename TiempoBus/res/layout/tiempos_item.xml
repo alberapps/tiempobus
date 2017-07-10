@@ -97,7 +97,7 @@
                         android:id="@+id/bus_destino"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_directions_grey600_18dp"
+                        android:drawableLeft="@drawable/ic_arrow_forward_black_18dp"
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/guion"

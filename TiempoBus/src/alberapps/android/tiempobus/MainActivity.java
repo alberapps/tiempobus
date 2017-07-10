@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public ArrayList<BusLlegada> buses = new ArrayList<>();
     private TiemposAdapter tiemposAdapter;
     private TextView guiHora;
-    private TextView datosParada;
+    //private TextView datosParada;
 
     public int paradaActual = 4450;
     public final ParadaActualHandler handler = new ParadaActualHandler(this);
@@ -792,7 +792,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         guiHora = (TextView) findViewById(R.id.ultima_act);
 
-        datosParada = (TextView) findViewById(R.id.datos_parada);
+        //datosParada = (TextView) findViewById(R.id.datos_parada);
 
         // Progreso inicial
         /*
@@ -1807,7 +1807,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         laActividad.datosPantallaPrincipal.gestionarHistorial(laActividad.paradaActual, null);
                         laActividad.datosPantallaPrincipal.actualizarAnteriorHistorial();
 
-                        laActividad.datosParada.setText(cabdatos);
+                        //laActividad.datosParada.setText(cabdatos);
 
                         final Calendar c = Calendar.getInstance();
 

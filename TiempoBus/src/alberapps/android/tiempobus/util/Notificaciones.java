@@ -579,4 +579,97 @@ public class Notificaciones {
 
     }
 
+    /**
+     * Notificacion nuevas noticias
+     *
+     * @param contexto
+     */
+    public static void notificacionAvisosMensajesTiempoBus(Context contexto, String titulo, String contenido, String extendido) {
+
+        PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
+
+        NotificationCompat.Builder mBuilder = null;
+
+        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))
+                .setContentText(contenido)
+                .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+        mBuilder.setAutoCancel(true);
+
+        /*
+        // Led
+        int defaults = Notification.DEFAULT_LIGHTS;
+
+        // Sonido seleccionado
+        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
+
+        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+            // Sonido por defecto
+            defaults = defaults | Notification.DEFAULT_SOUND;
+
+        } else {
+
+            // Sonido seleccionado
+            mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+        }
+
+        // Usar o no la vibracion
+        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+
+        if (controlVibrar) {
+            // Vibrate por defecto
+            defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+        }
+
+
+        // Opciones por defecto seleccionadas
+        mBuilder.setDefaults(defaults);
+*/
+
+        // ticker
+        CharSequence tickerText = contexto.getString(R.string.avisos_push_tiempobus);
+        mBuilder.setTicker(tickerText);
+
+        NotificationCompat.BigTextStyle inboxStyle = new NotificationCompat.BigTextStyle();
+
+        // Sets a title for the Inbox style big view
+        inboxStyle.bigText(extendido);
+
+        // Moves events into the big view
+        // for (int i=0; i < events.length; i++) {
+
+        // inboxStyle..addLine(events[i]);
+        // }
+        inboxStyle.setSummaryText(contexto.getString(R.string.app_name));
+        // Moves the big view style object into the notification object.
+        mBuilder.setStyle(inboxStyle);
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(contexto, NoticiasTabsPager.class);
+
+        // The stack builder object will contain an artificial back stack for
+        // the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(NoticiasTabsPager.class);
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(resultPendingIntent);
+
+        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        // mId allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+
+    }
+
+
 }

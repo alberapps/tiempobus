@@ -60,6 +60,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         this.paradaActual = paradaActual;
     }
 
+    private ContentLoadingProgressBar progressBar = null;
+
     /**
      * Cache de datos para mostrar en caso de error
      *
@@ -114,9 +116,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         final BusLlegada bus = getItem(position);
 
+
         if (!bus.isSinDatos() && !bus.isErrorServicio()) {
 
             TextView busLinea = null;
+
 
             if (v != null) {
                 busLinea = (TextView) v.findViewById(R.id.bus_linea);
@@ -132,6 +136,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 v.setTag(new ViewHolder(v));
 
             }
+
 
             //animar
             //v.setAlpha(0.0f);
@@ -331,11 +336,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             text.setText(ctx.getString(R.string.aviso_recarga));
 
-            ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
 
-            progressBar.show();
+            progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
 
-
+            if (progressBar != null) {
+                progressBar.show();
+            }
 
 
         } else {
@@ -349,14 +355,15 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
             }
 
+
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
 
 
             if (bus != null && bus.isErrorServicio()) {
                 boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
-                if(DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) && opcionTR){
+                if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) && opcionTR) {
                     text.setText(ctx.getString(R.string.error_tiempos_tram));
-                }else {
+                } else {
                     text.setText(ctx.getString(R.string.error_tiempos));
                 }
             } else {
@@ -400,6 +407,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             textAviso.setText(aviso);
+
+            progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
+
+            if (progressBar != null) {
+                progressBar.hide();
+            }
 
 
         }

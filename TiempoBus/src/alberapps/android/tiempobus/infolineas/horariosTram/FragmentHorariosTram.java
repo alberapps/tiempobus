@@ -278,9 +278,30 @@ public class FragmentHorariosTram extends Fragment {
         @Override
         public void datosHorariosTramLoaded(HorarioTram datos) {
             if (datos != null) {
-                actividad.datosHorariosTram = datos;
 
-                cargarListado();
+                try {
+
+                    actividad.datosHorariosTram = datos;
+
+                    cargarListado();
+
+                } catch (Exception e) {
+
+                    Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    datos = new HorarioTram();
+                    datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
+                    DatoTransbordo datoTransbordo = new DatoTransbordo();
+                    datoTransbordo.setErrorServicio(true);
+                    datos.getDatosTransbordos().add(datoTransbordo);
+
+                    actividad.datosHorariosTram = datos;
+
+                    cargarListado();
+
+                }
+
 
             } else {
 
@@ -307,6 +328,7 @@ public class FragmentHorariosTram extends Fragment {
      * Cargar el listado de horarios
      */
     private void cargarListado() {
+
 
         if (actividad.datosHorariosTram != null) {
 
