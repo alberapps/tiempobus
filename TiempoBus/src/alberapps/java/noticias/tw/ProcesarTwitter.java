@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.noticias.tw;
 
@@ -294,6 +294,95 @@ public class ProcesarTwitter {
                 lista.clear();
 
                 listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, 25);
+
+                // Eliminar las que sean de conversacion y retweet
+                for (int i = 0; i < listaInicial.size(); i++) {
+
+                    if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
+                        lista.add(listaInicial.get(i));
+                    }
+
+                }
+
+            }
+
+            if (lista != null && !lista.isEmpty()) {
+
+                // Ordenar por fecha
+                Collections.sort(lista);
+
+            } else {
+
+                return null;
+
+            }
+
+        } catch (TwitterException e) {
+//88 rate limit exceeded
+            TwResultado resultado = new TwResultado();
+
+            resultado.setError(Integer.toString(e.getErrorCode()));
+            resultado.setMensajeError(e.getErrorMessage());
+
+            lista = new ArrayList<>();
+
+            lista.add(resultado);
+
+            e.printStackTrace();
+        } catch (Exception e) {
+
+            TwResultado resultado = new TwResultado();
+
+            resultado.setError("100");
+            resultado.setMensajeError(e.getMessage());
+
+            lista = new ArrayList<>();
+
+            lista.add(resultado);
+
+            e.printStackTrace();
+
+        }
+
+
+        return lista;
+
+    }
+
+    /**
+     * listado alberapps
+     *
+     * @return listado
+     */
+    public static List<TwResultado> procesarAlberApps() {
+
+        List<TwResultado> lista = new ArrayList<>();
+
+
+        try {
+            List<TwResultado> listaInicial;
+
+            // Iniciar
+            ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
+            procesar4j.setUp();
+
+            // Tram
+            listaInicial = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, 15);
+
+            // Eliminar las que sean de conversacion y retweet
+            for (int i = 0; i < listaInicial.size(); i++) {
+
+                if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
+                    lista.add(listaInicial.get(i));
+                }
+
+            }
+
+            if (lista.size() < 2) {
+
+                lista.clear();
+
+                listaInicial = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, 25);
 
                 // Eliminar las que sean de conversacion y retweet
                 for (int i = 0; i < listaInicial.size(); i++) {

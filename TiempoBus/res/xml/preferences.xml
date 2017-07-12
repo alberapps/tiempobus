@@ -59,7 +59,13 @@
                 android:key="aviso_noticias_tram"
                 android:title="@string/preferencias_noticias_auto_tram"
                 android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
-        
+
+        <CheckBoxPreference
+            android:key="aviso_noticias_alberapps"
+            android:title="@string/preferencias_noticias_auto_alberapps"
+            android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
+
+
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="noticias_vibrar"

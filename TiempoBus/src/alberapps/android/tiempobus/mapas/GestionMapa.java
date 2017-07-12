@@ -155,19 +155,6 @@ public class GestionMapa {
 
             }
 
-            /*Intent intent = new Intent(context, MainActivity.class);
-            Bundle b = new Bundle();
-            b.putInt("poste", codigo);
-            intent.putExtras(b);
-
-            SharedPreferences.Editor editor = preferencias.edit();
-            editor.putInt("parada_inicio", codigo);
-            editor.commit();
-
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            context.startActivity(intent);
-            */
 
             //Devolver nueva parada
             Intent intent = new Intent();
@@ -179,7 +166,7 @@ public class GestionMapa {
             context.finish();
 
         }
-        //context.finish();
+
 
     }
 

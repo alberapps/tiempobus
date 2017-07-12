@@ -122,8 +122,6 @@ public class SelectorLinea {
             }
         });
 
-        // Por defecto 5
-        // spinner.setSelection(1);
 
         dialogSeleccion.setView(vista);
 
@@ -259,25 +257,6 @@ public class SelectorLinea {
                     // cambiar el modo de la actividad
                     if (arg2 == 0) {
 
-                        /*Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);*/
-
                         Intent intent2 = new Intent();
                         intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
 
@@ -286,26 +265,6 @@ public class SelectorLinea {
 
 
                     } else if (arg2 == 1) {
-
-                       /* Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);
-                        */
 
                         Intent intent2 = new Intent();
                         intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE);
@@ -316,24 +275,6 @@ public class SelectorLinea {
 
                     } else if (arg2 == 2) {
 
-                        /*Intent intent2 = context.getIntent();
-                        intent2.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA")) {
-                            intent2.getExtras().remove("LINEA_MAPA");
-                            intent2.removeExtra("LINEA_MAPA");
-
-                        }
-
-                        if (intent2.getExtras() != null && intent2.getExtras().containsKey("LINEA_MAPA_FICHA")) {
-
-                            intent2.getExtras().remove("LINEA_MAPA_FICHA");
-                            intent2.removeExtra("LINEA_MAPA_FICHA");
-
-                        }
-
-                        context.finish();
-                        context.startActivity(intent2);*/
 
                         Intent intent2 = new Intent();
                         intent2.putExtra("MODO_RED_MAPA", InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE);
@@ -457,19 +398,19 @@ public class SelectorLinea {
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
 
-            context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
-            context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+            context.lineaSeleccionada = listaConFiltroGrupo.get(posicion).getIdlinea();
+            context.lineaSeleccionadaDesc = listaConFiltroGrupo.get(posicion).getLinea();
 
-            context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+            context.lineaSeleccionadaNum = listaConFiltroGrupo.get(posicion).getNumLinea();
 
             context.gestionarLineas.loadDatosMapaV3();
 
         } else if (context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_OFFLINE) {
 
-            context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
-            context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+            context.lineaSeleccionada = listaConFiltroGrupo.get(posicion).getIdlinea();
+            context.lineaSeleccionadaDesc = listaConFiltroGrupo.get(posicion).getLinea();
 
-            context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+            context.lineaSeleccionadaNum = listaConFiltroGrupo.get(posicion).getNumLinea();
 
             context.mapasOffline.loadDatosMapaOffline();
             context.gestionVehiculos.loadDatosVehiculos();
@@ -492,10 +433,10 @@ public class SelectorLinea {
 
             } else {
 
-                context.lineaSeleccionada = context.lineasBus.get(posicion).getIdlinea();
-                context.lineaSeleccionadaDesc = context.lineasBus.get(posicion).getLinea();
+                context.lineaSeleccionada = listaConFiltroGrupo.get(posicion).getIdlinea();
+                context.lineaSeleccionadaDesc = listaConFiltroGrupo.get(posicion).getLinea();
 
-                context.lineaSeleccionadaNum = context.lineasBus.get(posicion).getNumLinea();
+                context.lineaSeleccionadaNum = listaConFiltroGrupo.get(posicion).getNumLinea();
 
                 context.mapasOffline.loadDatosMapaTRAMOffline(null);
 
@@ -533,17 +474,18 @@ public class SelectorLinea {
 
             }
 
-            listaSpinner.clear();
-
-            for (int i = 0; i < listaConFiltroGrupo.size(); i++) {
-                listaSpinner.add(new SpinnerItem(i, listaConFiltroGrupo.get(i).getLinea()));
-            }
-
-            Log.d("SELECTOR_LINEA", "por grupo: " + grupo + " lista: " + listaSpinner.size());
-
-            adapter.notifyDataSetChanged();
-
         }
+
+        listaSpinner.clear();
+
+        for (int i = 0; i < listaConFiltroGrupo.size(); i++) {
+            listaSpinner.add(new SpinnerItem(i, listaConFiltroGrupo.get(i).getLinea()));
+        }
+
+        Log.d("SELECTOR_LINEA", "por grupo: " + grupo + " lista: " + listaSpinner.size());
+
+        adapter.addAll(listaSpinner);
+        adapter.notifyDataSetChanged();
 
 
     }

@@ -606,11 +606,11 @@ public class FragmentLineas extends Fragment {
 
                     actividad.cambiarTab();
 
-                    if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+                    /*if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
 
                         Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
 
-                    }
+                    }*/
 
                 } else {
                     Toast.makeText(actividad, actividad.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
@@ -656,11 +656,11 @@ public class FragmentLineas extends Fragment {
 
             actividad.cambiarTab();
 
-            if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+            /*if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
 
                 Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
 
-            }
+            }*/
 
         } else {
 
@@ -697,11 +697,11 @@ public class FragmentLineas extends Fragment {
 
             actividad.cambiarTab();
 
-            if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
+            /*if (actividad.datosIda == null || actividad.datosVuelta == null || actividad.datosIda.equals(actividad.datosVuelta)) {
 
                 Toast.makeText(actividad, actividad.getString(R.string.mapa_posible_error), Toast.LENGTH_LONG).show();
 
-            }
+            }*/
 
         } else {
 

@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.alarma;
 
@@ -319,11 +319,11 @@ public class GestionarAlarmas {
      *
      * @param bus
      */
-    public void mostrarModalTiemposAlerta(BusLlegada bus, final int paradaActual, final String textoReceiver) {
+    public void mostrarModalTiemposAlerta(final BusLlegada bus, final int paradaActual, final String textoReceiver) {
 
         final BusLlegada theBus = bus;
 
-        AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
         dialog.setTitle(context.getString(R.string.tit_choose_alarm));
 
@@ -357,14 +357,19 @@ public class GestionarAlarmas {
                 // Si se ha podido establecer
                 if (correcto) {
 
-                    Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
-                    intent.setClass(context, TiemposForegroundService.class);
-                    intent.putExtra("PARADA", paradaActual);
+                    //Tram inactivo temporalmente
+                    if (!DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
 
-                    boolean checkActivo = preferencias.getBoolean("activarServicio", false);
+                        Intent intent = new Intent(TiemposForegroundService.ACTION_FOREGROUND);
+                        intent.setClass(context, TiemposForegroundService.class);
+                        intent.putExtra("PARADA", paradaActual);
 
-                    if (checkActivo) {
-                        context.startService(intent);
+                        boolean checkActivo = preferencias.getBoolean("activarServicio", false);
+
+                        if (checkActivo) {
+                            context.startService(intent);
+                        }
+
                     }
 
                     dialog.dismiss();
@@ -426,9 +431,14 @@ public class GestionarAlarmas {
 
             CheckBox check = (CheckBox) vista.findViewById(R.id.checkBoxAlerta);
 
-
-            boolean checkActivo = preferencias.getBoolean("activarServicio", false);
-            check.setChecked(checkActivo);
+            //Temporalmente para tram
+            if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+                check.setChecked(false);
+                check.setEnabled(false);
+            } else {
+                boolean checkActivo = preferencias.getBoolean("activarServicio", false);
+                check.setChecked(checkActivo);
+            }
 
             dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 

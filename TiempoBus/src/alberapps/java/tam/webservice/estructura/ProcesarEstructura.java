@@ -30,9 +30,6 @@ import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.mapas.UtilidadesGeo;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
-import alberapps.java.tam.webservice.estructura.nodosmap.EstructuraGetNodosMapSublineaParser;
-import alberapps.java.tam.webservice.estructura.nodosmap.GetNodosMapSublineaResult;
-import alberapps.java.tam.webservice.estructura.nodosmap.InfoNodoMap;
 import alberapps.java.tam.webservice.estructura.polylinea.EstructuraGetPolylineaSublineaParser;
 import alberapps.java.tam.webservice.estructura.polylinea.GetPolylineaSublineaResult;
 import alberapps.java.tam.webservice.estructura.rutas.EstructuraGetRutasSublineaParser;
@@ -56,14 +53,14 @@ public class ProcesarEstructura {
         String lineab = linea;
 
         //PARCHE 11
-        if (linea.equals("11")) {
+        /*if (linea.equals("11")) {
             parche11 = true;
         }
 
         if (linea.equals("11H")) {
             lineab = "11";
             parche11 = false;
-        }
+        }*/
 
         try {
 
@@ -83,11 +80,11 @@ public class ProcesarEstructura {
 
                 for (int j = 0; j < datos.getInfoRutaList().get(0).getInfoSeccion().size(); j++) {
 
-                    if (parche11) {
+                    /*if (parche11) {
                         if (!datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getSeccion().equals("1")) {
                             continue;
                         }
-                    }
+                    }*/
 
 
                     for (int i = 0; i < datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().size(); i++) {
@@ -101,7 +98,7 @@ public class ProcesarEstructura {
                             pm.setLineas("");
                             pm.setObservaciones("");
                             pm.setSentido(datos.getInfoRutaList().get(0).getNombre());
-
+                            pm.setCoordinates(datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas());
 
                             listaIda.add(pm);
 
@@ -131,13 +128,13 @@ public class ProcesarEstructura {
 
                 for (int j = 0; j < datos.getInfoRutaList().get(1).getInfoSeccion().size(); j++) {
 
-                    if (parche11) {
+                    /*if (parche11) {
                         if (datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getSeccion().equals("4") || datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getSeccion().equals("5")) {
 
                         } else {
                             continue;
                         }
-                    }
+                    }*/
 
                     for (int i = 0; i < datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().size(); i++) {
 
@@ -150,6 +147,7 @@ public class ProcesarEstructura {
                             pm.setLineas("");
                             pm.setObservaciones("");
                             pm.setSentido(datos.getInfoRutaList().get(1).getNombre());
+                            pm.setCoordinates(datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas());
 
                             listaIda.add(pm);
 
@@ -192,72 +190,74 @@ public class ProcesarEstructura {
 
         try {
 
-            EstructuraGetNodosMapSublineaParser parser = new EstructuraGetNodosMapSublineaParser();
+            //EstructuraGetNodosMapSublineaParser parser = new EstructuraGetNodosMapSublineaParser();
 
             //PARCHE 11
-            String lineab = linea;
+            /*String lineab = linea;
             if (linea.equals("11H")) {
                 lineab = "11";
+            }*/
+
+            //GetNodosMapSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
+
+
+            //if (datos != null && datos.getInfoNodoMapList() != null && !datos.getInfoNodoMapList().isEmpty()) {
+
+
+            DatosMapa[] datosLineas = getDatosLineas(linea, sublinea, cache);
+
+            /*String parada = null;
+
+            //Ruta 1
+            for (int i = 0; i < datosLineas[0].getPlacemarks().size(); i++) {
+
+                parada = datosLineas[0].getPlacemarks().get(i).getCodigoParada();
+
+                InfoNodoMap buscar = new InfoNodoMap();
+                buscar.setNodo(parada);
+                //int indice = datos.getInfoNodoMapList().lastIndexOf(buscar);
+
+                //if (indice >= 0) {
+
+                //double x = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosx());
+                //double y = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosy());
+
+                //String coord = UtilidadesGeo.getCoordenadasCorreccion(UtilidadesGeo.getLatLongUTMBus(y, x));
+
+                String coord = coordenadas
+
+                datosLineas[0].getPlacemarks().get(i).setCoordinates(coord);
+
+                //}
+
             }
 
-            GetNodosMapSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
+            //Ruta 2
+            for (int i = 0; i < datosLineas[1].getPlacemarks().size(); i++) {
 
+                parada = datosLineas[1].getPlacemarks().get(i).getCodigoParada();
 
-            if (datos != null && datos.getInfoNodoMapList() != null && !datos.getInfoNodoMapList().isEmpty()) {
+                InfoNodoMap buscar = new InfoNodoMap();
+                buscar.setNodo(parada);
+                int indice = datos.getInfoNodoMapList().lastIndexOf(buscar);
 
+                if (indice >= 0) {
 
-                DatosMapa[] datosLineas = getDatosLineas(linea, sublinea, cache);
+                    double x = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosx());
+                    double y = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosy());
 
-                String parada = null;
+                    String coord = UtilidadesGeo.getCoordenadasCorreccion(UtilidadesGeo.getLatLongUTMBus(y, x));
 
-                //Ruta 1
-                for (int i = 0; i < datosLineas[0].getPlacemarks().size(); i++) {
-
-                    parada = datosLineas[0].getPlacemarks().get(i).getCodigoParada();
-
-                    InfoNodoMap buscar = new InfoNodoMap();
-                    buscar.setNodo(parada);
-                    int indice = datos.getInfoNodoMapList().lastIndexOf(buscar);
-
-                    if (indice >= 0) {
-
-                        double x = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosx());
-                        double y = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosy());
-
-                        String coord = UtilidadesGeo.getCoordenadasCorreccion(UtilidadesGeo.getLatLongUTMBus(y, x));
-
-                        datosLineas[0].getPlacemarks().get(i).setCoordinates(coord);
-
-                    }
+                    datosLineas[1].getPlacemarks().get(i).setCoordinates(coord);
 
                 }
 
-                //Ruta 2
-                for (int i = 0; i < datosLineas[1].getPlacemarks().size(); i++) {
-
-                    parada = datosLineas[1].getPlacemarks().get(i).getCodigoParada();
-
-                    InfoNodoMap buscar = new InfoNodoMap();
-                    buscar.setNodo(parada);
-                    int indice = datos.getInfoNodoMapList().lastIndexOf(buscar);
-
-                    if (indice >= 0) {
-
-                        double x = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosx());
-                        double y = Double.parseDouble(datos.getInfoNodoMapList().get(indice).getPosy());
-
-                        String coord = UtilidadesGeo.getCoordenadasCorreccion(UtilidadesGeo.getLatLongUTMBus(y, x));
-
-                        datosLineas[1].getPlacemarks().get(i).setCoordinates(coord);
-
-                    }
-
-                }
+            }*/
 
 
-                datosMapa = datosLineas;
+            datosMapa = datosLineas;
 
-            }
+            //}
 
         } catch (Exception e) {
 
@@ -286,12 +286,12 @@ public class ProcesarEstructura {
             EstructuraGetPolylineaSublineaParser parser = new EstructuraGetPolylineaSublineaParser();
 
             //PARCHE 11
-            String lineab = linea;
+            /*String lineab = linea;
             if (linea.equals("11H")) {
                 lineab = "11";
-            }
+            }*/
 
-            GetPolylineaSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
+            GetPolylineaSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
 
 
             if (datos != null && datos.getInfoCoordList() != null && !datos.getInfoCoordList().isEmpty()) {

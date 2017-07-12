@@ -453,7 +453,24 @@ favorit per crear la teua llista.</string>
     <string name="que_hay_cerca">Què hi ha a prop?</string>
     <string name="satelite">Satèl·lit</string>
     <string name="origen_destino">Origen i Destinació</string>
-    <string name="error_tiempos_tram">El servei en temps real del TRAM no respon. Mentre pots utilitzar el servei d\'horaris.</string>
+    <string name="error_tiempos_tram">Tram d\'Alacant no ofereix informació en temps real actualment. Espere poder tornar a activar-lo en un futur.</string>
     <string name="tiempo_real">Temps Real</string>
+
+    <string name="permission_camera_rationale">Es necessita accés a la càmera</string>
+    <string name="no_camera_permission">No es pot procedir ja que l\'app no disposa de permís per accedir a la càmera.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">Lector de Codis QR</string>
+    <string name="barcode_header">Prem per iniciar la lectura</string>
+    <string name="read_barcode">Llegir Codi QR</string>
+    <string name="auto_focus">Auto Focus</string>
+    <string name="use_flash">Flash</string>
+    <string name="barcode_success">Codi QR llegit correctament</string>
+    <string name="barcode_failure">Error en llegir el Codi QR</string>
+    <string name="barcode_error_2">"Error en llegir el Codi QR: %1$s"</string>
+
+    <string name="barcode_opcion_1">Lector QR de TempsBus (Beta)</string>
+    <string name="barcode_opcion_2">Barcode Scanner de Zxing</string>
+    <string name="barcode_opcion_titulo">Selecciona lector</string>
+
 
 </resources>

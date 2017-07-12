@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2015 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2015 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tam.webservice.estructura.rutas;
 
@@ -263,7 +263,7 @@ public class EstructuraGetRutasSublineaParser {
 
                 seccion = readSeccion(parser);
 
-            }else if (name.equals("nodos")) {
+            } else if (name.equals("nodos")) {
 
                 infoSeccion.setNodos(readInfoNodoSeccion(parser));
                 infoSeccion.setSeccion(seccion);
@@ -304,6 +304,7 @@ public class EstructuraGetRutasSublineaParser {
         String tipo = null;
         String nombre = null;
         String distancia = null;
+        String coordenadas = null;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -317,11 +318,13 @@ public class EstructuraGetRutasSublineaParser {
                 nombre = readNombre(parser);
             } else if (name.equals("distancia")) {
                 distancia = readDistancia(parser);
+            } else if (name.equals("coordenadas")) {
+                coordenadas = readCoordenadas(parser);
             } else {
                 skip(parser);
             }
         }
-        return new InfoNodoSeccion(nodo, tipo, nombre, distancia);
+        return new InfoNodoSeccion(nodo, tipo, nombre, distancia, coordenadas);
     }
 
 
@@ -331,6 +334,14 @@ public class EstructuraGetRutasSublineaParser {
         String nombre = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "nombre");
         return nombre;
+    }
+
+    // Processes title tags in the feed.
+    private String readCoordenadas(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "coordenadas");
+        String coordenadas = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "coordenadas");
+        return coordenadas;
     }
 
     // Processes title tags in the feed.

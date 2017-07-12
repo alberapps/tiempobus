@@ -108,7 +108,12 @@ public class GestionarLineas {
                 context.datosMapaCargadosIda = datos[0];
                 context.datosMapaCargadosVuelta = datos[1];
 
-                cargarMapa(null);
+                //Si no hay datos, cargar desde offline
+                if(context.datosMapaCargadosIda.getRecorrido() == null || context.datosMapaCargadosIda.getRecorrido().equals("")){
+                    context.mapasOffline.loadDatosRecorridoOffline();
+                }else {
+                    cargarMapa(null);
+                }
 
                 context.gestionVehiculos.loadDatosVehiculos();
 
@@ -271,8 +276,8 @@ public class GestionarLineas {
 
                 String[] coordenadas = context.datosMapaCargadosIda.getPlacemarks().get(i).getCoordinates().split(",");
 
-                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+                double lat = Double.parseDouble(coordenadas[0]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[1]); // -0.510018;
                 // int glat = (int) (lat * 1E6);
                 // int glng = (int) (lng * 1E6);
 
@@ -346,8 +351,8 @@ public class GestionarLineas {
 
                 String[] coordenadas = context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCoordinates().split(",");
 
-                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
-                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
+                double lat = Double.parseDouble(coordenadas[0]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[1]); // -0.510018;
                 // int glat = (int) (lat * 1E6);
                 // int glng = (int) (lng * 1E6);
 
@@ -438,7 +443,7 @@ public class GestionarLineas {
                 cargarMarkers(context.markersVuelta, posicionSelecionada);
 
             } else {
-                avisoPosibleError();
+                //avisoPosibleError();
             }
 
         }
@@ -598,7 +603,7 @@ public class GestionarLineas {
 
 
         // Control de boton vehiculos
-        final android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
+        /*final android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
 
         boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
 
@@ -639,6 +644,7 @@ public class GestionarLineas {
 
             }
         });
+        */
 
 
         //Botones ida y vuelta

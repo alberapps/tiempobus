@@ -18,12 +18,7 @@
  */
 package alberapps.android.tiempobus.mapas;
 
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -32,13 +27,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
-import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadVehiculosMapaAsyncTask.LoadVehiculosMapaAsyncTaskResponder;
 import alberapps.java.tam.mapas.DatosMapa;
 
@@ -65,7 +56,7 @@ public class GestionVehiculos {
      * Cargar el mapa con las paradas de la linea
      */
     public void cargarVehiculosMapa() {
-
+/*
         //Desactivacion tram
         final android.support.v7.widget.SwitchCompat botonVehiculos = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapasVehiculosButton);
         if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
@@ -79,7 +70,7 @@ public class GestionVehiculos {
 
             return;
 
-        }
+        }*/
         //
 
 
@@ -186,7 +177,10 @@ public class GestionVehiculos {
      */
     public void loadDatosVehiculos() {
 
-        Log.d("mapas", "Inicia carga de vehiculos");
+        //Desactivado
+        return;
+
+        /*Log.d("mapas", "Inicia carga de vehiculos");
 
 
         boolean vehiculosPref = preferencias.getBoolean("mapas_vehiculos", true);
@@ -231,7 +225,7 @@ public class GestionVehiculos {
             if (context.dialog != null && context.dialog.isShowing()) {
                 context.dialog.dismiss();
             }
-        }
+        }*/
 
     }
 

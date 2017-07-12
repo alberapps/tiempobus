@@ -17,8 +17,7 @@
  
 -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -78,8 +77,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="35dp"
                 android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold"
                 android:text="@string/ida" />
 
             <android.support.v7.widget.SwitchCompat
@@ -88,16 +90,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="15dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold"
                 android:layout_weight="1"
                 android:text="@string/vuelta" />
 
-            <android.support.v7.widget.SwitchCompat
+            <!--android.support.v7.widget.SwitchCompat
                 android:id="@+id/mapasVehiculosButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="@string/mapas_vehiculo_on" />
+                android:text="@string/mapas_vehiculo_on" /-->
 
 
         </LinearLayout>

@@ -168,6 +168,39 @@ public class MapasOffline {
     /**
      * Cargar datos en modo offline
      */
+    public void loadDatosRecorridoOffline() {
+
+        String parametros[] = {context.lineaSeleccionadaNum};
+
+        Cursor cursorRecorrido = null;
+
+        try {
+            cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
+        } catch (Exception e) {
+            cursorRecorrido = null;
+            e.printStackTrace();
+        }
+
+        if (cursorRecorrido != null) {
+            cursorRecorrido.moveToFirst();
+
+            context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+            // Cargar datos en el mapa
+            context.gestionarLineas.cargarMapa(null);
+
+            cursorRecorrido.close();
+
+        } else {
+            Toast.makeText(context, context.getString(R.string.error_datos_offline), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    /**
+     * Cargar datos en modo offline
+     */
     public void loadDatosMapaTRAMOffline(String linea) {
 
         DatosMapa datosIda = new DatosMapa();

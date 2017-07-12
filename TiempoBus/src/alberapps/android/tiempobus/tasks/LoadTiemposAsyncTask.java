@@ -33,8 +33,6 @@ import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
-import alberapps.java.tram.ProcesarTiemposTramIsaeService;
-import alberapps.java.tram.ProcesarTiemposTramPorHorarios;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
 import alberapps.java.util.Utilidades;
@@ -130,7 +128,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         try {
 
-            if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_BENIDORM)) {
+            /*if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_BENIDORM)) {
 
                 try {
                     //Tiempos isae tram diesel
@@ -171,16 +169,35 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
                 //llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
                 //llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, null, null);
-                llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
 
-            } else if (DatosPantallaPrincipal.esTram(parada)) {
+                //Consulta de tram desactivada
+                //llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
+
+            } else */
+
+            if (DatosPantallaPrincipal.esTram(parada)) {
 
 
-                if (opcionTR) {
+                //Consulta de tram desactivada
+                /*if (opcionTR) {
                     llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
                 } else if (paradaDestinoTram != null) {
                     llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
+                }*/
+
+                BusLlegada bus = new BusLlegada();
+                llegadasBus = new ArrayList<>();
+
+                if(opcionTR) {
+                    bus.setErrorServicio(true);
+                    bus.setTiempoReal(true);
+                }else {
+                    bus.setTiempoReal(false);
+                    bus.setSinDatos(true);
                 }
+                llegadasBus.add(bus);
+
+
 
 
             } else {
@@ -203,7 +220,7 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
             e.printStackTrace();
 
             // Probar con acceso secundario
-            if (DatosPantallaPrincipal.esTram(parada) && opcionTR) {
+            /*if (DatosPantallaPrincipal.esTram(parada) && opcionTR) {
 
                 try {
 
@@ -230,11 +247,11 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
                     return null;
 
                 }
-            } else {
+            } else {*/
 
                 return null;
 
-            }
+            //}
 
 
         }

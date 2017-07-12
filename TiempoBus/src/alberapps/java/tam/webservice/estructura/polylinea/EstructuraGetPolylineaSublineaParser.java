@@ -61,6 +61,11 @@ public class EstructuraGetPolylineaSublineaParser {
             builder.build();
 
             String resp = Conectividad.conexionGetUtf8(builder.toString());
+
+            if(resp == null || resp.equals("") || !resp.contains("<soap:Envelope")){
+                return null;
+            }
+
             resp = resp.substring(resp.indexOf("<soap:Envelope"));
             is = Utilidades.stringToStream(resp);
 

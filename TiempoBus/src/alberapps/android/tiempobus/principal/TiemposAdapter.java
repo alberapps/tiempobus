@@ -346,10 +346,22 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         } else {
 
+
+            //tram
+            boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
+
+
             Context ctx = this.getContext().getApplicationContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+
+                //Vacio para opcion sin tiempo real
+                if(bus != null && bus.isSinDatos() && !opcionTR){
+                    v = vi.inflate(R.layout.sin_datos_tram, null);
+                    return v;
+                }
+
                 v = vi.inflate(R.layout.tiempos_item_sin_datos_tram, null);
             } else {
                 v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
@@ -360,7 +372,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             if (bus != null && bus.isErrorServicio()) {
-                boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
+
                 if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) && opcionTR) {
                     text.setText(ctx.getString(R.string.error_tiempos_tram));
                 } else {

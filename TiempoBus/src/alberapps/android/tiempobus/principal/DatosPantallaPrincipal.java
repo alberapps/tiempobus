@@ -644,6 +644,118 @@ public class DatosPantallaPrincipal {
 
     }
 
+
+    /**
+     * Verifica si hay nuevas noticias y muestra un aviso
+     */
+    public void verificarNuevosAvisosAlberApps() {
+
+
+        String fechaAviso = PreferencesUtil.getCache(context, "cache_aviso_alberapps");
+
+        //Si no hay valor almacenarlo y continuar
+        if (fechaAviso == null || fechaAviso.equals("")) {
+            String control = String.valueOf((new Date()).getTime());
+            PreferencesUtil.putCache(context, "cache_aviso_alberapps", control);
+        } else {
+
+            Date fecha = new Date(Long.parseLong(fechaAviso));
+
+            Date ahora = new Date();
+
+            //Si la diferencia es menor a 30 minutos. No continuar
+            if (ahora.getTime() - fecha.getTime() < 30 * 60 * 1000) {
+                return;
+            } else {
+                String control = String.valueOf((new Date()).getTime());
+                PreferencesUtil.putCache(context, "cache_aviso_alberapps", control);
+            }
+
+
+        }
+
+
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadAvisosTramAsyncTaskResponder loadAvisosTramAsyncTaskResponder = new LoadAvisosTramAsyncTaskResponder() {
+            public void AvisosTramLoaded(AvisosTram avisosTram) {
+
+                List<TwResultado> noticias = avisosTram.getAvisosTw();
+
+                if (NoticiasTabsPager.errorTwitter(context.getApplicationContext(), noticias)) {
+
+                    noticias = null;
+
+                }
+
+
+                if (noticias != null && !noticias.isEmpty()) {
+
+                    int nuevas = 0;
+
+                    String fecha_ultima = "";
+                    boolean lanzarAviso = false;
+
+                    // Ver si se guardo la fecha de la ultima noticia
+                    if (preferencias.contains("ultima_noticia_alberapps")) {
+                        fecha_ultima = preferencias.getString("ultima_noticia_alberapps", "");
+
+
+                        if (!fecha_ultima.equals(noticias.get(0).getFechaDate().toString())) {
+
+                            lanzarAviso = true;
+
+                            SharedPreferences.Editor editor = preferencias.edit();
+                            editor.putString("ultima_noticia_alberapps", noticias.get(0).getFechaDate().toString());
+                            editor.commit();
+
+                        }
+
+                    } else {
+
+                        SharedPreferences.Editor editor = preferencias.edit();
+                        editor.putString("ultima_noticia_alberapps", noticias.get(0).getFechaDate().toString());
+                        editor.commit();
+
+                    }
+
+                    // Si se guardo la fecha y no coincide con la ultima, lanzar
+                    // aviso
+                    if (lanzarAviso) {
+
+                        // Extendido
+
+                        String[] extendido = new String[2];
+
+                        extendido[0] = noticias.get(0).getFecha() + ": " + noticias.get(0).getMensaje();
+
+                        if (noticias.size() > 1) {
+                            extendido[1] = noticias.get(1).getFecha() + ": " + noticias.get(1).getMensaje();
+                        } else {
+                            extendido[1] = "";
+                        }
+
+                        Notificaciones.notificacionAvisosAlberApps(context.getApplicationContext(), extendido);
+
+                    }
+                } else {
+
+                }
+            }
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            context.nuevasNoticasAlberAppsTramTask = new LoadAvisosTramAsyncTask(loadAvisosTramAsyncTaskResponder).execute("AlberApps");
+        } else {
+            Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     public static boolean esTram(int paradaActual) {
 
         if (!UtilidadesTRAM.ACTIVADO_TRAM) {
@@ -796,12 +908,14 @@ public class DatosPantallaPrincipal {
         TextView texto = (TextView) view.findViewById(R.id.txt_aviso_header);
 
         boolean avisoBus = preferencias.getBoolean("aviso_noticias", true);
-
         boolean avisoTram = preferencias.getBoolean("aviso_noticias_tram", true);
+        boolean avisoAlberApps = preferencias.getBoolean("aviso_noticias_alberapps", true);
+
 
         //Botones ida y vuelta
         final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasBus);
         final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasTram);
+        final android.support.v7.widget.SwitchCompat botonAlberApps = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasAlberApps);
 
         if (avisoBus) {
             botonBus.setChecked(true);
@@ -809,6 +923,10 @@ public class DatosPantallaPrincipal {
 
         if (avisoTram) {
             botonTram.setChecked(true);
+        }
+
+        if (avisoAlberApps) {
+            botonAlberApps.setChecked(true);
         }
 
         botonBus.setOnClickListener(new View.OnClickListener() {
@@ -833,10 +951,21 @@ public class DatosPantallaPrincipal {
             }
         });
 
+        botonAlberApps.setOnClickListener(new View.OnClickListener() {
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
+            public void onClick(View v) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("aviso_noticias_alberapps", botonAlberApps.isChecked());
+                editor.commit();
+
+            }
+        });
+
+
+        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
             texto.setText(texto.getText() + "\n" + context.getString(R.string.compatibilidad));
-        }
+        }*/
 
         // Actualzaciones
 

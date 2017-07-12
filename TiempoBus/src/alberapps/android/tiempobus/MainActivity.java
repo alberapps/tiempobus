@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     AsyncTask<Object, Void, DatosRespuesta> loadTiemposTask = null;
     public AsyncTask<Object, Void, List<Noticias>> nuevasNoticiasTask;
     public AsyncTask<Object, Void, AvisosTram> nuevasNoticasTramTask;
+    public AsyncTask<Object, Void, AvisosTram> nuevasNoticasAlberAppsTramTask;
 
     public View avisoPie = null;
 
@@ -667,6 +668,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             Log.d("tiempos", "Cancelada task nuevas noticias tram");
 
         }
+
+        if (nuevasNoticasAlberAppsTramTask != null && nuevasNoticasAlberAppsTramTask.getStatus() == Status.RUNNING) {
+
+            nuevasNoticasAlberAppsTramTask.cancel(true);
+
+            Log.d("tiempos", "Cancelada task nuevas noticias alberapps");
+
+        }
+
+
 
     }
 
@@ -1853,6 +1864,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         // NOTICIAS
                         boolean verificaNoticias = laActividad.preferencias.getBoolean("aviso_noticias", true);
                         boolean verificaNoticiasTram = laActividad.preferencias.getBoolean("aviso_noticias_tram", true);
+                        boolean verificaNoticiasAlberApps = laActividad.preferencias.getBoolean("aviso_noticias_alberapps", true);
 
                         if (verificaNoticias) {
                             laActividad.datosPantallaPrincipal.verificarNuevasNoticias();
@@ -1861,6 +1873,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         if (UtilidadesTRAM.ACTIVADO_TRAM && verificaNoticiasTram) {
                             laActividad.datosPantallaPrincipal.verificarNuevasNoticiasTram();
                         }
+
+                        if (verificaNoticiasAlberApps) {
+                            laActividad.datosPantallaPrincipal.verificarNuevosAvisosAlberApps();
+                        }
+
 
 
                         break;

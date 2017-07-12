@@ -314,19 +314,28 @@
                     android:id="@+id/tarjeta_horario_ir"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="right"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="25dp"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Horario TRAM"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_today_grey600_24dp" />
+                    android:src="@drawable/ic_today_grey_18dp"
+                    android:tint="@color/primary_dark_material_light"
+                    android:scaleType="centerInside"/>
+
+                <ImageView
+                    android:id="@+id/tiempos_alerta_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Establecer alerta"
+                    android:src="@drawable/ic_alarm_grey600_18dp" />
 
                 <ImageButton
                     android:id="@+id/tarjeta_horario_compartir"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="45dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Compartir horario"
                     android:scaleType="centerInside"
@@ -341,16 +350,7 @@
                     android:contentDescription="Leer tiempo"
                     android:src="@drawable/ic_volume_up_grey600_18dp" /-->
 
-                <TextView
-                    android:id="@+id/tiempos_alerta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="12sp"
-                    android:textStyle="italic|bold" />
+
 
                 <FrameLayout
                     android:layout_width="match_parent"

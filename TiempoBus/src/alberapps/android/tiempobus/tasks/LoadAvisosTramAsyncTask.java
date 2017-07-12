@@ -49,11 +49,14 @@ public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, AvisosTram>
     protected AvisosTram doInBackground(Object... datos) {
 
         boolean consultarWeb = false;
+        boolean consultarAlberApps = false;
 
         if(datos.length > 0){
 
             if(((String)datos[0]).equals("TRAM_WEB")){
                 consultarWeb = true;
+            }else if(((String)datos[0]).equals("AlberApps")){
+                consultarAlberApps = true;
             }
 
         }
@@ -64,7 +67,11 @@ public class LoadAvisosTramAsyncTask extends AsyncTask<Object, Void, AvisosTram>
         List<TwResultado> twList = null;
         try {
 
-            twList = ProcesarTwitter.procesarTram();
+            if(consultarAlberApps){
+                twList = ProcesarTwitter.procesarAlberApps();
+            }else {
+                twList = ProcesarTwitter.procesarTram();
+            }
 
             avisosTram.setAvisosTw(twList);
 

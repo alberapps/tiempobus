@@ -86,16 +86,17 @@
 
                         android:textStyle="bold" />
 
-                    <TextView
+
+                    <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/datos_desc_linea_sentido"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_arrow_forward_blue_18dp"
                         android:gravity="top"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold"
-                        android:drawableLeft="@drawable/ic_arrow_forward_blue_18dp"/>
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>

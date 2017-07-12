@@ -86,11 +86,11 @@ public class ProcesarDatosLineasIsaeService {
                 datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
 
                 //Parche 27 - 127
-                if (datosLinea.getLineaNum().equals("127")) {
+                /*if (datosLinea.getLineaNum().equals("127")) {
                     datosLinea.setLineaNum("27");
 
                     datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().substring(1));
-                }
+                }*/
 
                 // KML
                 int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
@@ -125,7 +125,7 @@ public class ProcesarDatosLineasIsaeService {
                 lineas.add(datosLinea);
 
                 // 11H
-                if (datosLinea.getLineaNum().equals("11")) {
+                /*if (datosLinea.getLineaNum().equals("11")) {
 
                     DatosLinea datosLineaH = new DatosLinea();
                     datosLineaH.setLineaNum("11H");
@@ -141,7 +141,7 @@ public class ProcesarDatosLineasIsaeService {
                     int posicion11 = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
                     datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
 
-                }
+                }*/
 
 
             }

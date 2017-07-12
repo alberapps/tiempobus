@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.ProcesarTiemposTramPorHorarios;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.horarios.DatosConsultaHorariosTram;
@@ -177,6 +179,38 @@ public class PrincipalHorarioTramFragment extends Fragment {
         });
 
 
+        // Botones
+        ImageView alertaText = (ImageView) view.findViewById(R.id.tiempos_alerta_img);
+
+        alertaText.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+
+                TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
+
+                BusLlegada bus = new BusLlegada();
+                bus.setErrorServicio(false);
+                bus.setSinDatos(false);
+                bus.setTiempoReal(false);
+
+
+
+                bus.setLinea("TRAM");
+
+                bus.setProximo("sinestimacion;sinestimacion");
+
+                calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
+
+                // Texto para receiver
+                String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
+
+                // Activar alarma y mostrar modal
+                context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+
+            }
+
+        });
+
         boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
 
         //Botones ida y vuelta
@@ -209,6 +243,37 @@ public class PrincipalHorarioTramFragment extends Fragment {
         bus.setLinea();
         context.datosPantallaPrincipal.cantarLinea(bus);
         */
+
+
+    }
+
+
+    private void calcularTiempoPorHoras(String horasList, BusLlegada ida) {
+
+        Date hoy = new Date();
+
+        String[] horas = horasList.split(" ");
+
+        //Calcular el tiempo a partir de la hora
+        String hora1 = horas[0].trim();
+        String hora2 = "";
+        Date hora1Fecha = Utilidades.getFechaActualConHora(hora1);
+        Date hora2Fecha = null;
+        String minutosTren2 = "";
+
+        String minutosTren1 = Utilidades.getMinutosDiferencia(hoy, hora1Fecha);
+
+        ida.cambiarProximo(Integer.parseInt(minutosTren1) + 1);
+
+        if (horas.length > 1) {
+
+            hora2 = horas[1];
+            hora2Fecha = Utilidades.getFechaActualConHora(hora2);
+            minutosTren2 = Utilidades.getMinutosDiferencia(hoy, hora2Fecha);
+
+            ida.cambiarSiguiente(Integer.parseInt(minutosTren2) + 1);
+
+        }
 
 
     }
@@ -515,8 +580,8 @@ public class PrincipalHorarioTramFragment extends Fragment {
         // Combo de seleccion de destino
         final Spinner spinnerEstDest = (Spinner) getView().findViewById(R.id.spinner_estacion_destino);
         ArrayAdapter<CharSequence> adapterEstDest = null;
-        adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, android.R.layout.simple_spinner_item);
-        adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
+        adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_item);
         spinnerEstDest.setAdapter(adapterEstDest);
 
         //Cargar si esta disponible, el ultimo destino seleccionado para esta parada
