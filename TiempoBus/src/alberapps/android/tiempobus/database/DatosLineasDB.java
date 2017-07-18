@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by The Android Open Source Project
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on code by The Android Open Source Project
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.database;
 
@@ -72,9 +72,9 @@ public class DatosLineasDB {
     private static final String DATABASE_NAME = "tiempobuslineas";
     private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
     private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-    private static final int DATABASE_VERSION = 77;
+    private static final int DATABASE_VERSION = 78;
 
-    public static final String DATABASE_VERSION_FECHA = "10122016";
+    public static final String DATABASE_VERSION_FECHA = "18072017";
 
     private final DatosLineasOpenHelper mDatabaseOpenHelper;
     private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -210,7 +210,7 @@ public class DatosLineasDB {
         return query(null, selection, selectionArgs, columns);
 
 		/*
-		 * This builds a query that looks like: SELECT <columns> FROM <table>
+         * This builds a query that looks like: SELECT <columns> FROM <table>
 		 * WHERE rowid = <rowId>
 		 */
     }
@@ -224,7 +224,7 @@ public class DatosLineasDB {
         return query(null, selection, selectionArgs, columns);
 
 		/*
-		 * This builds a query that looks like: SELECT <columns> FROM <table>
+         * This builds a query that looks like: SELECT <columns> FROM <table>
 		 * WHERE rowid = <rowId>
 		 */
     }
@@ -586,23 +586,8 @@ public class DatosLineasDB {
                 }
 
 
-
-               /* String line;
-                while ((line = reader.readLine()) != null) {
-
-                    // Para TAM
-                    line = line.concat(";;TAM");
-
-                    String[] strings = TextUtils.split(line, ";;");
-                    // if (strings.length < 2) continue;
-
-                    long id = addWord(strings[0].trim() + " > " + strings[2].trim() + " - " + strings[3].trim() + " " + strings[5].trim(), strings[1].trim() + " > " + strings[2].trim() + " [" + strings[3].trim()
-                            + "] - " + strings[5].trim(), strings);
-                    if (id < 0) {
-                        Log.e(TAG, "unable to add line: " + strings[0].trim());
-                    }
-                }*/
-
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 inputStream.close();
                 reader.close();
@@ -805,18 +790,6 @@ public class DatosLineasDB {
 
                         strings[7] = "";
 
-                        /*if (strings[0].equals("L9")) {
-                            strings[7] = UtilidadesTRAM.OBSERVACIONES_L9;
-                            // } else if (strings[0].equals("L1") ||
-                            // strings[0].equals("L3")) {
-                            // strings[7] =
-                            // UtilidadesTRAM.getObservacionesL1(strings[3]);}
-                            // else if (strings[0].equals("L4")) {
-                            // strings[7] =
-                            // UtilidadesTRAM.getObservacionesL1enL4(strings[3]);
-                        } else {
-                            strings[7] = "";
-                        }*/
 
                         strings[8] = "TRAM";
 
@@ -827,17 +800,6 @@ public class DatosLineasDB {
                             Log.e(TAG, "unable to add line: " + strings[0].trim());
                         }
 
-						/*
-						 * strings[2] = "VUELTA";
-						 * 
-						 * // vuelta long id2 = addWord(strings[0].trim() +
-						 * " > " + strings[2].trim() + " - " + strings[3].trim()
-						 * + " " + strings[5].trim(), strings[1].trim() + " > "
-						 * + strings[2].trim() + " [" + strings[3].trim() +
-						 * "] - " + strings[5].trim(), strings); if (id2 < 0) {
-						 * Log.e(TAG, "unable to add line: " +
-						 * strings[0].trim()); }
-						 */
 
                     }
 
@@ -863,33 +825,11 @@ public class DatosLineasDB {
 
             InputStream inputStreamR = null;
             BufferedReader readerR = null;
-            // InputStream inputStreamR2 = null;
-            // BufferedReader readerR2 = null;
 
-            // if (origen != null &&
-            // origen.equals(DescargarActualizaBD.BD_DESCARGA)) {
-
-            // inputStreamR =
-            // DescargarActualizaBD.inputStreamInfolineasRecorrido1();
-            // readerR = new BufferedReader(new
-            // InputStreamReader(inputStreamR));
-
-            // inputStreamR2 =
-            // DescargarActualizaBD.inputStreamInfolineasRecorrido2();
-            // readerR2 = new BufferedReader(new
-            // InputStreamReader(inputStreamR2));
-
-            // } else {
 
             inputStreamR = resources.openRawResource(R.raw.preinforecorridotram);
             readerR = new BufferedReader(new InputStreamReader(inputStreamR));
 
-            // inputStreamR2 =
-            // resources.openRawResource(R.raw.precargainfolineasrecorrido2);
-            // readerR2 = new BufferedReader(new
-            // InputStreamReader(inputStreamR2));
-
-            // }
 
             try {
                 String line;
@@ -947,17 +887,6 @@ public class DatosLineasDB {
 
                 }
 
-				/*
-				 * while ((line = readerR2.readLine()) != null) {
-				 * 
-				 * // Para TAM line = line.concat(";;TAM");
-				 * 
-				 * String[] strings = TextUtils.split(line, ";;"); // if
-				 * (strings.length < 2) continue;
-				 * 
-				 * long id = addRecorrido(strings); if (id < 0) { Log.e(TAG,
-				 * "unable to add line: " + strings[0].trim()); } }
-				 */
 
             } finally {
 
