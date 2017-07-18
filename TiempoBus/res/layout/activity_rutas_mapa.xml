@@ -54,9 +54,9 @@
                     android:id="@+id/mapRuta"
                     android:name="alberapps.android.tiempobus.rutas.RutaMapaFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
+                    android:layout_height="210dp"
                     map:cameraZoom="14"
-                    map:liteMode="true"
+                    map:liteMode="false"
                     map:mapType="normal"
                     tools:ignore="MissingPrefix" />
 

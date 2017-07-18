@@ -201,7 +201,7 @@
     <string name="foreground_service_started">Vérifier le temps tous les %s secondes</string>
     <string name="foreground_service">TiempoBus : service d\'alarmes</string>
     
-    <string name="tab_noticias">Web Subús</string>
+    <string name="tab_noticias">Web Vectalia</string>
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Les tweets plus récentes du :</string>
@@ -338,6 +338,7 @@
     <string name="foreground_service_started_2">Vérifier le temps tous les 60 secondes</string>
     <string name="bus_tram">Bus et Tram</string>
     <string name="horarios_tram_aviso">Les itinéraires sont récupérés directement du site tramalicante.es</string>
+    <string name="nuevas_noticias_alberapps">\@AlberApps : Il y a des nouveaux avis-</string>
 
 
 </resources>

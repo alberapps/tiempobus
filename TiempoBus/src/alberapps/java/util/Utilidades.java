@@ -544,4 +544,20 @@ public class Utilidades {
     }
 
 
+    public static String getCoordenadasB(String data) {
+
+        String coordenadas = "";
+
+        if (data != null && !data.equals("")) {
+
+            String[] d1 = data.split(",");
+
+            coordenadas = d1[1] + "," + d1[0];
+
+        }
+
+        return coordenadas;
+
+    }
+
 }

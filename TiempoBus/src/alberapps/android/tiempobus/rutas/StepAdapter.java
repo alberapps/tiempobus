@@ -17,7 +17,6 @@
 package alberapps.android.tiempobus.rutas;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -55,7 +54,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public ItemViewHolder(View v, final RutasActivity contexto) {
             super(v);
             // Define click listener for the ViewHolder's View.
-            v.setOnClickListener(new View.OnClickListener() {
+            /*v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Log.d(TAG, "Element " + getPosition() + " clicked.");
@@ -64,7 +63,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .setAction("Action", null).show();
 
                 }
-            });
+            });*/
             //textView = (TextView) v.findViewById(R.id.textView);
             datosDescripcion = (TextView) v.findViewById(R.id.datos_descripcion);
             datosPasos = (TextView) v.findViewById(R.id.datos_pasos);

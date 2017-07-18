@@ -29,6 +29,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +70,9 @@ public class RutaMapaFragment extends SupportMapFragment implements OnMapReadyCa
         mMap = googleMap;
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
 
         mMap.getUiSettings().setAllGesturesEnabled(false);
 
@@ -108,12 +110,17 @@ public class RutaMapaFragment extends SupportMapFragment implements OnMapReadyCa
 
         }
 
+        //Obtener linea
+        polyline = contexto.getPolyline();
 
-        //polyline = contexto.getPolyline();
+        if (polyline != null) {
+            List<LatLng> polDecode = PolyUtil.decode(polyline);
 
+            PolylineOptions poly = new PolylineOptions();
+            poly.addAll(polDecode);
 
-        //PolylineOptions poly = new PolylineOptions().
-
+            mMap.addPolyline(poly);
+        }
 
     }
 

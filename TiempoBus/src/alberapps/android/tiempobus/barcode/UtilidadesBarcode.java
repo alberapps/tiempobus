@@ -18,7 +18,7 @@
  */
 package alberapps.android.tiempobus.barcode;
 
-public class Utilidades {
+public class UtilidadesBarcode {
 
     /**
      * FORMATO: SMSTO:215034:TAM 2932

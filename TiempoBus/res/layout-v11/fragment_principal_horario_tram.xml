@@ -1,0 +1,186 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contenedor_fragment_horario_tram"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="alberapps.android.tiempobus.principal.horariotram.PrincipalHorarioTramFragment">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/tarjeta_margin"
+
+        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/infolinea_horarios"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="4dp"
+                        android:text="@string/tramalicante"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="12sp"
+                        android:textStyle="italic|bold" />
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/texto_buscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/destino"
+                    android:imeOptions="actionGo"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+
+                <Spinner
+                    android:id="@+id/spinner_estacion_destino"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+
+                    android:gravity="center" />
+
+
+                <include layout="@layout/fragment_principal_horario_tram_horas" />
+
+                <LinearLayout
+                    android:id="@+id/datos_lineas_posibles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5sp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/lineas_parada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lineas_parada_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/fragment_principal_horario_tram_paso2" />
+
+                <include layout="@layout/fragment_principal_horario_tram_paso3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/mi_material_grey_200"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/tarjeta_horario_ir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Horario TRAM"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_today_grey_18dp"
+                    android:tint="@color/primary_dark_material_light" />
+
+                <ImageView
+                    android:id="@+id/tiempos_alerta_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Establecer alerta"
+                    android:src="@drawable/ic_alarm_grey600_18dp" />
+
+                <ImageButton
+                    android:id="@+id/tarjeta_horario_compartir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Compartir horario"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_share_grey600_18dp" />
+
+
+                <!--ImageView
+                    android:id="@+id/audio_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Leer tiempo"
+                    android:src="@drawable/ic_volume_up_grey600_18dp" /-->
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/switchTiempoReal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text="@string/tiempo_real"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</FrameLayout>

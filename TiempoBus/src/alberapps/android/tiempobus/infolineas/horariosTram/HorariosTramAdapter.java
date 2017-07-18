@@ -154,7 +154,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             String aviso = "";
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
-            imagenAviso.setImageResource(R.drawable.alerts_warning);
+            imagenAviso.setImageResource(R.drawable.ic_warning_black_48dp);
 
             textAviso.setText(aviso);
 

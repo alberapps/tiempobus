@@ -33,11 +33,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -905,17 +907,24 @@ public class DatosPantallaPrincipal {
 
     public void opcionesNotificacion(View view) {
 
-        TextView texto = (TextView) view.findViewById(R.id.txt_aviso_header);
+        //TextView texto = (TextView) view.findViewById(R.id.txt_aviso_header);
 
         boolean avisoBus = preferencias.getBoolean("aviso_noticias", true);
         boolean avisoTram = preferencias.getBoolean("aviso_noticias_tram", true);
         boolean avisoAlberApps = preferencias.getBoolean("aviso_noticias_alberapps", true);
 
 
-        //Botones ida y vuelta
-        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasBus);
-        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasTram);
-        final android.support.v7.widget.SwitchCompat botonAlberApps = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasAlberApps);
+        //Botones activar notificaciones
+        //final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasBus);
+        //final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasTram);
+        //final android.support.v7.widget.SwitchCompat botonAlberApps = (android.support.v7.widget.SwitchCompat) view.findViewById(R.id.switchNoticiasAlberApps);
+
+        Menu menu = context.mDrawerView.getMenu();
+
+        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasBus));
+        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasTram));
+        final android.support.v7.widget.SwitchCompat botonAlberApps = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasAlberApps));
+
 
         if (avisoBus) {
             botonBus.setChecked(true);
@@ -969,7 +978,7 @@ public class DatosPantallaPrincipal {
 
         // Actualzaciones
 
-        context.gestionarTarjetaInfo.controlActualizarDB(texto);
+        //context.gestionarTarjetaInfo.controlActualizarDB(texto);
 
     }
 

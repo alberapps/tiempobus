@@ -199,7 +199,7 @@
     <string name="foreground_service_started">Verify time every %s seconds</string>
     <string name="foreground_service">TiempoBus: Alert Service</string>
 
-    <string name="tab_noticias">Subús Web</string>
+    <string name="tab_noticias">Vectalia Web</string>
     <string name="tab_tw">Twitter</string>
 
     <string name="dato_tw">Most recent tweets from:</string>
@@ -377,5 +377,6 @@
     <string name="tarjeta_clima_pref_desc">Data source</string>
     <string name="satelite">Satellite</string>
     <string name="tiempo_real">Real Time</string>
+    <string name="nuevas_noticias_alberapps">\@AlberApps: There are new Notices</string>
 
 </resources>

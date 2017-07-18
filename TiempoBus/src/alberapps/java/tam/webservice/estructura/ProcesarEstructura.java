@@ -34,6 +34,7 @@ import alberapps.java.tam.webservice.estructura.polylinea.EstructuraGetPolylinea
 import alberapps.java.tam.webservice.estructura.polylinea.GetPolylineaSublineaResult;
 import alberapps.java.tam.webservice.estructura.rutas.EstructuraGetRutasSublineaParser;
 import alberapps.java.tam.webservice.estructura.rutas.GetRutaSublineaResult;
+import alberapps.java.util.Utilidades;
 
 public class ProcesarEstructura {
 
@@ -98,7 +99,7 @@ public class ProcesarEstructura {
                             pm.setLineas("");
                             pm.setObservaciones("");
                             pm.setSentido(datos.getInfoRutaList().get(0).getNombre());
-                            pm.setCoordinates(datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas());
+                            pm.setCoordinates(Utilidades.getCoordenadasB(datos.getInfoRutaList().get(0).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas()));
 
                             listaIda.add(pm);
 
@@ -147,7 +148,7 @@ public class ProcesarEstructura {
                             pm.setLineas("");
                             pm.setObservaciones("");
                             pm.setSentido(datos.getInfoRutaList().get(1).getNombre());
-                            pm.setCoordinates(datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas());
+                            pm.setCoordinates(Utilidades.getCoordenadasB(datos.getInfoRutaList().get(1).getInfoSeccion().get(j).getNodos().get(i).getCoordenadas()));
 
                             listaIda.add(pm);
 

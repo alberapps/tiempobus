@@ -7,15 +7,21 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContentResolverCompat;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import alberapps.android.tiempobus.MainActivity;
@@ -37,6 +44,7 @@ import alberapps.android.tiempobus.database.historial.HistorialDB;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
+import alberapps.android.tiempobus.mapas.SpinnerItem;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
 import alberapps.android.tiempobus.util.UtilidadesUI;
@@ -129,114 +137,118 @@ public class PrincipalHorarioTramFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setupFondoAplicacion();
+        //Para evitar limitacion en layouts
 
-        ImageButton botonHorarios = (ImageButton) view.findViewById(R.id.tarjeta_horario_ir);
 
-        final MainActivity context = (MainActivity) getActivity();
+            setupFondoAplicacion();
 
-        botonHorarios.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
 
-                context.detenerTodasTareas();
+            ImageButton botonHorarios = (ImageButton) view.findViewById(R.id.tarjeta_horario_ir);
 
-                Intent i = new Intent(context, InfoLineasTabsPager.class);
-                i.putExtra("HORARIOS", "TRAM");
+            final MainActivity context = (MainActivity) getActivity();
 
-                StringBuffer dato = new StringBuffer("");
-                dato.append(datosConsulta.getCodEstacionDestino());
-                dato.append(";;");
-                dato.append(datosConsulta.getCodEstacionOrigen());
-                dato.append(";;");
-                dato.append(datosConsulta.getEstacionDestinoSeleccion());
-                dato.append(";;");
-                dato.append(datosConsulta.getEstacionOrigenSeleccion());
-                dato.append(";;");
-                dato.append(datosConsulta.getHoraDesde());
-                dato.append(";;");
-                dato.append(datosConsulta.getHoraHasta());
+            botonHorarios.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View arg0) {
 
-                i.putExtra("HORARIOSDATA", dato.toString());
+                    context.detenerTodasTareas();
 
-                context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+                    Intent i = new Intent(context, InfoLineasTabsPager.class);
+                    i.putExtra("HORARIOS", "TRAM");
 
+                    StringBuffer dato = new StringBuffer("");
+                    dato.append(datosConsulta.getCodEstacionDestino());
+                    dato.append(";;");
+                    dato.append(datosConsulta.getCodEstacionOrigen());
+                    dato.append(";;");
+                    dato.append(datosConsulta.getEstacionDestinoSeleccion());
+                    dato.append(";;");
+                    dato.append(datosConsulta.getEstacionOrigenSeleccion());
+                    dato.append(";;");
+                    dato.append(datosConsulta.getHoraDesde());
+                    dato.append(";;");
+                    dato.append(datosConsulta.getHoraHasta());
+
+                    i.putExtra("HORARIOSDATA", dato.toString());
+
+                    context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+
+                }
+            });
+
+
+            ImageButton botonCompartir = (ImageButton) view.findViewById(R.id.tarjeta_horario_compartir);
+
+
+            botonCompartir.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
+                    TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
+
+                    context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
+
+                }
+            });
+
+
+            // Botones
+            ImageView alertaText = (ImageView) view.findViewById(R.id.tiempos_alerta_img);
+
+            alertaText.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View view) {
+
+                    TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
+
+                    BusLlegada bus = new BusLlegada();
+                    bus.setErrorServicio(false);
+                    bus.setSinDatos(false);
+                    bus.setTiempoReal(false);
+
+
+                    bus.setLinea("TRAM");
+
+                    bus.setProximo("sinestimacion;sinestimacion");
+
+                    calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
+
+                    // Texto para receiver
+                    String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
+
+                    // Activar alarma y mostrar modal
+                    context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+
+                }
+
+            });
+
+            boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+
+            //Botones ida y vuelta
+            final SwitchCompat botonTR = (SwitchCompat) view.findViewById(R.id.switchTiempoReal);
+
+
+            if (opcionTR) {
+                botonTR.setChecked(true);
             }
-        });
+
+            botonTR.setOnClickListener(new View.OnClickListener() {
+
+                public void onClick(View v) {
+
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putBoolean("tram_opcion_tr", botonTR.isChecked());
+                    editor.commit();
+
+                    recargaExterna = false;
+                    cargaInicial();
+
+                }
+            });
 
 
-        ImageButton botonCompartir = (ImageButton) view.findViewById(R.id.tarjeta_horario_compartir);
-
-
-        botonCompartir.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View arg0) {
-
-                TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
-                TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
-
-                context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
-
-            }
-        });
-
-
-        // Botones
-        ImageView alertaText = (ImageView) view.findViewById(R.id.tiempos_alerta_img);
-
-        alertaText.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-
-                TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
-
-                BusLlegada bus = new BusLlegada();
-                bus.setErrorServicio(false);
-                bus.setSinDatos(false);
-                bus.setTiempoReal(false);
-
-
-
-                bus.setLinea("TRAM");
-
-                bus.setProximo("sinestimacion;sinestimacion");
-
-                calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
-
-                // Texto para receiver
-                String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
-
-                // Activar alarma y mostrar modal
-                context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
-
-            }
-
-        });
-
-        boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
-
-        //Botones ida y vuelta
-        final SwitchCompat botonTR = (SwitchCompat) view.findViewById(R.id.switchTiempoReal);
-
-
-        if (opcionTR) {
-            botonTR.setChecked(true);
-        }
-
-        botonTR.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-
-                SharedPreferences.Editor editor = preferencias.edit();
-                editor.putBoolean("tram_opcion_tr", botonTR.isChecked());
-                editor.commit();
-
-                recargaExterna = false;
-                cargaInicial();
-
-            }
-        });
-
-
-        cargaInicial();
+            cargaInicial();
 
 
         /*BusLlegada bus = new BusLlegada();
@@ -244,7 +256,28 @@ public class PrincipalHorarioTramFragment extends Fragment {
         context.datosPantallaPrincipal.cantarLinea(bus);
         */
 
+        } else {
 
+            AppCompatTextView botonHorarios = (AppCompatTextView) view.findViewById(R.id.boton_horarios);
+
+            final MainActivity context = (MainActivity) getActivity();
+
+            botonHorarios.setOnClickListener(new Button.OnClickListener() {
+                public void onClick(View arg0) {
+
+                    context.detenerTodasTareas();
+
+                    Intent i = new Intent(context, InfoLineasTabsPager.class);
+                    i.putExtra("HORARIOS", "TRAM");
+
+
+
+                    context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+
+                }
+            });
+
+        }
     }
 
 
@@ -500,7 +533,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
             }
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -575,66 +608,140 @@ public class PrincipalHorarioTramFragment extends Fragment {
     };
 
 
+    private boolean filtroTramRecargar = true;
+
     private void cargaInicial() {
 
-        // Combo de seleccion de destino
-        final Spinner spinnerEstDest = (Spinner) getView().findViewById(R.id.spinner_estacion_destino);
-        ArrayAdapter<CharSequence> adapterEstDest = null;
-        adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
-        adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinnerEstDest.setAdapter(adapterEstDest);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
 
-        //Cargar si esta disponible, el ultimo destino seleccionado para esta parada
-        String paradaHist = cargarHorarioParadaHistorial(((MainActivity) getActivity()).paradaActual);
-        int destino = UtilidadesTRAM.HORARIOS_COD_ESTACION[spinnerEstDest.getSelectedItemPosition()];
+            // Combo de seleccion de destino
+            LinkedList<SpinnerItem> listaSpinner = new LinkedList<>();
+            String[] a1 = getResources().getStringArray(R.array.estaciones_tram);
+            for (int i = 0; i < a1.length; i++) {
+                listaSpinner.add(new SpinnerItem(i, a1[i]));
+            }
+            final ArrayAdapter<SpinnerItem> adapterEstDest = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_horario, listaSpinner);
 
-        if (paradaHist != null && !paradaHist.equals("")) {
-            destino = Integer.parseInt(paradaHist);
+            final Spinner spinnerEstDest = (Spinner) getView().findViewById(R.id.spinner_estacion_destino);
+            //final ArrayAdapter<SpinnerItem> adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
+            adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinnerEstDest.setAdapter(adapterEstDest);
 
-            // Seleccion inicial
+            //Cargar si esta disponible, el ultimo destino seleccionado para esta parada
+            String paradaHist = cargarHorarioParadaHistorial(((MainActivity) getActivity()).paradaActual);
+            int destino = UtilidadesTRAM.HORARIOS_COD_ESTACION[spinnerEstDest.getSelectedItemPosition()];
 
-            List datosList = new ArrayList(Arrays.asList(UtilidadesTRAM.HORARIOS_COD_ESTACION));
-            int select = datosList.lastIndexOf(destino);
-            spinnerEstDest.setSelection(select);
+            if (paradaHist != null && !paradaHist.equals("")) {
+                destino = Integer.parseInt(paradaHist);
 
-        }
+                // Seleccion inicial
 
-        //cargarHorarios(destino);
+                List datosList = new ArrayList(Arrays.asList(UtilidadesTRAM.HORARIOS_COD_ESTACION));
+                int select = datosList.lastIndexOf(destino);
+                spinnerEstDest.setSelection(select);
+
+            }
+
+            //cargarHorarios(destino);
+
+            final TextView textoBuscar = (TextView) getView().findViewById(R.id.texto_buscar);
 
 
-        // Seleccion
-        spinnerEstDest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            // Seleccion
+            spinnerEstDest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                Integer codigoEstacion = UtilidadesTRAM.HORARIOS_COD_ESTACION[arg2];
-                //actividad.consultaHorarioTram.setCodEstacionDestino(codigoEstacion);
-                //actividad.consultaHorarioTram.setEstacionDestinoSeleccion(arg2);
+                    if (!textoBuscar.isFocused()) {
 
-                if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
-                    recargaExterna = false;
+                        int id = ((SpinnerItem) arg0.getItemAtPosition(arg2)).getId();
+
+                        Integer codigoEstacion = UtilidadesTRAM.HORARIOS_COD_ESTACION[id];
+                        //actividad.consultaHorarioTram.setCodEstacionDestino(codigoEstacion);
+                        //actividad.consultaHorarioTram.setEstacionDestinoSeleccion(arg2);
+
+                        if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
+                            recargaExterna = false;
+                        }
+
+                        destinoActual = codigoEstacion;
+
+                        ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
+
+                        textoDestinoActual = ((SpinnerItem) arg0.getItemAtPosition(arg2)).toString();
+
+                        cargarHorarios(codigoEstacion, id);
+
+                        onCambioDestino(destinoActual, textoDestinoActual);
+                    }
                 }
 
-                destinoActual = codigoEstacion;
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
 
-                ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
+                }
 
-                textoDestinoActual = (String) arg0.getItemAtPosition(arg2);
-
-                cargarHorarios(codigoEstacion, arg2);
-
-                onCambioDestino(destinoActual, textoDestinoActual);
-
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-        });
+            });
 
 
+            // Busqueda
+
+
+            textoBuscar.addTextChangedListener(new TextWatcher() {
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    adapterEstDest.getFilter().filter(s);
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            //Control desde teclado
+
+            textoBuscar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_GO) {
+
+                        if (spinnerEstDest.getSelectedItem() == null) {
+                            return true;
+                        }
+
+                        int id = ((SpinnerItem) spinnerEstDest.getSelectedItem()).getId();
+
+                        Integer codigoEstacion = UtilidadesTRAM.HORARIOS_COD_ESTACION[id];
+
+                        if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
+                            recargaExterna = false;
+                        }
+
+                        destinoActual = codigoEstacion;
+
+                        ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
+
+                        textoDestinoActual = ((SpinnerItem) spinnerEstDest.getSelectedItem()).toString();
+
+                        cargarHorarios(codigoEstacion, id);
+
+                        onCambioDestino(destinoActual, textoDestinoActual);
+
+
+                        return false;
+                    }
+
+                    return false;
+                }
+            });
+
+        }
     }
 
 

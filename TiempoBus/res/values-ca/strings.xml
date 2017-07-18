@@ -199,7 +199,7 @@ favorit per crear la teua llista.</string>
     <string name="foreground_service_started">Verifica temps cada %s segons</string>
     <string name="foreground_service">TempsBus: Servei Alertes</string>
     
-    <string name="tab_noticias">Web Subús</string>
+    <string name="tab_noticias">Web Vectalia</string>
     <string name="tab_tw">Twitter</string>
     
     <string name="dato_tw">Tweets més recents de:</string>
@@ -471,6 +471,7 @@ favorit per crear la teua llista.</string>
     <string name="barcode_opcion_1">Lector QR de TempsBus (Beta)</string>
     <string name="barcode_opcion_2">Barcode Scanner de Zxing</string>
     <string name="barcode_opcion_titulo">Selecciona lector</string>
+    <string name="nuevas_noticias_alberapps">\@AlberApps: Hi ha nous Avisos</string>
 
 
 </resources>

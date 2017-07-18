@@ -40,7 +40,7 @@ import java.util.Locale;
 import alberapps.android.tiempobus.R;
 
 /**
- * Utilidades de uso en la interfaz
+ * UtilidadesBarcode de uso en la interfaz
  */
 public class UtilidadesUI {
 

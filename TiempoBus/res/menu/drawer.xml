@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_secciones"
+        android:checkableBehavior="single">
         <!--item
             android:id="@+id/navigation_item_mapa"
             android:icon="@drawable/ic_map_grey600_48dp"
@@ -28,22 +31,41 @@
             android:title="@string/historial_titulo" />
     </group>
 
-    <item android:title="@string/preferences">
+    <group
+        android:id="@+id/menu_pref"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navigation_item_preferencias"
+            android:icon="@drawable/ic_settings_applications_grey600_48dp"
+            android:title="@string/preferences" />
+        <item
+            android:id="@+id/navigation_item_fondo"
+            android:icon="@drawable/ic_collections_grey600_48dp"
+            android:title="@string/fondo_pantall" />
+        <item
+            android:id="@+id/navigation_item_exportar"
+            android:icon="@drawable/ic_add_to_photos_grey600_48dp"
+            android:title="@string/menu_export_qr" />
+
+
+    </group>
+
+    <item android:title="@string/preferencias_noticias_auto">
         <menu>
 
             <item
-                android:id="@+id/navigation_item_preferencias"
-                android:icon="@drawable/ic_settings_applications_grey600_48dp"
-                android:title="@string/preferences" />
+                android:id="@+id/switchNoticiasBus"
+                android:title="@string/tab_noticias"
+                app:actionLayout="@layout/switch_layout" />
             <item
-                android:id="@+id/navigation_item_fondo"
-                android:icon="@drawable/ic_collections_grey600_48dp"
-                android:title="@string/fondo_pantall" />
+                android:id="@+id/switchNoticiasTram"
+                android:title="@string/tram_tw_txt"
+                app:actionLayout="@layout/switch_layout" />
             <item
-                android:id="@+id/navigation_item_exportar"
-                android:icon="@drawable/ic_add_to_photos_grey600_48dp"
-                android:title="@string/menu_export_qr" />
-
+                android:id="@+id/switchNoticiasAlberApps"
+                android:title="@string/alberapps"
+                app:actionLayout="@layout/switch_layout" />
 
         </menu>
     </item>

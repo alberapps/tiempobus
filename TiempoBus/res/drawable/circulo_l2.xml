@@ -4,7 +4,7 @@
 
     <solid android:color="@color/tram_l2" />
 
-    <corners android:radius="2dp"/>
+    <corners android:radius="3dp"/>
 
 </shape>
 

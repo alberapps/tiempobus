@@ -4,7 +4,7 @@ dependencies {
     //compile fileTree(dir: 'libs', include: '*.jar')
     //compile project(':workspace:google-play-services_lib')
     //compile 'com.android.support:gridlayout-v7:21.0.1'
-    //compile 'com.google.maps.android:android-maps-utils:0.4'
+    compile 'com.google.maps.android:android-maps-utils:0.5'
     compile files('libs/twitter4j-core-4.0.4.jar')
     compile files('libs/jsoup-1.10.2.jar')
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 70
-        versionName "4.0.2"
+        versionCode 71
+        versionName "4.1.beta1"
     }
 
     sourceSets {

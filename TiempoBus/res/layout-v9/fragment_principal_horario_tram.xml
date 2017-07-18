@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
-         
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
- 
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
- 
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:tint="@color/tram_l3"/>
+                android:tint="@color/tram_l3" />
 
             <TextView
                 android:id="@+id/txt_sin_datos"
@@ -54,36 +54,25 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/main_no_items"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/error_tiempos_tram"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/mi_material_blue_principal"
                 android:textStyle="bold" />
 
 
-            <TextView
-                android:id="@+id/txt_sin_datos_aviso"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center_vertical|center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/mi_material_blue_principal" />
-
-
-            <!--android.support.v7.widget.AppCompatTextView
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/boton_horarios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
                 android:background="@drawable/actionbar_compat_item"
+                android:drawableLeft="@drawable/ic_today_grey600_24dp"
                 android:text="@string/infolinea_horarios"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary_dark_material_light"
                 android:textStyle="bold"
-                android:layout_margin="5dp"
-                app:textAllCaps="true"
-                android:drawableLeft="@drawable/ic_today_grey600_24dp"
-                /-->
+                app:textAllCaps="true" />
 
 
         </LinearLayout>

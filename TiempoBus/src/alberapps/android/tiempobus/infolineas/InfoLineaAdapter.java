@@ -205,7 +205,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             }*/
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
-            imagenAviso.setImageResource(R.drawable.alerts_warning);
+            imagenAviso.setImageResource(R.drawable.ic_warning_black_48dp);
 
 
             textAviso.setText(aviso);

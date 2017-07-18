@@ -21,7 +21,6 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,7 +59,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         this.paradaActual = paradaActual;
     }
 
-    private ContentLoadingProgressBar progressBar = null;
 
     /**
      * Cache de datos para mostrar en caso de error
@@ -337,13 +335,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             text.setText(ctx.getString(R.string.aviso_recarga));
 
 
-            progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
-
-            if (progressBar != null) {
-                progressBar.show();
-            }
-
-
         } else {
 
 
@@ -357,7 +348,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
 
                 //Vacio para opcion sin tiempo real
-                if(bus != null && bus.isSinDatos() && !opcionTR){
+                if (bus != null && bus.isSinDatos() && !opcionTR) {
                     v = vi.inflate(R.layout.sin_datos_tram, null);
                     return v;
                 }
@@ -415,16 +406,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             }
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
-            imagenAviso.setImageResource(R.drawable.alerts_warning);
+            imagenAviso.setImageResource(R.drawable.ic_warning_black_48dp);
 
 
             textAviso.setText(aviso);
-
-            progressBar = (ContentLoadingProgressBar) v.findViewById(R.id.progressbar_horizontal);
-
-            if (progressBar != null) {
-                progressBar.hide();
-            }
 
 
         }

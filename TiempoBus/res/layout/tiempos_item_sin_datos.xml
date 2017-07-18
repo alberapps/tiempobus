@@ -45,7 +45,9 @@
                 android:id="@+id/imageAviso"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:tint="@color/tram_l3"
+                />
 
             <TextView
                 android:id="@+id/txt_sin_datos"
@@ -55,17 +57,9 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="@string/main_no_items"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/primary_dark_material_light" />
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold"/>
 
-            <android.support.v4.widget.ContentLoadingProgressBar
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/progressbar_horizontal"
-                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                android:indeterminate="true"
-                />
 
             <TextView
                 android:id="@+id/txt_sin_datos_aviso"
@@ -74,10 +68,7 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/primary_dark_material_light" />
-
-
-
+                android:textColor="@color/mi_material_blue_principal" />
 
 
         </LinearLayout>

@@ -113,7 +113,7 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
             aviso = ctx.getString(R.string.tlf_subus);
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
-            imagenAviso.setImageResource(R.drawable.alerts_warning);
+            imagenAviso.setImageResource(R.drawable.ic_warning_black_48dp);
 
 
             textAviso.setText(aviso);

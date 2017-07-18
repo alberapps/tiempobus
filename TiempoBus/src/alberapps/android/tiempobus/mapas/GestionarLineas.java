@@ -276,8 +276,8 @@ public class GestionarLineas {
 
                 String[] coordenadas = context.datosMapaCargadosIda.getPlacemarks().get(i).getCoordinates().split(",");
 
-                double lat = Double.parseDouble(coordenadas[0]); // 38.386058;
-                double lng = Double.parseDouble(coordenadas[1]); // -0.510018;
+                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
                 // int glat = (int) (lat * 1E6);
                 // int glng = (int) (lng * 1E6);
 
@@ -351,8 +351,8 @@ public class GestionarLineas {
 
                 String[] coordenadas = context.datosMapaCargadosVuelta.getPlacemarks().get(i).getCoordinates().split(",");
 
-                double lat = Double.parseDouble(coordenadas[0]); // 38.386058;
-                double lng = Double.parseDouble(coordenadas[1]); // -0.510018;
+                double lat = Double.parseDouble(coordenadas[1]); // 38.386058;
+                double lng = Double.parseDouble(coordenadas[0]); // -0.510018;
                 // int glat = (int) (lat * 1E6);
                 // int glng = (int) (lng * 1E6);
 

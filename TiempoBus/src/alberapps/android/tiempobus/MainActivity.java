@@ -91,7 +91,7 @@ import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
-import alberapps.android.tiempobus.barcode.Utilidades;
+import alberapps.android.tiempobus.barcode.UtilidadesBarcode;
 import alberapps.android.tiempobus.barcodereader.BarcodeMainActivity;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     // drawer
     private DrawerLayout mDrawerLayout;
-    private NavigationView mDrawerView;
+    public NavigationView mDrawerView;
     private ActionBarDrawerToggle mDrawerToggle;
 
     private CharSequence mDrawerTitle;
@@ -509,7 +509,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 integrator.setButtonYesByID(R.string.barcode_si);
                 integrator.setButtonNoByID(R.string.barcode_no);
 
-                String paradaCodificada = Utilidades.codificarCodigoParada(Integer.toString(paradaActual));
+                String paradaCodificada = UtilidadesBarcode.codificarCodigoParada(Integer.toString(paradaActual));
 
                 integrator.shareText(paradaCodificada);
 
@@ -1268,7 +1268,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 String contents = result.getContents();
                 if (contents != null) {
 
-                    String parada = Utilidades.parsearCodigoParada(result.getContents());
+                    String parada = UtilidadesBarcode.parsearCodigoParada(result.getContents());
 
                     if (parada != null) {
 
@@ -1308,7 +1308,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 if (result != null) {
 
 
-                    String parada = Utilidades.parsearCodigoParada(result);
+                    String parada = UtilidadesBarcode.parsearCodigoParada(result);
 
                     if (parada != null) {
 
