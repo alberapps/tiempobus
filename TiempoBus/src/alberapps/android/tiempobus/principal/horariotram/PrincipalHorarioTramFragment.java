@@ -624,7 +624,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
             final Spinner spinnerEstDest = (Spinner) getView().findViewById(R.id.spinner_estacion_destino);
             //final ArrayAdapter<SpinnerItem> adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
-            adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            adapterEstDest.setDropDownViewResource(R.layout.spinner_item_horario_lista);
             spinnerEstDest.setAdapter(adapterEstDest);
 
             //Cargar si esta disponible, el ultimo destino seleccionado para esta parada

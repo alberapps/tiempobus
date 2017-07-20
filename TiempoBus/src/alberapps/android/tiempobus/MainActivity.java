@@ -938,7 +938,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public void iniciarLectorCodigoQr() {
 
-        final CharSequence[] items = {getString(R.string.barcode_opcion_1), getString(R.string.barcode_opcion_2)};
+        final CharSequence[] items = {getString(R.string.barcode_opcion_2), getString(R.string.barcode_opcion_1)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.barcode_opcion_titulo);
@@ -946,12 +946,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
 
-                if (item == 0) {
+                if (item == 1) {
 
                     Intent i = new Intent(MainActivity.this, BarcodeMainActivity.class);
                     startActivityForResult(i, SUB_ACTIVITY_REQUEST_BARCODE);
 
-                } else if (item == 1) {
+                } else if (item == 0) {
 
                     IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 

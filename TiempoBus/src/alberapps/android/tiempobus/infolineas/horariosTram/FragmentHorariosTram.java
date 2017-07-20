@@ -62,7 +62,6 @@ import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
-import alberapps.android.tiempobus.infolineas.InfoLineaParadasAdapter;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.tasks.LoadHorariosTramAsyncTask;
 import alberapps.android.tiempobus.util.PreferencesUtil;
@@ -79,11 +78,6 @@ import alberapps.java.util.Utilidades;
 public class FragmentHorariosTram extends Fragment {
 
     InfoLineasTabsPager actividad;
-
-    int mCurCheckPosition = 0;
-
-
-    InfoLineaParadasAdapter infoLineaParadasAdapter;
 
     SharedPreferences preferencias;
 
@@ -106,24 +100,6 @@ public class FragmentHorariosTram extends Fragment {
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
-
-
-        /*if(actividad.lineasBus == null && savedInstanceState != null && savedInstanceState.getSerializable("LINEAS_INSTANCE") != null) {
-            List lineasBusAux = (ArrayList)savedInstanceState.getSerializable("LINEAS_INSTANCE");
-
-            actividad.lineasBus = new ArrayList<BusLinea>();
-
-            for(int i = 0;i < lineasBusAux.size();i++) {
-                actividad.lineasBus.add((BusLinea) lineasBusAux.get(i));
-            }
-
-        }
-
-        */
-
-        /*if(actividad.dialog != null){
-            actividad.dialog.dismiss();
-        }*/
 
         if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             iniciar();
@@ -157,9 +133,6 @@ public class FragmentHorariosTram extends Fragment {
             ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
             TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
             lineasVi.setEmptyView(vacio);
-
-            //cargarHorarios();
-
 
             actividad.datosHorariosTram = new HorarioTram();
             actividad.datosHorariosTram.setDatosTransbordos(new ArrayList<DatoTransbordo>());
@@ -237,8 +210,6 @@ public class FragmentHorariosTram extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        //outState.putSerializable("LINEAS_INSTANCE", actividad.lineasBus);
-
         super.onSaveInstanceState(outState);
     }
 
@@ -249,9 +220,6 @@ public class FragmentHorariosTram extends Fragment {
     }
 
     private void cargarHorarios() {
-
-        //actividad.datosHorariosTram = new HorarioTram();
-        //cargarListado();
 
         if (actividad.dialog == null) {
             actividad.dialog = ProgressDialog.show(actividad, "", getString(R.string.dialogo_espera), true);
@@ -342,7 +310,6 @@ public class FragmentHorariosTram extends Fragment {
             actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
 
             if (actividad.horariosTramView != null) {
-                //actividad.lineasView.setOnItemClickListener(lineasClickedHandler);
 
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
                 actividad.horariosTramView.setEmptyView(vacio);
@@ -385,8 +352,8 @@ public class FragmentHorariosTram extends Fragment {
             // Combo de seleccion de origen
             final Spinner spinnerEstOrigen = (Spinner) vheader.findViewById(R.id.spinner_estacion_origen);
             ArrayAdapter<CharSequence> adapter = null;
-            adapter = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
+            adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
             spinnerEstOrigen.setAdapter(adapter);
 
 
@@ -471,8 +438,8 @@ public class FragmentHorariosTram extends Fragment {
             // Combo de seleccion de destino
             final Spinner spinnerEstDest = (Spinner) vheader.findViewById(R.id.spinner_estacion_destino);
             ArrayAdapter<CharSequence> adapterEstDest = null;
-            adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, android.R.layout.simple_spinner_item);
-            adapterEstDest.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);
+            adapterEstDest.setDropDownViewResource(R.layout.spinner_item_horario_lista);
             spinnerEstDest.setAdapter(adapterEstDest);
 
             // Seleccion inicial
@@ -596,8 +563,8 @@ public class FragmentHorariosTram extends Fragment {
         }
 
 
-        ArrayAdapter<String> adapterFavoritos = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, favoritosString);
-        adapterFavoritos.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapterFavoritos = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_horario, favoritosString);
+        adapterFavoritos.setDropDownViewResource(R.layout.spinner_item_horario_lista);
         spinnerFavorito.setAdapter(adapterFavoritos);
 
 
@@ -730,12 +697,6 @@ public class FragmentHorariosTram extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            //final Calendar c = Calendar.getInstance();
-            //int year = c.get(Calendar.YEAR);
-            //int month = c.get(Calendar.MONTH);
-            //int day = c.get(Calendar.DAY_OF_MONTH);
-
 
             Date dia = ((InfoLineasTabsPager) getActivity()).consultaHorarioTram.getDiaDate();
             final Calendar c = Calendar.getInstance();
@@ -770,10 +731,6 @@ public class FragmentHorariosTram extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
-            //final Calendar c = Calendar.getInstance();
-            //int hour = c.get(Calendar.HOUR_OF_DAY);
-            //int minute = c.get(Calendar.MINUTE);
 
             String horaDesde = ((InfoLineasTabsPager) getActivity()).consultaHorarioTram.getHoraDesde();
             String[] hd = horaDesde.split(":");
@@ -803,10 +760,6 @@ public class FragmentHorariosTram extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
-            //final Calendar c = Calendar.getInstance();
-            //int hour = c.get(Calendar.HOUR_OF_DAY);
-            //int minute = c.get(Calendar.MINUTE);
 
             String horaHasta = ((InfoLineasTabsPager) getActivity()).consultaHorarioTram.getHoraHasta();
             String[] hd = horaHasta.split(":");

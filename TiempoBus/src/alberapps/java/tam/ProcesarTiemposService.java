@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.tam;
 
@@ -52,8 +52,13 @@ public class ProcesarTiemposService {
 
         GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada), cacheTiempos);
 
+        //Control de sin resultados
+        if (serviceResult != null && serviceResult.getPasoParadaList() != null && serviceResult.getPasoParadaList().isEmpty()) {
+            return buses;
+        }
+
         // Control errores del status
-        if (serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus().equals("-1")) {
+        if (serviceResult != null && (serviceResult.getPasoParadaList() == null || serviceResult.getPasoParadaList().isEmpty()) && serviceResult.getStatus() != null && serviceResult.getStatus().equals("-1")) {
 
             throw new TiempoBusException(TiempoBusException.ERROR_STATUS_SERVICIO);
 
