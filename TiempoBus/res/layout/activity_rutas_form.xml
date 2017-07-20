@@ -64,9 +64,9 @@
                         android:layout_width="190dp"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:singleLine="true"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/mi_material_blue_principal" />
 
                     <ImageButton
                         android:id="@+id/boton_origen"
@@ -111,9 +111,9 @@
                         android:layout_width="190dp"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:singleLine="true"
-                        android:inputType="text"/>
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:textColor="@color/mi_material_blue_principal" />
 
                     <ImageButton
                         android:id="@+id/boton_destino"

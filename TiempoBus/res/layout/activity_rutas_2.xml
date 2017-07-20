@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="text"
                     android:hint="@string/origen"
                     />
@@ -97,7 +97,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:ems="12"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:inputType="text"
                     android:hint="@string/destino"
                     />

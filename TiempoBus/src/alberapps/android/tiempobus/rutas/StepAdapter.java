@@ -18,7 +18,7 @@ package alberapps.android.tiempobus.rutas;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +28,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.directions.Step;
 
 /**
@@ -86,7 +87,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public HeaderViewHolder(View v, final RutasActivity contexto) {
             super(v);
 
-            ImageButton volver = (ImageButton)v.findViewById(R.id.volver_rutas);
+            ImageButton volver = (ImageButton) v.findViewById(R.id.volver_rutas);
 
             volver.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,7 +103,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         //public TextView getDatosDescripcion() {
-            //return datosDescripcion;
+        //return datosDescripcion;
         //}
     }
 
@@ -126,12 +127,12 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         View v = null;
 
-        if(viewType == ITEM) {
+        if (viewType == ITEM) {
             // Create a new view.
             v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.activity_rutas_item, viewGroup, false);
             return new ItemViewHolder(v, contexto);
-        }else if(viewType == CABECERA){
+        } else if (viewType == CABECERA) {
             v = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.activity_rutas_header, viewGroup, false);
             return new HeaderViewHolder(v, contexto);
@@ -144,9 +145,9 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
 
-        if(position == 0){
+        if (position == 0) {
             return CABECERA;
-        }else{
+        } else {
             return ITEM;
         }
 
@@ -173,28 +174,34 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             ((ItemViewHolder) viewHolder).getDatosDescripcion().setText(texto);
 
-            if(paso != null && paso.getSteps() != null && !paso.getSteps().isEmpty()){
+            if (paso != null && paso.getSteps() != null && !paso.getSteps().isEmpty()) {
 
                 StringBuilder pasos = new StringBuilder("");
-                for(int i = 0; i < paso.getSteps().size();i++){
-                    pasos.append(i + 1);
-                    pasos.append(". ");
-                    pasos.append(Html.fromHtml(paso.getSteps().get(i).getHtmlInstructions()));
-                    pasos.append("\n");
+                Spanned value = null;
+                for (int i = 0; i < paso.getSteps().size(); i++) {
+
+                    value = UtilidadesUI.fromHtml(paso.getSteps().get(i).getHtmlInstructions());
+
+                    if (value != null) {
+                        pasos.append(i + 1);
+                        pasos.append(". ");
+                        pasos.append(value);
+                        pasos.append("\n");
+                    }
                 }
 
                 ((ItemViewHolder) viewHolder).getDatosPasos().setText(pasos.toString());
 
-            }else if(paso != null && paso.getTransitDetails() != null && paso.getTransitDetails().getLine() != null){
+            } else if (paso != null && paso.getTransitDetails() != null && paso.getTransitDetails().getLine() != null) {
 
                 StringBuilder datos = new StringBuilder("");
-                if(paso.getTransitDetails().getLine().getType() != null){
+                if (paso.getTransitDetails().getLine().getType() != null) {
                     datos.append(paso.getTransitDetails().getLine().getType());
                 }
 
-                if(paso.getTransitDetails().getLine().getShortName() != null){
+                if (paso.getTransitDetails().getLine().getShortName() != null) {
 
-                    if(datos.length() > 0){
+                    if (datos.length() > 0) {
                         datos.append("\n");
                         datos.append(contexto.getString(R.string.linea));
                         datos.append(" ");
@@ -203,18 +210,18 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     datos.append(paso.getTransitDetails().getLine().getShortName());
                 }
 
-                if(paso.getTransitDetails().getLine().getName() != null){
+                if (paso.getTransitDetails().getLine().getName() != null) {
 
-                    if(datos.length() > 0){
+                    if (datos.length() > 0) {
                         datos.append(": ");
                     }
 
                     datos.append(paso.getTransitDetails().getLine().getName());
                 }
 
-                if(paso.getTransitDetails().getHeadsign()!= null){
+                if (paso.getTransitDetails().getHeadsign() != null) {
 
-                    if(datos.length() > 0){
+                    if (datos.length() > 0) {
                         datos.append("\n");
                     }
 
@@ -234,6 +241,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
     }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
@@ -241,7 +249,7 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    public void addAll(List<Step> mDataSet2){
+    public void addAll(List<Step> mDataSet2) {
 
         mDataSet.clear();
         mDataSet.addAll(mDataSet2);

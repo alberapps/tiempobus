@@ -31,8 +31,12 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.List;
 import java.util.Locale;
@@ -115,6 +119,10 @@ public class UtilidadesUI {
      * @param actividad
      */
     public static void setupFondoAplicacion(String fondoGaleria, View contenedorPrincipal, FragmentActivity actividad) {
+
+        if (contenedorPrincipal == null) {
+            return;
+        }
 
         try {
 
@@ -445,5 +453,37 @@ public class UtilidadesUI {
         }
     }
 
+
+    public static Spanned fromHtml(String html) {
+        Spanned result = null;
+
+        if (html != null) {
+
+            try {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+                } else {
+                    result = Html.fromHtml(html);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return result;
+    }
+
+    public static void ocultarTeclado(AppCompatActivity context) {
+
+        if (context.getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
+
+    }
 
 }

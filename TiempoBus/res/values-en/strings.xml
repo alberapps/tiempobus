@@ -378,5 +378,17 @@
     <string name="satelite">Satellite</string>
     <string name="tiempo_real">Real Time</string>
     <string name="nuevas_noticias_alberapps">\@AlberApps: There are new Notices</string>
+    <string name="conf_avanzado_desc">Advanced configuration. Caution.</string>
+    <string name="conf_avanzado_opciones">Advanced Options</string>
+    <string name="conf_avanzado_titulo">Advanced</string>
+    <string name="conf_bd_titulo">Database</string>
+    <string name="conf_conectividad_titulo">Connectivity</string>
+    <string name="conf_conectividad_titulo_check">Enable Caché</string>
+    <string name="conf_db_actualizar">Update bus line database</string>
+    <string name="menu_rutas">Route Planner</string>
+    <string name="origen">Origin</string>
+    <string name="origen_destino">Origin and Destination</string>
+    <string name="preferencias_noticias_auto_alberapps">Check @AlberApps News</string>
+    <string name="que_hay_cerca">What\'s nearby?</string>
 
 </resources>

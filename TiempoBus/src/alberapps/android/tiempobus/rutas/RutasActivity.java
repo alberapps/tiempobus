@@ -91,6 +91,8 @@ public class RutasActivity extends AppCompatActivity {
 
     Integer posicionActual = null;
 
+    private AppCompatActivity activity = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -118,6 +120,7 @@ public class RutasActivity extends AppCompatActivity {
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UtilidadesUI.ocultarTeclado(activity);
                 cargarDatosRutas();
             }
         });

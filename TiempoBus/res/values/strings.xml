@@ -512,7 +512,7 @@
     <string name="tiempo_real">Tiempo Real</string>
     <string name="tramalicante" translatable="false">tramalicante.es</string>
 
-    <string name="error_tiempos_tram">Tram de Alicante no ofrece información en Tiempo Real actualmente.\nEspero poder volver a activarlo en un futuro.</string>
+    <string name="error_tiempos_tram">Tram de Alicante no ofrece información en Tiempo Real actualmente.</string>
 
     <string name="satelite">Satélite</string>
 
@@ -524,8 +524,8 @@
     <string name="title_activity_main">Lector de Códigos QR</string>
     <string name="barcode_header">Pulsa para iniciar la lectura</string>
     <string name="read_barcode">Leer Código QR</string>
-    <string name="auto_focus">Auto Focus</string>
-    <string name="use_flash">Flash</string>
+    <string name="auto_focus" translatable="false">Auto Focus</string>
+    <string name="use_flash" translatable="false">Flash</string>
     <string name="barcode_success">Código QR leido correctamente</string>
     <string name="barcode_failure">Error al leer el Código QR</string>
     <string name="barcode_error_2">"Error al leer el Código QR: %1$s"</string>
@@ -536,7 +536,7 @@
 
 
     <string name="avisos_push_tiempobus">Aviso de AlberApps</string>
-    <string name="alberapps">\@AlberApps</string>
+    <string name="alberapps" translatable="false">\@AlberApps</string>
 
 
 </resources>
