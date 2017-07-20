@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.1.beta2</string>
+    <string name="app_version" translatable="false">4.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2017)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>

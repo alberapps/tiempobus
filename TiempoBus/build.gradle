@@ -27,8 +27,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 72
-        versionName "4.1.beta2"
+        versionCode 73
+        versionName "4.1"
     }
 
     sourceSets {
