@@ -48,7 +48,7 @@ public class PdfHorariosBus {
 
     private SharedPreferences preferencias;
 
-    public static String URL_SUBUS_PLANOS = "http://www.alicante.vectalia.es/planos/";
+    public static String URL_SUBUS_PLANOS = "https://alicante.vectalia.es/planos/";
 
 
     /**

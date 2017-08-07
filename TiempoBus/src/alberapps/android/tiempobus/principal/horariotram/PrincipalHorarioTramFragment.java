@@ -140,7 +140,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
         //Para evitar limitacion en layouts
 
 
-            setupFondoAplicacion();
+        setupFondoAplicacion();
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
 
@@ -186,7 +186,11 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
                     TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
 
-                    context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
+                    if(!datosInfo.getText().equals("")) {
+                        context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
+                    }else {
+                        Toast.makeText(getContext(), getContext().getString(R.string.main_no_items), Toast.LENGTH_LONG).show();
+                    }
 
                 }
             });
@@ -211,13 +215,17 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                     bus.setProximo("sinestimacion;sinestimacion");
 
-                    calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
+                    boolean ok = calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
 
-                    // Texto para receiver
-                    String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
+                    if (ok) {
+                        // Texto para receiver
+                        String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
 
-                    // Activar alarma y mostrar modal
-                    context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+                        // Activar alarma y mostrar modal
+                        context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+                    } else {
+                        Toast.makeText(getContext(), getContext().getString(R.string.err_bus_sin), Toast.LENGTH_LONG).show();
+                    }
 
                 }
 
@@ -271,7 +279,6 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     i.putExtra("HORARIOS", "TRAM");
 
 
-
                     context.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                 }
@@ -281,31 +288,45 @@ public class PrincipalHorarioTramFragment extends Fragment {
     }
 
 
-    private void calcularTiempoPorHoras(String horasList, BusLlegada ida) {
+    private boolean calcularTiempoPorHoras(String horasList, BusLlegada ida) {
 
-        Date hoy = new Date();
 
-        String[] horas = horasList.split(" ");
+        if (horasList != null && !horasList.equals("")) {
 
-        //Calcular el tiempo a partir de la hora
-        String hora1 = horas[0].trim();
-        String hora2 = "";
-        Date hora1Fecha = Utilidades.getFechaActualConHora(hora1);
-        Date hora2Fecha = null;
-        String minutosTren2 = "";
+            Date hoy = new Date();
 
-        String minutosTren1 = Utilidades.getMinutosDiferencia(hoy, hora1Fecha);
+            String[] horas = horasList.split(" ");
 
-        ida.cambiarProximo(Integer.parseInt(minutosTren1) + 1);
+            //Calcular el tiempo a partir de la hora
+            String hora1 = horas[0].trim();
+            String hora2 = "";
+            Date hora1Fecha = Utilidades.getFechaActualConHora(hora1);
 
-        if (horas.length > 1) {
+            if (hora1Fecha == null) {
+                return false;
+            }
 
-            hora2 = horas[1];
-            hora2Fecha = Utilidades.getFechaActualConHora(hora2);
-            minutosTren2 = Utilidades.getMinutosDiferencia(hoy, hora2Fecha);
+            Date hora2Fecha = null;
+            String minutosTren2 = "";
 
-            ida.cambiarSiguiente(Integer.parseInt(minutosTren2) + 1);
+            String minutosTren1 = Utilidades.getMinutosDiferencia(hoy, hora1Fecha);
 
+            ida.cambiarProximo(Integer.parseInt(minutosTren1) + 1);
+
+            if (horas.length > 1) {
+
+                hora2 = horas[1];
+                hora2Fecha = Utilidades.getFechaActualConHora(hora2);
+                minutosTren2 = Utilidades.getMinutosDiferencia(hoy, hora2Fecha);
+
+                ida.cambiarSiguiente(Integer.parseInt(minutosTren2) + 1);
+
+            }
+
+            return true;
+
+        } else {
+            return false;
         }
 
 

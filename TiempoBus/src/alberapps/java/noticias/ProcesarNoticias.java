@@ -44,7 +44,7 @@ public class ProcesarNoticias {
         List<Noticias> noticias = new ArrayList<>();
 
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").authority("www.alicante.vectalia.es");
+        builder.scheme("https").authority("alicante.vectalia.es");
         builder.appendPath(UtilidadesUI.getIdiomaWebSubus());
         builder.appendPath("alertas");
 

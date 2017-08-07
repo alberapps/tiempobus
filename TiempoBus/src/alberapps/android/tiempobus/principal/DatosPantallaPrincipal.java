@@ -887,6 +887,8 @@ public class DatosPantallaPrincipal {
         sendIntent.setType("text/plain");
         context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.menu_share)));
 
+
+
     }
 
     /**
@@ -1186,7 +1188,7 @@ public class DatosPantallaPrincipal {
             twSb.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    UtilidadesUI.openWebPage(context, "http://www.alicante.vectalia.es/");
+                    UtilidadesUI.openWebPage(context, "https://alicante.vectalia.es/");
 
                 }
             });

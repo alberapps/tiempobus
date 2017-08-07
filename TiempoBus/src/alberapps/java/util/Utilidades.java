@@ -275,15 +275,26 @@ public class Utilidades {
      */
     public static Date getFechaActualConHora(String hora) {
 
-        String[] horas = hora.split(":");
+        try {
 
-        Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horas[0]));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(horas[1]));
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+            String[] horas = hora.split(":");
 
-        return calendar.getTime();
+            if (horas.length < 2) {
+                return null;
+            }
+
+            Calendar calendar = Calendar.getInstance(UtilidadesUI.getLocaleUsuario());
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(horas[0]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(horas[1]));
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+
+            return calendar.getTime();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 

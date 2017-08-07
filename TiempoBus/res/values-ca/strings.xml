@@ -453,7 +453,7 @@ favorit per crear la teua llista.</string>
     <string name="que_hay_cerca">Què hi ha a prop?</string>
     <string name="satelite">Satèl·lit</string>
     <string name="origen_destino">Origen i Destinació</string>
-    <string name="error_tiempos_tram">Tram d\'Alacant no ofereix informació en temps real actualment.</string>
+    <string name="error_tiempos_tram">Informació en Temps Real NO DISPONIBLE de forma indefinida.\nTram d\'Alacant no ofereix el servei actualment.</string>
     <string name="tiempo_real">Temps Real</string>
 
     <string name="permission_camera_rationale">Es necessita accés a la càmera</string>

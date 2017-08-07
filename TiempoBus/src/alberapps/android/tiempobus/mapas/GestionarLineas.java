@@ -104,14 +104,14 @@ public class GestionarLineas {
     LoadDatosRecorridosAsyncTaskResponder loadDatosRecorridosAsyncTaskResponderIda = new LoadDatosRecorridosAsyncTaskResponder() {
         public void datosRecorridosLoaded(DatosMapa[] datos) {
 
-            if (datos != null) {
+            if (datos != null && datos[0] != null) {
                 context.datosMapaCargadosIda = datos[0];
                 context.datosMapaCargadosVuelta = datos[1];
 
                 //Si no hay datos, cargar desde offline
-                if(context.datosMapaCargadosIda.getRecorrido() == null || context.datosMapaCargadosIda.getRecorrido().equals("")){
+                if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() == null || context.datosMapaCargadosIda.getRecorrido().equals("")) {
                     context.mapasOffline.loadDatosRecorridoOffline();
-                }else {
+                } else {
                     cargarMapa(null);
                 }
 
@@ -121,11 +121,12 @@ public class GestionarLineas {
 
             } else {
 
-                Toast toast = Toast.makeText(context.getApplicationContext(), context.getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT);
-                toast.show();
-                context.finish();
+                Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
+                //context.finish();
 
                 context.dialog.dismiss();
+
+                context.selectorLinea.mostrarModalSelectorLinea();
 
             }
 
@@ -304,9 +305,9 @@ public class GestionarLineas {
                     descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getLineas().trim();
                 }
 
-                descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
-
-                if (context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null) {
+                if (context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones() != null
+                        && !context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones().trim().equals("")) {
+                    descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
                     descripcionAlert += context.datosMapaCargadosIda.getPlacemarks().get(i).getObservaciones().trim();
                 }
 
@@ -401,9 +402,9 @@ public class GestionarLineas {
                     descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getLineas().trim();
                 }
 
-                descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
-
-                if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null) {
+                if (context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones() != null
+                        && !context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones().trim().equals("")) {
+                    descripcionAlert += "\n" + context.getResources().getText(R.string.observaciones) + " ";
                     descripcionAlert += context.datosMapaCargadosVuelta.getPlacemarks().get(i).getObservaciones().trim();
                 }
 

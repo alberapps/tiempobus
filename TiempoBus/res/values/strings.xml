@@ -512,7 +512,7 @@
     <string name="tiempo_real">Tiempo Real</string>
     <string name="tramalicante" translatable="false">tramalicante.es</string>
 
-    <string name="error_tiempos_tram">Tram de Alicante no ofrece información en Tiempo Real actualmente.</string>
+    <string name="error_tiempos_tram">Información en Tiempo Real NO DISPONIBLE de forma indefinida.\nTram de Alicante no ofrece este servicio actualmente.</string>
 
     <string name="satelite">Satélite</string>
 
