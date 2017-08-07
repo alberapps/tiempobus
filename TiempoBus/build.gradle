@@ -23,12 +23,12 @@ dependencies {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 73
-        versionName "4.1"
+        versionCode 74
+        versionName "4.1.1"
     }
 
     sourceSets {

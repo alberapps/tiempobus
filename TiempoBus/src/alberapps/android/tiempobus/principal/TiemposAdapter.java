@@ -379,7 +379,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
-                aviso = ctx.getString(R.string.tlf_tram);
+                //aviso = ctx.getString(R.string.tlf_tram);
+                aviso = ctx.getString(R.string.info_tram_tr);
+
 
 
                 // //Horarios
