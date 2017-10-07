@@ -32,19 +32,19 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 26
-        versionCode 74
-        versionName "4.1.1"
+        versionCode 75
+        versionName "4.2"
     }
 
     productFlavors {
 
         legacy {
             minSdkVersion 9
-            versionCode 974 // Min API level 9
+            versionCode 975 // Min API level 9
         }
         current {
             minSdkVersion 14
-            versionCode 1474 // Min API level 14
+            versionCode 1475 // Min API level 14
         }
 
     }
