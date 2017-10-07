@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.util;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
@@ -75,6 +77,23 @@ public class Notificaciones {
      */
     public static int NOTIFICACION_SERVICIO_ALERTAS = 6;
 
+
+    public static void initChannels(Context context){
+
+        if(Build.VERSION.SDK_INT < 26){
+            return;
+        }
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel("default", "TiempoBus default", NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription("TiempoBus default");
+        notificationManager.createNotificationChannel(channel);
+
+
+    }
+
+
     /**
      * Notificaciones de Base de Datos
      *
@@ -89,7 +108,7 @@ public class Notificaciones {
 
             NotificationCompat.Builder mBuilder = null;
 
-            mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
+            mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
                     .setContentText(contexto.getString(R.string.recarga_bd_desc))
                     .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap());
 
@@ -184,7 +203,7 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -273,7 +292,7 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -362,7 +381,7 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_alberapps))
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_alberapps))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -459,7 +478,7 @@ public class Notificaciones {
             texto = contexto.getString(R.string.notification_title);
         }
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -542,7 +561,7 @@ public class Notificaciones {
         String texto = contexto.getString(R.string.foreground_service);
 
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -590,7 +609,7 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.share_3))
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.share_3))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -682,7 +701,7 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto).setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))
+        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))
                 .setContentText(contenido)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);

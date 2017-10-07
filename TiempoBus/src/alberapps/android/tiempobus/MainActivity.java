@@ -111,6 +111,7 @@ import alberapps.android.tiempobus.rutas.RutasActivity;
 import alberapps.android.tiempobus.service.TiemposForegroundService;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadTiemposAsyncTask.LoadTiemposAsyncTaskResponder;
+import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.noticias.Noticias;
@@ -258,6 +259,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         gestionarAlarmas = new GestionarAlarmas(this, preferencias, alarmManager);
 
         controlesIniciales();
+
+        Notificaciones.initChannels(this);
 
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
