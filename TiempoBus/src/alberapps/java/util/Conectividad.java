@@ -27,6 +27,8 @@ import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -316,6 +318,8 @@ public class Conectividad {
 
         }
 
+        //Log.d("CONEXION", datos);
+
         return datos;
 
     }
@@ -514,5 +518,111 @@ public class Conectividad {
         }
 
     }
+
+
+
+
+    public static InputStream conexionGetStream(String urlGet, String userAgent) throws Exception {
+
+
+        // Abrir Conexion
+        HttpURLConnection urlConnection = null;
+
+        BufferedInputStream in = null;
+
+        InputStream in2 = null;
+
+        try {
+
+            // Crear url
+            URL url = new URL(urlGet);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT + 20000);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            if (userAgent == null) {
+                urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+            } else {
+                urlConnection.setRequestProperty("User-Agent", userAgent);
+            }
+
+            /*if (!usarCache) {
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                Log.d("CONEXION", "Sin cache");
+            } else {
+                Log.d("CONEXION", "Con cache");
+            }*/
+
+            in = new BufferedInputStream(urlConnection.getInputStream());
+
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int count;
+
+                while ((count = in.read(buffer)) != -1) {
+                    baos.write(buffer, 0, count);
+                }
+
+
+            byte[] bytes = baos.toByteArray();
+            // do something with 'filename' and 'bytes'...
+
+            in2 = new ByteArrayInputStream(bytes);
+
+
+            //String datos = Utilidades.obtenerStringDeStreamUTF8(in);
+
+            //in2 = new BufferedInputStream(Utilidades.stringToStream(datos));
+
+            //in = urlConnection.getInputStream();
+
+
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
+
+            throw new Exception("Error al acceder al servicio");
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
+            }
+
+        }
+
+        return in2;
+
+    }
+
+
+
+
 
 }

@@ -245,7 +245,7 @@ public class FragmentHorariosTram extends Fragment {
 
         @Override
         public void datosHorariosTramLoaded(HorarioTram datos) {
-            if (datos != null) {
+            if (datos != null && datos.getHorariosItemCombinados() != null) {
 
                 try {
 
@@ -255,8 +255,9 @@ public class FragmentHorariosTram extends Fragment {
 
                 } catch (Exception e) {
 
-                    Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
-                    toast.show();
+                    e.printStackTrace();
+
+                    Toast.makeText(actividad, getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                     datos = new HorarioTram();
                     datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
@@ -273,8 +274,7 @@ public class FragmentHorariosTram extends Fragment {
 
             } else {
 
-                Toast toast = Toast.makeText(actividad, getResources().getText(R.string.error_tiempos), Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(actividad, getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                 datos = new HorarioTram();
                 datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());

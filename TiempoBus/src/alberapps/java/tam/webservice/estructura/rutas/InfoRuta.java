@@ -25,6 +25,8 @@ public class InfoRuta {
 
     private String nombre;
 
+    private String idLinea;
+
     private List<InfoSeccion> infoSeccion;
 
     public String getNombre() {
@@ -41,5 +43,13 @@ public class InfoRuta {
 
     public void setInfoSeccion(List<InfoSeccion> infoSeccion) {
         this.infoSeccion = infoSeccion;
+    }
+
+    public String getIdLinea() {
+        return idLinea;
+    }
+
+    public void setIdLinea(String idLinea) {
+        this.idLinea = idLinea;
     }
 }

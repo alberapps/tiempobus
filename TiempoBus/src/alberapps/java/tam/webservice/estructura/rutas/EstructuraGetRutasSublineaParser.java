@@ -192,6 +192,7 @@ public class EstructuraGetRutasSublineaParser {
         InfoRuta infoRuta = new InfoRuta();
 
         String nombre = null;
+        String idLinea = null;
 
         parser.require(XmlPullParser.START_TAG, ns, "InfoRuta");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -206,7 +207,10 @@ public class EstructuraGetRutasSublineaParser {
 
                 infoRuta.setInfoSeccion(readSecciones(parser));
                 infoRuta.setNombre(nombre);
+                infoRuta.setIdLinea(idLinea);
 
+            } else if (name.equals("idLinea")) {
+                idLinea = readIdLinea(parser);
             } else {
                 skip(parser);
             }
@@ -335,6 +339,14 @@ public class EstructuraGetRutasSublineaParser {
         parser.require(XmlPullParser.END_TAG, ns, "nombre");
         return nombre;
     }
+
+    private String readIdLinea(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "idLinea");
+        String nombre = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "idLinea");
+        return nombre;
+    }
+
 
     // Processes title tags in the feed.
     private String readCoordenadas(XmlPullParser parser) throws IOException, XmlPullParserException {

@@ -12,24 +12,59 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.google.android.gms:play-services-maps:10.0.1'
+
+    //compile 'com.google.firebase:firebase-messaging:10.0.1'
+
+
+    /*compile 'com.google.android.gms:play-services-maps:10.0.1'
     compile 'com.google.android.gms:play-services-drive:10.0.1'
     compile 'com.google.android.gms:play-services-location:10.0.1'
     compile 'com.google.android.gms:play-services-places:10.0.1'
     compile 'com.google.android.gms:play-services-analytics:10.0.1'
     compile 'com.google.android.gms:play-services-vision:10.0.1'
-    //compile 'com.google.firebase:firebase-messaging:10.0.1'
+*/
+
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 74
         versionName "4.1.1"
     }
+
+    productFlavors {
+
+        legacy {
+            minSdkVersion 9
+            versionCode 974 // Min API level 9
+        }
+        current {
+            minSdkVersion 14
+            versionCode 1474 // Min API level 14
+        }
+
+    }
+
+    dependencies {
+        currentCompile 'com.google.android.gms:play-services-maps:11.0.4'
+        currentCompile 'com.google.android.gms:play-services-drive:11.0.4'
+        currentCompile 'com.google.android.gms:play-services-location:11.0.4'
+        currentCompile 'com.google.android.gms:play-services-places:11.0.4'
+        currentCompile 'com.google.android.gms:play-services-analytics:11.0.4'
+        currentCompile 'com.google.android.gms:play-services-vision:11.0.4'
+
+        legacyCompile 'com.google.android.gms:play-services-maps:10.0.1'
+        legacyCompile 'com.google.android.gms:play-services-drive:10.0.1'
+        legacyCompile 'com.google.android.gms:play-services-location:10.0.1'
+        legacyCompile 'com.google.android.gms:play-services-places:10.0.1'
+        legacyCompile 'com.google.android.gms:play-services-analytics:10.0.1'
+        legacyCompile 'com.google.android.gms:play-services-vision:10.0.1'
+    }
+
 
     sourceSets {
         main {
@@ -73,6 +108,5 @@ android {
 
 
 }
-
 
 //apply plugin: 'com.google.gms.google-services'

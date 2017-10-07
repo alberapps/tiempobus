@@ -30,6 +30,7 @@ import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.mapas.UtilidadesGeo;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.mapas.PlaceMark;
+import alberapps.java.tam.mapas.ProcesarMapaServiceV3;
 import alberapps.java.tam.webservice.estructura.polylinea.EstructuraGetPolylineaSublineaParser;
 import alberapps.java.tam.webservice.estructura.polylinea.GetPolylineaSublineaResult;
 import alberapps.java.tam.webservice.estructura.rutas.EstructuraGetRutasSublineaParser;
@@ -79,6 +80,8 @@ public class ProcesarEstructura {
 
                 List<PlaceMark> listaIda = new ArrayList<>();
 
+                datosMapa[0].setIdRuta(datos.getInfoRutaList().get(0).getIdLinea());
+
                 for (int j = 0; j < datos.getInfoRutaList().get(0).getInfoSeccion().size(); j++) {
 
                     /*if (parche11) {
@@ -126,6 +129,8 @@ public class ProcesarEstructura {
                 PlaceMark pm = null;
 
                 List<PlaceMark> listaIda = new ArrayList<>();
+
+                datosMapa[1].setIdRuta(datos.getInfoRutaList().get(1).getIdLinea());
 
                 for (int j = 0; j < datos.getInfoRutaList().get(1).getInfoSeccion().size(); j++) {
 
@@ -333,6 +338,69 @@ public class ProcesarEstructura {
 
         return recorridos;
     }
+
+    /**
+     * Datos polylinea desde web con kml
+     *
+     * @return
+     */
+    public static String[] getDatosPolyLineaKml(String linea, String sublinea, boolean cache, Context context, String idRuta) {
+
+        String[] recorridos = {null, null};
+
+
+        try {
+
+            ////pruebas
+            recorridos = ProcesarMapaServiceV3.getDatosRecorrido(context, idRuta, linea);
+
+            ////
+
+
+            //EstructuraGetPolylineaSublineaParser parser = new EstructuraGetPolylineaSublineaParser();
+
+            //GetPolylineaSublineaResult datos = parser.consultarServicio(linea, sublinea, cache);
+
+
+            /*if (datos != null && datos.getInfoCoordList() != null && !datos.getInfoCoordList().isEmpty()) {
+
+                StringBuffer sb = new StringBuffer("");
+
+                for (int i = 0; i < datos.getInfoCoordList().size(); i++) {
+
+                    double x = Double.parseDouble(datos.getInfoCoordList().get(i).getX());
+                    double y = Double.parseDouble(datos.getInfoCoordList().get(i).getY());
+
+                    String coord = UtilidadesGeo.getCoordenadasCorreccion(UtilidadesGeo.getLatLongUTMBus(y, x));
+
+                    if (sb.length() > 0) {
+                        sb.append(" ");
+                    }
+
+                    sb.append(coord);
+
+                }
+
+                recorridos[0] = sb.toString();
+
+
+            } else {
+
+                recorridos[0] = null;
+
+            }*/
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            recorridos = null;
+        }
+
+        return recorridos;
+    }
+
 
 
     /**

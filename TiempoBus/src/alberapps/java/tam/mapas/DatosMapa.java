@@ -44,6 +44,16 @@ public class DatosMapa implements Serializable {
     // Recorrido
     private String recorrido;
 
+    private String idRuta;
+
+    public String getIdRuta() {
+        return idRuta;
+    }
+
+    public void setIdRuta(String idRuta) {
+        this.idRuta = idRuta;
+    }
+
     public String getRecorrido() {
         return recorrido;
     }

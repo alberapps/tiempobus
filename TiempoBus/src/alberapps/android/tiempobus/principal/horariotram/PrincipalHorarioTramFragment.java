@@ -266,7 +266,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
         } else {
 
-            AppCompatTextView botonHorarios = (AppCompatTextView) view.findViewById(R.id.boton_horarios);
+            AppCompatTextView botonHorarios = (AppCompatTextView) view.findViewById(R.id.tarjeta_horario_ir);
 
             final MainActivity context = (MainActivity) getActivity();
 

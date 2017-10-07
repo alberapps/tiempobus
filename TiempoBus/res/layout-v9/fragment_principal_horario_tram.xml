@@ -61,7 +61,7 @@
 
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/boton_horarios"
+                android:id="@+id/tarjeta_horario_ir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

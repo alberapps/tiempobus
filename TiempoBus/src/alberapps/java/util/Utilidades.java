@@ -438,13 +438,15 @@ public class Utilidades {
      * @param is
      * @return boolean
      */
-    public static boolean isZipFile(InputStream is) {
+    public static boolean isZipFile(InputStream is, DataInputStream entrada) {
 
         boolean esZip = false;
 
-        DataInputStream entrada = new DataInputStream(is);
 
         try {
+
+            is.mark(100);
+
             int verificar = entrada.readInt();
 
             //if(verificar == 0x504b0304){
@@ -457,7 +459,7 @@ public class Utilidades {
         } finally {
 
             try {
-                entrada.close();
+                //entrada.close();
 
                 is.reset();
 

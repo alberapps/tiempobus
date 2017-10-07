@@ -26,6 +26,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -243,7 +244,7 @@ public class GestionarLineas {
         LatLng point = null;
 
         // Recorrido ida
-        if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
+        /*if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() != null && !context.datosMapaCargadosIda.getRecorrido().equals("")) {
 
 
             // if
@@ -257,9 +258,9 @@ public class GestionarLineas {
             if (colorTram != null) {
                 drawPath(context.datosMapaCargadosIda, colorTram);
             } else {
-                drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
+                drawPath(context.datosMapaCargadosIda, ContextCompat.getColor(context, R.color.bus_blue));
             }
-        }
+        }*/
 
         MarkerOptions posicionSelecionada = null;
 
@@ -270,7 +271,7 @@ public class GestionarLineas {
             if (colorTram != null) {
                 drawPath(context.datosMapaCargadosIda, colorTram);
             } else {
-                drawPath(context.datosMapaCargadosIda, context.getResources().getColor(R.color.mi_material_blue_principal));
+                drawPath(context.datosMapaCargadosIda, ContextCompat.getColor(context, R.color.bus_blue));
             }
 
             for (int i = 0; i < context.datosMapaCargadosIda.getPlacemarks().size(); i++) {
@@ -341,7 +342,7 @@ public class GestionarLineas {
         if (context.datosMapaCargadosVuelta != null && context.datosMapaCargadosVuelta.getRecorrido() != null && !context.datosMapaCargadosVuelta.getRecorrido().equals("")) {
 
             // Recorrido
-            drawPath(context.datosMapaCargadosVuelta, context.getResources().getColor(R.color.tram_l2));
+            drawPath(context.datosMapaCargadosVuelta, ContextCompat.getColor(context, R.color.tram_l2));
 
         }
 

@@ -168,7 +168,7 @@ public class HorarioTram {
 
         //for (int i = 0; i < datosTransbordos.size(); i++) {
 
-        if(datosTransbordos.size() > paso) {
+        if (datosTransbordos != null && !datosTransbordos.isEmpty() && datosTransbordos.size() > paso) {
 
             List<HorarioItem> items = datosTransbordos.get(paso).getHorariosItem();
 
@@ -185,6 +185,9 @@ public class HorarioTram {
         }
         //}
 
+        if(listado.isEmpty()){
+            return null;
+        }
 
         return listado;
 

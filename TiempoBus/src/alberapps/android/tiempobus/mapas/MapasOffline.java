@@ -142,6 +142,11 @@ public class MapasOffline {
 
                     context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
 
+                    if(cursorRecorrido.getCount() > 1) {
+                        cursorRecorrido.moveToNext();
+                        context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+                    }
+
                     // Cargar datos en el mapa
                     context.gestionarLineas.cargarMapa(null);
 
@@ -185,6 +190,11 @@ public class MapasOffline {
             cursorRecorrido.moveToFirst();
 
             context.datosMapaCargadosIda.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+
+            if(cursorRecorrido.getCount() > 1) {
+                cursorRecorrido.moveToNext();
+                context.datosMapaCargadosVuelta.setRecorrido(cursorRecorrido.getString(cursorRecorrido.getColumnIndex(DatosLineasDB.COLUMN_COORDENADAS)));
+            }
 
             // Cargar datos en el mapa
             context.gestionarLineas.cargarMapa(null);

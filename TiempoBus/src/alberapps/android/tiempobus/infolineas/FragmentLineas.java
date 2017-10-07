@@ -513,12 +513,14 @@ public class FragmentLineas extends Fragment {
 
             linea = actividad.infoLineaAdapter.getListaFiltrada().get(position - 1);
 
-            actividad.setLinea(linea);
+            if(linea != null && !linea.isErrorServicio() && !linea.isFiltroSinDatos()) {
+                actividad.setLinea(linea);
 
-            // Quitar de horarios
-            actividad.gestionHorariosIda.limpiarHorariosIda();
+                // Quitar de horarios
+                actividad.gestionHorariosIda.limpiarHorariosIda();
 
-            cargarParadas(position - 1);
+                cargarParadas(position - 1);
+            }
 
         }
     };
