@@ -142,7 +142,7 @@
                             android:layout_width="3dp"
                             android:layout_height="match_parent"/>
 
-                        <EditText
+                        <android.support.v7.widget.AppCompatEditText
                             android:id="@+id/campo_poste"
                             android:layout_width="67dp"
                             android:layout_height="wrap_content"
@@ -157,8 +157,8 @@
                             android:textColor="@color/mi_material_blue_principal"
                             android:textStyle="bold">
 
-                            <!--requestFocus /-->
-                        </EditText>
+
+                        </android.support.v7.widget.AppCompatEditText>
 
                         <ImageButton
                             android:id="@+id/boton_subposte"

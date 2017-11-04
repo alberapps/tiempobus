@@ -837,12 +837,15 @@ public class GestionarLineas {
                 if (!context.datosMapaCargadosIda.getPlacemarks().isEmpty()) {
                     context.datosMapaCargadosIdaAux = new DatosMapa();
                     context.datosMapaCargadosIdaAux.setPlacemarks(context.datosMapaCargadosIda.getPlacemarks());
+                    context.datosMapaCargadosIdaAux.setRecorrido(context.datosMapaCargadosIda.getRecorrido());
                     context.datosMapaCargadosIda.setPlacemarks(new ArrayList<PlaceMark>());
+                    context.datosMapaCargadosIda.setRecorrido("");
 
                     context.flagIda = false;
 
                 } else if (context.datosMapaCargadosIdaAux != null) {
                     context.datosMapaCargadosIda.setPlacemarks(context.datosMapaCargadosIdaAux.getPlacemarks());
+                    context.datosMapaCargadosIda.setRecorrido(context.datosMapaCargadosIdaAux.getRecorrido());
 
                     context.flagIda = true;
 
@@ -906,12 +909,15 @@ public class GestionarLineas {
             if (!context.datosMapaCargadosVuelta.getPlacemarks().isEmpty()) {
                 context.datosMapaCargadosVueltaAux = new DatosMapa();
                 context.datosMapaCargadosVueltaAux.setPlacemarks(context.datosMapaCargadosVuelta.getPlacemarks());
+                context.datosMapaCargadosVueltaAux.setRecorrido(context.datosMapaCargadosVuelta.getRecorrido());
                 context.datosMapaCargadosVuelta.setPlacemarks(new ArrayList<PlaceMark>());
+                context.datosMapaCargadosVuelta.setRecorrido("");
 
                 context.flagVuelta = false;
 
             } else if (context.datosMapaCargadosVueltaAux != null) {
                 context.datosMapaCargadosVuelta.setPlacemarks(context.datosMapaCargadosVueltaAux.getPlacemarks());
+                context.datosMapaCargadosVuelta.setRecorrido(context.datosMapaCargadosVueltaAux.getRecorrido());
 
                 context.flagVuelta = true;
 

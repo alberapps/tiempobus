@@ -351,8 +351,8 @@ public class ProcesarEstructura {
 
         try {
 
-            ////pruebas
-            recorridos = ProcesarMapaServiceV3.getDatosRecorrido(context, idRuta, linea);
+            //Recorridos por KML
+            recorridos = ProcesarMapaServiceV3.contultarDatosRecorrido(context, idRuta, linea);
 
             ////
 

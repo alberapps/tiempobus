@@ -79,8 +79,7 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/white"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
                 </FrameLayout>
 
                 <LinearLayout
@@ -93,19 +92,27 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/bus_destino"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_arrow_forward_black_18dp"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="bold"
+                        android:orientation="horizontal">
 
-                        />
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            card_view:srcCompat="@drawable/ic_arrow_forward_black_18dp" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/bus_destino"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:maxLines="1"
+                            android:text="@string/guion"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_light"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tiempo_principal"

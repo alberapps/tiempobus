@@ -35,6 +35,7 @@ import android.support.v4.content.ContentResolverCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.util.TypedValue;
@@ -43,7 +44,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -1047,7 +1047,7 @@ public class DatosPantallaPrincipal {
                     context.paradaActual = Integer.parseInt(spinnerValues.get(arg2).getNumParada());
 
                     // Poner en campo de poste
-                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    AppCompatEditText txtPoste = (AppCompatEditText) context.findViewById(R.id.campo_poste);
                     assert txtPoste != null;
                     txtPoste.setText(Integer.toString(context.paradaActual));
 

@@ -66,7 +66,7 @@ public class SelectorLinea {
     List<BusLinea> listaSinFiltroGrupo;
     List<BusLinea> listaConFiltroGrupo = new ArrayList<>();
 
-    ArrayAdapter<SpinnerItem> adapter = null;
+    LineasArrayAdapter adapter = null;
 
     public SelectorLinea(MapasActivity contexto, SharedPreferences preferencia) {
 
@@ -96,11 +96,16 @@ public class SelectorLinea {
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_linea);
 
 
-        adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaSpinner);
+        //adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaSpinner);
+        adapter = new LineasArrayAdapter(context, android.R.layout.simple_spinner_item);
+        adapter.addAll(listaSpinner);
+
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+        //spinner.setSelection(0);
+
 
         // Busqueda
         final TextView textoBuscar = (TextView) vista.findViewById(R.id.texto_buscar);
@@ -109,7 +114,9 @@ public class SelectorLinea {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                adapter.getFilter().filter(s);
+                adapter.getFilter().filter(s.toString());
+                //adapter.notifyDataSetChanged();
+                //spinner.setSelection(0);
 
             }
 

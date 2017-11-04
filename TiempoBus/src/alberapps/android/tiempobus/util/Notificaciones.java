@@ -78,9 +78,9 @@ public class Notificaciones {
     public static int NOTIFICACION_SERVICIO_ALERTAS = 6;
 
 
-    public static void initChannels(Context context){
+    public static void initChannels(Context context) {
 
-        if(Build.VERSION.SDK_INT < 26){
+        if (Build.VERSION.SDK_INT < 26) {
             return;
         }
 
@@ -94,6 +94,18 @@ public class Notificaciones {
     }
 
 
+    public static NotificationCompat.Builder initBuilder(Context contexto) {
+
+        NotificationCompat.Builder mBuilder = null;
+
+        mBuilder = new NotificationCompat.Builder(contexto, "default");
+
+        //mBuilder = new NotificationCompat.Builder(contexto);
+
+        return mBuilder;
+
+    }
+
     /**
      * Notificaciones de Base de Datos
      *
@@ -106,9 +118,10 @@ public class Notificaciones {
 
         if (accion.equals(NOTIFICACION_BD_INICIAL)) {
 
-            NotificationCompat.Builder mBuilder = null;
+            NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-            mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
+
+            mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
                     .setContentText(contexto.getString(R.string.recarga_bd_desc))
                     .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap());
 
@@ -201,9 +214,10 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b)).setNumber(nuevas)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -290,9 +304,10 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -379,9 +394,10 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_alberapps))
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_alberapps))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -469,7 +485,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
         String texto = "";
         if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
@@ -478,7 +494,8 @@ public class Notificaciones {
             texto = contexto.getString(R.string.notification_title);
         }
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -556,12 +573,12 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
         String texto = contexto.getString(R.string.foreground_service);
 
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(texto).setContentText(aviso)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -607,9 +624,10 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.share_3))
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.share_3))
                 .setContentText(contexto.getString(R.string.nuevas_noticias_b))
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
@@ -653,8 +671,8 @@ public class Notificaciones {
 
         // Sets a title for the Inbox style big view
         String text = "";
-        for(int i = 0; i< extendido.size(); i++) {
-            if(!text.equals("")){
+        for (int i = 0; i < extendido.size(); i++) {
+            if (!text.equals("")) {
                 text = text + "\n";
             }
             text = text + extendido.get(i);
@@ -699,9 +717,10 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = null;
+        NotificationCompat.Builder mBuilder = initBuilder(contexto);
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default").setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))
+
+        mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))
                 .setContentText(contenido)
                 .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);

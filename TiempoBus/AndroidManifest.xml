@@ -50,7 +50,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.TiempoBusTheme"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="adjustPan">
             <!--intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -237,7 +237,7 @@
             android:label="@string/buscador_online"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="adjustPan"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

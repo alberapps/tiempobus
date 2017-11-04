@@ -53,6 +53,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -66,7 +67,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -313,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
         // Poner en campo de poste
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
         txtPoste.setText(Integer.toString(paradaActual));
 
 
@@ -910,7 +910,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
         //Control desde teclado
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
         txtPoste.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -984,7 +984,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void accionCargar() {
 
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
 
         try {
             int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
@@ -1009,7 +1009,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void recargarTiempos() {
 
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
 
         try {
             int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
@@ -1220,7 +1220,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     }
 
                     // Poner en campo de poste
-                    EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+                    AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
                     txtPoste.setText(Integer.toString(paradaActual));
 
                     SharedPreferences.Editor editor = preferencias.edit();
@@ -1280,7 +1280,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         paradaActual = Integer.parseInt(parada);
 
                         // Poner en campo de poste
-                        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+                        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
                         txtPoste.setText(Integer.toString(paradaActual));
 
                         SharedPreferences.Editor editor = preferencias.edit();
@@ -1320,7 +1320,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         paradaActual = Integer.parseInt(parada);
 
                         // Poner en campo de poste
-                        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
+                        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
                         txtPoste.setText(Integer.toString(paradaActual));
 
                         SharedPreferences.Editor editor = preferencias.edit();

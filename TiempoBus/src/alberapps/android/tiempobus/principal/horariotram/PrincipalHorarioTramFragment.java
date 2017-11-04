@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContentResolverCompat;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
@@ -665,7 +666,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
             //cargarHorarios(destino);
 
-            final TextView textoBuscar = (TextView) getView().findViewById(R.id.texto_buscar);
+            final AppCompatEditText textoBuscar = (AppCompatEditText) getView().findViewById(R.id.texto_buscar);
 
 
             // Seleccion

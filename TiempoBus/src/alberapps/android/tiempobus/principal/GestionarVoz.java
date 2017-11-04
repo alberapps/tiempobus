@@ -28,8 +28,8 @@ import android.database.Cursor;
 import android.speech.RecognizerIntent;
 import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
-import android.widget.EditText;
 
 import org.jsoup.helper.StringUtil;
 
@@ -129,7 +129,7 @@ public class GestionarVoz {
                     context.paradaActual = Integer.parseInt(datosVoz.get(item).getResultado());
 
                     // Poner en campo de poste
-                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    AppCompatEditText txtPoste = (AppCompatEditText) context.findViewById(R.id.campo_poste);
                     txtPoste.setText(Integer.toString(context.paradaActual));
 
                     SharedPreferences.Editor editor = preferencias.edit();
@@ -143,7 +143,7 @@ public class GestionarVoz {
                     context.paradaActual = Integer.parseInt(datosVoz.get(item).getFavoritoParada());
 
                     // Poner en campo de poste
-                    EditText txtPoste = (EditText) context.findViewById(R.id.campo_poste);
+                    AppCompatEditText txtPoste = (AppCompatEditText) context.findViewById(R.id.campo_poste);
                     txtPoste.setText(Integer.toString(context.paradaActual));
 
                     SharedPreferences.Editor editor = preferencias.edit();

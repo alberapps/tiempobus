@@ -55,19 +55,10 @@ public class LoadDatosRecorridosAsyncTask extends AsyncTask<Object, Void, DatosM
                 datosMapa[0] = paradas[0];
                 datosMapa[1] = paradas[1];
 
-                //Parche M-1 (id 144)
-                /*if(((String) datos[0]).equals("M-1")){
-                    paradas[0].setIdRuta(paradas[1].getIdRuta());
-                }*/
-
-                if(paradas[0].getIdRuta().equals("144")){
-                    paradas[0].setIdRuta("145");
-                }
-
                 String[] recorridos = ProcesarEstructura.getDatosPolyLineaKml((String) datos[0], (String) datos[1], true, (Context) datos[2], paradas[0].getIdRuta());
 
-                datosMapa[0].setRecorrido(recorridos[1]);
-                datosMapa[1].setRecorrido(recorridos[0]);
+                datosMapa[0].setRecorrido(recorridos[0]);
+                datosMapa[1].setRecorrido(recorridos[1]);
 
 
             } else {

@@ -57,7 +57,7 @@
                 </LinearLayout>
 
 
-                <EditText
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/texto_buscar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -65,7 +65,8 @@
                     android:hint="@string/destino"
                     android:imeOptions="actionGo"
                     android:inputType="text"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    />
 
 
                 <Spinner
@@ -118,7 +119,7 @@
                 android:background="@color/mi_material_grey_200"
                 android:orientation="horizontal">
 
-                <ImageButton
+                <android.support.v7.widget.AppCompatImageButton
                     android:id="@+id/tarjeta_horario_ir"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -126,7 +127,7 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Horario TRAM"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_today_grey_18dp"
+                    card_view:srcCompat="@drawable/ic_today_grey_18dp"
                     android:tint="@color/primary_dark_material_light" />
 
                 <ImageView
