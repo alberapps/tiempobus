@@ -36,6 +36,7 @@ import android.support.v4.content.res.ResourcesCompat;
 
 import java.util.List;
 
+import alberapps.android.tiempobus.BuildConfig;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
@@ -98,9 +99,11 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        mBuilder = new NotificationCompat.Builder(contexto, "default");
-
-        //mBuilder = new NotificationCompat.Builder(contexto);
+        if(BuildConfig.FLAVOR.equals("legacy")){
+            mBuilder = new NotificationCompat.Builder(contexto);
+        }else {
+            mBuilder = new NotificationCompat.Builder(contexto, "default");
+        }
 
         return mBuilder;
 

@@ -108,7 +108,7 @@ public class UtilidadesTAM {
     public static String[] LINEAS_AZUL_CAMPELLO = {"C2"};
     public static String[] LINEAS_AZUL_MUTXAMEL = {"M","136"};
     public static String[] LINEAS_AZUL_SANTVICENT = {"45","46A","46B"};*/
-    public static String[] LINEAS_URBANAS = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "11H", "12", "13", "16", "17", "191", "192", "22", "22N", "27", "39", "45", "03N", "14A", "14B"};
+    public static String[] LINEAS_URBANAS = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "11H", "12", "13", "16", "17", "191", "192", "22", "22N", "27", "39", "45", "03N", "A", "B"};
 
     //public static List<String> lineasAzules = Arrays.asList(LINEAS_AZUL);
     public static List<String> lineasUrbanas = Arrays.asList(LINEAS_URBANAS);

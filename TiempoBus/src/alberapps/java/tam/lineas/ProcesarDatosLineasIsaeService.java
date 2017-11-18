@@ -92,6 +92,11 @@ public class ProcesarDatosLineasIsaeService {
                     datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().substring(1));
                 }*/
 
+                //Parche M
+                if (datosLinea.getLineaNum().equals("M")) {
+                    continue;
+                }
+
                 // KML
                 int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
 
