@@ -482,7 +482,7 @@ public class GestionarTarjetaInfo {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putBoolean("tarjeta_wiki_on", false);
-                editor.commit();
+                editor.apply();
 
                 if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
                     CardView tarjetaWiki = (CardView) v.findViewById(R.id.tarjetaWiki);
@@ -648,7 +648,7 @@ public class GestionarTarjetaInfo {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putBoolean("tarjeta_clima_on", false);
-                editor.commit();
+                editor.apply();
 
                 if (!UtilidadesUI.pantallaTabletHorizontal(context)) {
                     CardView tarjetaClima = (CardView) v.findViewById(R.id.tarjetaClima);

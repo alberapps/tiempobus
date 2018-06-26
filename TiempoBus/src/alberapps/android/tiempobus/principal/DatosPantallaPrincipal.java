@@ -447,7 +447,7 @@ public class DatosPantallaPrincipal {
 
                                 SharedPreferences.Editor editor = preferencias.edit();
                                 editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
-                                editor.commit();
+                                editor.apply();
 
                             }
 
@@ -464,7 +464,7 @@ public class DatosPantallaPrincipal {
 
                             SharedPreferences.Editor editor = preferencias.edit();
                             editor.putString("ultima_noticia", Utilidades.getFechaES(fechaComparar));
-                            editor.commit();
+                            editor.apply();
 
                         }
 
@@ -598,7 +598,7 @@ public class DatosPantallaPrincipal {
 
                             SharedPreferences.Editor editor = preferencias.edit();
                             editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-                            editor.commit();
+                            editor.apply();
 
                         }
 
@@ -606,7 +606,7 @@ public class DatosPantallaPrincipal {
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-                        editor.commit();
+                        editor.apply();
 
                     }
 
@@ -710,7 +710,7 @@ public class DatosPantallaPrincipal {
 
                             SharedPreferences.Editor editor = preferencias.edit();
                             editor.putString("ultima_noticia_alberapps", noticias.get(0).getFechaDate().toString());
-                            editor.commit();
+                            editor.apply();
 
                         }
 
@@ -718,7 +718,7 @@ public class DatosPantallaPrincipal {
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putString("ultima_noticia_alberapps", noticias.get(0).getFechaDate().toString());
-                        editor.commit();
+                        editor.apply();
 
                     }
 
@@ -946,7 +946,7 @@ public class DatosPantallaPrincipal {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putBoolean("aviso_noticias", botonBus.isChecked());
-                editor.commit();
+                editor.apply();
 
             }
         });
@@ -957,7 +957,7 @@ public class DatosPantallaPrincipal {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putBoolean("aviso_noticias_tram", botonTram.isChecked());
-                editor.commit();
+                editor.apply();
 
             }
         });
@@ -968,7 +968,7 @@ public class DatosPantallaPrincipal {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putBoolean("aviso_noticias_alberapps", botonAlberApps.isChecked());
-                editor.commit();
+                editor.apply();
 
             }
         });
@@ -1053,7 +1053,7 @@ public class DatosPantallaPrincipal {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("parada_inicio", context.paradaActual);
-                    editor.commit();
+                    editor.apply();
 
                     context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
                 }
@@ -1336,7 +1336,7 @@ public class DatosPantallaPrincipal {
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putInt("parada_inicio", context.paradaActual);
                         editor.putInt("infolinea_modo", 2);
-                        editor.commit();
+                        editor.apply();
 
                         context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 
@@ -1350,7 +1350,7 @@ public class DatosPantallaPrincipal {
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putInt("revAviso", REV_ACTUAL);
-                editor.commit();
+                editor.apply();
 
             }
 
@@ -1375,7 +1375,7 @@ public class DatosPantallaPrincipal {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("analytics_on", true);
-                    editor.commit();
+                    editor.apply();
 
                     dialog.dismiss();
 
@@ -1389,7 +1389,7 @@ public class DatosPantallaPrincipal {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("analytics_on", false);
-                    editor.commit();
+                    editor.apply();
 
                     dialog.dismiss();
 
@@ -1401,7 +1401,7 @@ public class DatosPantallaPrincipal {
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putBoolean("pregunta_estadisticas", true);
-            editor.commit();
+            editor.apply();
 
         }
 
@@ -1428,7 +1428,7 @@ public class DatosPantallaPrincipal {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("analytics_on", true);
-                    editor.commit();
+                    editor.apply();
 
                     dialog.dismiss();
 
@@ -1442,7 +1442,7 @@ public class DatosPantallaPrincipal {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("analytics_on", false);
-                    editor.commit();
+                    editor.apply();
 
                     dialog.dismiss();
 
@@ -1456,7 +1456,7 @@ public class DatosPantallaPrincipal {
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putBoolean("pregunta_estadisticas", true);
-            editor.commit();
+            editor.apply();
 
         }
 
@@ -1621,7 +1621,7 @@ public class DatosPantallaPrincipal {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("tarjetas_fijas", datosNuevos);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -1655,7 +1655,7 @@ public class DatosPantallaPrincipal {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("tarjetas_fijas", datosNuevos);
-        editor.commit();
+        editor.apply();
 
     }
 

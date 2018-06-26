@@ -174,7 +174,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
                 modoRed = MODO_RED_TRAM_OFFLINE;
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putInt("infolinea_modo", MODO_RED_TRAM_OFFLINE);
-                editor.commit();
+                editor.apply();
 
                 modoHorario = "TRAM";
                 this.getIntent().removeExtra("HORARIOS");
@@ -333,7 +333,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_inicio", codigo);
-        editor.commit();
+        editor.apply();
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -454,7 +454,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.remove("parada_search");
-            editor.commit();
+            editor.apply();
 
             cargarTiempos(paradaSearch);
 

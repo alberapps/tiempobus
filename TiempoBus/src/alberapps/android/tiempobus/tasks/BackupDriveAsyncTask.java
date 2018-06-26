@@ -23,7 +23,7 @@ import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
 
-import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
+import alberapps.android.tiempobus.favoritos.drivedeprecated.FavoritoDriveActivity;
 import alberapps.java.data.backup.DatosDriveBackup;
 
 /**

@@ -275,8 +275,8 @@ public class FragmentLineas extends Fragment {
             final Spinner spinnerGrupos = (Spinner) vheader.findViewById(R.id.spinner_grupo_lineas);
 
 
-            ArrayAdapter<CharSequence> adaptergrupos = ArrayAdapter.createFromResource(getActivity(), R.array.grupos_lineas_bus, android.R.layout.simple_spinner_item);
-
+            ArrayAdapter<CharSequence> adaptergrupos = ArrayAdapter.createFromResource(getActivity(), R.array.grupos_lineas_bus, R.layout.spinner_item_horario);
+            adaptergrupos.setDropDownViewResource(R.layout.spinner_item_horario_lista);
             spinnerGrupos.setAdapter(adaptergrupos);
 
 
@@ -323,12 +323,12 @@ public class FragmentLineas extends Fragment {
             ArrayAdapter<CharSequence> adapter = null;
 
             if (UtilidadesTRAM.ACTIVADO_TRAM) {
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, android.R.layout.simple_spinner_item);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos, R.layout.spinner_item_horario);
             } else {
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.spinner_datos_b, R.layout.spinner_item_horario);
             }
 
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
 
             spinner.setAdapter(adapter);
 
@@ -347,7 +347,7 @@ public class FragmentLineas extends Fragment {
                         // Guarda la nueva seleciccion
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putInt("infolinea_modo", arg2);
-                        editor.commit();
+                        editor.apply();
 
                         // cambiar el modo de la actividad
                         if (arg2 == 0) {
@@ -411,7 +411,7 @@ public class FragmentLineas extends Fragment {
                             || actividad.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putInt("infolinea_bus_filtro1", arg2);
-                        editor.commit();
+                        editor.apply();
                     }
 
                 }

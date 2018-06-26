@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putInt("parada_inicio", paradaActual);
-            editor.commit();
+            editor.apply();
         }
 
         setupView();
@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putBoolean("analytics_on", false);
-            editor.commit();
+            editor.apply();
         }
 
     }
@@ -690,10 +690,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Guardar ultima parada seleccionada
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_inicio", paradaActual);
-        editor.commit();
+        editor.apply();
 
         editor.remove("parada_tram");
-        editor.commit();
+        editor.apply();
 
         handler.removeMessages(MSG_RECARGA);
 
@@ -708,10 +708,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Guardar ultima parada seleccionada
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_inicio", paradaActual);
-        editor.commit();
+        editor.apply();
 
         editor.remove("parada_tram");
-        editor.commit();
+        editor.apply();
 
         handler.removeMessages(MSG_RECARGA);
 
@@ -993,7 +993,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putInt("parada_inicio", paradaActual);
-                editor.commit();
+                editor.apply();
 
                 handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
@@ -1121,7 +1121,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("activarServicio", true);
-                    editor.commit();
+                    editor.apply();
 
                     startService(intent);
 
@@ -1132,7 +1132,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("activarServicio", false);
-                    editor.commit();
+                    editor.apply();
 
                     stopService(intent);
 
@@ -1225,7 +1225,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("parada_inicio", paradaActual);
-                    editor.commit();
+                    editor.apply();
 
                     handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
                     break;
@@ -1285,7 +1285,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putInt("parada_inicio", paradaActual);
-                        editor.commit();
+                        editor.apply();
 
                         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
@@ -1325,7 +1325,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putInt("parada_inicio", paradaActual);
-                        editor.commit();
+                        editor.apply();
 
                         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
@@ -2040,7 +2040,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     SharedPreferences.Editor editor = actividad.preferencias.edit();
                     editor.putInt("parada_tram", actividad.paradaActual);
-                    editor.commit();
+                    editor.apply();
 
                     // Get tracker.
                     Tracker t = ((ApplicationTiempoBus) actividad.getApplication()).getTracker(TrackerName.APP_TRACKER);
@@ -2083,7 +2083,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putString("parada_destino_tram", Integer.toString(destino) + ";" + textoDestino);
-        editor.commit();
+        editor.apply();
 
         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 

@@ -217,7 +217,7 @@ public class SelectorLinea {
                         || context.modoRed == InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE) {
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("infolinea_bus_filtro1", arg2);
-                    editor.commit();
+                    editor.apply();
                 }
 
             }
@@ -261,7 +261,7 @@ public class SelectorLinea {
                     // Guarda la nueva seleciccion
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("infolinea_modo", arg2);
-                    editor.commit();
+                    editor.apply();
 
                     // cambiar el modo de la actividad
                     if (arg2 == 0) {

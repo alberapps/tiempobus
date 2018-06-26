@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:shortcutId="noticias"
+        android:shortcutLongLabel="@string/tit_noticias"
+        android:shortcutShortLabel="@string/tit_noticias"
+        android:icon="@drawable/ic_my_library_books_grey600_48dp">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="alberapps.android.tiempobus.noticias.NoticiasTabsPager"
+            android:targetPackage="alberapps.android.tiempobus"
+            />
+
+        <categories android:name="android.shortcut.conversation" />
+
+    </shortcut>
+
+</shortcuts>

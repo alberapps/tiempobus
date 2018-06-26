@@ -97,6 +97,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp">
 
+                    <!--android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/infoparada_horarios_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:background="@drawable/actionbar_compat_item"
+                        android:text="@string/infolinea_horarios"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        app:textAllCaps="true"
+                        android:layout_marginRight="10dp"
+                        /-->
+
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/infoparada_horarios"
                         android:layout_width="wrap_content"

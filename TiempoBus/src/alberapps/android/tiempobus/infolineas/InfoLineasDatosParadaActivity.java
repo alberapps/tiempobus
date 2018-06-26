@@ -175,7 +175,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_inicio", codigo);
-        editor.commit();
+        editor.apply();
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

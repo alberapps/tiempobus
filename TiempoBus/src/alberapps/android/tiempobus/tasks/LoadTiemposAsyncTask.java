@@ -80,9 +80,16 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
         paradaI = (Integer) datos[0];
 
         Context context = (Context) datos[1];
+
+
+        //PrecargasV3.precargarDatosLineas(context);
+        //PrecargasV3.precargarDatosLineasRecorrido(context);
+
+
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+        //boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+        boolean opcionTR = false;
 
         Boolean cacheTiempos = (Boolean) datos[2];
 

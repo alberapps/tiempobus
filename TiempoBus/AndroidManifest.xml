@@ -40,7 +40,8 @@
     <application
         android:name=".ApplicationTiempoBus"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_tiempobus_5"
+        android:icon="@mipmap/ic_tiempobus_5_adaptive"
+        android:roundIcon="@mipmap/ic_tiempobus_5_adaptive_round"
         android:label="@string/app_name"
         android:theme="@style/Theme.TiempoBusTheme">
         >
@@ -65,6 +66,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                       android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -105,7 +108,7 @@
                 android:value=".favoritos.FavoritosActivity" />
         </activity>
         <activity
-            android:name=".favoritos.drive.FavoritoDriveActivity"
+            android:name=".favoritos.googledrive.FavoritoGoogleDriveActivity"
             android:icon="@mipmap/ic_tiempobus_5"
             android:label="@string/favoritosN"
             android:theme="@android:style/Theme.Dialog" />

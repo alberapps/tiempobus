@@ -57,7 +57,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.data.TiempoBusDb;
-import alberapps.android.tiempobus.favoritos.drive.FavoritoDriveActivity;
+import alberapps.android.tiempobus.favoritos.googledrive.FavoritoGoogleDriveActivity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask.BackupAsyncTaskResponder;
@@ -416,7 +416,7 @@ public class FavoritosActivity extends AppCompatActivity {
 
                     // Guardar
                     editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_D_SORT_ORDER);
-                    editor.commit();
+                    editor.apply();
 
                 } else {
 
@@ -426,7 +426,7 @@ public class FavoritosActivity extends AppCompatActivity {
 
                     // Guardar
                     editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NUM_A_SORT_ORDER);
-                    editor.commit();
+                    editor.apply();
 
                 }
 
@@ -441,7 +441,7 @@ public class FavoritosActivity extends AppCompatActivity {
 
                     // Guarda
                     editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_D_SORT_ORDER);
-                    editor.commit();
+                    editor.apply();
                 } else {
 
                     orden = TiempoBusDb.Favoritos.NAME_A_SORT_ORDER;
@@ -450,7 +450,7 @@ public class FavoritosActivity extends AppCompatActivity {
 
                     // Guarda
                     editor.putString("orden_favoritos", TiempoBusDb.Favoritos.NAME_A_SORT_ORDER);
-                    editor.commit();
+                    editor.apply();
 
                 }
 
@@ -479,10 +479,10 @@ public class FavoritosActivity extends AppCompatActivity {
 
                 if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
 
-                    Intent intent2 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+                    Intent intent2 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
 
                     Bundle b2 = new Bundle();
-                    b2.putString("MODO", FavoritoDriveActivity.MODO_EXPORTAR);
+                    b2.putString("MODO", FavoritoGoogleDriveActivity.MODO_EXPORTAR);
                     intent2.putExtras(b2);
 
                     startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
@@ -592,10 +592,10 @@ public class FavoritosActivity extends AppCompatActivity {
         builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent1 = new Intent(FavoritosActivity.this, FavoritoDriveActivity.class);
+                Intent intent1 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
 
                 Bundle b = new Bundle();
-                b.putString("MODO", FavoritoDriveActivity.MODO_IMPORTAR);
+                b.putString("MODO", FavoritoGoogleDriveActivity.MODO_IMPORTAR);
                 intent1.putExtras(b);
 
                 startActivityForResult(intent1, SUB_ACTIVITY_REQUEST_DRIVE);

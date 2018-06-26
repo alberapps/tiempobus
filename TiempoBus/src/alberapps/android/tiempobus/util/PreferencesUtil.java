@@ -79,7 +79,7 @@ public class PreferencesUtil {
         //Quitar info de la alarma
         SharedPreferences.Editor editor = preferenciasAlertas.edit();
         editor.putString("alerta", "");
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -106,7 +106,7 @@ public class PreferencesUtil {
         //Quitar info de la alarma
         SharedPreferences.Editor editor = preferenciasAlertas.edit();
         editor.putString("alerta", info);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -193,7 +193,7 @@ public class PreferencesUtil {
         SharedPreferences.Editor editor = preferenciasAlertas.edit();
         editor.putString("update", "");
         editor.putString("ignorar", "");
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -229,7 +229,7 @@ public class PreferencesUtil {
 
 
         editor.putString("ignorar", ignorar);
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -261,7 +261,7 @@ public class PreferencesUtil {
         //Guardar valor
         SharedPreferences.Editor editor = preferenciasCache.edit();
         editor.putString(campo, valor);
-        editor.commit();
+        editor.apply();
 
     }
 

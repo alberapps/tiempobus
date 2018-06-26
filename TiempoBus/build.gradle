@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    //compile fileTree(dir: 'libs', include: '*.jar')
+    implementation fileTree(dir: 'libs', include: '*.jar')
     //compile project(':workspace:google-play-services_lib')
     //compile 'com.android.support:gridlayout-v7:21.0.1'
-    compile 'com.google.maps.android:android-maps-utils:0.5'
-    compile files('libs/twitter4j-core-4.0.4.jar')
-    compile files('libs/jsoup-1.11.1.jar')
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
+    implementation files('libs/twitter4j-core-4.0.4.jar')
+    implementation files('libs/jsoup-1.11.3.jar')
 
 
     /*compile 'com.android.support:appcompat-v7:25.3.1'
@@ -24,17 +24,22 @@ dependencies {
 
     //compile 'com.google.firebase:firebase-messaging:10.0.1'
 
+    //implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    //implementation 'com.android.support:multidex:1.0.3'
 }
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "27.0.0"
+    buildToolsVersion "28.0.0"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
         versionCode 75
         versionName "4.2"
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled false
     }
 
     flavorDimensions "api"
@@ -43,12 +48,12 @@ android {
 
         legacy {
             minSdkVersion 9
-            versionCode 975 // Min API level 9
+            versionCode 978 // Min API level 9
             dimension "api"
         }
         current {
             minSdkVersion 14
-            versionCode 1477  // Min API level 14
+            versionCode 1478  // Min API level 14
             dimension "api"
         }
 
@@ -56,31 +61,33 @@ android {
 
     dependencies {
 
-        currentCompile 'com.android.support:appcompat-v7:27.0.1'
-        currentCompile 'com.android.support:cardview-v7:27.0.1'
-        currentCompile 'com.android.support:design:27.0.1'
-        currentCompile 'com.android.support:recyclerview-v7:27.0.1'
-        currentCompile 'com.android.support:support-v4:27.0.1'
+        currentImplementation 'com.android.support:appcompat-v7:27.1.1'
+        currentImplementation 'com.android.support:cardview-v7:27.1.1'
+        currentImplementation 'com.android.support:design:27.1.1'
+        currentImplementation 'com.android.support:recyclerview-v7:27.1.1'
+        currentImplementation 'com.android.support:support-v4:27.1.1'
 
-        currentCompile 'com.google.android.gms:play-services-maps:11.4.2'
-        currentCompile 'com.google.android.gms:play-services-drive:11.4.2'
-        currentCompile 'com.google.android.gms:play-services-location:11.4.2'
-        currentCompile 'com.google.android.gms:play-services-places:11.4.2'
-        currentCompile 'com.google.android.gms:play-services-analytics:11.4.2'
-        currentCompile 'com.google.android.gms:play-services-vision:11.4.2'
+        currentImplementation 'com.google.android.gms:play-services-maps:15.0.1'
+        currentImplementation 'com.google.android.gms:play-services-drive:15.0.1'
+        currentImplementation 'com.google.android.gms:play-services-location:15.0.1'
+        currentImplementation 'com.google.android.gms:play-services-places:15.0.1'
+        currentImplementation 'com.google.android.gms:play-services-analytics:16.0.1'
+        currentImplementation 'com.google.android.gms:play-services-vision:15.0.2'
 
-        legacyCompile 'com.android.support:appcompat-v7:25.3.1'
-        legacyCompile 'com.android.support:cardview-v7:25.3.1'
-        legacyCompile 'com.android.support:design:25.3.1'
-        legacyCompile 'com.android.support:recyclerview-v7:25.3.1'
-        legacyCompile 'com.android.support:support-v4:25.3.1'
+        currentImplementation 'com.google.android.gms:play-services-auth:15.0.1'
 
-        legacyCompile 'com.google.android.gms:play-services-maps:10.0.1'
-        legacyCompile 'com.google.android.gms:play-services-drive:10.0.1'
-        legacyCompile 'com.google.android.gms:play-services-location:10.0.1'
-        legacyCompile 'com.google.android.gms:play-services-places:10.0.1'
-        legacyCompile 'com.google.android.gms:play-services-analytics:10.0.1'
-        legacyCompile 'com.google.android.gms:play-services-vision:10.0.1'
+        legacyImplementation 'com.android.support:appcompat-v7:25.3.1'
+        legacyImplementation 'com.android.support:cardview-v7:25.3.1'
+        legacyImplementation 'com.android.support:design:25.3.1'
+        legacyImplementation 'com.android.support:recyclerview-v7:25.3.1'
+        legacyImplementation 'com.android.support:support-v4:25.3.1'
+
+        legacyImplementation 'com.google.android.gms:play-services-maps:10.0.1'
+        legacyImplementation 'com.google.android.gms:play-services-drive:10.0.1'
+        legacyImplementation 'com.google.android.gms:play-services-location:10.0.1'
+        legacyImplementation 'com.google.android.gms:play-services-places:10.0.1'
+        legacyImplementation 'com.google.android.gms:play-services-analytics:10.0.1'
+        legacyImplementation 'com.google.android.gms:play-services-vision:10.0.1'
     }
 
 
@@ -96,7 +103,7 @@ android {
         }
 
         // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+        //instrumentTest.setRoot('tests')
 
         // Move the build types to build-types/<type>
         // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
@@ -125,6 +132,10 @@ android {
     }
 
 
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 //apply plugin: 'com.google.gms.google-services'

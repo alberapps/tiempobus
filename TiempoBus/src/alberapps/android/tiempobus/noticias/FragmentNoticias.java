@@ -65,7 +65,9 @@ public class FragmentNoticias extends Fragment {
         // Progreso lista
         ListView listNoticiasWiew = (ListView) actividad.findViewById(R.id.lista_noticias);
         TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias);
-        vacio.setVisibility(View.INVISIBLE);
+        if(vacio != null) {
+            vacio.setVisibility(View.INVISIBLE);
+        }
         ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_noticias);
         lpb.setIndeterminate(true);
         listNoticiasWiew.setEmptyView(lpb);

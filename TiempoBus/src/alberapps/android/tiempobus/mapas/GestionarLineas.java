@@ -622,14 +622,14 @@ public class GestionarLineas {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("mapas_vehiculos", true);
-                    editor.commit();
+                    editor.apply();
 
                     context.gestionVehiculos.loadDatosVehiculos();
                 } else {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("mapas_vehiculos", false);
-                    editor.commit();
+                    editor.apply();
 
                     if (context.markersVehiculos != null) {
 

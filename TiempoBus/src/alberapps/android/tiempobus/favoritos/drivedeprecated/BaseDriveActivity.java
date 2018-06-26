@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package alberapps.android.tiempobus.favoritos.drive;
+package alberapps.android.tiempobus.favoritos.drivedeprecated;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

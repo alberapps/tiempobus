@@ -464,7 +464,7 @@ public class Conectividad {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("cache_eliminada", false);
-                    editor.commit();
+                    editor.apply();
 
                 } catch (IOException e) {
                     Log.i("Conectividad", "HTTP response cache installation failed:" + e);
@@ -483,7 +483,7 @@ public class Conectividad {
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putBoolean("cache_eliminada", true);
-                        editor.commit();
+                        editor.apply();
 
                         Log.i("Conectividad", "Cache eliminada");
 

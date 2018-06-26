@@ -118,7 +118,7 @@ public class GestionarFondo {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putString("image_galeria", "");
-                    editor.commit();
+                    editor.apply();
 
                     Toast.makeText(context.getApplicationContext(), context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
                 }
@@ -198,7 +198,7 @@ public class GestionarFondo {
             // Guardar
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putString("image_galeria", filePath);
-            editor.commit();
+            editor.apply();
 
             setupFondoAplicacion();
 
@@ -244,7 +244,7 @@ public class GestionarFondo {
                 // Guardar
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putString("image_galeria", filePath);
-                editor.commit();
+                editor.apply();
 
                 setupFondoAplicacion();
 
@@ -306,7 +306,7 @@ public class GestionarFondo {
 
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putString("image_galeria", "");
-            editor.commit();
+            editor.apply();
 
             View contenedor_principal = context.findViewById(R.id.contenedor_principal);
 

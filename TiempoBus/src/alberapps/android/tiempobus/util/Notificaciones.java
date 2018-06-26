@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -73,6 +74,14 @@ public class Notificaciones {
 
     public static int NOTIFICACION_ALARMA_DIARIA = 2;
 
+
+    /**
+     * Channel
+     */
+    public static String CHANNEL_DEFAULT = "default";
+    public static String CHANNEL_ALERTABUS = "alertaBus";
+    public static String CHANNEL_NOTICIAS = "noticias";
+
     /**
      * Servicio
      */
@@ -85,24 +94,73 @@ public class Notificaciones {
             return;
         }
 
+        PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        NotificationChannel channel = new NotificationChannel("default", "TiempoBus default", NotificationManager.IMPORTANCE_DEFAULT);
-        channel.setDescription("TiempoBus default");
+        //Default
+        NotificationChannel channel = new NotificationChannel(CHANNEL_DEFAULT, context.getString(R.string.channel_default), NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription(context.getString(R.string.channel_default));
         notificationManager.createNotificationChannel(channel);
+
+
+        //Alertas Bus
+        NotificationChannel channelAvisoBus = new NotificationChannel(CHANNEL_ALERTABUS, context.getString(R.string.notification_title), NotificationManager.IMPORTANCE_HIGH);
+        channel.setDescription(context.getString(R.string.notification_title));
+
+        // Sonido seleccionado
+        String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
+
+        if (!strRingtonePreference.equals("DEFAULT_SOUND")) {
+
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+
+            channelAvisoBus.setSound(Uri.parse(strRingtonePreference), audioAttributes);
+
+        }
+
+
+        notificationManager.createNotificationChannel(channelAvisoBus);
+
+
+        //Noticias
+        NotificationChannel channelNoticias = new NotificationChannel(CHANNEL_NOTICIAS, context.getString(R.string.tit_noticias), NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription(context.getString(R.string.tit_noticias));
+
+        // Sonido seleccionado
+        String strRingtonePreferenceNoticias = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
+
+        if (!strRingtonePreferenceNoticias.equals("DEFAULT_SOUND")) {
+
+            AudioAttributes audioAttributesNoticias = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .build();
+
+            channelNoticias.setSound(Uri.parse(strRingtonePreferenceNoticias), audioAttributesNoticias);
+
+        }
+
+
+        notificationManager.createNotificationChannel(channelNoticias);
 
 
     }
 
 
-    public static NotificationCompat.Builder initBuilder(Context contexto) {
+    public static NotificationCompat.Builder initBuilder(Context contexto, String channel) {
 
         NotificationCompat.Builder mBuilder = null;
 
-        if(BuildConfig.FLAVOR.equals("legacy")){
+        if (BuildConfig.FLAVOR.equals("legacy")) {
             mBuilder = new NotificationCompat.Builder(contexto);
-        }else {
-            mBuilder = new NotificationCompat.Builder(contexto, "default");
+        } else {
+            mBuilder = new NotificationCompat.Builder(contexto, channel);
         }
 
         return mBuilder;
@@ -121,7 +179,7 @@ public class Notificaciones {
 
         if (accion.equals(NOTIFICACION_BD_INICIAL)) {
 
-            NotificationCompat.Builder mBuilder = initBuilder(contexto);
+            NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
 
 
             mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
@@ -217,7 +275,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_NOTICIAS);
 
 
         mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_bus))
@@ -307,7 +365,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_NOTICIAS);
 
 
         mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_tram))
@@ -397,7 +455,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_NOTICIAS);
 
 
         mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.nuevas_noticias_alberapps))
@@ -488,7 +546,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_ALERTABUS);
 
         String texto = "";
         if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
@@ -576,7 +634,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
 
         String texto = contexto.getString(R.string.foreground_service);
 
@@ -627,7 +685,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
 
 
         mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.share_3))
@@ -720,7 +778,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
 
 
         mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.avisos_push_tiempobus))

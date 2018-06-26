@@ -154,7 +154,7 @@ public class BuscadorLineas extends AppCompatActivity {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_search", codigo);
-        editor.commit();
+        editor.apply();
 
         setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
         finish();
@@ -166,7 +166,7 @@ public class BuscadorLineas extends AppCompatActivity {
 
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("parada_inicio", codigo);
-        editor.commit();
+        editor.apply();
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

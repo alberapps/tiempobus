@@ -134,7 +134,7 @@ public class GestionarVoz {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("parada_inicio", context.paradaActual);
-                    editor.commit();
+                    editor.apply();
 
                     context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 
@@ -148,7 +148,7 @@ public class GestionarVoz {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putInt("parada_inicio", context.paradaActual);
-                    editor.commit();
+                    editor.apply();
 
                     context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
 

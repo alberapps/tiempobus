@@ -15,33 +15,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package alberapps.android.tiempobus.favoritos.drive;
+package alberapps.android.tiempobus.favoritos.drivedeprecated;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.content.IntentSender.SendIntentException;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import alberapps.android.tiempobus.R;
-import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask;
-import alberapps.android.tiempobus.tasks.BackupDriveAsyncTask.BackupDriveAsyncTaskResponder;
 
 /**
  * Exportar e importar desde drive
@@ -181,7 +166,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
      */
     private void nuevoArchivoDrive() {
 
-        final ResultCallback<DriveApi.DriveContentsResult> contentsCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
+       /* final ResultCallback<DriveApi.DriveContentsResult> contentsCallback = new ResultCallback<DriveApi.DriveContentsResult>() {
 
             @Override
             public void onResult(DriveApi.DriveContentsResult result) {
@@ -207,7 +192,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
         }
 
         Drive.DriveApi.newDriveContents(getGoogleApiClient()).setResultCallback(contentsCallback);
-
+*/
     }
 
     /**
@@ -219,7 +204,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
         // activarProgreso();
 
-        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+        /*DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
         BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
             public void backupLoaded(Boolean resultado) {
@@ -239,7 +224,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
             }
         };
 
-        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");*/
 
     }
 
@@ -248,12 +233,12 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
      */
     private void cargarFicheroDrive() {
 
-        IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder().setMimeType(new String[]{"application/octet-stream"}).build(getGoogleApiClient());
+       /* IntentSender intentSender = Drive.DriveApi.newOpenFileActivityBuilder().setMimeType(new String[]{"application/octet-stream"}).build(getGoogleApiClient());
         try {
             startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
         } catch (SendIntentException e) {
             Log.w(TAG, "Unable to send intent", e);
-        }
+        }*/
 
     }
 
@@ -266,7 +251,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
         // activarProgreso();
 
-        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+       /* DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
         BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
             public void backupLoaded(Boolean resultado) {
@@ -286,7 +271,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
             }
         };
 
-        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");*/
 
     }
 

@@ -148,6 +148,10 @@ public class GestionIda {
 
         ListView idaView = (ListView) context.findViewById(R.id.infolinea_lista_ida);
 
+        if(idaView == null){
+            return;
+        }
+
         View vheader = null;
 
         if (idaView != null && idaView.getHeaderViewsCount() == 0) {
@@ -155,6 +159,10 @@ public class GestionIda {
             LayoutInflater li2 = LayoutInflater.from(context);
 
             vheader = li2.inflate(R.layout.infolineas_paradas_header, null);
+
+            if(vheader == null){
+                return;
+            }
 
             idaView.addHeaderView(vheader);
 

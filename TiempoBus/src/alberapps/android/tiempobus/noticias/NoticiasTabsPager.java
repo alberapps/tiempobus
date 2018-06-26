@@ -1118,7 +1118,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
                             SharedPreferences.Editor editor = preferencias.edit();
                             editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-                            editor.commit();
+                            editor.apply();
 
                         }
 
@@ -1126,7 +1126,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putString("ultima_noticia_tram", noticias.get(0).getFechaDate().toString());
-                        editor.commit();
+                        editor.apply();
 
                     }
 

@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContentResolverCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -235,26 +234,30 @@ public class PrincipalHorarioTramFragment extends Fragment {
             boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
 
             //Botones ida y vuelta
-            final SwitchCompat botonTR = (SwitchCompat) view.findViewById(R.id.switchTiempoReal);
+            //final SwitchCompat botonTR = (SwitchCompat) view.findViewById(R.id.switchTiempoReal);
 
 
             if (opcionTR) {
-                botonTR.setChecked(true);
+                //botonTR.setChecked(true);
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putBoolean("tram_opcion_tr", false);
+                editor.apply();
+
             }
 
-            botonTR.setOnClickListener(new View.OnClickListener() {
+            /*botonTR.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("tram_opcion_tr", botonTR.isChecked());
-                    editor.commit();
+                    editor.apply();
 
                     recargaExterna = false;
                     cargaInicial();
 
                 }
-            });
+            });*/
 
 
             cargaInicial();

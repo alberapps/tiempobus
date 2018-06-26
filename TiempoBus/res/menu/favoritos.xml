@@ -25,32 +25,32 @@
         android:id="@id/menu_ordenar_parada"
         android:orderInCategory="1"
         tiempobus:showAsAction="never"
-        android:title="@string/ordenar_parada"></item>
+        android:title="@string/ordenar_parada"/>
     <item
         android:id="@id/menu_ordenar_nombre"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
-        android:title="@string/ordenar_nombre"></item>
+        android:title="@string/ordenar_nombre"/>
     <item
         android:id="@id/menu_exportar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
-        android:title="@string/exportar"></item>
+        android:title="@string/exportar"/>
     <item
         android:id="@id/menu_importar"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
-        android:title="@string/importar"></item>
+        android:title="@string/importar"/>
     <item
         android:id="@id/menu_exportar_drive"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
-        android:title="@string/exportar_drive"></item>
+        android:title="@string/exportar_drive"/>
     <item
         android:id="@id/menu_importar_drive"
         android:orderInCategory="2"
         tiempobus:showAsAction="never"
-        android:title="@string/importar_drive"></item>
+        android:title="@string/importar_drive"/>
 
 
 </menu>

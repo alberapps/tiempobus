@@ -339,7 +339,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             //tram
-            boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
+            //boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
+            boolean opcionTR = false;
 
 
             Context ctx = this.getContext().getApplicationContext();
