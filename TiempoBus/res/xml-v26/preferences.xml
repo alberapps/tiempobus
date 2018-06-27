@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+
+<!-- This is a primitive example showing the different types of preferences available. -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/preferencias_tiempos" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="checkbox_preference"
+            android:summary="@string/preferencias_tiempos_desc"
+            android:title="@string/preferencias_tiempos_auto" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/configuracion_alarmas" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="activarServicio"
+            android:summary="@string/foreground_service_started_2"
+            android:title="@string/alarma_checkbox" />
+        <PreferenceScreen
+            android:key="channel_settings_alarmas"
+            android:summary="@string/channel_settings_desc"
+            android:title="@string/channel_settings" >
+        </PreferenceScreen>
+
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/conf_noticias" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="aviso_noticias"
+            android:summary="@string/conf_noticias_a"
+            android:title="@string/preferencias_noticias_auto" />
+        
+        <CheckBoxPreference
+                android:key="aviso_noticias_tram"
+                android:title="@string/preferencias_noticias_auto_tram"
+                android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
+
+        <CheckBoxPreference
+            android:key="aviso_noticias_alberapps"
+            android:title="@string/preferencias_noticias_auto_alberapps"
+            android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
+
+
+        <PreferenceScreen
+            android:key="channel_settings_noticias"
+            android:summary="@string/channel_settings_desc"
+            android:title="@string/channel_settings" >
+        </PreferenceScreen>
+
+        <PreferenceScreen
+            android:key="conf_twitter"
+            android:summary="@string/preferences"
+            android:title="@string/tab_tw" >
+
+            <ListPreference
+                android:defaultValue="3"
+                android:dialogTitle="@string/tw_maximo"
+                android:entries="@array/cantidad_tw"
+                android:entryValues="@array/cantidad_tw"
+                android:key="tweets_maximos_v11"
+                android:summary="@string/tw_maximo_desc"
+                android:title="@string/tw_maximo" />
+
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_activar"
+                android:title="@string/twitter_activar" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_2"
+                android:title="\@Alicante_City" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_3"
+                android:title="\@campelloturismo" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_4"
+                android:title="\@aytoraspeig" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_5"
+                android:title="\@sant_joan" />
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="tw_6"
+                android:title="\@TramdeAlicante" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/tarjeta" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="tarjeta_clima_on"
+            android:title="@string/tarjeta_clima"
+            android:summary="@string/alarma_checkbox"/>
+        <ListPreference
+            android:defaultValue="yw"
+            android:dialogTitle="@string/tarjeta_clima"
+            android:entries="@array/tarjeta_clima_value"
+            android:entryValues="@array/tarjeta_clima_key"
+            android:key="tarjeta_clima"
+            android:summary="@string/tarjeta_clima_pref_desc"
+            android:title="@string/tarjeta_clima" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="tarjeta_wiki_on"
+            android:title="@string/wikipedia"
+            android:summary="@string/alarma_checkbox"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/conf_avanzado_titulo" >
+        <PreferenceScreen
+            android:key="conf_avanzada"
+            android:summary="@string/conf_avanzado_desc"
+            android:title="@string/conf_avanzado_opciones" >
+            <PreferenceCategory android:title="@string/conf_conectividad_titulo" >
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="conectividad_cache"
+                    android:summary="@string/conf_conectividad_titulo_desc"
+                    android:title="@string/conf_conectividad_titulo_check" />
+                <!--<CheckBoxPreference
+                    android:defaultValue="false"
+                    android:key="conectividad_cache_tiempos"
+                    android:summary="@string/conf_conectividad_titulo_desc_tiempos"
+                    android:title="@string/conf_conectividad_titulo_check_tiempos" />-->
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/conf_bd_titulo" >
+                 <!--CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="control_verificar_actualiza"
+                    android:summary="@string/pref_control_actualizar_desc"
+                    android:title="@string/pref_control_actualizar_titulo" /-->
+                <PreferenceScreen
+                    android:key="reiniciar_db"
+                    android:summary="@string/conf_db_recargar_desc"
+                    android:title="@string/conf_db_recargar" >
+                </PreferenceScreen>
+                <PreferenceScreen
+                    android:key="actualizar_db"
+                    android:summary="@string/conf_db_actualizar_desc"
+                    android:title="@string/conf_db_actualizar" >
+                </PreferenceScreen>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/menu_mapa" >
+                <ListPreference
+                    android:defaultValue="30"
+                    android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                    android:entries="@array/tiempos_recarga"
+                    android:entryValues="@array/tiempos_recarga"
+                    android:key="tiempo_recarga_vehiculos"
+                    android:summary="@string/conf_tiempo_recarga_desc"
+                    android:title="@string/conf_tiempo_recarga" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/configuracion_alarmas" >
+                <ListPreference
+                    android:defaultValue="60"
+                    android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                    android:entries="@array/tiempos_recarga"
+                    android:entryValues="@array/tiempos_recarga"
+                    android:key="servicio_recarga"
+                    android:summary="@string/conf_tiempo_recarga_desc"
+                    android:title="@string/conf_tiempo_recarga" />
+            </PreferenceCategory>
+            <PreferenceCategory android:title="@string/preferencias_tiempos" >
+                <ListPreference
+                    android:defaultValue="60"
+                    android:dialogTitle="@string/conf_tiempo_recarga_titulo"
+                    android:entries="@array/tiempos_recarga"
+                    android:entryValues="@array/tiempos_recarga"
+                    android:key="tiempo_recarga"
+                    android:summary="@string/conf_tiempo_recarga_desc"
+                    android:title="@string/conf_tiempo_recarga" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/traducciones_tit" >
+        <PreferenceScreen
+            android:key="traducciones"
+            android:summary="@string/traducciones_desc"
+            android:title="@string/traducciones" >
+            <intent android:action=".appinfo.TraduccionesActivity" />
+        </PreferenceScreen>
+
+        <ListPreference
+            android:defaultValue="no"
+            android:dialogTitle="@string/traducciones_cambiar"
+            android:entries="@array/entries_locale_desc"
+            android:entryValues="@array/entries_locale"
+            android:key="idioma_seleccionado"
+            android:summary="@string/traducciones_cambiar"
+            android:title="@string/traducciones_locale" />
+    </PreferenceCategory>
+
+    <!--
+    <PreferenceCategory
+            android:title="@string/dialog_based_preferences">
+
+        <EditTextPreference
+                android:key="edittext_preference"
+                android:title="@string/title_edittext_preference"
+                android:summary="@string/summary_edittext_preference"
+                android:dialogTitle="@string/dialog_title_edittext_preference" />
+                
+        <ListPreference
+                android:key="list_preference"
+                android:title="@string/title_list_preference"
+                android:summary="@string/summary_list_preference"
+                android:entries="@array/entries_list_preference"
+                android:entryValues="@array/entryvalues_list_preference"
+                android:dialogTitle="@string/dialog_title_list_preference" />
+
+    </PreferenceCategory>
+    -->
+
+    <PreferenceCategory android:title="@string/launch_preferences" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="analytics_on"
+            android:summary="@string/analytics_on_desc"
+            android:title="@string/analytics_on" />
+
+        <PreferenceScreen
+            android:summary="@string/pagina_play_valora"
+            android:title="@string/pagina_play" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://play.google.com/store/apps/details?id=alberapps.android.tiempobus" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:summary="@string/pagina_blog_detalle"
+            android:title="@string/pagina_blog" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://alberapps.blogspot.com" />
+        </PreferenceScreen>
+
+        <!--
+             This PreferenceScreen tag serves as a screen break (similar to page break
+             in word processing). Like for other preference types, we assign a key
+             here so it is able to save and restore its instance state.
+        -->
+        <PreferenceScreen
+            android:key="screen_preference"
+            android:summary="@string/summary_screen_preference"
+            android:title="@string/title_screen_preference" >
+            <intent android:action=".appinfo.AppInfoActivity" />
+
+            <!-- You can place more preferences here that will be shown on the next screen. -->
+            <!--
+                 <Preference android:key="next_screen_checkbox_preference"
+                    android:title="@string/title_next_screen_toggle_preference"
+                    android:summary="@string/summary_next_screen_toggle_preference" 
+                    android:layout="@layout/acercade" android:selectable="false" />
+            -->
+
+
+            <!--
+            <CheckBoxPreference
+                    android:key="next_screen_checkbox_preference"
+                    android:title="@string/title_next_screen_toggle_preference"
+                    android:summary="@string/summary_next_screen_toggle_preference" 
+                    android:layout="@layout/acercade" android:selectable="false"
+                    
+                     />
+            -->
+
+        </PreferenceScreen>
+
+        <!--
+        <PreferenceScreen
+                android:title="@string/title_intent_preference"
+                android:summary="@string/summary_intent_preference">
+
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="http://www.android.com" />
+
+        </PreferenceScreen>
+        -->
+    </PreferenceCategory>
+
+    <!--
+    <PreferenceCategory
+            android:title="@string/preference_attributes">
+    
+        <CheckBoxPreference
+                android:key="parent_checkbox_preference"
+                android:title="@string/title_parent_preference"
+                android:summary="@string/summary_parent_preference" />
+    -->
+    <!-- The visual style of a child is defined by this styled theme attribute. -->
+    <!--
+        <CheckBoxPreference
+                android:key="child_checkbox_preference"
+                android:dependency="parent_checkbox_preference"
+                android:layout="?android:attr/preferenceLayoutChild"
+                android:title="@string/title_child_preference"
+                android:summary="@string/summary_child_preference" />
+            
+    </PreferenceCategory>
+    -->
+
+</PreferenceScreen>

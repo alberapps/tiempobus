@@ -106,7 +106,7 @@
     <string name="info_borrar">Favorite deleted</string>
     <string name="info_modificar">Favorite modified</string>
     <string name="pagina_play">TiempoBus in Google Play</string>
-    <string name="pagina_play_valora">Give us your opinion and, if you want, your +1</string>
+    <string name="pagina_play_valora">Give us your opinion</string>
     <string name="pagina_blog">TiempoBus Blog</string>
     <string name="pagina_blog_detalle">Information and News</string>
     <string name="preferencias_imagen">Wallpaper</string>
@@ -390,5 +390,26 @@
     <string name="origen_destino">Origin and Destination</string>
     <string name="preferencias_noticias_auto_alberapps">Check @AlberApps News</string>
     <string name="que_hay_cerca">What\'s nearby?</string>
+
+
+
+    <string name="select_folder">Select a folder</string>
+    <string name="select_file">Select file</string>
+    <string name="file_created">Created file</string>
+    <string name="file_create_error">Error while trying to create the file.</string>
+    <string name="content_updated">Successfully edited contents.</string>
+    <string name="content_update_failed">Error while editing contents.</string>
+    <string name="file_not_selected">No file selected, can not continue.</string>
+    <string name="download_progress">Download Progress:</string>
+    <string name="content_loaded">File contents successfully read.</string>
+    <string name="read_failed">Error while retrieving file.</string>
+
+    <string name="channel_default">Notifications (default)</string>
+    <string name="channel_low">Notifications (low)</string>
+
+    <string name="channel_settings">Configure Notifications</string>
+    <string name="channel_settings_desc">Notification channel configuration</string>
+
+
 
 </resources>

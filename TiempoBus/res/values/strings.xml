@@ -111,7 +111,7 @@
     <string name="info_borrar">Favorito borrado</string>
     <string name="info_modificar">Favorito modificado</string>
     <string name="pagina_play">TiempoBus en Google Play</string>
-    <string name="pagina_play_valora">Espero tu valoración y si quieres tu +1</string>
+    <string name="pagina_play_valora">Espero tu valoración</string>
     <string name="pagina_blog">Blog de TiempoBus</string>
     <string name="pagina_blog_detalle">Información y Novedades</string>
     <string name="preferencias_imagen">Fondo de pantalla</string>
@@ -286,25 +286,25 @@
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
-        
+
     <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
     <string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
     <string name="acercade_info_nuevo_2">Desarrollo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraducciones:\nmagnoling.com - twitter.com/Magnoling_</string>
     <string name="aviso_infoapp" translatable="false">InfoApp</string>
     <string name="infoapp_trad">Traducciones: magnoling.com</string>
-    
+
     <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) y TRAM(www.tramalicante.es, www.fgv.es)
 		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
-	
+
 	<string name="legal_b">
 		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
-	</string>	
-	
+	</string>
+
 	<string name="aviso_header_listado">
 		Las funciones de BUS y TRAM se pueden usar simultaneamente. En el buscador y en los mapas, selecciona la red que quieres consultar en ese momento. 
 	</string>
@@ -320,7 +320,7 @@
     <string name="preferencias_noticias_auto_alberapps">Comprobar Noticias \@AlberApps</string>
 
     <string name="probar">Probar TRAM</string>
-    
+
     <string name="info_tram_inicio">El TRAM llega a TiempoBus\n- Ya puedes acceder a la información y los tiempos de paso del TRAM.
     \n- Cambia entre TRAM y BUS en la selección que verás al pie del buscador y los mapas.
     \n- Tus favoritos funcionarán simultaneamente en ambos modos.
@@ -334,7 +334,7 @@
 
     <string name="error_gps" translatable="false">ERROR GPS</string>
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
-    
+
     <string name="legal_sin_tram">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM.
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
@@ -363,7 +363,7 @@
 
     <string name="exportar_drive">Exportar(Google Drive)</string>
     <string name="importar_drive">Importar(Google Drive)</string>
-    
+
     <string name="aviso_legal_analytics">    
     Aviso legal de Google Analytics 
     \nEsta aplicación utiliza Google Analytics, un servicio analítico de web prestado por Google, Inc., una compañía de Delaware cuya oficina principal esta en 1600 Amphitheatre Parkway, Mountain View (California), CA 94043, Estados Unidos (\"Google\").
@@ -415,7 +415,7 @@
     <string name="pref_control_actualizar_desc">Al iniciar la aplicación, verificar si hay actualizaciones de la base de datos</string>
 
     <string name="twitter_activar">Twitter Activo</string>
-    
+
     <string name="detalle_licencia">    
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante\n
    Copyright © 2012 Alberto Montiel\n\n
@@ -541,18 +541,22 @@
     <string name="info_tram_tr">Puedes seguir usando el servicio basado en horarios</string>
 
 
-    <string name="select_folder">Select a folder</string>
-    <string name="select_file">Select file</string>
-    <string name="file_created">Created file</string>
-    <string name="file_create_error">Error while trying to create the file.</string>
-    <string name="content_updated">Successfully edited contents.</string>
-    <string name="content_update_failed">Error while editing contents.</string>
-    <string name="file_not_selected">No file selected, can not continue.</string>
-    <string name="download_progress">Download Progress:</string>
-    <string name="content_loaded">File contents successfully read.</string>
-    <string name="read_failed">Error while retrieving file.</string>
+    <string name="select_folder">Selecciona una carpeta</string>
+    <string name="select_file">Selecciona un archivo</string>
+    <string name="file_created">Archivo creado</string>
+    <string name="file_create_error">Error al crear el archivo.</string>
+    <string name="content_updated">Contenidos editados correctamente.</string>
+    <string name="content_update_failed">Error al editar el contenido.</string>
+    <string name="file_not_selected">No has seleccionado un archivo, no se puede continuar.</string>
+    <string name="download_progress">Progreso de la descarga:</string>
+    <string name="content_loaded">Contenido del archivo leído correctamente.</string>
+    <string name="read_failed">Error al recuperar el archivo.</string>
 
-    <string name="channel_default">Avisos no urgentes</string>
+    <string name="channel_default">Avisos (default)</string>
+    <string name="channel_low">Avisos (low)</string>
+
+    <string name="channel_settings">Configurar Notificaciones</string>
+    <string name="channel_settings_desc">Configuración del canal de notificaciones</string>
 
 
 </resources>

@@ -81,6 +81,7 @@ public class Notificaciones {
     public static String CHANNEL_DEFAULT = "default";
     public static String CHANNEL_ALERTABUS = "alertaBus";
     public static String CHANNEL_NOTICIAS = "noticias";
+    public static String CHANNEL_LOW = "low";
 
     /**
      * Servicio
@@ -103,7 +104,24 @@ public class Notificaciones {
         //Default
         NotificationChannel channel = new NotificationChannel(CHANNEL_DEFAULT, context.getString(R.string.channel_default), NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription(context.getString(R.string.channel_default));
+
+
+        // Led
+        channel.enableLights(false);
+        channel.enableVibration(false);
+        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
         notificationManager.createNotificationChannel(channel);
+
+        //Low
+        NotificationChannel channelLow = new NotificationChannel(CHANNEL_LOW, context.getString(R.string.channel_low), NotificationManager.IMPORTANCE_LOW);
+        channelLow.setDescription(context.getString(R.string.channel_low));
+
+        channelLow.enableLights(false);
+        channelLow.enableVibration(false);
+        channelLow.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+        notificationManager.createNotificationChannel(channelLow);
 
 
         //Alertas Bus
@@ -124,6 +142,15 @@ public class Notificaciones {
 
         }
 
+        // Led
+        channelAvisoBus.enableLights(true);
+
+        // Usar o no la vibracion
+        if (preferencias.getBoolean("alarma_vibrar", true)) {
+            channelAvisoBus.enableVibration(true);
+        }
+
+        channelAvisoBus.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
         notificationManager.createNotificationChannel(channelAvisoBus);
 
@@ -146,9 +173,17 @@ public class Notificaciones {
 
         }
 
+        // Led
+        channelNoticias.enableLights(true);
+
+        // Usar o no la vibracion
+        if (preferencias.getBoolean("noticias_vibrar", true)) {
+            channelNoticias.enableVibration(true);
+        }
+
+        channelNoticias.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
         notificationManager.createNotificationChannel(channelNoticias);
-
 
     }
 
@@ -179,7 +214,7 @@ public class Notificaciones {
 
         if (accion.equals(NOTIFICACION_BD_INICIAL)) {
 
-            NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
+            NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_LOW);
 
 
             mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
@@ -634,7 +669,7 @@ public class Notificaciones {
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_DEFAULT);
+        NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_LOW);
 
         String texto = contexto.getString(R.string.foreground_service);
 

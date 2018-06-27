@@ -72,7 +72,7 @@ favorit per crear la teua llista.</string>
     <string name="conf_noticias_a">Comprovar si hi ha noves notícies en iniciar l\'aplicació</string>
     <string name="barcode_error">No s\'ha pogut recuperar el codi QR</string>
     <string name="alarma_modal">Alarma Activa</string>
-    <string name="alarma_activa_no">L\'Alarma no està activada.</string>
+    <string name="alarma_activa_no">L\'alarma no està activada.</string>
     <string name="alarma_establecida">Alarma establerta a les</string>
     <string name="alarma_establecida_linea">Línia</string>
     <string name="alarma_establecida_parada">Parada</string>
@@ -105,7 +105,7 @@ favorit per crear la teua llista.</string>
     <string name="info_borrar">Favorit esborrat</string>
     <string name="info_modificar">Favorit modificat</string>
     <string name="pagina_play">TempsBus al Google Play</string>
-    <string name="pagina_play_valora">Espere la teva valoració i si vols el teu +1</string>
+    <string name="pagina_play_valora">Espere la teva valoració</string>
     <string name="pagina_blog">Bloc de TempsBus</string>
     <string name="pagina_blog_detalle">Informació i Novetats</string>
     <string name="preferencias_imagen">Fons de pantalla</string>
@@ -473,5 +473,22 @@ favorit per crear la teua llista.</string>
     <string name="preferencias_noticias_auto_alberapps">Comprovar Notícies @AlberApps</string>
 
     <string name="info_tram_tr">Pots seguir utilitzant el servei basat en horaris</string>
+
+    <string name="select_folder">Selecciona una carpeta</string>
+    <string name="select_file">Selecciona un arxiu</string>
+    <string name="file_created">Arxiu creat</string>
+    <string name="file_create_error">S\'ha pogut crear el fitxer.</string>
+    <string name="content_updated">Continguts editats correctament.</string>
+    <string name="content_update_failed">No s\'ha pogut editar el contingut.</string>
+    <string name="file_not_selected">No has seleccionat un arxiu, no es pot continuar.</string>
+    <string name="download_progress">Progrés de la descàrrega:</string>
+    <string name="content_loaded">Contingut de l\'arxiu llegit correctament.</string>
+    <string name="read_failed">Error en recuperar l\'arxiu.</string>
+
+    <string name="channel_default">Avisos (default)</string>
+    <string name="channel_low">Avisos (low)</string>
+
+    <string name="channel_settings">Configura Notificacions</string>
+    <string name="channel_settings_desc">Configuració del canal de notificacions</string>
 
 </resources>

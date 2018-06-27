@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="alberapps.blogspot.com"
+                        android:text="@string/app_autor_web"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
                         android:textStyle="bold" />

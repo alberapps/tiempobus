@@ -107,17 +107,20 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
 
 
-
             //Formato colores
             DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea(), true);
 
 
             TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
+            //TextView informacionText1 = (TextView) v.findViewById(R.id.infoparada_horarios_1);
 
             if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+
+
+
                 // Carga de horarios bus
                 // Link informacion
-                /*informacionText.setOnClickListener(new OnClickListener() {
+                /*informacionText1.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View view) {
 
@@ -130,6 +133,8 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                     }
 
                 });*/
+
+
 
                 int id = Integer.parseInt(bus.getIdGrupo());
 
@@ -346,25 +351,34 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
-                List<BusLinea> lista = (List<BusLinea>) results.values;
+                try {
 
-                notifyDataSetChanged();
-                clear();
+                    List<BusLinea> lista = (List<BusLinea>) results.values;
 
-                for (int i = 0; i < lista.size(); i++) {
-                    add(lista.get(i));
+                    notifyDataSetChanged();
+                    clear();
+
+                    for (int i = 0; i < lista.size(); i++) {
+                        add(lista.get(i));
+                    }
+
+                    if (getCount() == 0) {
+                        BusLinea b1 = new BusLinea();
+                        b1.setFiltroSinDatos(true);
+                        add(b1);
+                    }
+
+                    notifyDataSetInvalidated();
+
+                    final TextView textoBuscar = (TextView) contexto.findViewById(R.id.texto_buscar);
+                    if(textoBuscar != null) {
+                        textoBuscar.requestFocus();
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
                 }
-
-                if (getCount() == 0) {
-                    BusLinea b1 = new BusLinea();
-                    b1.setFiltroSinDatos(true);
-                    add(b1);
-                }
-
-                notifyDataSetInvalidated();
-
-                final TextView textoBuscar = (TextView) contexto.findViewById(R.id.texto_buscar);
-                textoBuscar.requestFocus();
 
             }
 

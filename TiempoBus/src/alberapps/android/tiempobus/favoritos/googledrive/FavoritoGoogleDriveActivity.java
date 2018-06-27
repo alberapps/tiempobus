@@ -36,9 +36,6 @@ import com.google.android.gms.drive.OpenFileActivityOptions;
 import com.google.android.gms.drive.events.OpenFileCallback;
 import com.google.android.gms.tasks.Task;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -58,7 +55,7 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
 
     private static final String TAG = "FavoritoDriveActivity";
 
-    private static final int REQUEST_CODE_CREATE_FILE = 1;
+    private static final int REQUEST_CODE_CREATE_FILE = 115;
 
     public static final String MODO_EXPORTAR = "exportar";
     public static final String MODO_IMPORTAR = "importar";
@@ -239,46 +236,55 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
 
         // activarProgreso();
 
-        DriveFile file = id.asDriveFile();
+        try {
 
-        AtomicReference<Boolean> resultado = null;
+            DriveFile file = id.asDriveFile();
 
-        // [START open_for_write]
-        Task<DriveContents> openTask =
-                getDriveResourceClient().openFile(file, DriveFile.MODE_WRITE_ONLY);
-        // [END open_for_write]
-        // [START rewrite_contents]
-        openTask.continueWithTask(task -> {
-            DriveContents driveContents = task.getResult();
+            AtomicReference<Boolean> resultado = new AtomicReference<>();
 
+            // [START open_for_write]
+            Task<DriveContents> openTask =
+                    getDriveResourceClient().openFile(file, DriveFile.MODE_WRITE_ONLY);
+            // [END open_for_write]
+            // [START rewrite_contents]
+            openTask.continueWithTask(task -> {
+                DriveContents driveContents = task.getResult();
 
-            resultado.set(DatosDriveBackup.exportar(driveContents));
+                resultado.set(DatosDriveBackup.exportar(driveContents));
 
-            // [START commit_content]
-            Task<Void> commitTask =
-                    getDriveResourceClient().commitContents(driveContents, null);
-            // [END commit_content]
-            return commitTask;
-        })
-                .addOnSuccessListener(this,
-                        aVoid -> {
-                            if (resultado.get() != null && resultado.get()) {
-                                showMessage(getString(R.string.ok_exportar_drive));
-                            } else {
-                                showMessage(getString(R.string.error_exportar_drive));
-                            }
+                // [START commit_content]
+                Task<Void> commitTask =
+                        getDriveResourceClient().commitContents(driveContents, null);
+                // [END commit_content]
+                return commitTask;
+            })
+                    .addOnSuccessListener(this,
+                            aVoid -> {
+                                if (resultado.get() != null && resultado.get()) {
+                                    showMessage(getString(R.string.ok_exportar_drive));
+                                } else {
+                                    showMessage(getString(R.string.error_exportar_drive));
+                                }
 
-                            terminar(null);
+                                terminar(null);
 
-                        })
-                .addOnFailureListener(this, e -> {
-                    Log.e(TAG, "Unable to update contents", e);
-                    showMessage(getString(R.string.error_exportar_drive));
-                    terminar(null);
+                            })
+                    .addOnFailureListener(this, e -> {
+                        Log.e(TAG, "Unable to update contents", e);
+                        showMessage(getString(R.string.error_exportar_drive));
+                        //showMessage(e.getMessage());
+                        terminar(null);
 
-                });
-        // [END rewrite_contents]
+                    });
+            // [END rewrite_contents]
 
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            showMessage(getString(R.string.error_exportar_drive));
+            //showMessage(e.getMessage());
+
+        }
 
     }
 
@@ -306,7 +312,7 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
      */
     private void cargarDatos(DriveFile file) {
 
-        AtomicReference<Boolean> resultado = null;
+        AtomicReference<Boolean> resultado = new AtomicReference<>();
 
         // [START read_with_progress_listener]
         OpenFileCallback openCallback = new OpenFileCallback() {
@@ -314,7 +320,7 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
             public void onProgress(long bytesDownloaded, long bytesExpected) {
                 // Update progress dialog with the latest progress.
                 int progress = (int) (bytesDownloaded * 100 / bytesExpected);
-                Log.d(TAG, String.format("Loading progress: %d percent", progress));
+                //Log.d(TAG, String.format("Loading progress: %d percent", progress));
                 mProgressBar.setProgress(progress);
             }
 
@@ -327,33 +333,33 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
                 // Read contents
                 // [START_EXCLUDE]
                 try {
-                    try (BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(driveContents.getInputStream()))) {
+                    //try (BufferedReader reader = new BufferedReader(
+                    //      new InputStreamReader(driveContents.getInputStream()))) {
 
-                        resultado.set(DatosDriveBackup.recuperar(driveContents));
+                    resultado.set(DatosDriveBackup.recuperar(driveContents));
 
-                        getDriveResourceClient().discardContents(driveContents);
+                    getDriveResourceClient().discardContents(driveContents);
 
-                        // Limpiar archivos temporales y backup
-                        DatosDriveBackup.borrarArchivosBackup();
+                    // Limpiar archivos temporales y backup
+                    DatosDriveBackup.borrarArchivosBackup();
+
+                    //showMessage(getString(R.string.ok_importar_drive));
+
+
+                    if (resultado.get() != null && resultado.get()) {
 
                         showMessage(getString(R.string.ok_importar_drive));
 
-
-                        if (resultado.get() != null && resultado.get()) {
-
-                            showMessage(getString(R.string.ok_importar_drive));
-
-                        } else {
-                            // Error al recuperar datos
-                            showMessage(getString(R.string.error_importar_drive));
-
-                        }
-
-                        terminar(RESULT_OK);
+                    } else {
+                        // Error al recuperar datos
+                        showMessage(getString(R.string.error_importar_drive));
 
                     }
-                } catch (IOException e) {
+
+                    terminar(RESULT_OK);
+
+                    //}
+                } catch (Exception e) {
                     onError(e);
                 }
                 // [END_EXCLUDE]
@@ -365,6 +371,7 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
                 // [START_EXCLUDE]
                 Log.e(TAG, "Unable to read contents", e);
                 showMessage(getString(R.string.error_importar_drive));
+                //showMessage(e.getMessage());
                 terminar(null);
                 // [END_EXCLUDE]
             }
@@ -391,7 +398,7 @@ public class FavoritoGoogleDriveActivity extends BaseGoogleDriveActivity {
 
     protected void onDestroy() {
         super.onDestroy();
-        if(mExecutorService != null) {
+        if (mExecutorService != null) {
             mExecutorService.shutdown();
         }
     }

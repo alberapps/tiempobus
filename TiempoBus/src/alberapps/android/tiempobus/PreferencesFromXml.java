@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on the Copyright (C) 2011 The Android Open Source Project
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on the Copyright (C) 2011 The Android Open Source Project
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus;
 
@@ -30,6 +30,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.widget.Toast;
 
@@ -42,7 +43,7 @@ import alberapps.android.tiempobus.util.PreferencesUtil;
 /**
  * Pantalla de preferencias
  */
-public class PreferencesFromXml extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
+public class PreferencesFromXml extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,19 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
 
                 actualizarDB();
 
+            } else if (preference.getKey().equals("channel_settings_alarmas")) {
+
+                Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, Notificaciones.CHANNEL_ALERTABUS);
+                startActivity(intent);
+
+            } else if (preference.getKey().equals("channel_settings_noticias")) {
+
+                Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, Notificaciones.CHANNEL_NOTICIAS);
+                startActivity(intent);
             }
 
         }
