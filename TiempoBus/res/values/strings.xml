@@ -558,5 +558,7 @@
     <string name="channel_settings">Configurar Notificaciones</string>
     <string name="channel_settings_desc">Configuración del canal de notificaciones</string>
 
+    <string name="favorito_destacado_aviso">La lista se reordenará en el siguiente acceso</string>
+
 
 </resources>

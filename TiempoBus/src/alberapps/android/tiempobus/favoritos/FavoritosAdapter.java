@@ -1,19 +1,19 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.favoritos;
 
@@ -25,11 +25,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
+import alberapps.android.tiempobus.util.PreferencesUtil;
+import alberapps.java.util.Datos;
 
 /**
  * Adaptador Favoritos
@@ -37,6 +41,9 @@ import alberapps.android.tiempobus.data.Favorito;
 public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
     private Context contexto;
+
+    private List<Datos> listaDestacados;
+
 
     /**
      * Constructor
@@ -48,6 +55,8 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
         super(context, textViewResourceId);
 
         this.contexto = context;
+
+        listaDestacados = PreferencesUtil.recuperarLista(context, PreferencesUtil.LISTA_PARADAS_DESTACADAS);
 
     }
 
@@ -76,7 +85,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
         if (favorito != null) {
 
-            if(favorito.getNumParada().equals("0")){
+            if (favorito.getNumParada().equals("0")) {
 
                 tag.numParada.setText("HT");
 
@@ -97,7 +106,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 compartir.setVisibility(View.INVISIBLE);
 
-            }else {
+            } else {
 
                 tag.numParada.setText(favorito.getNumParada().trim());
 
@@ -110,7 +119,6 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
                 tag.descripcion.setText(favorito.getDescripcion().trim());
 
             }
-
 
 
         }
@@ -164,11 +172,50 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 if (favorito != null) {
                     actividad.launchBorrarFavorito(Integer.parseInt(favorito.getId()));
+                    PreferencesUtil.eliminarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
                 }
 
             }
 
         });
+
+
+        ImageView favoritoDestacar = v.findViewById(R.id.favorito_destacar);
+
+        Datos dato = new Datos();
+        dato.setParada(favorito.getNumParada());
+
+        if (listaDestacados.contains(dato)) {
+            favoritoDestacar.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_24dp));
+        } else {
+            favoritoDestacar.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_border_24dp));
+        }
+
+        favoritoDestacar.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+
+                ImageView favoritoDestacar2 = view.findViewById(R.id.favorito_destacar);
+
+                Datos dato = new Datos();
+                dato.setParada(favorito.getNumParada());
+
+                if (!listaDestacados.contains(dato)) {
+                    PreferencesUtil.guardarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
+                    favoritoDestacar2.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_24dp));
+                } else {
+                    PreferencesUtil.eliminarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
+                    favoritoDestacar2.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_border_24dp));
+                }
+
+                listaDestacados = PreferencesUtil.recuperarLista(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS);
+
+                Toast.makeText(contexto.getApplicationContext(), contexto.getString(R.string.favorito_destacado_aviso), Toast.LENGTH_LONG).show();
+
+            }
+
+        });
+
 
         return v;
     }
@@ -200,9 +247,33 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
             return;
         }
 
+        if (listaDestacados.size() > 0) {
+
+            Datos dato = null;
+            List<Favorito> favoritoDesc = new ArrayList<>();
+            List<Favorito> favoritoNo = new ArrayList<>();
+
+            for (int i = 0; i < favorito.size(); i++) {
+                dato = new Datos();
+                dato.setParada(favorito.get(i).getNumParada());
+                if (listaDestacados.contains(dato)) {
+                    favoritoDesc.add(favorito.get(i));
+                } else {
+                    favoritoNo.add(favorito.get(i));
+                }
+            }
+
+            favorito.clear();
+            favorito.addAll(favoritoDesc);
+            favorito.addAll(favoritoNo);
+
+        }
+
+
         for (int i = 0; i < favorito.size(); i++) {
             add(favorito.get(i));
         }
     }
+
 
 }
