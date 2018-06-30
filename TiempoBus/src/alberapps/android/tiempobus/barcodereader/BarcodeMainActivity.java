@@ -111,7 +111,7 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
 
                     Intent intent = new Intent();
-                    data.putExtra("RESULTADO_BARCODE", barcode.displayValue);
+                    intent.putExtra("RESULTADO_BARCODE", barcode.displayValue);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
 

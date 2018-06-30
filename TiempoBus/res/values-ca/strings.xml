@@ -466,9 +466,9 @@ favorit per crear la teua llista.</string>
     <string name="barcode_failure">Error en llegir el Codi QR</string>
     <string name="barcode_error_2">"Error en llegir el Codi QR: %1$s"</string>
 
-    <string name="barcode_opcion_1">Lector QR de TempsBus (Beta)</string>
-    <string name="barcode_opcion_2">Barcode Scanner de Zxing</string>
-    <string name="barcode_opcion_titulo">Selecciona lector</string>
+    <string name="barcode_opcion_1">Lector QR de TempsBus</string>
+    <string name="barcode_opcion_2">Barcode Scanner de Zxing (Extern)</string>
+    <string name="barcode_opcion_titulo">Selecciona Lector QR</string>
     <string name="nuevas_noticias_alberapps">\@AlberApps: Hi ha nous Avisos</string>
     <string name="preferencias_noticias_auto_alberapps">Comprovar Notícies @AlberApps</string>
 

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.3</string>
+    <string name="app_version" translatable="false">4.3.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2018)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -518,8 +518,8 @@
 
 
 
-    <string name="permission_camera_rationale">Se necesita acceso a la camara</string>
-    <string name="no_camera_permission">No se puede proceder ya que la app no dispone de permiso para acceder a la camara.</string>
+    <string name="permission_camera_rationale">Se necesita acceso a la cámara</string>
+    <string name="no_camera_permission">No se puede proceder ya que la app no dispone de permiso para acceder a la cámara.</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="title_activity_main">Lector de Códigos QR</string>
     <string name="barcode_header">Pulsa para iniciar la lectura</string>
@@ -530,9 +530,9 @@
     <string name="barcode_failure">Error al leer el Código QR</string>
     <string name="barcode_error_2">"Error al leer el Código QR: %1$s"</string>
 
-    <string name="barcode_opcion_1">Lector QR de TiempoBus (Beta)</string>
-    <string name="barcode_opcion_2">Barcode Scanner de Zxing</string>
-    <string name="barcode_opcion_titulo">Selecciona lector</string>
+    <string name="barcode_opcion_1">Lector QR de TiempoBus</string>
+    <string name="barcode_opcion_2">Barcode Scanner de Zxing (Externo)</string>
+    <string name="barcode_opcion_titulo">Selecciona Lector QR</string>
 
 
     <string name="avisos_push_tiempobus">Aviso de AlberApps</string>

@@ -410,6 +410,20 @@
     <string name="channel_settings">Configure Notifications</string>
     <string name="channel_settings_desc">Notification channel configuration</string>
 
+    <string name="permission_camera_rationale">You need access to the camera</string>
+    <string name="no_camera_permission">You can not proceed as the app does not have permission to access the camera.</string>
+    <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+    <string name="title_activity_main">QR Reader</string>
+    <string name="barcode_header">Press to start reading</string>
+    <string name="read_barcode">Read QR Code</string>
+    <string name="barcode_success">QR code read correctly</string>
+    <string name="barcode_failure">Error reading the QR Code</string>
+    <string name="barcode_error_2">"Error reading the QR Code: %1$s"</string>
+
+    <string name="barcode_opcion_1">TiempoBus QR reader</string>
+    <string name="barcode_opcion_2">Barcode Scanner de Zxing (External)</string>
+    <string name="barcode_opcion_titulo">Select QR reader</string>
+
 
 
 </resources>

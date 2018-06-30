@@ -29,9 +29,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import alberapps.android.tiempobus.BuildConfig;
@@ -49,6 +52,9 @@ public class ImageDetailActivity extends AppCompatActivity implements OnClickLis
     private ImagePagerAdapter mAdapter;
     private ImageFetcher mImageFetcher;
     private ViewPager mPager;
+
+    private ScaleGestureDetector scaleGestureDetector;
+    private float scaleFactor = 1.0f;
 
     @TargetApi(VERSION_CODES.HONEYCOMB)
     @Override
@@ -134,6 +140,9 @@ public class ImageDetailActivity extends AppCompatActivity implements OnClickLis
         if (extraCurrentItem != -1) {
             mPager.setCurrentItem(extraCurrentItem);
         }
+
+        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+
     }
 
     @Override
@@ -164,7 +173,7 @@ public class ImageDetailActivity extends AppCompatActivity implements OnClickLis
             case R.id.clear_cache:
                 mImageFetcher.clearCache();
                 Toast.makeText(
-                        this, R.string.clear_cache_complete_toast,Toast.LENGTH_SHORT).show();
+                        this, R.string.clear_cache_complete_toast, Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -219,6 +228,47 @@ public class ImageDetailActivity extends AppCompatActivity implements OnClickLis
             mPager.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         } else {
             mPager.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        scaleGestureDetector.onTouchEvent(event);
+
+        return true;
+
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+
+            try {
+
+                ImageView mImageView = findViewById(R.id.imageView);
+
+                if (mImageView != null) {
+
+                    scaleFactor *= scaleGestureDetector.getScaleFactor();
+
+                    scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 10.0f));
+
+                    mImageView.setScaleX(scaleFactor);
+                    mImageView.setScaleY(scaleFactor);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.error_no_definido, Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), R.string.error_no_definido, Toast.LENGTH_SHORT).show();
+            }
+
+            return true;
+
+
         }
     }
 }
