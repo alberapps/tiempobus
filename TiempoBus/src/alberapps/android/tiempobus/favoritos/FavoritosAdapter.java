@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -180,32 +181,32 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
         });
 
 
-        ImageView favoritoDestacar = v.findViewById(R.id.favorito_destacar);
+        AppCompatImageView favoritoDestacar = v.findViewById(R.id.favorito_destacar);
 
         Datos dato = new Datos();
         dato.setParada(favorito.getNumParada());
 
         if (listaDestacados.contains(dato)) {
-            favoritoDestacar.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_24dp));
+            favoritoDestacar.setImageResource(R.drawable.ic_favorite_24dp);
         } else {
-            favoritoDestacar.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_border_24dp));
+            favoritoDestacar.setImageResource(R.drawable.ic_favorite_border_24dp);
         }
 
         favoritoDestacar.setOnClickListener(new OnClickListener() {
 
             public void onClick(View view) {
 
-                ImageView favoritoDestacar2 = view.findViewById(R.id.favorito_destacar);
+                AppCompatImageView favoritoDestacar2 = view.findViewById(R.id.favorito_destacar);
 
                 Datos dato = new Datos();
                 dato.setParada(favorito.getNumParada());
 
                 if (!listaDestacados.contains(dato)) {
                     PreferencesUtil.guardarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
-                    favoritoDestacar2.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_24dp));
+                    favoritoDestacar2.setImageResource(R.drawable.ic_favorite_24dp);
                 } else {
                     PreferencesUtil.eliminarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
-                    favoritoDestacar2.setImageDrawable(contexto.getDrawable(R.drawable.ic_favorite_border_24dp));
+                    favoritoDestacar2.setImageResource(R.drawable.ic_favorite_border_24dp);
                 }
 
                 listaDestacados = PreferencesUtil.recuperarLista(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS);

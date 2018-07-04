@@ -493,4 +493,7 @@ favorit per crear la teua llista.</string>
 
     <string name="favorito_destacado_aviso">La llista es reordenarà en el següent accés</string>
 
+    <string name="obligatorio">No deixes el camp buit</string>
+    <string name="fav_existente">El favorito ya existe</string>
+
 </resources>

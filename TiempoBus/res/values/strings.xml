@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.3.1</string>
+    <string name="app_version" translatable="false">4.3.3</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2018)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -559,6 +559,9 @@
     <string name="channel_settings_desc">Configuración del canal de notificaciones</string>
 
     <string name="favorito_destacado_aviso">La lista se reordenará en el siguiente acceso</string>
+
+    <string name="obligatorio">No dejes el campo vacío</string>
+    <string name="fav_existente">El favorit ja existeix</string>
 
 
 </resources>

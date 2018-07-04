@@ -63,6 +63,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -681,7 +682,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
 
 
-
     }
 
     @Override
@@ -811,10 +811,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Progreso inicial
         /*
          * TextView vacio = (TextView) findViewById(R.id.tiempos_vacio);
-		 * vacio.setVisibility(View.INVISIBLE); ProgressBar lpb = (ProgressBar)
-		 * findViewById(R.id.tiempos_progreso); lpb.setIndeterminate(true);
-		 * tiemposView.setEmptyView(lpb);
-		 */
+         * vacio.setVisibility(View.INVISIBLE); ProgressBar lpb = (ProgressBar)
+         * findViewById(R.id.tiempos_progreso); lpb.setIndeterminate(true);
+         * tiemposView.setEmptyView(lpb);
+         */
         // Control de sin datos
         BusLlegada sinDatos = new BusLlegada();
         sinDatos.setSinDatos(true);
@@ -840,6 +840,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
             }
         });
+
+
+        tiemposView.setOnScrollListener(new ScrollListenerAux());
 
 
         // Asignamos el adapter a la lista
@@ -1430,19 +1433,30 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      * descripcion
      */
     private void nuevoFavorito() {
-        Intent i = new Intent(MainActivity.this, FavoritoNuevoActivity.class);
 
-        Bundle extras = new Bundle();
-        extras.putInt("POSTE", paradaActual); // Pasamos el poste actual
-        // Preparamos una descripcion automatica para el favorito
-        HashSet<String> h = new HashSet<>();
-        for (BusLlegada bus : buses) {
-            h.add(bus.getLinea() + " a " + bus.getDestino());
+        String cabdatos = datosPantallaPrincipal.cargarDescripcion(Integer.toString(paradaActual));
+
+        if (cabdatos.equals("")) {
+
+            Intent i = new Intent(MainActivity.this, FavoritoNuevoActivity.class);
+
+            Bundle extras = new Bundle();
+            extras.putInt("POSTE", paradaActual); // Pasamos el poste actual
+            // Preparamos una descripcion automatica para el favorito
+            HashSet<String> h = new HashSet<>();
+            for (BusLlegada bus : buses) {
+                h.add(bus.getLinea() + " a " + bus.getDestino());
+            }
+            extras.putString("DESCRIPCION", h.toString());
+
+            i.putExtras(extras);
+            startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
+
+        } else {
+
+            Toast.makeText(getApplicationContext(), getString(R.string.fav_existente), Toast.LENGTH_LONG).show();
+
         }
-        extras.putString("DESCRIPCION", h.toString());
-
-        i.putExtras(extras);
-        startActivityForResult(i, SUB_ACTIVITY_REQUEST_ADDFAV);
     }
 
     /**
@@ -1882,7 +1896,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         }
 
 
-
                         break;
 
 
@@ -2094,4 +2107,28 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         return super.onCreateView(name, context, attrs);
     }
+
+
+    public class ScrollListenerAux implements AbsListView.OnScrollListener {
+
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            if (SCROLL_STATE_TOUCH_SCROLL == i) {
+                View cFocus = getCurrentFocus();
+                if (cFocus != null) {
+                    cFocus.clearFocus();
+                }
+            }
+
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+        }
+    }
+
+
 }

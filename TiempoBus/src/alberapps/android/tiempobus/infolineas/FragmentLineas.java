@@ -36,6 +36,7 @@ import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -229,6 +230,9 @@ public class FragmentLineas extends Fragment {
 
             if (actividad.lineasView != null) {
                 actividad.lineasView.setOnItemClickListener(lineasClickedHandler);
+
+                actividad.lineasView.setOnScrollListener(new ScrollListenerAux());
+
 
                 TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_lineas_empty);
                 actividad.lineasView.setEmptyView(vacio);
@@ -944,6 +948,27 @@ public class FragmentLineas extends Fragment {
         datos.setCurrentPlacemark(datos.getPlacemarks().get(0));
 
         return datos;
+    }
+
+    public class ScrollListenerAux implements AbsListView.OnScrollListener {
+
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            if(SCROLL_STATE_TOUCH_SCROLL == i) {
+                View cFocus = actividad.getCurrentFocus();
+                if(cFocus != null) {
+                    cFocus.clearFocus();
+                }
+            }
+
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+        }
     }
 
 }

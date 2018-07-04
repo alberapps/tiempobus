@@ -32,6 +32,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.content.ContentResolverCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.Html;
@@ -873,28 +874,28 @@ public class GestionarTarjetaInfo {
                     String draw = weather.getListaDatos().get(0).getIcon();
 
                     if (draw.equals("01d") || draw.equals("01n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clear));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_clear, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("02d") || draw.equals("02n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_clouds));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_light_clouds, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("03d") || draw.equals("03n") || draw.equals("04d") || draw.equals("04n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_clouds));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_clouds, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("09d") || draw.equals("09n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_light_rain));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_light_rain, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("10d") || draw.equals("10n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_rain));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_rain, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("11d") || draw.equals("11n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_storm));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_storm, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("13d") || draw.equals("13n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_snow));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_snow, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else if (draw.equals("50d") || draw.equals("50n")) {
-                        iv.setImageDrawable(context.getResources().getDrawable(R.drawable.art_fog));
+                        iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.art_fog, null));
                         iv.setVisibility(ImageView.VISIBLE);
                     } else {
                         iv.setVisibility(ImageView.INVISIBLE);
@@ -991,7 +992,9 @@ public class GestionarTarjetaInfo {
 
                     Integer draw = Integer.parseInt(weather.getListaDatos().get(0).getIcon());
 
-                    iv.setImageDrawable(context.getResources().getDrawable(WeatherDataUtil.getConditionIconId(draw)));
+                    iv.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), WeatherDataUtil.getConditionIconId(draw), null));
+
+
                     iv.setVisibility(ImageView.VISIBLE);
 
                    /* else {
@@ -1100,82 +1103,82 @@ public class GestionarTarjetaInfo {
      */
     private void imgTiempo(EstadoCielo data, ImageView iv) {
 
-		/*
+        /*
          * 11: sol
-		 * 
-		 * 
-		 * 12: nube-sol 13: nube-sol+ 14: nube-sol++ 17: niebla
-		 * 
-		 * 
-		 * 15: nubes
-		 * 
-		 * 
-		 * 43: lluvia suave 44: lluvia suave+ 45: lluvia suave++ 46: lluvia
-		 * suave+++ 23: intervalos nubosos lluvia 25: muy nuboso lluvia 26:
-		 * nuboso lluvia+
-		 * 
-		 * 71: nieve 72: nieve+ 73: nieve++ 33: intervalos nubosos nieve 34:
-		 * intervalos nubosos nieve+ 35: nuboso con nieve 36: nuboso con nieve+
-		 * 
-		 * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
-		 * nuboso tormenta+ 64: nuboso tormenta++
-		 */
+         *
+         *
+         * 12: nube-sol 13: nube-sol+ 14: nube-sol++ 17: niebla
+         *
+         *
+         * 15: nubes
+         *
+         *
+         * 43: lluvia suave 44: lluvia suave+ 45: lluvia suave++ 46: lluvia
+         * suave+++ 23: intervalos nubosos lluvia 25: muy nuboso lluvia 26:
+         * nuboso lluvia+
+         *
+         * 71: nieve 72: nieve+ 73: nieve++ 33: intervalos nubosos nieve 34:
+         * intervalos nubosos nieve+ 35: nuboso con nieve 36: nuboso con nieve+
+         *
+         * 52: tormenta 53: tormenta+ 54: tormenta++ 62: nuboso tormenta 63:
+         * nuboso tormenta+ 64: nuboso tormenta++
+         */
         /*
          * if (data.getValor().substring(0, 2).equals("11")) {
-		 * iv.setImageResource(R.drawable.weather_sun_blue_48); } else if
-		 * (data.getValor().substring(0, 2).equals("15")) {
-		 * iv.setImageResource(R.drawable.weather_clouds_blue_48); } else if
-		 * (data.getValor().substring(0, 1).equals("1")) {
-		 * iv.setImageResource(R.drawable.weather_cloudy_blue_48); } else if
-		 * (data.getValor().substring(0, 1).equals("4") ||
-		 * data.getValor().substring(0, 1).equals("2")) {
-		 * iv.setImageResource(R.drawable.weather_rain_blue_48); } else if
-		 * (data.getValor().substring(0, 1).equals("7") ||
-		 * data.getValor().substring(0, 1).equals("3")) {
-		 * iv.setImageResource(R.drawable.weather_snow_blue_48); } else if
-		 * (data.getValor().substring(0, 1).equals("5") ||
-		 * data.getValor().substring(0, 1).equals("6")) {
-		 * iv.setImageResource(R.drawable.weather_thunder_blue_48); } else {
-		 * iv.setVisibility(ImageView.INVISIBLE); return; }
-		 */
+         * iv.setImageResource(R.drawable.weather_sun_blue_48); } else if
+         * (data.getValor().substring(0, 2).equals("15")) {
+         * iv.setImageResource(R.drawable.weather_clouds_blue_48); } else if
+         * (data.getValor().substring(0, 1).equals("1")) {
+         * iv.setImageResource(R.drawable.weather_cloudy_blue_48); } else if
+         * (data.getValor().substring(0, 1).equals("4") ||
+         * data.getValor().substring(0, 1).equals("2")) {
+         * iv.setImageResource(R.drawable.weather_rain_blue_48); } else if
+         * (data.getValor().substring(0, 1).equals("7") ||
+         * data.getValor().substring(0, 1).equals("3")) {
+         * iv.setImageResource(R.drawable.weather_snow_blue_48); } else if
+         * (data.getValor().substring(0, 1).equals("5") ||
+         * data.getValor().substring(0, 1).equals("6")) {
+         * iv.setImageResource(R.drawable.weather_thunder_blue_48); } else {
+         * iv.setVisibility(ImageView.INVISIBLE); return; }
+         */
         iv.setVisibility(ImageView.VISIBLE);
 
     }
 
-	/*
+    /*
      * private void imgTiempoYW(String condionCode, ImageView iv){
-	 * 
-	 * 
-	 * // http://developer.yahoo.com/weather/ switch (conditionCode) { case 19:
-	 * // dust or sand case 20: // foggy case 21: // haze case 22: // smoky
-	 * //niebla iv.setImageResource(R.drawable.weather_clouds_blue_48); break;
-	 * case 23: // blustery case 24: // windy return
-	 * R.drawable.ic_weather_windy; case 25: // cold case 26: // cloudy case 27:
-	 * // mostly cloudy (night) case 28: // mostly cloudy (day) return
-	 * R.drawable.ic_weather_cloudy; case 29: // partly cloudy (night) case 30:
-	 * // partly cloudy (day) case 44: // partly cloudy return
-	 * R.drawable.ic_weather_partly_cloudy; case 31: // clear (night) case 33:
-	 * // fair (night) case 34: // fair (day) return
-	 * R.drawable.ic_weather_clear; case 32: // sunny case 36: // hot return
-	 * R.drawable.ic_weather_sunny; case 0: // tornado case 1: // tropical storm
-	 * case 2: // hurricane case 3: // severe thunderstorms case 4: //
-	 * thunderstorms case 5: // mixed rain and snow case 6: // mixed rain and
-	 * sleet case 7: // mixed snow and sleet case 8: // freezing drizzle case 9:
-	 * // drizzle case 10: // freezing rain case 11: // showers case 12: //
-	 * showers case 17: // hail case 18: // sleet case 35: // mixed rain and
-	 * hail case 37: // isolated thunderstorms case 38: // scattered
-	 * thunderstorms case 39: // scattered thunderstorms case 40: // scattered
-	 * showers case 45: // thundershowers case 47: // isolated thundershowers
-	 * return R.drawable.ic_weather_raining; case 13: // snow flurries case 14:
-	 * // light snow showers case 15: // blowing snow case 16: // snow case 41:
-	 * // heavy snow case 42: // scattered snow showers case 43: // heavy snow
-	 * case 46: // snow showers return R.drawable.ic_weather_snow;
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+     *
+     *
+     * // http://developer.yahoo.com/weather/ switch (conditionCode) { case 19:
+     * // dust or sand case 20: // foggy case 21: // haze case 22: // smoky
+     * //niebla iv.setImageResource(R.drawable.weather_clouds_blue_48); break;
+     * case 23: // blustery case 24: // windy return
+     * R.drawable.ic_weather_windy; case 25: // cold case 26: // cloudy case 27:
+     * // mostly cloudy (night) case 28: // mostly cloudy (day) return
+     * R.drawable.ic_weather_cloudy; case 29: // partly cloudy (night) case 30:
+     * // partly cloudy (day) case 44: // partly cloudy return
+     * R.drawable.ic_weather_partly_cloudy; case 31: // clear (night) case 33:
+     * // fair (night) case 34: // fair (day) return
+     * R.drawable.ic_weather_clear; case 32: // sunny case 36: // hot return
+     * R.drawable.ic_weather_sunny; case 0: // tornado case 1: // tropical storm
+     * case 2: // hurricane case 3: // severe thunderstorms case 4: //
+     * thunderstorms case 5: // mixed rain and snow case 6: // mixed rain and
+     * sleet case 7: // mixed snow and sleet case 8: // freezing drizzle case 9:
+     * // drizzle case 10: // freezing rain case 11: // showers case 12: //
+     * showers case 17: // hail case 18: // sleet case 35: // mixed rain and
+     * hail case 37: // isolated thunderstorms case 38: // scattered
+     * thunderstorms case 39: // scattered thunderstorms case 40: // scattered
+     * showers case 45: // thundershowers case 47: // isolated thundershowers
+     * return R.drawable.ic_weather_raining; case 13: // snow flurries case 14:
+     * // light snow showers case 15: // blowing snow case 16: // snow case 41:
+     * // heavy snow case 42: // scattered snow showers case 43: // heavy snow
+     * case 46: // snow showers return R.drawable.ic_weather_snow;
+     *
+     *
+     *
+     *
+     * }
+     */
 
     /**
      * Control de estado de actualizaciones

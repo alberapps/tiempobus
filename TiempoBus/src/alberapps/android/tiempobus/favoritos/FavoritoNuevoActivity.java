@@ -172,16 +172,16 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
 
 
-		/*
+        /*
          * Asignamos el comprotamiento de los botones
-		 */
+         */
         Button guiGo = (Button) findViewById(R.id.boton_go);
         guiGo.setOnClickListener(guiGoOnClickListener);
 
 
-		/*
+        /*
          * Asignamos el comprotamiento de los botones
-		 */
+         */
         // Button guiCancel = (Button) findViewById(R.id.boton_cancel);
         // guiCancel.setOnClickListener(guiCancelListener);
 
@@ -192,26 +192,33 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
      */
     OnClickListener guiGoOnClickListener = new OnClickListener() {
         public void onClick(View v) {
-            ContentValues values = new ContentValues();
 
-            values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
+            if (!guiTitulo.getText().toString().equals("")) {
 
-            //Para horarios tram
-            String desc = "";
-            if (datosHorario != null && !datosHorario.equals("")) {
-                desc = guiDescripcion.getText().toString() + "::" + datosHorario;
+                ContentValues values = new ContentValues();
+
+                values.put(TiempoBusDb.Favoritos.TITULO, guiTitulo.getText().toString());
+
+                //Para horarios tram
+                String desc = "";
+                if (datosHorario != null && !datosHorario.equals("")) {
+                    desc = guiDescripcion.getText().toString() + "::" + datosHorario;
+                } else {
+                    desc = guiDescripcion.getText().toString();
+                }
+
+                values.put(TiempoBusDb.Favoritos.DESCRIPCION, desc);
+                values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(numParada));
+
+                getContentResolver().insert(TiempoBusDb.Favoritos.CONTENT_URI, values);
+
+                Intent intent = new Intent();
+                setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
+                finish();
+
             } else {
-                desc = guiDescripcion.getText().toString();
+                Toast.makeText(FavoritoNuevoActivity.this, R.string.obligatorio, Toast.LENGTH_SHORT).show();
             }
-
-            values.put(TiempoBusDb.Favoritos.DESCRIPCION, desc);
-            values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(numParada));
-
-            getContentResolver().insert(TiempoBusDb.Favoritos.CONTENT_URI, values);
-
-            Intent intent = new Intent();
-            setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
-            finish();
         }
     };
 

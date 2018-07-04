@@ -424,6 +424,9 @@
     <string name="barcode_opcion_2">Barcode Scanner de Zxing (External)</string>
     <string name="barcode_opcion_titulo">Select QR reader</string>
 
+    <string name="obligatorio">Required field</string>
+    <string name="fav_existente">The favorite already exists</string>
+
 
 
 </resources>

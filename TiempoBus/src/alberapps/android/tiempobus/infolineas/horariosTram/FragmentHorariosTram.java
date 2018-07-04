@@ -39,6 +39,7 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -133,6 +134,8 @@ public class FragmentHorariosTram extends Fragment {
             ListView lineasVi = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
             TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
             lineasVi.setEmptyView(vacio);
+
+            lineasVi.setOnScrollListener(new ScrollListenerAux());
 
             actividad.datosHorariosTram = new HorarioTram();
             actividad.datosHorariosTram.setDatosTransbordos(new ArrayList<DatoTransbordo>());
@@ -835,5 +838,25 @@ public class FragmentHorariosTram extends Fragment {
 
     }
 
+    public class ScrollListenerAux implements AbsListView.OnScrollListener {
+
+
+        @Override
+        public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            if(SCROLL_STATE_TOUCH_SCROLL == i) {
+                View cFocus = actividad.getCurrentFocus();
+                if(cFocus != null) {
+                    cFocus.clearFocus();
+                }
+            }
+
+        }
+
+        @Override
+        public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+        }
+    }
 
 }
