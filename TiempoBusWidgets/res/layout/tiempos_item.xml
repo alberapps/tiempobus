@@ -45,7 +45,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/circulo_azul"
+                android:background="@drawable/cuadrado_azul"
                 android:gravity="center"
                 android:text="@string/guion"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -100,7 +100,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary_dark_material_light"
                 android:textStyle="bold"
-                android:drawableLeft="@drawable/ic_directions_grey600_18dp"
+                android:drawableLeft="@drawable/ic_arrow_forward_grey600_18dp"
 
                 />
 

@@ -17,6 +17,8 @@
  */
 package alberapps.java.tram;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,7 +27,6 @@ import java.util.List;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tram.webservice.GetPasoParadaResult;
 import alberapps.java.tram.webservice.GetPasoParadaXmlWebservice;
-import android.util.Log;
 
 /**
  * Consulta de tiempos TRAM
@@ -89,7 +90,7 @@ public class ProcesarTiemposTramIsaeService {
 	 */
 	public static ArrayList<BusLlegada> getParadaConLineaTRAM(String linea, String parada, int consulta) throws Exception {
 
-		ArrayList<BusLlegada> buses = new ArrayList<BusLlegada>();
+		ArrayList<BusLlegada> buses = new ArrayList<>();
 
 		GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
 
@@ -146,7 +147,7 @@ public class ProcesarTiemposTramIsaeService {
 	 * Recupera tiempos para una parada y linea indicadas
 	 * 
 	 * @param linea
-	 * @param poste
+	 * @param parada
 	 * @return
 	 * @throws Exception
 	 */
@@ -157,7 +158,7 @@ public class ProcesarTiemposTramIsaeService {
 
 		BusLlegada buses = null;
 
-		ArrayList<BusLlegada> busesList = new ArrayList<BusLlegada>();
+		ArrayList<BusLlegada> busesList = new ArrayList<>();
 
 		try {
 

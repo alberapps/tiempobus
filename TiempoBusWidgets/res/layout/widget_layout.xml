@@ -132,7 +132,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="15dp"
-                android:text="0:00"
+                android:text="@string/empty_view_text"
                 android:textColor="@color/mi_material_blue_principal"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"

@@ -195,7 +195,7 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		String[] procesa = this.proximo.split(";");
 
-		StringBuffer proximoNuevo = new StringBuffer();
+		StringBuilder proximoNuevo = new StringBuilder(150);
 
 		if (proximoMinutosNuevo.equals(0)) {
 			proximoNuevo.append("enlaparada");
@@ -241,7 +241,7 @@ public class BusLlegada implements Comparable<BusLlegada> {
 
 		String[] procesa = this.proximo.split(";");
 
-		StringBuffer siguienteNuevo = new StringBuffer();
+		StringBuilder siguienteNuevo = new StringBuilder(150);
 
 		siguienteNuevo.append(procesa[0]);
 		siguienteNuevo.append(";");

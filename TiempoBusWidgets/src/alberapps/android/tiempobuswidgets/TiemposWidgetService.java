@@ -172,9 +172,9 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+                busLinea.setBackground(contexto.getResources().getDrawable(R.drawable.cuadrado_azul));
             } else {
-                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.circulo_azul));
+                busLinea.setBackgroundDrawable(contexto.getResources().getDrawable(R.drawable.cuadrado_azul));
             }
         }
 

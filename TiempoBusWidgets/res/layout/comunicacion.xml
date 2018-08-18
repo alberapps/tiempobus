@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="@string/alta_1"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            />
 
         <TextView
             android:id="@+id/textView2"
@@ -24,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:text="@string/alta_2"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"/>
 
     </LinearLayout>
 
@@ -32,12 +35,16 @@
         android:id="@+id/aceptar_eliminar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F8F8F8"
-        android:gravity="center"
+        android:background="@android:color/transparent"
+        android:gravity="right"
         android:padding="12dp"
         android:text="@android:string/ok"
-        android:textAllCaps="true"
-        android:textColor="#232323"
-        android:textSize="14sp" />
+        android:textColor="@color/mi_material_blue_principal"
+
+        />
+
+
+
+
 
 </LinearLayout>

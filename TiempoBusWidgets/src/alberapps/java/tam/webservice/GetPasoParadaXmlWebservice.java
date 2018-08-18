@@ -121,7 +121,7 @@ public class GetPasoParadaXmlWebservice {
     public GetPasoParadaResult parse(InputStream is) {
         // Instanciamos la fábrica para DOM
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        List<PasoParada> pasoParadaList = new ArrayList<PasoParada>();
+        List<PasoParada> pasoParadaList = new ArrayList<>();
 
         GetPasoParadaResult resultados = new GetPasoParadaResult();
 
@@ -199,8 +199,8 @@ public class GetPasoParadaXmlWebservice {
      */
     private String datosPost(String linea, String parada) {
 
-        StringBuffer sr = new StringBuffer("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-
+        StringBuilder sr = new StringBuilder(150);
+        sr.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
         sr.append("<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">");
         sr.append("<soap:Body> <GetPasoParada xmlns=\"http://tempuri.org/\">");
 

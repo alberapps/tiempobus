@@ -41,7 +41,7 @@ public class GestionarDatos {
 
 		String[] listaS = lista.split(";");
 
-		List<Datos> datosNuevo = new ArrayList<Datos>();
+		List<Datos> datosNuevo = new ArrayList<>();
 		Datos dato = null;
 
 		for (int i = 0; i < listaS.length; i++) {
@@ -72,7 +72,7 @@ public class GestionarDatos {
 	 */
 	public static String getStringDeLista(List<Datos> lista) {
 
-		StringBuffer datos = new StringBuffer();
+		StringBuilder datos = new StringBuilder(300);
 
 		for (int i = 0; i < lista.size(); i++) {
 

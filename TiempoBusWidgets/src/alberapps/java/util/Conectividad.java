@@ -25,21 +25,10 @@ import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,13 +55,6 @@ public class Conectividad {
      * @return
      */
     public static String conexionPostUtf8(String urlPost, String post, Boolean cacheTiempos) throws Exception {
-
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionPostUtf8Froyo(urlPost, post);
-
-        }
 
 
         // Abrir Conexion
@@ -174,13 +156,6 @@ public class Conectividad {
      */
     public static String conexionPostUtf8NoKeepAlive(String urlPost, String post, Boolean cacheTiempos) throws Exception {
 
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionPostUtf8Froyo(urlPost, post);
-
-        }
-
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -266,12 +241,6 @@ public class Conectividad {
      */
     public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
 
-        // Para Froyo
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-
-            return conexionGetIsoFroyo(urlGet, userAgent);
-
-        }
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -346,6 +315,8 @@ public class Conectividad {
             }
 
         }
+
+        //Log.d("CONEXION", datos);
 
         return datos;
 
@@ -460,116 +431,6 @@ public class Conectividad {
 
     }
 
-    /**
-     * Conexion con Apache para Froyo
-     *
-     * @param url
-     * @return
-     */
-
-    public static String conexionGetIsoFroyo(String url, String userAgent) throws Exception {
-
-        HttpGet request = new HttpGet(url);
-
-        try {
-
-            // Timeout para establecer conexion
-            int timeout = Comunes.READ_TIMEOUT;
-            HttpParams httpParam = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
-
-            // Timeout para recibir datos
-            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
-            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-
-            if (userAgent == null) {
-                request.setHeader("User-Agent", USER_AGENT);
-            } else {
-                request.setHeader("User-Agent", userAgent);
-            }
-
-            DefaultHttpClient client = new DefaultHttpClient(httpParam);
-
-            HttpResponse response = client.execute(request);
-
-            final int statusCode = response.getStatusLine().getStatusCode();
-
-            if (statusCode != HttpStatus.SC_OK) {
-
-                return null;
-            }
-
-            HttpEntity responseEntity = response.getEntity();
-
-            return EntityUtils.toString(responseEntity, HTTP.ISO_8859_1);
-
-        } catch (IOException e) {
-            request.abort();
-
-            throw new Exception("Error al acceder al servicio");
-        }
-
-        //return null;
-
-    }
-
-
-    /**
-     * Conexion con Apache para Froyo
-     *
-     * @param url
-     * @return
-     */
-
-    public static String conexionPostUtf8Froyo(String url, String post) throws Exception {
-
-        HttpPost request = new HttpPost(url);
-
-        try {
-
-            // Timeout para establecer conexion
-            int timeout = Comunes.READ_TIMEOUT;
-            HttpParams httpParam = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParam, timeout);
-
-            // Timeout para recibir datos
-            int timeoutSocket = Comunes.CONNECT_TIMEOUT;
-            HttpConnectionParams.setSoTimeout(httpParam, timeoutSocket);
-
-            request.setHeader("User-Agent", USER_AGENT);
-
-            DefaultHttpClient client = new DefaultHttpClient(httpParam);
-
-            // Datos
-            StringEntity ent = new StringEntity(post, HTTP.UTF_8);
-            ent.setContentType("text/xml; charset=utf-8");
-
-            request.setEntity(ent);
-
-            HttpResponse response = client.execute(request);
-
-            final int statusCode = response.getStatusLine().getStatusCode();
-
-            if (statusCode != HttpStatus.SC_OK) {
-
-                return null;
-            }
-
-            HttpEntity responseEntity = response.getEntity();
-
-            return EntityUtils.toString(responseEntity, HTTP.UTF_8);
-
-        } catch (IOException e) {
-            request.abort();
-
-            throw new Exception("Error al acceder al servicio");
-
-        }
-
-        //return null;
-
-    }
-
 
     /**
      * Activar el uso de cache si la plataforma lo permite
@@ -601,7 +462,7 @@ public class Conectividad {
 
                     SharedPreferences.Editor editor = preferencias.edit();
                     editor.putBoolean("cache_eliminada", false);
-                    editor.commit();
+                    editor.apply();
 
                 } catch (IOException e) {
                     Log.i("Conectividad", "HTTP response cache installation failed:" + e);
@@ -620,7 +481,7 @@ public class Conectividad {
 
                         SharedPreferences.Editor editor = preferencias.edit();
                         editor.putBoolean("cache_eliminada", true);
-                        editor.commit();
+                        editor.apply();
 
                         Log.i("Conectividad", "Cache eliminada");
 
@@ -655,5 +516,111 @@ public class Conectividad {
         }
 
     }
+
+
+
+
+    public static InputStream conexionGetStream(String urlGet, String userAgent) throws Exception {
+
+
+        // Abrir Conexion
+        HttpURLConnection urlConnection = null;
+
+        BufferedInputStream in = null;
+
+        InputStream in2 = null;
+
+        try {
+
+            // Crear url
+            URL url = new URL(urlGet);
+
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT + 20000);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            if (userAgent == null) {
+                urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+            } else {
+                urlConnection.setRequestProperty("User-Agent", userAgent);
+            }
+
+            /*if (!usarCache) {
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                Log.d("CONEXION", "Sin cache");
+            } else {
+                Log.d("CONEXION", "Con cache");
+            }*/
+
+            in = new BufferedInputStream(urlConnection.getInputStream());
+
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int count;
+
+                while ((count = in.read(buffer)) != -1) {
+                    baos.write(buffer, 0, count);
+                }
+
+
+            byte[] bytes = baos.toByteArray();
+            // do something with 'filename' and 'bytes'...
+
+            in2 = new ByteArrayInputStream(bytes);
+
+
+            //String datos = Utilidades.obtenerStringDeStreamUTF8(in);
+
+            //in2 = new BufferedInputStream(Utilidades.stringToStream(datos));
+
+            //in = urlConnection.getInputStream();
+
+
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
+
+            throw new Exception("Error al acceder al servicio");
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
+            }
+
+        }
+
+        return in2;
+
+    }
+
+
+
+
 
 }

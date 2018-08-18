@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TiempoBus Widgets</string>
+    <string name="empty_view_text">No information</string>
+    <string name="tiempo_m_1">At stop</string>
+    <string name="tiempo_m_2">No data</string>
+    <string name="tiempo_m_3">and</string>
+    <string name="aviso_recarga">Reloading data&#8230;</string>
+    <string name="error_red">Internet access is not available. Please verify your connection</string>
+    <string name="error_tiempos">Failed to retrieve data.\\nTry again in a few minutes.</string>
+    <string name="literal_min">min</string>
+</resources>

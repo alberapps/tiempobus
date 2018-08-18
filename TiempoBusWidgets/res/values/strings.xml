@@ -20,21 +20,21 @@
     
     <string name="app_name">TiempoBus Widgets</string>
     
-    <string name="app_name_title">TiempoBus y Tram</string>
+    <string name="app_name_title">TiempoBus Widget</string>
     
     <string name="configura">Configurar</string>
     
-    <string name="alta_1">El bus/tram de la parada actual ha sido añadido a TiempoBus Widgets.</string>
+    <string name="alta_1">El bus de la parada actual ha sido añadido a TiempoBus Widgets.</string>
     
-    <string name="alta_2">Seleccione "Actualizar" en el widget para visualizar los nuevos datos.</string>
+    <string name="alta_2">Seleccione \"Actualizar\" en el widget para visualizar los nuevos datos.</string>
     
     <string name="tiempo_m_1">En la Parada</string>
     <string name="tiempo_m_2">Sin Estimación</string>
     <string name="tiempo_m_3">y</string>
     
-    <string name="eliminar_ok">Se ha eliminado el bus/tram del widget</string>
+    <string name="eliminar_ok">Se ha eliminado el bus del widget</string>
     
-    <string name="eliminar_pregunta">¿Quieres eliminar el bus/tram del widget?</string>
+    <string name="eliminar_pregunta">¿Quieres eliminar el bus del widget?</string>
     
     <string name="texto_tiempo">Actualizado: </string>
     
@@ -50,9 +50,9 @@
     
     <string name="texto_nuevo">No hay paradas</string>
     
-    <string name="guion">-</string>
+    <string name="guion" translatable="false">-</string>
     
-    <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \'Actualizar\'. En caso contrario accede a TiempoBus y selecciónalas en la lista de tiempos, con la opción de enviar al Widget. Recuerda que necesitas tener instalada la app TiempoBus.</string>
+    <string name="aviso_sin_datos">Si ya tienes paradas cargadas, pulsa \"Actualizar\". \nEn caso contrario accede a TiempoBus y selecciónalas en la lista de tiempos, con la opción de enviar al Widget. \n\nRecuerda que necesitas tener instalada la app TiempoBus y Tram.</string>
     
     <string name="literal_min">min</string>
     
@@ -69,6 +69,6 @@
     <string name="preferencias_actualizar_des">Actualizar datos</string>
     <string name="preferencias_actualizar_des_sum">Actualizar los tiempos al desbloquear el dispositivo</string>
     <string name="hora">Hora</string>
-    <string name="info_url" translatable="false">alberapps.blogspot.com</string>
+    <string name="info_url" translatable="false">blog.alberapps.com</string>
 
 </resources>

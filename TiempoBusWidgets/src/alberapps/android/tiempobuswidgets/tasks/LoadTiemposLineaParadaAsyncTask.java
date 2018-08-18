@@ -73,7 +73,7 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 
 			BusLlegada llegadaBus = null;
 
-			llegadasBus = new ArrayList<BusLlegada>();
+			llegadasBus = new ArrayList<>();
 
 			for (int i = 0; i < lineasParadaList.size(); i++) {
 

@@ -19,14 +19,14 @@
  */
 package alberapps.android.tiempobuswidgets;
 
-import java.util.ArrayList;
-
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
+
+import java.util.ArrayList;
 
 /**
  * Informacion del registro
@@ -65,7 +65,7 @@ public class TiemposDataProvider extends ContentProvider {
 	 * persist if the process is ever killed. For simplicity, in this sample the
 	 * data will only be stored in memory.
 	 */
-	private static final ArrayList<TiemposDataPoint> sData = new ArrayList<TiemposDataPoint>();
+	private static final ArrayList<TiemposDataPoint> sData = new ArrayList<>();
 
 	@Override
 	public boolean onCreate() {

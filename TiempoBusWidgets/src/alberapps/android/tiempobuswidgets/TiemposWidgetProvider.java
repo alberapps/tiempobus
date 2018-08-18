@@ -19,16 +19,6 @@
  */
 package alberapps.android.tiempobuswidgets;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask;
-import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
-import alberapps.java.datos.Datos;
-import alberapps.java.datos.GestionarDatos;
-import alberapps.java.tam.BusLlegada;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -48,7 +38,18 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask;
+import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
+import alberapps.java.datos.Datos;
+import alberapps.java.datos.GestionarDatos;
+import alberapps.java.tam.BusLlegada;
 
 /**
  * Our data observer just notifies an update for all widgets when it detects a
@@ -186,7 +187,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 		preferencias = context.getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
-		listaTiempos = new ArrayList<BusLlegada>();
+		listaTiempos = new ArrayList<>();
 
 		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
@@ -347,8 +348,8 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		final Calendar c = Calendar.getInstance();
 
 		if (estado.equals("ok")) {
-			SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-			String updated = df.format(c.getTime()).toString();
+			SimpleDateFormat df = new SimpleDateFormat("HH:mm", Locale.US);
+			String updated = df.format(c.getTime());
 			rv.setTextViewText(R.id.hora_act, updated);
 		} else if (estado.equals("carga")) {
 			rv.setTextViewText(R.id.hora_act, context.getString(R.string.texto_carga));
