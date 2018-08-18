@@ -25,7 +25,7 @@
   android:resizeMode="vertical|horizontal"
   android:minResizeWidth="280dp"
   android:minResizeHeight="95dp"
-  android:previewImage="@drawable/previsualizar3"
+  android:previewImage="@drawable/previsualizar4"
   android:updatePeriodMillis="1800000"
   android:widgetCategory="home_screen">
 </appwidget-provider>
