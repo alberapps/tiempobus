@@ -563,5 +563,7 @@
     <string name="obligatorio">No dejes el campo vacío</string>
     <string name="fav_existente">El favorit ja existeix</string>
 
+    <string name="pdf_text" translatable="false">PDF</string>
+
 
 </resources>

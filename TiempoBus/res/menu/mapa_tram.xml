@@ -25,39 +25,20 @@
         android:id="@id/menu_cercanas_img"
         android:icon="@drawable/ic_place_white_24dp"
         android:orderInCategory="0"
-        tiempobus:showAsAction="ifRoom"
-        android:title="@string/cercanas"></item>
+        android:title="@string/cercanas"
+        tiempobus:showAsAction="ifRoom" />
     <item
         android:id="@id/menu_satelite"
         android:icon="@drawable/ic_satellite_white_24dp"
 
         android:orderInCategory="1"
-        tiempobus:showAsAction="ifRoom"
-        android:title="@string/menu_search"></item>
+        android:title="@string/satelite"
+        tiempobus:showAsAction="ifRoom" />
     <item
         android:id="@id/menu_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:orderInCategory="3"
-        tiempobus:showAsAction="ifRoom"
-        android:title="@string/menu_search"></item>
-
-
-    <!--
-
-    <item
-        android:id="@id/menu_search_online"
-        android:orderInCategory="5"
-        tiempobus:showAsAction="never"
-        android:title="@string/mapa_lineas"></item>
-    <item
-        android:id="@id/menu_cercanas"
-        android:orderInCategory="4"
-        tiempobus:showAsAction="never"
-        android:title="@string/cercanas"></item>
-
-        -->
-
-    <!-- <item android:id="@id/menu_posicion" android:orderInCategory="1" android:title="@string/mapa_ida" android:showAsAction="always" android:icon="@drawable/device_access_location_found"></item>-->
-
+        android:title="@string/menu_search"
+        tiempobus:showAsAction="always" />
 
 </menu>

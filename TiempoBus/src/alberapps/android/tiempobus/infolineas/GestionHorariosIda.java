@@ -221,7 +221,7 @@ public class GestionHorariosIda {
         datosHorario2.setAutoLinkMask(Linkify.ALL);
         datosHorario2.setLinksClickable(true);
         if (context.datosHorarios.getHorariosIda() != null && !context.datosHorarios.getHorariosIda().isEmpty()) {
-            datosHorario2.setText(ProcesarHorarios.URL_SUBUS + context.datosHorarios.getHorariosIda().get(0).getLinkHorario());
+            datosHorario2.setText(context.datosHorarios.getHorariosIda().get(0).getLinkHorario());
         }
 
         idaView.setAdapter(infoLineaHorariosAdapter);

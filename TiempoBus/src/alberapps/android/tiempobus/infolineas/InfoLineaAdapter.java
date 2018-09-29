@@ -112,7 +112,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
 
             TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
-            //TextView informacionText1 = (TextView) v.findViewById(R.id.infoparada_horarios_1);
+            TextView informacionText1 = (TextView) v.findViewById(R.id.infoparada_horarios_1);
 
             if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 
@@ -120,7 +120,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 // Carga de horarios bus
                 // Link informacion
-                /*informacionText1.setOnClickListener(new OnClickListener() {
+                informacionText1.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View view) {
 
@@ -132,7 +132,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                     }
 
-                });*/
+                });
 
 
 
@@ -149,7 +149,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
                 //informacionText.setVisibility(View.INVISIBLE);
 
-                informacionText.setText(R.string.infolinea_horarios_pdf);
+                //informacionText.setText(R.string.pdf_text);
 
                 // Carga de horarios tram
                 // Link informacion
@@ -166,15 +166,15 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
             } else {
 
-                //informacionText.setVisibility(View.VISIBLE);
+                informacionText.setVisibility(View.INVISIBLE);
 
                 datosLinea.setText(bus.getGrupo());
 
-                informacionText.setText(R.string.infolinea_horarios_pdf);
+                informacionText1.setText(R.string.infolinea_horarios_pdf);
 
                 // Carga de horarios tram
                 // Link informacion
-                informacionText.setOnClickListener(new OnClickListener() {
+                informacionText1.setOnClickListener(new OnClickListener() {
 
                     public void onClick(View view) {
 

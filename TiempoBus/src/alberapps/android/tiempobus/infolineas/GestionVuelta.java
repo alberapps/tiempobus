@@ -102,8 +102,10 @@ public class GestionVuelta {
 
             ListView idaView = (ListView) context.findViewById(R.id.infolinea_lista_vuelta);
 
-            TextView vacio = (TextView) context.findViewById(R.id.infolinea_vuelta_empty);
-            idaView.setEmptyView(vacio);
+            if(idaView != null) {
+                TextView vacio = (TextView) context.findViewById(R.id.infolinea_vuelta_empty);
+                idaView.setEmptyView(vacio);
+            }
         }
 
     }

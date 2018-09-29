@@ -320,34 +320,37 @@ public class Notificaciones {
 
         mBuilder.setAutoCancel(true);
 
-        // Led
-        int defaults = Notification.DEFAULT_LIGHTS;
 
-        // Sonido seleccionado
-        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
-
-        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
-            // Sonido por defecto
-            defaults = defaults | Notification.DEFAULT_SOUND;
-
-        } else {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Led
+            int defaults = Notification.DEFAULT_LIGHTS;
 
             // Sonido seleccionado
-            mBuilder.setSound(Uri.parse(strRingtonePreference));
+            String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
+            if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+                // Sonido por defecto
+                defaults = defaults | Notification.DEFAULT_SOUND;
+
+            } else {
+
+                // Sonido seleccionado
+                mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+            }
+
+            // Usar o no la vibracion
+            boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+
+            if (controlVibrar) {
+                // Vibrate por defecto
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+            }
+
+            // Opciones por defecto seleccionadas
+            mBuilder.setDefaults(defaults);
         }
-
-        // Usar o no la vibracion
-        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
-
-        if (controlVibrar) {
-            // Vibrate por defecto
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-
-        }
-
-        // Opciones por defecto seleccionadas
-        mBuilder.setDefaults(defaults);
 
         // ticker
         CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
@@ -410,34 +413,36 @@ public class Notificaciones {
 
         mBuilder.setAutoCancel(true);
 
-        // Led
-        int defaults = Notification.DEFAULT_LIGHTS;
-
-        // Sonido seleccionado
-        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
-
-        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
-            // Sonido por defecto
-            defaults = defaults | Notification.DEFAULT_SOUND;
-
-        } else {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Led
+            int defaults = Notification.DEFAULT_LIGHTS;
 
             // Sonido seleccionado
-            mBuilder.setSound(Uri.parse(strRingtonePreference));
+            String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
+            if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+                // Sonido por defecto
+                defaults = defaults | Notification.DEFAULT_SOUND;
+
+            } else {
+
+                // Sonido seleccionado
+                mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+            }
+
+            // Usar o no la vibracion
+            boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+
+            if (controlVibrar) {
+                // Vibrate por defecto
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+            }
+
+            // Opciones por defecto seleccionadas
+            mBuilder.setDefaults(defaults);
         }
-
-        // Usar o no la vibracion
-        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
-
-        if (controlVibrar) {
-            // Vibrate por defecto
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-
-        }
-
-        // Opciones por defecto seleccionadas
-        mBuilder.setDefaults(defaults);
 
         // ticker
         CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
@@ -500,34 +505,36 @@ public class Notificaciones {
 
         mBuilder.setAutoCancel(true);
 
-        // Led
-        int defaults = Notification.DEFAULT_LIGHTS;
-
-        // Sonido seleccionado
-        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
-
-        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
-            // Sonido por defecto
-            defaults = defaults | Notification.DEFAULT_SOUND;
-
-        } else {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Led
+            int defaults = Notification.DEFAULT_LIGHTS;
 
             // Sonido seleccionado
-            mBuilder.setSound(Uri.parse(strRingtonePreference));
+            String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
+            if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+                // Sonido por defecto
+                defaults = defaults | Notification.DEFAULT_SOUND;
+
+            } else {
+
+                // Sonido seleccionado
+                mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+            }
+
+            // Usar o no la vibracion
+            boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+
+            if (controlVibrar) {
+                // Vibrate por defecto
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+            }
+
+            // Opciones por defecto seleccionadas
+            mBuilder.setDefaults(defaults);
         }
-
-        // Usar o no la vibracion
-        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
-
-        if (controlVibrar) {
-            // Vibrate por defecto
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-
-        }
-
-        // Opciones por defecto seleccionadas
-        mBuilder.setDefaults(defaults);
 
         // ticker
         CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);
@@ -597,35 +604,37 @@ public class Notificaciones {
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-        // Led
-        int defaults = Notification.DEFAULT_LIGHTS;
-
-        // Sonido seleccionado
-        String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
-
-        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
-            // Sonido por defecto
-            defaults = defaults | Notification.DEFAULT_SOUND;
-
-        } else {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Led
+            int defaults = Notification.DEFAULT_LIGHTS;
 
             // Sonido seleccionado
-            mBuilder.setSound(Uri.parse(strRingtonePreference));
+            String strRingtonePreference = preferencias.getString("alarma_tono", "DEFAULT_SOUND");
 
+            if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+                // Sonido por defecto
+                defaults = defaults | Notification.DEFAULT_SOUND;
+
+            } else {
+
+                // Sonido seleccionado
+                mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+            }
+
+            // Usar o no la vibracion
+            boolean controlVibrar = preferencias.getBoolean("alarma_vibrar", true);
+
+            if (controlVibrar) {
+
+                // Vibrate por defecto
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+            }
+
+            // Opciones por defecto seleccionadas
+            mBuilder.setDefaults(defaults);
         }
-
-        // Usar o no la vibracion
-        boolean controlVibrar = preferencias.getBoolean("alarma_vibrar", true);
-
-        if (controlVibrar) {
-
-            // Vibrate por defecto
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-
-        }
-
-        // Opciones por defecto seleccionadas
-        mBuilder.setDefaults(defaults);
 
         mBuilder.setAutoCancel(true);
 
@@ -730,34 +739,36 @@ public class Notificaciones {
 
         mBuilder.setAutoCancel(true);
 
-        // Led
-        int defaults = Notification.DEFAULT_LIGHTS;
-
-        // Sonido seleccionado
-        String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
-
-        if (strRingtonePreference.equals("DEFAULT_SOUND")) {
-            // Sonido por defecto
-            defaults = defaults | Notification.DEFAULT_SOUND;
-
-        } else {
+        if (Build.VERSION.SDK_INT < 26) {
+            // Led
+            int defaults = Notification.DEFAULT_LIGHTS;
 
             // Sonido seleccionado
-            mBuilder.setSound(Uri.parse(strRingtonePreference));
+            String strRingtonePreference = preferencias.getString("noticias_tono", "DEFAULT_SOUND");
 
+            if (strRingtonePreference.equals("DEFAULT_SOUND")) {
+                // Sonido por defecto
+                defaults = defaults | Notification.DEFAULT_SOUND;
+
+            } else {
+
+                // Sonido seleccionado
+                mBuilder.setSound(Uri.parse(strRingtonePreference));
+
+            }
+
+            // Usar o no la vibracion
+            boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
+
+            if (controlVibrar) {
+                // Vibrate por defecto
+                defaults = defaults | Notification.DEFAULT_VIBRATE;
+
+            }
+
+            // Opciones por defecto seleccionadas
+            mBuilder.setDefaults(defaults);
         }
-
-        // Usar o no la vibracion
-        boolean controlVibrar = preferencias.getBoolean("noticias_vibrar", true);
-
-        if (controlVibrar) {
-            // Vibrate por defecto
-            defaults = defaults | Notification.DEFAULT_VIBRATE;
-
-        }
-
-        // Opciones por defecto seleccionadas
-        mBuilder.setDefaults(defaults);
 
         // ticker
         CharSequence tickerText = contexto.getString(R.string.nuevas_noticias);

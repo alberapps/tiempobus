@@ -21,7 +21,7 @@ package alberapps.android.tiempobus.tasks;
 import android.os.AsyncTask;
 
 import alberapps.java.horarios.DatosHorarios;
-import alberapps.java.horarios.ProcesarHorarios;
+import alberapps.java.horarios.ProcesarHorariosJson;
 import alberapps.java.tam.BusLinea;
 
 /**
@@ -47,7 +47,7 @@ public class LoadHorariosInfoLineasAsyncTask extends AsyncTask<Object, Void, Dat
 
             BusLinea datosLinea = (BusLinea) datos[0];
 
-            datosHorarios = ProcesarHorarios.getDetalleHorario(datosLinea);
+            datosHorarios = ProcesarHorariosJson.getDetalleHorario(datosLinea);
 
 
         } catch (Exception e) {

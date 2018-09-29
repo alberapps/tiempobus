@@ -25,7 +25,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import alberapps.android.tiempobus.R;
-import alberapps.java.horarios.ProcesarHorarios;
 
 /**
  * Gestion de datos del tram
@@ -102,7 +101,7 @@ public class GestionHorariosVuelta {
         datosHorario2.setAutoLinkMask(Linkify.ALL);
         datosHorario2.setLinksClickable(true);
         if (context.datosHorarios.getHorariosIda() != null && !context.datosHorarios.getHorariosIda().isEmpty()) {
-            datosHorario2.setText(ProcesarHorarios.URL_SUBUS + context.datosHorarios.getHorariosIda().get(0).getLinkHorario());
+            datosHorario2.setText(context.datosHorarios.getHorariosIda().get(0).getLinkHorario());
         }
 
         vueltaView.setAdapter(infoLineaHorariosAdapter);

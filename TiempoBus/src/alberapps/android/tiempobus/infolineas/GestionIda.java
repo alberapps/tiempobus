@@ -108,9 +108,11 @@ public class GestionIda {
         context.infoLineaParadasAdapter.addAll(context.datosIda.getPlacemarks());
 
         ListView idaView = (ListView) context.findViewById(R.id.infolinea_lista_ida);
-        idaView.setOnItemClickListener(idaClickedHandler);
+        if(idaView != null) {
+            idaView.setOnItemClickListener(idaClickedHandler);
 
-        idaView.setAdapter(context.infoLineaParadasAdapter);
+            idaView.setAdapter(context.infoLineaParadasAdapter);
+        }
 
     }
 

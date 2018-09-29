@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.noticias;
 
@@ -65,12 +65,14 @@ public class FragmentNoticias extends Fragment {
         // Progreso lista
         ListView listNoticiasWiew = (ListView) actividad.findViewById(R.id.lista_noticias);
         TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias);
-        if(vacio != null) {
+        if (vacio != null) {
             vacio.setVisibility(View.INVISIBLE);
         }
         ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_noticias);
-        lpb.setIndeterminate(true);
-        listNoticiasWiew.setEmptyView(lpb);
+        if (lpb != null) {
+            lpb.setIndeterminate(true);
+            listNoticiasWiew.setEmptyView(lpb);
+        }
 
         super.onViewStateRestored(savedInstanceState);
     }

@@ -30,6 +30,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -203,11 +204,24 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                     MainActivity actividad = (MainActivity) contexto;
 
-                    // Texto para receiver
-                    String textoReceiver = actividad.gestionarAlarmas.prepararReceiver(bus, actividad.paradaActual);
+                    if (bus != null) {
 
-                    // Activar alarma y mostrar modal
-                    actividad.gestionarAlarmas.mostrarModalTiemposAlerta(bus, actividad.paradaActual, textoReceiver);
+                        try {
+
+                            // Texto para receiver
+                            String textoReceiver = actividad.gestionarAlarmas.prepararReceiver(bus, actividad.paradaActual);
+
+                            // Activar alarma y mostrar modal
+                            actividad.gestionarAlarmas.mostrarModalTiemposAlerta(bus, actividad.paradaActual, textoReceiver);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(actividad.getApplicationContext(), actividad.getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                        }
+
+                    } else {
+                        Toast.makeText(actividad.getApplicationContext(), actividad.getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 
@@ -382,7 +396,6 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
                 //aviso = ctx.getString(R.string.tlf_tram);
                 aviso = ctx.getString(R.string.info_tram_tr);
-
 
 
                 // //Horarios

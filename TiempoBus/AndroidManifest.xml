@@ -5,8 +5,7 @@
     android:installLocation="auto"
     >
 
-    <uses-sdk
-        android:minSdkVersion="8"/>
+    <uses-sdk/>
         <!--tools:overrideLibrary="com.google.android.gms,
         com.google.android.gms.base, com.google.android.gms.maps,
         com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,

@@ -260,7 +260,7 @@ public class FragmentHorariosTram extends Fragment {
 
                     e.printStackTrace();
 
-                    Toast.makeText(actividad, actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                     datos = new HorarioTram();
                     datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
@@ -277,7 +277,7 @@ public class FragmentHorariosTram extends Fragment {
 
             } else {
 
-                Toast.makeText(actividad, getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                 datos = new HorarioTram();
                 datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
@@ -301,27 +301,36 @@ public class FragmentHorariosTram extends Fragment {
     private void cargarListado() {
 
 
-        if (actividad.datosHorariosTram != null) {
+        try {
 
-            actividad.horariosTramAdapter = new HorariosTramAdapter(getActivity(), R.layout.infolineas_horarios_item);
+            if (actividad.datosHorariosTram != null) {
+
+                actividad.horariosTramAdapter = new HorariosTramAdapter(getActivity(), R.layout.infolineas_horarios_item);
 
 
-            actividad.horariosTramAdapter.addAll(actividad.datosHorariosTram.getHorariosItemCombinados());
+                actividad.horariosTramAdapter.addAll(actividad.datosHorariosTram.getHorariosItemCombinados());
 
 
-            // Controlar pulsacion
-            actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
+                // Controlar pulsacion
+                actividad.horariosTramView = (ListView) getActivity().findViewById(R.id.infolinea_lista_horario_tram);
 
-            if (actividad.horariosTramView != null) {
+                if (actividad.horariosTramView != null) {
 
-                TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
-                actividad.horariosTramView.setEmptyView(vacio);
+                    TextView vacio = (TextView) getActivity().findViewById(R.id.infolinea_horario_tram_empty);
+                    actividad.horariosTramView.setEmptyView(vacio);
 
-                cargarHeaderHorarios();
+                    cargarHeaderHorarios();
 
-                actividad.horariosTramView.setAdapter(actividad.horariosTramAdapter);
+                    actividad.horariosTramView.setAdapter(actividad.horariosTramAdapter);
+
+                }
 
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -844,9 +853,9 @@ public class FragmentHorariosTram extends Fragment {
         @Override
         public void onScrollStateChanged(AbsListView absListView, int i) {
 
-            if(SCROLL_STATE_TOUCH_SCROLL == i) {
+            if (SCROLL_STATE_TOUCH_SCROLL == i) {
                 View cFocus = actividad.getCurrentFocus();
-                if(cFocus != null) {
+                if (cFocus != null) {
                     cFocus.clearFocus();
                 }
             }

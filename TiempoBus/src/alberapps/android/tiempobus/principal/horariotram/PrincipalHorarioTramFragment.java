@@ -186,9 +186,9 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
                     TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
 
-                    if(!datosInfo.getText().equals("")) {
+                    if (!datosInfo.getText().equals("")) {
                         context.datosPantallaPrincipal.shareHorario(datosHoras.getText().toString(), datosInfo.getText().toString());
-                    }else {
+                    } else {
                         Toast.makeText(getContext(), getContext().getString(R.string.main_no_items), Toast.LENGTH_LONG).show();
                     }
 
@@ -218,11 +218,24 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     boolean ok = calcularTiempoPorHoras(datosHoras.getText().toString(), bus);
 
                     if (ok) {
-                        // Texto para receiver
-                        String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
+                        if (bus != null) {
 
-                        // Activar alarma y mostrar modal
-                        context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+                            try {
+                                // Texto para receiver
+                                String textoReceiver = context.gestionarAlarmas.prepararReceiver(bus, context.paradaActual);
+
+                                // Activar alarma y mostrar modal
+                                context.gestionarAlarmas.mostrarModalTiemposAlerta(bus, context.paradaActual, textoReceiver);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(context.getApplicationContext(), context.getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(context.getApplicationContext(), context.getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
                         Toast.makeText(getContext(), getContext().getString(R.string.err_bus_sin), Toast.LENGTH_LONG).show();
                     }
@@ -478,7 +491,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     datosInfo.setText(horas.getDatoInfo().replace("Paso ", ""));
 
 
-                    if (datos.getHorariosItemCombinados(1).size() > 1) {
+                    if (datos.getHorariosItemCombinados(1) != null && datos.getHorariosItemCombinados(1).size() > 1) {
 
                         datosLineaC.setVisibility(View.VISIBLE);
                         TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);

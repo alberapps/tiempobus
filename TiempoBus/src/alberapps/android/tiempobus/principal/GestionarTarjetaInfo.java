@@ -724,15 +724,25 @@ public class GestionarTarjetaInfo {
 
                     iv.setVisibility(ImageView.INVISIBLE);
                     TextView textoWeather = (TextView) v.findViewById(R.id.textoWeather);
-                    textoWeather.setText(context.getString(R.string.main_no_items));
+                    if (textoWeather != null) {
+                        textoWeather.setText(context.getString(R.string.main_no_items));
+                    }
                     TextView textoTemperatura = (TextView) v.findViewById(R.id.TextTemperatura);
-                    textoTemperatura.setText("");
+                    if (textoTemperatura != null) {
+                        textoTemperatura.setText("");
+                    }
                     TextView textoLocalidad = (TextView) v.findViewById(R.id.textoWeatherTexto2);
-                    textoLocalidad.setText("");
+                    if (textoLocalidad != null) {
+                        textoLocalidad.setText("");
+                    }
                     TextView textoWeatherTexto = (TextView) v.findViewById(R.id.textoWeatherTexto);
-                    textoWeatherTexto.setText("");
+                    if (textoWeatherTexto != null) {
+                        textoWeatherTexto.setText("");
+                    }
                     TextView textoWeatherTexto3 = (TextView) v.findViewById(R.id.textoWeatherTexto3);
-                    textoWeatherTexto3.setText("");
+                    if (textoWeatherTexto3 != null) {
+                        textoWeatherTexto3.setText("");
+                    }
 
                 }
             }

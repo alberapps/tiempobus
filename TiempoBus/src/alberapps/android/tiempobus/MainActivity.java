@@ -1056,12 +1056,25 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 switch (item) {
                     case 0:
 
-                        // Texto para receiver
-                        String textoReceiver = gestionarAlarmas.prepararReceiver(busSeleccionado, paradaActual);
+                        if(busSeleccionado != null) {
 
-                        // Activar alarma y mostrar modal
-                        gestionarAlarmas.mostrarModalTiemposAlerta(busSeleccionado, paradaActual, textoReceiver);
-                        busSeleccionado = null;
+                            try {
+
+                                // Texto para receiver
+                                String textoReceiver = gestionarAlarmas.prepararReceiver(busSeleccionado, paradaActual);
+
+                                // Activar alarma y mostrar modal
+                                gestionarAlarmas.mostrarModalTiemposAlerta(busSeleccionado, paradaActual, textoReceiver);
+                                busSeleccionado = null;
+
+                            }catch(Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+                        }
                         break;
 
                     case 1:

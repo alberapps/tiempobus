@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by The Android Open Source Project
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on code by The Android Open Source Project
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.service;
 
@@ -198,36 +198,50 @@ public class TiemposForegroundService extends Service {
 
         Log.d("SERVICIO", "Manejar comando");
 
-        parada = Integer.toString(intent.getExtras().getInt("PARADA"));
+        if (intent != null && intent.getExtras() != null && intent.getExtras().containsKey("PARADA")) {
 
-        if (ACTION_FOREGROUND.equals(intent.getAction())) {
-            // In this sample, we'll use the same text for the ticker and the
-            // expanded notification
+            try {
 
-            CharSequence text = getString(R.string.foreground_service_started, new Object[]{preferencias.getString("servicio_recarga", "60")});
+                parada = Integer.toString(intent.getExtras().getInt("PARADA"));
 
-            // CharSequence text = getText(R.string.foreground_service_started);
+                if (ACTION_FOREGROUND.equals(intent.getAction())) {
+                    // In this sample, we'll use the same text for the ticker and the
+                    // expanded notification
 
-            // Set the icon, scrolling text and timestamp
-            //Notification notification = new Notification(R.drawable.ic_stat_tiempobus_4, text, System.currentTimeMillis());
+                    CharSequence text = getString(R.string.foreground_service_started, new Object[]{preferencias.getString("servicio_recarga", "60")});
 
-            // The PendingIntent to launch our activity if the user selects this
-            // notification
-            //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+                    // CharSequence text = getText(R.string.foreground_service_started);
 
-            // Set the info for the views that show in the notification panel.
-            //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
+                    // Set the icon, scrolling text and timestamp
+                    //Notification notification = new Notification(R.drawable.ic_stat_tiempobus_4, text, System.currentTimeMillis());
 
-            Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
+                    // The PendingIntent to launch our activity if the user selects this
+                    // notification
+                    //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
 
-            startForegroundCompat(R.string.foreground_service_started, notification);
+                    // Set the info for the views that show in the notification panel.
+                    //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
 
-        } else if (ACTION_BACKGROUND.equals(intent.getAction())) {
-            stopForegroundCompat(R.string.foreground_service_started);
+                    Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
+
+                    startForegroundCompat(R.string.foreground_service_started, notification);
+
+                } else if (ACTION_BACKGROUND.equals(intent.getAction())) {
+                    stopForegroundCompat(R.string.foreground_service_started);
+                }
+
+                Log.d("TiemposService", "Iniciando Recargas");
+                recargaTimer();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
+            }
+
+
+        } else {
+            Toast.makeText(this, getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
         }
-
-        Log.d("TiemposService", "Iniciando Recargas");
-        recargaTimer();
 
     }
 

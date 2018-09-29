@@ -1,23 +1,24 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,37 +78,43 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
 
             descHorario.setText(horario.getTituloHorario());
 
-            StringBuffer sb = new StringBuffer("");
+            StringBuilder sb = new StringBuilder(200);
 
             int horaAnterior = -1;
 
             for (int i = 0; i < horario.getHorarios().size(); i++) {
 
-                String[] num = horario.getHorarios().get(i).split(":");
-
-                int hora = 0;
-
                 try {
-                    hora = Integer.parseInt(num[0]);
+
+                    String[] num = horario.getHorarios().get(i).split(":");
+
+                    int hora = Integer.parseInt(num[0]);
+
+                    if (horaAnterior != hora) {
+                        horaAnterior = hora;
+                        if(i > 0){
+                            sb.append("<br/><br/>");
+                        } else {
+                            sb.append("<br/>");
+                        }
+                        sb.append("<font color='#4f5d72'><strong>" +hora + "h:</strong></font>&nbsp;");
+                    } else {
+                        if (i > 0) {
+                            sb.append("&nbsp;");
+                        }
+                    }
+
+                    sb.append(horario.getHorarios().get(i));
+
 
                 } catch (Exception e) {
                     continue;
                 }
 
-                if (hora > horaAnterior) {
-                    sb.append(" ");
-                    horaAnterior = hora;
-                } else {
-                    sb.append("\n\n");
-                    horaAnterior = 0;
-                }
-
-                sb.append(horario.getHorarios().get(i));
-
 
             }
 
-            datosHorario.setText(sb.toString());
+            datosHorario.setText(Html.fromHtml(sb.toString()));
 
         }
 
