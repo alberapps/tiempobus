@@ -26,9 +26,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.speech.RecognizerIntent;
-import android.support.v4.content.ContentResolverCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.core.content.ContentResolverCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.util.Log;
 
 import org.jsoup.helper.StringUtil;

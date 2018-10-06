@@ -27,14 +27,14 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat.Builder;
-import android.support.v4.content.ContentResolverCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.app.NotificationCompat.Builder;
+import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -475,7 +475,7 @@ public class GestionarTarjetaInfo {
 
 
         //Desactivar tarjeta
-        final android.support.v7.widget.SwitchCompat wikiSwitch = (android.support.v7.widget.SwitchCompat) v.findViewById(R.id.wikiSwitch);
+        final androidx.appcompat.widget.SwitchCompat wikiSwitch = (androidx.appcompat.widget.SwitchCompat) v.findViewById(R.id.wikiSwitch);
 
         wikiSwitch.setOnClickListener(new View.OnClickListener() {
 
@@ -641,7 +641,7 @@ public class GestionarTarjetaInfo {
 
 
         //Desactivar tarjeta
-        final android.support.v7.widget.SwitchCompat climaSwitch = (android.support.v7.widget.SwitchCompat) v.findViewById(R.id.climaSwitch);
+        final androidx.appcompat.widget.SwitchCompat climaSwitch = (androidx.appcompat.widget.SwitchCompat) v.findViewById(R.id.climaSwitch);
 
         climaSwitch.setOnClickListener(new View.OnClickListener() {
 

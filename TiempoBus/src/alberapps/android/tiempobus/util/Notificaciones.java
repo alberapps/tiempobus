@@ -30,10 +30,10 @@ import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.Builder;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationCompat.Builder;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.List;
 

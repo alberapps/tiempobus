@@ -19,8 +19,8 @@ package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.AppCompatTextView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;

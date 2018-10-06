@@ -42,7 +42,7 @@
     </LinearLayout>
 
     <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -185,9 +185,9 @@
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tarjetaClima"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -232,7 +232,7 @@
                             android:textSize="12sp"
                             android:textStyle="italic|bold" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/climaSwitch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -352,11 +352,11 @@
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
     <!-- A CardView that contains a TextView -->
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tarjetaWiki"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -399,7 +399,7 @@
                             android:textSize="12sp"
                             android:textStyle="italic|bold" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/wikiSwitch"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -436,7 +436,7 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

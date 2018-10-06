@@ -20,7 +20,7 @@ package alberapps.android.tiempobus.mapas;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.support.v4.content.ContentResolverCompat;
+import androidx.core.content.ContentResolverCompat;
 import android.widget.Toast;
 
 import java.util.ArrayList;

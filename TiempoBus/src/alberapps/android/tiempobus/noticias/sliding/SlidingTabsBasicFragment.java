@@ -17,8 +17,8 @@
 package alberapps.android.tiempobus.noticias.sliding;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +34,7 @@ import alberapps.java.tram.UtilidadesTRAM;
 
 /**
  * A basic sample which shows how to use
- * to display a custom {@link android.support.v4.view.ViewPager} title strip which gives continuous feedback to the user
+ * to display a custom {@link ViewPager} title strip which gives continuous feedback to the user
  * when scrolling.
  */
 public class SlidingTabsBasicFragment extends Fragment {
@@ -42,18 +42,18 @@ public class SlidingTabsBasicFragment extends Fragment {
     static final String LOG_TAG = "SlidingTabsBasicFragment";
 
     /**
-     * A custom {@link android.support.v4.view.ViewPager} title strip which looks much like Tabs present in Android v4.0 and
+     * A custom {@link ViewPager} title strip which looks much like Tabs present in Android v4.0 and
      * above, but is designed to give continuous feedback to the user when scrolling.
      */
     private SlidingTabLayout mSlidingTabLayout;
 
     /**
-     * A {@link android.support.v4.view.ViewPager} which will be used in conjunction with the {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} above.
+     * A {@link ViewPager} which will be used in conjunction with the {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} above.
      */
     private ViewPager mViewPager;
 
     /**
-     * Inflates the {@link android.view.View} which will be displayed by this {@link android.support.v4.app.Fragment}, from the app's
+     * Inflates the {@link android.view.View} which will be displayed by this {@link Fragment}, from the app's
      * resources.
      */
     @Override
@@ -68,8 +68,8 @@ public class SlidingTabsBasicFragment extends Fragment {
      * This is called after the {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)} has finished.
      * Here we can pick out the {@link android.view.View}s we need to configure from the content view.
      * <p/>
-     * We set the {@link android.support.v4.view.ViewPager}'s adapter to be an instance of {@link alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment.InfoLineaFragmentPagerAdapter}. The
-     * {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} is then given the {@link android.support.v4.view.ViewPager} so that it can populate itself.
+     * We set the {@link ViewPager}'s adapter to be an instance of {@link alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment.InfoLineaFragmentPagerAdapter}. The
+     * {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} is then given the {@link ViewPager} so that it can populate itself.
      *
      * @param view View created in {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
      */

@@ -28,7 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
-import android.support.v4.app.NotificationCompat.Builder;
+import androidx.core.app.NotificationCompat.Builder;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -72,7 +72,7 @@ public class DatosLineasDB {
     private static final String DATABASE_NAME = "tiempobuslineas";
     private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
     private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-    private static final int DATABASE_VERSION = 82;
+    private static final int DATABASE_VERSION = 83;
 
     public static final String DATABASE_VERSION_FECHA = "26062018";
 

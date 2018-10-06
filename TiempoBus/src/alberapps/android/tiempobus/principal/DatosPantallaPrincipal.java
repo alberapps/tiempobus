@@ -31,12 +31,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.ContentResolverCompat;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatSpinner;
+import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatSpinner;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -923,9 +923,9 @@ public class DatosPantallaPrincipal {
 
         Menu menu = context.mDrawerView.getMenu();
 
-        final android.support.v7.widget.SwitchCompat botonBus = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasBus));
-        final android.support.v7.widget.SwitchCompat botonTram = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasTram));
-        final android.support.v7.widget.SwitchCompat botonAlberApps = (android.support.v7.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasAlberApps));
+        final androidx.appcompat.widget.SwitchCompat botonBus = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasBus));
+        final androidx.appcompat.widget.SwitchCompat botonTram = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasTram));
+        final androidx.appcompat.widget.SwitchCompat botonAlberApps = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasAlberApps));
 
 
         if (avisoBus) {

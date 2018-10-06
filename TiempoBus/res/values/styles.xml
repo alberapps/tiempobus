@@ -4,7 +4,7 @@
 
 
     <!-- extend one of the Theme.AppCompat themes -->
-    <style name="Theme.TiempoBusTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.TiempoBusTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
@@ -20,7 +20,7 @@
 
     </style>
 
-    <style name="Theme.TiempoBusThemeActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.TiempoBusThemeActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
@@ -37,7 +37,7 @@
     </style>
 
 
-    <style name="Theme.TiempoBusThemeTab" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.TiempoBusThemeTab" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
@@ -54,7 +54,7 @@
     <style name="Theme.TiempoBusTheme.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.TiempoBusTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.TiempoBusTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="drawerColor" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>

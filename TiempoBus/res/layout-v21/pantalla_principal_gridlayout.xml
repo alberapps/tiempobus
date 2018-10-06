@@ -33,7 +33,7 @@
             android:layout_height="match_parent">
 
 
-            <android.support.v4.widget.SwipeRefreshLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshPrincipal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -47,7 +47,7 @@
                     android:fastScrollEnabled="true"
                     android:scrollingCache="true" />
 
-            </android.support.v4.widget.SwipeRefreshLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
         </FrameLayout>
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/boton_circular_cancelar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,9 +77,9 @@
 
                     >
 
-                </android.support.design.widget.FloatingActionButton>
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-                <android.support.design.widget.FloatingActionButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/boton_circular_fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,11 +91,11 @@
                     app:fabSize="normal">
 
 
-                </android.support.design.widget.FloatingActionButton>
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             </FrameLayout>
 
-            <android.support.design.widget.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
+            <com.google.android.material.bottomnavigation.BottomNavigationView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:design="http://schema.android.com/apk/res/android.support.design"
                 android:id="@+id/bottomNavigation"
                 android:layout_width="match_parent"

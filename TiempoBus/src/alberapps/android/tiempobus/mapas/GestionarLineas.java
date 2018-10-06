@@ -26,7 +26,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -650,7 +650,7 @@ public class GestionarLineas {
 
 
         //Botones ida y vuelta
-        final android.support.v7.widget.SwitchCompat botonIda = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapaIdaButton);
+        final androidx.appcompat.widget.SwitchCompat botonIda = (androidx.appcompat.widget.SwitchCompat) context.findViewById(R.id.mapaIdaButton);
 
 
         if (context.flagIda) {
@@ -669,7 +669,7 @@ public class GestionarLineas {
             }
         });
 
-        final android.support.v7.widget.SwitchCompat botonVuelta = (android.support.v7.widget.SwitchCompat) context.findViewById(R.id.mapaVueltaButton);
+        final androidx.appcompat.widget.SwitchCompat botonVuelta = (androidx.appcompat.widget.SwitchCompat) context.findViewById(R.id.mapaVueltaButton);
 
         if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             botonVuelta.setEnabled(false);

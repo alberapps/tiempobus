@@ -20,7 +20,7 @@ package alberapps.java.tam.webservice.estructura;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v4.content.ContentResolverCompat;
+import androidx.core.content.ContentResolverCompat;
 
 import java.util.ArrayList;
 import java.util.List;

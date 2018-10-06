@@ -19,13 +19,13 @@ package alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps
 import android.annotation.TargetApi;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.core.app.NavUtils;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -101,7 +101,7 @@ public class ImageDetailActivity extends AppCompatActivity implements OnClickLis
         // Enable some additional newer visibility and ActionBar features to create a more
         // immersive photo viewing experience
         if (Utils.hasHoneycomb()) {
-            final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+            final androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
 
             // Hide title text and set home as up
             actionBar.setDisplayShowTitleEnabled(false);

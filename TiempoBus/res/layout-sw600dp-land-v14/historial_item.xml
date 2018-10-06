@@ -29,7 +29,7 @@
         android:orientation="vertical">
 
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -93,7 +93,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </LinearLayout>
