@@ -102,44 +102,48 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:background="@color/mi_material_grey_200">
+                    android:layout_height="27dp"
+                    android:background="@color/mi_material_grey_200"
+                    android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/favorito_destacar"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        card_view:srcCompat="@drawable/ic_favorite_border_24dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="50dp"
-                        />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        card_view:srcCompat="@drawable/ic_favorite_border_24dp" />
 
-                    <ImageView
+
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/favorito_editar"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Modificar"
-                        android:src="@drawable/ic_mode_edit_grey600_18dp" />
+                        card_view:srcCompat="@drawable/ic_edit_24dp" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/favorito_borrar"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Borrar"
-                        android:src="@drawable/ic_delete_grey600_18dp" />
+                        card_view:srcCompat="@drawable/ic_delete_24dp" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/compartir_img"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Compartir"
-                        android:src="@drawable/ic_share_grey600_18dp" />
+                        card_view:srcCompat="@drawable/ic_share_24dp" />
 
 
                 </LinearLayout>

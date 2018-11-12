@@ -38,6 +38,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.java.tam.BusLlegada;
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * Adaptador Tiempos
@@ -196,7 +197,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             }
 
             // Botones
-            ImageView alertaText = (ImageView) v.findViewById(R.id.tiempos_alerta_img);
+            AppCompatImageView alertaText = v.findViewById(R.id.tiempos_alerta_img);
 
             alertaText.setOnClickListener(new OnClickListener() {
 
@@ -227,7 +228,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             });
 
-            ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
+            AppCompatImageView compartir = v.findViewById(R.id.compartir_img);
 
             compartir.setOnClickListener(new OnClickListener() {
 
@@ -241,7 +242,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             });
 
-            ImageView leer = (ImageView) v.findViewById(R.id.audio_img);
+            AppCompatImageView leer = v.findViewById(R.id.audio_img);
 
             leer.setOnClickListener(new OnClickListener() {
 
@@ -255,7 +256,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             });
 
-            ImageView mapa = (ImageView) v.findViewById(R.id.mapa_tarjeta);
+            AppCompatImageView mapa = v.findViewById(R.id.mapa_tarjeta);
 
             mapa.setOnClickListener(new OnClickListener() {
 

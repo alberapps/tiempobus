@@ -58,9 +58,10 @@ public class LoadDirectionsAsyncTask extends AsyncTask<Object, Void, Direction> 
 
             String origen = (String) datos[0];
             String destino = (String) datos[1];
+            context = (Context) datos[3];
 
 
-            direction = DirectionsApi.getDirections(origen,destino,"");
+            direction = DirectionsApi.getDirections(origen,destino,"", context);
 
 
 

@@ -365,7 +365,7 @@ public class RutasActivity extends AppCompatActivity {
 
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            taskDirection = new LoadDirectionsAsyncTask(loadDirectionsAsyncTaskResponder).execute(origen, destino, "");
+            taskDirection = new LoadDirectionsAsyncTask(loadDirectionsAsyncTaskResponder).execute(origen, destino, "", getApplicationContext());
 
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();

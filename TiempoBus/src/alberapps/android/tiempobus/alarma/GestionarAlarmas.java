@@ -332,9 +332,9 @@ public class GestionarAlarmas {
 
         final Spinner spinner = (Spinner) vista.findViewById(R.id.spinner_tiempos);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.spinner_minutos, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.spinner_minutos, R.layout.spinner_item_horario_lista);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
 
         spinner.setAdapter(adapter);
 

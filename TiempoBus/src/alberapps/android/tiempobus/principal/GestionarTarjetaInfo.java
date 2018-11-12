@@ -295,7 +295,7 @@ public class GestionarTarjetaInfo {
 
                         if (localizacion != null) {
 
-                            StringBuffer sb = new StringBuffer();
+                            StringBuilder sb = new StringBuilder(100);
 
 
                             sb.append(localizacion.getDireccion());

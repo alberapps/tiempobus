@@ -1034,7 +1034,7 @@ public class DatosPantallaPrincipal {
         AppCompatSpinner spinner = (AppCompatSpinner) context.findViewById(R.id.spinner_historial);
 
         ArrayAdapter adapter = new ArrayAdapter<>(context, R.layout.spinner_item, listaSpinner);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
         spinner.setAdapter(adapter);
 
         // Seleccion

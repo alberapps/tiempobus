@@ -440,7 +440,7 @@ favorit per crear la teua llista.</string>
     <string name="error_ruta">Error al carregar l\'itinerari</string>
     <string name="tarjeta_clima_pref_desc">Font de dades</string>
     <string name="title_activity_rutas">Rutes</string>
-    <string name="menu_rutas">Càlcul de Rutes</string>
+    <string name="menu_rutas">Rutes</string>
     <string name="cercanias"> RODALIES</string>
     <string name="andar">Caminar</string>
     <string name="origen">Origen</string>

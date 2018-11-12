@@ -18,6 +18,7 @@
  */
 package alberapps.java.directions;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.util.Conectividad;
 
@@ -37,7 +39,7 @@ public class DirectionsApi {
 
     private final static String LOG_TAG = DirectionsApi.class.getSimpleName();
 
-    public static Direction getDirections(String origen, String destino, String medio) throws Exception {
+    public static Direction getDirections(String origen, String destino, String medio, Context context) throws Exception {
 
         try {
 
@@ -57,9 +59,7 @@ public class DirectionsApi {
                     .appendQueryParameter("alternatives", "true")
                     .appendQueryParameter("sensor", "false")
                     .appendQueryParameter("language", idioma)
-
-
-            ;
+                    .appendQueryParameter("key", context.getString(R.string.api_key_directions));
 
 
             Uri url = builder.build();

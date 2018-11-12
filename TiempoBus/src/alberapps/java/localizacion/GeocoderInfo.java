@@ -22,9 +22,11 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
 import alberapps.android.tiempobus.R;
 
 /**
@@ -60,7 +62,10 @@ public class GeocoderInfo {
 
                 String direc = "";
 
-                if (address.getThoroughfare() != null && !address.getThoroughfare().equals("")) {
+                /*if (address.getFeatureName() != null && !address.getFeatureName().equals("") && !address.getFeatureName().equals(address.getLocality())) {
+                    direc = address.getFeatureName();
+                    localiza.setLocalidad(address.getLocality());
+                } else if (address.getThoroughfare() != null && !address.getThoroughfare().equals("")) {
                     direc = address.getThoroughfare();
 
                     if (address.getSubThoroughfare() != null && !address.getSubThoroughfare().equals("")) {
@@ -72,6 +77,20 @@ public class GeocoderInfo {
                         direc += address.getSubThoroughfare();
 
                     }
+                    localiza.setLocalidad(address.getLocality());
+
+                } else*/
+
+                if (address.getAddressLine(0) != null && !address.getAddressLine(0).equals("")) {
+
+                    direc = address.getAddressLine(0);
+
+                    if (direc.contains(", " + address.getCountryName())) {
+                        direc = direc.substring(0, direc.indexOf(", " + address.getCountryName()));
+                    }
+                    if (direc.contains(", " + address.getSubAdminArea())) {
+                        direc = direc.substring(0, direc.indexOf(", " + address.getSubAdminArea()));
+                    }
 
                 }
 
@@ -79,7 +98,6 @@ public class GeocoderInfo {
 
                 localiza.setDireccion(direc);
 
-                localiza.setLocalidad(address.getLocality());
 
                 if ((localiza.getDireccion() == null || localiza.getDireccion().equals("")) &&
                         (localiza.getLocalidad() == null || localiza.getLocalidad().equals(""))) {

@@ -101,7 +101,7 @@ public class SelectorLinea {
         adapter.addAll(listaSpinner);
 
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
 
         spinner.setAdapter(adapter);
         //spinner.setSelection(0);
@@ -180,6 +180,8 @@ public class SelectorLinea {
 
         ArrayAdapter<CharSequence> adaptergrupos = ArrayAdapter.createFromResource(context, R.array.grupos_lineas_bus, android.R.layout.simple_spinner_item);
 
+        adaptergrupos.setDropDownViewResource(R.layout.spinner_item_horario_lista);
+
         spinnerGrupos.setAdapter(adaptergrupos);
 
 
@@ -242,7 +244,7 @@ public class SelectorLinea {
             adapter = ArrayAdapter.createFromResource(context, R.array.spinner_datos_b, android.R.layout.simple_spinner_item);
         }
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);
 
         spinner.setAdapter(adapter);
 

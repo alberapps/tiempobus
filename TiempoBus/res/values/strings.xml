@@ -488,7 +488,7 @@
     <string name="origen">Origen</string>
     <string name="origen_destino">Origen y Destino</string>
     <string name="aviso_header_rutas">IMPORTANTE: Esta funcionalidad está en desarrollo. Pueden producirse errores que se revisarán en próximas versiones.</string>
-    <string name="menu_rutas">Cálculo de Rutas</string>
+    <string name="menu_rutas">Rutas</string>
     <string name="error_ruta">Error al calcular la ruta</string>
     <string name="rutas_info_c" translatable="false">Tram Alicante\nSubús - Vectalia\nRenfe Cercanías\nPowered by Google Maps Directions</string>
     <string name="andar">Andar</string>

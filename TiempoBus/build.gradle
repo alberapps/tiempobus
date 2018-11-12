@@ -53,7 +53,7 @@ android {
         //currentImplementation 'com.android.support:recyclerview-v7:27.1.1'
         //currentImplementation 'com.android.support:support-v4:27.1.1'
 
-        currentImplementation 'androidx.appcompat:appcompat:1.0.0'
+        currentImplementation 'androidx.appcompat:appcompat:1.0.1'
         currentImplementation 'com.google.android.material:material:1.0.0'
         currentImplementation 'androidx.cardview:cardview:1.0.0'
         currentImplementation 'androidx.recyclerview:recyclerview:1.0.0'
@@ -65,8 +65,8 @@ android {
         currentImplementation 'com.google.android.gms:play-services-drive:16.0.0'
         currentImplementation 'com.google.android.gms:play-services-location:16.0.0'
         currentImplementation 'com.google.android.gms:play-services-places:16.0.0'
-        currentImplementation 'com.google.android.gms:play-services-analytics:16.0.4'
-        currentImplementation 'com.google.android.gms:play-services-vision:16.2.0'
+        currentImplementation 'com.google.android.gms:play-services-analytics:16.0.5'
+        currentImplementation 'com.google.android.gms:play-services-vision:17.0.2'
 
         currentImplementation 'com.google.android.gms:play-services-auth:16.0.1'
 
