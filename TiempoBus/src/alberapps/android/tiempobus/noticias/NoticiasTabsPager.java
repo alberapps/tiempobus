@@ -426,7 +426,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-            StringBuffer textoHeader = new StringBuffer();
+            StringBuilder textoHeader = new StringBuilder(200);
 
             textoHeader.append(getString(R.string.aviso_noticias));
             textoHeader.append("\n");
@@ -741,7 +741,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-            StringBuffer textoHeader = new StringBuffer();
+            StringBuilder textoHeader = new StringBuilder(200);
 
             textoHeader.append(getString(R.string.dato_tw));
             textoHeader.append("\n");
@@ -911,7 +911,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-            StringBuffer textoHeader = new StringBuffer();
+            StringBuilder textoHeader = new StringBuilder(200);
 
             textoHeader.append(getString(R.string.aviso_noticias));
             textoHeader.append("\n");
@@ -966,7 +966,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
 
             TextView descripcion = (TextView) vheader.findViewById(R.id.descripcion_ultima_tram_1);
-            StringBuffer textoHeader = new StringBuffer();
+            StringBuilder textoHeader = new StringBuilder(100);
             textoHeader.append(getString(R.string.aviso_recarga));
             descripcion.setLinksClickable(true);
             descripcion.setAutoLinkMask(Linkify.WEB_URLS);

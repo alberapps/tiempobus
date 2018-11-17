@@ -117,6 +117,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         final MainActivity actividad = (MainActivity) contexto;
 
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+
         final BusLlegada bus = getItem(position);
 
 
@@ -190,6 +192,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                 //Mensaje tiempo real
                 TextView textoTiempoReal = (TextView) v.findViewById(R.id.tiempo_aviso);
+                textoTiempoReal.setTypeface(ubuntu);
                 if (bus.isTiempoReal()) {
                     textoTiempoReal.setVisibility(View.GONE);
                 } else {
@@ -349,6 +352,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+            text.setTypeface(ubuntu, Typeface.BOLD);
 
             text.setText(ctx.getString(R.string.aviso_recarga));
 
@@ -379,6 +383,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+            text.setTypeface(ubuntu, Typeface.BOLD);
 
 
             if (bus != null && bus.isErrorServicio()) {
@@ -393,6 +398,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
+            textAviso.setTypeface(ubuntu, Typeface.BOLD);
 
             String aviso = "";
 

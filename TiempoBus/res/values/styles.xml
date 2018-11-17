@@ -149,7 +149,10 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
-	
+
+    <style name="Theme.TiempoBusDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="fontFamily">@font/ubuntu</item>
+    </style>
 	
 	
 

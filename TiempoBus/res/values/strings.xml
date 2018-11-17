@@ -566,5 +566,8 @@
 
     <string name="pdf_text" translatable="false">PDF</string>
 
+    <string name="camara_instrucciones">Tap to capture. Pinch/Stretch to zoom</string>
+
+
 
 </resources>

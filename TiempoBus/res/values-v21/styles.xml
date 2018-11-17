@@ -122,5 +122,11 @@
 
     </style>
 
+    <style name="Theme.TiempoBusDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:fontFamily">@font/ubuntu</item>
+        <item name="fontFamily">@font/ubuntu</item>
+    </style>
+
+
 
 </resources>

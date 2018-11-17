@@ -156,7 +156,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     Intent i = new Intent(context, InfoLineasTabsPager.class);
                     i.putExtra("HORARIOS", "TRAM");
 
-                    StringBuffer dato = new StringBuffer("");
+                    StringBuilder dato = new StringBuilder(150);
                     dato.append(datosConsulta.getCodEstacionDestino());
                     dato.append(";;");
                     dato.append(datosConsulta.getCodEstacionOrigen());

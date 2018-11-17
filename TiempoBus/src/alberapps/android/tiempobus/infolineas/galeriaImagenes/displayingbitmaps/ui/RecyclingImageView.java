@@ -23,13 +23,14 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.util.RecyclingBitmapDrawable;
+import androidx.appcompat.widget.AppCompatImageView;
 
 
 /**
  * Sub-class of ImageView which automatically notifies the drawable when it is
  * being displayed.
  */
-public class RecyclingImageView extends ImageView {
+public class RecyclingImageView extends AppCompatImageView {
 
     public RecyclingImageView(Context context) {
         super(context);

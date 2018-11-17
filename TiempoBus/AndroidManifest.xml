@@ -375,7 +375,7 @@
         <activity
             android:name=".barcodereader.BarcodeMainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
+            android:theme="@style/Theme.TiempoBusDialog">
         </activity>
 
         <activity android:name=".barcodereader.BarcodeCaptureActivity"

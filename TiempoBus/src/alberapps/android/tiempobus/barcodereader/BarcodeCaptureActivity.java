@@ -107,7 +107,7 @@ public final class BarcodeCaptureActivity extends AppCompatActivity{
         gestureDetector = new GestureDetector(this, new CaptureGestureListener());
         scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
-        Snackbar.make(mGraphicOverlay, "Tap to capture. Pinch/Stretch to zoom",
+        Snackbar.make(mGraphicOverlay, getString(R.string.camara_instrucciones),
                 Snackbar.LENGTH_LONG)
                 .show();
     }
@@ -305,9 +305,9 @@ public final class BarcodeCaptureActivity extends AppCompatActivity{
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Multitracker sample")
+        builder.setTitle(getString(R.string.barcode_opcion_1))
                 .setMessage(R.string.no_camera_permission)
-                .setPositiveButton(R.string.ok, listener)
+                .setPositiveButton(android.R.string.ok, listener)
                 .show();
     }
 
