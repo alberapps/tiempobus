@@ -21,6 +21,7 @@ package alberapps.android.tiempobus.principal;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +40,8 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.java.tam.BusLlegada;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador Tiempos
@@ -557,6 +560,15 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             busProximo = (TextView) v.findViewById(R.id.bus_proximo);
 
             tiempoPrincipal = (TextView) v.findViewById(R.id.tiempo_principal);
+
+            Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+
+            busLinea.setTypeface(ubuntu, Typeface.BOLD);
+            busDestino.setTypeface(ubuntu, Typeface.BOLD);
+            busProximo.setTypeface(ubuntu);
+            tiempoPrincipal.setTypeface(ubuntu, Typeface.BOLD);
+
+
         }
 
     }

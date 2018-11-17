@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.historial;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador Historial
@@ -101,6 +103,11 @@ public class HistorialAdapter extends ArrayAdapter<Favorito> {
             numParada = (TextView) v.findViewById(R.id.numParadaFav);
             titulo = (TextView) v.findViewById(R.id.titulo);
             descripcion = (TextView) v.findViewById(R.id.descripcion);
+
+            Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+            numParada.setTypeface(ubuntu, Typeface.BOLD);
+            titulo.setTypeface(ubuntu, Typeface.BOLD);
+            descripcion.setTypeface(ubuntu);
         }
 
     }

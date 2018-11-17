@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.4.1</string>
+    <string name="app_version" translatable="false">4.4.2</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2018)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -468,6 +468,7 @@
         Mapicons mapicons.nicolasmollet.com;
         Logo de la App compuesto con http://www.elegantthemes.com/blog/freebie-of-the-week/flat-icon-collection-update (http://www.gnu.org/licenses/gpl-2.0.html);
         Marcadores mapa por Freepik de www.flaticon.com (http://creativecommons.org/licenses/by/3.0/)
+        Ubuntu font ubuntu.com (https://www.ubuntu.com/legal/font-licence)
 	</string>
     <string name="compatibilidad">* AVISO para Android 2.2 (Froyo): Google Play Services ya no es totalmente compatible. Pueden producirse fallos en la app.</string>
 

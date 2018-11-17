@@ -1669,6 +1669,10 @@ public class DatosPantallaPrincipal {
 
         try {
 
+            if (esTram(context.paradaActual)) {
+                return tiempos;
+            }
+
             if (tiempos != null && !tiempos.isEmpty()) {
 
                 String tarjetasFijasPref = preferencias.getString("tarjetas_fijas", "");

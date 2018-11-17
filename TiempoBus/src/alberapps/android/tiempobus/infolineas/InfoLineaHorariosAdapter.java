@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.horarios.Horario;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador de listados de horarios
@@ -71,6 +73,11 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
 
         descHorario = (TextView) v.findViewById(R.id.desc_horario);
         datosHorario = (TextView) v.findViewById(R.id.datos_horario);
+
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+
+        descHorario.setTypeface(ubuntu, Typeface.BOLD);
+        datosHorario.setTypeface(ubuntu, Typeface.BOLD);
 
         final Horario horario = getItem(position);
 

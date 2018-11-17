@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +37,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador de informacion de lineas
@@ -100,6 +102,12 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
         descLinea = (TextView) v.findViewById(R.id.desc_linea);
         datosLinea = (TextView) v.findViewById(R.id.datos_linea);
 
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+
+        busLinea.setTypeface(ubuntu, Typeface.BOLD);
+        descLinea.setTypeface(ubuntu, Typeface.BOLD);
+        datosLinea.setTypeface(ubuntu);
+
         final BusLinea bus = getItem(position);
 
         if (bus != null && !bus.isErrorServicio() && !bus.isFiltroSinDatos()) {
@@ -113,6 +121,11 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
             TextView informacionText = (TextView) v.findViewById(R.id.infoparada_horarios);
             TextView informacionText1 = (TextView) v.findViewById(R.id.infoparada_horarios_1);
+            TextView infoparada = (TextView) v.findViewById(R.id.infoparada_paradas);
+
+            informacionText.setTypeface(ubuntu);
+            informacionText1.setTypeface(ubuntu);
+            infoparada.setTypeface(ubuntu);
 
             if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 

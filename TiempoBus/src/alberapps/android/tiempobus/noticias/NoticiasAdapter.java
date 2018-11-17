@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.noticias;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.List;
 import alberapps.android.tiempobus.R;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.util.Utilidades;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Datos lista de noticias
@@ -51,6 +53,8 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
 
         Noticias noticia = getItem(position);
 
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+
         if (!noticia.isSinDatos() && !noticia.isErrorServicio()) {
 
             if (v == null) {
@@ -68,6 +72,10 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                     TextView fecha = (TextView) v.findViewById(R.id.fecha);
                     TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
                     TextView noticiaLineasText = (TextView) v.findViewById(R.id.noticia_lineas);
+
+                    fecha.setTypeface(ubuntu, Typeface.BOLD);
+                    noticiaText.setTypeface(ubuntu);
+                    noticiaLineasText.setTypeface(ubuntu);
 
                     if(noticia.getFechaDoble() != null){
                         fecha.setText(noticia.getFechaDoble());
@@ -98,6 +106,7 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
+            text.setTypeface(ubuntu, Typeface.BOLD);
 
 
             if (noticia != null && noticia.isErrorServicio()) {
@@ -107,6 +116,7 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
+            textAviso.setTypeface(ubuntu, Typeface.BOLD);
 
             String aviso = "";
 

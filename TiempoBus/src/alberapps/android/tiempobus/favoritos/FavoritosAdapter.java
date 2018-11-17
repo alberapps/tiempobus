@@ -19,6 +19,8 @@ package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +37,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.util.Datos;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador Favoritos
@@ -234,6 +237,12 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
             numParada = (TextView) v.findViewById(R.id.numParadaFav);
             titulo = (TextView) v.findViewById(R.id.titulo);
             descripcion = (TextView) v.findViewById(R.id.descripcion);
+
+            Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+            numParada.setTypeface(ubuntu, Typeface.BOLD);
+            titulo.setTypeface(ubuntu, Typeface.BOLD);
+            descripcion.setTypeface(ubuntu);
+
         }
 
     }

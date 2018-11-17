@@ -39,6 +39,7 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tram.UtilidadesTRAM;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador listado de paradas
@@ -82,6 +83,12 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         descParada = (TextView) v.findViewById(R.id.desc_parada);
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        numParada.setTypeface(ubuntu, Typeface.BOLD);
+        descParada.setTypeface(ubuntu, Typeface.BOLD);
+        datos.setTypeface(ubuntu, Typeface.ITALIC);
+
+
         if (datos != null) {
             datos.setText("");
         }
@@ -112,6 +119,8 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
 
         TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
+
+        cargarText.setTypeface(ubuntu);
 
         if (!UtilidadesTRAM.ACTIVADO_L9 && ((InfoLineasTabsPager) contexto).getLinea().getNumLinea().equals("L9")) {
             cargarText.setVisibility(View.INVISIBLE);
@@ -148,6 +157,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         }
 
         TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
+        informacionText.setTypeface(ubuntu);
 
         // Link informacion
         informacionText.setOnClickListener(new OnClickListener() {
@@ -243,7 +253,9 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
         texto.setGravity(Gravity.CENTER);
         //texto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        texto.setTypeface(Typeface.DEFAULT_BOLD);
+
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        texto.setTypeface(ubuntu, Typeface.BOLD);
 
         DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
 

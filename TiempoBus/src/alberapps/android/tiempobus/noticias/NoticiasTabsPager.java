@@ -34,6 +34,8 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.NavUtils;
 import androidx.core.view.MenuItemCompat;
@@ -1267,7 +1269,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
         texto.setGravity(Gravity.CENTER);
-        texto.setTypeface(Typeface.DEFAULT_BOLD);
+        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        texto.setTypeface(ubuntu, Typeface.BOLD);
 
         DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
 

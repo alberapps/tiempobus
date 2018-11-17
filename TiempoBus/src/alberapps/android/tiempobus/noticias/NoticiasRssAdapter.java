@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.noticias;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.noticias.rss.NoticiaRss;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Lista de noticias de RSS
@@ -42,8 +44,13 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
 
     public View getView(int position, View v, ViewGroup parent) {
+
+        Context ctx = this.getContext().getApplicationContext();
+
+        Typeface ubuntu = ResourcesCompat.getFont(ctx, R.font.ubuntu);
+
         if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
+
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             v = vi.inflate(R.layout.noticias_rss_item, null);
@@ -56,6 +63,9 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
                 TextView titulo = (TextView) v.findViewById(R.id.titulo_rss);
                 TextView descripcion = (TextView) v.findViewById(R.id.descripcion_rss);
+
+                titulo.setTypeface(ubuntu, Typeface.BOLD);
+                descripcion.setTypeface(ubuntu);
 
                 titulo.setText(noticia.getTitulo());
                 descripcion.setText(noticia.getDescripcion());
