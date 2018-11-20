@@ -14,7 +14,7 @@
  
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
+
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -29,18 +29,84 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
-
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
-        card_view:cardElevation="@dimen/cardview_default_elevation"
-
-        >
+        card_view:cardCornerRadius="@dimen/card_radius"
+        card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        card_view:srcCompat="@drawable/ic_arrow_forward_black_18dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/bus_destino"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="@string/guion"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                        android:textColor="@color/primary_dark_material_light"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="27dp"
+                        android:layout_gravity="right"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/fijar_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Fijar linea"
+                            android:src="@drawable/fijar" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/tiempos_opciones"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/actionbar_compat_item"
+                            android:contentDescription="Mas opciones"
+                            card_view:srcCompat="@drawable/ic_more_vert_24dp" />
+
+
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tiempo_aviso"
@@ -58,7 +124,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
@@ -93,28 +158,6 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            card_view:srcCompat="@drawable/ic_arrow_forward_black_18dp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/bus_destino"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:maxLines="1"
-                            android:text="@string/guion"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/primary_dark_material_light"
-                            android:textStyle="bold"
-                            />
-                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tiempo_principal"
@@ -122,10 +165,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/bus_proximo"
@@ -133,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                         android:textColor="@color/mi_material_blue_grey"
 
                         />
@@ -147,18 +189,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="27dp"
-                android:background="@color/mi_material_grey_200"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/fijar_img"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:contentDescription="Fijar linea"
-                    android:src="@drawable/fijar" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/tiempos_alerta_img"
@@ -200,17 +232,6 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Leer tiempo"
                     card_view:srcCompat="@drawable/ic_volume_up_24dp" />
-
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/tiempos_opciones"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_weight="1"
-                    android:background="@drawable/actionbar_compat_item"
-                    android:contentDescription="Mas opciones"
-                    card_view:srcCompat="@drawable/ic_more_vert_24dp" />
 
 
             </LinearLayout>

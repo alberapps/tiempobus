@@ -49,7 +49,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
         <LinearLayout
@@ -70,9 +70,8 @@
                     android:layout_gravity="left"
                     android:text="@string/launch_preferences"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-
                     android:textSize="12sp"
-                    android:textStyle="italic|bold" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,10 +92,10 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="7dp"
                     android:layout_marginLeft="1dp"
-                    android:layout_marginRight="3dp"
                     android:layout_marginTop="2dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="7dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -138,8 +137,7 @@
                             android:gravity="top"
                             android:text="@string/guion"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/primary_dark_material_light"
-                            android:textStyle="italic" />
+                            android:textColor="@color/primary_dark_material_light" />
 
                     </LinearLayout>
 
@@ -151,8 +149,8 @@
                 android:id="@+id/info_cercana"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5sp"
+                android:layout_marginBottom="10dp"
                 android:gravity="top"
                 android:text="@string/que_hay_cerca"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -166,8 +164,7 @@
                 android:layout_marginBottom="5dp"
                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
                 android:gravity="top"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="italic" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -196,7 +193,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
@@ -230,7 +227,7 @@
                             android:text="@string/eltiempoOWM"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textSize="12sp"
-                            android:textStyle="italic|bold" />
+                            android:textStyle="bold" />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/climaSwitch"
@@ -286,8 +283,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:maxLines="2"
-                                    android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textStyle="italic" />
+                                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                             </LinearLayout>
 
@@ -296,27 +292,25 @@
                                 android:id="@+id/textoWeatherTexto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="1dp"
                                 android:layout_marginLeft="5sp"
+                                android:layout_marginBottom="1dp"
                                 android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textStyle="italic" />
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
                             <TextView
                                 android:id="@+id/textoWeatherTexto2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="2dp"
                                 android:layout_marginLeft="5sp"
                                 android:layout_marginTop="1dp"
+                                android:layout_marginBottom="2dp"
                                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textStyle="italic" />
+                                android:textAppearance="?android:attr/textAppearanceSmall" />
                         </LinearLayout>
 
 
@@ -326,8 +320,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
                         android:layout_marginRight="7dp"
+                        android:layout_marginBottom="5dp"
 
 
                         >
@@ -341,8 +335,7 @@
                             android:maxLines="2"
                             android:text="@string/guion"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textSize="10sp"
-                            android:textStyle="italic" />
+                            android:textSize="10sp" />
                     </LinearLayout>
 
 
@@ -365,7 +358,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
         <LinearLayout
@@ -397,7 +390,7 @@
                             android:text="@string/wikipedia"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textSize="12sp"
-                            android:textStyle="italic|bold" />
+                            android:textStyle="bold" />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/wikiSwitch"
@@ -421,10 +414,9 @@
                             android:fadeScrollbars="false"
                             android:gravity="top"
                             android:lines="3"
-                            android:scrollHorizontally="true"
                             android:scrollbars="horizontal"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textStyle="italic" />
+                            android:scrollHorizontally="true"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     </HorizontalScrollView>
 

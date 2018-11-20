@@ -31,7 +31,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
@@ -93,7 +93,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         card_view:cardBackgroundColor="@color/cardview_light_background"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
@@ -134,7 +134,7 @@
                 android:gravity="top"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_principal"
-                android:textStyle="italic" />
+                />
 
             <TextView
                 android:id="@+id/fecha_ultima_tram_2"
@@ -155,7 +155,7 @@
                 android:gravity="top"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_principal"
-                android:textStyle="italic" />
+                />
 
             <Button
                 android:id="@+id/boton_ver_todas"

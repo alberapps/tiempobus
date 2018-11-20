@@ -16,6 +16,6 @@
 
 <resources>
 
-    <dimen name="tarjeta_margin">5dp</dimen>
+    <dimen name="tarjeta_margin">3dp</dimen>
 
 </resources>

@@ -31,7 +31,7 @@
         android:layout_margin="@dimen/tarjeta_margin"
 
         app:cardBackgroundColor="@color/cardview_light_background"
-        app:cardCornerRadius="1dp"
+        app:cardCornerRadius="@dimen/card_radius"
         app:cardElevation="@dimen/cardview_default_elevation">
 
         <LinearLayout

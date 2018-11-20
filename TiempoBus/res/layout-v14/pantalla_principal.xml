@@ -87,6 +87,9 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/drawer_menu_header"
         app:menu="@menu/drawer"
+        app:itemIconTint="@color/mi_material_blue_principal"
+        app:itemTextColor="@color/mi_material_blue_principal"
+        app:itemTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
         />
         
 

@@ -36,7 +36,7 @@
             android:layout_margin="@dimen/tarjeta_margin"
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
-            card_view:cardCornerRadius="1dp"
+            card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/cardview_default_elevation">
 
             <LinearLayout
@@ -74,7 +74,7 @@
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="italic" />
+                        />
 
                     <TextView
                         android:id="@+id/noticia_lineas"
@@ -84,7 +84,7 @@
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/primary_dark_material_light"
-                        android:textStyle="italic" />
+                        />
 
                 </LinearLayout>
 

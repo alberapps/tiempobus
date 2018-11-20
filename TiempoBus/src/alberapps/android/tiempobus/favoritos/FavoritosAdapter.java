@@ -18,6 +18,7 @@
 package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
+
 import androidx.appcompat.widget.AppCompatImageView;
 
 import android.graphics.Typeface;
@@ -89,38 +90,29 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
         if (favorito != null) {
 
+            ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
+
             if (favorito.getNumParada().equals("0")) {
 
                 tag.numParada.setText("HT");
-
                 TextView texto = (TextView) v.findViewById(R.id.numParadaFav);
-
                 texto.setTextColor(contexto.getResources().getColor(R.color.tram_l3));
-                //texto.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-                //texto.setTextAppearance(contexto, android.R.style.TextAppearance_Medium);
-
                 tag.titulo.setText(favorito.getTitulo().trim());
-
                 String[] desc = favorito.getDescripcion().trim().split("::");
                 datosHorario = desc[1];
-
                 tag.descripcion.setText(desc[0]);
-
-                ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
 
                 compartir.setVisibility(View.INVISIBLE);
 
             } else {
 
                 tag.numParada.setText(favorito.getNumParada().trim());
-
                 TextView texto = (TextView) v.findViewById(R.id.numParadaFav);
-
                 texto.setTextColor(contexto.getResources().getColor(R.color.mi_material_blue_principal));
-                //texto.setTextAppearance(contexto, android.R.style.TextAppearance_Large);
-
                 tag.titulo.setText(favorito.getTitulo().trim());
                 tag.descripcion.setText(favorito.getDescripcion().trim());
+
+                compartir.setVisibility(View.VISIBLE);
 
             }
 
@@ -153,14 +145,6 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
                 FavoritosActivity actividad = (FavoritosActivity) contexto;
 
                 actividad.shareFavorito(favorito);
-
-
-                //AlarmaDiaria alarmaDiaria = new AlarmaDiaria(getContext());
-
-                //alarmaDiaria.establecerAlarma();
-
-
-                //AlarmaDiariaReceiver.cargarTiempos(getContext());
 
             }
 

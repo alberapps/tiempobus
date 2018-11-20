@@ -84,12 +84,14 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
         Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
-        numParada.setTypeface(ubuntu, Typeface.BOLD);
-        descParada.setTypeface(ubuntu, Typeface.BOLD);
-        datos.setTypeface(ubuntu, Typeface.ITALIC);
 
+        numParada.setTypeface(ubuntu, Typeface.BOLD);
+        if(descParada != null) {
+            descParada.setTypeface(ubuntu, Typeface.BOLD);
+        }
 
         if (datos != null) {
+            datos.setTypeface(ubuntu);
             datos.setText("");
         }
 

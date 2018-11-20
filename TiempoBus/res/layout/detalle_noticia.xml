@@ -40,7 +40,7 @@
                 android:layout_margin="@dimen/tarjeta_margin"
 
                 card_view:cardBackgroundColor="@color/cardview_light_background"
-                card_view:cardCornerRadius="1dp"
+                card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
@@ -100,7 +100,7 @@
                 android:layout_margin="@dimen/tarjeta_margin"
 
                 card_view:cardBackgroundColor="@color/cardview_light_background"
-                card_view:cardCornerRadius="1dp"
+                card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
@@ -127,7 +127,7 @@
                             android:text="@string/noticia_zoom_reducir"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textColor="@color/primary_dark_material_light"
-                            android:textStyle="italic|bold" />
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                                 android:text="@string/noticia_zoom_aumenta"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="@color/primary_dark_material_light"
-                                android:textStyle="italic|bold" />
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -167,7 +167,7 @@
                 android:layout_margin="@dimen/tarjeta_margin"
 
                 card_view:cardBackgroundColor="@color/cardview_light_background"
-                card_view:cardCornerRadius="1dp"
+                card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/cardview_default_elevation">
 
 
