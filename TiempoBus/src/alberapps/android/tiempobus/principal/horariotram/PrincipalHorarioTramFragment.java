@@ -658,7 +658,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
             for (int i = 0; i < a1.length; i++) {
                 listaSpinner.add(new SpinnerItem(i, a1[i]));
             }
-            final ArrayAdapter<SpinnerItem> adapterEstDest = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_horario, listaSpinner);
+            final ArrayAdapter<SpinnerItem> adapterEstDest = new ArrayAdapter<>(getActivity(), R.layout.spinner_item_horario_principal, listaSpinner);
 
             final Spinner spinnerEstDest = (Spinner) getView().findViewById(R.id.spinner_estacion_destino);
             //final ArrayAdapter<SpinnerItem> adapterEstDest = ArrayAdapter.createFromResource(getActivity(), R.array.estaciones_tram, R.layout.spinner_item_horario);

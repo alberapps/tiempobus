@@ -116,7 +116,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="27dp"
-                android:background="@color/mi_material_grey_200"
                 android:orientation="horizontal"
                 >
 

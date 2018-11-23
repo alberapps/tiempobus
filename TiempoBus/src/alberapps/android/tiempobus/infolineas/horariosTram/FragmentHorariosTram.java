@@ -31,10 +31,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContentResolverCompat;
+
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -155,48 +158,57 @@ public class FragmentHorariosTram extends Fragment {
         imgCircularFavorito.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                //Cargar datos
-                StringBuffer guardar = new StringBuffer("");
-                guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getHoraDesde());
-                guardar.append(";;");
-                guardar.append(actividad.consultaHorarioTram.getHoraHasta());
-                PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
-                datosHorario = guardar.toString();
+                try {
+
+                    //Cargar datos
+                    StringBuffer guardar = new StringBuffer("");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionDestino());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getCodEstacionOrigen());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionDestinoSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getEstacionOrigenSeleccion());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraDesde());
+                    guardar.append(";;");
+                    guardar.append(actividad.consultaHorarioTram.getHoraHasta());
+                    PreferencesUtil.putCache(actividad, "datos_horarios_tram", guardar.toString());
+                    datosHorario = guardar.toString();
 
 
-                Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
+                    Intent i = new Intent(actividad, FavoritoNuevoActivity.class);
 
-                Bundle extras = new Bundle();
-                extras.putString("HTRAM", "TRAM");
-                // Preparamos una descripcion automatica para el
-                // favorito
+                    Bundle extras = new Bundle();
+                    extras.putString("HTRAM", "TRAM");
+                    // Preparamos una descripcion automatica para el
+                    // favorito
 
 
-                String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
+                    String[] estaciones = actividad.getResources().getStringArray(R.array.estaciones_tram);
 
-                StringBuffer desc = new StringBuffer();
-                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
-                desc.append("\n");
-                desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
-                desc.append("\n");
-                desc.append(actividad.consultaHorarioTram.getHoraDesde());
-                desc.append("->");
-                desc.append(actividad.consultaHorarioTram.getHoraHasta());
-                desc.append("::");
-                desc.append(datosHorario);
+                    StringBuffer desc = new StringBuffer();
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionOrigenSeleccion()]);
+                    desc.append("\n");
+                    desc.append(estaciones[actividad.consultaHorarioTram.getEstacionDestinoSeleccion()]);
+                    desc.append("\n");
+                    desc.append(actividad.consultaHorarioTram.getHoraDesde());
+                    desc.append("->");
+                    desc.append(actividad.consultaHorarioTram.getHoraHasta());
+                    desc.append("::");
+                    desc.append(datosHorario);
 
-                extras.putString("DESCRIPCION", desc.toString());
+                    extras.putString("DESCRIPCION", desc.toString());
 
-                i.putExtras(extras);
-                actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+                    i.putExtras(extras);
+                    actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_ADDFAV);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    Toast.makeText(actividad.getApplicationContext(), getString(R.string.aviso_error_datos), Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 

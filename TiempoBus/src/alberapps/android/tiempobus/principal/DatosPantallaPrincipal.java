@@ -1740,6 +1740,10 @@ public class DatosPantallaPrincipal {
      */
     public static void formatoLinea(Context contexto, TextView busLinea, String linea, boolean cambiarSize) {
 
+        if(linea.isEmpty()){
+            return;
+        }
+
         //Color circulo
         if (linea.trim().equals("L1")) {
 
