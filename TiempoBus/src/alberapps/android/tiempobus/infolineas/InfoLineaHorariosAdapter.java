@@ -74,10 +74,16 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
         descHorario = (TextView) v.findViewById(R.id.desc_horario);
         datosHorario = (TextView) v.findViewById(R.id.datos_horario);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
 
-        descHorario.setTypeface(ubuntu, Typeface.BOLD);
-        datosHorario.setTypeface(ubuntu, Typeface.BOLD);
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+            descHorario.setTypeface(ubuntu, Typeface.BOLD);
+            datosHorario.setTypeface(ubuntu, Typeface.BOLD);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         final Horario horario = getItem(position);
 
@@ -99,12 +105,12 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
 
                     if (horaAnterior != hora) {
                         horaAnterior = hora;
-                        if(i > 0){
+                        if (i > 0) {
                             sb.append("<br/><br/>");
                         } else {
                             sb.append("<br/>");
                         }
-                        sb.append("<font color='#4f5d72'><strong>" +hora + "h:</strong></font>&nbsp;");
+                        sb.append("<font color='#4f5d72'><strong>" + hora + "h:</strong></font>&nbsp;");
                     } else {
                         if (i > 0) {
                             sb.append("&nbsp;");

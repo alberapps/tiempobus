@@ -117,7 +117,13 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         final MainActivity actividad = (MainActivity) contexto;
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         final BusLlegada bus = getItem(position);
 
@@ -192,7 +198,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                 //Mensaje tiempo real
                 TextView textoTiempoReal = (TextView) v.findViewById(R.id.tiempo_aviso);
-                textoTiempoReal.setTypeface(ubuntu);
+
+                if (ubuntu != null) {
+                    textoTiempoReal.setTypeface(ubuntu);
+                }
                 if (bus.isTiempoReal()) {
                     textoTiempoReal.setVisibility(View.GONE);
                 } else {
@@ -352,7 +361,10 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            text.setTypeface(ubuntu, Typeface.BOLD);
+
+            if (ubuntu != null) {
+                text.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             text.setText(ctx.getString(R.string.aviso_recarga));
 
@@ -383,7 +395,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            text.setTypeface(ubuntu, Typeface.BOLD);
+            if (ubuntu != null) {
+                text.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
 
             if (bus != null && bus.isErrorServicio()) {
@@ -398,7 +412,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            if (ubuntu != null) {
+                textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             String aviso = "";
 
@@ -567,12 +583,16 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             tiempoPrincipal = (TextView) v.findViewById(R.id.tiempo_principal);
 
-            Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+            try {
+                Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
 
-            busLinea.setTypeface(ubuntu, Typeface.BOLD);
-            busDestino.setTypeface(ubuntu, Typeface.BOLD);
-            busProximo.setTypeface(ubuntu);
-            tiempoPrincipal.setTypeface(ubuntu, Typeface.BOLD);
+                busLinea.setTypeface(ubuntu, Typeface.BOLD);
+                busDestino.setTypeface(ubuntu, Typeface.BOLD);
+                busProximo.setTypeface(ubuntu);
+                tiempoPrincipal.setTypeface(ubuntu, Typeface.BOLD);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
         }

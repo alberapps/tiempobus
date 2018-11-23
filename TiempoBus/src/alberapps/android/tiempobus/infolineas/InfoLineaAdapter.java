@@ -102,11 +102,17 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
         descLinea = (TextView) v.findViewById(R.id.desc_linea);
         datosLinea = (TextView) v.findViewById(R.id.datos_linea);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
 
-        busLinea.setTypeface(ubuntu, Typeface.BOLD);
-        descLinea.setTypeface(ubuntu, Typeface.BOLD);
-        datosLinea.setTypeface(ubuntu);
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+            busLinea.setTypeface(ubuntu, Typeface.BOLD);
+            descLinea.setTypeface(ubuntu, Typeface.BOLD);
+            datosLinea.setTypeface(ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         final BusLinea bus = getItem(position);
 
@@ -123,12 +129,13 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             TextView informacionText1 = (TextView) v.findViewById(R.id.infoparada_horarios_1);
             TextView infoparada = (TextView) v.findViewById(R.id.infoparada_paradas);
 
-            informacionText.setTypeface(ubuntu);
-            informacionText1.setTypeface(ubuntu);
-            infoparada.setTypeface(ubuntu);
+            if (ubuntu != null) {
+                informacionText.setTypeface(ubuntu);
+                informacionText1.setTypeface(ubuntu);
+                infoparada.setTypeface(ubuntu);
+            }
 
             if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
-
 
 
                 // Carga de horarios bus
@@ -146,7 +153,6 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                     }
 
                 });
-
 
 
                 int id = Integer.parseInt(bus.getIdGrupo());
@@ -384,7 +390,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                     notifyDataSetInvalidated();
 
                     final TextView textoBuscar = (TextView) contexto.findViewById(R.id.texto_buscar);
-                    if(textoBuscar != null) {
+                    if (textoBuscar != null) {
                         textoBuscar.requestFocus();
                     }
 

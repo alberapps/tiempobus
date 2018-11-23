@@ -61,7 +61,13 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
         final HorarioItem horas = getItem(position);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (horas != null && !horas.isErrorServicio() && !horas.isSinDatos() && horas != null) {
 
@@ -73,7 +79,9 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 v = vi.inflate(R.layout.infolinea_horarios_tram_info, null);
 
                 TextView text = (TextView) v.findViewById(R.id.txt_datos);
-                text.setTypeface(ubuntu);
+                if(ubuntu != null) {
+                    text.setTypeface(ubuntu);
+                }
 
                 StringBuffer datos = new StringBuffer("");
 
@@ -125,9 +133,11 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 datosInfo = (TextView) v.findViewById(R.id.datos_info);
 
 
-                datosGrupoHora.setTypeface(ubuntu, Typeface.BOLD);
-                datosHoras.setTypeface(ubuntu, Typeface.BOLD);
-                datosInfo.setTypeface(ubuntu, Typeface.BOLD);
+                if(ubuntu != null) {
+                    datosGrupoHora.setTypeface(ubuntu, Typeface.BOLD);
+                    datosHoras.setTypeface(ubuntu, Typeface.BOLD);
+                    datosInfo.setTypeface(ubuntu, Typeface.BOLD);
+                }
 
                 if (datosGrupoHora == null) {
                     Context ctx = this.getContext().getApplicationContext();
@@ -156,12 +166,16 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            text.setTypeface(ubuntu, Typeface.BOLD);
+            if(ubuntu != null) {
+                text.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             text.setText(ctx.getString(R.string.error_tiempos));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            if(ubuntu != null) {
+                textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             String aviso = "";
 
@@ -177,12 +191,16 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            text.setTypeface(ubuntu, Typeface.BOLD);
+            if (ubuntu != null){
+                text.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             text.setText(ctx.getString(R.string.main_no_items));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            if(ubuntu != null) {
+                textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             String aviso = "";
 

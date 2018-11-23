@@ -104,10 +104,14 @@ public class HistorialAdapter extends ArrayAdapter<Favorito> {
             titulo = (TextView) v.findViewById(R.id.titulo);
             descripcion = (TextView) v.findViewById(R.id.descripcion);
 
-            Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
-            numParada.setTypeface(ubuntu, Typeface.BOLD);
-            titulo.setTypeface(ubuntu, Typeface.BOLD);
-            descripcion.setTypeface(ubuntu);
+            try {
+                Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+                numParada.setTypeface(ubuntu, Typeface.BOLD);
+                titulo.setTypeface(ubuntu, Typeface.BOLD);
+                descripcion.setTypeface(ubuntu);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     }

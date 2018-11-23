@@ -53,7 +53,13 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
 
         Noticias noticia = getItem(position);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (!noticia.isSinDatos() && !noticia.isErrorServicio()) {
 
@@ -73,9 +79,11 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                     TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
                     TextView noticiaLineasText = (TextView) v.findViewById(R.id.noticia_lineas);
 
-                    fecha.setTypeface(ubuntu, Typeface.BOLD);
-                    noticiaText.setTypeface(ubuntu);
-                    noticiaLineasText.setTypeface(ubuntu);
+                    if(ubuntu != null) {
+                        fecha.setTypeface(ubuntu, Typeface.BOLD);
+                        noticiaText.setTypeface(ubuntu);
+                        noticiaLineasText.setTypeface(ubuntu);
+                    }
 
                     if(noticia.getFechaDoble() != null){
                         fecha.setText(noticia.getFechaDoble());
@@ -106,7 +114,9 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            text.setTypeface(ubuntu, Typeface.BOLD);
+            if(ubuntu != null) {
+                text.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
 
             if (noticia != null && noticia.isErrorServicio()) {
@@ -116,7 +126,9 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            if(ubuntu != null) {
+                textAviso.setTypeface(ubuntu, Typeface.BOLD);
+            }
 
             String aviso = "";
 

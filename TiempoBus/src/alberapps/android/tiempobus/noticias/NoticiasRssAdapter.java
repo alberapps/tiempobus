@@ -47,7 +47,13 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
         Context ctx = this.getContext().getApplicationContext();
 
-        Typeface ubuntu = ResourcesCompat.getFont(ctx, R.font.ubuntu);
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(ctx, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (v == null) {
 
@@ -64,8 +70,10 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
                 TextView titulo = (TextView) v.findViewById(R.id.titulo_rss);
                 TextView descripcion = (TextView) v.findViewById(R.id.descripcion_rss);
 
-                titulo.setTypeface(ubuntu, Typeface.BOLD);
-                descripcion.setTypeface(ubuntu);
+                if(ubuntu != null) {
+                    titulo.setTypeface(ubuntu, Typeface.BOLD);
+                    descripcion.setTypeface(ubuntu);
+                }
 
                 titulo.setText(noticia.getTitulo());
                 descripcion.setText(noticia.getDescripcion());

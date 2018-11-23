@@ -83,15 +83,25 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         descParada = (TextView) v.findViewById(R.id.desc_parada);
         datos = (TextView) v.findViewById(R.id.datos_parada);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        Typeface ubuntu = null;
 
-        numParada.setTypeface(ubuntu, Typeface.BOLD);
-        if(descParada != null) {
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (ubuntu != null) {
+            numParada.setTypeface(ubuntu, Typeface.BOLD);
+        }
+        if (ubuntu != null && descParada != null) {
             descParada.setTypeface(ubuntu, Typeface.BOLD);
         }
 
         if (datos != null) {
-            datos.setTypeface(ubuntu);
+            if (ubuntu != null) {
+                datos.setTypeface(ubuntu);
+            }
             datos.setText("");
         }
 
@@ -122,7 +132,9 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
         TextView cargarText = (TextView) v.findViewById(R.id.infoparada_cargar);
 
-        cargarText.setTypeface(ubuntu);
+        if (ubuntu != null){
+            cargarText.setTypeface(ubuntu);
+        }
 
         if (!UtilidadesTRAM.ACTIVADO_L9 && ((InfoLineasTabsPager) contexto).getLinea().getNumLinea().equals("L9")) {
             cargarText.setVisibility(View.INVISIBLE);
@@ -159,7 +171,9 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         }
 
         TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
-        informacionText.setTypeface(ubuntu);
+        if(ubuntu != null) {
+            informacionText.setTypeface(ubuntu);
+        }
 
         // Link informacion
         informacionText.setOnClickListener(new OnClickListener() {
@@ -256,8 +270,16 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         texto.setGravity(Gravity.CENTER);
         //texto.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
-        texto.setTypeface(ubuntu, Typeface.BOLD);
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(ubuntu != null) {
+            texto.setTypeface(ubuntu, Typeface.BOLD);
+        }
 
         DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
 

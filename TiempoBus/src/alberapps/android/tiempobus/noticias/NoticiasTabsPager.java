@@ -44,6 +44,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
+
 import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;
@@ -1269,8 +1270,17 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         texto.setLayoutParams(new ViewGroup.LayoutParams(size50, size50));
         texto.setGravity(Gravity.CENTER);
-        Typeface ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
-        texto.setTypeface(ubuntu, Typeface.BOLD);
+
+        Typeface ubuntu = null;
+
+        try {
+            ubuntu = ResourcesCompat.getFont(contexto, R.font.ubuntu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (ubuntu != null) {
+            texto.setTypeface(ubuntu, Typeface.BOLD);
+        }
 
         DatosPantallaPrincipal.formatoLinea(contexto, texto, conexion, false);
 
