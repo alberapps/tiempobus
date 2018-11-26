@@ -18,6 +18,9 @@
  */
 package alberapps.java.noticias;
 
+import android.content.Context;
+import android.os.Build;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -35,9 +38,9 @@ import alberapps.java.util.Utilidades;
  */
 public class ProcesarDetalleNoticia {
 
-    public static Noticias getDetalleNoticia(String url, String userAgent) throws Exception {
+    public static Noticias getDetalleNoticia(String url, String userAgent, Context context) throws Exception {
 
-        return getDetalleNoticiaNuevo(url, userAgent);
+        return getDetalleNoticiaNuevo(url, userAgent, context);
 
     }
 
@@ -49,7 +52,7 @@ public class ProcesarDetalleNoticia {
      * @return noticias
      * @throws Exception
      */
-    public static Noticias getDetalleNoticiaNuevo(String url, String userAgentDefault) throws Exception {
+    public static Noticias getDetalleNoticiaNuevo(String url, String userAgentDefault, Context context) throws Exception {
 
         InputStream st = null;
 
@@ -58,8 +61,16 @@ public class ProcesarDetalleNoticia {
 
         try {
 
+            String conexion = null;
 
-            Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(url, true, userAgentDefault)), "UTF-8", url);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                conexion = Conectividad.conexionGetUtf8StringUserAgent(url, true, userAgentDefault);
+            } else {
+                conexion = Conectividad.conexionGetUtf8StringUserAgent(url, true, userAgentDefault, context);
+            }
+
+
+            Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", url);
 
             noticias = new Noticias();
 

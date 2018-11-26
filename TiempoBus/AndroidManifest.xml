@@ -2,15 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="alberapps.android.tiempobus"
-    android:installLocation="auto"
-    >
+    android:installLocation="auto">
 
-    <uses-sdk/>
-        <!--tools:overrideLibrary="com.google.android.gms,
-        com.google.android.gms.base, com.google.android.gms.maps,
-        com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,
-        com.google.android.gms.tasks" /-->
-
+    <uses-sdk />
+    <!--tools:overrideLibrary="com.google.android.gms,
+    com.google.android.gms.base, com.google.android.gms.maps,
+    com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,
+    com.google.android.gms.tasks" /-->
 
     <supports-screens
         android:largeScreens="true"
@@ -40,10 +38,14 @@
         android:name=".ApplicationTiempoBus"
         android:allowBackup="false"
         android:icon="@mipmap/ic_tiempobus_5_adaptive"
-        android:roundIcon="@mipmap/ic_tiempobus_5_adaptive_round"
         android:label="@string/app_name"
-        android:theme="@style/Theme.TiempoBusTheme">
-        >
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_tiempobus_5_adaptive_round"
+        android:theme="@style/Theme.TiempoBusTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|locale"
@@ -65,8 +67,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data android:name="android.app.shortcuts"
-                       android:resource="@xml/shortcuts" />
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity
@@ -74,10 +77,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:icon="@mipmap/ic_tiempobus_5"
             android:label="@string/favoritosN"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeActionBar"
-            tools:ignore="UnusedAttribute"
-            android:launchMode="singleTop">
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -119,10 +122,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:icon="@mipmap/ic_tiempobus_5"
             android:label="@string/tit_noticias"
+            android:launchMode="singleTop"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            tools:ignore="UnusedAttribute"
-            android:launchMode="singleTop">
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -161,10 +164,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|locale"
             android:icon="@mipmap/ic_tiempobus_5"
             android:label="@string/busqueda"
+            android:launchMode="singleTop"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            tools:ignore="UnusedAttribute"
-            android:launchMode="singleTop">
+            tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.InfoLineasTabsPager" />
@@ -259,9 +262,10 @@
                 android:value=".infolineas.InfoLineasTabsPager" />
         </activity-->
 
-        <activity android:name=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity"
-            android:label="@string/launch_preferences"
+        <activity
+            android:name=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity"
             android:icon="@mipmap/ic_tiempobus_5"
+            android:label="@string/launch_preferences"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
             android:theme="@style/Theme.TiempoBusThemeActionBar"
             tools:ignore="UnusedAttribute">
@@ -272,15 +276,15 @@
 
         <activity
             android:name=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageDetailActivity"
-            android:label="@string/launch_preferences"
             android:icon="@mipmap/ic_tiempobus_5"
+            android:label="@string/launch_preferences"
             android:parentActivityName=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity"
             android:theme="@style/Theme.TiempoBusTheme.FullScreen"
             tools:ignore="UnusedAttribute">
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.galeriaImagenes.displayingbitmaps.ui.ImageGridActivity" />
         </activity>
-
 
 
         <activity
@@ -375,11 +379,11 @@
         <activity
             android:name=".barcodereader.BarcodeMainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.TiempoBusDialog">
-        </activity>
+            android:theme="@style/Theme.TiempoBusDialog"></activity>
 
-        <activity android:name=".barcodereader.BarcodeCaptureActivity"
-            android:label="Read Barcode"/>
+        <activity
+            android:name=".barcodereader.BarcodeCaptureActivity"
+            android:label="Read Barcode" />
 
 
         <!--service android:name=".mensajes.TiempoBusFirebaseMessagingService">

@@ -528,7 +528,7 @@ public class DatosPantallaPrincipal {
 
             String userAgentDefault = Utilidades.getAndroidUserAgent(context);
 
-            context.nuevasNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(true, userAgentDefault);
+            context.nuevasNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(true, userAgentDefault, context.getApplicationContext());
         } else {
             Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }

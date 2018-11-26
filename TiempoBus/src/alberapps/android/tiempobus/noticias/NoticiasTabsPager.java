@@ -355,7 +355,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             String userAgentDefault = Utilidades.getAndroidUserAgent(this);
 
-            loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(usarCache, userAgentDefault);
+            loadNoticiasTask = new LoadNoticiasAsyncTask(loadNoticiasAsyncTaskResponder).execute(usarCache, userAgentDefault, getApplicationContext());
 
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();

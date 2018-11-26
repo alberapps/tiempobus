@@ -17,6 +17,7 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import alberapps.java.noticias.Noticias;
@@ -46,11 +47,17 @@ public class LoadDetalleNoticiaAsyncTask extends AsyncTask<Object, Void, Noticia
 
             String url = (String) datos[0];
 
-            if (datos.length == 2) {
+            Context context = null;
+
+            if (datos.length >= 2) {
                 userAgent = (String) datos[1];
             }
 
-            noticia = ProcesarDetalleNoticia.getDetalleNoticia(url, userAgent);
+            if (datos.length >= 3) {
+                context = (Context) datos[2];
+            }
+
+            noticia = ProcesarDetalleNoticia.getDetalleNoticia(url, userAgent, context);
 
         } catch (Exception e) {
             return null;

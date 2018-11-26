@@ -18,7 +18,9 @@
  */
 package alberapps.java.noticias;
 
+import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -39,7 +41,7 @@ public class ProcesarNoticias {
 
     //public static String URL_SUBUS_NOTICIAS = "http://www.alicante.vectalia.es/alertas/";
 
-    public static List<Noticias> getTamNews(Boolean usarCache, String userAgentDefault) throws Exception {
+    public static List<Noticias> getTamNews(Boolean usarCache, String userAgentDefault, Context context) throws Exception {
 
         List<Noticias> noticias = new ArrayList<>();
 
@@ -48,7 +50,17 @@ public class ProcesarNoticias {
         builder.appendPath(UtilidadesUI.getIdiomaWebSubus());
         builder.appendPath("alertas");
 
-        Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault)), "UTF-8", builder.toString());
+        String conexion = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault);
+        } else {
+            conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault, context);
+        }
+
+
+        Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());
+
 
         //Seccion de noticias
         Elements seccionNoticias = doc.select("div.novedades_alertas");

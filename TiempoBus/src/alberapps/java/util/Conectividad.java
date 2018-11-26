@@ -21,6 +21,7 @@ package alberapps.java.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
@@ -30,6 +31,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,7 +39,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
+
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Comunes;
 
 /**
@@ -243,7 +254,6 @@ public class Conectividad {
      */
     public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
 
-
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
 
@@ -324,6 +334,132 @@ public class Conectividad {
 
     }
 
+
+    /**
+     * Establecer conexion con certificado
+     *
+     * @param urlGet
+     * @param usarCache
+     * @param userAgent
+     * @param utf8
+     * @param contextParam
+     * @return
+     * @throws Exception
+     */
+    public static String conexionGetWebBusCert(String urlGet, boolean usarCache, String userAgent, boolean utf8, Context contextParam) throws Exception {
+
+        HttpsURLConnection urlConnection = null;
+
+        String datos = null;
+
+        InputStream in = null;
+
+        try {
+
+
+            // Load CAs from an InputStream
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+            InputStream caInput = new BufferedInputStream(contextParam.getAssets().open("webbus.crt"));
+
+            Certificate ca;
+            try {
+                ca = cf.generateCertificate(caInput);
+                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+            } finally {
+                caInput.close();
+            }
+
+            // Create a KeyStore containing our trusted CAs
+            String keyStoreType = KeyStore.getDefaultType();
+            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+            // Create a TrustManager that trusts the CAs in our KeyStore
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(keyStore);
+
+            // Create an SSLContext that uses our TrustManager
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, tmf.getTrustManagers(), null);
+
+            // Crear url
+            urlGet = urlGet + "/";
+            URL url = new URL(urlGet);
+
+            urlConnection =
+                    (HttpsURLConnection) url.openConnection();
+            urlConnection.setSSLSocketFactory(context.getSocketFactory());
+
+            urlConnection.setReadTimeout(Comunes.READ_TIMEOUT);
+            urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            if (userAgent == null) {
+                urlConnection.setRequestProperty("User-Agent", USER_AGENT);
+            } else {
+                urlConnection.setRequestProperty("User-Agent", userAgent);
+            }
+
+            if (!usarCache) {
+                urlConnection.addRequestProperty("Cache-Control", "no-cache");
+                Log.d("CONEXION", "Sin cache");
+            } else {
+                Log.d("CONEXION", "Con cache");
+            }
+
+            in = new BufferedInputStream(urlConnection.getInputStream());
+
+            if (utf8) {
+                datos = Utilidades.obtenerStringDeStreamUTF8(in);
+            } else {
+                datos = Utilidades.obtenerStringDeStream(in);
+            }
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {
+
+            }
+
+            throw new Exception("Error al acceder al servicio");
+
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+
+            }
+
+        }
+
+        //Log.d("CONEXION", datos);
+
+        return datos;
+
+    }
+
+
     /**
      * Devuelve inputstream
      *
@@ -368,6 +504,14 @@ public class Conectividad {
         return conexionGetIso(urlGet, usarCache, userAgent, true);
 
     }
+
+    public static String conexionGetUtf8StringUserAgent(String urlGet, Boolean usarCache, String userAgent, Context context) throws Exception {
+
+        return conexionGetWebBusCert(urlGet, usarCache, userAgent, true, context);
+
+
+    }
+
 
     /**
      * Conexion indicando si hay que usar cache
@@ -520,8 +664,6 @@ public class Conectividad {
     }
 
 
-
-
     public static InputStream conexionGetStream(String urlGet, String userAgent) throws Exception {
 
 
@@ -565,9 +707,9 @@ public class Conectividad {
             byte[] buffer = new byte[1024];
             int count;
 
-                while ((count = in.read(buffer)) != -1) {
-                    baos.write(buffer, 0, count);
-                }
+            while ((count = in.read(buffer)) != -1) {
+                baos.write(buffer, 0, count);
+            }
 
 
             byte[] bytes = baos.toByteArray();
@@ -581,7 +723,6 @@ public class Conectividad {
             //in2 = new BufferedInputStream(Utilidades.stringToStream(datos));
 
             //in = urlConnection.getInputStream();
-
 
 
         } catch (IOException e) {
@@ -620,9 +761,6 @@ public class Conectividad {
         return in2;
 
     }
-
-
-
 
 
 }

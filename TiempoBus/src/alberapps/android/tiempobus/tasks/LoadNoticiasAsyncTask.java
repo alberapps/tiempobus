@@ -17,6 +17,7 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.util.List;
@@ -48,8 +49,9 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
         try {
 
             Boolean usarCache = true;
+            Context context = null;
 
-            if (datos.length == 1) {
+            if (datos.length > 1) {
 
                 usarCache = (Boolean) datos[0];
 
@@ -57,12 +59,15 @@ public class LoadNoticiasAsyncTask extends AsyncTask<Object, Void, List<Noticias
 
             String userAgent = null;
 
-            if (datos.length == 2) {
+            if (datos.length >= 2) {
                 userAgent = (String) datos[1];
             }
 
+            if (datos.length >= 3) {
+                context = (Context) datos[2];
+            }
 
-            noticiasList = ProcesarNoticias.getTamNews(usarCache, userAgent);
+            noticiasList = ProcesarNoticias.getTamNews(usarCache, userAgent, context);
 
         } catch (Exception e) {
 

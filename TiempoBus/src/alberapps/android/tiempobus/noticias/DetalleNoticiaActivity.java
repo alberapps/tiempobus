@@ -137,7 +137,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
                     String userAgentDefault = Utilidades.getAndroidUserAgent(this);
 
-                    taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link, userAgentDefault);
+                    taskDetalle = new LoadDetalleNoticiaAsyncTask(loadDetalleNoticiaAsyncTaskResponder).execute(link, userAgentDefault, getApplicationContext());
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
                     if (dialog != null && dialog.isShowing()) {
