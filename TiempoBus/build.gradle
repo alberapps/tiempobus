@@ -22,7 +22,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionName "4.4.2"
+        versionName "4.4.7"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
@@ -39,7 +39,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1487  // Min API level 14
+            versionCode 1492  // Min API level 14
             dimension "api"
         }
 
