@@ -44,7 +44,7 @@ public class ProcesarHorariosTram {
         HorarioTram horarioTram = new HorarioTram();
 
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").authority("www.tramalicante.es").appendPath("horarios.mobi.php")
+        builder.scheme("https").authority("www.tramalicante.es").appendPath("horarios.php")
                 .appendQueryParameter("origen", Integer.toString(datosConsulta.getCodEstacionOrigen()))
                 .appendQueryParameter("destino", Integer.toString(datosConsulta.getCodEstacionDestino()))
                 .appendQueryParameter("fecha", Utilidades.getFechaES(datosConsulta.getDiaDate()))
@@ -63,8 +63,10 @@ public class ProcesarHorariosTram {
 
         //String title = doc.title();
 
+        Elements consulta = doc.getElementsByClass("consulta");
+
         //Datos trayecto
-        Elements ul = doc.select("ul");
+        Elements ul = consulta.select("ul");
 
         //Datos individuales
         Elements liList = ul.select("li");
@@ -102,7 +104,7 @@ public class ProcesarHorariosTram {
 
         //Transbordos
 
-        Elements spanList = doc.select("span.texto_transbordo");
+        Elements spanList = consulta.select("span.texto_transbordo");
 
         DatoTransbordo datoTransbordo = null;
 
@@ -117,7 +119,7 @@ public class ProcesarHorariosTram {
         }
 
 
-        Elements h3List = doc.select("h3");
+        Elements h3List = consulta.select("h3");
         for (int j = 0; j < h3List.size(); j++) {
 
             datosTransbordo.get(j).setTrenesDestino(h3List.get(j).text());
@@ -128,7 +130,7 @@ public class ProcesarHorariosTram {
 
 
         //Horarios
-        Elements tableList = doc.select("table");
+        Elements tableList = consulta.select("table");
 
         Elements tr = null;
         Elements td = null;
