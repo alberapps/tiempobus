@@ -562,12 +562,13 @@
     <string name="favorito_destacado_aviso">La lista se reordenará en el siguiente acceso</string>
 
     <string name="obligatorio">No dejes el campo vacío</string>
-    <string name="fav_existente">El favorit ja existeix</string>
+    <string name="fav_existente">El favorito ya existe</string>
 
     <string name="pdf_text" translatable="false">PDF</string>
 
     <string name="camara_instrucciones">Tap to capture. Pinch/Stretch to zoom</string>
 
+    <string name="hour_text" translatable="false">h</string>
 
 
 </resources>

@@ -272,17 +272,23 @@ public class FragmentHorariosTram extends Fragment {
 
                     e.printStackTrace();
 
-                    Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                    try {
 
-                    datos = new HorarioTram();
-                    datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
-                    DatoTransbordo datoTransbordo = new DatoTransbordo();
-                    datoTransbordo.setErrorServicio(true);
-                    datos.getDatosTransbordos().add(datoTransbordo);
+                        datos = new HorarioTram();
+                        datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());
+                        DatoTransbordo datoTransbordo = new DatoTransbordo();
+                        datoTransbordo.setErrorServicio(true);
+                        datos.getDatosTransbordos().add(datoTransbordo);
 
-                    actividad.datosHorariosTram = datos;
+                        actividad.datosHorariosTram = datos;
 
-                    cargarListado();
+                        cargarListado();
+
+                        Toast.makeText(actividad.getApplicationContext(), actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+
+                    }catch(Exception e1){
+                        e1.printStackTrace();
+                    }
 
                 }
 

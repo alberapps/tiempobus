@@ -69,7 +69,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             e.printStackTrace();
         }
 
-        if (horas != null && !horas.isErrorServicio() && !horas.isSinDatos() && horas != null) {
+        if (horas != null && !horas.isErrorServicio() && !horas.isSinDatos()) {
 
 
             if (horas.getInfoRecorrido() != null && !horas.getInfoRecorrido().isEmpty()) {
@@ -79,11 +79,11 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 v = vi.inflate(R.layout.infolinea_horarios_tram_info, null);
 
                 TextView text = (TextView) v.findViewById(R.id.txt_datos);
-                if(ubuntu != null) {
+                if (ubuntu != null) {
                     text.setTypeface(ubuntu);
                 }
 
-                StringBuffer datos = new StringBuffer("");
+                StringBuilder datos = new StringBuilder(150);
 
                 for (int i = 0; i < horas.getInfoRecorrido().size(); i++) {
 
@@ -99,7 +99,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                         datos.append("- ");
                         datos.append(ctx.getString(R.string.tipo_billete));
                         datos.append(": ");
-                    }else if (i == 2) {
+                    } else if (i == 2) {
                         datos.append("- ");
                         datos.append(ctx.getString(R.string.transbordos));
                         datos.append(": ");
@@ -132,13 +132,6 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 datosHoras = (TextView) v.findViewById(R.id.datos_horas);
                 datosInfo = (TextView) v.findViewById(R.id.datos_info);
 
-
-                if(ubuntu != null) {
-                    datosGrupoHora.setTypeface(ubuntu, Typeface.BOLD);
-                    datosHoras.setTypeface(ubuntu, Typeface.BOLD);
-                    datosInfo.setTypeface(ubuntu, Typeface.BOLD);
-                }
-
                 if (datosGrupoHora == null) {
                     Context ctx = this.getContext().getApplicationContext();
                     LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -150,9 +143,17 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
                 }
 
-                datosGrupoHora.setText(horas.getGrupoHora() + "h");
+                datosGrupoHora.setText(String.format("%s" + this.getContext().getString(R.string.hour_text), horas.getGrupoHora()));
+
                 datosHoras.setText(horas.getHoras());
                 datosInfo.setText(horas.getDatoInfo());
+
+                if (ubuntu != null) {
+                    datosGrupoHora.setTypeface(ubuntu, Typeface.BOLD);
+                    datosHoras.setTypeface(ubuntu, Typeface.BOLD);
+                    datosInfo.setTypeface(ubuntu, Typeface.BOLD);
+                }
+
 
                 //Formato colores
                 DatosPantallaPrincipal.formatoLinea(contexto, datosGrupoHora, horas.getLinea(), false);
@@ -166,14 +167,14 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            if(ubuntu != null) {
+            if (ubuntu != null) {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
             text.setText(ctx.getString(R.string.error_tiempos));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            if(ubuntu != null) {
+            if (ubuntu != null) {
                 textAviso.setTypeface(ubuntu, Typeface.BOLD);
             }
 
@@ -191,14 +192,14 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            if (ubuntu != null){
+            if (ubuntu != null) {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
             text.setText(ctx.getString(R.string.main_no_items));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            if(ubuntu != null) {
+            if (ubuntu != null) {
                 textAviso.setTypeface(ubuntu, Typeface.BOLD);
             }
 
