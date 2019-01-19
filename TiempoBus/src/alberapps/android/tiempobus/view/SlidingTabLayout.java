@@ -70,7 +70,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 12;
 
-    private static final int TEXT_COLOR = R.color.white;
+    private static final int TEXT_COLOR = R.color.mi_material_blue_principal;
 
     private int mTitleOffset;
 

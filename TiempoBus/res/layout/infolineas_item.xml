@@ -32,7 +32,7 @@
 
         app:cardBackgroundColor="@color/cardview_light_background"
         app:cardCornerRadius="@dimen/card_radius"
-        app:cardElevation="@dimen/cardview_default_elevation">
+        app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -31,6 +31,22 @@
             android:title="@string/historial_titulo" />
     </group>
 
+    <item android:title="@string/infolinea_horarios">
+        <menu>
+
+            <item
+                android:id="@+id/navigation_item_horarios_tram"
+                android:icon="@drawable/ic_today_24dp"
+                android:title="@string/mapas_vehiculo_titulo_tram" />
+            <item
+                android:id="@+id/navigation_item_horarios_bus"
+                android:icon="@drawable/ic_today_24dp"
+                android:title="@string/mapas_vehiculo_titulo" />
+
+        </menu>
+
+    </item>
+
     <group
         android:id="@+id/menu_pref"
         android:checkableBehavior="none">
@@ -43,10 +59,10 @@
             android:id="@+id/navigation_item_fondo"
             android:icon="@drawable/ic_collections_grey600_48dp"
             android:title="@string/fondo_pantall" />
-        <item
+        <!--item
             android:id="@+id/navigation_item_exportar"
             android:icon="@drawable/ic_add_to_photos_grey600_48dp"
-            android:title="@string/menu_export_qr" />
+            android:title="@string/menu_export_qr" /-->
 
 
     </group>

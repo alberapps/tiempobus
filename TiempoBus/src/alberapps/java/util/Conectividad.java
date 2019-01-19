@@ -360,7 +360,14 @@ public class Conectividad {
             // Load CAs from an InputStream
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
 
-            InputStream caInput = new BufferedInputStream(contextParam.getAssets().open("webbus.crt"));
+            InputStream caInput = null;
+
+            if (urlGet.contains("tramalicante.es")) {
+                caInput = new BufferedInputStream(contextParam.getAssets().open("tram.crt"));
+            } else {
+                caInput = new BufferedInputStream(contextParam.getAssets().open("webbus.crt"));
+            }
+
 
             Certificate ca;
             try {
@@ -370,11 +377,13 @@ public class Conectividad {
                 caInput.close();
             }
 
+
             // Create a KeyStore containing our trusted CAs
             String keyStoreType = KeyStore.getDefaultType();
             KeyStore keyStore = KeyStore.getInstance(keyStoreType);
             keyStore.load(null, null);
             keyStore.setCertificateEntry("ca", ca);
+
 
             // Create a TrustManager that trusts the CAs in our KeyStore
             String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
@@ -498,6 +507,13 @@ public class Conectividad {
         return conexionGetIso(urlGet, usarCache, null, true);
 
     }
+
+    public static String conexionGetUtf8String(String urlGet, Boolean usarCache, Context context) throws Exception {
+
+        return conexionGetWebBusCert(urlGet, usarCache, null, true, context);
+
+    }
+
 
     public static String conexionGetUtf8StringUserAgent(String urlGet, Boolean usarCache, String userAgent) throws Exception {
 

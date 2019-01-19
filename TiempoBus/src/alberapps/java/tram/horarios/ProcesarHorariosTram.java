@@ -18,7 +18,9 @@
  */
 package alberapps.java.tram.horarios;
 
+import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -39,7 +41,7 @@ public class ProcesarHorariosTram {
 
     //public static String URL_TRAM_HORARIOS = "http://www.tramalicante.es/horarios.mobi.php?origen=124&destino=34&fecha=07/03/2015&hini=19:00&hfin=20:59&calcular=1";
 
-    public static HorarioTram getHorarios(DatosConsultaHorariosTram datosConsulta) throws Exception {
+    public static HorarioTram getHorarios(DatosConsultaHorariosTram datosConsulta, Context context) throws Exception {
 
         HorarioTram horarioTram = new HorarioTram();
 
@@ -57,7 +59,15 @@ public class ProcesarHorariosTram {
         Uri urlHorarios = builder.build();
 
 
-        InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
+        //InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
+        InputStream is = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
+        } else {
+            is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true, context));
+        }
+
 
         Document doc = Jsoup.parse(is, "UTF-8", urlHorarios.toString());
 

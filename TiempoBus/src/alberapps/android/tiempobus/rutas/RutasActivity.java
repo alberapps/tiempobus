@@ -138,6 +138,8 @@ public class RutasActivity extends AppCompatActivity {
 
         }
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         datosRutas = new ArrayList<>();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);

@@ -88,6 +88,8 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
         }
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
 
         dialog = ProgressDialog.show(DetalleNoticiaActivity.this, "", getString(R.string.dialogo_espera), true);
 

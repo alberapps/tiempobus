@@ -37,7 +37,7 @@
 
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="@dimen/card_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"
+            card_view:cardElevation="@dimen/card_elevation"
 
             >
 

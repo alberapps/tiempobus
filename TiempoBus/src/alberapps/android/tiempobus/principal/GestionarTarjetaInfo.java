@@ -27,6 +27,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -35,6 +36,7 @@ import androidx.core.content.ContentResolverCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -370,7 +372,15 @@ public class GestionarTarjetaInfo {
                         if (lat != null && !lat.equals("") && !lon.equals("")) {
 
                             // Cargar informacion del tiempo
-                            String proveedor = preferencias.getString("tarjeta_clima", "yw");
+                            String proveedor = preferencias.getString("tarjeta_clima", "owm");
+                            if (proveedor.equals("yw")) {
+                                //yw desactivado
+                                SharedPreferences.Editor editor = preferencias.edit();
+                                editor.putString("tarjeta_clima", "owm");
+                                editor.apply();
+                                proveedor = "owm";
+                            }
+
                             cargarInfoWeather(lat, lon, v, proveedor, localizacionInfo);
 
                         }
@@ -851,9 +861,9 @@ public class GestionarTarjetaInfo {
      */
     private void mostrarElTiempoOwm(WeatherQuery weather, ImageView iv, View v) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder(50);
 
-        StringBuffer temp = new StringBuffer();
+        StringBuilder temp = new StringBuilder(50);
 
         try {
 
@@ -921,12 +931,11 @@ public class GestionarTarjetaInfo {
 
 
                 sb.append(weather.getListaDatos().get(0).getHumidity());
-                sb.append("%, ");
-                sb.append(weather.getListaDatos().get(0).getLow());
-                sb.append("º/");
-                sb.append(weather.getListaDatos().get(0).getHigh());
-                sb.append("º");
-
+                sb.append("%");
+                //sb.append(weather.getListaDatos().get(0).getLow());
+                //sb.append("º/");
+                //sb.append(weather.getListaDatos().get(0).getHigh());
+                //sb.append("º");
 
                 temp.append(weather.getListaDatos().get(0).getContitionTemp());
                 temp.append("º");

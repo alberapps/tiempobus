@@ -468,7 +468,7 @@ favorit per crear la teua llista.</string>
 
     <string name="barcode_opcion_1">Lector QR de TempsBus</string>
     <string name="barcode_opcion_2">Barcode Scanner de Zxing (Extern)</string>
-    <string name="barcode_opcion_titulo">Selecciona Lector QR</string>
+    <string name="barcode_opcion_titulo">Utilitats QR</string>
     <string name="nuevas_noticias_alberapps">\@AlberApps: Hi ha nous Avisos</string>
     <string name="preferencias_noticias_auto_alberapps">Comprovar Notícies @AlberApps</string>
 
@@ -492,8 +492,13 @@ favorit per crear la teua llista.</string>
     <string name="channel_settings_desc">Configuració del canal de notificacions</string>
 
     <string name="favorito_destacado_aviso">La llista es reordenarà en el següent accés</string>
+    <string name="favorito_destacado_titulo">Destacats</string>
+    <string name="favorito_destacado_aviso_no">No hi ha favorits destacats</string>
+
 
     <string name="obligatorio">No deixes el camp buit</string>
     <string name="fav_existente">El favorit ja existeix</string>
+
+    <string name="menu_horarios_tram">TRAM: Horaris</string>
 
 </resources>

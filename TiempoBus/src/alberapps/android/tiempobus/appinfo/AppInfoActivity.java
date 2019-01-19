@@ -35,6 +35,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
+import androidx.core.app.NavUtils;
 
 /**
  * Informacion de la app
@@ -56,11 +57,13 @@ public class AppInfoActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            //actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
             actionBar.setElevation(0);
 
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
 
         ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
@@ -110,6 +113,12 @@ public class AppInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
 
         return super.onOptionsItemSelected(item);
 

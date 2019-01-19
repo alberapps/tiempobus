@@ -36,7 +36,7 @@
             android:layout_margin="@dimen/tarjeta_margin"
             card_view:cardBackgroundColor="@color/cardview_light_background"
             card_view:cardCornerRadius="@dimen/card_radius"
-            card_view:cardElevation="@dimen/cardview_default_elevation"            >
+            card_view:cardElevation="@dimen/card_elevation"            >
 
 
             <LinearLayout
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        card_view:srcCompat="@drawable/ic_favorite_border_24dp" />
+                        card_view:srcCompat="@drawable/ic_star_border_24dp" />
 
 
                     <androidx.appcompat.widget.AppCompatImageView

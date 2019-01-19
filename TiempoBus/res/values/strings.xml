@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.4.7</string>
+    <string name="app_version" translatable="false">4.4.7.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2018)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -533,7 +533,8 @@
 
     <string name="barcode_opcion_1">Lector QR de TiempoBus</string>
     <string name="barcode_opcion_2">Barcode Scanner de Zxing (Externo)</string>
-    <string name="barcode_opcion_titulo">Selecciona Lector QR</string>
+    <string name="barcode_opcion_3_info">(Zxing)</string>
+    <string name="barcode_opcion_titulo">Utilidades QR</string>
 
 
     <string name="avisos_push_tiempobus">Aviso de AlberApps</string>
@@ -561,6 +562,9 @@
 
     <string name="favorito_destacado_aviso">La lista se reordenará en el siguiente acceso</string>
 
+    <string name="favorito_destacado_titulo">Destacados</string>
+    <string name="favorito_destacado_aviso_no">No hay favoritos destacados</string>
+
     <string name="obligatorio">No dejes el campo vacío</string>
     <string name="fav_existente">El favorito ya existe</string>
 
@@ -569,6 +573,10 @@
     <string name="camara_instrucciones">Tap to capture. Pinch/Stretch to zoom</string>
 
     <string name="hour_text" translatable="false">h</string>
+
+    <string name="error_mapa">Error al cargar el mapa</string>
+
+    <string name="menu_horarios_tram">TRAM: Horarios</string>
 
 
 </resources>

@@ -112,14 +112,14 @@
             android:key="tarjeta_clima_on"
             android:title="@string/tarjeta_clima"
             android:summary="@string/alarma_checkbox"/>
-        <ListPreference
+        <!--ListPreference
             android:defaultValue="yw"
             android:dialogTitle="@string/tarjeta_clima"
             android:entries="@array/tarjeta_clima_value"
             android:entryValues="@array/tarjeta_clima_key"
             android:key="tarjeta_clima"
             android:summary="@string/tarjeta_clima_pref_desc"
-            android:title="@string/tarjeta_clima" />
+            android:title="@string/tarjeta_clima" /-->
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="tarjeta_wiki_on"

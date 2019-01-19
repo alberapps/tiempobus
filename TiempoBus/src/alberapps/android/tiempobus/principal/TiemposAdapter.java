@@ -22,6 +22,7 @@ package alberapps.android.tiempobus.principal;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +33,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -214,6 +217,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             // Botones
             AppCompatImageView alertaText = v.findViewById(R.id.tiempos_alerta_img);
 
+            Bundle bundle = new Bundle();
+
             alertaText.setOnClickListener(new OnClickListener() {
 
                 public void onClick(View view) {
@@ -239,6 +244,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         Toast.makeText(actividad.getApplicationContext(), actividad.getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
                     }
 
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C06");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Alarma");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
 
             });
@@ -253,6 +263,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                     actividad.datosPantallaPrincipal.shareBus(bus, actividad.paradaActual);
 
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C07");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Compartir");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 }
 
             });
@@ -266,6 +281,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                     MainActivity actividad = (MainActivity) contexto;
 
                     actividad.datosPantallaPrincipal.cantarLinea(bus);
+
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C08");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Leer");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
                 }
 
@@ -287,6 +308,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         actividad.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
 
                     }
+
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C09");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Mapa");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
                 }
 
@@ -319,6 +346,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
                         notifyDataSetChanged();
 
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C10");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Fijar - Quitar");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
                     }
 
@@ -343,6 +375,11 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                         actividad.handler.sendEmptyMessage(MainActivity.MSG_FRECUENCIAS_ACTUALIZADAS);
 
                         notifyDataSetChanged();
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C11");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Boton Fijar - Poner");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        actividad.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                     }
 

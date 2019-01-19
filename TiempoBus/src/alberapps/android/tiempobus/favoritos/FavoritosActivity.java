@@ -46,6 +46,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
@@ -107,6 +108,8 @@ public class FavoritosActivity extends AppCompatActivity {
             actionBar.setElevation(0);
 
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -188,6 +191,10 @@ public class FavoritosActivity extends AppCompatActivity {
 
         favoritosView.setOnItemClickListener(favoritoClickedHandler);
         registerForContextMenu(favoritosView);
+
+
+        TextView vacio = (TextView) findViewById(android.R.id.empty);
+        favoritosView.setEmptyView(vacio);
 
 
     }

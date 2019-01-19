@@ -32,6 +32,8 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import androidx.core.app.NotificationCompat.Builder;
+
+import android.view.View;
 import android.widget.Toast;
 
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
@@ -60,6 +62,8 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
         //bindPreferenceSummaryToValue(findPreference("noticias_tono"));
         //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key_list)));
 
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
     }
 

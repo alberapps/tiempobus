@@ -23,20 +23,20 @@
     xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@id/menu_cercanas_img"
-        android:icon="@drawable/ic_place_white_24dp"
+        android:icon="@drawable/ic_place_24dp"
         android:orderInCategory="0"
         android:title="@string/cercanas"
         tiempobus:showAsAction="ifRoom" />
     <item
         android:id="@id/menu_satelite"
-        android:icon="@drawable/ic_satellite_white_24dp"
+        android:icon="@drawable/ic_satellite_24dp"
 
         android:orderInCategory="1"
         android:title="@string/satelite"
         tiempobus:showAsAction="ifRoom" />
     <item
         android:id="@id/menu_search"
-        android:icon="@drawable/ic_search_white_24dp"
+        android:icon="@drawable/ic_search_24dp"
         android:orderInCategory="3"
         android:title="@string/menu_search"
         tiempobus:showAsAction="always" />

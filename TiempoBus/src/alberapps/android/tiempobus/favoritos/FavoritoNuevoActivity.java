@@ -73,6 +73,8 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
         setContentView(R.layout.favorito_nuevo);
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

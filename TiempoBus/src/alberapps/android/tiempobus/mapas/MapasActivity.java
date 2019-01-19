@@ -31,11 +31,13 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
@@ -212,6 +214,8 @@ public class MapasActivity extends AppCompatActivity
             actionBar.setElevation(0);
 
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -649,12 +653,12 @@ public class MapasActivity extends AppCompatActivity
 
             case R.id.menu_satelite:
 
-                if (mMap.getMapType() == GoogleMap.MAP_TYPE_SATELLITE) {
+                if (mMap != null && mMap.getMapType() == GoogleMap.MAP_TYPE_SATELLITE) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                } else {
-
+                } else if (mMap != null) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
+                } else {
+                    Toast.makeText(this, getString(R.string.error_mapa), Toast.LENGTH_LONG).show();
                 }
 
                 break;

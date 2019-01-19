@@ -174,9 +174,9 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
         dato.setParada(favorito.getNumParada());
 
         if (listaDestacados.contains(dato)) {
-            favoritoDestacar.setImageResource(R.drawable.ic_favorite_24dp);
+            favoritoDestacar.setImageResource(R.drawable.ic_star_24dp);
         } else {
-            favoritoDestacar.setImageResource(R.drawable.ic_favorite_border_24dp);
+            favoritoDestacar.setImageResource(R.drawable.ic_star_border_24dp);
         }
 
         favoritoDestacar.setOnClickListener(new OnClickListener() {
@@ -190,10 +190,10 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
                 if (!listaDestacados.contains(dato)) {
                     PreferencesUtil.guardarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
-                    favoritoDestacar2.setImageResource(R.drawable.ic_favorite_24dp);
+                    favoritoDestacar2.setImageResource(R.drawable.ic_star_24dp);
                 } else {
                     PreferencesUtil.eliminarParada(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS, favorito.getNumParada());
-                    favoritoDestacar2.setImageResource(R.drawable.ic_favorite_border_24dp);
+                    favoritoDestacar2.setImageResource(R.drawable.ic_star_border_24dp);
                 }
 
                 listaDestacados = PreferencesUtil.recuperarLista(contexto, PreferencesUtil.LISTA_PARADAS_DESTACADAS);

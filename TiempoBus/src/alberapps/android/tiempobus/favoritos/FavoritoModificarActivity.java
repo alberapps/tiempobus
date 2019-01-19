@@ -76,6 +76,8 @@ public class FavoritoModificarActivity extends AppCompatActivity {
 
         }
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);

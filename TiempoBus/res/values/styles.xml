@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
 
     <!-- extend one of the Theme.AppCompat themes -->
@@ -48,6 +48,8 @@
 
         <item name="android:windowContentOverlay">@null</item>
 
+        <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
+
         <item name="colorButtonNormal">@color/mi_material_blue_principal</item>
 
         <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
@@ -80,6 +82,8 @@
         <item name="colorAccent">@color/mi_material_blue_principal</item>
 
         <item name="android:windowContentOverlay">@null</item>
+
+        <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
 
         <item name="colorButtonNormal">@color/mi_material_blue_principal</item>
 
@@ -153,7 +157,32 @@
     <style name="Theme.TiempoBusDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="fontFamily">@font/ubuntu</item>
     </style>
-	
-	
+
+
+
+    <style name="Theme.TiempoBus.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/white</item>
+        <item name="colorControlNormal">@color/mi_material_blue_principal</item>
+        <item name="android:colorControlNormal" tools:ignore="NewApi">?colorControlNormal</item>
+
+    </style>
+
+    <style name="Theme.TiempoBus.Toolbar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="fontFamily">@font/ubuntu</item>
+        <item name="android:textColor">@color/mi_material_blue_principal</item>
+        <item name="android:textColorSecondary">@color/mi_material_blue_principal</item>
+    </style>
+
+    <style name="Theme.TiempoBus.ActionBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/white</item>
+        <item name="colorControlNormal">@color/mi_material_blue_principal</item>
+        <item name="android:colorControlNormal" tools:ignore="NewApi">?colorControlNormal</item>
+        <item name="android:textColorPrimary">@color/mi_material_blue_principal</item>
+    </style>
+
+
+
+
+
 
 </resources>

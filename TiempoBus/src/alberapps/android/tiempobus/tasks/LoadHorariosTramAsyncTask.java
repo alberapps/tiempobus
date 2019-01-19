@@ -18,6 +18,7 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import alberapps.java.tram.horarios.DatosConsultaHorariosTram;
@@ -47,7 +48,14 @@ public class LoadHorariosTramAsyncTask extends AsyncTask<Object, Void, HorarioTr
 
             DatosConsultaHorariosTram datosConsulta = (DatosConsultaHorariosTram) datos[0];
 
-            horarioTram = ProcesarHorariosTram.getHorarios(datosConsulta);
+            Context context = null;
+
+            if (datos.length >= 2) {
+                context = (Context) datos[1];
+            }
+
+
+            horarioTram = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
 
         } catch (Exception e) {

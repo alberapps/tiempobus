@@ -45,6 +45,8 @@ import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -79,6 +81,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -203,8 +206,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private BottomNavigationView bottomNavigation = null;
 
 
+    public FirebaseAnalytics mFirebaseAnalytics;
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         setContentView(R.layout.pantalla_principal);
 
@@ -274,25 +283,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onStart();
 
 
-        // Verificar si hay parada por defecto
-        /*if (preferencias.contains("parada_inicio")) {
-            paradaActual = preferencias.getInt("parada_inicio", paradaActual);
-        }*/
-
-        /*Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            paradaActual = extras.getInt("POSTE");
-        }
-
-        Log.d("PRINCIPAL", "inicia: " + buses.size());
-
-        handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
-
-        // Poner en campo de poste
-        EditText txtPoste = (EditText) findViewById(R.id.campo_poste);
-        txtPoste.setText(Integer.toString(paradaActual));
-        */
-
     }
 
 
@@ -334,10 +324,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 // Envia inicio actividad
                 GoogleAnalytics.getInstance(this).reportActivityStart(this);
 
+                //Nuevo para firebase
+                mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+
                 Log.d("PRINCIPAL", "Analytics activo");
 
             } else {
                 GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
+
+                //Nuevo para firebase
+                mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
 
                 Log.d("PRINCIPAL", "Analytics inactivo");
 
@@ -456,6 +452,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void selectItem(MenuItem item) {
 
+        Bundle bundle = new Bundle();
+
         switch (item.getItemId()) {
 
             case R.id.navigation_item_mapa:
@@ -464,6 +462,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     detenerTodasTareas();
                     startActivityForResult(new Intent(MainActivity.this, MapasActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
                 }
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M01");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Mapa");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
 
                 break;
 
@@ -474,37 +478,106 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 detenerTodasTareas();
                 //startActivity(new Intent(MainActivity.this, NoticiasTabsPager.class));
                 startActivityForResult(new Intent(MainActivity.this, NoticiasTabsPager.class), SUB_ACTIVITY_REQUEST_PARADA);
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M02");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Noticias");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+
                 break;
 
             case R.id.navigation_item_favoritos:
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, FavoritosActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M03");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Favoritos");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 break;
 
             case R.id.navigation_item_guardar:
                 detenerTodasTareas();
                 nuevoFavorito();
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M04");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Nuevo Favorito");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 break;
 
             case R.id.navigation_item_historial:
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, HistorialActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M05");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Historial");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                break;
+
+            case R.id.navigation_item_horarios_tram:
+
+                detenerTodasTareas();
+
+                Intent i = new Intent(this, InfoLineasTabsPager.class);
+                i.putExtra("HORARIOS", "TRAM");
+
+                this.startActivityForResult(i, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M09");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Horario TRAM");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                break;
+
+            case R.id.navigation_item_horarios_bus:
+
+                detenerTodasTareas();
+
+                Intent j = new Intent(this, InfoLineasTabsPager.class);
+                j.putExtra("MODO_RED", InfoLineasTabsPager.MODO_RED_SUBUS_ONLINE);
+
+                this.startActivityForResult(j, MainActivity.SUB_ACTIVITY_REQUEST_PARADA);
+
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M10");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Horario BUS");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 break;
 
             case R.id.navigation_item_preferencias:
 
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M06");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Preferencias");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 break;
 
             case R.id.navigation_item_fondo:
 
                 gestionarFondo.seleccionarFondo();
 
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar fondo");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 break;
 
 
-            case R.id.navigation_item_exportar:
+            /*case R.id.navigation_item_exportar:
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 
                 // configurar
@@ -515,9 +588,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 String paradaCodificada = UtilidadesBarcode.codificarCodigoParada(Integer.toString(paradaActual));
 
-                integrator.shareText(paradaCodificada);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M08");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Exportar QR");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
-                break;
+                break;*/
             case R.id.navigation_item_rutas:
 
 
@@ -525,6 +601,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 //startActivity(new Intent(MainActivity.this, RutasActivity.class));
                 startActivityForResult(new Intent(MainActivity.this, RutasActivity.class), SUB_ACTIVITY_REQUEST_PARADA);
 
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M08");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Rutas");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 break;
         }
@@ -793,6 +873,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Fondo
         gestionarFondo.setupFondoAplicacion();
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         /**
          * Configuramos la lista de resultados
          */
@@ -905,6 +987,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
+        // //Fav destacados
+
+        AppCompatImageView botonFavDesc = (AppCompatImageView) findViewById(R.id.favorito_dest);
+        botonFavDesc.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+
+                datosPantallaPrincipal.abrirFavDestacados();
+
+            }
+        });
+
 
         // Swipe para recargar
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
@@ -944,10 +1037,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public void iniciarLectorCodigoQr() {
 
-        final CharSequence[] items = {getString(R.string.barcode_opcion_1), getString(R.string.barcode_opcion_2)};
+        final CharSequence[] items = {getString(R.string.barcode_opcion_1), getString(R.string.barcode_opcion_2), getString(R.string.menu_export_qr) + " " + getString(R.string.barcode_opcion_3_info)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.barcode_opcion_titulo);
+
+        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int id) {
+
+                dialog.dismiss();
+
+            }
+
+        });
 
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
@@ -969,6 +1072,24 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                     integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
 
+
+                } else if (item == 2) {
+
+                    IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+
+                    // configurar
+                    integrator.setTitleByID(R.string.barcode_titulo);
+                    integrator.setMessageByID(R.string.barcode_mensaje);
+                    integrator.setButtonYesByID(R.string.barcode_si);
+                    integrator.setButtonNoByID(R.string.barcode_no);
+
+                    String paradaCodificada = UtilidadesBarcode.codificarCodigoParada(Integer.toString(paradaActual));
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M08");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Exportar QR");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 }
 
@@ -1053,6 +1174,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
 
+                Bundle bundle = new Bundle();
+
                 switch (item) {
                     case 0:
 
@@ -1075,6 +1198,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         } else {
                             Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
                         }
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C01");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Menu Alarma");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         break;
 
                     case 1:
@@ -1082,6 +1211,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             datosPantallaPrincipal.shareBus(busSeleccionado, paradaActual);
                             busSeleccionado = null;
                         }
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C02");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Menu Compartir");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         break;
 
                     case 2:
@@ -1099,16 +1234,33 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         }
 
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C03");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Menu Mapa");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         break;
 
                     case 3:
                         datosPantallaPrincipal.cantarLinea(busSeleccionado);
                         busSeleccionado = null;
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C04");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Menu Leer");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         break;
 
                     case 4:
                         gestionarWidget.enviarAWidget(busSeleccionado, paradaActual);
                         busSeleccionado = null;
+
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "C05");
+                        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tarjeta - Menu Widget");
+                        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                         break;
                 }
 

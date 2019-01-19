@@ -60,6 +60,8 @@ public class TraduccionesActivity extends AppCompatActivity {
 
         }
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         ImageView botoMagnolia = (ImageView) findViewById(R.id.boton_magnolia);
         assert botoMagnolia != null;
         botoMagnolia.setOnClickListener(new ImageView.OnClickListener() {

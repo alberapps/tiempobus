@@ -33,5 +33,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="card_radius">4dp</dimen>
+    <!--dimen name="card_elevation">@dimen/cardview_default_elevation</dimen-->
+    <dimen name="card_elevation">1dp</dimen>
 
 </resources>

@@ -450,7 +450,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
         ConnectivityManager connMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            AsyncTask<Object, Void, HorarioTram> taskHorariosTram = new LoadHorariosTramAsyncTask(loadHorariosTramAsyncTaskResponder).execute(datosConsulta);
+            AsyncTask<Object, Void, HorarioTram> taskHorariosTram = new LoadHorariosTramAsyncTask(loadHorariosTramAsyncTaskResponder).execute(datosConsulta, getContext());
         } else {
             Toast.makeText(getActivity().getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
         }
@@ -517,7 +517,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                         horariosPaso2.setVisibility(View.VISIBLE);
 
-                        if (datos.getHorariosItemCombinados(2).size() > 1) {
+                        if (datos.getHorariosItemCombinados(2) != null && datos.getHorariosItemCombinados(2).size() > 1) {
 
                             TextView datosLinea3 = (TextView) getView().findViewById(R.id.datos_linea3);
                             datosLinea3.setText(datos.getHorariosItemCombinados(2).get(1).getLinea());

@@ -31,12 +31,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+
 import androidx.core.content.ContentResolverCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
+
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -103,6 +105,7 @@ public class DatosPantallaPrincipal {
     private SharedPreferences preferencias;
 
     private LinkedList<SpinnerItem> listaSpinner = new LinkedList<>();
+    private LinkedList<SpinnerItem> listaSpinnerFav = new LinkedList<>();
 
     public DatosPantallaPrincipal(MainActivity contexto, SharedPreferences preferencia) {
 
@@ -202,7 +205,7 @@ public class DatosPantallaPrincipal {
         try {
             HashMap<String, String> datosFav = new HashMap<>();
 
-            //Cursor cursor = context.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
+
             Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
 
 
@@ -888,7 +891,6 @@ public class DatosPantallaPrincipal {
         context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.menu_share)));
 
 
-
     }
 
     /**
@@ -1104,6 +1106,82 @@ public class DatosPantallaPrincipal {
 
     }
 
+    public void abrirFavDestacados() {
+
+
+        List<Favorito> favoritos = cargarFavoritosBD();
+
+        List<Favorito> fav = new ArrayList<>();
+
+        if(favoritos != null) {
+
+            List<Datos> listaDestacados = PreferencesUtil.recuperarLista(context, PreferencesUtil.LISTA_PARADAS_DESTACADAS);
+
+            Datos dato = new Datos();
+
+            for (int i = 0; i < favoritos.size(); i++) {
+
+                dato.setParada(favoritos.get(i).getNumParada());
+
+                if (listaDestacados.contains(dato)) {
+                    fav.add(favoritos.get(i));
+                }
+
+            }
+        }
+
+        if (fav.size() > 0) {
+
+            CharSequence[] items = new CharSequence[fav.size()];
+
+            for (int i = 0; i < fav.size() && i <= 5; i++) {
+                items[i] = fav.get(i).getTitulo();
+            }
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.favorito_destacado_titulo);
+
+            builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+
+            });
+
+            builder.setItems(items, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int item) {
+
+                    context.paradaActual = Integer.parseInt(fav.get(item).getNumParada());
+
+                    // Poner en campo de poste
+                    AppCompatEditText txtPoste = (AppCompatEditText) context.findViewById(R.id.campo_poste);
+                    assert txtPoste != null;
+                    txtPoste.setText(Integer.toString(context.paradaActual));
+
+                    SharedPreferences.Editor editor = preferencias.edit();
+                    editor.putInt("parada_inicio", context.paradaActual);
+                    editor.apply();
+
+                    context.handler.sendEmptyMessageDelayed(MainActivity.MSG_RECARGA, MainActivity.DELAY_RECARGA);
+
+                }
+            });
+
+            AlertDialog alert = builder.create();
+
+            alert.show();
+
+        } else {
+
+            Toast.makeText(context, context.getString(R.string.favorito_destacado_aviso_no), Toast.LENGTH_SHORT).show();
+
+        }
+
+
+    }
+
 
     /**
      * Carga del historial
@@ -1153,6 +1231,47 @@ public class DatosPantallaPrincipal {
 
     }
 
+
+    public List<Favorito> cargarFavoritosBD() {
+
+        List<Favorito> anteriorFavList = new ArrayList<>();
+
+        Favorito anteriorFav = null;
+
+        try {
+
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
+
+            if (cursor != null) {
+
+                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+                    anteriorFav = new Favorito();
+
+                    anteriorFav.setNumParada(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.POSTE)));
+                    anteriorFav.setTitulo(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.TITULO)));
+                    anteriorFav.setDescripcion(cursor.getString(cursor.getColumnIndex(TiempoBusDb.Favoritos.DESCRIPCION)));
+                    anteriorFavList.add(anteriorFav);
+
+                }
+
+                cursor.close();
+
+            }
+
+            if (!anteriorFavList.isEmpty()) {
+
+                return anteriorFavList;
+
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     /**
      * Cargar pie listado
@@ -1740,7 +1859,7 @@ public class DatosPantallaPrincipal {
      */
     public static void formatoLinea(Context contexto, TextView busLinea, String linea, boolean cambiarSize) {
 
-        if(linea.isEmpty()){
+        if (linea.isEmpty()) {
             return;
         }
 

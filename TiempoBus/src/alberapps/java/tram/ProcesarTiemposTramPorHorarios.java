@@ -17,6 +17,7 @@
  */
 package alberapps.java.tram;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Integer destino, String textoDestino) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Integer destino, String textoDestino, Context context) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<>();
 
@@ -58,13 +59,13 @@ public class ProcesarTiemposTramPorHorarios {
 
             if (destino != null) {
 
-                busesList.addAll(obtenerTiemposDesdeHorariosConDestino(parada, destino, textoDestino));
+                busesList.addAll(obtenerTiemposDesdeHorariosConDestino(parada, destino, textoDestino, context));
 
             } else {
 
                 //Lineas de la parada
                 //if (UtilidadesTRAM.esParadaL9(Integer.toString(parada))) {
-                busesList.addAll(obtenerTiemposDesdeHorariosL9(parada));
+                busesList.addAll(obtenerTiemposDesdeHorariosL9(parada, context));
                 //}
 
 
@@ -122,7 +123,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL9(int parada) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL9(int parada, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -152,7 +153,7 @@ public class ProcesarTiemposTramPorHorarios {
         //Ida
         if (parada != 50) {
             datosConsulta.setCodEstacionDestino(50);
-            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada ida = new BusLlegada();
             ida.setDestino("DÉNIA");
@@ -174,7 +175,7 @@ public class ProcesarTiemposTramPorHorarios {
         if (parada != 33) {
             //Vuelta
             datosConsulta.setCodEstacionDestino(33);
-            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("BENIDORM");
@@ -209,7 +210,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL2(int parada) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL2(int parada, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -235,7 +236,7 @@ public class ProcesarTiemposTramPorHorarios {
         //Ida
         if (parada != 2) {
             datosConsulta.setCodEstacionDestino(2);
-            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada ida = new BusLlegada();
             ida.setDestino("LUCEROS");
@@ -257,7 +258,7 @@ public class ProcesarTiemposTramPorHorarios {
         if (parada != 124) {
             //Vuelta
             datosConsulta.setCodEstacionDestino(124);
-            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("SANT VICENT");
@@ -292,7 +293,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL3(int parada) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL3(int parada, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -318,7 +319,7 @@ public class ProcesarTiemposTramPorHorarios {
         //Ida
         if (parada != 2) {
             datosConsulta.setCodEstacionDestino(2);
-            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada ida = new BusLlegada();
             ida.setDestino("LUCEROS");
@@ -340,7 +341,7 @@ public class ProcesarTiemposTramPorHorarios {
         if (parada != 17) {
             //Vuelta
             datosConsulta.setCodEstacionDestino(17);
-            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("EL CAMPELLO");
@@ -375,7 +376,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL1(int parada) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL1(int parada, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -401,7 +402,7 @@ public class ProcesarTiemposTramPorHorarios {
         //Ida
         if (parada != 2) {
             datosConsulta.setCodEstacionDestino(2);
-            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada ida = new BusLlegada();
             ida.setDestino("LUCEROS");
@@ -423,7 +424,7 @@ public class ProcesarTiemposTramPorHorarios {
         if (parada != 33) {
             //Vuelta
             datosConsulta.setCodEstacionDestino(33);
-            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("BENIDORM");
@@ -458,7 +459,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL4(int parada) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosL4(int parada, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -484,7 +485,7 @@ public class ProcesarTiemposTramPorHorarios {
         //Ida
         if (parada != 2) {
             datosConsulta.setCodEstacionDestino(2);
-            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada ida = new BusLlegada();
             ida.setDestino("LUCEROS");
@@ -506,7 +507,7 @@ public class ProcesarTiemposTramPorHorarios {
         if (parada != 113) {
             //Vuelta
             datosConsulta.setCodEstacionDestino(113);
-            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta);
+            HorarioTram horarioTramVuelta = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
             BusLlegada vuelta = new BusLlegada();
             vuelta.setDestino("HOLANDA");
@@ -615,7 +616,7 @@ public class ProcesarTiemposTramPorHorarios {
      * @return
      * @throws Exception
      */
-    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosConDestino(int parada, int destino, String textoDestino) throws Exception {
+    private static ArrayList<BusLlegada> obtenerTiemposDesdeHorariosConDestino(int parada, int destino, String textoDestino, Context context) throws Exception {
 
         ArrayList<BusLlegada> listado = new ArrayList<>();
 
@@ -641,7 +642,7 @@ public class ProcesarTiemposTramPorHorarios {
         }
 
         datosConsulta.setCodEstacionDestino(destino);
-        HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta);
+        HorarioTram horarioTramIda = ProcesarHorariosTram.getHorarios(datosConsulta, context);
 
 
         BusLlegada ida = new BusLlegada();

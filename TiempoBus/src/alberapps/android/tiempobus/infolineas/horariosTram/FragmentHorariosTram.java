@@ -245,7 +245,7 @@ public class FragmentHorariosTram extends Fragment {
         ConnectivityManager connMgr = (ConnectivityManager) actividad.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            actividad.taskHorariosTram = new LoadHorariosTramAsyncTask(loadHorariosTramAsyncTaskResponder).execute(actividad.consultaHorarioTram);
+            actividad.taskHorariosTram = new LoadHorariosTramAsyncTask(loadHorariosTramAsyncTaskResponder).execute(actividad.consultaHorarioTram, getContext());
         } else {
             Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
             actividad.dialog.dismiss();
@@ -284,7 +284,7 @@ public class FragmentHorariosTram extends Fragment {
 
                         cargarListado();
 
-                        Toast.makeText(actividad.getApplicationContext(), actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(actividad.getApplicationContext(), actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                     }catch(Exception e1){
                         e1.printStackTrace();
@@ -295,7 +295,7 @@ public class FragmentHorariosTram extends Fragment {
 
             } else {
 
-                Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                 datos = new HorarioTram();
                 datos.setDatosTransbordos(new ArrayList<DatoTransbordo>());

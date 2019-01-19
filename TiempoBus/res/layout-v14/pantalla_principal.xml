@@ -44,10 +44,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?actionBarSize"
-            android:background="?colorPrimary"
-            android:title="@string/app_name"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
 
+            android:title="@string/app_name"
+            android:theme="@style/Theme.TiempoBus.Toolbar"
+            app:popupTheme="@style/Theme.MaterialComponents.Light"
+            app:titleTextAppearance="@style/Theme.TiempoBus.Toolbar.Title"
+            app:titleTextColor="@color/mi_material_blue_principal"
+            app:subtitleTextColor="@color/mi_material_blue_principal"
 
 
             >

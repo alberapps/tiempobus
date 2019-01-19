@@ -99,9 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                app:itemBackground="@color/mi_material_blue_principal"
-                app:itemIconTint="@color/white"
-                app:itemTextColor="@color/white"
+                app:itemBackground="@color/white"
+                app:itemIconTint="@color/mi_material_blue_principal"
+                app:itemTextColor="@color/mi_material_blue_principal"
                 app:menu="@menu/navigation_items"
                 />
 
