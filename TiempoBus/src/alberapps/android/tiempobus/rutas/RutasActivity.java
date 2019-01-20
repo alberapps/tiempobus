@@ -18,22 +18,18 @@
  */
 package alberapps.android.tiempobus.rutas;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,20 +42,35 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.LoadDirectionsAsyncTask;
+import alberapps.android.tiempobus.tasks.LoadLocationAsyncTask;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.directions.Direction;
 import alberapps.java.directions.Leg;
 import alberapps.java.directions.Route;
 import alberapps.java.directions.Step;
+import alberapps.java.localizacion.Localizacion;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Actividad del calculador de rutas
@@ -69,6 +80,10 @@ public class RutasActivity extends AppCompatActivity {
 
     private static int PLACE_AUTOCOMPLETE_REQUEST_ORIGEN_CODE = 1;
     private static int PLACE_AUTOCOMPLETE_REQUEST_DESTINO_CODE = 2;
+
+    protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+
+    public static final int REQUEST_CODE_LOCATION = 5;
 
     private ProgressDialog dialog;
 
@@ -92,6 +107,8 @@ public class RutasActivity extends AppCompatActivity {
     Integer posicionActual = null;
 
     private AppCompatActivity activity = this;
+
+    private FusedLocationProviderClient mFusedLocationClient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +211,17 @@ public class RutasActivity extends AppCompatActivity {
                 cargarAutocompletar(PLACE_AUTOCOMPLETE_REQUEST_DESTINO_CODE);
             }
         });
+
+        ImageButton botonPosicionActual = (ImageButton) findViewById(R.id.boton_posicion_actual);
+        botonPosicionActual.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+                obtenerPosicionActual();
+            }
+        });
+
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
 
     }
 
@@ -477,5 +505,108 @@ public class RutasActivity extends AppCompatActivity {
 
     }
 
+
+    private void obtenerPosicionActual() {
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request missing location permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_LOCATION);
+
+            return;
+        }
+
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+
+                            String lat = Double.toString(location.getLatitude());
+                            String lon = Double.toString(location.getLongitude());
+
+                            obtenerDireccionLocation(lat, lon);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+                });
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+                //Intent intent = getIntent();
+                //finish();
+                //startActivity(intent);
+
+                obtenerPosicionActual();
+
+            } else {
+                // Permission was denied or request was cancelled
+                //finish();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+    private void obtenerDireccionLocation(String lat, String lon) {
+
+        LoadLocationAsyncTask.LoadLocationAsyncTaskResponder loadLocationAsyncTaskResponder = new LoadLocationAsyncTask.LoadLocationAsyncTaskResponder() {
+            public void LocationLoaded(final Localizacion localizacion) {
+
+                if (localizacion != null) {
+
+                    StringBuilder sb = new StringBuilder(100);
+
+                    sb.append(localizacion.getDireccion());
+                    if (localizacion.getLocalidad() != null) {
+                        sb.append(", ");
+                        sb.append(localizacion.getLocalidad());
+                    }
+
+                    origen = sb.toString();
+
+                    TextView textoOrigen = (TextView) findViewById(R.id.ruta_origen);
+                    textoOrigen.setText(origen);
+
+
+                } else {
+                    origen = "";
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_ruta), Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            new LoadLocationAsyncTask(loadLocationAsyncTaskResponder).execute(lat, lon, this);
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+        }
+
+
+    }
 
 }

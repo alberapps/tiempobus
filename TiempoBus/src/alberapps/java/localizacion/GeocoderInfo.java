@@ -46,8 +46,17 @@ public class GeocoderInfo {
 
         try {
 
-            Double glat = (Integer.parseInt(lat) / 1E6);
-            Double glon = (Integer.parseInt(lon) / 1E6);
+            Double glat = 0.0;
+            Double glon = 0.0;
+
+            if(lat.contains(".")){
+                glat = Double.parseDouble(lat);
+                glon = Double.parseDouble(lon);
+
+            }else {
+                glat = (Integer.parseInt(lat) / 1E6);
+                glon = (Integer.parseInt(lon) / 1E6);
+            }
 
             //Recupera direcciones
             addresses = geocoder.getFromLocation(glat, glon, 1);

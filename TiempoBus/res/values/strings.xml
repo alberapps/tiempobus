@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.4.7.1</string>
+    <string name="app_version" translatable="false">4.5.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2018)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -577,6 +577,10 @@
     <string name="error_mapa">Error al cargar el mapa</string>
 
     <string name="pasos_horarios">Paso</string>
+
+    <string name="info_acuerdo">https://blog.alberapps.com/p/politica-de-privacidad-de-tiempobus.html</string>
+
+    <string name="precision_gps">AVISO: el modo de alta precisión del GPS está desactivado</string>
 
 
 </resources>

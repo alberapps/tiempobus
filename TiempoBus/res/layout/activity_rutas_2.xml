@@ -59,13 +59,25 @@
                 <EditText
                     android:id="@+id/ruta_origen"
                     android:layout_width="0dp"
-                    android:layout_weight=".90"
+                    android:layout_weight=".80"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:maxLines="1"
                     android:inputType="text"
                     android:hint="@string/origen"
+                    />
+
+                <ImageButton
+                    android:id="@+id/boton_posicion_actual"
+                    android:layout_width="0dp"
+                    android:layout_weight=".10"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/actionbar_compat_item"
+                    android:contentDescription="Actual"
+                    android:scaleType="centerInside"
+                    card_view:srcCompat="@drawable/ic_my_location_24dp"
                     />
 
                 <ImageButton
@@ -77,8 +89,9 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Origen"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_place_grey600_24dp"
+                    card_view:srcCompat="@drawable/ic_place_grey_24dp"
                     />
+
             </LinearLayout>
 
 
@@ -111,7 +124,7 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Destino"
                     android:scaleType="centerInside"
-                    android:src="@drawable/ic_place_grey600_24dp" />
+                    card_view:srcCompat="@drawable/ic_place_grey_24dp" />
             </LinearLayout>
 
             <Button

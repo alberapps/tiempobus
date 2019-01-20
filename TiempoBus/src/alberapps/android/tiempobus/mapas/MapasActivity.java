@@ -31,13 +31,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NavUtils;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
-
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;
@@ -54,15 +47,17 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -75,6 +70,9 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +83,12 @@ import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.mapas.DatosMapa;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 
 /**
  * Mapas con info de paradas y posicion
@@ -189,7 +193,7 @@ public class MapasActivity extends AppCompatActivity
     private static final LocationRequest REQUEST = LocationRequest.create()
             .setInterval(5000)         // 5 seconds
             .setFastestInterval(16)    // 16ms = 60fps
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -722,9 +726,45 @@ public class MapasActivity extends AppCompatActivity
         } else {
             // Location permission has been granted, continue as usual.
 
-            PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, mLocationSettingsRequest);
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(mLocationRequest);
 
-            result.setResultCallback(this);
+            SettingsClient client = LocationServices.getSettingsClient(this);
+            Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+
+            task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
+                @Override
+                public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+
+                    conectadoLocation = true;
+                    detenerTareas();
+                    paradasCercanas.seleccionarProximidad();
+
+                    if (!locationSettingsResponse.getLocationSettingsStates().isGpsUsable()) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.precision_gps), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            task.addOnFailureListener(this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    try {
+                        ResolvableApiException resolvable = (ResolvableApiException) e;
+                        resolvable.startResolutionForResult(MapasActivity.this, REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException sendEx) {
+                        //Ignore the error
+                    }
+
+                }
+            });
+
+
+            //endingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, mLocationSettingsRequest);
+
+            //result.setResultCallback(this);
         }
 
     }

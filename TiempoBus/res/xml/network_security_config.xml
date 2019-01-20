@@ -4,5 +4,6 @@
         <domain includeSubdomains="true">alberapps.com</domain>
         <domain includeSubdomains="true">tramalicante.es</domain>
         <domain includeSubdomains="true">pbs.twimg.com</domain>
+        <domain includeSubdomains="true">api.openweathermap.org</domain>
     </domain-config>
 </network-security-config>
