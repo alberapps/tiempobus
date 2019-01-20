@@ -159,6 +159,8 @@ public class HorarioTram {
 
                 info.getInfoRecorrido().add(transbordos.toString());
 
+                info.setNumPasos(datosTransbordos.size());
+
             }
 
 

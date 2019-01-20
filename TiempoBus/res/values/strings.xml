@@ -576,7 +576,7 @@
 
     <string name="error_mapa">Error al cargar el mapa</string>
 
-    <string name="menu_horarios_tram">TRAM: Horarios</string>
+    <string name="pasos_horarios">Paso</string>
 
 
 </resources>

@@ -564,7 +564,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                 } else {
 
-                    datosHoras.setText(getString(R.string.aviso_error_datos));
+                    datosHoras.setText(getString(R.string.main_no_items));
                     datosInfo.setText("");
 
                 }

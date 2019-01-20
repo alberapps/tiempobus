@@ -22,14 +22,19 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.horarios.HorarioItem;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -39,6 +44,8 @@ import androidx.core.content.res.ResourcesCompat;
 public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
     private Context contexto;
+
+    private int pasoActual;
 
     /**
      * Constructor
@@ -50,6 +57,8 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
         super(context, textViewResourceId);
 
         this.contexto = context;
+
+        this.pasoActual = 0;
 
     }
 
@@ -110,6 +119,62 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 }
 
                 text.setText(datos.toString());
+
+
+                //Pasos
+                List<String> pasoString = new ArrayList<>();
+
+                final Spinner spinnerPasos = (Spinner) v.findViewById(R.id.spinner_pasos);
+
+                if(horas.getNumPasos() < 2){
+
+                    spinnerPasos.setVisibility(View.INVISIBLE);
+
+                } else {
+
+                    spinnerPasos.setVisibility(View.VISIBLE);
+
+                    for (int i = 1; i <= horas.getNumPasos(); i++) {
+
+                        pasoString.add(getContext().getString(R.string.pasos_horarios) + " " + i);
+
+                    }
+
+
+                    ArrayAdapter<String> adapterPasos = new ArrayAdapter<>(getContext(), R.layout.spinner_item_horario, pasoString);
+                    adapterPasos.setDropDownViewResource(R.layout.spinner_item_horario_lista);
+                    spinnerPasos.setAdapter(adapterPasos);
+                    spinnerPasos.setSelection(pasoActual);
+
+                    // Seleccion
+                    spinnerPasos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+                            if (arg2 != pasoActual) {
+                                InfoLineasTabsPager actividad = (InfoLineasTabsPager) contexto;
+
+                                clear();
+                                addAll(actividad.datosHorariosTram.getHorariosItemCombinados(arg2));
+
+                                pasoActual = arg2;
+
+                                notifyDataSetChanged();
+
+                                actividad.horariosTramView.setSelection(1);
+                            }
+
+                        }
+
+                        public void onNothingSelected(AdapterView<?> arg0) {
+                            // TODO Auto-generated method stub
+
+                        }
+
+                    });
+
+                }
+
 
 
             } else {

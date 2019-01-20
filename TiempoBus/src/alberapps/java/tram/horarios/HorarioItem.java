@@ -36,6 +36,8 @@ public class HorarioItem {
 
     private List<String> infoRecorrido;
 
+    private int numPasos;
+
     public List<String> getInfoRecorrido() {
         return infoRecorrido;
     }
@@ -96,4 +98,11 @@ public class HorarioItem {
         this.errorServicio = errorServicio;
     }
 
+    public int getNumPasos() {
+        return numPasos;
+    }
+
+    public void setNumPasos(int numPasos) {
+        this.numPasos = numPasos;
+    }
 }
