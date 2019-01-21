@@ -21,7 +21,6 @@ package alberapps.java.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
@@ -31,7 +30,6 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -48,7 +46,6 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
-import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.Comunes;
 
 /**
@@ -363,9 +360,9 @@ public class Conectividad {
             InputStream caInput = null;
 
             if (urlGet.contains("tramalicante.es")) {
-                caInput = new BufferedInputStream(contextParam.getAssets().open("tram.crt"));
+                caInput = new BufferedInputStream(contextParam.getAssets().open("crt1.crt"));
             } else {
-                caInput = new BufferedInputStream(contextParam.getAssets().open("webbus.crt"));
+                caInput = new BufferedInputStream(contextParam.getAssets().open("crt2.crt"));
             }
 
 

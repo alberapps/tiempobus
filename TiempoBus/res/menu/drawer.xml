@@ -5,18 +5,6 @@
     <group
         android:id="@+id/menu_secciones"
         android:checkableBehavior="single">
-        <!--item
-            android:id="@+id/navigation_item_mapa"
-            android:icon="@drawable/ic_map_grey600_48dp"
-            android:title="@string/menu_mapa"/>
-        <item
-            android:id="@+id/navigation_item_rutas"
-            android:icon="@drawable/ic_navigation_grey600_48dp"
-            android:title="@string/menu_rutas"/>
-        <item
-            android:id="@+id/navigation_item_noticias"
-            android:icon="@drawable/ic_my_library_books_grey600_48dp"
-            android:title="@string/tit_noticias"/-->
         <item
             android:id="@+id/navigation_item_favoritos"
             android:icon="@drawable/ic_book_grey600_48dp"
@@ -37,11 +25,11 @@
             <item
                 android:id="@+id/navigation_item_horarios_tram"
                 android:icon="@drawable/ic_today_24dp"
-                android:title="@string/mapas_vehiculo_titulo_tram" />
+                android:title="@string/menu_horario_tram" />
             <item
                 android:id="@+id/navigation_item_horarios_bus"
                 android:icon="@drawable/ic_today_24dp"
-                android:title="@string/mapas_vehiculo_titulo" />
+                android:title="@string/menu_horario_bus" />
 
         </menu>
 

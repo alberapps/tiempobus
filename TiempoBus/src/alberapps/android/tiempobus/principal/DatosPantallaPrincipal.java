@@ -1121,10 +1121,13 @@ public class DatosPantallaPrincipal {
 
             for (int i = 0; i < favoritos.size(); i++) {
 
-                dato.setParada(favoritos.get(i).getNumParada());
+                if(!favoritos.get(i).getNumParada().equals("0")) {
 
-                if (listaDestacados.contains(dato)) {
-                    fav.add(favoritos.get(i));
+                    dato.setParada(favoritos.get(i).getNumParada());
+
+                    if (listaDestacados.contains(dato)) {
+                        fav.add(favoritos.get(i));
+                    }
                 }
 
             }

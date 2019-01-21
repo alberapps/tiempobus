@@ -92,6 +92,8 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
             ImageView compartir = (ImageView) v.findViewById(R.id.compartir_img);
 
+            AppCompatImageView favoritoDestacar2 = v.findViewById(R.id.favorito_destacar);
+
             if (favorito.getNumParada().equals("0")) {
 
                 tag.numParada.setText("HT");
@@ -103,6 +105,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
                 tag.descripcion.setText(desc[0]);
 
                 compartir.setVisibility(View.INVISIBLE);
+                favoritoDestacar2.setVisibility(View.INVISIBLE);
 
             } else {
 
@@ -113,6 +116,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
                 tag.descripcion.setText(favorito.getDescripcion().trim());
 
                 compartir.setVisibility(View.VISIBLE);
+                favoritoDestacar2.setVisibility(View.VISIBLE);
 
             }
 

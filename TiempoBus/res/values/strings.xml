@@ -533,7 +533,7 @@
 
     <string name="barcode_opcion_1">Lector QR de TiempoBus</string>
     <string name="barcode_opcion_2">Barcode Scanner de Zxing (Externo)</string>
-    <string name="barcode_opcion_3_info">(Zxing)</string>
+    <string name="barcode_opcion_3_info" translatable="false">(Zxing)</string>
     <string name="barcode_opcion_titulo">Utilidades QR</string>
 
 
@@ -578,9 +578,12 @@
 
     <string name="pasos_horarios">Paso</string>
 
-    <string name="info_acuerdo">https://blog.alberapps.com/p/politica-de-privacidad-de-tiempobus.html</string>
+    <string name="info_acuerdo" translatable="false">https://blog.alberapps.com/p/politica-de-privacidad-de-tiempobus.html</string>
 
-    <string name="precision_gps">AVISO: el modo de alta precisión del GPS está desactivado</string>
+    <string name="precision_gps">AVISO: el sistema de alta precisión del GPS está desactivado</string>
+
+    <string name="menu_horario_tram">Tram</string>
+    <string name="menu_horario_bus">Bus</string>
 
 
 </resources>

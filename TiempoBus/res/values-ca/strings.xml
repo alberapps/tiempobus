@@ -499,6 +499,13 @@ favorit per crear la teua llista.</string>
     <string name="obligatorio">No deixes el camp buit</string>
     <string name="fav_existente">El favorit ja existeix</string>
 
-    <string name="menu_horarios_tram">TRAM: Horaris</string>
+    <string name="error_mapa">Error en carregar el mapa</string>
+
+    <string name="pasos_horarios">Pas</string>
+
+
+    <string name="precision_gps">AVÍS: el sistema d\'alta precisió del GPS està desactivat</string>
+
+
 
 </resources>

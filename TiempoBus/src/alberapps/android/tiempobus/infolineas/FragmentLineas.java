@@ -261,7 +261,7 @@ public class FragmentLineas extends Fragment {
 
             TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
 
-            /////PDF
+            /*
             TextView pdfRecorrido = (TextView) vheader.findViewById(R.id.lineas_informacion);
             pdfRecorrido.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View arg0) {
@@ -271,6 +271,7 @@ public class FragmentLineas extends Fragment {
 
                 }
             });
+            */
 
 
             /////
