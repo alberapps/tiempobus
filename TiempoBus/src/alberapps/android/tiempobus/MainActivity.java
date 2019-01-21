@@ -41,6 +41,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+
+import alberapps.android.tiempobus.settings.Settings2Activity;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -557,6 +559,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 detenerTodasTareas();
                 startActivityForResult(new Intent(MainActivity.this, PreferencesFromXml.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
+
+                //startActivityForResult(new Intent(MainActivity.this, Settings2Activity.class), SUB_ACTIVITY_REQUEST_PREFERENCIAS);
 
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M06");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Preferencias");

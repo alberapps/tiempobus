@@ -22,7 +22,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionName "4.4.7.1"
+        versionName "4.5.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
@@ -39,7 +39,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1493  // Min API level 14
+            versionCode 1494  // Min API level 14
             dimension "api"
         }
 
@@ -52,6 +52,7 @@ android {
         currentImplementation 'androidx.cardview:cardview:1.0.0'
         currentImplementation 'androidx.recyclerview:recyclerview:1.0.0'
         currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        currentImplementation 'androidx.vectordrawable:vectordrawable:1.0.1'
 
         currentImplementation 'androidx.core:core:1.0.1'
 
@@ -65,9 +66,9 @@ android {
         currentImplementation 'com.google.android.gms:play-services-vision:17.0.2'
 
         currentImplementation 'com.google.android.gms:play-services-auth:16.0.1'
-
-
         currentImplementation 'com.google.firebase:firebase-core:16.0.6'
+
+
 
         /*legacyImplementation 'com.android.support:appcompat-v7:25.3.1'
         legacyImplementation 'com.android.support:cardview-v7:25.3.1'

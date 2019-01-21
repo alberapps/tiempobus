@@ -387,11 +387,17 @@
         <activity
             android:name=".barcodereader.BarcodeMainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.TiempoBusDialog"></activity>
+            android:theme="@style/Theme.TiempoBusDialog"/>
 
         <activity
             android:name=".barcodereader.BarcodeCaptureActivity"
             android:label="Read Barcode" />
+
+        <activity
+            android:name=".settings.Settings2Activity"
+            android:label="@string/preferences_from_xml"
+            android:theme="@style/Theme.TiempoBusThemeActionBar"
+            />
 
 
         <!--service android:name=".mensajes.TiempoBusFirebaseMessagingService">
