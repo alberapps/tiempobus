@@ -27,17 +27,17 @@ import twitter4j.TwitterException;
 
 public class ProcesarTwitter {
 
-    public static final String tw_alicante_ruta = "http://twitter.com/Alicante_City";
+    public static final String tw_alicante_ruta = "https://twitter.com/Alicante_City";
 
-    public static final String tw_alberapps_ruta = "http://twitter.com/alberapps";
+    public static final String tw_alberapps_ruta = "https://twitter.com/alberapps";
 
-    public static final String tw_campello_ruta = "http://twitter.com/campelloturismo";
+    public static final String tw_campello_ruta = "https://twitter.com/campelloturismo";
 
-    public static final String tw_sanvi_ruta = "http://twitter.com/aytoraspeig";
+    public static final String tw_sanvi_ruta = "https://twitter.com/aytoraspeig";
 
-    public static final String tw_santjoan_ruta = "http://twitter.com/sant_joan";
+    public static final String tw_santjoan_ruta = "https://twitter.com/sant_joan";
 
-    public static final String tw_tram_ruta = "http://twitter.com/tramdealicante";
+    public static final String tw_tram_ruta = "https://twitter.com/tramdealicante";
 
     public static final String TW_STATUS = "/status/";
 

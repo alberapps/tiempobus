@@ -37,7 +37,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
  */
 public class FragmentNoticiasRss extends Fragment {
 
-    public static final String noticiasURL = "http://www.tramalicante.es/page.php?page=199";
+    public static final String noticiasURL = "https://www.tramalicante.es/page.php?page=199";
 
     private NoticiasTabsPager actividad;
 

@@ -112,9 +112,18 @@ public class LoadWeatherAsyncTask extends AsyncTask<Object, Void, WeatherQuery> 
                         String jsonCache = PreferencesUtil.getCache(context, "cache_clima_json");
 
                         if (jsonCache != null && !jsonCache.equals("")) {
+
+                            List<WeatherData> weatherData = null;
+
+                            if (proveedor.equals("yw")) {
+                                weatherData = ProcesarYahooWeather.parsea(jsonCache);
+                            } else if (proveedor.equals("owm")) {
+                                weatherData = ProcesarOWMCurrect.parsea(jsonCache);
+                            }
+
                             //List<WeatherData> weatherData = ProcesarOWMCurrect.parsea(jsonCache);
 
-                            List<WeatherData> weatherData = ProcesarYahooWeather.parsea(jsonCache);
+                            //List<WeatherData> weatherData = ProcesarYahooWeather.parsea(jsonCache);
 
 
                             if (weatherData != null) {

@@ -45,7 +45,7 @@ public class ProcesarAvisosTram {
         String idioma = UtilidadesUI.getIdiomaRssTram();
 
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").authority("www.tramalicante.es").appendPath("page.php")
+        builder.scheme("https").authority("www.tramalicante.es").appendPath("page.php")
                 .appendQueryParameter("page", "144")
                 .appendQueryParameter("idioma", idioma);
 

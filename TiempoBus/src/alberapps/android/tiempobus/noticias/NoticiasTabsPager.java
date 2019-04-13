@@ -848,7 +848,13 @@ public class NoticiasTabsPager extends AppCompatActivity {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
+            //loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute();
+
+            String userAgentDefault = Utilidades.getAndroidUserAgent(this);
+
+            loadNoticiasRssTask = new LoadNoticiasRssAsyncTask(loadNoticiasRssAsyncTaskResponder).execute(true, userAgentDefault, getApplicationContext());
+
+
         } else {
             Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
 

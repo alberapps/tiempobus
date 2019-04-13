@@ -132,6 +132,28 @@ public class Utilidades {
 
     }
 
+    public static Date getDateRss(String fecha) {
+
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
+        Date fechaDate = null;
+
+        if (fecha != null) {
+            try {
+                fechaDate = df.parse(fecha);
+
+                return fechaDate;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+
+    }
+
+
     /**
      * String desde date
      *
@@ -155,6 +177,25 @@ public class Utilidades {
         return null;
 
     }
+
+    public static String getFechaString2(Date fecha) {
+
+        DateFormat df = new SimpleDateFormat("EEE dd MMM yyyy", UtilidadesUI.getLocaleUsuario());
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
 
     /**
      * String desde date

@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.noticias;
 
@@ -29,7 +29,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
+import alberapps.java.util.Utilidades;
 import androidx.core.content.res.ResourcesCompat;
 
 /**
@@ -59,7 +61,7 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            v = vi.inflate(R.layout.noticias_rss_item, null);
+            v = vi.inflate(R.layout.noticias_rss_item, parent, false);
 
         }
 
@@ -69,14 +71,25 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
                 TextView titulo = (TextView) v.findViewById(R.id.titulo_rss);
                 TextView descripcion = (TextView) v.findViewById(R.id.descripcion_rss);
+                TextView link = (TextView) v.findViewById(R.id.link_rss);
 
-                if(ubuntu != null) {
+                if (ubuntu != null) {
                     titulo.setTypeface(ubuntu, Typeface.BOLD);
                     descripcion.setTypeface(ubuntu);
                 }
 
-                titulo.setText(noticia.getTitulo());
+                String text = Utilidades.getFechaString2(noticia.getDateItem()) + "\n" + noticia.getTitulo();
+
+                titulo.setText(text);
                 descripcion.setText(noticia.getDescripcion());
+                link.setText(noticia.getLink());
+
+                link.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UtilidadesUI.openWebPage(getContext(), noticia.getLink());
+                    }
+                });
 
             }
         }

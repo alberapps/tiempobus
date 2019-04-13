@@ -17,6 +17,7 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 
@@ -25,6 +26,7 @@ import java.util.List;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.rss.ParserXML;
+import alberapps.java.tram.news.TramNewsParser;
 
 /**
  * Tarea asincrona que se encarga de consultar las noticias rss del tram
@@ -49,17 +51,40 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
         List<NoticiaRss> noticiasList = null;
         try {
 
-            String idioma = UtilidadesUI.getIdiomaRssTram();
+            //String idioma = UtilidadesUI.getIdiomaRssTram();
 
 
-            Uri.Builder builder = new Uri.Builder();
-            builder.scheme("http").authority("www.tramalicante.es").appendPath("rss.php")
-                    .appendQueryParameter("idioma", idioma);
+            //Uri.Builder builder = new Uri.Builder();
+            //builder.scheme("https").authority("www.tramalicante.es").appendPath("rss.php")
+              //      .appendQueryParameter("idioma", idioma);
 
-            Uri urlNoticias = builder.build();
+            //Uri urlNoticias = builder.build();
 
 
-            noticiasList = ParserXML.parsea(urlNoticias.toString());
+            //noticiasList = ParserXML.parsea(urlNoticias.toString());
+
+            Boolean usarCache = true;
+            Context context = null;
+
+            if (datos.length > 1) {
+
+                usarCache = (Boolean) datos[0];
+
+            }
+
+            String userAgent = null;
+
+            if (datos.length >= 2) {
+                userAgent = (String) datos[1];
+            }
+
+            if (datos.length >= 3) {
+                context = (Context) datos[2];
+            }
+
+
+            noticiasList = TramNewsParser.getTramNews(usarCache, userAgent, context);
+
 
         } catch (Exception e) {
             return null;
