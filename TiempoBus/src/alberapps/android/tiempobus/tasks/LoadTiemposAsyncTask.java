@@ -32,7 +32,6 @@ import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
-import alberapps.java.tam.PrecargasV3;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
