@@ -32,6 +32,7 @@ import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
+import alberapps.java.tam.PrecargasV3;
 import alberapps.java.tam.ProcesarTiemposService;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
@@ -82,9 +83,10 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
         Context context = (Context) datos[1];
 
 
+        /////////
         //PrecargasV3.precargarDatosLineas(context);
         //PrecargasV3.precargarDatosLineasRecorrido(context);
-
+        /////////
 
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
