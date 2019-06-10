@@ -4,11 +4,13 @@
     package="alberapps.android.tiempobus"
     android:installLocation="auto">
 
-    <uses-sdk />
+    <!--uses-sdk /-->
     <!--tools:overrideLibrary="com.google.android.gms,
     com.google.android.gms.base, com.google.android.gms.maps,
     com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,
     com.google.android.gms.tasks" /-->
+    <!-- places api 14 and 15-->
+    <uses-sdk tools:overrideLibrary="com.google.android.libraries.places" />
 
     <supports-screens
         android:largeScreens="true"

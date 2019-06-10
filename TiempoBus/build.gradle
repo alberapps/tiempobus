@@ -18,11 +18,11 @@ dependencies {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    buildToolsVersion "29.0.0"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionName "4.5.1"
+        versionName "4.5.2"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
@@ -39,7 +39,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1494  // Min API level 14
+            versionCode 1495  // Min API level 14
             dimension "api"
         }
 
@@ -54,20 +54,25 @@ android {
         currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
         currentImplementation 'androidx.vectordrawable:vectordrawable:1.0.1'
 
-        currentImplementation 'androidx.core:core:1.0.1'
+        currentImplementation 'androidx.core:core:1.0.2'
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
         currentImplementation 'com.google.android.gms:play-services-maps:16.1.0'
         currentImplementation 'com.google.android.gms:play-services-drive:16.1.0'
         currentImplementation 'com.google.android.gms:play-services-location:16.0.0'
-        currentImplementation 'com.google.android.gms:play-services-places:16.0.0'
         currentImplementation 'com.google.android.gms:play-services-analytics:16.0.8'
         currentImplementation 'com.google.android.gms:play-services-vision:17.0.2'
 
         currentImplementation 'com.google.android.gms:play-services-auth:16.0.1'
-        currentImplementation 'com.google.firebase:firebase-core:16.0.8'
+        currentImplementation 'com.google.firebase:firebase-core:16.0.9'
 
+        //Places old
+        //currentImplementation 'com.google.android.gms:play-services-places:16.0.0'
+        //Places new
+        //currentImplementation 'com.google.android.libraries.places:places:1.1.0'
+        currentImplementation 'com.google.android.libraries.places:places-compat:1.1.0'
+        //
 
 
         /*legacyImplementation 'com.android.support:appcompat-v7:25.3.1'

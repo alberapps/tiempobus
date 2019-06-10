@@ -81,8 +81,8 @@ import android.widget.Toast;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
+//import com.google.android.gms.location.places.Place;
+//import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.lang.ref.WeakReference;
@@ -1572,7 +1572,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
 
 
-        if (requestCode == GestionarTarjetaInfo.PLACE_PICKER_REQUEST) {
+        /*if (requestCode == GestionarTarjetaInfo.PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(this, data);
                 String toastMsg = String.format("Place: %s", place.getName());
@@ -1592,7 +1592,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
             }
-        }
+        }*/
 
 
     }

@@ -286,7 +286,7 @@ public class FragmentHorariosTram extends Fragment {
 
                         //Toast.makeText(actividad.getApplicationContext(), actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
-                    }catch(Exception e1){
+                    } catch (Exception e1) {
                         e1.printStackTrace();
                     }
 
@@ -346,9 +346,13 @@ public class FragmentHorariosTram extends Fragment {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                Toast.makeText(actividad.getApplicationContext(), actividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
 
-            Toast.makeText(actividad.getApplicationContext(), getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
 
         }
 

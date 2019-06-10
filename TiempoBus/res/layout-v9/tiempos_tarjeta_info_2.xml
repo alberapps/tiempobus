@@ -145,7 +145,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
+            <!--TextView
                 android:id="@+id/info_cercana"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:text="@string/que_hay_cerca"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/mi_material_blue_principal"
-                android:textStyle="bold" />
+                android:textStyle="bold" /-->
 
             <TextView
                 android:id="@+id/datos_location"

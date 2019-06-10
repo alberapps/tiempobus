@@ -50,7 +50,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlacePicker;
+//import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
@@ -120,7 +120,7 @@ public class GestionarTarjetaInfo {
 
     TextView datosParada;
 
-    public static final int PLACE_PICKER_REQUEST = 5000;
+    //public static final int PLACE_PICKER_REQUEST = 5000;
 
     /**
      * Tarjeta con informacion de la parada
@@ -320,7 +320,7 @@ public class GestionarTarjetaInfo {
                                     localizacionInfo = localizacion;
 
 
-                                    TextView infoCercana = (TextView) vista.findViewById(R.id.info_cercana);
+                                    /*TextView infoCercana = (TextView) vista.findViewById(R.id.info_cercana);
 
                                     infoCercana.setOnClickListener(new TextView.OnClickListener() {
                                         public void onClick(View arg0) {
@@ -344,7 +344,7 @@ public class GestionarTarjetaInfo {
                                             }
 
                                         }
-                                    });
+                                    });*/
 
 
                                 } catch (Exception e) {
