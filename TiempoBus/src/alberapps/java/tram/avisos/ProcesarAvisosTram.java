@@ -74,13 +74,15 @@ public class ProcesarAvisosTram {
                 if (i == 0) {
                     aviso.setTitulo("L1");
                 } else if (i == 1) {
-                    aviso.setTitulo("L3");
-                } else if (i == 2) {
-                    aviso.setTitulo("L4");
-                } else if (i == 3) {
-                    aviso.setTitulo("L9");
-                } else if (i == 4) {
                     aviso.setTitulo("L2");
+                } else if (i == 2) {
+                    aviso.setTitulo("L3");
+                } else if (i == 3) {
+                    aviso.setTitulo("L4");
+                } else if (i == 4) {
+                    aviso.setTitulo("L5");
+                } else if (i == 5) {
+                    aviso.setTitulo("L9");
                 }
                 avisos.add(aviso);
 

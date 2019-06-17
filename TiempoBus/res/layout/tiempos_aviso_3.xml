@@ -116,7 +116,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="12sp" />
 
-                <LinearLayout
+                <!--LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
@@ -141,7 +141,42 @@
 
                         />
 
+
+                </LinearLayout-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:padding="2dip">
+
+
+                    <TextView
+                        android:id="@+id/imgTram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/url_tram"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/imgFgv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/url_fgv"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
+
+
+
 
 
                 <TextView

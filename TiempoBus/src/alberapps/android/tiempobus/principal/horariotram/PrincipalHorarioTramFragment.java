@@ -472,9 +472,13 @@ public class PrincipalHorarioTramFragment extends Fragment {
                 TextView datosHoras = (TextView) getView().findViewById(R.id.datos_horas);
                 TextView datosInfo = (TextView) getView().findViewById(R.id.datos_info);
 
+                TextView datosInfoDestinos = (TextView) getView().findViewById(R.id.datos_info_destinos);
+
+
                 if (recarga) {
                     datosHoras.setText(getString(R.string.aviso_recarga));
                     datosInfo.setText("");
+                    datosInfoDestinos.setText("");
                     horariosPaso2.setVisibility(View.GONE);
                     horariosPaso3.setVisibility(View.GONE);
                     datosLineasPosibles.setVisibility(View.GONE);
@@ -490,10 +494,25 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     datosHoras.setText(stringHoras);
                     datosInfo.setText(horas.getDatoInfo().replace("Paso ", ""));
 
+                    String aux = datos.getDatosTransbordos().get(0).getTrenesDestino();
+                    String[] auxList = null;
+                    String aux2 = "";
+                    if(aux != null){
+                        auxList = aux.split(":");
+                    }
+
+                    if(auxList.length > 0){
+                        aux2 = auxList[1].trim();
+                    }else {
+                        aux2 = aux.trim();
+                    }
+
+                    datosInfoDestinos.setText(aux2);
 
                     if (datos.getHorariosItemCombinados(1) != null && datos.getHorariosItemCombinados(1).size() > 1) {
 
-                        datosLineaC.setVisibility(View.VISIBLE);
+                        //datosLineaC.setVisibility(View.VISIBLE);
+
                         TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
                         datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
                         //Formato colores
@@ -511,8 +530,24 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                         TextView datosHoras2 = (TextView) getView().findViewById(R.id.datos_horas_2);
                         TextView datosInfo2 = (TextView) getView().findViewById(R.id.datos_info_2);
+                        TextView datosInfoDestinos2 = (TextView) getView().findViewById(R.id.datos_info_destinos_2);
                         datosHoras2.setText(stringHorasPaso2);
                         datosInfo2.setText(horasPaso2.getDatoInfo().replace("Paso ", ""));
+
+                        aux = datos.getDatosTransbordos().get(1).getTrenesDestino();
+                        auxList = null;
+                        aux2 = "";
+                        if(aux != null){
+                            auxList = aux.split(":");
+                        }
+
+                        if(auxList.length > 0){
+                            aux2 = auxList[1].trim();
+                        }else {
+                            aux2 = aux.trim();
+                        }
+
+                        datosInfoDestinos2.setText(aux2);
 
 
                         horariosPaso2.setVisibility(View.VISIBLE);
@@ -531,9 +566,25 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                             TextView datosHoras3 = (TextView) getView().findViewById(R.id.datos_horas_3);
                             TextView datosInfo3 = (TextView) getView().findViewById(R.id.datos_info_3);
+                            TextView datosInfoDestinos3 = (TextView) getView().findViewById(R.id.datos_info_destinos_3);
                             datosHoras3.setText(stringHorasPaso3);
                             datosInfo3.setText(horasPaso3.getDatoInfo().replace("Paso ", ""));
 
+
+                            aux = datos.getDatosTransbordos().get(2).getTrenesDestino();
+                            auxList = null;
+                            aux2 = "";
+                            if(aux != null){
+                                auxList = aux.split(":");
+                            }
+
+                            if(auxList.length > 0){
+                                aux2 = auxList[1].trim();
+                            }else {
+                                aux2 = aux.trim();
+                            }
+
+                            datosInfoDestinos3.setText(aux2);
 
                             horariosPaso3.setVisibility(View.VISIBLE);
 
@@ -694,24 +745,16 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                         int id = ((SpinnerItem) arg0.getItemAtPosition(arg2)).getId();
 
-                        Integer codigoEstacion = UtilidadesTRAM.HORARIOS_COD_ESTACION[id];
-                        //actividad.consultaHorarioTram.setCodEstacionDestino(codigoEstacion);
-                        //actividad.consultaHorarioTram.setEstacionDestinoSeleccion(arg2);
+                        String destino = ((SpinnerItem) arg0.getItemAtPosition(arg2)).toString();
 
-                        if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
-                            recargaExterna = false;
-                        }
+                        estacionSeleccionada (id, destino);
+                    } else if(adapterEstDest.getCount() == 1) {
 
-                        destinoActual = codigoEstacion;
+                        estacionSeleccionada (adapterEstDest.getItem(0).getId(), adapterEstDest.getItem(0).toString());
 
-                        ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
-
-                        textoDestinoActual = ((SpinnerItem) arg0.getItemAtPosition(arg2)).toString();
-
-                        cargarHorarios(codigoEstacion, id);
-
-                        onCambioDestino(destinoActual, textoDestinoActual);
                     }
+
+
                 }
 
                 public void onNothingSelected(AdapterView<?> arg0) {
@@ -720,6 +763,8 @@ public class PrincipalHorarioTramFragment extends Fragment {
                 }
 
             });
+
+
 
 
             // Busqueda
@@ -731,13 +776,21 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                     adapterEstDest.getFilter().filter(s);
 
+                    /*if(adapterEstDest.getCount() == 1) {
+                        estacionSeleccionada (adapterEstDest.getItem(0).getId(), adapterEstDest.getItem(0).toString());
+                    }*/
+
                 }
 
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
                 }
 
+
+
                 public void afterTextChanged(Editable s) {
+
+
 
                 }
             });
@@ -782,6 +835,28 @@ public class PrincipalHorarioTramFragment extends Fragment {
         }
     }
 
+
+    private void estacionSeleccionada (int id, String destino) {
+
+        Integer codigoEstacion = UtilidadesTRAM.HORARIOS_COD_ESTACION[id];
+        //actividad.consultaHorarioTram.setCodEstacionDestino(codigoEstacion);
+        //actividad.consultaHorarioTram.setEstacionDestinoSeleccion(arg2);
+
+        if (destinoActual != null && !destinoActual.equals(codigoEstacion)) {
+            recargaExterna = false;
+        }
+
+        destinoActual = codigoEstacion;
+
+        ((MainActivity) getActivity()).datosPantallaPrincipal.gestionarHistorial(((MainActivity) getActivity()).paradaActual, codigoEstacion.toString());
+
+        textoDestinoActual = destino;
+
+        cargarHorarios(codigoEstacion, id);
+
+        onCambioDestino(destinoActual, textoDestinoActual);
+
+    }
 
     /**
      * Consultar si la parada ya esta en el historial

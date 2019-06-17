@@ -1333,7 +1333,7 @@ public class DatosPantallaPrincipal {
                 vPieTram = v;
             }
 
-            ImageView imgTram = (ImageView) v.findViewById(R.id.imgTram);
+            TextView imgTram = (TextView) v.findViewById(R.id.imgTram);
             imgTram.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -1342,7 +1342,7 @@ public class DatosPantallaPrincipal {
                 }
             });
 
-            ImageView imgFgv = (ImageView) v.findViewById(R.id.imgFgv);
+            TextView imgFgv = (TextView) v.findViewById(R.id.imgFgv);
             imgFgv.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -1899,6 +1899,12 @@ public class DatosPantallaPrincipal {
                 busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l9, null));
             } else {
                 busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l9, null));
+            }
+        } else if (linea.trim().equals("L5")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                busLinea.setBackground(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l5, null));
+            } else {
+                busLinea.setBackgroundDrawable(ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.circulo_l5, null));
             }
         } else if (UtilidadesTAM.isBusUrbano(linea.trim())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

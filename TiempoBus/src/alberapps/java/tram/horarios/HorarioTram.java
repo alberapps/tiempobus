@@ -174,13 +174,49 @@ public class HorarioTram {
 
             List<HorarioItem> items = datosTransbordos.get(paso).getHorariosItem();
 
+
+
             for (int j = 0; j < items.size(); j++) {
+
                 if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > paso) {
                     items.get(j).setLinea(lineasTransbordos.get(paso));
                 } else {
                     items.get(j).setLinea("");
                 }
             }
+
+            //lineasTransbordos.remove("L4L");
+
+
+            //items.get(items.size() - 1).setLinea(lineasTransbordos.get(lineasTransbordos.size() - 1));
+
+            /*for (int j = 0; j < items.size(); j++) {
+
+                if(j == 0) {
+                    items.get(0).setLinea(lineasTransbordos.get(0));
+                }else if(j == items.size()-1) {
+                    items.get(items.size() - 1).setLinea(lineasTransbordos.get(lineasTransbordos.size() - 1));
+                }else {
+
+                    if(lineasTransbordos.size() == datosTransbordos.size()) {
+
+                        if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > paso) {
+                            items.get(j).setLinea(lineasTransbordos.get(paso));
+                        } else {
+                            items.get(j).setLinea("");
+                        }
+
+                    } else {
+                        items.get(j).setLinea("");
+                    }
+
+                }
+
+
+
+            }*/
+
+
 
             listado.addAll(items);
 

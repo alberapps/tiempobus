@@ -42,13 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/imagenTram"
-                    android:layout_width="90dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="5dp"
-                    android:contentDescription="Imagen tram"
-                    android:src="@drawable/tram2_val" />
 
                 <LinearLayout
 

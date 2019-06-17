@@ -104,6 +104,11 @@ public class GestionTram {
             abrirPdfGDocs(3);
         } else if (bus.getNumLinea().equals("L9")) {
             abrirPdfGDocs(4);
+        } else if (bus.getNumLinea().equals("L5")) {
+            //abrirPdfGDocs(4);
+
+            Toast.makeText(context, context.getString(R.string.info_error), Toast.LENGTH_LONG).show();
+
         }
 
     }

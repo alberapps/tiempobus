@@ -56,11 +56,11 @@ public class TramNewsParser {
 
         String conexion = null;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault);
-        } else {
-            conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault, context);
-        }
+        //} else {
+        //    conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault, context);
+        //}
 
 
         Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());

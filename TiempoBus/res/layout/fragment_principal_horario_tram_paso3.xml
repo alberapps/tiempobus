@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/horarios_paso3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="5sp"
-        android:layout_marginRight="5sp">
+        android:layout_marginRight="5sp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/datos_linea3"
@@ -44,6 +46,28 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textColor="@color/primary_dark_material_light"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                card_view:srcCompat="@drawable/ic_arrow_forward_blue_18dp" />
+
+            <TextView
+                android:id="@+id/datos_info_destinos_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/guion"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/mi_material_blue_principal"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/datos_horas_3"

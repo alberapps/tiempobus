@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -78,7 +79,7 @@ public class AppInfoActivity extends AppCompatActivity {
 
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
-            ImageView botonFGV = (ImageView) findViewById(R.id.imageLogoFGV);
+            TextView botonFGV = (TextView) findViewById(R.id.imageLogoFGV);
             assert botonFGV != null;
             botonFGV.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
@@ -88,7 +89,7 @@ public class AppInfoActivity extends AppCompatActivity {
                 }
             });
 
-            ImageView botonTram = (ImageView) findViewById(R.id.imageLogoTram);
+            TextView botonTram = (TextView) findViewById(R.id.imageLogoTram);
             assert botonTram != null;
             botonTram.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {

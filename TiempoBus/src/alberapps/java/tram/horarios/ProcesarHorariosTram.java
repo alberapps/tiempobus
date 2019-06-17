@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
@@ -62,11 +63,11 @@ public class ProcesarHorariosTram {
         //InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
         InputStream is = null;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
-        } else {
-            is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true, context));
-        }
+        //} else {
+        //    is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true, context));
+        //}
 
 
         Document doc = Jsoup.parse(is, "UTF-8", urlHorarios.toString());
@@ -107,6 +108,15 @@ public class ProcesarHorariosTram {
 
 
             }
+
+            //Parche paradas L5
+            //if(UtilidadesTRAM.esParadaExclusivaL5(Integer.toString(datosConsulta.getCodEstacionDestino()))){
+
+//                horarioTram.getLineasTransbordos().remove("L4");
+
+  //          }
+
+
 
         }
 
@@ -199,6 +209,33 @@ public class ProcesarHorariosTram {
 
         }
 
+
+
+        //TODO parche
+        /*horarioTram.getLineasTransbordos().remove("L41");
+
+        if(horarioTram.getLineasTransbordos().size() > horarioTram.getDatosTransbordos().size()){
+
+            List<String> aux = new ArrayList<>();
+
+            for(int i = 0; i < horarioTram.getDatosTransbordos().size(); i++){
+
+                /*if( i==0 ) {
+                    aux.add(horarioTram.getLineasTransbordos().get(0));
+                }else if(i == horarioTram.getDatosTransbordos().size() - 1){
+                    aux.add(horarioTram.getLineasTransbordos().get(horarioTram.getLineasTransbordos().size() - 1));
+                } else {
+                    aux.add("Var");
+                }*/
+
+                //aux.add(UtilidadesTRAM.getLineaHorario(horarioTram.getDatosTransbordos().get(i).ge))
+
+
+            /*}
+
+            horarioTram.setLineasTransbordos(aux);
+
+        }*/
 
         return horarioTram;
 

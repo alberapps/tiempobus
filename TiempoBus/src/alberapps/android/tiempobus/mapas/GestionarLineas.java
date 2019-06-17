@@ -213,6 +213,8 @@ public class GestionarLineas {
                 colorTram = context.getResources().getColor(R.color.tram_l4);
             } else if (linea != null && linea.equals("L9")) {
                 colorTram = context.getResources().getColor(R.color.tram_l9);
+            } else if (linea != null && linea.equals("L5")) {
+                colorTram = context.getResources().getColor(R.color.tram_l5);
             }
 
         } else {

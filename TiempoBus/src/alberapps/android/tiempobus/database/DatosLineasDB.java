@@ -72,9 +72,10 @@ public class DatosLineasDB {
     private static final String DATABASE_NAME = "tiempobuslineas";
     private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
     private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-    private static final int DATABASE_VERSION = 85;
+    private static final int DATABASE_VERSION = 86;
 
-    public static final String DATABASE_VERSION_FECHA = "13042019";
+    //Tram L5 10/6/2019
+    public static final String DATABASE_VERSION_FECHA = "10062019";
 
     private final DatosLineasOpenHelper mDatabaseOpenHelper;
     private static final HashMap<String, String> mColumnMap = buildColumnMap();
@@ -709,6 +710,8 @@ public class DatosLineasDB {
 
                     // 4L -> 41
 
+                    //L5
+
                     line = line.replace("[", "");
                     line = line.replace("]", "");
                     line = line.replace("\"", "");
@@ -742,6 +745,8 @@ public class DatosLineasDB {
                             transbordo.append("4L");
                         } else if (strings1[i].equals("2")) {
                             transbordo.append("L2");
+                        } else if (strings1[i].equals("5")) {
+                            transbordo.append("L5");
                         }
 
                     }
@@ -767,6 +772,9 @@ public class DatosLineasDB {
                         } else if (strings1[i].equals("2")) {
                             strings[0] = "L2";
                             strings[1] = "L2";
+                        } else if (strings1[i].equals("5")) {
+                            strings[0] = "L5";
+                            strings[1] = "L5";
                         }
 
                         int posicion = UtilidadesTRAM.getIdLinea(strings[0]);

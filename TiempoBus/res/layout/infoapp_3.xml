@@ -117,7 +117,26 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
-            <ImageView
+            <TextView
+                android:id="@+id/imageLogoTram"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:layout_marginTop="15dp"
+                android:text="@string/url_tram"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/imageLogoFGV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:autoLink="web"
+                android:text="@string/url_fgv"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+            <!--ImageView
                 android:id="@+id/imageLogoTram"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
@@ -131,7 +150,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:contentDescription="Logo FGV"
-                android:src="@drawable/logofgv" />
+                android:src="@drawable/logofgv" /-->
 
             <!--Button
                 android:id="@+id/buttonLinks"

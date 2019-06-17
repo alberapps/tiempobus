@@ -33,10 +33,10 @@ public class UtilidadesTRAM {
     public static boolean ACTIVADO_L9 = true;
 
     // Para la carga en BD
-    public static String[] LINEAS_NUM = {"L1", "L3", "L4", "L9", "4L", "L2"};
+    public static String[] LINEAS_NUM = {"L1", "L3", "L4", "L9", "4L", "L2", "L5"};
 
     // Para el servicio de consultas
-    public static String[] LINEAS_A_CONSULTAR = {"L1", "L3", "L4", "L2"};
+    public static String[] LINEAS_A_CONSULTAR = {"L1", "L3", "L4", "L2", "L5"};
 
     public static int[] L1_ORDEN_SIN_L3 = {2, 3, 4, 5, 6, 8, 17, 19, 20, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32, 33};
 
@@ -57,15 +57,19 @@ public class UtilidadesTRAM {
 
     public static int[] L2_ORDEN_HORARIOS = {2, 3, 4, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124};
 
-    public static String[] DESC_TIPO = {"", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2"};
+    public static int[] L5_ORDEN = {101, 102, 5, 6, 7, 8, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113};
 
-    public static String[] DESC_LINEA = {"", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente"};
+    public static int[] L5_EXCLUSIVA_ORDEN = {101, 102};
+
+    public static String[] DESC_TIPO = {"", "TRAM - L1", "TRAM - L3", "TRAM - L4", "TRAM - L9", "TRAM - 4L", "TRAM - L2", "TRAM - L5"};
+
+    public static String[] DESC_LINEA = {"", "Luceros-Benidorm", "Luceros-El Campello", "Luceros-Pl. La Coruña", "Benidorm - Dénia", "Puerta del Mar-Sangueta", "Luceros-San Vicente", "Porta del Mar- Pl. La Coruña"};
 
     public static String OBSERVACIONES_L9 = "L9: Actualmente en fase de implantación.";
 
     public static String OBSERVACIONES_L1 = "L1: Realiza parada los fines de semana y festivos.";
 
-    public static int[] TIPO = {1, 2, 3, 4, 5, 6};
+    public static int[] TIPO = {1, 2, 3, 4, 5, 6, 7};
 
     public static final String URL_DOCS = "https://docs.google.com/gview?embedded=true&url=";
     public static final String[] PDF_URL = {"http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Campello%20y%20Benidorm.pdf",
@@ -83,15 +87,24 @@ public class UtilidadesTRAM {
 
     public static final String L2_SANTVICENT = "SANT VICENT";
 
-    public static final Integer[] HORARIOS_COD_ESTACION = {7, 2, 49, 38, 20, 108, 106, 33, 34, 44, 115, 31, 107, 22, 42, 35, 51, 40, 11, 121, 9, 10, 29, 21, 28, 50, 37, 17, 14, 43, 116, 39, 119, 46, 113, 117, 30, 111, 36, 114, 6, 48, 27, 47, 13, 109, 8, 118, 4, 3, 103, 12, 41, 112, 26, 16, 110, 19, 15, 5, 124, 122, 104, 32, 45, 105, 123, 25, 120};
+    public static final Integer[] HORARIOS_COD_ESTACION = {7, 2, 49, 38, 20, 108, 106, 33, 34, 44, 115, 31, 107, 22, 42, 35, 51, 40, 11, 121, 9, 10, 29, 21, 28, 50, 37, 17, 14, 43, 116, 39, 119, 46, 113, 117, 30, 111, 36, 114, 6, 102, 48, 27, 47, 13, 109, 8, 118, 4, 3, 103, 12, 41, 112, 26, 16, 110, 19, 101, 15, 5, 124, 122, 104, 32, 45, 105, 123, 25, 120};
 
-    public static String[] LINEAS_HORARIOS = {"L1", "L3", "L4", "L2"};
-    public static String[] LINEAS_HORARIOS_DESC = {"Benidorm", "El Campello", "Plaza La Coruña", "Sant Vicent del Raspeig"};
+    public static String[] LINEAS_HORARIOS = {"L1", "L3", "L4", "L2", "L1"};
+    public static String[] LINEAS_HORARIOS_DESC = {"Benidorm", "El Campello", "Plaza La Coruña", "Sant Vicent del Raspeig", "Benidorm Intermodal"};
 
 
     public static String getLineaHorario(String buscar, int parada) {
 
-        if (!buscar.equals("Alicante-Luceros")) {
+
+        if (esParadaExclusivaL5(Integer.toString(parada))) {
+
+            return "L5";
+
+        } else if (buscar.equals("Porta del Mar") || buscar.equals("La Marina")) {
+
+            return "L5";
+
+        } else if (!buscar.equals("Alicante-Luceros")) {
 
             for (int i = 0; i < LINEAS_HORARIOS_DESC.length; i++) {
 
@@ -103,19 +116,44 @@ public class UtilidadesTRAM {
 
         } else {
 
-            if (esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
-                    && !esParadaL4(Integer.toString(parada))) {
+            String p1 = Integer.toString(parada);
+
+            String lineaList = "";
+
+            if(esParadaL2(p1)){
+                lineaList+="L2,";
+            }
+
+            if(esParadaL1(p1)){
+                lineaList+="L1,";
+            }
+
+            if(esParadaL3(p1)){
+                lineaList+="L3,";
+            }
+
+            if(esParadaL4(p1)){
+                lineaList+="L4,";
+            }
+
+
+            return  lineaList;
+
+            /*if (esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
+                    && !esParadaL4(Integer.toString(parada)) && !esParadaL5(Integer.toString(parada))) {
                 return "L2";
             } else if (!esParadaL2(Integer.toString(parada)) && esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
-                    && !esParadaL4(Integer.toString(parada))) {
+                    && !esParadaL4(Integer.toString(parada)) && !esParadaL5(Integer.toString(parada))) {
                 return "L1";
             } else if (!esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && esParadaL3(Integer.toString(parada))
-                    && !esParadaL4(Integer.toString(parada))) {
+                    && !esParadaL4(Integer.toString(parada)) && !esParadaL5(Integer.toString(parada))) {
                 return "L3";
             } else if (!esParadaL2(Integer.toString(parada)) && !esParadaL1(Integer.toString(parada)) && !esParadaL3(Integer.toString(parada))
-                    && esParadaL4(Integer.toString(parada))) {
+                    && esParadaL4(Integer.toString(parada)) && !esParadaExclusivaL5(Integer.toString(parada))) {
                 return "L4";
-            }
+            } else {
+                return "L4,L1,L3";
+            }*/
 
         }
 
@@ -207,6 +245,19 @@ public class UtilidadesTRAM {
                     recorrido.get(recorrido.lastIndexOf(busqueda)).setOrden(i);
                 } catch (Exception e) {
                     Log.d("", L2_ORDEN[i] + " :L2");
+                }
+
+            }
+        } else if (linea.equals("L5")) {
+            for (int i = 0; i < L5_ORDEN.length; i++) {
+
+                PlaceMark busqueda = new PlaceMark();
+                busqueda.setCodigoParada(Integer.toString(L5_ORDEN[i]));
+
+                try {
+                    recorrido.get(recorrido.lastIndexOf(busqueda)).setOrden(i);
+                } catch (Exception e) {
+                    Log.d("", L5_ORDEN[i] + " :L5");
                 }
 
             }
@@ -384,6 +435,45 @@ public class UtilidadesTRAM {
 
         for (int i = 0; i < L4_ORDEN.length; i++) {
             if (parada.equals(Integer.toString(L4_ORDEN[i]))) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+    /**
+     * Es una parada de la L5
+     *
+     * @param parada
+     * @return boolean
+     */
+    public static boolean esParadaL5(String parada) {
+
+        for (int i = 0; i < L5_ORDEN.length; i++) {
+            if (parada.equals(Integer.toString(L5_ORDEN[i]))) {
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
+
+    /**
+     * Es una parada exclusiva de la L5
+     *
+     * @param parada
+     * @return boolean
+     */
+    public static boolean esParadaExclusivaL5(String parada) {
+
+        for (int i = 0; i < L5_EXCLUSIVA_ORDEN.length; i++) {
+            if (parada.equals(Integer.toString(L5_EXCLUSIVA_ORDEN[i]))) {
                 return true;
             }
 

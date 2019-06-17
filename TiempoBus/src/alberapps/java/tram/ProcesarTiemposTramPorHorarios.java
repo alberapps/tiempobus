@@ -739,6 +739,8 @@ public class ProcesarTiemposTramPorHorarios {
 
         String lineas = "";
 
+        List<String> lineasList = new ArrayList<>();
+
         if (datos.getDatosTransbordos() != null && !datos.getDatosTransbordos().isEmpty()) {
 
             String[] grupo1 = datos.getDatosTransbordos().get(0).getTrenesDestino().split(":");
@@ -748,13 +750,7 @@ public class ProcesarTiemposTramPorHorarios {
                 if (grupo2.length > 0) {
                     for (int i = 0; i < grupo2.length; i++) {
 
-                        if (!lineas.equals("")) {
-                            lineas += ",";
-                        }
-
-                        lineas += UtilidadesTRAM.getLineaHorario(grupo2[i].trim(), paradaActual);
-
-
+                        lineasList.add(UtilidadesTRAM.getLineaHorario(grupo2[i].trim(), paradaActual));
 
                     }
                 }
@@ -763,6 +759,20 @@ public class ProcesarTiemposTramPorHorarios {
 
         }
 
+        for (int i = 0; i < lineasList.size(); i++) {
+
+            if (!lineas.equals("")) {
+                lineas += ",";
+            }
+
+            if(lineasList.get(i).equals("L4") && paradaActual > 4){
+                lineas += "L4,L5";
+            } else {
+                lineas += lineasList.get(i);
+            }
+
+
+        }
 
 
         return lineas;

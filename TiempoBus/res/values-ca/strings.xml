@@ -506,6 +506,8 @@ favorit per crear la teua llista.</string>
 
     <string name="precision_gps">AVÍS: el sistema d\'alta precisió del GPS està desactivat</string>
 
+    <string name="info_error">Informació no disponible</string>
+
 
 
 </resources>
