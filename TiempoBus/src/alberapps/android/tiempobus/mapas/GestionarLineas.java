@@ -197,6 +197,10 @@ public class GestionarLineas {
         // Cargar datos cabecera
         String cabdatos = context.lineaSeleccionadaDesc;
 
+        if(context.datosLinea == null){
+            Toast.makeText(context, context.getResources().getText(R.string.aviso_error_datos), Toast.LENGTH_LONG).show();
+            return;
+        }
 
         context.datosLinea.setText(cabdatos);
 

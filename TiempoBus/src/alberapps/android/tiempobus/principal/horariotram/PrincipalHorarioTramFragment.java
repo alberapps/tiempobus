@@ -513,10 +513,10 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
                         //datosLineaC.setVisibility(View.VISIBLE);
 
-                        TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
-                        datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
+                        //TextView datosLinea = (TextView) getView().findViewById(R.id.datos_linea);
+                        //datosLinea.setText(datos.getHorariosItemCombinados(0).get(1).getLinea());
                         //Formato colores
-                        DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, datos.getHorariosItemCombinados(0).get(1).getLinea(), false);
+                        //DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, datos.getHorariosItemCombinados(0).get(1).getLinea(), false);
 
                         TextView datosLinea2 = (TextView) getView().findViewById(R.id.datos_linea2);
                         datosLinea2.setText(datos.getHorariosItemCombinados(1).get(1).getLinea());
@@ -597,10 +597,10 @@ public class PrincipalHorarioTramFragment extends Fragment {
                         horariosPaso2.setVisibility(View.GONE);
                         datosLineaC.setVisibility(View.GONE);
 
-                        String lineas = ProcesarTiemposTramPorHorarios.getLineasPorNombreDestino(datos, ((MainActivity) getActivity()).paradaActual);
+                        //String lineas = ProcesarTiemposTramPorHorarios.getLineasPorNombreDestino(datos, ((MainActivity) getActivity()).paradaActual);
 
                         //Lineas posibles
-                        if (!lineas.equals("") && lineas.contains(",")) {
+                        /*if (!lineas.equals("") && lineas.contains(",")) {
                             datosLineasPosibles.setVisibility(View.VISIBLE);
                             InfoLineaParadasAdapter.mostrarLineasParada(getContext(), datosLineasPosibles, lineas);
                         } else if (!lineas.equals("")) {
@@ -609,7 +609,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
                             datosLinea.setText(lineas);
                             //Formato colores
                             DatosPantallaPrincipal.formatoLinea(getActivity(), datosLinea, lineas, false);
-                        }
+                        }*/
 
                     }
 

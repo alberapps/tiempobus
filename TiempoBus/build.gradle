@@ -22,7 +22,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionName "4.5.2"
+        versionName "4.5.6"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
@@ -39,7 +39,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1495  // Min API level 14
+            versionCode 1497  // Min API level 14
             dimension "api"
         }
 
@@ -58,13 +58,13 @@ android {
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
-        currentImplementation 'com.google.android.gms:play-services-maps:16.1.0'
-        currentImplementation 'com.google.android.gms:play-services-drive:16.1.0'
-        currentImplementation 'com.google.android.gms:play-services-location:16.0.0'
-        currentImplementation 'com.google.android.gms:play-services-analytics:16.0.8'
-        currentImplementation 'com.google.android.gms:play-services-vision:17.0.2'
+        currentImplementation 'com.google.android.gms:play-services-maps:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-drive:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-location:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-analytics:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-vision:18.0.0'
 
-        currentImplementation 'com.google.android.gms:play-services-auth:16.0.1'
+        currentImplementation 'com.google.android.gms:play-services-auth:17.0.0'
         currentImplementation 'com.google.firebase:firebase-core:16.0.9'
 
         //Places old
@@ -140,6 +140,10 @@ android {
         abortOnError false
         disable 'MissingTranslation'
     }
+
+    //dexOptions {
+    //    javaMaxHeapSize "4g"
+    //}
 }
 
 apply plugin: 'com.google.gms.google-services'
