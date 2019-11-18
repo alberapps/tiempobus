@@ -64,12 +64,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment;
@@ -1353,18 +1349,10 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

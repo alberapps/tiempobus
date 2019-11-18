@@ -43,11 +43,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import java.util.ArrayList;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.horariosTram.HorariosTramAdapter;
@@ -446,10 +442,6 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
         //Para el buscador
         if (preferencias.contains("parada_search")) {
             int paradaSearch = preferencias.getInt("parada_search", -1);
@@ -467,12 +459,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
     @Override
     protected void onStop() {
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
-
         super.onStop();
-
 
     }
 

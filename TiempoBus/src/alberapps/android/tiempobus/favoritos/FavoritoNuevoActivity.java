@@ -37,12 +37,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.TiempoBusDb;
@@ -317,23 +313,12 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
-
         super.onStop();
-
 
     }
 

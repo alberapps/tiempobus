@@ -36,8 +36,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -462,18 +460,10 @@ public class RutasActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

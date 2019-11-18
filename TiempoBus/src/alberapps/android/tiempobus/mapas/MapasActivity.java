@@ -40,8 +40,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -617,18 +615,10 @@ public class MapasActivity extends AppCompatActivity
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

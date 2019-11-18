@@ -30,9 +30,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
@@ -130,18 +127,10 @@ public class AppInfoActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

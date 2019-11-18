@@ -21,9 +21,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import alberapps.android.tiempobus.BuildConfig;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.util.Utils;
@@ -61,18 +58,10 @@ public class ImageGridActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

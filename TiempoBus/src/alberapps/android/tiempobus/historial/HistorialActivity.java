@@ -40,9 +40,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -315,9 +312,6 @@ public class HistorialActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
     }
 
     @Override
@@ -325,9 +319,6 @@ public class HistorialActivity extends AppCompatActivity {
 
         super.onStop();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
     }
 
 }

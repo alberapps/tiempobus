@@ -42,8 +42,14 @@ import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 
+import alberapps.android.tiempobus.data.FavoritosProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.database.historial.HistorialProvider;
+import alberapps.android.tiempobus.favoritos.googledriverest.FavoritoGoogleDriveRestActivity;
 import alberapps.android.tiempobus.settings.Settings2Activity;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.vision.Tracker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -77,14 +83,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-//import com.google.android.gms.location.places.Place;
-//import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,8 +91,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-
-import alberapps.android.tiempobus.ApplicationTiempoBus.TrackerName;
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
@@ -317,22 +314,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             if (preferencias.getBoolean("analytics_on", false)) {
                 controlInicialAnalytics = true;
 
-                // Activar
-                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(false);
-
-                // Inicia tracker
-                Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
-
-                // Envia inicio actividad
-                GoogleAnalytics.getInstance(this).reportActivityStart(this);
-
                 //Nuevo para firebase
                 mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
                 Log.d("PRINCIPAL", "Analytics activo");
 
             } else {
-                GoogleAnalytics.getInstance(getApplicationContext()).setAppOptOut(true);
 
                 //Nuevo para firebase
                 mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
@@ -611,6 +598,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 break;
+
+            case R.id.navigation_item_drive:
+                detenerTodasTareas();
+                startActivity(new Intent(MainActivity.this, FavoritoGoogleDriveRestActivity.class));
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M09");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Favoritos - Drive");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                break;
         }
 
 
@@ -680,12 +678,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         handler.removeMessages(MSG_RECARGA);
 
-        if (preferencias.getBoolean("analytics_on", true) || controlInicialAnalytics) {
-
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-
-        }
-
         super.onStop();
 
     }
@@ -711,6 +703,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
 
         detenerTodasTareas();
+
+        //Cerrar BD
+        FavoritosProvider.DatabaseHelper.getInstance(this).close();
+        DatosLineasDB.DatosLineasOpenHelper.getInstance(this).close();
+        HistorialProvider.DatabaseHelper.getInstance(this).close();
+        //
 
         super.onDestroy();
     }
@@ -993,7 +991,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // //Fav destacados
 
-        AppCompatImageView botonFavDesc = (AppCompatImageView) findViewById(R.id.favorito_dest);
+        ImageView botonFavDesc = findViewById(R.id.favorito_dest);
         botonFavDesc.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -2196,15 +2194,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     }
 
-    public Tracker getTracker() {
-
-        // Get tracker.
-        Tracker t = ((ApplicationTiempoBus) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
-
-        return t;
-
-    }
-
     /**
      * Estadistica uso de tram
      *
@@ -2224,11 +2213,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     editor.putInt("parada_tram", actividad.paradaActual);
                     editor.apply();
 
-                    // Get tracker.
-                    Tracker t = ((ApplicationTiempoBus) actividad.getApplication()).getTracker(TrackerName.APP_TRACKER);
-
-                    // Build and send an Event.
-                    t.send(new HitBuilders.EventBuilder().setCategory("EVENTOS").setAction("TRAM").setLabel("TIEMPO_TRAM").build());
+                    FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(actividad);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "TR01");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Tiempos - Tram");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
 
                     Log.d("PRINCIPAL", "Enviado tram a analytics");
 

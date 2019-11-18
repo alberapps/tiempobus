@@ -20,20 +20,8 @@
 package alberapps.android.tiempobus;
 
 import android.app.Application;
-import android.util.Log;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
-
-import java.util.HashMap;
 
 public class ApplicationTiempoBus extends Application {
-
-    public enum TrackerName {
-        APP_TRACKER
-    }
-
-    private HashMap<TrackerName, Tracker> mTrackers = new HashMap<>();
 
     public ApplicationTiempoBus() {
 
@@ -41,26 +29,4 @@ public class ApplicationTiempoBus extends Application {
 
     }
 
-    synchronized Tracker getTracker(TrackerName trackerId) {
-
-        Log.d("APP", "inicia tracker");
-
-        if (!mTrackers.containsKey(trackerId)) {
-
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            /*
-			 * Tracker t = (trackerId == TrackerName.APP_TRACKER) ?
-			 * analytics.newTracker(PROPERTY_ID) : (trackerId ==
-			 * TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(
-			 * R.xml.global_tracker) :
-			 * analytics.newTracker(R.xml.ecommerce_tracker);
-			 */
-
-            Tracker t = analytics.newTracker(R.xml.app_tracker);
-
-            mTrackers.put(trackerId, t);
-
-        }
-        return mTrackers.get(trackerId);
-    }
 }

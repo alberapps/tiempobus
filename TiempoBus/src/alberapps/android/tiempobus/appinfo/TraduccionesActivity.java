@@ -29,9 +29,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 
@@ -99,23 +96,12 @@ public class TraduccionesActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
-
     }
 
     @Override
     protected void onStop() {
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
-
         super.onStop();
-
 
     }
 
