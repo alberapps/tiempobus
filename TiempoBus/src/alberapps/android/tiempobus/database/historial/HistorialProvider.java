@@ -64,7 +64,7 @@ public class HistorialProvider extends ContentProvider {
 	 */
 	@Override
 	public boolean onCreate() {
-		mOpenHelper = new DatabaseHelper(getContext());
+		mOpenHelper = DatabaseHelper.getInstance(getContext());
 		return true;
 	}
 
@@ -160,6 +160,7 @@ public class HistorialProvider extends ContentProvider {
 		if (rowId > 0) {
 			Uri noteUri = ContentUris.withAppendedId(HistorialDB.Historial.CONTENT_URI, rowId);
 			getContext().getContentResolver().notifyChange(noteUri, null);
+            mOpenHelper.close();
 			return noteUri;
 		}
 
@@ -188,6 +189,7 @@ public class HistorialProvider extends ContentProvider {
 		}
 
 		getContext().getContentResolver().notifyChange(uri, null);
+        mOpenHelper.close();
 		return count;
 	}
 
@@ -213,6 +215,7 @@ public class HistorialProvider extends ContentProvider {
 		}
 
 		getContext().getContentResolver().notifyChange(uri, null);
+        mOpenHelper.close();
 		return count;
 	}
 
@@ -239,7 +242,9 @@ public class HistorialProvider extends ContentProvider {
 	 * Clase de ayuda para abrir, crear y "upgradear" el fichero de base de
 	 * datos
 	 */
-	private static class DatabaseHelper extends SQLiteOpenHelper {
+	public static class DatabaseHelper extends SQLiteOpenHelper {
+
+		private static DatabaseHelper dbInstance;
 
 		/**
 		 * Configura la BBDD
@@ -249,6 +254,15 @@ public class HistorialProvider extends ContentProvider {
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
+
+		public static synchronized DatabaseHelper getInstance(Context context) {
+			if(dbInstance == null){
+				dbInstance = new DatabaseHelper(context);
+			}
+
+			return dbInstance;
+		}
+
 
 		/**
 		 * Crear la base de datos

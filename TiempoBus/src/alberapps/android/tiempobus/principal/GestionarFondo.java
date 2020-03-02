@@ -68,17 +68,17 @@ public class GestionarFondo {
      */
     public void seleccionarFondo() {
 
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        /*if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Request missing location permission.
             ActivityCompat.requestPermissions(context,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     MainActivity.REQUEST_CODE_STORAGE);
-        } else {
+        } else {*/
 
             seleccionarFondoPermisos();
 
-        }
+        //}
 
     }
 
@@ -150,14 +150,38 @@ public class GestionarFondo {
 
         if (file != null) {
 
-            return Uri.fromFile(getTempFile());
+            return Uri.fromFile(file);
         } else {
             return null;
         }
     }
 
     private File getTempFile() {
-        if (isSDCARDMounted()) {
+
+
+
+        File f = null;
+        try {
+
+            File directory = context.getFilesDir();
+            File fondoDir = new File(directory, "img_fondo");
+
+            if(!fondoDir.exists()){
+                fondoDir.mkdir();
+            }
+
+            f = new File(fondoDir, "foto_fondo.jpg");
+            f.createNewFile();
+
+
+        } catch (IOException e) {
+
+
+        }
+
+        return f;
+
+        /*if (isSDCARDMounted()) {
 
             File directorio = new File(Environment.getExternalStorageDirectory() + "/Android/data/alberapps.android.tiempobus/");
             directorio.mkdirs();
@@ -173,7 +197,7 @@ public class GestionarFondo {
             return f;
         } else {
             return null;
-        }
+        }*/
     }
 
     private boolean isSDCARDMounted() {

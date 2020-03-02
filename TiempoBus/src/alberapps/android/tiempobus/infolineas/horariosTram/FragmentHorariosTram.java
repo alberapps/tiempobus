@@ -309,7 +309,9 @@ public class FragmentHorariosTram extends Fragment {
 
             }
 
-            actividad.dialog.dismiss();
+            if(actividad.dialog.isShowing()) {
+                actividad.dialog.dismiss();
+            }
         }
     };
 

@@ -17,6 +17,8 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import alberapps.java.data.backup.DatosBackup;
@@ -24,7 +26,7 @@ import alberapps.java.data.backup.DatosBackup;
 /**
  * Tarea asincrona copia de seguridad
  */
-public class BackupAsyncTask extends AsyncTask<String, Void, Boolean> {
+public class BackupAsyncTask extends AsyncTask<Object, Void, Boolean> {
 
     public interface BackupAsyncTaskResponder {
         void backupLoaded(Boolean result);
@@ -37,16 +39,18 @@ public class BackupAsyncTask extends AsyncTask<String, Void, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(String... datos) {
+    protected Boolean doInBackground(Object... datos) {
         Boolean resultado = null;
         try {
 
             String entrada = (String) datos[0];
+            Activity context = (Activity) datos [1];
 
             if (entrada.equals("importar")) {
                 resultado = DatosBackup.recuperar(false);
             } else {
-                resultado = DatosBackup.exportar(false);
+                //resultado = DatosBackup.exportar(false, context);
+                resultado = DatosBackup.exportarIntent(false, context);
             }
         } catch (Exception e) {
             return false;

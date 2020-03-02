@@ -34,13 +34,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.DatosTam;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 public class DinamicaPasoParadaParser {
-
-    //private String URL = "http://isaealicante.subus.es/services/dinamica.asmx";
 
     /**
      * Consulta del servicioWeb y mapeo de la respuesta
@@ -68,17 +67,26 @@ public class DinamicaPasoParadaParser {
             builder.build();
 
             String resp = Conectividad.conexionGetUtf8(builder.toString());
-            resp = resp.substring(resp.indexOf("<soap:Envelope"));
-            is = Utilidades.stringToStream(resp);
 
-            if (is != null) {
+            if (resp != null && !resp.trim().equals("") && !resp.contains("005: Error del servicio")) {
 
-                resultados = parse(is);
+                resp = resp.substring(resp.indexOf("<soap:Envelope"));
+                is = Utilidades.stringToStream(resp);
 
+                if (is != null) {
+
+                    resultados = parse(is);
+
+                } else {
+
+                    // resultados
+
+                }
+
+            } else if (resp != null && !resp.trim().equals("") && resp.contains("005: Error del servicio")) {
+                throw new TiempoBusException(TiempoBusException.ERROR_005_SERVICIO);
             } else {
-
-                // resultados
-
+                throw new TiempoBusException(TiempoBusException.ERROR_NO_DEFINIDO);
             }
 
         } catch (Exception e) {

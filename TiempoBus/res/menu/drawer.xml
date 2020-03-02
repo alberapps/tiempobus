@@ -2,6 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:title="@string/drive_modal">
+        <menu>
+            <item
+                android:id="@+id/navigation_item_drive"
+                android:icon="@drawable/ic_cloud_upload_grey_48dp"
+                android:title="@string/archivo_drive_signin" />
+        </menu>
+    </item>
+
     <group
         android:id="@+id/menu_secciones"
         android:checkableBehavior="single">

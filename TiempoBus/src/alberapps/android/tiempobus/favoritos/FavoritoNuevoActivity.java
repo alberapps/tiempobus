@@ -38,6 +38,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
@@ -46,6 +47,7 @@ import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.database.DatosLineasDB;
 import alberapps.android.tiempobus.database.Parada;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.data.backup.DatosDriveBackup;
 
 /**
  * Guarda un nuevo favorito
@@ -177,12 +179,6 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
         guiGo.setOnClickListener(guiGoOnClickListener);
 
 
-        /*
-         * Asignamos el comprotamiento de los botones
-         */
-        // Button guiCancel = (Button) findViewById(R.id.boton_cancel);
-        // guiCancel.setOnClickListener(guiCancelListener);
-
     }
 
     /**
@@ -209,6 +205,14 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
                 values.put(TiempoBusDb.Favoritos.POSTE, Integer.valueOf(numParada));
 
                 getContentResolver().insert(TiempoBusDb.Favoritos.CONTENT_URI, values);
+
+                //Datos para copia de seguridad
+                Date fechaDB = DatosDriveBackup.datosArchivoDB();
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putLong("drive_local_db", fechaDB.getTime());
+                editor.apply();
+                ////
+
 
                 Intent intent = new Intent();
                 setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);

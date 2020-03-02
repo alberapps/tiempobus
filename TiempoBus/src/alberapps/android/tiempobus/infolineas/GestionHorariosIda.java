@@ -28,6 +28,8 @@ import android.net.NetworkInfo;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -176,7 +178,12 @@ public class GestionHorariosIda {
         infoLineaHorariosAdapter.addAll(context.datosHorarios.getHorariosIda());
 
         ListView idaView = (ListView) context.findViewById(R.id.infolinea_lista_ida);
-        // idaView.setOnItemClickListener(idaClickedHandler);
+        idaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         if (idaView.getFooterViewsCount() == 0) {
 

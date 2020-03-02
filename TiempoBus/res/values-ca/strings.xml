@@ -510,4 +510,65 @@ favorit per crear la teua llista.</string>
 
 
 
+    <string name="drive_aviso">Pots guardar els teus favorits en Drive, per a importar-los des de qualsevol dels teus dispositius. Pots veure i administrar els arxius en la carpeta \"TiempoBus_data\" de la teua unitat.</string>
+    <string name="drive_aviso_2">L\'app tindrà només accés als seus propis fitxers. La API de Google Drive evita qualsevol altre accés no autoritzat.</string>
+
+    <string name="archivo_borrado">L\'arxiu s\'ha enviat a la paperera de la teua unitat</string>
+
+    <string name="archivo_drive_nuevo">S\'ha creat l\'arxiu:</string>
+    <string name="archivo_drive_nuevo_2">en la carpeta \"TiempoBus_data\" de la teua unitat.</string>
+    <string name="archivo_drive_usuario">Usuari de Google:</string>
+    <string name="archivo_drive_usuario_def">No hi ha usuari</string>
+
+    <string name="archivo_drive_exp_1">Actualitzar backup actual</string>
+    <string name="archivo_drive_exp_2">Nou arxiu (no backup)</string>
+
+    <string name="archivo_drive_backup_1">Guardar</string>
+    <string name="archivo_drive_backup_2">Carregar</string>
+
+    <string name="archivo_drive_backup_3">Crear còpia</string>
+    <string name="archivo_drive_backup_4">Carregar/Admin copies</string>
+
+    <string name="archivo_drive_backup_aviso_1">La còpia de seguretat se substituirà amb la llista de favorits actual. Continuar?</string>
+    <string name="archivo_drive_backup_aviso_2">No hi ha cap còpia de seguretat. Crear?</string>
+
+    <string name="archivo_drive_backup_aviso_3">Es crearà una còpia de la llista de favorits actual en la teua unitat. Continuar?</string>
+
+    <string name="archivo_drive_signin">Accedir</string>
+    <string name="archivo_drive_signout">Tancar sessió</string>
+
+    <string name="archivo_drive_backup_aviso_signout">S\'ha tancat la sessió correctament.</string>
+    <string name="archivo_drive_backup_aviso_disconnect">S\'ha desconnectat l\'app del teu compte correctament.</string>
+    <string name="archivo_drive_backup_aviso_signout_pregunta">Pots tancar la sessió de manera temporal, o desconnectar l\'app del teu compte de manera definitiva.</string>
+
+    <string name="archivo_drive_signout_confirm">Tancar sessió</string>
+    <string name="archivo_drive_disconnect_confirm">Desconnectar compte</string>
+
+    <string name="archivo_drive_sinc_auto">Sincronització</string>
+
+    <string name="archivo_drive_sinc_auto_switch">Activar pujada automàtica</string>
+    <string name="archivo_drive_sinc_auto_switch2">Activar detectar canvis en Drive</string>
+
+    <string name="archivo_drive_sinc_auto_info">Avís: No es controla la sincronització des de diversos dispositius. La còpia en Drive se substituirà amb la versió local després de realitzar cada canvi.</string>
+
+    <string name="archivo_drive_sinc_auto_info_2">En accedir a l\'app es comprovarà si hi ha canvis en l\'arxiu de Drive. Es mostrarà un avís per si es desitja actualitzar la còpia local.</string>
+
+    <string name="archivo_drive_sinc_manual">Gestió de còpies</string>
+
+    <string name="archivo_drive_error_signin">S\'ha produït un error en accedir al teu compte.</string>
+
+    <string name="archivo_drive_info">Data de la ultima còpia de seguretat:</string>
+    <string name="archivo_drive_info_2">Data de la Base de dades local:</string>
+
+    <string name="archivo_drive_info_no_data">No hi ha informació</string>
+    <string name="archivo_drive_info_no_data_2">No s\'ha creat arxiu de còpia de seguretat</string>
+    <string name="archivo_drive_info_no_data_3">Error en recuperar les dades</string>
+    <string name="archivo_drive_info_no_data_4">No sincronitzat</string>
+
+    <string name="error_status_2">El servei de Vectalia no ha retornat resultats. Verifica la disponibilitat en alicante.vectalia.com</string>
+
+    <string name="archivo_exportar_otra">Enviar arxiu de BD a:</string>
+
+
+
 </resources>

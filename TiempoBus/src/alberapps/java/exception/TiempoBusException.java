@@ -30,6 +30,9 @@ public class TiempoBusException extends Exception {
 
     public static int ERROR_STATUS_SERVICIO = 1;
     public static String ERROR_STATUS_SERVICIO_MSG = "Error en el status del servicio";
+    public static int ERROR_005_SERVICIO = 2;
+    public static int ERROR_NO_DEFINIDO = 3;
+
 
     private int codigo;
 

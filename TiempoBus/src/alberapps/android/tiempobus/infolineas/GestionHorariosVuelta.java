@@ -21,6 +21,8 @@ package alberapps.android.tiempobus.infolineas;
 import android.content.SharedPreferences;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,7 +59,12 @@ public class GestionHorariosVuelta {
         infoLineaHorariosAdapter.addAll(context.datosHorarios.getHorariosVuelta());
 
         ListView vueltaView = (ListView) context.findViewById(R.id.infolinea_lista_vuelta);
-        // idaView.setOnItemClickListener(idaClickedHandler);
+        vueltaView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         if (vueltaView.getFooterViewsCount() == 0) {
 

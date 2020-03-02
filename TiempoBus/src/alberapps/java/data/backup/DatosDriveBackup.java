@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2014 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2014 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.java.data.backup;
 
@@ -23,14 +23,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 import android.util.Log;
 
-import com.google.android.gms.drive.DriveContents;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Gestion de copias de seguridad en Drive
@@ -42,30 +47,26 @@ public class DatosDriveBackup {
     public static final String FICHERO_DB_RESTORE = "tiempoBusDB.restore.db";
     public static final String FICHERO_DB_DRIVE = "tiempoBusDB.drive.db";
 
-    /**
-     * Exportar la base de datos a Drive
-     *
-     * @return boolean
-     */
-    public static boolean exportar(DriveContents contents) {
 
-        boolean control = false;
+    public static byte[] exportarDriveRest() {
 
         FileInputStream baseDatos = null;
 
         try {
 
-            OutputStream outputStream = contents.getOutputStream();
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
             // base de datos
             baseDatos = new FileInputStream(Environment.getDataDirectory() + RUTA_DATABASE);
 
             copyFileDrive(baseDatos, outputStream);
 
-            control = true;
+            return outputStream.toByteArray();
+
 
         } catch (IOException e) {
-            control = false;
+            e.printStackTrace();
         } finally {
 
             if (baseDatos != null) {
@@ -79,21 +80,38 @@ public class DatosDriveBackup {
 
         }
 
-        return control;
+        return null;
 
     }
+
+
+    public static Task<Boolean> recuperarDatosTask(final InputStream fileDriveStream) {
+
+        final Executor mExecutor = Executors.newSingleThreadExecutor();
+
+        return Tasks.call(mExecutor, () -> {
+
+            boolean result = recuperarDatos(fileDriveStream);
+
+            if (result) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+
 
     /**
      * Sobreescribir la base de datos
      *
      * @return boolean
      */
-    public static boolean recuperar(DriveContents contents) {
+    public static boolean recuperarDatos(InputStream fileDriveStream) {
 
         // Copia de respaldo para posible fallo
         exportarRespaldo();
 
-        InputStream fileDriveStream = null;
         FileOutputStream baseDatosE = null;
         FileInputStream fileEXIE = null;
 
@@ -116,8 +134,6 @@ public class DatosDriveBackup {
             fileExport = new FileOutputStream(fileEx);
 
             // Copiar desde drive a sd
-
-            fileDriveStream = contents.getInputStream();
 
             copyFileI(fileDriveStream, fileExport);
 
@@ -145,6 +161,7 @@ public class DatosDriveBackup {
             baseDatosE.flush();
 
             control = true;
+
 
         } catch (Exception e) {
 
@@ -195,6 +212,25 @@ public class DatosDriveBackup {
         }
 
         return control;
+
+    }
+
+
+    public static Date datosArchivoDB() {
+
+        try {
+
+            File baseDatos = new File(Environment.getDataDirectory() + RUTA_DATABASE);
+
+            return new Date(baseDatos.lastModified());
+
+
+        } catch (Exception e) {
+
+
+        }
+
+        return null;
 
     }
 

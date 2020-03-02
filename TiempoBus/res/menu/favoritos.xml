@@ -21,36 +21,41 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tiempobus="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@id/menu_ordenar_parada"
-        android:orderInCategory="1"
-        tiempobus:showAsAction="never"
-        android:title="@string/ordenar_parada"/>
-    <item
-        android:id="@id/menu_ordenar_nombre"
+    <group>
+        <item
+            android:id="@id/menu_ordenar_parada"
+            android:orderInCategory="1"
+            android:title="@string/ordenar_parada"
+            tiempobus:showAsAction="never" />
+        <item
+            android:id="@id/menu_ordenar_nombre"
+            android:orderInCategory="2"
+            android:title="@string/ordenar_nombre"
+            tiempobus:showAsAction="never" />
+    </group>
+
+    <!--item
+        android:id="@+id/submenu_1"
         android:orderInCategory="2"
-        tiempobus:showAsAction="never"
-        android:title="@string/ordenar_nombre"/>
-    <item
-        android:id="@id/menu_exportar"
-        android:orderInCategory="2"
-        tiempobus:showAsAction="never"
-        android:title="@string/exportar"/>
-    <item
-        android:id="@id/menu_importar"
-        android:orderInCategory="2"
-        tiempobus:showAsAction="never"
-        android:title="@string/importar"/>
-    <item
-        android:id="@id/menu_exportar_drive"
-        android:orderInCategory="2"
-        tiempobus:showAsAction="never"
-        android:title="@string/exportar_drive"/>
+        android:title="@string/menu_sd">
+        <menu>
+            <item
+                android:id="@id/menu_exportar"
+                android:orderInCategory="3"
+                android:title="@string/exportar"
+                tiempobus:showAsAction="never" />
+            <item
+                android:id="@id/menu_importar"
+                android:orderInCategory="4"
+                android:title="@string/importar"
+                tiempobus:showAsAction="never" />
+        </menu>
+    </item-->
     <item
         android:id="@id/menu_importar_drive"
-        android:orderInCategory="2"
-        tiempobus:showAsAction="never"
-        android:title="@string/importar_drive"/>
+        android:orderInCategory="5"
+        android:title="@string/drive_modal"
+        tiempobus:showAsAction="never" />
 
 
 </menu>

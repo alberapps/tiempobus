@@ -18,15 +18,26 @@
  */
 package alberapps.java.data.backup;
 
+import android.app.Activity;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Environment;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ShareCompat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLConnection;
+
+import alberapps.android.tiempobus.R;
 
 /**
  * Gestion de copias de seguridad
@@ -38,7 +49,7 @@ public class DatosBackup {
      *
      * @return boolean
      */
-    public static boolean exportar(boolean respaldo) {
+    public static boolean exportarSD(boolean respaldo) {
 
         if (isSDCARDMounted()) {
 
@@ -113,6 +124,35 @@ public class DatosBackup {
 
     }
 
+    public static boolean exportarIntent(boolean respaldo, Activity context) {
+
+
+        //Intent sharing = new Intent(Intent.ACTION_SEND);
+        Uri file = Uri.parse(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+        //sharing.setType("*/*");
+        //sharing.putExtra(Intent.EXTRA_STREAM, file);
+        //context.startActivity(Intent.createChooser(sharing, context.getString(R.string.archivo_exportar_otra)));
+
+
+        //ShareCompat.IntentBuilder.from(context)
+         //       .setStream(file)
+        //        .setType("*/*")
+          //      .startChooser();*/
+
+       /* File baseDatos = new File(Environment.getDataDirectory() + "/data/alberapps.android.tiempobus/databases/zgzbus.db");
+        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+        downloadManager.addCompletedDownload(baseDatos.getName(), baseDatos.getName(), false, "application/octet-stream", baseDatos.getAbsolutePath(), baseDatos.length(), true);
+*/
+
+
+
+        return true;
+
+
+
+
+    }
+
     /**
      * Sobreescribir la base de datos
      *
@@ -122,7 +162,7 @@ public class DatosBackup {
         if (isSDCARDMounted()) {
 
             // Copia de respaldo para posible fallo
-            exportar(true);
+            exportarSD(true);
 
             FileInputStream fileEXIE = null;
             FileOutputStream baseDatosE = null;
@@ -158,6 +198,9 @@ public class DatosBackup {
                 copyFile(fileEXIE, baseDatosE);
 
                 control = true;
+
+
+
             } catch (IOException e) {
 
                 // Recuperar respaldo

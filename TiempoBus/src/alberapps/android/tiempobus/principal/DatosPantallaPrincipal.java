@@ -1137,7 +1137,7 @@ public class DatosPantallaPrincipal {
 
             CharSequence[] items = new CharSequence[fav.size()];
 
-            for (int i = 0; i < fav.size() && i <= 5; i++) {
+            for (int i = 0; i < fav.size(); i++) {
                 items[i] = fav.get(i).getTitulo();
             }
 
@@ -1297,7 +1297,7 @@ public class DatosPantallaPrincipal {
                 vPieBus = v;
             }
 
-            TextView infoapp = (TextView) v.findViewById(R.id.legal3);
+            ImageView infoapp = v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -1352,7 +1352,7 @@ public class DatosPantallaPrincipal {
                 }
             });
 
-            TextView infoapp = (TextView) v.findViewById(R.id.legal3);
+            ImageView infoapp = v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 

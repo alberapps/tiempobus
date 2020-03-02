@@ -71,8 +71,10 @@ public class FragmentNoticiasRss extends Fragment {
             vacio.setVisibility(View.INVISIBLE);
         }
         ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_rss);
-        lpb.setIndeterminate(true);
-        listRssWiew.setEmptyView(lpb);
+        if(lpb != null) {
+            lpb.setIndeterminate(true);
+            listRssWiew.setEmptyView(lpb);
+        }
 
         super.onViewStateRestored(savedInstanceState);
     }

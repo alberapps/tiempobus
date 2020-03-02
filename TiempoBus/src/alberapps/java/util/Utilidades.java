@@ -308,6 +308,24 @@ public class Utilidades {
 
     }
 
+    public static String getFechaHoraES(Date fecha) {
+
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
     /**
      * Fecha de hoy con la hora indicada
      *

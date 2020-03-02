@@ -26,15 +26,15 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import androidx.fragment.app.FragmentActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.drive.Drive;
 
 /**
  * Actividad para el acceso a la api de Google Drive
@@ -93,7 +93,7 @@ public class BaseDriveActivity extends FragmentActivity implements GoogleApiClie
     protected void onResume() {
         super.onResume();
         if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
+            //mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Drive.API).addScope(Drive.SCOPE_FILE).addConnectionCallbacks(this).addOnConnectionFailedListener(this).build();
         }
         mGoogleApiClient.connect();
     }

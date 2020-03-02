@@ -19,12 +19,8 @@ package alberapps.android.tiempobus.favoritos.drivedeprecated;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.OpenFileActivityBuilder;
 
 import alberapps.android.tiempobus.R;
 
@@ -98,7 +94,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
 
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_CREATOR:
@@ -159,7 +155,7 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
-    }
+    }*/
 
     /**
      * Crear archivo en drive
@@ -200,11 +196,11 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
      *
      * @param id
      */
-    private void guardarDatos(DriveId id) {
+    /*private void guardarDatos(DriveId id) {
 
         // activarProgreso();
 
-        /*DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
         BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
             public void backupLoaded(Boolean resultado) {
@@ -224,9 +220,9 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
             }
         };
 
-        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");*/
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "exportar");
 
-    }
+    }*/
 
     /**
      * Cargar el fichero desde drive
@@ -245,13 +241,13 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
     /**
      * Cargar los datos del archivo
      *
-     * @param id
+     *
      */
-    private void cargarDatos(DriveId id) {
+    /*private void cargarDatos(DriveId id) {
 
         // activarProgreso();
 
-       /* DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
+        DriveFile file = Drive.DriveApi.getFile(getGoogleApiClient(), id);
 
         BackupDriveAsyncTaskResponder backupDriveAsyncTaskResponder = new BackupDriveAsyncTaskResponder() {
             public void backupLoaded(Boolean resultado) {
@@ -271,9 +267,9 @@ public class FavoritoDriveActivity extends BaseDriveActivity {
             }
         };
 
-        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");*/
+        new BackupDriveAsyncTask(backupDriveAsyncTaskResponder).execute(file, this, "importar");
 
-    }
+    }*/
 
     private void terminar(Integer resultado) {
         getGoogleApiClient().disconnect();

@@ -94,7 +94,7 @@ public class DatosLineasDB {
      */
     public DatosLineasDB(Context context) {
         contexto = context;
-        mDatabaseOpenHelper = new DatosLineasOpenHelper(context);
+        mDatabaseOpenHelper = DatosLineasOpenHelper.getInstance(context);
     }
 
     /**
@@ -314,10 +314,12 @@ public class DatosLineasDB {
     /**
      * This creates/opens the database.
      */
-    private static class DatosLineasOpenHelper extends SQLiteOpenHelper {
+    public static class DatosLineasOpenHelper extends SQLiteOpenHelper {
 
         private final Context mHelperContext;
         private SQLiteDatabase mDatabase;
+
+        private static DatosLineasOpenHelper dbInstance;
 
         /*
          * Note that FTS3 does not support column constraints and thus, you
@@ -335,6 +337,14 @@ public class DatosLineasDB {
         DatosLineasOpenHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
             mHelperContext = context;
+        }
+
+        public static synchronized DatosLineasOpenHelper getInstance(Context context) {
+            if(dbInstance == null){
+                dbInstance = new DatosLineasOpenHelper(context);
+            }
+
+            return dbInstance;
         }
 
         @Override
@@ -408,6 +418,9 @@ public class DatosLineasDB {
 
                         // mDatabase.endTransaction();
 
+                        //
+                        close();
+
                     }
 
                 }
@@ -477,6 +490,9 @@ public class DatosLineasDB {
                     } finally {
 
                         // mDatabase.endTransaction();
+
+                        //
+                        close();
 
                     }
 

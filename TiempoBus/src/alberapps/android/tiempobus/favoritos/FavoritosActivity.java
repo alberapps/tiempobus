@@ -48,21 +48,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
+import alberapps.android.tiempobus.data.FavoritosProvider;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.favoritos.googledrive.FavoritoGoogleDriveActivity;
+import alberapps.android.tiempobus.favoritos.googledriverest.FavoritoGoogleDriveRestActivity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask.BackupAsyncTaskResponder;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.data.backup.DatosDriveBackup;
 
 /**
  * Muestra los favoritos guardados
@@ -122,9 +122,11 @@ public class FavoritosActivity extends AppCompatActivity {
 
         // Orden de favoritos
         orden = preferencias.getString("orden_favoritos", TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
-        consultarDatos(orden);
+        //consultarDatos(orden);
 
     }
+
+
 
     /**
      * Consulda de datos desde la base de datos en el orden indicado
@@ -306,6 +308,13 @@ public class FavoritosActivity extends AppCompatActivity {
 
                 int resultado = getContentResolver().delete(miUri, null, null);
 
+                //Datos para copia de seguridad
+                Date fechaDB = DatosDriveBackup.datosArchivoDB();
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putLong("drive_local_db", fechaDB.getTime());
+                editor.apply();
+                ////
+
                 adapter.notifyDataSetInvalidated();
 
                 consultarDatos(orden);
@@ -482,21 +491,30 @@ public class FavoritosActivity extends AppCompatActivity {
                 }
                 break;
 
-            case R.id.menu_exportar_drive:
-
-                if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
-
-                    Intent intent2 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
-
-                    Bundle b2 = new Bundle();
-                    b2.putString("MODO", FavoritoGoogleDriveActivity.MODO_EXPORTAR);
-                    intent2.putExtras(b2);
-
-                    startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
-
-                }
-
-                break;
+//            case R.id.menu_exportar_drive:
+//
+//                if (DatosPantallaPrincipal.servicesConnectedActivity(this)) {
+//
+//                    Intent intent2 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
+//
+//                    Bundle b2 = new Bundle();
+//                    b2.putString("MODO", FavoritoGoogleDriveActivity.MODO_EXPORTAR);
+//                    intent2.putExtras(b2);
+//
+//                    startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);
+//
+//
+//                    /*Intent intent2 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveRestActivity.class);
+//
+//                    Bundle b2 = new Bundle();
+//                    b2.putString("MODO", FavoritoGoogleDriveRestActivity.MODO_EXPORTAR);
+//                    intent2.putExtras(b2);
+//
+//                    startActivityForResult(intent2, SUB_ACTIVITY_REQUEST_DRIVE);*/
+//
+//                }
+//
+//                break;
 
 
         }
@@ -547,7 +565,7 @@ public class FavoritosActivity extends AppCompatActivity {
             }
         };
 
-        new BackupAsyncTask(backupAsyncTaskResponder).execute("exportar");
+        new BackupAsyncTask(backupAsyncTaskResponder).execute("exportar", this);
 
     }
 
@@ -595,11 +613,13 @@ public class FavoritosActivity extends AppCompatActivity {
      */
     private void importarDriveDB() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.favoritos_pregunta)).setCancelable(false).setPositiveButton(getString(R.string.barcode_si), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                Intent intent1 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
+                //Intent intent1 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveActivity.class);
+
+                Intent intent1 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveRestActivity.class);
 
                 Bundle b = new Bundle();
                 b.putString("MODO", FavoritoGoogleDriveActivity.MODO_IMPORTAR);
@@ -616,7 +636,10 @@ public class FavoritosActivity extends AppCompatActivity {
         });
         AlertDialog alert = builder.create();
 
-        alert.show();
+        alert.show();*/
+
+        Intent intent1 = new Intent(FavoritosActivity.this, FavoritoGoogleDriveRestActivity.class);
+        startActivityForResult(intent1, SUB_ACTIVITY_REQUEST_DRIVE);
 
     }
 
@@ -631,6 +654,11 @@ public class FavoritosActivity extends AppCompatActivity {
             public void backupLoaded(Boolean resultado) {
 
                 if (resultado != null && resultado) {
+
+                    //Cerrar para recargar datos
+                    FavoritosProvider.DatabaseHelper dbHelper = FavoritosProvider.DatabaseHelper.getInstance(FavoritosActivity.this);
+                    dbHelper.close();
+                    //
 
                     consultarDatos(orden);
                     if (dialog != null && dialog.isShowing()) {
@@ -660,18 +688,12 @@ public class FavoritosActivity extends AppCompatActivity {
 
         super.onStart();
 
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStart(this);
-        }
+        consultarDatos(orden);
 
     }
 
     @Override
     protected void onStop() {
-
-        if (preferencias.getBoolean("analytics_on", true)) {
-            GoogleAnalytics.getInstance(this).reportActivityStop(this);
-        }
 
         super.onStop();
 

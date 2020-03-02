@@ -1,21 +1,21 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by ZgzBus Copyright (C) 2010 Francho Joven
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on code by ZgzBus Copyright (C) 2010 Francho Joven
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.data;
 
@@ -62,7 +62,7 @@ public class FavoritosProvider extends ContentProvider {
      */
     @Override
     public boolean onCreate() {
-        mOpenHelper = new DatabaseHelper(getContext());
+        mOpenHelper = DatabaseHelper.getInstance(getContext());
         return true;
     }
 
@@ -160,6 +160,9 @@ public class FavoritosProvider extends ContentProvider {
         if (rowId > 0) {
             Uri noteUri = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, rowId);
             getContext().getContentResolver().notifyChange(noteUri, null);
+            //
+            mOpenHelper.close();
+            //
             return noteUri;
         }
 
@@ -188,6 +191,9 @@ public class FavoritosProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
+        //
+        mOpenHelper.close();
+        //
         return count;
     }
 
@@ -213,8 +219,13 @@ public class FavoritosProvider extends ContentProvider {
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
+        //
+        mOpenHelper.close();
+        //
         return count;
     }
+
+
 
     /**
      * Configuramos las urls disponibles
@@ -237,7 +248,9 @@ public class FavoritosProvider extends ContentProvider {
      * Clase de ayuda para abrir, crear y "upgradear" el fichero de base de
      * datos
      */
-    private static class DatabaseHelper extends SQLiteOpenHelper {
+    public static class DatabaseHelper extends SQLiteOpenHelper {
+
+        private static DatabaseHelper dbInstance;
 
         /**
          * Configura la BBDD
@@ -246,6 +259,14 @@ public class FavoritosProvider extends ContentProvider {
          */
         DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        }
+
+        public static synchronized DatabaseHelper getInstance(Context context) {
+            if(dbInstance == null){
+                dbInstance = new DatabaseHelper(context);
+            }
+
+            return dbInstance;
         }
 
         /**
@@ -273,6 +294,15 @@ public class FavoritosProvider extends ContentProvider {
             db.execSQL("DROP TABLE IF EXISTS " + TABLA_FAVORITOS);
             onCreate(db);
         }
+
+        @Override
+        public synchronized void close() {
+            super.close();
+        }
     }
+
+
+
+
 
 }

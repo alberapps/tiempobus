@@ -37,10 +37,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Date;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.TiempoBusDb;
 import alberapps.android.tiempobus.util.UtilidadesUI;
+import alberapps.java.data.backup.DatosDriveBackup;
 
 /**
  * Guarda un nuevo favorito
@@ -174,6 +178,13 @@ public class FavoritoModificarActivity extends AppCompatActivity {
                 Uri miUriM = ContentUris.withAppendedId(TiempoBusDb.Favoritos.CONTENT_URI, id_uri);
 
                 getContentResolver().update(miUriM, values, null, null);
+
+                //Datos para copia de seguridad
+                Date fechaDB = DatosDriveBackup.datosArchivoDB();
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putLong("drive_local_db", fechaDB.getTime());
+                editor.apply();
+                ////
 
                 Intent intent = new Intent();
                 setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);

@@ -41,30 +41,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-
-import alberapps.android.tiempobus.data.FavoritosProvider;
-import alberapps.android.tiempobus.database.DatosLineasDB;
-import alberapps.android.tiempobus.database.historial.HistorialProvider;
-import alberapps.android.tiempobus.favoritos.googledriverest.FavoritoGoogleDriveRestActivity;
-import alberapps.android.tiempobus.settings.Settings2Activity;
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.vision.Tracker;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -83,7 +59,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,13 +84,19 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.UtilidadesBarcode;
 import alberapps.android.tiempobus.barcodereader.BarcodeMainActivity;
+import alberapps.android.tiempobus.data.FavoritosProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.database.historial.HistorialProvider;
+import alberapps.android.tiempobus.databinding.PantallaPrincipalBinding;
 import alberapps.android.tiempobus.favoritos.FavoritoNuevoActivity;
 import alberapps.android.tiempobus.favoritos.FavoritosActivity;
+import alberapps.android.tiempobus.favoritos.googledriverest.FavoritoGoogleDriveRestActivity;
 import alberapps.android.tiempobus.historial.HistorialActivity;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.mapas.MapasActivity;
@@ -207,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public FirebaseAnalytics mFirebaseAnalytics;
 
+    private PantallaPrincipalBinding pantallaPrincipalBinding;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,16 +214,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        setContentView(R.layout.pantalla_principal);
+        //setContentView(R.layout.pantalla_principal);
+        pantallaPrincipalBinding = PantallaPrincipalBinding.inflate(getLayoutInflater());
+        setContentView(pantallaPrincipalBinding.getRoot());
+
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
         Conectividad.activarCache(this, preferencias);
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarid);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(pantallaPrincipalBinding.toolbarid);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -279,13 +280,19 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     @Override
     protected void onStart() {
+
         super.onStart();
 
+        //Drive
+        MenuItem driveMenu = mDrawerView.getMenu().getItem(0).getSubMenu().getItem(0);
+
+        if (preferencias.contains("drive_cuenta")) {
+            driveMenu.setTitle(preferencias.getString("drive_cuenta", getString(R.string.archivo_drive_signin)));
+        } else {
+            driveMenu.setTitle(getString(R.string.archivo_drive_signin));
+        }
 
     }
-
-
-    private boolean controlInicialAnalytics = false;
 
 
     /**
@@ -307,35 +314,24 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         txtPoste.setText(Integer.toString(paradaActual));
 
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.FROYO) {
+        datosPantallaPrincipal.controlMostrarAnalytics();
 
-            datosPantallaPrincipal.controlMostrarAnalytics();
+        if (preferencias.getBoolean("analytics_on", false)) {
 
-            if (preferencias.getBoolean("analytics_on", false)) {
-                controlInicialAnalytics = true;
+            //Nuevo para firebase
+            mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
 
-                //Nuevo para firebase
-                mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
-
-                Log.d("PRINCIPAL", "Analytics activo");
-
-            } else {
-
-                //Nuevo para firebase
-                mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
-
-                Log.d("PRINCIPAL", "Analytics inactivo");
-
-            }
+            Log.d("PRINCIPAL", "Analytics activo");
 
         } else {
 
-            //Ya no funciona en Froyo
+            //Nuevo para firebase
+            mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
 
-            SharedPreferences.Editor editor = preferencias.edit();
-            editor.putBoolean("analytics_on", false);
-            editor.apply();
+            Log.d("PRINCIPAL", "Analytics inactivo");
+
         }
+
 
     }
 
@@ -409,6 +405,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 }
             });
+        }
+
+
+        //Drive
+        MenuItem driveMenu = mDrawerView.getMenu().getItem(0).getSubMenu().getItem(0);
+
+        if (preferencias.contains("drive_cuenta")) {
+            driveMenu.setTitle(preferencias.getString("drive_cuenta", getString(R.string.archivo_drive_signin)));
         }
 
         datosPantallaPrincipal.opcionesNotificacion(mDrawerHeader);
@@ -1181,7 +1185,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 switch (item) {
                     case 0:
 
-                        if(busSeleccionado != null) {
+                        if (busSeleccionado != null) {
 
                             try {
 
@@ -1192,7 +1196,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 gestionarAlarmas.mostrarModalTiemposAlerta(busSeleccionado, paradaActual, textoReceiver);
                                 busSeleccionado = null;
 
-                            }catch(Exception e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.alarma_auto_error), Toast.LENGTH_SHORT).show();
                             }
@@ -1760,9 +1764,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         }
 
-                        if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_STATUS_SERVICIO)) {
+                        if (datosRespuesta != null && datosRespuesta.getError() != null && datosRespuesta.getError().equals(TiempoBusException.ERROR_005_SERVICIO)) {
 
-                            //Toast.makeText(getApplicationContext(), getString(R.string.error_status), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_status_2), Toast.LENGTH_LONG).show();
 
                         }
 
@@ -1834,7 +1838,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 case MSG_ERROR_TIEMPOS:
 
                     if (laActividad != null) {
-                        Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(laActividad, laActividad.getString(R.string.error_tiempos), Toast.LENGTH_SHORT).show();
 
                         laActividad.showProgressBar(false);
                     }

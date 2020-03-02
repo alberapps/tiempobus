@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">4.5.6</string>
+    <string name="app_version" translatable="false">5.0.0</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor" translatable="false">Alberto Montiel (2019)</string>
+    <string name="app_autor" translatable="false">Alberto Montiel (2020)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
     <string name="app_autor_web" translatable="false">blog.alberapps.com</string>
     <string name="poste">Nº de parada&#8230;</string>
@@ -671,5 +671,66 @@
 
     <string name="info_error">Información no disponible</string>
 
+
+    <string name="drive_aviso">Puedes guardar tus favoritos en Drive, para importarlos desde cualquiera de tus dispositivos. Puedes ver y administrar los archivos en la carpeta \"TiempoBus_data\" de tu unidad.</string>
+    <string name="drive_aviso_2">La app tendrá sólo acceso a sus propios ficheros. La API de Google Drive evita cualquier otro acceso no autorizado.</string>
+
+    <string name="menu_sd" translatable="false">SD</string>
+
+    <string name="archivo_borrado">El archivo se ha enviado a la papelera de tu unidad</string>
+
+    <string name="archivo_drive_nuevo">Se ha creado el archivo:</string>
+    <string name="archivo_drive_nuevo_2">en la carpeta \"TiempoBus_data\" de tu unidad.</string>
+    <string name="archivo_drive_usuario">Usuario de Google:</string>
+    <string name="archivo_drive_usuario_def">No hay usuario</string>
+
+    <string name="archivo_drive_exp_1">Actualizar backup actual</string>
+    <string name="archivo_drive_exp_2">Nuevo archivo (no backup)</string>
+
+    <string name="archivo_drive_backup_1">Guardar</string>
+    <string name="archivo_drive_backup_2">Cargar</string>
+
+    <string name="archivo_drive_backup_3">Crear copia</string>
+    <string name="archivo_drive_backup_4">Cargar/Admin copias</string>
+
+    <string name="archivo_drive_backup_aviso_1">La copia de seguridad se sustituirá con la lista de favoritos actual. ¿Continuar?</string>
+    <string name="archivo_drive_backup_aviso_2">No hay ninguna copia de seguridad. ¿Crear?</string>
+
+    <string name="archivo_drive_backup_aviso_3">Se creará una copia de la lista de favoritos actual en tu unidad. ¿Continuar?</string>
+
+    <string name="archivo_drive_signin">Acceder</string>
+    <string name="archivo_drive_signout">Cerrar sesión</string>
+
+    <string name="archivo_drive_backup_aviso_signout">Se ha cerrado la sesión correctamente.</string>
+    <string name="archivo_drive_backup_aviso_disconnect">Se ha desconectado la app de tu cuenta correctamente.</string>
+    <string name="archivo_drive_backup_aviso_signout_pregunta">Puedes cerrar la sesión de forma temporal, o desconectar la app de tu cuenta de forma definitiva.</string>
+
+    <string name="archivo_drive_signout_confirm">Cerrar sesión</string>
+    <string name="archivo_drive_disconnect_confirm">Desconectar cuenta</string>
+
+    <string name="archivo_drive_sinc_auto">Sincronización</string>
+
+    <string name="archivo_drive_sinc_auto_switch">Activar subida automática</string>
+    <string name="archivo_drive_sinc_auto_switch2">Activar detectar cambios en Drive</string>
+
+    <string name="archivo_drive_sinc_auto_info">Aviso: No se controla la sincronización desde varios dispositivos. La copia en Drive se sustituirá con la versión local tras realizar cada cambio.</string>
+
+    <string name="archivo_drive_sinc_auto_info_2">Al acceder a la app se comprobará si hay cambios en el archivo de Drive. Se mostrará un aviso por si se desea actualizar la copia local.</string>
+
+    <string name="archivo_drive_sinc_manual">Gestión de copias</string>
+
+    <string name="archivo_drive_error_signin">Se ha producido un error al acceder a tu cuenta.</string>
+
+    <string name="archivo_drive_info">Fecha de la ultima copia de seguridad:</string>
+    <string name="archivo_drive_info_2">Fecha de la Base de datos local:</string>
+
+    <string name="archivo_drive_info_no_data">No hay información</string>
+    <string name="archivo_drive_info_no_data_2">No se ha creado archivo de backup</string>
+    <string name="archivo_drive_info_no_data_3">Error al recuperar los datos</string>
+    <string name="archivo_drive_info_no_data_4">No sincronizado</string>
+
+    <string name="error_status_2">El servicio de Vectalia no ha devuelto resultados. Verifica la disponibilidad en alicante.vectalia.com</string>
+
+    <string name="archivo_exportar_otra">Enviar archivo de BD a:</string>
 
 </resources>

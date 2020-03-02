@@ -68,7 +68,6 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
     protected DatosRespuesta doInBackground(Object... datos) {
 
         ArrayList<BusLlegada> llegadasBus = null;
-        ArrayList<BusLlegada> llegadasDiesel = null;
 
         DatosRespuesta datosRespuesta = new DatosRespuesta();
 
@@ -76,11 +75,8 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
         int paradaI = 0;
 
         parada = ((Integer) datos[0]).toString();
-
         paradaI = (Integer) datos[0];
-
         Context context = (Context) datos[1];
-
 
         /////////
         //PrecargasV3.precargarDatosLineas(context);
@@ -89,123 +85,27 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
-        //boolean opcionTR = preferencias.getBoolean("tram_opcion_tr", false);
+
         boolean opcionTR = false;
 
         Boolean cacheTiempos = (Boolean) datos[2];
 
 
-        Integer paradaDestinoTram = UtilidadesTRAM.HORARIOS_COD_ESTACION[0];
-        String paradaDestinoTramTexto = "";
-
-        if (datos.length >= 4 && !((String) datos[3]).equals("")) {
-            paradaDestinoTram = Integer.parseInt(((String) datos[3]).split(";")[0]);
-            paradaDestinoTramTexto = ((String) datos[3]).split(";")[1];
-        }
-
-        int url1 = 1;
-        int url2 = 1;
-
-        if (DatosPantallaPrincipal.esTram(parada)) {
-
-            // Verificar linea 9
-            if (!UtilidadesTRAM.ACTIVADO_L9 && UtilidadesTRAM.esParadaL9(parada)) {
-                return null;
-            }
-
-            // Ip a usar de forma aleatoria
-            boolean iprandom = Utilidades.ipRandom();
-
-            if (iprandom) {
-
-                url1 = DinamicaPasoParadaParser.URL1;
-                url2 = DinamicaPasoParadaParser.URL2;
-
-                Log.d("TIEMPOS", "Combinacion url 1");
-
-            } else {
-
-                url2 = DinamicaPasoParadaParser.URL1;
-                url1 = DinamicaPasoParadaParser.URL2;
-
-                Log.d("TIEMPOS", "Combinacion url 2");
-
-            }
-
-        }
-
         try {
 
-            /*if (parada.equals(UtilidadesTRAM.CODIGO_TRAM_BENIDORM)) {
-
-                try {
-                    //Tiempos isae tram diesel
-                    //llegadasDiesel = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
-
-                    llegadasDiesel = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, null, null);
-
-                } catch (Exception e) {
-                    llegadasDiesel = null;
-                }
-
-                try {
-                    //Tiempos isae tram
-                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
-
-                } catch (Exception e) {
-
-                    //En caso de error en servicio de tram pero ok en servcio diesel
-
-                    if (llegadasDiesel == null) {
-                        throw e;
-                    }
-
-                    e.printStackTrace();
-                }
-
-
-                if (llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
-
-                    if (llegadasBus == null) {
-                        llegadasBus = new ArrayList<>();
-                    }
-
-                    llegadasBus.addAll(llegadasDiesel);
-                }
-
-            } else if (UtilidadesTRAM.esParadaL9(parada)) {
-
-                //llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegada(paradaI);
-                //llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, null, null);
-
-                //Consulta de tram desactivada
-                //llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
-
-            } else */
-
             if (DatosPantallaPrincipal.esTram(parada)) {
-
-
-                //Consulta de tram desactivada
-                /*if (opcionTR) {
-                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url1, cacheTiempos);
-                } else if (paradaDestinoTram != null) {
-                    llegadasBus = ProcesarTiemposTramPorHorarios.procesaTiemposLlegada(paradaI, paradaDestinoTram, paradaDestinoTramTexto);
-                }*/
 
                 BusLlegada bus = new BusLlegada();
                 llegadasBus = new ArrayList<>();
 
-                if(opcionTR) {
+                if (opcionTR) {
                     bus.setErrorServicio(true);
                     bus.setTiempoReal(true);
-                }else {
+                } else {
                     bus.setTiempoReal(false);
                     bus.setSinDatos(true);
                 }
                 llegadasBus.add(bus);
-
-
 
 
             } else {
@@ -217,50 +117,25 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
         } catch (TiempoBusException e) {
 
-            datosRespuesta.setError(e.getCodigo());
-            datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
-
             e.printStackTrace();
 
-        } catch (Exception e) {
+            if (e.getCodigo() == TiempoBusException.ERROR_005_SERVICIO) {
 
+                datosRespuesta.setError(e.getCodigo());
+                datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
 
-            e.printStackTrace();
-
-            // Probar con acceso secundario
-            /*if (DatosPantallaPrincipal.esTram(parada) && opcionTR) {
-
-                try {
-
-                    Log.d("TIEMPOS", "Accede a la segunda ruta de tram");
-
-                    llegadasBus = ProcesarTiemposTramIsaeService.procesaTiemposLlegada(paradaI, url2, cacheTiempos);
-
-                    if (UtilidadesTRAM.esParadaL9(parada) && llegadasDiesel != null && !llegadasDiesel.isEmpty()) {
-                        llegadasBus.addAll(llegadasDiesel);
-                    }
-
-                    datosRespuesta.setListaBusLlegada(llegadasBus);
-                } catch (TiempoBusException e2) {
-
-                    datosRespuesta.setError(e2.getCodigo());
-                    datosRespuesta.setListaBusLlegada(new ArrayList<BusLlegada>());
-
-                    e.printStackTrace();
-
-                } catch (Exception e1) {
-
-                    e1.printStackTrace();
-
-                    return null;
-
-                }
-            } else {*/
+            } else {
 
                 return null;
 
-            //}
+            }
 
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return null;
 
         }
 

@@ -2,11 +2,9 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
-    //compile project(':workspace:google-play-services_lib')
-    //compile 'com.android.support:gridlayout-v7:21.0.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
     implementation files('libs/twitter4j-core-4.0.7.jar')
-    implementation files('libs/jsoup-1.11.3.jar')
+    implementation files('libs/jsoup-1.13.1.jar')
 
 
     //compile 'com.google.firebase:firebase-messaging:10.0.1'
@@ -14,19 +12,36 @@ dependencies {
     //implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 
     //implementation 'com.android.support:multidex:1.0.3'
+
+    //Drive nueva api
+    implementation 'com.google.http-client:google-http-client-gson:1.34.2'
+    implementation('com.google.api-client:google-api-client-android:1.30.9') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation('com.google.apis:google-api-services-drive:v3-rev20191108-1.30.8') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+
+    //
+
 }
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.3"
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
-        versionName "4.5.6"
+        versionName "5.0.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         multiDexEnabled false
+        //multiDexEnabled true
+
     }
+
+    viewBinding.enabled = true
 
     flavorDimensions "api"
 
@@ -39,7 +54,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1497  // Min API level 14
+            versionCode 1498  // Min API level 14
             dimension "api"
         }
 
@@ -47,22 +62,22 @@ android {
 
     dependencies {
 
-        currentImplementation 'androidx.appcompat:appcompat:1.0.2'
+        currentImplementation 'androidx.appcompat:appcompat:1.1.0'
         currentImplementation 'com.google.android.material:material:1.0.0'
         currentImplementation 'androidx.cardview:cardview:1.0.0'
-        currentImplementation 'androidx.recyclerview:recyclerview:1.0.0'
+        currentImplementation 'androidx.recyclerview:recyclerview:1.1.0'
         currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        currentImplementation 'androidx.vectordrawable:vectordrawable:1.0.1'
+        currentImplementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 
-        currentImplementation 'androidx.core:core:1.0.2'
+        currentImplementation 'androidx.core:core:1.2.0'
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
         currentImplementation 'com.google.android.gms:play-services-maps:17.0.0'
-        currentImplementation 'com.google.android.gms:play-services-drive:17.0.0'
+        //currentImplementation 'com.google.android.gms:play-services-drive:17.0.0'
         currentImplementation 'com.google.android.gms:play-services-location:17.0.0'
-        currentImplementation 'com.google.android.gms:play-services-analytics:17.0.0'
-        currentImplementation 'com.google.android.gms:play-services-vision:18.0.0'
+        //currentImplementation 'com.google.android.gms:play-services-analytics:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-vision:19.0.0'
 
         currentImplementation 'com.google.android.gms:play-services-auth:17.0.0'
         currentImplementation 'com.google.firebase:firebase-core:16.0.9'
@@ -71,8 +86,9 @@ android {
         //currentImplementation 'com.google.android.gms:play-services-places:16.0.0'
         //Places new
         //currentImplementation 'com.google.android.libraries.places:places:1.1.0'
-        currentImplementation 'com.google.android.libraries.places:places-compat:1.1.0'
+        currentImplementation 'com.google.android.libraries.places:places-compat:2.2.0'
         //
+
 
 
         /*legacyImplementation 'com.android.support:appcompat-v7:25.3.1'
@@ -118,15 +134,17 @@ android {
         debug {
             debuggable true
 
-            //minifyEnabled true
+            minifyEnabled false
 
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
 
             minifyEnabled true
 
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -144,6 +162,18 @@ android {
     //dexOptions {
     //    javaMaxHeapSize "4g"
     //}
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
 }
 
 apply plugin: 'com.google.gms.google-services'
