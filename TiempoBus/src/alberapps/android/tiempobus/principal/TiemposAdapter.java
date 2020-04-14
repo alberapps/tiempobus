@@ -42,6 +42,7 @@ import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.MapasActivity;
 import alberapps.java.tam.BusLlegada;
+
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.res.ResourcesCompat;
@@ -135,18 +136,15 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             TextView busLinea = null;
 
-
             if (v != null) {
                 busLinea = (TextView) v.findViewById(R.id.bus_linea);
             }
 
             // Si no tenemos la vista de la fila creada componemos una
             if (v == null || busLinea == null) {
-                Context ctx = this.getContext().getApplicationContext();
-                LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+                LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.tiempos_item, null);
-
                 v.setTag(new ViewHolder(v));
 
             }
@@ -390,12 +388,8 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
         } else if (bus.isConsultaInicial()) {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
-
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
 
@@ -403,19 +397,14 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
-            text.setText(ctx.getString(R.string.aviso_recarga));
-
+            text.setText(contexto.getString(R.string.aviso_recarga));
 
         } else {
-
-
             //tram
             //boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
             boolean opcionTR = false;
 
-
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
 
@@ -440,12 +429,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             if (bus != null && bus.isErrorServicio()) {
 
                 if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) && opcionTR) {
-                    text.setText(ctx.getString(R.string.error_tiempos_tram));
+                    text.setText(contexto.getString(R.string.error_tiempos_tram));
                 } else {
-                    text.setText(ctx.getString(R.string.error_tiempos));
+                    text.setText(contexto.getString(R.string.error_tiempos));
                 }
             } else {
-                text.setText(ctx.getString(R.string.main_no_items) + "\n" + ctx.getString(R.string.error_status));
+                text.setText(contexto.getString(R.string.main_no_items) + "\n" + contexto.getString(R.string.error_status));
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
@@ -458,7 +447,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
             if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
                 //aviso = ctx.getString(R.string.tlf_tram);
-                aviso = ctx.getString(R.string.info_tram_tr);
+                aviso = contexto.getString(R.string.info_tram_tr);
 
 
                 // //Horarios
@@ -481,7 +470,7 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
 
 
             } else {
-                aviso = ctx.getString(R.string.tlf_subus);
+                aviso = contexto.getString(R.string.tlf_subus);
             }
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);

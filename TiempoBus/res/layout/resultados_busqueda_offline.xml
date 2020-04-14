@@ -29,7 +29,7 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/background_2"
         android:text="@string/search_instructions"
         android:textColor="@color/mi_material_blue_principal"
         android:textSize="17sp" />

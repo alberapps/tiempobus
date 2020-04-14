@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/traducciones_tit"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
             </LinearLayout>

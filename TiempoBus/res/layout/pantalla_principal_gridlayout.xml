@@ -73,7 +73,7 @@
                     android:src="@drawable/ic_cancel_white_24dp"
                     app:backgroundTint="@color/tram_l1"
                     app:fabSize="normal"
-
+                    app:tint="@color/button_text_color"
                     >
 
                 </com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -86,7 +86,8 @@
                     android:contentDescription="Guardar favorito"
                     android:src="@drawable/ic_bookmark_outline_white_24dp"
                     app:backgroundTint="@color/mi_material_blue_principal"
-                    app:fabSize="normal">
+                    app:fabSize="normal"
+                    app:tint="@color/button_text_color">
 
 
                 </com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -99,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                app:itemBackground="@color/white"
+                app:itemBackground="@color/tb_card_backgound"
                 app:itemIconTint="@color/mi_material_blue_principal"
                 app:itemTextColor="@color/mi_material_blue_principal"
                 app:menu="@menu/navigation_items"

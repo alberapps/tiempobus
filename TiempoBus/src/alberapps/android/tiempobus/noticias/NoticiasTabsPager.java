@@ -32,9 +32,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.core.app.NavUtils;
@@ -149,6 +151,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
+
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             setContentView(R.layout.noticias_contenedor);
         } else {
@@ -163,7 +166,9 @@ public class NoticiasTabsPager extends AppCompatActivity {
             actionBar.setElevation(0);
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {
@@ -710,7 +715,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
                 cargarHeaderTwitter();
 
-                twAdapter = new TwAdapter(this, R.layout.avisostw_item);
+                twAdapter = new TwAdapter(this, R.layout.noticias_avisostw_item);
                 twAdapter.addAll(avisosRecuperados);
                 listTwWiew.setAdapter(twAdapter);
                 twAdapter.notifyDataSetChanged();
@@ -1027,7 +1032,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         try {
 
-            twTramAdapter = new TwAdapter(this, R.layout.avisostw_item);
+            twTramAdapter = new TwAdapter(this, R.layout.noticias_avisostw_item);
 
             noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
 

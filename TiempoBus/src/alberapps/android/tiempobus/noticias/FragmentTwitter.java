@@ -20,7 +20,7 @@ package alberapps.android.tiempobus.noticias;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,7 +97,7 @@ public class FragmentTwitter extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.avisostw, container, false);
+        return inflater.inflate(R.layout.noticias_avisostw, container, false);
     }
 
     /**

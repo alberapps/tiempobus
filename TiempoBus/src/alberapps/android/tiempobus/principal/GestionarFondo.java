@@ -25,12 +25,18 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,7 +72,7 @@ public class GestionarFondo {
     /**
      * Decidir si galeria o fondo de color
      */
-    public void seleccionarFondo() {
+    public void configurarTema() {
 
         /*if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -76,9 +82,61 @@ public class GestionarFondo {
                     MainActivity.REQUEST_CODE_STORAGE);
         } else {*/
 
-            seleccionarFondoPermisos();
+        //seleccionarFondoPermisos();
 
         //}
+
+        final CharSequence[] items = {context.getResources().getString(R.string.configurar_tema_oscuro), context.getResources().getString(R.string.fondo_pantall)};
+
+        if (preferencias.getBoolean("dark_theme", false)) {
+            items[0] = context.getResources().getString(R.string.configurar_tema_claro);
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.configurar_tema_menu);
+        builder.setNegativeButton(android.R.string.cancel, (dialog, id) -> dialog.dismiss());
+
+        builder.setItems(items, (dialog, item) -> {
+
+            Bundle bundle = new Bundle();
+
+            if (item == 0) {
+
+                SharedPreferences.Editor editor = preferencias.edit();
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07A");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar tema oscuro");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                context.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                if (preferencias.getBoolean("dark_theme", false)) {
+                    editor.putBoolean("dark_theme", false);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else {
+                    editor.putBoolean("dark_theme", true);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
+                editor.apply();
+
+                Intent intent = context.getIntent();
+                context.finish();
+                context.startActivity(intent);
+
+            } else if (item == 1) {
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07B");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar fondo");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                context.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                seleccionarFondoPermisos();
+            }
+
+        });
+
+        AlertDialog alert = builder.create();
+
+        alert.show();
+
 
     }
 
@@ -159,14 +217,13 @@ public class GestionarFondo {
     private File getTempFile() {
 
 
-
         File f = null;
         try {
 
             File directory = context.getFilesDir();
             File fondoDir = new File(directory, "img_fondo");
 
-            if(!fondoDir.exists()){
+            if (!fondoDir.exists()) {
                 fondoDir.mkdir();
             }
 

@@ -1,30 +1,34 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *  based on code by The Android Open Source Project
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * based on code by The Android Open Source Project
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.infolineas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +36,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.MapasActivity;
@@ -69,6 +74,9 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
 
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
         try {
 
@@ -81,12 +89,12 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
             PlaceMark datosParada = (PlaceMark) this.getIntent().getExtras().get("DATOS_PARADA");
             BusLinea datosLinea = (BusLinea) this.getIntent().getExtras().get("DATOS_LINEA");
 
-            TextView parada = (TextView) findViewById(R.id.parada);
-            TextView linea = (TextView) findViewById(R.id.linea);
-            TextView destino = (TextView) findViewById(R.id.destino);
-            TextView localizacion = (TextView) findViewById(R.id.localizacion);
-            TextView conexiones = (TextView) findViewById(R.id.conexiones);
-            TextView observaciones = (TextView) findViewById(R.id.observaciones);
+            TextView parada = findViewById(R.id.parada);
+            TextView linea = findViewById(R.id.linea);
+            TextView destino = findViewById(R.id.destino);
+            TextView localizacion = findViewById(R.id.localizacion);
+            TextView conexiones = findViewById(R.id.conexiones);
+            TextView observaciones = findViewById(R.id.observaciones);
 
             parada.setText(datosParada.getCodigoParada());
 
@@ -103,7 +111,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
             conexiones.setText(datosParada.getLineas());
             observaciones.setText(datosParada.getObservaciones());
 
-            TextView botonPoste = (TextView) findViewById(R.id.buttonT);
+            TextView botonPoste = findViewById(R.id.buttonT);
 
             if (!UtilidadesTRAM.ACTIVADO_L9 && lineaNum.equals("L9")) {
                 botonPoste.setVisibility(View.INVISIBLE);
@@ -139,7 +147,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
             }
 
             // boton mapa
-            TextView botonMapa = (TextView) findViewById(R.id.buttonM);
+            TextView botonMapa = findViewById(R.id.buttonM);
             botonMapa.setOnClickListener(new OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -164,19 +172,6 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
      * @param codigo
      */
     private void cargarTiempos(int codigo) {
-
-        /*Intent intent = new Intent(this, MainActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("poste", codigo);
-        intent.putExtras(b);
-
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putInt("parada_inicio", codigo);
-        editor.apply();
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        startActivity(intent);*/
 
         //Devolver nueva parada
         Intent intent = new Intent();

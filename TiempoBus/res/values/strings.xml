@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.0.0</string>
+    <string name="app_version" translatable="false">5.0.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2020)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -732,5 +732,12 @@
     <string name="error_status_2">El servicio de Vectalia no ha devuelto resultados. Verifica la disponibilidad en alicante.vectalia.com</string>
 
     <string name="archivo_exportar_otra">Enviar archivo de BD a:</string>
+
+    <string name="drawer_app_name">TiempoBus y Tram\nAlberApps</string>
+
+
+    <string name="configurar_tema_menu">Configurar Tema</string>
+    <string name="configurar_tema_oscuro">Tema Oscuro</string>
+    <string name="configurar_tema_claro">Tema Claro</string>
 
 </resources>

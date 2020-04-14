@@ -27,7 +27,11 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,7 +74,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.detalle_noticia);
+        setContentView(R.layout.noticias_detalle);
 
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -85,7 +89,10 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
 
 
         dialog = ProgressDialog.show(DetalleNoticiaActivity.this, "", getString(R.string.dialogo_espera), true);
@@ -155,7 +162,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         }
 
 
-        TextView zoomMas = (TextView) findViewById(R.id.noticia_zoom_aumenta);
+        TextView zoomMas = findViewById(R.id.noticia_zoom_aumenta);
 
         assert zoomMas != null;
         zoomMas.setOnClickListener(new OnClickListener() {
@@ -195,7 +202,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         });
 
 
-        TextView zoomMenos = (TextView) findViewById(R.id.noticia_zoom_reduc);
+        TextView zoomMenos = findViewById(R.id.noticia_zoom_reduc);
 
         assert zoomMenos != null;
         zoomMenos.setOnClickListener(new OnClickListener() {
@@ -265,9 +272,9 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
      */
     public void cargarDetalle(Noticias noticia) {
 
-        TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
-        TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
-        TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
+        TextView cabFecha = findViewById(R.id.cabeceraFecha);
+        TextView cabTitulo = findViewById(R.id.cabeceraTitulo);
+        TextView cabLinea = findViewById(R.id.cabeceraLinea);
 
         if (noticia.getFechaCabecera() != null && !noticia.getFechaCabecera().trim().equals("")) {
             assert cabFecha != null;
@@ -290,7 +297,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         assert cabLinea != null;
         cabLinea.setText(noticiaLineas);
 
-        TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
+        TextView accederNoticia = findViewById(R.id.accederNoticia);
 
         assert accederNoticia != null;
         accederNoticia.setLinksClickable(true);
@@ -299,7 +306,12 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         accederNoticia.setText(link);
 
         if (noticia.getContenidoHtml() != null) {
-            mWebView = (WebView) findViewById(R.id.webViewDetalle);
+            mWebView = findViewById(R.id.webViewDetalle);
+
+            //Color de fondo
+            if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                mWebView.setBackgroundColor(ContextCompat.getColor(this, R.color.webview_color));
+            }
 
             assert mWebView != null;
             WebSettings settings = mWebView.getSettings();
@@ -318,9 +330,9 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
      */
     public void cargarDetalleError() {
 
-        TextView cabFecha = (TextView) findViewById(R.id.cabeceraFecha);
-        TextView cabTitulo = (TextView) findViewById(R.id.cabeceraTitulo);
-        TextView cabLinea = (TextView) findViewById(R.id.cabeceraLinea);
+        TextView cabFecha = findViewById(R.id.cabeceraFecha);
+        TextView cabTitulo = findViewById(R.id.cabeceraTitulo);
+        TextView cabLinea = findViewById(R.id.cabeceraLinea);
 
         assert cabFecha != null;
         cabFecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
@@ -329,7 +341,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
         assert cabLinea != null;
         cabLinea.setText("");
 
-        TextView accederNoticia = (TextView) findViewById(R.id.accederNoticia);
+        TextView accederNoticia = findViewById(R.id.accederNoticia);
 
         assert accederNoticia != null;
         accederNoticia.setLinksClickable(true);

@@ -55,7 +55,7 @@
         <item
             android:id="@+id/navigation_item_fondo"
             android:icon="@drawable/ic_collections_grey600_48dp"
-            android:title="@string/fondo_pantall" />
+            android:title="@string/configurar_tema_menu" />
         <!--item
             android:id="@+id/navigation_item_exportar"
             android:icon="@drawable/ic_add_to_photos_grey600_48dp"

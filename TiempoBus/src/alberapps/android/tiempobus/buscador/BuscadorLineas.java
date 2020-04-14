@@ -25,12 +25,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import androidx.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +38,13 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
@@ -75,10 +79,12 @@ public class BuscadorLineas extends AppCompatActivity {
 
         }
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
-        mTextView = (TextView) findViewById(R.id.text);
-        mListView = (ListView) findViewById(R.id.list);
+        mTextView = findViewById(R.id.text);
+        mListView = findViewById(R.id.list);
 
         // Fondo
         setupFondoAplicacion();
@@ -96,6 +102,7 @@ public class BuscadorLineas extends AppCompatActivity {
         // don't create
         // a new instance of this activity, so the system delivers the search
         // intent here)
+        super.onNewIntent(intent);
         handleIntent(intent);
     }
 
@@ -145,7 +152,7 @@ public class BuscadorLineas extends AppCompatActivity {
     public void cargarTiempos(int codigo) {
 
         //Devolver nueva parada
-       Intent intent = new Intent();
+        Intent intent = new Intent();
         Bundle b = new Bundle();
         b.putInt("POSTE", codigo);
         intent.putExtras(b);
@@ -157,20 +164,6 @@ public class BuscadorLineas extends AppCompatActivity {
 
         setResult(MainActivity.SUB_ACTIVITY_RESULT_OK, intent);
         finish();
-
-        /*Intent intent = new Intent(this, MainActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("poste", codigo);
-        intent.putExtras(b);
-
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.putInt("parada_inicio", codigo);
-        editor.apply();
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        startActivity(intent);*/
-
 
     }
 
@@ -186,7 +179,6 @@ public class BuscadorLineas extends AppCompatActivity {
         try {
 
             cursor = managedQuery(BuscadorLineasProvider.CONTENT_URI, null, null, new String[]{query}, null);
-            //cursor = ContentResolverCompat.query(getContentResolver(), BuscadorLineasProvider.CONTENT_URI, null, null, new String[]{query}, null, null);
 
             if (cursor == null) {
                 // There are no results

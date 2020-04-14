@@ -19,9 +19,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contenedor_rutas"
-    android:layout_width="500dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
     android:orientation="vertical">
 
 
@@ -31,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation"
 
@@ -49,6 +48,7 @@
                 android:layout_marginLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="@string/origen_destino"
+                android:textColor="@color/image_button_color"
                 android:textStyle="bold" />
 
 
@@ -77,6 +77,7 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Actual"
                     android:scaleType="centerInside"
+                    android:tint="@color/image_button_color"
                     card_view:srcCompat="@drawable/ic_my_location_24dp" />
 
                 <ImageButton
@@ -88,6 +89,7 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Origen"
                     android:scaleType="centerInside"
+                    android:tint="@color/image_button_color"
                     card_view:srcCompat="@drawable/ic_place_grey_24dp" />
 
             </LinearLayout>
@@ -119,6 +121,7 @@
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Destino"
                     android:scaleType="centerInside"
+                    android:tint="@color/image_button_color"
                     card_view:srcCompat="@drawable/ic_place_grey_24dp" />
             </LinearLayout>
 
@@ -129,14 +132,13 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"
                 android:text="@string/menu_search"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/button_text_color" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-
-    <include layout="@layout/content_rutas" />
+    <include layout="@layout/rutas_content" />
 
 
 </LinearLayout>

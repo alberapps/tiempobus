@@ -19,14 +19,12 @@ package alberapps.android.tiempobus.favoritos.googledriverest;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,9 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -67,14 +63,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.FavoritosProvider;
-import alberapps.android.tiempobus.favoritos.FavoritosActivity;
-import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.data.backup.DatosDriveBackup;
 import alberapps.java.util.Utilidades;
@@ -112,8 +103,9 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
         setContentView(R.layout.favoritos_drive);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -456,6 +448,7 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
                     showMessage(getString(R.string.archivo_drive_error_signin));
                     terminar(null);
                 }
+                mProgressBar.setIndeterminate(false);
                 break;
 
             /*case REQUEST_CODE_OPEN_DOCUMENT:
@@ -472,6 +465,8 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
                 super.onActivityResult(requestCode, resultCode, data);
                 break;
         }
+
+
     }
 
 

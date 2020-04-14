@@ -47,7 +47,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation">
 
@@ -146,14 +146,16 @@
             </LinearLayout>
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/datos_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
                 android:gravity="top"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                card_view:drawableTint="@color/image_button_color"
+                android:textColor="@color/image_button_color"/>
 
         </LinearLayout>
 
@@ -168,7 +170,7 @@
 
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation">
 
@@ -249,8 +251,8 @@
                                     android:layout_marginLeft="5sp"
                                     android:layout_marginRight="5sp"
                                     android:gravity="center_vertical"
-                                    android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textColor="@color/primary_material_dark"
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                    android:textColor="@color/mi_material_blue_principal"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -259,12 +261,13 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:maxLines="2"
-                                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                    android:textColor="@color/mi_material_blue_grey"  />
 
                             </LinearLayout>
 
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/textoWeatherTexto"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -273,10 +276,12 @@
                                 android:drawableLeft="@drawable/ic_info_outline_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                card_view:drawableTint="@color/image_button_color"
+                                android:textColor="@color/image_button_color"/>
 
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/textoWeatherTexto2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -286,7 +291,9 @@
                                 android:drawableLeft="@drawable/ic_place_grey600_18dp"
                                 android:gravity="top"
                                 android:maxLines="4"
-                                android:textAppearance="?android:attr/textAppearanceSmall" />
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                                card_view:drawableTint="@color/image_button_color"
+                                android:textColor="@color/image_button_color" />
                         </LinearLayout>
 
 
@@ -333,7 +340,7 @@
 
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation">
 

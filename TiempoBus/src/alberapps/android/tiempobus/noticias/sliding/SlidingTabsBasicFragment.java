@@ -77,7 +77,7 @@ public class SlidingTabsBasicFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // BEGIN_INCLUDE (setup_viewpager)
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        mViewPager = view.findViewById(R.id.viewpager);
 
 
         InfoLineaFragmentPagerAdapter mTabsAdapter = new InfoLineaFragmentPagerAdapter(getActivity().getSupportFragmentManager(), getActivity());
@@ -104,6 +104,8 @@ public class SlidingTabsBasicFragment extends Fragment {
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        mSlidingTabLayout.setBackgroundColor(getResources().getColor(R.color.background_2));
 
         mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.mi_material_blue_principal));
 

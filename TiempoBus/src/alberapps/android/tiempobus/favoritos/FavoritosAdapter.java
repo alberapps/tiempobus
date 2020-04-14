@@ -18,9 +18,6 @@
 package alberapps.android.tiempobus.favoritos;
 
 import android.content.Context;
-
-import androidx.appcompat.widget.AppCompatImageView;
-
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +38,6 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.util.PreferencesUtil;
 import alberapps.java.util.Datos;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador Favoritos
@@ -77,11 +76,8 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
 
         // Si no tenemos la vista de la fila creada componemos una
         if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.favoritos_item, null);
-
             v.setTag(new ViewHolder(v));
         }
 
@@ -231,7 +227,7 @@ public class FavoritosAdapter extends ArrayAdapter<Favorito> {
                 numParada.setTypeface(ubuntu, Typeface.BOLD);
                 titulo.setTypeface(ubuntu, Typeface.BOLD);
                 descripcion.setTypeface(ubuntu);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

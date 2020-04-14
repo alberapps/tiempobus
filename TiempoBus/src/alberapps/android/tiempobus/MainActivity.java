@@ -38,7 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.AttributeSet;
@@ -65,8 +65,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -275,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         //PrecargasV3.precargarDatosLineas(this);
         //PrecargasV3.precargarDatosLineasRecorrido(this);
 
-
     }
 
     @Override
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);
 
         // Poner en campo de poste
-        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
         txtPoste.setText(Integer.toString(paradaActual));
 
 
@@ -343,9 +343,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     @SuppressLint("NewApi")
     private void iniciarDrawer(Bundle savedInstanceState) {
         mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        mDrawerView = (NavigationView) findViewById(R.id.left_drawer);
+        mDrawerView = findViewById(R.id.left_drawer);
 
         // set a custom shadow that overlays the main content when the drawer
         // opens
@@ -395,13 +395,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         View mDrawerHeader = mDrawerView.getHeaderView(0).findViewById(R.id.drawer_header);
 
-        ImageView imgCabecera = (ImageView) mDrawerHeader.findViewById(R.id.imgAlberapps);
+        AppCompatTextView imgCabecera = mDrawerHeader.findViewById(R.id.imgAlberapps);
 
         if (imgCabecera != null) {
             imgCabecera.setOnClickListener(new Button.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    UtilidadesUI.openWebPage(MainActivity.this, "http://alberapps.blogspot.com.es");
+                    UtilidadesUI.openWebPage(MainActivity.this, "https://blog.alberapps.com");
 
                 }
             });
@@ -562,10 +562,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             case R.id.navigation_item_fondo:
 
-                gestionarFondo.seleccionarFondo();
+                gestionarFondo.configurarTema();
 
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar fondo");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Configuar tema");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
@@ -879,7 +879,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Fondo
         gestionarFondo.setupFondoAplicacion();
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&  AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
         /**
          * Configuramos la lista de resultados
@@ -892,7 +894,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         datosPantallaPrincipal.cargarHeader();
 
 
-        guiHora = (TextView) findViewById(R.id.ultima_act);
+        guiHora = findViewById(R.id.ultima_act);
 
         //datosParada = (TextView) findViewById(R.id.datos_parada);
 
@@ -943,7 +945,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
          */
 
         // boton poste
-        botonCargaTiempos = (ImageButton) findViewById(R.id.boton_subposte);
+        botonCargaTiempos = findViewById(R.id.boton_subposte);
         botonCargaTiempos.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -955,7 +957,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // //Barcode
 
-        ImageButton botonBarcode = (ImageButton) findViewById(R.id.boton_barcode);
+        ImageButton botonBarcode = findViewById(R.id.boton_barcode);
         botonBarcode.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -967,7 +969,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // //Alertas
 
-        ImageButton botonAlerta = (ImageButton) findViewById(R.id.boton_alertas);
+        ImageButton botonAlerta = findViewById(R.id.boton_alertas);
         botonAlerta.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -978,7 +980,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // //Info
 
-        ImageButton botonInfo = (ImageButton) findViewById(R.id.boton_info);
+        ImageButton botonInfo = findViewById(R.id.boton_info);
         botonInfo.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
@@ -1006,13 +1008,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
         // Swipe para recargar
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshPrincipal);
+        swipeRefresh = findViewById(R.id.swipeRefreshPrincipal);
         swipeRefresh.setColorSchemeResources(R.color.mi_material_blue_principal, R.color.tram_l2, R.color.mi_material_blue_principal, R.color.tram_l2);
         swipeRefresh.setOnRefreshListener(this);
 
 
         //Control desde teclado
-        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
         txtPoste.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -1026,7 +1028,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         });
 
 
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
 
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -1114,7 +1116,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void accionCargar() {
 
-        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
 
         try {
             int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
@@ -1139,7 +1141,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
      */
     private void recargarTiempos() {
 
-        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
 
         try {
             int tmpPoste = Integer.parseInt(txtPoste.getText().toString());
@@ -1394,7 +1396,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     }
 
                     // Poner en campo de poste
-                    AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+                    AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
                     txtPoste.setText(Integer.toString(paradaActual));
 
                     SharedPreferences.Editor editor = preferencias.edit();
@@ -1454,7 +1456,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         paradaActual = Integer.parseInt(parada);
 
                         // Poner en campo de poste
-                        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+                        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
                         txtPoste.setText(Integer.toString(paradaActual));
 
                         SharedPreferences.Editor editor = preferencias.edit();
@@ -1494,7 +1496,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         paradaActual = Integer.parseInt(parada);
 
                         // Poner en campo de poste
-                        AppCompatEditText txtPoste = (AppCompatEditText) findViewById(R.id.campo_poste);
+                        AppCompatEditText txtPoste = findViewById(R.id.campo_poste);
                         txtPoste.setText(Integer.toString(paradaActual));
 
                         SharedPreferences.Editor editor = preferencias.edit();
@@ -1640,7 +1642,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             swipeRefresh.setRefreshing(true);
 
-            FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
+            FloatingActionButton imgCancelar = findViewById(R.id.boton_circular_cancelar);
             imgCancelar.setVisibility(View.VISIBLE);
 
             //animar
@@ -1664,7 +1666,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 swipeRefresh.setRefreshing(false);
             }
 
-            final FloatingActionButton imgCancelar = (FloatingActionButton) findViewById(R.id.boton_circular_cancelar);
+            final FloatingActionButton imgCancelar = findViewById(R.id.boton_circular_cancelar);
 
             //animar
 
@@ -1873,7 +1875,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         cabdatos = laActividad.datosPantallaPrincipal.cargarDescripcion(Integer.toString(laActividad.paradaActual));
 
-                        ImageView imgFavorito = (ImageView) laActividad.findViewById(R.id.indicador_favorito);
+                        ImageView imgFavorito = laActividad.findViewById(R.id.indicador_favorito);
 
 
                         final MainActivity activ = mActividad.get();
@@ -1907,7 +1909,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                             });
 
 
-                            FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
+                            FloatingActionButton imgCircularFavorito = laActividad.findViewById(R.id.boton_circular_fav);
 
                             imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_outline_white_24dp, null));
 
@@ -1949,7 +1951,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 
-                                FloatingActionButton imgCircularFavorito = (FloatingActionButton) laActividad.findViewById(R.id.boton_circular_fav);
+                                FloatingActionButton imgCircularFavorito = laActividad.findViewById(R.id.boton_circular_fav);
 
 
                                 imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_white_24dp, null));
@@ -1964,7 +1966,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                                 });
                             } else {
 
-                                ImageButton imgCircularFavorito = (ImageButton) laActividad.findViewById(R.id.boton_circular_fav);
+                                ImageButton imgCircularFavorito = laActividad.findViewById(R.id.boton_circular_fav);
 
 
                                 imgCircularFavorito.setImageDrawable(ResourcesCompat.getDrawable(laActividad.getResources(), R.drawable.ic_bookmark_white_24dp, null));
@@ -1990,7 +1992,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         //ImageButton botonHorarios = (ImageButton) laActividad.findViewById(R.id.aviso_header_horario);
 
-                        if (laActividad.datosPantallaPrincipal.esTram(laActividad.paradaActual)) {
+                        if (DatosPantallaPrincipal.esTram(laActividad.paradaActual)) {
                             cabdatos = "TRAM " + cabdatos;
 
                             // Estadisticas tram
@@ -2258,7 +2260,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
         SharedPreferences.Editor editor = preferencias.edit();
-        editor.putString("parada_destino_tram", Integer.toString(destino) + ";" + textoDestino);
+        editor.putString("parada_destino_tram", destino + ";" + textoDestino);
         editor.apply();
 
         handler.sendEmptyMessageDelayed(MSG_RECARGA, DELAY_RECARGA);

@@ -19,8 +19,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/contenedor_rutas"
-    android:layout_width="match_parent"
+    android:layout_width="500dp"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
 
@@ -30,7 +31,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation"
 
@@ -48,6 +49,7 @@
                 android:layout_marginLeft="10dp"
                 android:paddingTop="10dp"
                 android:text="@string/origen_destino"
+                android:textColor="@color/image_button_color"
                 android:textStyle="bold" />
 
 
@@ -59,42 +61,39 @@
                 <EditText
                     android:id="@+id/ruta_origen"
                     android:layout_width="0dp"
-                    android:layout_weight=".80"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:maxLines="1"
-                    android:inputType="text"
+                    android:layout_weight=".80"
                     android:hint="@string/origen"
-                    />
+                    android:inputType="text"
+                    android:maxLines="1" />
 
                 <ImageButton
                     android:id="@+id/boton_posicion_actual"
                     android:layout_width="0dp"
-                    android:layout_weight=".10"
                     android:layout_height="38dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight=".10"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Actual"
                     android:scaleType="centerInside"
-                    card_view:srcCompat="@drawable/ic_my_location_24dp"
-                    />
+                    android:tint="@color/image_button_color"
+                    card_view:srcCompat="@drawable/ic_my_location_24dp" />
 
                 <ImageButton
                     android:id="@+id/boton_origen"
                     android:layout_width="0dp"
-                    android:layout_weight=".10"
                     android:layout_height="38dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight=".10"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Origen"
                     android:scaleType="centerInside"
-                    card_view:srcCompat="@drawable/ic_place_grey_24dp"
-                    />
+                    android:tint="@color/image_button_color"
+                    card_view:srcCompat="@drawable/ic_place_grey_24dp" />
 
             </LinearLayout>
-
-
 
 
             <LinearLayout
@@ -105,44 +104,43 @@
                 <EditText
                     android:id="@+id/ruta_destino"
                     android:layout_width="0dp"
-                    android:layout_weight=".90"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_weight=".90"
                     android:ems="12"
-                    android:maxLines="1"
-                    android:inputType="text"
                     android:hint="@string/destino"
-                    />
+                    android:inputType="text"
+                    android:maxLines="1" />
 
                 <ImageButton
                     android:id="@+id/boton_destino"
                     android:layout_width="0dp"
-                    android:layout_weight=".10"
                     android:layout_height="38dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_weight=".10"
                     android:background="@drawable/actionbar_compat_item"
                     android:contentDescription="Destino"
                     android:scaleType="centerInside"
+                    android:tint="@color/image_button_color"
                     card_view:srcCompat="@drawable/ic_place_grey_24dp" />
             </LinearLayout>
 
             <Button
+                android:id="@+id/boton_buscar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_margin="5dp"
                 android:text="@string/menu_search"
-                android:id="@+id/boton_buscar"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@color/button_text_color" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <include layout="@layout/content_rutas" />
 
+    <include layout="@layout/rutas_content" />
 
 
 </LinearLayout>

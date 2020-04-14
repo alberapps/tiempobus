@@ -130,11 +130,11 @@ public class StepAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == ITEM) {
             // Create a new view.
             v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_rutas_item, viewGroup, false);
+                    .inflate(R.layout.rutas_activity_item, viewGroup, false);
             return new ItemViewHolder(v, contexto);
         } else if (viewType == CABECERA) {
             v = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.activity_rutas_header, viewGroup, false);
+                    .inflate(R.layout.rutas_activity_header, viewGroup, false);
             return new HeaderViewHolder(v, contexto);
         }
 

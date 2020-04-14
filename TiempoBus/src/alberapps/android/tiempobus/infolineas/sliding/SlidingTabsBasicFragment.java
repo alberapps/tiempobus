@@ -112,6 +112,8 @@ public class SlidingTabsBasicFragment extends Fragment {
         mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
 
+        mSlidingTabLayout.setBackgroundColor(getResources().getColor(R.color.background_2));
+
         mSlidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.mi_material_blue_principal));
 
         //Al entrar a horarios directamente

@@ -21,7 +21,7 @@ package alberapps.android.tiempobus.principal;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
@@ -116,7 +116,7 @@ public class FragmentSecundarioTablet extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_secun_detalle, container, false);
+        return inflater.inflate(R.layout.tiempos_tablet_fragment_secun_detalle, container, false);
     }
 
     OnHeadlineSelectedListener mCallback;

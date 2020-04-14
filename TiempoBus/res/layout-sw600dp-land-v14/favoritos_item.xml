@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation"            >
 
@@ -78,7 +78,7 @@
                             android:maxLines="1"
                             android:text="@string/guion"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                            android:textColor="@color/primary_dark_material_light"
+                            android:textColor="@color/image_button_color"
                             android:textStyle="bold" />
 
                         <TextView
@@ -89,8 +89,7 @@
                             android:gravity="top"
                             android:text="@string/guion"
                             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                            android:textColor="@color/primary_dark_material_light"
-                            />
+                            android:textColor="@color/image_button_color" />
 
                     </LinearLayout>
 
@@ -108,6 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:tint="@color/image_button_color"
                         card_view:srcCompat="@drawable/ic_star_border_24dp" />
 
 
@@ -119,6 +119,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Modificar"
+                        android:tint="@color/image_button_color"
                         card_view:srcCompat="@drawable/ic_edit_24dp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -129,6 +130,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Borrar"
+                        android:tint="@color/image_button_color"
                         card_view:srcCompat="@drawable/ic_delete_24dp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -139,6 +141,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/actionbar_compat_item"
                         android:contentDescription="Compartir"
+                        android:tint="@color/image_button_color"
                         card_view:srcCompat="@drawable/ic_share_24dp" />
 
 

@@ -59,11 +59,8 @@ public class InfoLineaHorariosAdapter extends ArrayAdapter<Horario> {
     public View getView(final int position, View v, ViewGroup parent) {
         // Si no tenemos la vista de la fila creada componemos una
         if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.infolineas_horarios_item, null);
-
         }
 
 

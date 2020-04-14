@@ -29,6 +29,8 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +39,6 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tam.BusLinea;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador de informacion de lineas
@@ -46,13 +47,13 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
     private InfoLineasTabsPager contexto;
 
-    List<BusLinea> listaOriginal;
+    private List<BusLinea> listaOriginal;
 
-    List<BusLinea> listaOriginalSinGrupo;
+    private List<BusLinea> listaOriginalSinGrupo;
 
-    CharSequence filtro;
+    private CharSequence filtro;
 
-    List<String> descripcionesGrupo;
+    private List<String> descripcionesGrupo;
 
     /**
      * Constructor
@@ -78,18 +79,13 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
     public View getView(final int position, View v, ViewGroup parent) {
         // Si no tenemos la vista de la fila creada componemos una
         if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.infolineas_item, null);
-
         }
 
         //Control de vista correcta por el filtro
         if (v.findViewById(R.id.bus_linea) == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.infolineas_item, null);
         }
 
@@ -206,16 +202,11 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             }
         } else if (bus != null && bus.isErrorServicio()) {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-
-
-            text.setText(ctx.getString(R.string.error_tiempos));
-
-
+            text.setText(contexto.getString(R.string.error_tiempos));
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
 
             String aviso = "";
@@ -237,13 +228,12 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         } else if (bus != null && bus.isFiltroSinDatos()) {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
 
-            text.setText(ctx.getString(R.string.main_no_items));
+            text.setText(contexto.getString(R.string.main_no_items));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
 
@@ -252,9 +242,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
             //ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
             //imagenAviso.setImageResource(R.drawable.alerts_warning);
 
-
             textAviso.setText(aviso);
-
 
         }
 

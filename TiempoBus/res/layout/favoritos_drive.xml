@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/tarjeta_margin"
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 
@@ -30,7 +30,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/archivo_drive_usuario"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
 
                 <TextView
                     android:id="@+id/drive_user_email"
@@ -54,7 +54,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:text="@string/archivo_drive_signin"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/button_text_color" />
 
 
                 </LinearLayout>
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/tarjeta_margin"
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 
@@ -85,7 +85,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/archivo_drive_sinc_manual"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -102,14 +102,14 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/archivo_drive_info"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
 
                 <TextView
                     android:id="@+id/drive_file_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -118,14 +118,14 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/archivo_drive_info_2"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
                 <TextView
                     android:id="@+id/drive_file_sync"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light" />
+                    android:textColor="@color/image_button_color" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:text="@string/archivo_drive_backup_1"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/button_text_color" />
 
                     <Button
                         android:id="@+id/drive_backup2"
@@ -149,7 +149,7 @@
                         android:layout_margin="10dp"
                         android:layout_weight="2"
                         android:text="@string/archivo_drive_backup_2"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@color/button_text_color" />
 
                 </LinearLayout>
 
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/archivo_drive_backup_3"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/button_text_color" />
 
                 <Button
                     android:id="@+id/drive_importar"
@@ -167,7 +167,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/archivo_drive_backup_4"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/button_text_color" />
 
 
 
@@ -180,7 +180,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/drive_aviso"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light"
+                    android:textColor="@color/image_button_color"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -189,7 +189,7 @@
                     android:layout_marginBottom="5dp"
                     android:text="@string/drive_aviso_2"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-                    android:textColor="@color/primary_dark_material_light"
+                    android:textColor="@color/image_button_color"
                     android:textSize="12sp"/>
 
 
@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/tarjeta_margin"
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 

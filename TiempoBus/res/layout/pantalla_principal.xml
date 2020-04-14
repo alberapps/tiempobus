@@ -37,8 +37,6 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbarid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +44,7 @@
 
             android:title="@string/app_name"
             android:theme="@style/Theme.TiempoBus.Toolbar"
-            app:popupTheme="@style/Theme.MaterialComponents.Light"
+            app:popupTheme="@style/Theme.MaterialComponents.DayNight"
             app:titleTextAppearance="@style/Theme.TiempoBus.Toolbar.Title"
             app:titleTextColor="@color/mi_material_blue_principal"
             app:subtitleTextColor="@color/mi_material_blue_principal"

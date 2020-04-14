@@ -4,14 +4,14 @@
 
 
     <!-- extend one of the Theme.AppCompat themes -->
-    <style name="Theme.TiempoBusTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.TiempoBusTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
         <item name="colorPrimaryDark">@color/mi_material_blue_principal_700</item>
         <item name="colorAccent">@color/mi_material_blue_principal</item>
 
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/background_2</item>
 
         <!--item name="actionBarStyle">@style/Header.Material</item-->
 
@@ -25,7 +25,7 @@
         <!--item name="drawerArrowStyle">@style/drawerColor</item-->
 
 
-        <item name="android:navigationBarColor">@color/mi_material_blue_principal_700</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_color</item>
 
         <!-- New MaterialComponents attributes. -->
         <!--item name="colorPrimaryVariant">@color/my_app_primary_variant_color</item>
@@ -58,7 +58,7 @@
 
     </style>
 
-    <style name="Theme.TiempoBusThemeActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.TiempoBusThemeActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
@@ -68,13 +68,13 @@
         <!--item name="actionBarStyle">@style/Header.Material</item-->
 
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/background_2</item>
 
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
 
-        <item name="android:navigationBarColor">@color/mi_material_blue_principal_700</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_color</item>
 
         <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2</item>
@@ -99,7 +99,7 @@
     </style>
 
 
-    <style name="Theme.TiempoBusThemeTab" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="Theme.TiempoBusThemeTab" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/mi_material_blue_principal</item>
@@ -108,9 +108,9 @@
 
 
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:statusBarColor">@color/background_2</item>
 
-        <item name="android:navigationBarColor">@color/mi_material_blue_principal_700</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_color</item>
 
         <item name="android:windowContentOverlay">@null</item>
 
@@ -139,11 +139,19 @@
 
     </style>
 
-    <style name="Theme.TiempoBusDialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="Theme.TiempoBusDialog" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="android:fontFamily">@font/ubuntu</item>
         <item name="fontFamily">@font/ubuntu</item>
     </style>
 
+    <style name="Theme.TiempoBus.PreferencesTheme.Dark" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColor">@color/text_1</item>
+        <item name="android:textColorPrimary">@color/text_1</item>
+        <item name="android:textColorSecondary">@color/text_2</item>
+        <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
+
+        <item name="android:navigationBarColor">#232323</item>
+    </style>
 
 
 </resources>

@@ -1,20 +1,20 @@
 /**
- *  TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- *  Copyright (C) 2012 Alberto Montiel
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
+ * Copyright (C) 2012 Alberto Montiel
+ * <p>
+ * <p>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package alberapps.android.tiempobus.noticias;
 
@@ -27,12 +27,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.noticias.Noticias;
 import alberapps.java.util.Utilidades;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Datos lista de noticias
@@ -64,11 +65,8 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
         if (!noticia.isSinDatos() && !noticia.isErrorServicio()) {
 
             if (v == null) {
-                Context ctx = this.getContext().getApplicationContext();
-                LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+                LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.noticias_item, null);
-
             }
 
             if (this.getCount() > 0) {
@@ -79,26 +77,26 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                     TextView noticiaText = (TextView) v.findViewById(R.id.noticia);
                     TextView noticiaLineasText = (TextView) v.findViewById(R.id.noticia_lineas);
 
-                    if(ubuntu != null) {
+                    if (ubuntu != null) {
                         fecha.setTypeface(ubuntu, Typeface.BOLD);
                         noticiaText.setTypeface(ubuntu);
                         noticiaLineasText.setTypeface(ubuntu);
                     }
 
-                    if(noticia.getFechaDoble() != null){
+                    if (noticia.getFechaDoble() != null) {
                         fecha.setText(noticia.getFechaDoble());
-                    }else if(noticia.getFecha() != null) {
+                    } else if (noticia.getFecha() != null) {
                         fecha.setText(Utilidades.getFechaStringSinHora(noticia.getFecha()));
-                    }else{
+                    } else {
                         fecha.setText(contexto.getString(R.string.sin_fecha));
                     }
                     noticiaText.setText(noticia.getNoticia().trim());
 
                     String noticiaLineas = "";
 
-                    if(noticia.getNoticiaLineas().length() > 400){
-                        noticiaLineas = noticia.getNoticiaLineas().substring(0,400) + "...";
-                    }else{
+                    if (noticia.getNoticiaLineas().length() > 400) {
+                        noticiaLineas = noticia.getNoticiaLineas().substring(0, 400) + "...";
+                    } else {
                         noticiaLineas = noticia.getNoticiaLineas();
                     }
 
@@ -107,32 +105,31 @@ public class NoticiasAdapter extends ArrayAdapter<Noticias> {
                 }
             }
 
-        }else{
+        } else {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
-            if(ubuntu != null) {
+            if (ubuntu != null) {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
 
             if (noticia != null && noticia.isErrorServicio()) {
-                text.setText(ctx.getString(R.string.error_tiempos));
+                text.setText(contexto.getString(R.string.error_tiempos));
             } else {
-                text.setText(ctx.getString(R.string.main_no_items) + "\n" + ctx.getString(R.string.error_status));
+                text.setText(contexto.getString(R.string.main_no_items) + "\n" + contexto.getString(R.string.error_status));
             }
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
-            if(ubuntu != null) {
+            if (ubuntu != null) {
                 textAviso.setTypeface(ubuntu, Typeface.BOLD);
             }
 
             String aviso = "";
 
-            aviso = ctx.getString(R.string.tlf_subus);
+            aviso = contexto.getString(R.string.tlf_subus);
 
             ImageView imagenAviso = (ImageView) v.findViewById(R.id.imageAviso);
             imagenAviso.setImageResource(R.drawable.ic_warning_black_48dp);

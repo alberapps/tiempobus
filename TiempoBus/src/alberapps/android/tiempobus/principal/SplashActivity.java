@@ -18,16 +18,27 @@
 package alberapps.android.tiempobus.principal;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
 
 public class SplashActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(preferencias.getBoolean("dark_theme",false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

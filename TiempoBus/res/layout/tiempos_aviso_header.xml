@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 
@@ -66,7 +66,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:contentDescription="Favorito"
-                            android:src="@drawable/ic_bookmark_outline_grey600_18dp" />
+                            android:src="@drawable/ic_bookmark_outline_grey600_18dp"
+                            android:tint="@color/image_button_color"/>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner
@@ -114,7 +115,9 @@
                                     android:gravity="right"
                                     android:text="00:00"
                                     android:textAppearance="?android:attr/textAppearanceSmall"
-                                    android:textSize="18sp" />
+                                    android:textSize="18sp"
+                                    android:textColor="@color/image_button_color"
+                                    card_view:drawableTint="@color/image_button_color"/>
                             </LinearLayout>
                         </FrameLayout>
 
@@ -160,7 +163,8 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Cargar tiempo entrada"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_refresh_grey600_24dp" />
+                            android:src="@drawable/ic_refresh_grey600_24dp"
+                            android:tint="@color/image_button_color"/>
 
                         <FrameLayout
                             android:id="@+id/FrameLayout01"
@@ -176,7 +180,8 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Estado alertas"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_alarm_grey600_24dp" />
+                            android:src="@drawable/ic_alarm_grey600_24dp"
+                            android:tint="@color/image_button_color"/>
 
                         <ImageButton
                             android:id="@+id/boton_info"
@@ -186,7 +191,8 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Entrada voz"
                             android:scaleType="centerInside"
-                            android:src="@drawable/ic_keyboard_voice_grey600_24dp" />
+                            android:src="@drawable/ic_keyboard_voice_grey600_24dp"
+                            android:tint="@color/image_button_color"/>
 
                         <ImageView
                             android:id="@+id/favorito_dest"
@@ -194,7 +200,8 @@
                             android:layout_height="match_parent"
                             android:contentDescription="Favorito"
                             android:background="@drawable/actionbar_compat_item"
-                            card_view:srcCompat="@drawable/ic_star_border_24dp" />
+                            card_view:srcCompat="@drawable/ic_star_border_24dp"
+                            android:tint="@color/image_button_color"/>
 
 
                         <FrameLayout

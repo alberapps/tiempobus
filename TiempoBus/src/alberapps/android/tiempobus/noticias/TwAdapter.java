@@ -60,7 +60,7 @@ public class TwAdapter extends ArrayAdapter<TwResultado> {
             Context ctx = getContext();
             LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            v = vi.inflate(R.layout.avisostw_item, null);
+            v = vi.inflate(R.layout.noticias_avisostw_item, null);
 
             // holder.progress = (ProgressBar)
             // convertView.findViewById(R.id.progress_spinner);

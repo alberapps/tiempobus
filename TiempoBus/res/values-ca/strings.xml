@@ -570,5 +570,9 @@ favorit per crear la teua llista.</string>
     <string name="archivo_exportar_otra">Enviar arxiu de BD a:</string>
 
 
+    <string name="drawer_app_name">TempsBus i Tram\nAlberApps</string>
+    <string name="configurar_tema_menu">Configurar Tema</string>
+    <string name="configurar_tema_oscuro">Tema Fosc</string>
+    <string name="configurar_tema_claro">Tema Clar</string>
 
 </resources>

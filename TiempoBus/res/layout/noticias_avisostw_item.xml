@@ -29,7 +29,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation">
 
@@ -43,9 +43,8 @@
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:contentDescription="Imagen twitter"
-                android:src="@drawable/ic_tiempobus_5"
                 android:gravity="top"
-                />
+                android:src="@drawable/ic_tiempobus_5" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -68,6 +67,7 @@
                         android:maxLines="1"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/image_button_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -78,8 +78,8 @@
                         android:maxLines="1"
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="11sp"
-                        />
+                        android:textColor="@color/image_button_color"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -91,8 +91,8 @@
                     android:maxLines="1"
                     android:text="@string/guion"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="11sp"
-                    />
+                    android:textColor="@color/image_button_color"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/noticia"
@@ -101,7 +101,8 @@
                     android:autoLink="web"
                     android:gravity="top"
                     android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/image_button_color" />
 
                 <TextView
                     android:id="@+id/tw_web"
@@ -109,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ir_tw"
                     android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/image_button_color"
                     android:textSize="12sp"
                     android:textStyle="bold" />
 

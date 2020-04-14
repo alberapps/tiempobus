@@ -28,9 +28,11 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat.Builder;
 
 import android.view.View;
@@ -50,9 +52,9 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            setTheme(R.style.Theme_AppCompat_Light_DarkActionBar);
-        }*/
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.Theme_TiempoBus_PreferencesTheme_Dark);
+        }
 
         super.onCreate(savedInstanceState);
 
@@ -63,7 +65,9 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
         //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key_list)));
 
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
     }
 

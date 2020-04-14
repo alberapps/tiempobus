@@ -39,7 +39,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
 
-                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardBackgroundColor="@color/tb_card_backgound"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/card_elevation">
 
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
+                        android:textColor="@color/image_button_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light" />
+                        android:textColor="@color/image_button_color" />
 
                     <TextView
                         android:id="@+id/cabeceraLinea"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light" />
+                        android:textColor="@color/image_button_color" />
 
                     <TextView
                         android:id="@+id/accederNoticia"
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light" />
+                        android:textColor="@color/image_button_color" />
 
 
                 </LinearLayout>
@@ -99,7 +99,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
 
-                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardBackgroundColor="@color/tb_card_backgound"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/card_elevation">
 
@@ -126,7 +126,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:text="@string/noticia_zoom_reducir"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textColor="@color/primary_dark_material_light"
+                            android:textColor="@color/image_button_color"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -144,7 +144,7 @@
                                 android:gravity="right"
                                 android:text="@string/noticia_zoom_aumenta"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="@color/primary_dark_material_light"
+                                android:textColor="@color/image_button_color"
                                 android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
@@ -166,7 +166,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/tarjeta_margin"
 
-                card_view:cardBackgroundColor="@color/cardview_light_background"
+                card_view:cardBackgroundColor="@color/tb_card_backgound"
                 card_view:cardCornerRadius="@dimen/card_radius"
                 card_view:cardElevation="@dimen/card_elevation">
 
@@ -187,7 +187,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="@string/aviso_noticia"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/primary_dark_material_light"
+                        android:textColor="@color/image_button_color"
                         android:textStyle="bold" />
 
                 </LinearLayout>

@@ -1033,7 +1033,7 @@ public class DatosPantallaPrincipal {
         final List<Favorito> spinnerValues = new ArrayList<>();
 
 
-        AppCompatSpinner spinner = (AppCompatSpinner) context.findViewById(R.id.spinner_historial);
+        AppCompatSpinner spinner = context.findViewById(R.id.spinner_historial);
 
         ArrayAdapter adapter = new ArrayAdapter<>(context, R.layout.spinner_item, listaSpinner);
         adapter.setDropDownViewResource(R.layout.spinner_item_horario_lista);

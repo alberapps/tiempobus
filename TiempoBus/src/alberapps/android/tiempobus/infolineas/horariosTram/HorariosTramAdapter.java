@@ -28,15 +28,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.InfoLineasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
-import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.tram.horarios.HorarioItem;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador de listados de horarios
@@ -57,7 +57,6 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
         super(context, textViewResourceId);
 
         this.contexto = context;
-
         this.pasoActual = 0;
 
     }
@@ -83,8 +82,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
             if (horas.getInfoRecorrido() != null && !horas.getInfoRecorrido().isEmpty()) {
 
-                Context ctx = this.getContext().getApplicationContext();
-                LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(R.layout.infolinea_horarios_tram_info, null);
 
                 TextView text = (TextView) v.findViewById(R.id.txt_datos);
@@ -102,15 +100,15 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
                     if (i == 0) {
                         datos.append("- ");
-                        datos.append(ctx.getString(R.string.duracion));
+                        datos.append(contexto.getString(R.string.duracion));
                         datos.append(": ");
                     } else if (i == 1) {
                         datos.append("- ");
-                        datos.append(ctx.getString(R.string.tipo_billete));
+                        datos.append(contexto.getString(R.string.tipo_billete));
                         datos.append(": ");
                     } else if (i == 2) {
                         datos.append("- ");
-                        datos.append(ctx.getString(R.string.transbordos));
+                        datos.append(contexto.getString(R.string.transbordos));
                         datos.append(": ");
                     }
 
@@ -126,7 +124,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
                 final Spinner spinnerPasos = (Spinner) v.findViewById(R.id.spinner_pasos);
 
-                if(horas.getNumPasos() < 2){
+                if (horas.getNumPasos() < 2) {
 
                     spinnerPasos.setVisibility(View.INVISIBLE);
 
@@ -176,17 +174,13 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 }
 
 
-
             } else {
 
 
                 // Si no tenemos la vista de la fila creada componemos una
                 if (v == null) {
-                    Context ctx = this.getContext().getApplicationContext();
-                    LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+                    LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     v = vi.inflate(R.layout.infolineas_horarios_tram_item, null);
-
                 }
 
                 TextView datosGrupoHora;
@@ -198,8 +192,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 datosInfo = (TextView) v.findViewById(R.id.datos_info);
 
                 if (datosGrupoHora == null) {
-                    Context ctx = this.getContext().getApplicationContext();
-                    LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     v = vi.inflate(R.layout.infolineas_horarios_tram_item, null);
 
                     datosGrupoHora = (TextView) v.findViewById(R.id.datos_grupo_hora);
@@ -227,8 +220,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
         } else if (horas != null && horas.isErrorServicio()) {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
@@ -236,7 +228,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
-            text.setText(ctx.getString(R.string.error_tiempos));
+            text.setText(contexto.getString(R.string.error_tiempos));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
             if (ubuntu != null) {
@@ -252,8 +244,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
         } else if (horas != null && horas.isSinDatos()) {
 
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.tiempos_item_sin_datos, null);
 
             TextView text = (TextView) v.findViewById(R.id.txt_sin_datos);
@@ -261,7 +252,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
                 text.setTypeface(ubuntu, Typeface.BOLD);
             }
 
-            text.setText(ctx.getString(R.string.main_no_items));
+            text.setText(contexto.getString(R.string.main_no_items));
 
             TextView textAviso = (TextView) v.findViewById(R.id.txt_sin_datos_aviso);
             if (ubuntu != null) {

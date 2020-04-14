@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 
@@ -59,6 +59,7 @@
                         android:text="@string/guion"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="12sp"
+                        android:textColor="@color/image_button_color"
                         />
 
                 </LinearLayout>

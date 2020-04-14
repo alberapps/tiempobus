@@ -7,12 +7,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/app_backgound">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -20,8 +19,8 @@
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_tiempobus_5_acercade" />
 
@@ -36,21 +35,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/app_name_b"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
                     android:textStyle="bold" />
 
                 <FrameLayout
                     android:id="@+id/frameLayout1"
                     android:layout_width="10dp"
-                    android:layout_height="match_parent"></FrameLayout>
+                    android:layout_height="match_parent" />
 
                 <TextView
                     android:id="@+id/TextView01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/app_version"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/black" />
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
 
             <TextView
@@ -121,8 +118,8 @@
                 android:id="@+id/imageLogoTram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
                 android:layout_marginTop="15dp"
+                android:autoLink="web"
                 android:text="@string/url_tram"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -197,8 +194,8 @@
                 android:layout_gravity="left"
                 android:autoLink="web"
                 android:paddingLeft="5dip"
-                android:paddingRight="5dip"
                 android:paddingTop="5dip"
+                android:paddingRight="5dip"
                 android:text="@string/referencias"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="9sp" />
@@ -208,10 +205,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:paddingBottom="5dip"
                 android:paddingLeft="5dip"
-                android:paddingRight="5dip"
                 android:paddingTop="1dip"
+                android:paddingRight="5dip"
+                android:paddingBottom="5dip"
                 android:text="@string/referencias_infoapp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="9sp" />
@@ -230,13 +227,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:text="@string/info_acuerdo"
-                android:padding="5dip"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"/>
-
+                android:layout_marginBottom="10dp"
+                android:autoLink="web"
+                android:padding="5dip"
+                android:text="@string/info_acuerdo"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
         </LinearLayout>

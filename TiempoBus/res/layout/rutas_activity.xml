@@ -26,13 +26,13 @@
                 app:popupTheme="@style/Theme.TiempoBusTheme.PopupOverlay"
                 />
 
-            <include layout="@layout/activity_rutas_form" />
+            <include layout="@layout/rutas_activity_form" />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_rutas" />
+    <include layout="@layout/rutas_content" />
 
 
 

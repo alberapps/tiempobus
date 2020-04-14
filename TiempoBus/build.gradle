@@ -27,12 +27,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
-        versionName "5.0.0"
+        targetSdkVersion 29
+        versionName "5.0.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -54,7 +54,7 @@ android {
         }
         current {
             minSdkVersion 14
-            versionCode 1498  // Min API level 14
+            versionCode 1499  // Min API level 14
             dimension "api"
         }
 
@@ -63,13 +63,15 @@ android {
     dependencies {
 
         currentImplementation 'androidx.appcompat:appcompat:1.1.0'
-        currentImplementation 'com.google.android.material:material:1.0.0'
+        currentImplementation 'com.google.android.material:material:1.1.0'
         currentImplementation 'androidx.cardview:cardview:1.0.0'
         currentImplementation 'androidx.recyclerview:recyclerview:1.1.0'
         currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
         currentImplementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 
         currentImplementation 'androidx.core:core:1.2.0'
+
+        currentImplementation 'androidx.preference:preference:1.1.0'
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
@@ -79,7 +81,7 @@ android {
         //currentImplementation 'com.google.android.gms:play-services-analytics:17.0.0'
         currentImplementation 'com.google.android.gms:play-services-vision:19.0.0'
 
-        currentImplementation 'com.google.android.gms:play-services-auth:17.0.0'
+        currentImplementation 'com.google.android.gms:play-services-auth:18.0.0'
         currentImplementation 'com.google.firebase:firebase-core:16.0.9'
 
         //Places old
@@ -143,6 +145,8 @@ android {
 
             minifyEnabled true
 
+            shrinkResources true
+
             //proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-project.txt')
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -163,6 +167,13 @@ android {
     //    javaMaxHeapSize "4g"
     //}
 
+    configurations {
+        all {
+            exclude module: 'httpclient'
+            exclude module: 'commons-logging'
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -173,6 +184,7 @@ android {
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
     }
+
 
 }
 

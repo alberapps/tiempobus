@@ -35,29 +35,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/titulo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:textColor="@color/primary_dark_material_light"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/image_button_color"
                         android:textStyle="bold" />
 
                     <TextView
@@ -65,9 +64,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:textColor="@color/primary_dark_material_light"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        />
+                        android:textColor="@color/image_button_color" />
 
                 </LinearLayout>
 

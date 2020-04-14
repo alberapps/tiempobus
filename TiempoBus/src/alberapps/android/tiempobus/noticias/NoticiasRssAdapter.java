@@ -26,13 +26,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.util.Utilidades;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Lista de noticias de RSS
@@ -47,7 +48,7 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
 
     public View getView(int position, View v, ViewGroup parent) {
 
-        Context ctx = this.getContext().getApplicationContext();
+        Context ctx = this.getContext();
 
         Typeface ubuntu = null;
 

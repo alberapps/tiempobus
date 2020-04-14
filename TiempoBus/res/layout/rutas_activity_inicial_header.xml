@@ -35,7 +35,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation"
             >
@@ -88,7 +88,8 @@
                         android:padding="2dip"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/rutas_info_c"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        android:textColor="@color/image_button_color"/>
 
                     <TextView
                         android:id="@+id/desc_c"
@@ -96,7 +97,8 @@
                         android:layout_height="wrap_content"
                         android:padding="2dip"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="8sp"/>
+                        android:textSize="8sp"
+                        android:textColor="@color/image_button_color"/>
 
                 </LinearLayout>
 
@@ -115,7 +117,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/tarjeta_margin"
 
-            card_view:cardBackgroundColor="@color/cardview_light_background"
+            card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
             card_view:cardElevation="@dimen/card_elevation"
             >

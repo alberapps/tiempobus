@@ -30,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/tarjeta_margin"
 
-        card_view:cardBackgroundColor="@color/cardview_light_background"
+        card_view:cardBackgroundColor="@color/tb_card_backgound"
         card_view:cardCornerRadius="@dimen/card_radius"
         card_view:cardElevation="@dimen/card_elevation"
 
@@ -115,7 +115,7 @@
                 android:text="@string/nuevo_guardar"
                 android:id="@+id/boton_go"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
+                android:textColor="@color/button_text_color"
                 />
 
         </LinearLayout>

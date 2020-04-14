@@ -20,7 +20,7 @@ package alberapps.android.tiempobus.noticias;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;

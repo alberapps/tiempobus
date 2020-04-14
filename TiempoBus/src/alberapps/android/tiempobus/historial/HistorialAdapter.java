@@ -25,11 +25,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador Historial
@@ -61,11 +62,8 @@ public class HistorialAdapter extends ArrayAdapter<Favorito> {
 
         // Si no tenemos la vista de la fila creada componemos una
         if (v == null) {
-            Context ctx = this.getContext().getApplicationContext();
-            LayoutInflater vi = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(R.layout.historial_item, null);
-
             v.setTag(new ViewHolder(v));
         }
 
@@ -109,7 +107,7 @@ public class HistorialAdapter extends ArrayAdapter<Favorito> {
                 numParada.setTypeface(ubuntu, Typeface.BOLD);
                 titulo.setTypeface(ubuntu, Typeface.BOLD);
                 descripcion.setTypeface(ubuntu);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
