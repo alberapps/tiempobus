@@ -18,7 +18,6 @@
 package alberapps.android.tiempobus.tasks;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import alberapps.java.data.backup.DatosBackup;

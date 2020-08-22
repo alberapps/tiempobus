@@ -123,6 +123,21 @@
                     android:id="@+id/drive_file_sync"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="@color/image_button_color" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/archivo_drive_info_3"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                    android:textColor="@color/image_button_color" />
+                <TextView
+                    android:id="@+id/drive_file_dbfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
                     android:textColor="@color/image_button_color" />

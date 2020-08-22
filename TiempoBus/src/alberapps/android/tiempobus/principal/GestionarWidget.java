@@ -18,7 +18,6 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import androidx.appcompat.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.DialogInterface;
@@ -26,6 +25,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;

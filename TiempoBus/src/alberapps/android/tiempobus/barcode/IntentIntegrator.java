@@ -23,8 +23,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.util.Arrays;
 import java.util.Collection;

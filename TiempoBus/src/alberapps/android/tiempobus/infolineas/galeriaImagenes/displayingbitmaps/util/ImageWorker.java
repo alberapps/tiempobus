@@ -24,10 +24,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.widget.ImageView;
+
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.core.content.res.ResourcesCompat;
-import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 

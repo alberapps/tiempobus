@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
 import android.view.Menu;
@@ -41,7 +40,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 
@@ -79,9 +77,8 @@ public class BuscadorLineas extends AppCompatActivity {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         mTextView = findViewById(R.id.text);
         mListView = findViewById(R.id.list);

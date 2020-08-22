@@ -28,17 +28,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NavUtils;
-import androidx.core.content.ContentResolverCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -51,15 +42,23 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
+import androidx.core.content.ContentResolverCompat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.Favorito;
 import alberapps.android.tiempobus.data.FavoritosProvider;
 import alberapps.android.tiempobus.data.TiempoBusDb;
-import alberapps.android.tiempobus.favoritos.googledrive.FavoritoGoogleDriveActivity;
 import alberapps.android.tiempobus.favoritos.googledriverest.FavoritoGoogleDriveRestActivity;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.android.tiempobus.tasks.BackupAsyncTask;
@@ -112,9 +111,8 @@ public class FavoritosActivity extends AppCompatActivity {
 
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);

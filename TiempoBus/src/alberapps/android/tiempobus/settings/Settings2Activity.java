@@ -1,6 +1,7 @@
 package alberapps.android.tiempobus.settings;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,16 +13,15 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.app.ActionBar;
 import android.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
-import alberapps.android.tiempobus.R;
-
 import java.util.List;
+
+import alberapps.android.tiempobus.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

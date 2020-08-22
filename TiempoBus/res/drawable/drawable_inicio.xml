@@ -1,5 +1,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/mi_material_blue_principal" />
+    <item android:drawable="@color/mi_material_blue_principal_fix" />
 
     <item>
         <bitmap

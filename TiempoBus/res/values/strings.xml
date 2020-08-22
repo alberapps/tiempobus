@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.0.1</string>
+    <string name="app_version" translatable="false">5.0.3</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2020)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -721,8 +721,9 @@
 
     <string name="archivo_drive_error_signin">Se ha producido un error al acceder a tu cuenta.</string>
 
-    <string name="archivo_drive_info">Fecha de la ultima copia de seguridad:</string>
-    <string name="archivo_drive_info_2">Fecha de la Base de datos local:</string>
+    <string name="archivo_drive_info">Última copia de seguridad en Drive:</string>
+    <string name="archivo_drive_info_2">Última copia de seguridad desde este dispositivo:</string>
+    <string name="archivo_drive_info_3">Fecha de la Base de datos local:</string>
 
     <string name="archivo_drive_info_no_data">No hay información</string>
     <string name="archivo_drive_info_no_data_2">No se ha creado archivo de backup</string>
@@ -739,5 +740,6 @@
     <string name="configurar_tema_menu">Configurar Tema</string>
     <string name="configurar_tema_oscuro">Tema Oscuro</string>
     <string name="configurar_tema_claro">Tema Claro</string>
+    <string name="configurar_tema_auto">Tema del Sistema</string>
 
 </resources>

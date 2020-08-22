@@ -19,25 +19,16 @@
 package alberapps.java.data.backup;
 
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.ShareCompat;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
-
-import alberapps.android.tiempobus.R;
 
 /**
  * Gestion de copias de seguridad

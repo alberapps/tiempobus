@@ -34,6 +34,7 @@
     <!-- MATERIAL DESIGN -->
 
     <color name="mi_material_blue_principal">#4f5d72</color>
+    <color name="mi_material_blue_principal_fix">#4f5d72</color>
     <color name="mi_material_blue">#5677fc</color>
     <color name="mi_material_blue_grey">#607d8b</color>
     <color name="mi_material_grey">#9e9e9e</color>

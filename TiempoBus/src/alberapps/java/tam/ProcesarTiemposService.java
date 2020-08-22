@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 
 import alberapps.java.exception.TiempoBusException;
-import alberapps.java.tam.webservice.dinamica.GetPasoParadaResult;
 import alberapps.java.tam.webservice.dinamica.DinamicaPasoParadaParser;
+import alberapps.java.tam.webservice.dinamica.GetPasoParadaResult;
 
 /**
  * Consulta de tiempos

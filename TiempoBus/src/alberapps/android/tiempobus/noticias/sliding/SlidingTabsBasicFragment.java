@@ -17,19 +17,20 @@
 package alberapps.android.tiempobus.noticias.sliding;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.sliding.InfoLineaFragmentPagerAdapter;
-import alberapps.android.tiempobus.view.SlidingTabLayout;
 import alberapps.android.tiempobus.noticias.FragmentNoticias;
 import alberapps.android.tiempobus.noticias.FragmentNoticiasRss;
 import alberapps.android.tiempobus.noticias.FragmentTwitter;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
+import alberapps.android.tiempobus.view.SlidingTabLayout;
 import alberapps.java.tram.UtilidadesTRAM;
 
 /**

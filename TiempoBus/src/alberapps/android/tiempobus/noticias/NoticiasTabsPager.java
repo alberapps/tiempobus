@@ -32,21 +32,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NavUtils;
-import androidx.core.view.MenuItemCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
-
 import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;
@@ -66,8 +53,20 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.NavUtils;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import alberapps.android.tiempobus.PreferencesFromXml;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment;
@@ -166,9 +165,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
             actionBar.setElevation(0);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
 
         if (!UtilidadesUI.pantallaTabletHorizontal(this)) {

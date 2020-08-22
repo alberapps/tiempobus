@@ -18,7 +18,6 @@
  */
 package alberapps.android.tiempobus.infolineas;
 
-import androidx.appcompat.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,6 +32,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.LoadHorariosInfoLineasAsyncTask;

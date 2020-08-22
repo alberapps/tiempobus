@@ -22,12 +22,13 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
-import androidx.fragment.app.Fragment;
-import androidx.cardview.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;

@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
 import android.util.Log;
@@ -39,7 +38,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NavUtils;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -66,6 +64,8 @@ import java.util.Locale;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.data.FavoritosProvider;
+import alberapps.android.tiempobus.database.DatosLineasDB;
+import alberapps.android.tiempobus.database.historial.HistorialProvider;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.data.backup.DatosDriveBackup;
 import alberapps.java.util.Utilidades;
@@ -103,9 +103,8 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
         setContentView(R.layout.favoritos_drive);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -391,25 +390,34 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
     private void cargarDatosBackup(){
 
+        //Cerrar BD
+        FavoritosProvider.DatabaseHelper.getInstance(this).close();
+        DatosLineasDB.DatosLineasOpenHelper.getInstance(this).close();
+        HistorialProvider.DatabaseHelper.getInstance(this).close();
+        //
+
         final TextView fileInfo = findViewById(R.id.drive_file_info);
         fileInfo.setText(R.string.archivo_drive_info_no_data);
 
         final TextView fileSync = findViewById(R.id.drive_file_sync);
 
+        final TextView fileDbFile = findViewById(R.id.drive_file_dbfile);
+
 
         //Datos para copia de seguridad
         Long datos_local_db = preferencias.getLong("drive_local_db", 0);
 
-        Date fechaDB = null;
+
         if(!datos_local_db.equals(0)){
-            fechaDB = new Date(datos_local_db);
+            Date fechaDB = new Date(datos_local_db);
+            fileSync.setText(Utilidades.getFechaHoraES(fechaDB));
         } else {
-            fechaDB = DatosDriveBackup.datosArchivoDB();
+            fileSync.setText(R.string.archivo_drive_info_no_data);
         }
 
-        fileSync.setText(Utilidades.getFechaHoraES(fechaDB));
+        Date fechaLocalFile = DatosDriveBackup.datosArchivoDB();
+        fileDbFile.setText(Utilidades.getFechaHoraES(fechaLocalFile));
         //
-
 
         mDriveServiceHelper.queryBackupFile()
                 .addOnSuccessListener(fileList -> {
@@ -716,6 +724,7 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
                         builder.create().show();
 
+                        cargarDatosBackup();
 
                         terminar(null);
                     })

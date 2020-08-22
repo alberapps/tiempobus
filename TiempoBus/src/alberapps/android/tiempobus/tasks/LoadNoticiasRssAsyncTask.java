@@ -18,14 +18,11 @@
 package alberapps.android.tiempobus.tasks;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 
 import java.util.List;
 
-import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
-import alberapps.java.rss.ParserXML;
 import alberapps.java.tram.news.TramNewsParser;
 
 /**

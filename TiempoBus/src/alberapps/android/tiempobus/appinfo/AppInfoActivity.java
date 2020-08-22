@@ -19,13 +19,8 @@
 package alberapps.android.tiempobus.appinfo;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,10 +28,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.tram.UtilidadesTRAM;
-import androidx.core.app.NavUtils;
 
 /**
  * Informacion de la app
@@ -64,9 +63,8 @@ public class AppInfoActivity extends AppCompatActivity {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         ImageView botonGpl = (ImageView) findViewById(R.id.boton_gpl);
         assert botonGpl != null;

@@ -23,15 +23,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NavUtils;
-import androidx.core.content.ContentResolverCompat;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -43,6 +36,12 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.core.content.ContentResolverCompat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,9 +91,8 @@ public class HistorialActivity extends AppCompatActivity {
             actionBar.setElevation(0);
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         preferencias = PreferenceManager.getDefaultSharedPreferences(this);

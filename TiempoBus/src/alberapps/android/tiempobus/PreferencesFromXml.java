@@ -31,18 +31,17 @@ import android.preference.PreferenceActivity;
 import androidx.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat.Builder;
-
-import android.view.View;
-import android.widget.Toast;
 
 import alberapps.android.tiempobus.database.BuscadorLineasProvider;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask;
 import alberapps.android.tiempobus.tasks.ActualizarBDAsyncTask.LoadActualizarBDAsyncTaskResponder;
 import alberapps.android.tiempobus.util.Notificaciones;
 import alberapps.android.tiempobus.util.PreferencesUtil;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Pantalla de preferencias
@@ -52,7 +51,7 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && UtilidadesUI.isNightModeOn(this)) {
             setTheme(R.style.Theme_TiempoBus_PreferencesTheme_Dark);
         }
 
@@ -64,10 +63,7 @@ public class PreferencesFromXml extends PreferenceActivity implements Preference
         //bindPreferenceSummaryToValue(findPreference("noticias_tono"));
         //bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key_list)));
 
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        UtilidadesUI.initStatusBar(this);
 
     }
 

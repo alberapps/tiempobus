@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import androidx.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,9 +32,6 @@ import alberapps.java.exception.TiempoBusException;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.DatosRespuesta;
 import alberapps.java.tam.ProcesarTiemposService;
-import alberapps.java.tram.UtilidadesTRAM;
-import alberapps.java.tram.webservice.dinamica.DinamicaPasoParadaParser;
-import alberapps.java.util.Utilidades;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos

@@ -19,7 +19,6 @@
 package alberapps.android.tiempobus.alarma;
 
 import android.app.AlarmManager;
-import androidx.appcompat.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -34,6 +33,8 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -20,7 +20,6 @@ package alberapps.java.tram.news;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,11 +27,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import alberapps.android.tiempobus.util.UtilidadesUI;
-import alberapps.java.noticias.Noticias;
 import alberapps.java.noticias.rss.NoticiaRss;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;

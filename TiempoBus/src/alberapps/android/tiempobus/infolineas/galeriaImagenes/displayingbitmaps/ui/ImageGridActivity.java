@@ -19,8 +19,10 @@ package alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.preference.PreferenceManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import alberapps.android.tiempobus.BuildConfig;
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.util.Utils;

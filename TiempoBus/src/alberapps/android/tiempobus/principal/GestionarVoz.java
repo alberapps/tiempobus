@@ -26,10 +26,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.speech.RecognizerIntent;
-import androidx.core.content.ContentResolverCompat;
+import android.util.Log;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatEditText;
-import android.util.Log;
+import androidx.core.content.ContentResolverCompat;
 
 import org.jsoup.internal.StringUtil;
 

@@ -18,23 +18,19 @@
  */
 package alberapps.android.tiempobus.principal;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -86,7 +82,7 @@ public class GestionarFondo {
 
         //}
 
-        final CharSequence[] items = {context.getResources().getString(R.string.configurar_tema_oscuro), context.getResources().getString(R.string.fondo_pantall)};
+        final CharSequence[] items = {context.getResources().getString(R.string.configurar_tema_oscuro), context.getResources().getString(R.string.configurar_tema_auto), context.getResources().getString(R.string.fondo_pantall)};
 
         if (preferencias.getBoolean("dark_theme", false)) {
             items[0] = context.getResources().getString(R.string.configurar_tema_claro);
@@ -100,9 +96,9 @@ public class GestionarFondo {
 
             Bundle bundle = new Bundle();
 
-            if (item == 0) {
+            SharedPreferences.Editor editor = preferencias.edit();
 
-                SharedPreferences.Editor editor = preferencias.edit();
+            if (item == 0) {
 
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07A");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar tema oscuro");
@@ -124,6 +120,20 @@ public class GestionarFondo {
                 context.startActivity(intent);
 
             } else if (item == 1) {
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07C");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Reset tema");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                context.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                editor.remove("dark_theme");
+                editor.apply();
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                Intent intent = context.getIntent();
+                context.finish();
+                context.startActivity(intent);
+
+            } else if (item == 2) {
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M07B");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Cambiar fondo");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");

@@ -20,9 +20,10 @@ package alberapps.android.tiempobus.principal;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.preference.PreferenceManager;
 
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;

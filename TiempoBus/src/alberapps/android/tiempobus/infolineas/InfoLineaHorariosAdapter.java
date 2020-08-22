@@ -26,11 +26,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.java.horarios.Horario;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador de listados de horarios

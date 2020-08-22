@@ -20,7 +20,6 @@ package alberapps.java.tram.horarios;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,7 +30,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 

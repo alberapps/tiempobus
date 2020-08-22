@@ -27,16 +27,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.core.app.NotificationCompat.Builder;
-import androidx.core.content.ContentResolverCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -48,11 +38,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-//import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat.Builder;
+import androidx.core.content.ContentResolverCompat;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,6 +74,8 @@ import alberapps.java.weather.EstadoCielo;
 import alberapps.java.weather.WeatherQuery;
 import alberapps.java.weather.yahooweather.WeatherDataUtil;
 import alberapps.java.wikipedia.WikiQuery;
+
+//import com.google.android.gms.location.places.ui.PlacePicker;
 
 /**
  * Gestion de la tarjeta de informacion

@@ -19,8 +19,6 @@ package alberapps.android.tiempobus.infolineas;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.widget.AppCompatTextView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,13 +31,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.mapas.PlaceMark;
 import alberapps.java.tram.UtilidadesTRAM;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * Adaptador listado de paradas

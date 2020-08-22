@@ -20,18 +20,17 @@ package alberapps.android.tiempobus.appinfo;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 
@@ -60,9 +59,8 @@ public class TraduccionesActivity extends AppCompatActivity {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         ImageView botoMagnolia = (ImageView) findViewById(R.id.boton_magnolia);
         assert botoMagnolia != null;

@@ -27,14 +27,7 @@ import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NavUtils;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
@@ -47,6 +40,13 @@ import android.webkit.WebSettings.TextSize;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
+
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask;
 import alberapps.android.tiempobus.tasks.LoadDetalleNoticiaAsyncTask.LoadDetalleNoticiaAsyncTaskResponder;
@@ -89,9 +89,8 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
 
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
 
 
@@ -309,7 +308,7 @@ public class DetalleNoticiaActivity extends AppCompatActivity {
             mWebView = findViewById(R.id.webViewDetalle);
 
             //Color de fondo
-            if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            if(UtilidadesUI.isNightModeOn(this)){
                 mWebView.setBackgroundColor(ContextCompat.getColor(this, R.color.webview_color));
             }
 

@@ -557,8 +557,9 @@ favorit per crear la teua llista.</string>
 
     <string name="archivo_drive_error_signin">S\'ha produït un error en accedir al teu compte.</string>
 
-    <string name="archivo_drive_info">Data de la ultima còpia de seguretat:</string>
-    <string name="archivo_drive_info_2">Data de la Base de dades local:</string>
+    <string name="archivo_drive_info">Última còpia de seguretat:</string>
+    <string name="archivo_drive_info_2">Última còpia de seguretat des del dispositiu:</string>
+    <string name="archivo_drive_info_3">Data de la Base de dades local:</string>
 
     <string name="archivo_drive_info_no_data">No hi ha informació</string>
     <string name="archivo_drive_info_no_data_2">No s\'ha creat arxiu de còpia de seguretat</string>
@@ -574,5 +575,7 @@ favorit per crear la teua llista.</string>
     <string name="configurar_tema_menu">Configurar Tema</string>
     <string name="configurar_tema_oscuro">Tema Fosc</string>
     <string name="configurar_tema_claro">Tema Clar</string>
+    <string name="configurar_tema_auto">Tema del Sistema</string>
+
 
 </resources>

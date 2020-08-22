@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +37,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import alberapps.android.tiempobus.BuildConfig;
 import alberapps.android.tiempobus.R;

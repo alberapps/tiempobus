@@ -22,11 +22,12 @@
 package alberapps.android.tiempobus.infolineas.sliding;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.FragmentIda;

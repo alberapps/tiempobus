@@ -22,8 +22,9 @@ import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.util.RecyclingBitmapDrawable;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import alberapps.android.tiempobus.infolineas.galeriaImagenes.displayingbitmaps.util.RecyclingBitmapDrawable;
 
 
 /**

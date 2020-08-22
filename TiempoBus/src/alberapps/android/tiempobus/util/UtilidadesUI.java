@@ -19,6 +19,7 @@
 package alberapps.android.tiempobus.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -30,13 +31,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import androidx.fragment.app.FragmentActivity;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -141,7 +144,9 @@ public class UtilidadesUI {
                     dr = new BitmapDrawable(actividad.getResources(), bitmapCargado);
 
                 if (dr != null) {
-                    contenedorPrincipal.setBackground(dr);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        contenedorPrincipal.setBackground(dr);
+                    }
                 } else {
                     contenedorPrincipal.setBackgroundResource(R.color.app_backgound);
                 }
@@ -483,6 +488,36 @@ public class UtilidadesUI {
             inputMethodManager.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
+
+    }
+
+    public static boolean isNightModeOn(Activity context) {
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            return true;
+        } else if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+            return false;
+        }
+
+        int currentSystemMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        switch (currentSystemMode) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                return false;
+        }
+
+        return false;
+
+    }
+
+    public static void initStatusBar(Activity context) {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !UtilidadesUI.isNightModeOn(context)){
+            context.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
 
     }
 

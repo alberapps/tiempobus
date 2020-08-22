@@ -18,26 +18,25 @@
 package alberapps.android.tiempobus.mapas.streetview;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
-import androidx.core.app.NavUtils;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+
 import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Vista de streetview
@@ -72,9 +71,8 @@ public class StreetViewActivity extends AppCompatActivity {
 
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         // Carga de datos extra
         Bundle extras = getIntent().getExtras();

@@ -65,7 +65,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.res.ResourcesCompat;
@@ -682,6 +681,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         handler.removeMessages(MSG_RECARGA);
 
+        //Cerrar BD
+        FavoritosProvider.DatabaseHelper.getInstance(this).close();
+        DatosLineasDB.DatosLineasOpenHelper.getInstance(this).close();
+        HistorialProvider.DatabaseHelper.getInstance(this).close();
+        //
+
         super.onStop();
 
     }
@@ -879,9 +884,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         // Fondo
         gestionarFondo.setupFondoAplicacion();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&  AppCompatDelegate.getDefaultNightMode() != AppCompatDelegate.MODE_NIGHT_YES){
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
+        //Status bar color init
+        UtilidadesUI.initStatusBar(this);
 
         /**
          * Configuramos la lista de resultados
