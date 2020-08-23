@@ -17,7 +17,9 @@
  */
 package alberapps.android.tiempobus.rutas;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
@@ -35,6 +38,8 @@ import com.google.maps.android.PolyUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.directions.Leg;
 
 /**
@@ -68,6 +73,19 @@ public class RutaMapaFragment extends SupportMapFragment implements OnMapReadyCa
         contexto = (RutasActivity) getActivity();
 
         mMap = googleMap;
+
+        if(UtilidadesUI.isNightModeOn(getActivity())) {
+            try {
+                boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.maps_dark));
+
+                if (!success) {
+                    Log.e("MapasActivity", "Style parsing failed");
+                }
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+                Log.e("MapasActivity", "Error style");
+            }
+        }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);

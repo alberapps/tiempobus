@@ -135,10 +135,11 @@
                         android:id="@+id/legal3"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="5dp"
                         android:contentDescription="InfoApp"
                         android:background="@drawable/actionbar_compat_item"
-                        card_view:srcCompat="@drawable/ic_info_outline_18dp"
-                        android:tint="@color/image_button_color"/>
+                        card_view:srcCompat="@drawable/ic_info_outline_24dp"
+                        card_view:tint="@color/image_button_color"/>
 
 
                 </LinearLayout>

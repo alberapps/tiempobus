@@ -17,7 +17,9 @@
  */
 package alberapps.android.tiempobus.principal;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +30,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import alberapps.android.tiempobus.MainActivity;
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.mapas.GestionarLineas;
+import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
  * Mapa lite tarjeta info
@@ -62,6 +67,19 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
         contexto = (MainActivity) getActivity();
 
         mMap = googleMap;
+
+        if(UtilidadesUI.isNightModeOn(getActivity())) {
+            try {
+                boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.maps_dark));
+
+                if (!success) {
+                    Log.e("MapasActivity", "Style parsing failed");
+                }
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+                Log.e("MapasActivity", "Error style");
+            }
+        }
 
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);

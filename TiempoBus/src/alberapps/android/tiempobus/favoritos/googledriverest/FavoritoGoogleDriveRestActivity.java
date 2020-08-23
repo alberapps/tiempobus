@@ -405,10 +405,8 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
 
         //Datos para copia de seguridad
-        Long datos_local_db = preferencias.getLong("drive_local_db", 0);
-
-
-        if(!datos_local_db.equals(0)){
+        if(preferencias.contains("drive_local_db")) {
+            long datos_local_db = preferencias.getLong("drive_local_db", 0);
             Date fechaDB = new Date(datos_local_db);
             fileSync.setText(Utilidades.getFechaHoraES(fechaDB));
         } else {
@@ -1048,7 +1046,7 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 
-        View contenedor_principal = findViewById(R.id.contenedor_nuevo);
+        View contenedor_principal = findViewById(R.id.contenedor_drive);
 
         UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, this);
 

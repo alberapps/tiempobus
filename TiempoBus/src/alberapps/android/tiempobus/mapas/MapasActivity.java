@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -74,6 +75,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -279,6 +281,20 @@ public class MapasActivity extends AppCompatActivity
 
 
     private void setUpMap() {
+
+        if(UtilidadesUI.isNightModeOn(this)) {
+            try {
+                boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps_dark));
+
+                if (!success) {
+                    Log.e("MapasActivity", "Style parsing failed");
+                }
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
+                Log.e("MapasActivity", "Error style");
+            }
+        }
+
         // Hide the zoom controls as the button panel will cover it.
         mMap.getUiSettings().setZoomControlsEnabled(true);
 

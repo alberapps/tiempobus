@@ -717,12 +717,12 @@
 
     <string name="archivo_drive_sinc_auto_info_2">Al acceder a la app se comprobará si hay cambios en el archivo de Drive. Se mostrará un aviso por si se desea actualizar la copia local.</string>
 
-    <string name="archivo_drive_sinc_manual">Gestión de copias</string>
+    <string name="archivo_drive_sinc_manual">Gestión de copias de seguridad</string>
 
     <string name="archivo_drive_error_signin">Se ha producido un error al acceder a tu cuenta.</string>
 
     <string name="archivo_drive_info">Última copia de seguridad en Drive:</string>
-    <string name="archivo_drive_info_2">Última copia de seguridad desde este dispositivo:</string>
+    <string name="archivo_drive_info_2">Última modificación en los favoritos:</string>
     <string name="archivo_drive_info_3">Fecha de la Base de datos local:</string>
 
     <string name="archivo_drive_info_no_data">No hay información</string>

@@ -553,12 +553,12 @@ favorit per crear la teua llista.</string>
 
     <string name="archivo_drive_sinc_auto_info_2">En accedir a l\'app es comprovarà si hi ha canvis en l\'arxiu de Drive. Es mostrarà un avís per si es desitja actualitzar la còpia local.</string>
 
-    <string name="archivo_drive_sinc_manual">Gestió de còpies</string>
+    <string name="archivo_drive_sinc_manual">Gestió de còpies de seguretat</string>
 
     <string name="archivo_drive_error_signin">S\'ha produït un error en accedir al teu compte.</string>
 
     <string name="archivo_drive_info">Última còpia de seguretat:</string>
-    <string name="archivo_drive_info_2">Última còpia de seguretat des del dispositiu:</string>
+    <string name="archivo_drive_info_2">Última modificació en els favorits:</string>
     <string name="archivo_drive_info_3">Data de la Base de dades local:</string>
 
     <string name="archivo_drive_info_no_data">No hi ha informació</string>
