@@ -93,7 +93,7 @@
                             android:background="@drawable/actionbar_compat_item"
                             android:contentDescription="Fijar linea"
                             android:src="@drawable/fijar"
-                            android:tint="@color/image_button_color"/>
+                            card_view:tint="@color/image_button_color"/>
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/tiempos_opciones"

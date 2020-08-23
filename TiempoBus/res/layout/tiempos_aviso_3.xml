@@ -186,7 +186,7 @@
                     android:contentDescription="InfoApp"
                     android:background="@drawable/actionbar_compat_item"
                     card_view:srcCompat="@drawable/ic_info_outline_18dp"
-                    android:tint="@color/image_button_color"/>
+                    card_view:tint="@color/image_button_color"/>
 
 
             </LinearLayout>

@@ -742,4 +742,6 @@
     <string name="configurar_tema_claro">Tema Claro</string>
     <string name="configurar_tema_auto">Tema del Sistema</string>
 
+    <string name="info_covid">Información Covid-19</string>
+
 </resources>

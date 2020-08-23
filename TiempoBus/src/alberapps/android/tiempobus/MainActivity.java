@@ -86,6 +86,7 @@ import java.util.List;
 import java.util.Locale;
 
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
+import alberapps.android.tiempobus.appinfo.AppInfoActivity;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.UtilidadesBarcode;
@@ -1006,6 +1007,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             public void onClick(View arg0) {
 
                 datosPantallaPrincipal.abrirFavDestacados();
+
+            }
+        });
+
+        // //info covid
+
+        TextView infoCovid = findViewById(R.id.info_covid);
+        infoCovid.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View arg0) {
+
+                UtilidadesUI.openWebPage(MainActivity.this, "http://coronavirus.san.gva.es");
 
             }
         });

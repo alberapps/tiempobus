@@ -67,7 +67,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="Favorito"
                             android:src="@drawable/ic_bookmark_outline_grey600_18dp"
-                            android:tint="@color/image_button_color"/>
+                            card_view:tint="@color/image_button_color"/>
 
 
                         <androidx.appcompat.widget.AppCompatSpinner
@@ -201,7 +201,7 @@
                             android:contentDescription="Favorito"
                             android:background="@drawable/actionbar_compat_item"
                             card_view:srcCompat="@drawable/ic_star_border_24dp"
-                            android:tint="@color/image_button_color"/>
+                            card_view:tint="@color/image_button_color"/>
 
 
                         <FrameLayout
@@ -215,7 +215,18 @@
 
 
                 </LinearLayout>
-
+                <TextView
+                    android:id="@+id/info_covid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/info_covid"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/mi_material_blue_principal"
+                    android:textStyle="bold"
+                    android:background="@drawable/actionbar_compat_item"
+                    />
 
             </LinearLayout>
 
