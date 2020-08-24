@@ -76,7 +76,7 @@ android {
 
         currentImplementation 'androidx.core:core:1.3.1'
 
-        currentImplementation 'androidx.preference:preference:1.1.1'
+        //currentImplementation 'androidx.preference:preference:1.1.1'
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
@@ -91,6 +91,9 @@ android {
         //currentImplementation 'com.google.firebase:firebase-core:16.0.9'
         //API 16
         currentImplementation 'com.google.firebase:firebase-analytics:17.5.0'
+        currentImplementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+
+
 
         //Places old
         //currentImplementation 'com.google.android.gms:play-services-places:16.0.0'
@@ -148,6 +151,11 @@ android {
             shrinkResources true
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            /*firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }*/
+
         }
         release {
 
@@ -155,6 +163,11 @@ android {
             shrinkResources true
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            /*firebaseCrashlytics {
+                mappingFileUploadEnabled true
+            }*/
+
         }
     }
 
@@ -195,3 +208,6 @@ android {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+// Apply the Crashlytics Gradle plugin
+apply plugin: 'com.google.firebase.crashlytics'

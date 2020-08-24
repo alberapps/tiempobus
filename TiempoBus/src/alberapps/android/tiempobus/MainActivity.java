@@ -38,7 +38,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.util.AttributeSet;
@@ -76,6 +76,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -86,7 +87,6 @@ import java.util.List;
 import java.util.Locale;
 
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
-import alberapps.android.tiempobus.appinfo.AppInfoActivity;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
 import alberapps.android.tiempobus.barcode.IntentResult;
 import alberapps.android.tiempobus.barcode.UtilidadesBarcode;
@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
     public FirebaseAnalytics mFirebaseAnalytics;
+    public FirebaseCrashlytics mFirebaseCrash;
 
     private PantallaPrincipalBinding pantallaPrincipalBinding;
 
@@ -214,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseCrash = FirebaseCrashlytics.getInstance();
 
         //setContentView(R.layout.pantalla_principal);
         pantallaPrincipalBinding = PantallaPrincipalBinding.inflate(getLayoutInflater());
@@ -320,6 +322,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             //Nuevo para firebase
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
+            mFirebaseCrash.setCrashlyticsCollectionEnabled(true);
+            //
 
             Log.d("PRINCIPAL", "Analytics activo");
 
@@ -327,6 +331,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             //Nuevo para firebase
             mFirebaseAnalytics.setAnalyticsCollectionEnabled(false);
+            mFirebaseCrash.setCrashlyticsCollectionEnabled(false);
 
             Log.d("PRINCIPAL", "Analytics inactivo");
 

@@ -37,7 +37,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/read_barcode" />
+        android:text="@string/read_barcode"
+        android:theme="@style/Theme.TiempoBusTheme"
+        android:textColor="@color/button_text_color"
+
+        />
 
 
     <androidx.appcompat.widget.SwitchCompat

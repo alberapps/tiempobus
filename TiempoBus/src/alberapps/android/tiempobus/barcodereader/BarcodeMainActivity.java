@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -36,7 +37,7 @@ import static alberapps.android.tiempobus.barcodereader.BarcodeCaptureActivity.B
  * Main activity demonstrating how to pass extra parameters to an activity that
  * reads barcodes.
  */
-public class BarcodeMainActivity extends Activity implements View.OnClickListener {
+public class BarcodeMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // use a compound button so either checkbox or switch widgets work.
     private SwitchCompat autoFocus;

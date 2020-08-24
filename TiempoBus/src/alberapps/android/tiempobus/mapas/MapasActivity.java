@@ -31,7 +31,7 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.util.Log;
 import android.view.Menu;

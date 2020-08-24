@@ -33,7 +33,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.util.TypedValue;

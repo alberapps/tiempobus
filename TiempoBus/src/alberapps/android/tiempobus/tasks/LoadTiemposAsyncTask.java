@@ -22,7 +22,7 @@ package alberapps.android.tiempobus.tasks;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import androidx.preference.PreferenceManager;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 

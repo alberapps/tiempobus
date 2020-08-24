@@ -182,10 +182,10 @@ public class GestionarFondo {
 
                 } else if (item == 1) {
                     View contenedor_principal = context.findViewById(R.id.contenedor_principal);
-                    contenedor_principal.setBackgroundResource(R.color.background_material_light);
+                    contenedor_principal.setBackgroundResource(R.color.app_backgound);
 
                     SharedPreferences.Editor editor = preferencias.edit();
-                    editor.putString("image_galeria", "");
+                    editor.remove("image_galeria");
                     editor.apply();
 
                     Toast.makeText(context.getApplicationContext(), context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
@@ -279,22 +279,27 @@ public class GestionarFondo {
      */
     public void activarNuevoFondo(Uri uri) {
 
-        // Uri de la nueva imagen
-        File tempFile = getTempFile();
+        try {
+            // Uri de la nueva imagen
+            File tempFile = getTempFile();
 
-        if (tempFile != null) {
+            if (tempFile != null) {
 
-            String filePath = tempFile.getPath();
+                String filePath = tempFile.getPath();
 
-            // Guardar
-            SharedPreferences.Editor editor = preferencias.edit();
-            editor.putString("image_galeria", filePath);
-            editor.apply();
+                // Guardar
+                SharedPreferences.Editor editor = preferencias.edit();
+                editor.putString("image_galeria", filePath);
+                editor.apply();
 
-            setupFondoAplicacion();
+                setupFondoAplicacion();
 
-            Toast.makeText(context, context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getResources().getText(R.string.seleccion_ok), Toast.LENGTH_SHORT).show();
 
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(context, context.getResources().getText(R.string.error_fondo), Toast.LENGTH_SHORT).show();
         }
 
     }
