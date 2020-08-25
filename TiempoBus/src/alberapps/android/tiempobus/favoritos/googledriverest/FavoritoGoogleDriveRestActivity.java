@@ -52,6 +52,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,6 +96,7 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
 
     private GoogleSignInClient client;
 
+    public FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +121,8 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
         mProgressBar.setMax(100);
         mProgressBar.setProgress(0);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         init();
 
     }
@@ -129,11 +133,18 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
         Button importar = findViewById(R.id.drive_importar);
         importar.setEnabled(false);
 
+        Bundle bundle = new Bundle();
 
         importar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 modo = MODO_IMPORTAR;
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D05");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Cargar/Admin");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 queryArchivosApp();
             }
         });
@@ -145,6 +156,12 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 modo = MODO_EXPORTAR;
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D06");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Guardar copia");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 nuevoArchivoDrive(false);
             }
         });
@@ -157,6 +174,12 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 modo = MODO_EXPORTAR;
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D03");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Guardar");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 nuevoArchivoDrive(true);
             }
         });
@@ -167,6 +190,12 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 modo = MODO_IMPORTAR;
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D04");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Importar");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 cargarArchivoBackup();
             }
         });
@@ -185,8 +214,20 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!preferencias.contains("drive_cuenta")) {
+
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D01");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Signin");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     requestSignIn();
                 } else {
+
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "D02");
+                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Drive - Signout");
+                    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                     requestSignOut();
                 }
             }
