@@ -22,7 +22,7 @@ import android.net.Uri;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class ProcesarAvisosTram {
             if (lineasList.get(i).select("div.alert").size() > 0) {
 
                 //String safe = Jsoup.clean(lineasList.get(i).html(), URL_TRAM_AVISOS, Whitelist.basicWithImages());
-                String safe = Jsoup.clean(lineasList.get(i).html(), urlNoticias.toString(), Whitelist.basicWithImages().addTags("h3", "h4", "table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
+                String safe = Jsoup.clean(lineasList.get(i).html(), urlNoticias.toString(), Safelist.basicWithImages().addTags("h3", "h4", "table", "td", "tr", "th", "thead", "tfoot", "tbody").addAttributes("td", "rowspan", "align", "colspan", "src"));
 
 
                 Aviso aviso = new Aviso();

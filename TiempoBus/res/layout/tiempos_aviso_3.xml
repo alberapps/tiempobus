@@ -22,7 +22,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -39,11 +38,9 @@
 
             card_view:cardBackgroundColor="@color/tb_card_backgound"
             card_view:cardCornerRadius="@dimen/card_radius"
-
             card_view:cardElevation="@dimen/card_elevation"
 
             >
-
 
             <LinearLayout
 
@@ -52,146 +49,78 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-
-                    <TextView
-                        android:id="@+id/info_alberapps_blog"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="blog.alberapps.com"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="10dp"/>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    >
-
-
-                    <TextView
-                        android:id="@+id/info_alberapps"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="\@alberapps"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/info_mag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="\@magnoling_"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-
-
-
-                <TextView
-                    android:id="@+id/legal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-
-                    android:padding="2dip"
-                    android:text="@string/acercade_info_nuevo"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="12sp" />
-
-                <!--LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:padding="2dip">
-
+                    android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imgTram"
-                        android:layout_width="match_parent"
+                        android:id="@+id/legal3_info"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:contentDescription="Link TRAM"
-                        android:src="@drawable/logotram" />
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:contentDescription="InfoApp"
+                        android:background="@drawable/actionbar_compat_item"
+                        card_view:srcCompat="@drawable/ic_info_outline_24dp"
+                        card_view:tint="@color/image_button_color"/>
 
-                    <ImageView
-                        android:id="@+id/imgFgv"
+                    <TextView
+                        android:id="@+id/legal"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:contentDescription="Link fgv"
-                        android:src="@drawable/logofgv"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
 
+                        android:padding="2dip"
+                        android:text="@string/acercade_info_nuevo"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         />
 
-
-                </LinearLayout-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:padding="2dip">
-
-
                     <TextView
                         android:id="@+id/imgTram"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/url_tram"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
 
                     <TextView
                         android:id="@+id/imgFgv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/url_fgv"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+
+                    <TextView
+                        android:id="@+id/legal3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dip"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_screen_preference"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+
+
+
 
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/legal3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:contentDescription="InfoApp"
-                    android:background="@drawable/actionbar_compat_item"
-                    card_view:srcCompat="@drawable/ic_info_outline_18dp"
-                    card_view:tint="@color/image_button_color"/>
-
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
 

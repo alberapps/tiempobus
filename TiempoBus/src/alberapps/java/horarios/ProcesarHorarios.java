@@ -24,7 +24,7 @@ import android.util.Log;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -308,7 +308,7 @@ public class ProcesarHorarios {
      */
     private static String procesarElementoTabla(Element table) {
 
-        String safe = Jsoup.clean(table.html(), Whitelist.basic());
+        String safe = Jsoup.clean(table.html(), Safelist.basic());
 
         // Problema caracteres
         String limpiar = safe.replaceAll("", "-").replaceAll("", "&euro;").replaceAll("&nbsp;", "").trim();

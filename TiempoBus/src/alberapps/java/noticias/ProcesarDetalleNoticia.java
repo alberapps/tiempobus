@@ -24,7 +24,7 @@ import android.os.Build;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
@@ -112,7 +112,7 @@ public class ProcesarDetalleNoticia {
 
             // Limpiar resultado
             String safe = Jsoup.clean(contenido.first().html(), "https://alicante.vectalia.es/notificacion/",
-                    Whitelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody", "span", "div")
+                    Safelist.basicWithImages().addTags("table", "td", "tr", "th", "thead", "tfoot", "tbody", "span", "div")
                             .addAttributes("td", "rowspan", "align", "colspan", "src")
                             .addAttributes("span", "style")
                             .addAttributes("div", "style"));

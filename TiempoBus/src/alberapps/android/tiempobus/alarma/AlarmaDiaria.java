@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -40,7 +41,13 @@ public class AlarmaDiaria {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmaDiariaReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmIntent = null;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+        }
 
         alarmManager.cancel(alarmIntent);
         //alarmIntent.cancel();

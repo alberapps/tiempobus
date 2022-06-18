@@ -31,7 +31,8 @@
         android:icon="@drawable/ic_tiempobus_3"
         android:label="@string/app_name">
         <!-- The widget provider -->
-        <receiver android:name="alberapps.android.tiempobuswidgets.TiemposWidgetProvider">
+        <receiver android:name="alberapps.android.tiempobuswidgets.TiemposWidgetProvider"
+                  android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

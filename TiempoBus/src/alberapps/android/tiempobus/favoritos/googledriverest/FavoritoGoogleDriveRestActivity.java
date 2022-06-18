@@ -46,8 +46,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
@@ -536,7 +536,7 @@ public class FavoritoGoogleDriveRestActivity extends AppCompatActivity {
                     credential.setSelectedAccount(googleAccount.getAccount());
                     Drive googleDriveService =
                             new Drive.Builder(
-                                    AndroidHttp.newCompatibleTransport(),
+                                    new NetHttpTransport(),
                                     new GsonFactory(),
                                     credential)
                                     .setApplicationName("TiempoBus y Tram")

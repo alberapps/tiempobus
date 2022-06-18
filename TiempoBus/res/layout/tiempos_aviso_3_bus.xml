@@ -49,65 +49,21 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-
-                    <TextView
-                        android:id="@+id/info_alberapps_blog"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/app_autor_web"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="10dp"/>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <TextView
-                        android:id="@+id/info_alberapps"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="\@alberapps"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/info_mag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="\@magnoling_"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/legal3_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:contentDescription="InfoApp"
+                        android:background="@drawable/actionbar_compat_item"
+                        card_view:srcCompat="@drawable/ic_info_outline_24dp"
+                        card_view:tint="@color/image_button_color"/>
 
                     <TextView
                         android:id="@+id/legal"
@@ -117,8 +73,8 @@
 
                         android:padding="2dip"
                         android:text="@string/acercade_info_nuevo"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="12sp" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
 
                     <TextView
                         android:id="@+id/info_subus"
@@ -128,18 +84,23 @@
                         android:text="@string/url_subus"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="@color/mi_material_blue_principal"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
 
-
-                    <ImageView
+                    <TextView
                         android:id="@+id/legal3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:contentDescription="InfoApp"
-                        android:background="@drawable/actionbar_compat_item"
-                        card_view:srcCompat="@drawable/ic_info_outline_24dp"
-                        card_view:tint="@color/image_button_color"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="2dip"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_screen_preference"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="@color/mi_material_blue_principal"
+                        android:textStyle="bold"
+                        android:textSize="12sp"/>
+
+
+
 
 
                 </LinearLayout>

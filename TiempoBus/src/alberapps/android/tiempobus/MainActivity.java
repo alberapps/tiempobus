@@ -618,6 +618,27 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 break;
+
+            case R.id.navigation_item_link_blog:
+
+                UtilidadesUI.openWebPage(this, "https://blog.alberapps.com");
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M10");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - Blog");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                break;
+            case R.id.navigation_item_link_tw:
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M10");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - TW");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                UtilidadesUI.openWebPage(this, "https://twitter.com/alberapps");
+
+                break;
         }
 
 
@@ -1018,14 +1039,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         // //info covid
 
-        TextView infoCovid = findViewById(R.id.info_covid);
+        /*TextView infoCovid = findViewById(R.id.info_covid);
         infoCovid.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View arg0) {
 
                 UtilidadesUI.openWebPage(MainActivity.this, "http://coronavirus.san.gva.es");
 
             }
-        });
+        });*/
 
 
         // Swipe para recargar
@@ -2261,6 +2282,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_STORAGE) {
             if (grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {

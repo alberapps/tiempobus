@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -535,7 +536,11 @@ public class TiemposForegroundService extends Service {
         intent.putExtra("alarmTxt", txt);
         intent.putExtra("poste", parada);
 
-        alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        }
 
         Date actual = new Date();
 

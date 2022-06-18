@@ -2,24 +2,23 @@ apply plugin: 'com.android.application'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "28.0.2"
-
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 27
-        versionCode 11
-        versionName "3.5"
+        minSdkVersion 16
+        targetSdkVersion 31
+        versionCode 12
+        versionName "3.6.0"
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled false
     }
 
@@ -67,8 +66,8 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-
-    lintOptions {
+    lint {
         disable 'MissingTranslation'
     }
+
 }

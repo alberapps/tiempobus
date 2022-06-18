@@ -24,6 +24,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -48,7 +49,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmReceiver = null;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        }
 
         alarmManager.cancel(alarmReceiver);
 

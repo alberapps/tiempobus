@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,7 +85,12 @@ public class GestionarAlarmas {
         // Iniciar receiver
         Intent intent = new Intent(context, AlarmReceiver.class);
 
-        PendingIntent alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        PendingIntent alarmReceiver = null;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        }
 
         // Cancelar alarma si hay una definida
         if (alarmReceiver != null) {
@@ -224,7 +230,11 @@ public class GestionarAlarmas {
         intent.putExtra("alarmTxt", txt);
         intent.putExtra("poste", paradaActual);
 
-        alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            alarmReceiver = PendingIntent.getBroadcast(context, 0, intent, 0);
+        }
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, milisegundos, alarmReceiver);
 

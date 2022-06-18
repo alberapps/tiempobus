@@ -64,6 +64,19 @@
 
     </group>
 
+    <group
+        android:id="@+id/menu_links"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navigation_item_link_blog"
+            android:title="@string/app_autor_web" />
+        <item
+            android:id="@+id/navigation_item_link_tw"
+            android:title="@string/app_autor_tw" />
+
+    </group>
+
     <item android:title="@string/preferencias_noticias_auto">
         <menu>
 

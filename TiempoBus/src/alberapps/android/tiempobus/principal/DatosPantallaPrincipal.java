@@ -1296,7 +1296,7 @@ public class DatosPantallaPrincipal {
                 vPieBus = v;
             }
 
-            ImageView infoapp = v.findViewById(R.id.legal3);
+            TextView infoapp = v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -1351,7 +1351,7 @@ public class DatosPantallaPrincipal {
                 }
             });
 
-            ImageView infoapp = v.findViewById(R.id.legal3);
+            TextView infoapp = v.findViewById(R.id.legal3);
             infoapp.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
@@ -1368,44 +1368,6 @@ public class DatosPantallaPrincipal {
             context.avisoPie = v;
 
         }
-
-
-        TextView twAlberapps = (TextView) v.findViewById(R.id.info_alberapps);
-        twAlberapps.setOnClickListener(new TextView.OnClickListener() {
-            public void onClick(View arg0) {
-
-                UtilidadesUI.openWebPage(context, "http://twitter.com/alberapps");
-
-            }
-        });
-
-        TextView twMg = (TextView) v.findViewById(R.id.info_mag);
-        twMg.setOnClickListener(new TextView.OnClickListener() {
-            public void onClick(View arg0) {
-
-                UtilidadesUI.openWebPage(context, "http://twitter.com/Magnoling_");
-
-            }
-        });
-
-        TextView blogAlberapps = (TextView) v.findViewById(R.id.info_alberapps_blog);
-        blogAlberapps.setOnClickListener(new TextView.OnClickListener() {
-            public void onClick(View arg0) {
-
-                UtilidadesUI.openWebPage(context, "http://alberapps.blogspot.com");
-
-            }
-        });
-
-        /*TextView fbAlberapps = (TextView) v.findViewById(R.id.info_alberapps_fb);
-        fbAlberapps.setOnClickListener(new TextView.OnClickListener() {
-            public void onClick(View arg0) {
-
-                UtilidadesUI.openWebPage(context, "https://facebook.com/alberapps");
-
-            }
-        });*/
-
 
     }
 

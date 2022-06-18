@@ -10,7 +10,7 @@
     com.google.android.gms.location, com.google.android.gms.drive, com.google.android.gms.analytics,
     com.google.android.gms.tasks" /-->
     <!-- places api 14 and 15-->
-    <uses-sdk tools:overrideLibrary="com.google.android.libraries.places" />
+    <!--uses-sdk tools:overrideLibrary="com.google.android.libraries.places" /-->
 
     <supports-screens
         android:largeScreens="true"
@@ -70,7 +70,8 @@
         </activity>
         <activity
             android:name=".principal.SplashActivity"
-            android:theme="@style/Theme.TiempoBusThemeSplash">
+            android:theme="@style/Theme.TiempoBusThemeSplash"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -190,7 +191,8 @@
             android:launchMode="singleTop"
             android:parentActivityName=".infolineas.InfoLineasTabsPager"
             android:theme="@style/Theme.TiempoBusThemeTab"
-            tools:ignore="UnusedAttribute">
+            tools:ignore="UnusedAttribute"
+            android:exported="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".infolineas.InfoLineasTabsPager" />

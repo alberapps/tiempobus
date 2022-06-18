@@ -215,7 +215,7 @@
 
 
                 </LinearLayout>
-                <TextView
+                <!--TextView
                     android:id="@+id/info_covid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -226,7 +226,7 @@
                     android:textColor="@color/mi_material_blue_principal"
                     android:textStyle="bold"
                     android:background="@drawable/actionbar_compat_item"
-                    />
+                    /-->
 
             </LinearLayout>
 

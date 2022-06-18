@@ -2,11 +2,12 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.0.4</string>
+    <string name="app_version" translatable="false">5.1.0</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2020)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
     <string name="app_autor_web" translatable="false">blog.alberapps.com</string>
+    <string name="app_autor_tw" translatable="false">\@alberapps</string>
     <string name="poste">Nº de parada&#8230;</string>
     <string name="main_no_items">Sin información</string>
     <string name="ok">ok</string>
@@ -509,7 +510,7 @@
     <string name="sin_novedades">Sin novedades</string>
     <string name="que_hay_cerca">¿Qué hay cerca?</string>
     <string name="tram_txt" translatable="false">Tram</string>
-    <string name="tram_tw_txt" translatable="false">\@TramdeAlicante</string>
+    <string name="tram_tw_txt" translatable="false">\@tramdealicante</string>
     <string name="tiempo_real">Tiempo Real</string>
     <string name="tramalicante" translatable="false">tramalicante.es</string>
 
@@ -538,7 +539,7 @@
 
 
     <string name="avisos_push_tiempobus">Aviso de AlberApps</string>
-    <string name="alberapps" translatable="false">\@AlberApps</string>
+    <string name="alberapps" translatable="false">\@alberapps</string>
 
     <string name="info_tram_tr">Puedes seguir usando el servicio basado en horarios</string>
 
