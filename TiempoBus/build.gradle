@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: '*.jar')
-    implementation 'com.google.maps.android:android-maps-utils:2.3.0'
+    implementation 'com.google.maps.android:android-maps-utils:2.4.0'
     implementation files('libs/twitter4j-core-4.0.7.jar')
     //implementation files('libs/jsoup-1.13.1.jar')
 
-    implementation 'org.jsoup:jsoup:1.15.1'
+    implementation 'org.jsoup:jsoup:1.15.3'
 
 
     //compile 'com.google.firebase:firebase-messaging:10.0.1'
@@ -16,11 +16,11 @@ dependencies {
     //implementation 'com.android.support:multidex:1.0.3'
 
     //Drive nueva api
-    implementation 'com.google.http-client:google-http-client-gson:1.42.0'
-    implementation('com.google.api-client:google-api-client-android:1.35.1') {
+    implementation 'com.google.http-client:google-http-client-gson:1.42.3'
+    implementation('com.google.api-client:google-api-client-android:2.0.1') {
         exclude group: 'org.apache.httpcomponents'
     }
-    implementation('com.google.apis:google-api-services-drive:v3-rev20220508-1.32.1') {
+    implementation('com.google.apis:google-api-services-drive:v3-rev20220815-2.0.0') {
         exclude group: 'org.apache.httpcomponents'
     }
 
@@ -34,7 +34,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 31
-        versionName "5.1.0"
+        versionName "5.1.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -66,7 +66,7 @@ android {
         }*/
         current {
             minSdkVersion 19
-            versionCode 1901  // Min API level 19
+            versionCode 1902  // Min API level 19
             dimension "api"
         }
 
@@ -89,16 +89,16 @@ android {
 
         //currentImplementation 'com.android.support:preference-v7:27.1.1'
 
-        currentImplementation 'com.google.android.gms:play-services-maps:18.0.2'
-        currentImplementation 'com.google.android.gms:play-services-location:20.0.0'
+        currentImplementation 'com.google.android.gms:play-services-maps:18.1.0'
+        currentImplementation 'com.google.android.gms:play-services-location:21.0.1'
         currentImplementation 'com.google.android.gms:play-services-vision:20.1.3'
 
-        currentImplementation 'com.google.android.gms:play-services-auth:20.2.0'
+        currentImplementation 'com.google.android.gms:play-services-auth:20.3.0'
 
         //currentImplementation 'com.google.firebase:firebase-core:16.0.9'
         //API 16
-        currentImplementation 'com.google.firebase:firebase-analytics:21.0.0'
-        currentImplementation 'com.google.firebase:firebase-crashlytics:18.2.11'
+        currentImplementation 'com.google.firebase:firebase-analytics:21.2.0'
+        currentImplementation 'com.google.firebase:firebase-crashlytics:18.3.1'
 
         currentImplementation 'com.google.android.libraries.places:places-compat:2.6.0'
 
