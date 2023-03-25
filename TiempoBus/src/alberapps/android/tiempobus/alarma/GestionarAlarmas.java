@@ -220,7 +220,8 @@ public class GestionarAlarmas {
         Intent intent = new Intent(context, AlarmReceiver.class);
 
         String texto = "";
-        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))
+        || DatosPantallaPrincipal.esTramRt(Integer.toString(paradaActual))) {
             texto = context.getString(R.string.alarm_tram);
         } else {
             texto = context.getString(R.string.alarm_bus);
@@ -313,7 +314,8 @@ public class GestionarAlarmas {
     public String prepararReceiver(BusLlegada theBus, int paradaActual) {
 
         String texto = "";
-        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))) {
+        if (DatosPantallaPrincipal.esTram(Integer.toString(paradaActual))
+        || DatosPantallaPrincipal.esTramRt(Integer.toString(paradaActual))) {
             texto = context.getString(R.string.alarm_tram);
         } else {
             texto = context.getString(R.string.alarm_bus);

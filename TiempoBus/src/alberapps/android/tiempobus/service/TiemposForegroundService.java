@@ -526,7 +526,7 @@ public class TiemposForegroundService extends Service {
         cancelarAlarmas(false);
 
         String texto = "";
-        if (DatosPantallaPrincipal.esTram(parada)) {
+        if (DatosPantallaPrincipal.esTram(parada) || DatosPantallaPrincipal.esTramRt(parada)) {
             texto = context.getString(R.string.alarm_tram);
         } else {
             texto = context.getString(R.string.alarm_bus);

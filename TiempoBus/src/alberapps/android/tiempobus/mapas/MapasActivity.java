@@ -502,7 +502,7 @@ public class MapasActivity extends AppCompatActivity
 
                 }
 
-                if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
+                if (DatosPantallaPrincipal.esTram(Integer.toString(codigo)) || DatosPantallaPrincipal.esTramRt(Integer.toString(codigo))) {
                     //badge = R.drawable.tramway_2;
                     badge = R.drawable.ic_tram1;
                 } else {

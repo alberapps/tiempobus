@@ -84,7 +84,7 @@ public class GestionMapa {
 
         }
 
-        if (DatosPantallaPrincipal.esTram(Integer.toString(codigo))) {
+        if (DatosPantallaPrincipal.esTram(Integer.toString(codigo)) || DatosPantallaPrincipal.esTramRt(Integer.toString(codigo))) {
             //dialog.setIcon(R.drawable.tramway_2);
             dialog.setIcon(R.drawable.ic_tram1);
         } else {

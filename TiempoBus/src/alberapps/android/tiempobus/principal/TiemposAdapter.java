@@ -401,11 +401,12 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
         } else {
             //tram
             //boolean opcionTR = actividad.preferencias.getBoolean("tram_opcion_tr", false);
-            boolean opcionTR = false;
+            //boolean opcionTR = false;
+            boolean opcionTR = true;
 
             LayoutInflater vi = (LayoutInflater) contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
+            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) || DatosPantallaPrincipal.esTramRt(Integer.toString(actividad.paradaActual))) {
 
                 //Vacio para opcion sin tiempo real
                 if (bus != null && bus.isSinDatos() && !opcionTR) {
@@ -444,9 +445,9 @@ public class TiemposAdapter extends ArrayAdapter<BusLlegada> {
             String aviso = "";
 
 
-            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual))) {
-                //aviso = ctx.getString(R.string.tlf_tram);
-                aviso = contexto.getString(R.string.info_tram_tr);
+            if (DatosPantallaPrincipal.esTram(Integer.toString(actividad.paradaActual)) || DatosPantallaPrincipal.esTramRt(Integer.toString(actividad.paradaActual))) {
+                aviso = contexto.getString(R.string.tlf_tram);
+                //aviso = contexto.getString(R.string.info_tram_tr);
 
 
                 // //Horarios

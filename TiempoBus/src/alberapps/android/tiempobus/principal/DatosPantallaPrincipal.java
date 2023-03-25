@@ -762,7 +762,19 @@ public class DatosPantallaPrincipal {
 
     public static boolean esTram(int paradaActual) {
 
-        if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+        if (UtilidadesTRAM.ACTIVADO_TRAM_RT) {
+            return false;
+        }
+
+        if (Integer.toString(paradaActual).length() < 4 || Integer.toString(paradaActual).charAt(0) == '1') {
+            return true;
+        } else return UtilidadesTRAM.esParadaL2(Integer.toString(paradaActual));
+
+    }
+
+    public static boolean esTramRt(int paradaActual) {
+
+        if (!UtilidadesTRAM.ACTIVADO_TRAM_RT) {
             return false;
         }
 
@@ -774,7 +786,19 @@ public class DatosPantallaPrincipal {
 
     public static boolean esTram(String paradaActual) {
 
-        if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+        if (UtilidadesTRAM.ACTIVADO_TRAM_RT) {
+            return false;
+        }
+
+        if (paradaActual.length() < 4 || paradaActual.charAt(0) == '1') {
+            return true;
+        } else return UtilidadesTRAM.esParadaL2(paradaActual);
+
+    }
+
+    public static boolean esTramRt(String paradaActual) {
+
+        if (!UtilidadesTRAM.ACTIVADO_TRAM_RT) {
             return false;
         }
 
@@ -786,7 +810,17 @@ public class DatosPantallaPrincipal {
 
     public static boolean esLineaTram(String lineaActual) {
 
-        if (!UtilidadesTRAM.ACTIVADO_TRAM) {
+        if (UtilidadesTRAM.ACTIVADO_TRAM_RT) {
+            return false;
+        }
+
+        return UtilidadesTRAM.esLineaTram(lineaActual);
+
+    }
+
+    public static boolean esLineaTramRt(String lineaActual) {
+
+        if (!UtilidadesTRAM.ACTIVADO_TRAM_RT) {
             return false;
         }
 
@@ -1286,7 +1320,7 @@ public class DatosPantallaPrincipal {
 
         View v = null;
 
-        if (!esTram(context.paradaActual)) {
+        if (!esTram(context.paradaActual) && !esTramRt(context.paradaActual)) {
 
             if (vPieBus != null) {
                 v = vPieBus;
@@ -1556,7 +1590,7 @@ public class DatosPantallaPrincipal {
 
                 String lineaALeer = "";
 
-                if (esTram(context.paradaActual)) {
+                if (esTram(context.paradaActual) || esTramRt(context.paradaActual)) {
 
                     lineaALeer = context.getString(R.string.leer_1_tram) + " " + busSeleccionado.getLinea() + " " + context.getString(R.string.leer_2) + " " + busSeleccionado.getDestino() + " "
                             + context.getString(R.string.leer_3) + " " + busSeleccionado.getProximoMinutos().toString() + " " + context.getString(R.string.leer_4);
@@ -1576,7 +1610,7 @@ public class DatosPantallaPrincipal {
 
                 String lineaALeer = "";
 
-                if (esTram(context.paradaActual)) {
+                if (esTram(context.paradaActual) || esTramRt(context.paradaActual)) {
 
                     lineaALeer = "El tranvía de la línea " + busSeleccionado.getLinea() + " con destino " + busSeleccionado.getDestino() + " llegará en " + busSeleccionado.getProximoMinutos().toString() + " minutos";
 

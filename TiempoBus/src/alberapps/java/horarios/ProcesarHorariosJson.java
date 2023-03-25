@@ -51,7 +51,7 @@ public class ProcesarHorariosJson {
             horariosData = new HorariosData();
 
             Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_ESTRUCTURA_HORARIOS).buildUpon();
-            builder.appendQueryParameter("linea", datosLinea.getNumLinea());
+            builder.appendQueryParameter("line", datosLinea.getNumLinea());
             builder.build();
 
             str = Conectividad.conexionGetUtf8String(builder.toString(), true);

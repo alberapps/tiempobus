@@ -69,7 +69,7 @@ public class GestionIda {
 
         }
 
-        if (codigo != -1 && (context.datosIda.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(context.datosIda.getPlacemarks().get(posicion).getCodigoParada()))) {
+        if (codigo != -1 && (context.datosIda.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(context.datosIda.getPlacemarks().get(posicion).getCodigoParada()) || DatosPantallaPrincipal.esTramRt(context.datosIda.getPlacemarks().get(posicion).getCodigoParada()))) {
 
             context.cargarTiempos(codigo);
 
@@ -183,7 +183,7 @@ public class GestionIda {
 
             if (!esTram) {
 
-                textoLinea.setText(context.linea.getLinea().substring(context.linea.getNumLinea().length()).trim());
+                textoLinea.setText(context.linea.getLinea().trim());
 
             } else {
                 textoLinea.setText(context.getString(R.string.rss_tram));

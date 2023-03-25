@@ -368,7 +368,7 @@ public class SelectorLinea {
 
 
                 for (int i = 0; i < buses.size(); i++) {
-                    listaSpinner.add(new SpinnerItem(i, buses.get(i).getLinea()));
+                    listaSpinner.add(new SpinnerItem(i, buses.get(i).getNumLinea() + " " + buses.get(i).getLinea()));
                 }
 
                 if (context.modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
@@ -491,7 +491,7 @@ public class SelectorLinea {
         listaSpinner.clear();
 
         for (int i = 0; i < listaConFiltroGrupo.size(); i++) {
-            listaSpinner.add(new SpinnerItem(i, listaConFiltroGrupo.get(i).getLinea()));
+            listaSpinner.add(new SpinnerItem(i, listaConFiltroGrupo.get(i).getNumLinea() + " " + listaConFiltroGrupo.get(i).getLinea()));
         }
 
         Log.d("SELECTOR_LINEA", "por grupo: " + grupo + " lista: " + listaSpinner.size());

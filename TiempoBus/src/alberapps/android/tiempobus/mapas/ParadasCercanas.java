@@ -34,6 +34,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContentResolverCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -283,68 +284,81 @@ public class ParadasCercanas {
 
                 return;
             }
-            Location location = LocationServices.FusedLocationApi.getLastLocation(context.mGoogleApiClient);
 
-            if (location == null) {
+            //Location location = LocationServices.FusedLocationApi.getLastLocation(context.mGoogleApiClient);
+
+            FusedLocationProviderClient flC = LocationServices.getFusedLocationProviderClient(context);
+
+            flC.getLastLocation().addOnFailureListener(context, e -> {
                 Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
-                return;
-            }
+            });
 
-            double latitud = location.getLatitude();
-            double longitud = location.getLongitude();
+            flC.getLastLocation().addOnCanceledListener(context, () -> {
+                Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+            });
 
-            LatLng lt = new LatLng(latitud, longitud);
+            flC.getLastLocation().addOnSuccessListener(context, location -> {
 
-            context.mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
+                /*if (location == null) {
+                    Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
+                    return;
+                }*/
 
-            context.mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+                double latitud = location.getLatitude();
+                double longitud = location.getLongitude();
 
-            if (cercanas) {
+                LatLng lt = new LatLng(latitud, longitud);
 
-                int glat = (int) (latitud * 1E6);
-                int glng = (int) (longitud * 1E6);
+                context.mMap.moveCamera(CameraUpdateFactory.newLatLng(lt));
 
-                final List<LatLng> listaPuntos = cargarParadasCercanas(glat, glng);
+                context.mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
 
-                listaPuntos.add(lt);
+                if (cercanas) {
 
-                context.mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)));
+                    int glat = (int) (latitud * 1E6);
+                    int glng = (int) (longitud * 1E6);
 
-                if (listaPuntos != null && !listaPuntos.isEmpty()) {
+                    final List<LatLng> listaPuntos = cargarParadasCercanas(glat, glng);
 
-                    // Pan to see all markers in view.
-                    // Cannot zoom to bounds until the map has a size.
-                    final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
-                    if (mapView.getViewTreeObserver().isAlive()) {
-                        mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                            @SuppressWarnings("deprecation")
-                            // We use the new method when supported
-                            @SuppressLint("NewApi")
-                            // We check which build version we are using.
-                            public void onGlobalLayout() {
+                    listaPuntos.add(lt);
 
-                                Builder ltb = new Builder();
+                    context.mMap.addMarker(new MarkerOptions().position(new LatLng(latitud, longitud)));
 
-                                for (int i = 0; i < listaPuntos.size(); i++) {
-                                    ltb.include(listaPuntos.get(i));
+                    if (listaPuntos != null && !listaPuntos.isEmpty()) {
+
+                        // Pan to see all markers in view.
+                        // Cannot zoom to bounds until the map has a size.
+                        final View mapView = context.getSupportFragmentManager().findFragmentById(R.id.map).getView();
+                        if (mapView.getViewTreeObserver().isAlive()) {
+                            mapView.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                                @SuppressWarnings("deprecation")
+                                // We use the new method when supported
+                                @SuppressLint("NewApi")
+                                // We check which build version we are using.
+                                public void onGlobalLayout() {
+
+                                    Builder ltb = new Builder();
+
+                                    for (int i = 0; i < listaPuntos.size(); i++) {
+                                        ltb.include(listaPuntos.get(i));
+                                    }
+
+                                    LatLngBounds bounds = ltb.build();
+
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                                        mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                    } else {
+                                        mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                                    }
+                                    context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
                                 }
+                            });
+                        }
 
-                                LatLngBounds bounds = ltb.build();
-
-                                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                                    mapView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                } else {
-                                    mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                                }
-                                context.mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-                            }
-                        });
                     }
 
                 }
-
-            }
-
+            });
         } catch (Exception e) {
 
             Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();

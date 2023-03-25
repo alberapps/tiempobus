@@ -67,7 +67,7 @@ public class GestionVuelta {
 
         }
 
-        if (codigo != -1 && (context.datosVuelta.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(context.datosVuelta.getPlacemarks().get(posicion).getCodigoParada()))) {
+        if (codigo != -1 && (context.datosVuelta.getPlacemarks().get(posicion).getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(context.datosVuelta.getPlacemarks().get(posicion).getCodigoParada()) || DatosPantallaPrincipal.esTramRt(context.datosVuelta.getPlacemarks().get(posicion).getCodigoParada()))) {
 
             context.cargarTiempos(codigo);
 
@@ -190,7 +190,7 @@ public class GestionVuelta {
             //Linea
             TextView textoLinea = (TextView) vueltaView.findViewById(R.id.datos_desc_linea);
 
-            textoLinea.setText(context.linea.getLinea().substring(context.linea.getNumLinea().length()).trim());
+            textoLinea.setText(context.linea.getLinea().trim());
 
 
         }

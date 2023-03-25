@@ -152,7 +152,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
                     }
 
-                    if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()))) {
+                    if (codigo != -1 && (bus.getCodigoParada().length() == 4 || DatosPantallaPrincipal.esTram(bus.getCodigoParada()) || DatosPantallaPrincipal.esTramRt(bus.getCodigoParada()))) {
 
                         ((InfoLineasTabsPager) contexto).cargarTiempos(codigo);
 

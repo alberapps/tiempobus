@@ -165,7 +165,7 @@ public class FragmentLineas extends Fragment {
             Resources resources = getResources();
             InputStream inputStream = resources.openRawResource(R.raw.lineasoffline);
 
-            datosOffline = Utilidades.obtenerStringDeStream(inputStream);
+            datosOffline = Utilidades.obtenerStringDeStreamUTF8(inputStream);
 
         } else if (actividad.getModoRed() == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
 

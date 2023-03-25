@@ -30,6 +30,8 @@ public class UtilidadesTRAM {
 
     public static boolean ACTIVADO_TRAM = true;
 
+    public static boolean ACTIVADO_TRAM_RT = true;
+
     public static boolean ACTIVADO_L9 = true;
 
     // Para la carga en BD

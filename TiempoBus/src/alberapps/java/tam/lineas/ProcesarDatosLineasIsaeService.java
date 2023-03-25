@@ -37,13 +37,12 @@ import alberapps.java.tam.DatosTam;
 import alberapps.java.tam.UtilidadesTAM;
 import alberapps.java.tram.UtilidadesTRAM;
 import alberapps.java.util.Conectividad;
+import alberapps.java.util.Utilidades;
 
 /**
  * Procesa los datos recuperados de las lineas
  */
 public class ProcesarDatosLineasIsaeService {
-
-    //public static final String URL_SUBUS_LINEAS = "http://isaealicante.subus.es/movil/estima.aspx";
 
     public static List<DatosLinea> getLineasInfo(String offline) {
 
@@ -57,8 +56,13 @@ public class ProcesarDatosLineasIsaeService {
 
             // Carga desde internet o desde fichero local
             if (offline == null) {
-                st = Conectividad.conexionGetIsoStream(DatosTam.URL_SERVIDOR_LINEAS);
-                doc = Jsoup.parse(st, "ISO-8859-1", DatosTam.URL_SERVIDOR_LINEAS);
+                //st = Conectividad.conexionGetIsoStream(DatosTam.URL_SERVIDOR_LINEAS);
+                //doc = Jsoup.parse(st, "ISO-8859-1", DatosTam.URL_SERVIDOR_LINEAS);
+
+                String conexion = Conectividad.conexionGetUtf8StringUserAgent(DatosTam.URL_SERVIDOR_LINEAS, true, null);
+                doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", DatosTam.URL_SERVIDOR_LINEAS);
+
+
             } else {
 
                 Log.d("lineas", "datos offline: " + offline);
@@ -66,9 +70,9 @@ public class ProcesarDatosLineasIsaeService {
                 doc = Jsoup.parse(offline);
             }
 
-            Elements selectLineas = doc.select("select[name=LineasBox]");
+            //Elements selectLineas = doc.select("select[name=LineasBox]");
 
-            Elements option = selectLineas.get(0).select("option");
+            Elements option = doc.select("option");
 
             DatosLinea datosLinea = null;
 
@@ -76,26 +80,22 @@ public class ProcesarDatosLineasIsaeService {
 
             for (int i = 0; i < option.size(); i++) {
 
-                datosLinea = new DatosLinea();
+                if(option.get(i).attr("value").equals("12-old") ||
+                        option.get(i).attr("value").equals("03Nh")) {
+                    continue;
+                }
 
-                datosLinea.setLineaDescripcion(option.get(i).text());
+                datosLinea = new DatosLinea();
 
                 datosLinea.setLineaNum(option.get(i).attr("value"));
 
-                //Para evitar puntos
-                datosLinea.setLineaNum(datosLinea.getLineaNum().replace(".", ""));
+                datosLinea.setLineaDescripcion(option.get(i).text());
 
-                //Parche 27 - 127
-                /*if (datosLinea.getLineaNum().equals("127")) {
-                    datosLinea.setLineaNum("27");
 
-                    datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().substring(1));
-                }*/
-
-                //Parche M
-                if (datosLinea.getLineaNum().equals("M")) {
-                    continue;
+                if (datosLinea.getLineaDescripcion().contains(":")) {
+                    datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().split(":")[1]);
                 }
+                datosLinea.setLineaDescripcion(datosLinea.getLineaDescripcion().trim());
 
                 // KML
                 int posicion = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
@@ -128,26 +128,6 @@ public class ProcesarDatosLineasIsaeService {
 
 
                 lineas.add(datosLinea);
-
-                // 11H
-                /*if (datosLinea.getLineaNum().equals("11")) {
-
-                    DatosLinea datosLineaH = new DatosLinea();
-                    datosLineaH.setLineaNum("11H");
-                    int posicionH = UtilidadesTAM.getIdLinea(datosLineaH.getLineaNum());
-                    datosLineaH.setLineaDescripcion(datosLinea.getLineaDescripcion());
-
-                    datosLineaH.setGrupoLinea(UtilidadesTAM.DESC_TIPO[UtilidadesTAM.TIPO[posicionH]]);
-                    datosLineaH.setGrupoLineaId(Integer.toString(UtilidadesTAM.TIPO[posicionH]));
-
-                    lineas.add(datosLineaH);
-
-                    //Cambiar descripcion 11
-                    int posicion11 = UtilidadesTAM.getIdLinea(datosLinea.getLineaNum());
-                    datosLinea.setLineaDescripcion(UtilidadesTAM.LINEAS_DESCRIPCION[posicion11]);
-
-                }*/
-
 
             }
 

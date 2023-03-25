@@ -73,10 +73,10 @@ public class DatosLineasDB {
     private static final String DATABASE_NAME = "tiempobuslineas";
     private static final String FTS_VIRTUAL_TABLE = "FTSlineas";
     private static final String FTS_VIRTUAL_TABLE_RECORRIDO = "FTSlineasRecorrido";
-    private static final int DATABASE_VERSION = 88;
+    private static final int DATABASE_VERSION = 89;
 
     //Tram L5 10/6/2019
-    public static final String DATABASE_VERSION_FECHA = "06112022";
+    public static final String DATABASE_VERSION_FECHA = "24032023";
 
     private final DatosLineasOpenHelper mDatabaseOpenHelper;
     private static final HashMap<String, String> mColumnMap = buildColumnMap();

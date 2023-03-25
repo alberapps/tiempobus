@@ -618,7 +618,7 @@ public class Notificaciones {
         NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_ALERTABUS);
 
         String texto = "";
-        if (DatosPantallaPrincipal.esTram(Integer.toString(parada))) {
+        if (DatosPantallaPrincipal.esTram(Integer.toString(parada)) || DatosPantallaPrincipal.esTramRt(Integer.toString(parada))) {
             texto = contexto.getString(R.string.notification_title_tram);
         } else {
             texto = contexto.getString(R.string.notification_title);

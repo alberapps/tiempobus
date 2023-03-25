@@ -518,7 +518,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 break;
 
-            case R.id.navigation_item_horarios_tram:
+            /*case R.id.navigation_item_horarios_tram:
 
                 detenerTodasTareas();
 
@@ -550,7 +550,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 break;
-
+*/
             case R.id.navigation_item_preferencias:
 
                 detenerTodasTareas();
@@ -2034,7 +2034,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         //ImageButton botonHorarios = (ImageButton) laActividad.findViewById(R.id.aviso_header_horario);
 
-                        if (DatosPantallaPrincipal.esTram(laActividad.paradaActual)) {
+                        if (DatosPantallaPrincipal.esTram(laActividad.paradaActual) || DatosPantallaPrincipal.esTramRt(laActividad.paradaActual)) {
                             cabdatos = "TRAM " + cabdatos;
 
                             // Estadisticas tram

@@ -526,7 +526,8 @@ public class GestionarLineas {
             int lineaPos = -1;
 
             // tram
-            if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
+            if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))
+            || DatosPantallaPrincipal.esLineaTramRt(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
                 lineaPos = UtilidadesTRAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
             } else {
                 lineaPos = UtilidadesTAM.getIdLinea(context.getIntent().getExtras().getString("LINEA_MAPA"));
@@ -536,7 +537,8 @@ public class GestionarLineas {
 
             if (lineaPos > -1) {
 
-                if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
+                if (DatosPantallaPrincipal.esLineaTram(context.getIntent().getExtras().getString("LINEA_MAPA"))
+                || DatosPantallaPrincipal.esLineaTramRt(context.getIntent().getExtras().getString("LINEA_MAPA"))) {
 
                     // context.lineaSeleccionada =
 
@@ -557,7 +559,8 @@ public class GestionarLineas {
 
                 context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-                if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+                if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)
+                || DatosPantallaPrincipal.esLineaTramRt(context.lineaSeleccionadaNum)) {
                     context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
                     context.mapasOffline.loadDatosMapaTRAMOffline(null);
                 } else {
@@ -587,7 +590,8 @@ public class GestionarLineas {
 
             context.dialog = ProgressDialog.show(context, "", context.getString(R.string.dialogo_espera), true);
 
-            if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)) {
+            if (DatosPantallaPrincipal.esLineaTram(context.lineaSeleccionadaNum)
+            || DatosPantallaPrincipal.esLineaTramRt(context.lineaSeleccionadaNum)) {
                 context.modoRed = InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE;
                 context.mapasOffline.loadDatosMapaTRAMOffline(null);
             } else {

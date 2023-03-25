@@ -101,7 +101,7 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
 
             BitmapDescriptor marker = null;
 
-            if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual)) {
+            if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual) || contexto.datosPantallaPrincipal.esTramRt(contexto.paradaActual)) {
                 marker = GestionarLineas.markerTram();
                 //BitmapDescriptorFactory.fromResource(R.drawable.tramway);
             } else {
@@ -141,7 +141,7 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
 
             BitmapDescriptor marker = null;
 
-            if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual)) {
+            if (contexto.datosPantallaPrincipal.esTram(contexto.paradaActual) || contexto.datosPantallaPrincipal.esTramRt(contexto.paradaActual)) {
                 marker = GestionarLineas.markerTram();
                 //BitmapDescriptorFactory.fromResource(R.drawable.tramway);
             } else {

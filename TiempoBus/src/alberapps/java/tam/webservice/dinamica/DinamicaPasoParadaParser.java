@@ -61,9 +61,9 @@ public class DinamicaPasoParadaParser {
 
             Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_DINAMICA_PASOPARADA).buildUpon();
             if (linea != null) {
-                builder.appendQueryParameter("linea", linea);
+                builder.appendQueryParameter("line", linea);
             }
-            builder.appendQueryParameter("parada", parada);
+            builder.appendQueryParameter("stop", parada);
             builder.build();
 
             String resp = Conectividad.conexionGetUtf8(builder.toString());

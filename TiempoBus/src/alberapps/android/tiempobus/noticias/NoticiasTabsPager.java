@@ -589,7 +589,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
                 if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
-                    recargarRss();
+                    //recargarRss();
+                    verificarNuevasNoticiasTram();
 
                 } else {
 
@@ -801,10 +802,17 @@ public class NoticiasTabsPager extends AppCompatActivity {
             dialog.setMessage(getString(R.string.carga_rss_tram_msg));
         }
 
+        //////Provisional
+        noticiasRss = new ArrayList<NoticiaRss>();
+        noticiasRss.add(new NoticiaRss());
+        noticiasRss.get(0).setTitulo("Prueba");
+        cargarListadoRss();
+
+
         /**
          * Sera llamado cuando la tarea de cargar las noticias
          */
-        LoadNoticiasRssAsyncTaskResponder loadNoticiasRssAsyncTaskResponder = new LoadNoticiasRssAsyncTaskResponder() {
+        /*LoadNoticiasRssAsyncTaskResponder loadNoticiasRssAsyncTaskResponder = new LoadNoticiasRssAsyncTaskResponder() {
             public void noticiasRssLoaded(List<NoticiaRss> noticias) {
 
                 if (noticias != null && !noticias.isEmpty()) {
@@ -864,7 +872,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 dialog.dismiss();
 
             }
-        }
+        }*/
 
     }
 
@@ -947,6 +955,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
      */
     public void cargarHeaderUltimasNoticiasTram(final List<TwResultado> noticias) {
 
+        cargarListadoTodasTram(noticias);
+        /*
         if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 1 && noticias == null) {
 
             // Cargar layout para noticias tram tw
@@ -1017,7 +1027,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
             });
 
         }
-
+*/
     }
 
 
@@ -1042,13 +1052,13 @@ public class NoticiasTabsPager extends AppCompatActivity {
             if (noticias != null) {
 
                 twTramAdapter.addAll(noticias);
-                twTramAdapter.quitarIniciales();
+                //twTramAdapter.quitarIniciales();
                 twTramAdapter.notifyDataSetChanged();
 
             }
 
 
-            View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
+            /*View vheader = noticiasRssView.findViewById(R.id.layout_noticias_tram_tw);
 
             //Boton cargar todas las noticias
             final Button botonTodas = (Button) vheader.findViewById(R.id.boton_ver_todas);
@@ -1074,7 +1084,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                     });
 
                 }
-            });
+            });*/
 
         } catch (Exception e) {
 
@@ -1177,7 +1187,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 }
 
 
-                cargarAvisosWebTram(avisosTram.getAvisosWeb());
+                //cargarAvisosWebTram(avisosTram.getAvisosWeb());
 
 
             }

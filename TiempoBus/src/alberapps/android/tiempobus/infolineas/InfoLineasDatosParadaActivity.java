@@ -127,7 +127,7 @@ public class InfoLineasDatosParadaActivity extends AppCompatActivity {
 
                         }
 
-                        if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel))) {
+                        if (codigo != -1 && (paradaSel.length() == 4 || DatosPantallaPrincipal.esTram(paradaSel) || DatosPantallaPrincipal.esTramRt(paradaSel))) {
 
                             cargarTiempos(codigo);
 

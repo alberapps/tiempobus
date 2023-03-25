@@ -436,4 +436,8 @@
 
     </application>
 
+    <queries>
+        <package android:name="alberapps.android.tiempobuswidgets" />
+    </queries>
+
 </manifest>

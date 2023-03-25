@@ -114,8 +114,8 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
 
         if (bus != null && !bus.isErrorServicio() && !bus.isFiltroSinDatos()) {
             busLinea.setText(bus.getNumLinea());
-            descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
-
+            //descLinea.setText(bus.getLinea().substring(bus.getNumLinea().length()).trim());
+            descLinea.setText(bus.getLinea());
 
             //Formato colores
             DatosPantallaPrincipal.formatoLinea(contexto, busLinea, bus.getNumLinea(), true);
@@ -186,6 +186,9 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                 datosLinea.setText(bus.getGrupo());
 
                 informacionText1.setText(R.string.infolinea_horarios_pdf);
+
+                //Desactivado horarios
+                informacionText1.setVisibility(View.INVISIBLE);
 
                 // Carga de horarios tram
                 // Link informacion

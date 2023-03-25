@@ -96,7 +96,8 @@ public class SlidingTabsBasicFragment extends Fragment {
         } else if (((InfoLineasTabsPager) getActivity()).modoRed == InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
             mTabsAdapter.addTab(getString(R.string.linea).toUpperCase(), FragmentLineas.class);
             mTabsAdapter.addTab(getString(R.string.parada_tram).toUpperCase(), FragmentIda.class);
-            mTabsAdapter.addTab(getString(R.string.infolinea_horarios).toUpperCase(), FragmentHorariosTram.class);
+            //Horarios tram desactivado
+            //mTabsAdapter.addTab(getString(R.string.infolinea_horarios).toUpperCase(), FragmentHorariosTram.class);
         }
 
 

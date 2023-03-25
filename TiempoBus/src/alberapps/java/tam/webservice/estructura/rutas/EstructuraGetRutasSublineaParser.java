@@ -56,8 +56,8 @@ public class EstructuraGetRutasSublineaParser {
             //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, sublinea), cache));
 
             Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_ESTRUCTURA_RUTAS).buildUpon();
-            builder.appendQueryParameter("linea", linea);
-            builder.appendQueryParameter("sublinea", sublinea);
+            builder.appendQueryParameter("line", linea);
+            //builder.appendQueryParameter("sublinea", sublinea);
             builder.build();
 
             String resp = Conectividad.conexionGetUtf8(builder.toString());
