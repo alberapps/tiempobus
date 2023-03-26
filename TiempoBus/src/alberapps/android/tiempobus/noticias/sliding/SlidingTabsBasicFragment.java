@@ -26,6 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.sliding.InfoLineaFragmentPagerAdapter;
+import alberapps.android.tiempobus.noticias.FragmentAlberappsTwitter;
 import alberapps.android.tiempobus.noticias.FragmentNoticias;
 import alberapps.android.tiempobus.noticias.FragmentNoticiasRss;
 import alberapps.android.tiempobus.noticias.FragmentTwitter;
@@ -49,7 +50,7 @@ public class SlidingTabsBasicFragment extends Fragment {
     private SlidingTabLayout mSlidingTabLayout;
 
     /**
-     * A {@link ViewPager} which will be used in conjunction with the {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} above.
+     * A {@link ViewPager}
      */
     private ViewPager mViewPager;
 
@@ -69,11 +70,7 @@ public class SlidingTabsBasicFragment extends Fragment {
      * This is called after the {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)} has finished.
      * Here we can pick out the {@link android.view.View}s we need to configure from the content view.
      * <p/>
-     * We set the {@link ViewPager}'s adapter to be an instance of {@link alberapps.android.tiempobus.noticias.sliding.SlidingTabsBasicFragment.InfoLineaFragmentPagerAdapter}. The
-     * {@link alberapps.android.tiempobus.infolineas.sliding.view.SlidingTabLayout} is then given the {@link ViewPager} so that it can populate itself.
-     *
-     * @param view View created in {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}
-     */
+     * */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // BEGIN_INCLUDE (setup_viewpager)
@@ -88,6 +85,8 @@ public class SlidingTabsBasicFragment extends Fragment {
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentNoticiasRss.class);
         }
+
+        mTabsAdapter.addTab(getString(R.string.alberapps).toUpperCase(), FragmentAlberappsTwitter.class);
 
         mTabsAdapter.addTab(getString(R.string.tab_tw).toUpperCase(), FragmentTwitter.class);
 

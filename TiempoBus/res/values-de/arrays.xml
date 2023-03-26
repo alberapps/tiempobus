@@ -55,13 +55,13 @@
     </string-array> 
    
    <string-array name="spinner_datos">
-        <item>Bus TAM (Web Subús)</item>
+        <item>Bus TAM (Web Vectalia)</item>
         <item>Bus TAM (offline)</item>
         <item>Straßenbahn TRAM</item>            
     </string-array> 
     
     <string-array name="spinner_datos_b">
-        <item>Bus TAM (Web Subús)</item>
+        <item>Bus TAM (Web Vectalia)</item>
         <item>Bus TAM (offline)</item>                 
     </string-array> 
    

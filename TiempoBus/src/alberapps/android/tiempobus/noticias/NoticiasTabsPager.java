@@ -111,15 +111,23 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     private ListView listTwWiew;
 
+    private ListView listAlberappsTwWiew;
+
     private ListView noticiasRssView;
 
     List<TwResultado> avisosRecuperados;
+
+    List<TwResultado> avisosAlberappsRecuperados;
 
     List<NoticiaRss> noticiasRss;
 
     TwAdapter twAdapter;
 
+    TwAdapter twAlberappsAdapter;
+
     TwAdapter twTramAdapter;
+
+    List<TwResultado> noticiasTwTram;
 
     NoticiasRssAdapter noticiasRssAdapter;
 
@@ -128,6 +136,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
     MenuItem refresh = null;
 
     public boolean twSinResultados = false;
+
+    public boolean twAlberappsSinResultados = false;
 
     AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
 
@@ -621,8 +631,15 @@ public class NoticiasTabsPager extends AppCompatActivity {
             }
         };
 
+        if (preferencias.getBoolean("tw_activar", false) && !preferencias.getBoolean("tw_activar_2", false)) {
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putBoolean("tw_activar", false);
+            editor.putBoolean("tw_activar_2", true);
+            editor.apply();
+        }
+
         // Opcion de desactivar twitter
-        if (!preferencias.getBoolean("tw_activar", true)) {
+        if (!preferencias.getBoolean("tw_activar", false)) {
 
             setRefreshActionItemState(false);
 
@@ -641,6 +658,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 lpb.setVisibility(View.INVISIBLE);
 
                 TextView vacio = (TextView) findViewById(R.id.vacio_tw);
+                vacio.setText(R.string.tw_desactivado);
                 listTwWiew.setEmptyView(vacio);
 
             }
@@ -731,6 +749,131 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     }
 
+    private void recargarAlberappsTw() {
+
+        if (dialog != null && dialog.isShowing()) {
+            dialog.setMessage(getString(R.string.carga_tw_msg));
+        }
+
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
+            public void TwitterLoaded(List<TwResultado> mensajes) {
+
+                if (errorTwitter(getApplicationContext(), mensajes)) {
+
+                    mensajes = null;
+
+                    twAlberappsSinResultados = true;
+
+                }
+
+                if (mensajes != null && !mensajes.isEmpty()) {
+
+                    twAlberappsSinResultados = false;
+
+                    avisosAlberappsRecuperados = mensajes;
+
+                    cargarListadoAlberappsTw();
+
+                } else {
+
+                    avisosAlberappsRecuperados = null;
+                    // Error al recuperar datos
+
+                    cargarListadoAlberappsTw();
+
+                }
+
+
+                    setRefreshActionItemState(false);
+
+                    if (dialog != null && dialog.isShowing()) {
+
+                        dialog.dismiss();
+
+                    }
+
+
+
+                if (listAlberappsTwWiew != null) {
+                    // Quitar barra progreso inicial
+                    ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_alberapps_tw);
+                    lpb.clearAnimation();
+                    lpb.setVisibility(View.INVISIBLE);
+
+                    if (mensajes == null || mensajes.isEmpty()) {
+                        TextView vacio = (TextView) findViewById(R.id.vacio_alberapps_tw);
+                        listAlberappsTwWiew.setEmptyView(vacio);
+                    }
+
+
+                }
+
+            }
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            // Cargar lista de elementos a consultar
+            List<Boolean> listaTW = new ArrayList<>();
+
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(false);
+
+            loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, "25");
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+            setRefreshActionItemState(false);
+
+            if (dialog != null && dialog.isShowing()) {
+
+                dialog.dismiss();
+
+            }
+        }
+
+    }
+
+
+    /**
+     * Carga el listado
+     */
+    public void cargarListadoAlberappsTw() {
+
+        try {
+
+            listAlberappsTwWiew = (ListView) findViewById(R.id.listaalberappstw);
+
+            if (listAlberappsTwWiew != null) {
+
+                cargarHeaderAlberappsTwitter();
+
+                twAlberappsAdapter = new TwAdapter(this, R.layout.noticias_avisostw_item);
+                twAlberappsAdapter.addAll(avisosAlberappsRecuperados);
+                listAlberappsTwWiew.setAdapter(twAlberappsAdapter);
+                twAlberappsAdapter.notifyDataSetChanged();
+
+            }
+
+        } catch (Exception e) {
+
+            // Para evitar fallos en caso de volver antes de terminar
+
+            e.printStackTrace();
+
+        }
+
+    }
+
     /**
      * Cargar cabecera listado
      */
@@ -757,6 +900,30 @@ public class NoticiasTabsPager extends AppCompatActivity {
             listTwWiew = (ListView) findViewById(R.id.listatw);
 
             listTwWiew.addHeaderView(vheader);
+
+        }
+
+    }
+
+    public void cargarHeaderAlberappsTwitter() {
+
+        if (listAlberappsTwWiew != null && listAlberappsTwWiew.getHeaderViewsCount() == 0) {
+
+            LayoutInflater li2 = LayoutInflater.from(this);
+
+            View vheader = li2.inflate(R.layout.noticias_header, null);
+
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+            StringBuilder textoHeader = new StringBuilder(200);
+
+            textoHeader.append(getString(R.string.twitter4j));
+
+            texto.setText(textoHeader.toString());
+
+            listAlberappsTwWiew = (ListView) findViewById(R.id.listaalberappstw);
+
+            listAlberappsTwWiew.addHeaderView(vheader);
 
         }
 
@@ -1040,6 +1207,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
         try {
 
+            noticiasTwTram = noticias;
+
             twTramAdapter = new TwAdapter(this, R.layout.noticias_avisostw_item);
 
             noticiasRssView = (ListView) findViewById(R.id.noticias_rss);
@@ -1189,6 +1358,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
                 //cargarAvisosWebTram(avisosTram.getAvisosWeb());
 
+                recargarAlberappsTw();
 
             }
         };

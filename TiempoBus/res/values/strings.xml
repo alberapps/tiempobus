@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.1.1</string>
+    <string name="app_version" translatable="false">5.2.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor" translatable="false">Alberto Montiel (2022)</string>
+    <string name="app_autor" translatable="false">Alberto Montiel (2023)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
     <string name="app_autor_web" translatable="false">blog.alberapps.com</string>
     <string name="app_autor_tw" translatable="false">\@alberapps</string>
@@ -744,5 +744,7 @@
     <string name="configurar_tema_auto">Tema del Sistema</string>
 
     <string name="info_covid">Información Covid-19</string>
+
+    <string name="tw_desactivado">Desactivado. Acceder a preferencias para activar.</string>
 
 </resources>

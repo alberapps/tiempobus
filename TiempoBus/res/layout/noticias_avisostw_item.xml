@@ -66,7 +66,7 @@
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/image_button_color"
                         android:textStyle="bold" />
 
@@ -77,9 +77,9 @@
                         android:gravity="center_vertical"
                         android:maxLines="1"
                         android:text="@string/guion"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/image_button_color"
-                        android:textSize="11sp" />
+                        />
 
                 </LinearLayout>
 
@@ -90,9 +90,9 @@
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/image_button_color"
-                    android:textSize="11sp" />
+                    />
 
                 <TextView
                     android:id="@+id/noticia"
@@ -101,7 +101,7 @@
                     android:autoLink="web"
                     android:gravity="top"
                     android:text="@string/guion"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/image_button_color" />
 
                 <TextView
@@ -109,9 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/ir_tw"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/image_button_color"
-                    android:textSize="12sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

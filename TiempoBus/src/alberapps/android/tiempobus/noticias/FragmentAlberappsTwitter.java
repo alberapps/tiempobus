@@ -36,7 +36,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 /**
  * Fragmento tw
  */
-public class FragmentTwitter extends Fragment {
+public class FragmentAlberappsTwitter extends Fragment {
 
     private NoticiasTabsPager actividad;
 
@@ -57,27 +57,23 @@ public class FragmentTwitter extends Fragment {
 
         setupFondoAplicacion();
 
-        if (actividad.avisosRecuperados != null) {
+        if (actividad.avisosAlberappsRecuperados != null) {
             //Si hay resultados
 
-            actividad.cargarListadoTw();
-        } else if (actividad.twSinResultados || !actividad.preferencias.getBoolean("tw_activar", true)) {
+            actividad.cargarListadoAlberappsTw();
+        } else if (actividad.twAlberappsSinResultados) {
 
             //Si se ha consultado y no hay resultados
 
-            actividad.cargarListadoTw();
+            actividad.cargarListadoAlberappsTw();
 
-            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
+            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_alberapps_tw);
             lpb.clearAnimation();
             lpb.setVisibility(View.INVISIBLE);
 
-            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
-            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
+            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listaalberappstw);
 
-            if (!actividad.preferencias.getBoolean("tw_activar", false)) {
-                vacio.setText(R.string.tw_desactivado);
-            }
-
+            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_alberapps_tw);
             listTwWiew.setEmptyView(vacio);
 
 
@@ -86,10 +82,10 @@ public class FragmentTwitter extends Fragment {
             //Progreso inicial
 
             // Progreso lista
-            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listatw);
-            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_tw);
+            ListView listTwWiew = (ListView) actividad.findViewById(R.id.listaalberappstw);
+            TextView vacio = (TextView) actividad.findViewById(R.id.vacio_alberapps_tw);
             vacio.setVisibility(View.INVISIBLE);
-            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_tw);
+            ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.tiempos_progreso_alberapps_tw);
             lpb.setIndeterminate(true);
             listTwWiew.setEmptyView(lpb);
 
@@ -102,7 +98,7 @@ public class FragmentTwitter extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.noticias_avisostw, container, false);
+        return inflater.inflate(R.layout.noticias_alberappstw, container, false);
     }
 
     /**
@@ -115,7 +111,7 @@ public class FragmentTwitter extends Fragment {
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 
-        View contenedor_principal = getActivity().findViewById(R.id.contenedor_tw);
+        View contenedor_principal = getActivity().findViewById(R.id.contenedor_alberapps_tw);
 
         UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 

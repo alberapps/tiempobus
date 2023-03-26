@@ -59,8 +59,11 @@ public class FragmentNoticiasRss extends Fragment {
 
         setupFondoAplicacion();
 
-        if (actividad.noticiasRss != null) {
+        /*if (actividad.noticiasRss != null) {
             actividad.cargarListadoRss();
+        }*/
+        if (actividad.noticiasTwTram != null) {
+            actividad.cargarListadoTodasTram(actividad.noticiasTwTram);
         }
 
         // Progreso lista
