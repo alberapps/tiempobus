@@ -113,11 +113,15 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     private ListView listAlberappsTwWiew;
 
+    private ListView listTramTwWiew;
+
     private ListView noticiasRssView;
 
     List<TwResultado> avisosRecuperados;
 
     List<TwResultado> avisosAlberappsRecuperados;
+
+    List<TwResultado> avisosTramRecuperados;
 
     List<NoticiaRss> noticiasRss;
 
@@ -138,6 +142,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
     public boolean twSinResultados = false;
 
     public boolean twAlberappsSinResultados = false;
+
+    public boolean twTramSinResultados = false;
 
     AsyncTask<Object, Void, List<Noticias>> loadNoticiasTask = null;
 
@@ -600,7 +606,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
                     //recargarRss();
-                    verificarNuevasNoticiasTram();
+                    //verificarNuevasNoticiasTram();
+                    recargarTramTw();
 
                 } else {
 
@@ -670,7 +677,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             if (UtilidadesTRAM.ACTIVADO_TRAM) {
 
-                recargarRss();
+                //recargarRss();
+                recargarTramTw();
 
             } else {
 
@@ -701,6 +709,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
             listaTW.add(preferencias.getBoolean("tw_4", true));
             listaTW.add(preferencias.getBoolean("tw_5", true));
             listaTW.add(preferencias.getBoolean("tw_6", true));
+            listaTW.add(false);
 
             String cantidad = preferencias.getString("tweets_maximos_v11", "3");
 
@@ -827,6 +836,104 @@ public class NoticiasTabsPager extends AppCompatActivity {
             listaTW.add(false);
             listaTW.add(false);
             listaTW.add(false);
+            listaTW.add(true);
+
+            loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, "25");
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_red), Toast.LENGTH_LONG).show();
+
+            setRefreshActionItemState(false);
+
+            if (dialog != null && dialog.isShowing()) {
+
+                dialog.dismiss();
+
+            }
+        }
+
+    }
+
+    private void recargarTramTw() {
+
+        if (dialog != null && dialog.isShowing()) {
+            dialog.setMessage(getString(R.string.carga_tw_msg));
+        }
+
+        /**
+         * Sera llamado cuando la tarea de cargar las noticias
+         */
+        LoadTwitterAsyncTaskResponder loadTwitterAsyncTaskResponder = new LoadTwitterAsyncTaskResponder() {
+            public void TwitterLoaded(List<TwResultado> mensajes) {
+
+                if (errorTwitter(getApplicationContext(), mensajes)) {
+
+                    mensajes = null;
+
+                    twTramSinResultados = true;
+
+                }
+
+                if (mensajes != null && !mensajes.isEmpty()) {
+
+                    twTramSinResultados = false;
+
+                    avisosTramRecuperados = mensajes;
+
+                    cargarListadoTramTw();
+
+                } else {
+
+                    avisosTramRecuperados = null;
+                    // Error al recuperar datos
+
+                    cargarListadoTramTw();
+
+                }
+
+
+                setRefreshActionItemState(false);
+
+                if (dialog != null && dialog.isShowing()) {
+
+                    dialog.dismiss();
+
+                }
+
+
+
+                if (listTramTwWiew != null) {
+                    // Quitar barra progreso inicial
+                    ProgressBar lpb = (ProgressBar) findViewById(R.id.tiempos_progreso_tram_tw);
+                    lpb.clearAnimation();
+                    lpb.setVisibility(View.INVISIBLE);
+
+                    if (mensajes == null || mensajes.isEmpty()) {
+                        TextView vacio = (TextView) findViewById(R.id.vacio_tram_tw);
+                        listTramTwWiew.setEmptyView(vacio);
+                    }
+
+
+                }
+
+                recargarAlberappsTw();
+
+            }
+        };
+
+        // Control de disponibilidad de conexion
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            // Cargar lista de elementos a consultar
+            List<Boolean> listaTW = new ArrayList<>();
+
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(false);
+            listaTW.add(true);
+            listaTW.add(true);
 
             loadTwTask = new LoadTwitterAsyncTask(loadTwitterAsyncTaskResponder).execute(listaTW, "25");
         } else {
@@ -861,6 +968,36 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 twAlberappsAdapter.addAll(avisosAlberappsRecuperados);
                 listAlberappsTwWiew.setAdapter(twAlberappsAdapter);
                 twAlberappsAdapter.notifyDataSetChanged();
+
+            }
+
+        } catch (Exception e) {
+
+            // Para evitar fallos en caso de volver antes de terminar
+
+            e.printStackTrace();
+
+        }
+
+    }
+
+    /**
+     * Carga el listado
+     */
+    public void cargarListadoTramTw() {
+
+        try {
+
+            listTramTwWiew = (ListView) findViewById(R.id.listatramtw);
+
+            if (listTramTwWiew != null) {
+
+                cargarHeaderTramTwitter();
+
+                twTramAdapter = new TwAdapter(this, R.layout.noticias_avisostw_item);
+                twTramAdapter.addAll(avisosTramRecuperados);
+                listTramTwWiew.setAdapter(twTramAdapter);
+                twTramAdapter.notifyDataSetChanged();
 
             }
 
@@ -929,6 +1066,30 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
     }
 
+    public void cargarHeaderTramTwitter() {
+
+        if (listTramTwWiew != null && listTramTwWiew.getHeaderViewsCount() == 0) {
+
+            LayoutInflater li2 = LayoutInflater.from(this);
+
+            View vheader = li2.inflate(R.layout.noticias_header, null);
+
+            TextView texto = (TextView) vheader.findViewById(R.id.txt_noticias_header);
+
+            StringBuilder textoHeader = new StringBuilder(200);
+
+            textoHeader.append(getString(R.string.twitter4j));
+
+            texto.setText(textoHeader.toString());
+
+            listTramTwWiew = (ListView) findViewById(R.id.listatramtw);
+
+            listTramTwWiew.addHeaderView(vheader);
+
+        }
+
+    }
+
     /**
      * Listener encargado de gestionar las pulsaciones sobre los items
      */
@@ -972,8 +1133,8 @@ public class NoticiasTabsPager extends AppCompatActivity {
         //////Provisional
         noticiasRss = new ArrayList<NoticiaRss>();
         noticiasRss.add(new NoticiaRss());
-        noticiasRss.get(0).setTitulo("Prueba");
-        cargarListadoRss();
+        noticiasRss.get(0).setTitulo("");
+        cargarListadoRss(false);
 
 
         /**
@@ -1046,7 +1207,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
     /**
      * Carga el listado
      */
-    public void cargarListadoRss() {
+    public void cargarListadoRss(boolean reload) {
 
         try {
 
@@ -1056,7 +1217,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             if (noticiasRss != null) {
 
-                cargarHeaderNoticiasRss();
+                cargarHeaderNoticiasRss(reload);
 
                 noticiasRssAdapter.addAll(noticiasRss);
                 noticiasRssAdapter.notifyDataSetChanged();
@@ -1084,7 +1245,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
     /**
      * Cargar cabecera listado
      */
-    public void cargarHeaderNoticiasRss() {
+    public void cargarHeaderNoticiasRss(boolean reload) {
 
         if (noticiasRssView != null && noticiasRssView.getHeaderViewsCount() == 0) {
 
@@ -1098,9 +1259,11 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             textoHeader.append(getString(R.string.aviso_noticias));
             textoHeader.append("\n");
-            textoHeader.append(FragmentNoticiasRss.noticiasURL);
-            textoHeader.append("\n");
+            //textoHeader.append(FragmentNoticiasRss.noticiasURL);
+            //textoHeader.append("\n");
             textoHeader.append(ProcesarTwitter.tw_tram_ruta);
+            textoHeader.append("\n");
+            textoHeader.append(getString(R.string.twitter4j));
 
             texto.setLinksClickable(true);
             texto.setAutoLinkMask(Linkify.WEB_URLS);
@@ -1111,7 +1274,11 @@ public class NoticiasTabsPager extends AppCompatActivity {
 
             noticiasRssView.addHeaderView(vheader);
 
-            verificarNuevasNoticiasTram();
+            //if(!reload) {
+                verificarNuevasNoticiasTram();
+            /*} else {
+                cargarHeaderUltimasNoticiasTram(noticiasTwTram);
+            }*/
 
         }
 

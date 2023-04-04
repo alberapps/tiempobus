@@ -49,7 +49,7 @@ public class ProcesarTwitter {
      */
     public static List<TwResultado> procesar(List<Boolean> cargar, String cantidad) {
 
-        List<TwResultado> lista;
+        List<TwResultado> lista = new ArrayList<>();
 
         try {
 
@@ -57,7 +57,21 @@ public class ProcesarTwitter {
             ProcesarTwitter4j procesar4j = new ProcesarTwitter4j();
             procesar4j.setUp();
 
-            lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
+            //Consulta individual. Si no tram, devolver alberapps
+            if(cargar.get(5) && !cargar.get(4)) {
+                List<TwResultado> listaInicial = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
+
+                // Eliminar las que sean de conversacion y retweet
+                for (int i = 0; i < listaInicial.size(); i++) {
+
+                    if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
+                        lista.add(listaInicial.get(i));
+                    }
+
+                }
+            } else if(!cargar.get(5)) {
+                lista = procesar4j.recuperarTimeline("alberapps", tw_alberapps_ruta, Integer.parseInt(cantidad));
+            }
 
             if (cargar.get(0)) {
 
@@ -83,10 +97,22 @@ public class ProcesarTwitter {
 
             }
 
-            if (cargar.get(4)) {
-                // Tram
+
+            if(cargar.get(5) && cargar.get(4)) {
+                List<TwResultado> listaInicial = procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad));
+
+                // Eliminar las que sean de conversacion y retweet
+                for (int i = 0; i < listaInicial.size(); i++) {
+
+                    if (listaInicial.get(i).getRespuestaId() == -1 && !listaInicial.get(i).isRetweet()) {
+                        lista.add(listaInicial.get(i));
+                    }
+
+                }
+            } else if(!cargar.get(5) && cargar.get(4)){
                 lista.addAll(procesar4j.recuperarTimeline("tramdealicante", tw_tram_ruta, Integer.parseInt(cantidad)));
             }
+
 
             if (lista != null && !lista.isEmpty()) {
 

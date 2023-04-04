@@ -24,7 +24,7 @@
     
     <string name="configura">Configura</string>
     
-    <string name="alta_1">El bus de la parada actual ha estat afegit a TempsBus Widgets.</string>
+    <string name="alta_1">El bus/tram de la parada actual ha estat afegit a TempsBus Widgets.</string>
     
     <string name="alta_2">Seleccioneu \"Actualitzar\" al widget per visualitzar les noves dades.</string>
     
@@ -32,9 +32,9 @@
     <string name="tiempo_m_2">Sense Estimació</string>
     <string name="tiempo_m_3">i</string>
     
-    <string name="eliminar_ok">S\'ha eliminat el bus del widget</string>
+    <string name="eliminar_ok">S\'ha eliminat el bus/tram del widget</string>
     
-    <string name="eliminar_pregunta">Vols eliminar el bus del widget?</string>
+    <string name="eliminar_pregunta">Vols eliminar el bus/tram del widget?</string>
     
     <string name="texto_tiempo">Actualitzat: </string>
     
@@ -53,14 +53,7 @@
     <string name="aviso_sin_datos">Si ja tens parades carregades, prem \"Actualitzar\". \nEn cas contrari accedeix a TempsBus i selecciona les parades a la llista de temps, amb l\'opció d\'enviar al Widget. \n\nRecorda que necessites tindre instal·lada l\'app TempsBus i Tram.</string>
     
     <string name="literal_min">min</string>
-    
-    <!-- DashClock -->
-    <string name="extension_title">TempsBus</string>
-    <!--string name="extension_description">Temps de pas d\'autobusos i tramvies a Alacant (Spain). Els temps s\'afegixen des de la pantalla principal de l\'aplicació TempsBus.</string-->
-    <string name="pref_name_title">Your name</string>
-    <string name="pref_name_default">John Smith</string>
-    <string name="title_settings">TempsBus Preferències</string>
-    
+
     <string name="tiempo_m_1_d">Parada</string>
     <string name="tiempo_m_2_d">Sense Dades</string>
     

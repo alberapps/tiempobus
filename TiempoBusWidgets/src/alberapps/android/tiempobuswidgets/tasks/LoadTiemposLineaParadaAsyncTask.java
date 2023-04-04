@@ -26,8 +26,6 @@ import java.util.List;
 import alberapps.java.datos.Datos;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
-import alberapps.java.tram.ProcesarTiemposTramIsaeService;
-import alberapps.java.tram.UtilidadesTRAM;
 
 /**
  * Tarea asincrona que se encarga de consultar los tiempos para una linea y
@@ -77,20 +75,8 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 
 			for (int i = 0; i < lineasParadaList.size(); i++) {
 
-				//llegadaBus = ProcesarTiemposService.getPosteConLinea(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada());
-
-				if (UtilidadesTRAM.esTram(lineasParadaList.get(i).getParada())) {
-
-					llegadaBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada(), lineasParadaList.get(i).getDestino());
-
-				} else {
-
 					llegadaBus = ProcesarTiemposService.getPosteConLinea(lineasParadaList.get(i).getLinea(), lineasParadaList.get(i).getParada());
-				}
 
-
-
-				
 				if (llegadaBus == null) {
 
 					// Sin datos

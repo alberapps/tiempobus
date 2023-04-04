@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<?xml version="1.0" encoding="utf-8"?><!--
    TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
    Copyright (C) 2012 Alberto Montiel
          
@@ -16,64 +15,70 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  
---> 
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sample_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/sample_main_layout">
+    android:layout_height="match_parent">
 
-     <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
+    <!-- As the main content view, the view below consumes the entire
+        space available using match_parent in both dimensions. -->
     <FrameLayout
         android:id="@+id/content_frame_noticias"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-     
-     <LinearLayout 
-    
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-    
-    android:orientation="horizontal"
-    android:divider="?android:attr/dividerHorizontal"  
-    android:showDividers="middle"
-    
-     >   
-    <!-- -->
-       
-     <fragment
-        android:id="@+id/noticias_fragment"
-        android:name="alberapps.android.tiempobus.noticias.FragmentNoticias"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-     
-    <fragment
-        android:id="@+id/noticias_2_fragment"
-        android:name="alberapps.android.tiempobus.noticias.FragmentNoticiasRss"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    
-    <fragment
-        android:id="@+id/noticias_3_fragment"
-        android:name="alberapps.android.tiempobus.noticias.FragmentTwitter"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    
-     </LinearLayout>   
-        
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+
+            android:divider="?android:attr/dividerHorizontal"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+
+            >
+            <!-- -->
+
+            <fragment
+                android:id="@+id/noticias_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentNoticias"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <!--fragment
+                android:id="@+id/noticias_2_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentNoticiasRss"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" /-->
+            <fragment
+                android:id="@+id/noticias_2_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentTramTwitter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <fragment
+                android:id="@+id/noticias_4_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentAlberappsTwitter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <fragment
+                android:id="@+id/noticias_3_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentTwitter"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
     </FrameLayout>
-    
-    
-    
-    
-    
-    
-    
-   
+
 
 </LinearLayout>

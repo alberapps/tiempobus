@@ -114,6 +114,16 @@ public class GestionTram {
 
     }
 
+    public void seleccionarPdfParada(String stop) {
+
+        String pdf = UtilidadesTRAM.PDF_PARADA_URL + stop;
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(UtilidadesTRAM.URL_DOCS + pdf));
+        context.startActivity(i);
+
+    }
+
     /**
      * Abrir pdf
      *

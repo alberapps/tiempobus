@@ -63,12 +63,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <fragment
+            <!--fragment
                 android:id="@+id/infolinea_4_fragment"
                 android:name="alberapps.android.tiempobus.infolineas.horariosTram.FragmentHorariosTram"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1" /-->
 
         </LinearLayout>
 

@@ -33,6 +33,7 @@ import android.database.ContentObserver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask;
 import alberapps.android.tiempobuswidgets.tasks.LoadTiemposLineaParadaAsyncTask.LoadTiemposLineaParadaAsyncTaskResponder;
@@ -73,8 +76,11 @@ class TiemposDataProviderObserver extends ContentObserver {
 		// will requery the
 		// cursor for the new data.
 		mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetManager.getAppWidgetIds(mComponentName), R.id.tiempos_list);
+		mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetManager.getAppWidgetIds(mComponentName), R.id.tiempos_list);
 	}
 }
+
+
 
 /**
  * The widget's AppWidgetProvider.
@@ -105,6 +111,9 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onEnabled(Context context) {
+
+		Log.d("tag", "onEnabled");
+
 		// Register for external updates to the data to trigger an update of the
 		// widget. When using
 		// content providers, the data is often updated via a background
@@ -121,7 +130,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			r.registerContentObserver(TiemposDataProvider.CONTENT_URI, true, sDataObserver);
 		}
 
-		onReceive(context, new Intent().setAction(REFRESH_ACTION));
+		//onReceive(context, new Intent().setAction(REFRESH_ACTION));
 
 	}
 
@@ -142,6 +151,9 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onReceive(Context ctx, final Intent intent) {
+
+		Log.d("tag", "onReceive");
+
 		final String action = intent.getAction();
 
 		final Context context = ctx;
@@ -155,10 +167,13 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			// can be triggered from a background service, or perhaps as a
 			// result of user actions
 			// inside the main application.
-
 			actualizar(context, intent);
+			Log.d("tag", "REFRESH_ACTION ");
 
 		} else if (action.equals(CLICK_ACTION)) {
+
+			Log.d("tag", "CLICK_ACTION ");
+
 			// Show a toast
 			final int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 			final int dato = intent.getIntExtra(DATO_ID, -1);
@@ -185,12 +200,16 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	 */
 	public void actualizar(final Context context, Intent intent) {
 
+		Log.d("tag", "actualizar ");
+
 		preferencias = context.getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
 		listaTiempos = new ArrayList<>();
 
 		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
+
+				Log.d("tag", "actualizados ");
 
 				boolean sinParadas = false;
 
@@ -258,6 +277,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 							final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 							final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
 							mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
+
 						}
 					});
 
@@ -343,6 +363,8 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	 */
 	private void actualizarHora(Context context, String estado) {
 
+		Log.d("tag", "actualizarHora ");
+
 		// Cambiar hora actualizacion
 		RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 		final Calendar c = Calendar.getInstance();
@@ -368,8 +390,14 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	}
 
 	private RemoteViews buildLayout(Context context, int appWidgetId, boolean largeLayout) {
+
+		Log.d("tag", "buildLayout ");
+
 		RemoteViews rv;
 		if (largeLayout) {
+
+			Log.d("tag", "buildLayout: largeLayout");
+
 			// Specify the service to provide data for the collection widget.
 			// Note that we need to
 			// embed the appWidgetId via the data otherwise it will be ignored.
@@ -377,7 +405,21 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 			intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
 			rv = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-			rv.setRemoteAdapter(appWidgetId, R.id.tiempos_list, intent);
+			rv.setRemoteAdapter(R.id.tiempos_list, intent);
+
+
+			/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+				rv.setRemoteAdapter(
+						R.id.tiempos_list,
+						new RemoteViews.RemoteCollectionItems.Builder()
+								.addItem( 1, new RemoteViews(context.getPackageName(), R.layout.tiempos_item))
+								.addItem( 2, new RemoteViews(context.getPackageName(), R.layout.tiempos_item))
+
+						.setViewTypeCount(2)
+						.build()
+				);
+			}*/
+
 
 			// Set the empty view to be displayed if the collection is empty. It
 			// must be a sibling
@@ -393,14 +435,30 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 			onClickIntent.setAction(TiemposWidgetProvider.CLICK_ACTION);
 			onClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 			onClickIntent.setData(Uri.parse(onClickIntent.toUri(Intent.URI_INTENT_SCHEME)));
-			final PendingIntent onClickPendingIntent = PendingIntent.getBroadcast(context, 0, onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			rv.setPendingIntentTemplate(R.id.tiempos_list, onClickPendingIntent);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+				final PendingIntent onClickPendingIntent1 = PendingIntent.getBroadcast(context, 0, onClickIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+				rv.setPendingIntentTemplate(R.id.tiempos_list, onClickPendingIntent1);
+
+			} else {
+				final PendingIntent onClickPendingIntent2 = PendingIntent.getBroadcast(context, 0, onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+				rv.setPendingIntentTemplate(R.id.tiempos_list, onClickPendingIntent2);
+			}
+
 
 			// Bind the click intent for the refresh button on the widget
 			final Intent refreshIntent = new Intent(context, TiemposWidgetProvider.class);
 			refreshIntent.setAction(TiemposWidgetProvider.REFRESH_ACTION);
-			final PendingIntent refreshPendingIntent = PendingIntent.getBroadcast(context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-			rv.setOnClickPendingIntent(R.id.refresh, refreshPendingIntent);
+
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+				final PendingIntent refreshPendingIntent1 = PendingIntent.getBroadcast(context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+				rv.setOnClickPendingIntent(R.id.refresh, refreshPendingIntent1);
+			} else {
+				final PendingIntent refreshPendingIntent2 = PendingIntent.getBroadcast(context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+				rv.setOnClickPendingIntent(R.id.refresh, refreshPendingIntent2);
+			}
+
+
 
 			// Restore the minimal header
 			rv.setTextViewText(R.id.titulo, context.getString(R.string.app_name_title));
@@ -432,6 +490,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		for (int i = 0; i < appWidgetIds.length; ++i) {
 			RemoteViews layout = buildLayout(context, appWidgetIds[i], mIsLargeLayout);
 			appWidgetManager.updateAppWidget(appWidgetIds[i], layout);
+			Log.d("tag", "onUpdate 2");
 		}
 
 		final ContentResolver r = context.getContentResolver();
@@ -447,20 +506,19 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
 
-		/*
-		 * int minWidth =
-		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH); int
-		 * maxWidth =
-		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH); int
-		 * minHeight =
-		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT); int
-		 * maxHeight =
-		 * newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
-		 * 
-		 * RemoteViews layout; if (minHeight < 200) { mIsLargeLayout = false; }
-		 * else { mIsLargeLayout = true; } layout = buildLayout(context,
-		 * appWidgetId, mIsLargeLayout);
-		 * appWidgetManager.updateAppWidget(appWidgetId, layout);
-		 */
+
+		  /*int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+		  int maxWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+		  int minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+		  int maxHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
+
+		  RemoteViews layout; if (minHeight < 200) { mIsLargeLayout = false; }
+		  else { mIsLargeLayout = true; } layout = buildLayout(context,
+		  appWidgetId, mIsLargeLayout);
+		  appWidgetManager.updateAppWidget(appWidgetId, layout);*/
+
+		RemoteViews layout = buildLayout(context, appWidgetId, mIsLargeLayout);
+		appWidgetManager.updateAppWidget(appWidgetId, layout);
+		super.onAppWidgetOptionsChanged(context,appWidgetManager,appWidgetId,newOptions);
 	}
 }

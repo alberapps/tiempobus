@@ -85,6 +85,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import alberapps.android.tiempobus.alarma.GestionarAlarmas;
 import alberapps.android.tiempobus.barcode.IntentIntegrator;
@@ -275,8 +277,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         Notificaciones.initChannels(this);
 
-        //PrecargasV3.precargarDatosLineas(this);
-        //PrecargasV3.precargarDatosLineasRecorrido(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Notificaciones.requestNotificationPermission(this);
+        }
 
     }
 
@@ -851,7 +854,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         datosPantallaPrincipal.controlMostrarNovedades();
 
         mDrawerToggle.syncState();
-
 
     }
 
@@ -1729,7 +1731,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 }
             });*/
 
-            imgCancelar.setVisibility(View.INVISIBLE);
+            if(imgCancelar != null) {
+                imgCancelar.setVisibility(View.INVISIBLE);
+            }
 
             /*imgCancelar.animate().alpha(0.0f).setListener(new AnimatorListenerAdapter() {
                 @Override
@@ -2294,6 +2298,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 Toast.makeText(getApplicationContext(), getString(R.string.error_fichero), Toast.LENGTH_SHORT).show();
 
             }
+
+        } else if(requestCode == Notificaciones.RC_HANDLE_NOTIFICATION_PERM) {
+
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                recargarTiempos();
+            } else {
+                Notificaciones.requestNotificationPermissionToast(this);
+                recargarTiempos();
+            }
+
         }
     }
 

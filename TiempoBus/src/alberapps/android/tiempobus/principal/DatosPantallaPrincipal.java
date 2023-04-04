@@ -740,7 +740,7 @@ public class DatosPantallaPrincipal {
                             extendido[1] = "";
                         }
 
-                        Notificaciones.notificacionAvisosAlberApps(context.getApplicationContext(), extendido);
+                        Notificaciones.notificacionAvisosAlberApps(context, extendido);
 
                     }
                 } else {

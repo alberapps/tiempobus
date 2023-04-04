@@ -78,6 +78,7 @@ public class UtilidadesTRAM {
             "http://www.tramalicante.es/descargas/pdf/L1%20L3%20a%20Luceros%20%28Alicante%29.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L2.pdf",
             "http://www.tramalicante.es/descargas/pdf/Horario%20L4.pdf", "http://www.tramalicante.es/descargas/pdf/Horario%20L9.pdf"};
 
+    public static final String PDF_PARADA_URL = "https://www.tramalicante.es/es/descargar-horarios/?estacion=";
 
     public static final String CODIGO_TRAM_LONDRES = "109";
 

@@ -47,7 +47,7 @@ import alberapps.java.tram.UtilidadesTRAM;
  */
 public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
-    private Context contexto;
+    private InfoLineasTabsPager contexto;
 
     /**
      * Constructor
@@ -55,7 +55,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
      * @param context
      * @param textViewResourceId
      */
-    public InfoLineaParadasAdapter(Context context, int textViewResourceId) {
+    public InfoLineaParadasAdapter(InfoLineasTabsPager context, int textViewResourceId) {
         super(context, textViewResourceId);
 
         this.contexto = context;
@@ -107,7 +107,15 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
 
         if (bus != null) {
             numParada.setText(bus.getCodigoParada());
-            descParada.setText(bus.getTitle());
+
+            String[] t1 = bus.getTitle().split("-");
+            if(t1.length > 1) {
+                descParada.setText(t1[1]);
+            } else {
+                descParada.setText(bus.getTitle());
+            }
+
+
             //datos.setText("T: ".concat(bus.getLineas()));
 
             if (datos != null) {
@@ -169,20 +177,51 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         }
 
         TextView informacionText = (TextView) v.findViewById(R.id.infoparada_info);
+        //TextView informacionPdf = (TextView) v.findViewById(R.id.infoparada_horarios_pdf);
         if(ubuntu != null) {
             informacionText.setTypeface(ubuntu);
+            //informacionPdf.setTypeface(ubuntu);
         }
 
-        // Link informacion
-        informacionText.setOnClickListener(new OnClickListener() {
+        if (((InfoLineasTabsPager) contexto).modoRed != InfoLineasTabsPager.MODO_RED_TRAM_OFFLINE) {
+            //informacionPdf.setVisibility(View.INVISIBLE);
 
-            public void onClick(View view) {
+            informacionText.setText(R.string.launch_preferences);
 
-                ((InfoLineasTabsPager) contexto).irInformacion(bus);
+            // Link informacion
+            informacionText.setOnClickListener(new OnClickListener() {
 
-            }
+                public void onClick(View view) {
 
-        });
+                    ((InfoLineasTabsPager) contexto).irInformacion(bus);
+
+                }
+
+            });
+        } else {
+
+            informacionText.setText(R.string.infolinea_horarios_pdf);
+            //informacionPdf.setVisibility(View.VISIBLE);
+
+            // Carga de horarios tram
+            // Link informacion
+            informacionText.setOnClickListener(new OnClickListener() {
+
+                public void onClick(View view) {
+
+                    contexto.gestionTram.seleccionarPdfParada(bus.getCodigoParada());
+
+                }
+
+            });
+
+
+
+        }
+
+
+
+
 
 
         return v;

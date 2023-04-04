@@ -18,6 +18,9 @@
  */
 package alberapps.android.tiempobus.util;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -25,22 +28,33 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationCompat.Builder;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.res.ResourcesCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
 import alberapps.android.tiempobus.BuildConfig;
 import alberapps.android.tiempobus.MainActivity;
 import alberapps.android.tiempobus.R;
+import alberapps.android.tiempobus.barcodereader.BarcodeGraphic;
+import alberapps.android.tiempobus.barcodereader.ui.camera.GraphicOverlay;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 
@@ -84,6 +98,8 @@ public class Notificaciones {
     public static String CHANNEL_NOTICIAS = "noticias";
     public static String CHANNEL_LOW = "low";
 
+    public static final int RC_HANDLE_NOTIFICATION_PERM = 2;
+
     /**
      * Servicio
      */
@@ -100,7 +116,7 @@ public class Notificaciones {
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
 
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         //Default
         NotificationChannel channel = new NotificationChannel(CHANNEL_DEFAULT, context.getString(R.string.channel_default), NotificationManager.IMPORTANCE_DEFAULT);
@@ -188,6 +204,52 @@ public class Notificaciones {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static void requestNotificationPermission(AppCompatActivity activity) {
+
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+
+            final String[] permissions = new String[]{ Manifest.permission.POST_NOTIFICATIONS };
+
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.POST_NOTIFICATIONS)) {
+                ActivityCompat.requestPermissions(activity, permissions, RC_HANDLE_NOTIFICATION_PERM);
+                return;
+            }
+
+            Notificaciones.requestNotificationPermissionSnackbar(activity);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+    public static void requestNotificationPermissionSnackbar(AppCompatActivity activity) {
+
+        final String[] permissions = new String[]{ Manifest.permission.POST_NOTIFICATIONS };
+        final Activity thisActivity = activity;
+
+        View.OnClickListener listener = view -> ActivityCompat.requestPermissions(thisActivity, permissions,
+                RC_HANDLE_NOTIFICATION_PERM);
+
+        activity.findViewById(R.id.drawer_layout).setOnClickListener(listener);
+        View view = activity.findViewById(R.id.bottomNavigation);
+        Snackbar.make(view, R.string.notification_perm,
+                        Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.ok, listener)
+                .show();
+
+    }
+
+    public static void requestNotificationPermissionToast(AppCompatActivity activity) {
+
+        View view = activity.findViewById(R.id.bottomNavigation);
+        Snackbar sb = Snackbar.make(view, R.string.notification_perm,
+                Snackbar.LENGTH_INDEFINITE);
+
+        View.OnClickListener listener = view2 -> sb.dismiss();
+        activity.findViewById(R.id.drawer_layout).setOnClickListener(listener);
+        sb.setAction(R.string.ok, listener).show();
+
+    }
 
     public static NotificationCompat.Builder initBuilder(Context contexto, String channel) {
 
@@ -209,99 +271,112 @@ public class Notificaciones {
      * @param contexto
      * @param accion
      */
+
+    @SuppressLint("MissingPermission")
     public static Builder notificacionBaseDatos(Context contexto, String accion, Builder mBuilderN, Integer incrementa) {
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
 
-        if (accion.equals(NOTIFICACION_BD_INICIAL)) {
+        //if (mNotificationManager.areNotificationsEnabled()) {
 
-            NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_LOW);
+            if (accion.equals(NOTIFICACION_BD_INICIAL)) {
+
+                NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_LOW);
 
 
-            mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
-                    .setContentText(contexto.getString(R.string.recarga_bd_desc))
-                    .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap());
+                mBuilder.setSmallIcon(R.drawable.ic_stat_tiempobus_4).setContentTitle(contexto.getString(R.string.recarga_bd))
+                        .setContentText(contexto.getString(R.string.recarga_bd_desc))
+                        .setLargeIcon(((BitmapDrawable) ResourcesCompat.getDrawable(contexto.getResources(), R.drawable.ic_tiempobus_5, null)).getBitmap());
 
-            mBuilder.setAutoCancel(false);
+                mBuilder.setAutoCancel(false);
 
-            // ticker
-            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc);
-            mBuilder.setTicker(tickerText);
+                // ticker
+                CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc);
+                mBuilder.setTicker(tickerText);
 
-            mBuilder.setProgress(100, 0, false);
+                mBuilder.setProgress(100, 0, false);
 
-            // Creates an explicit intent for an Activity in your app
-            Intent resultIntent = new Intent(contexto, MainActivity.class);
+                // Creates an explicit intent for an Activity in your app
+                Intent resultIntent = new Intent(contexto, MainActivity.class);
 
-            // The stack builder object will contain an artificial back stack
-            // for
-            // the
-            // started Activity.
-            // This ensures that navigating backward from the Activity leads out
-            // of
-            // your application to the Home screen.
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
-            // Adds the back stack for the Intent (but not the Intent itself)
-            stackBuilder.addParentStack(MainActivity.class);
-            // Adds the Intent that starts the Activity to the top of the stack
-            stackBuilder.addNextIntent(resultIntent);
+                // The stack builder object will contain an artificial back stack
+                // for
+                // the
+                // started Activity.
+                // This ensures that navigating backward from the Activity leads out
+                // of
+                // your application to the Home screen.
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(contexto);
+                // Adds the back stack for the Intent (but not the Intent itself)
+                stackBuilder.addParentStack(MainActivity.class);
+                // Adds the Intent that starts the Activity to the top of the stack
+                stackBuilder.addNextIntent(resultIntent);
 
-            PendingIntent resultPendingIntent = null;
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
-                resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE);
-            } else {
-                resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent resultPendingIntent = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE);
+                } else {
+                    resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                }
+                mBuilder.setContentIntent(resultPendingIntent);
+
+                if (mNotificationManager.areNotificationsEnabled()) {
+                    // mId allows you to update the notification later on.
+                    mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilder.build());
+                }
+
+                return mBuilder;
+
+            } else if (accion.equals(NOTIFICACION_BD_INCREMENTA)) {
+
+                mBuilderN.setProgress(100, incrementa, false);
+                
+                if (mNotificationManager.areNotificationsEnabled()) {
+                    // mId allows you to update the notification later on.
+                    mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+                }
+
+                return mBuilderN;
+
+            } else if (accion.equals(NOTIFICACION_BD_FINAL)) {
+                mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_final));
+
+                mBuilderN.setAutoCancel(true);
+
+                // ticker
+                CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_final);
+                mBuilderN.setTicker(tickerText);
+
+                mBuilderN.setProgress(0, 0, false);
+
+                if (mNotificationManager.areNotificationsEnabled()) {
+                    // mId allows you to update the notification later on.
+                    mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+                }
+
+                return mBuilderN;
+
+            } else if (accion.equals(NOTIFICACION_BD_ERROR)) {
+                mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_error));
+
+                mBuilderN.setAutoCancel(true);
+
+                // ticker
+                CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_error);
+                mBuilderN.setTicker(tickerText);
+
+                mBuilderN.setProgress(0, 0, false);
+
+                if (mNotificationManager.areNotificationsEnabled()) {
+                    // mId allows you to update the notification later on.
+                    mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
+                }
+
+                return mBuilderN;
+
             }
-            mBuilder.setContentIntent(resultPendingIntent);
 
-            // mId allows you to update the notification later on.
-            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilder.build());
-
-            return mBuilder;
-
-        } else if (accion.equals(NOTIFICACION_BD_INCREMENTA)) {
-
-            mBuilderN.setProgress(100, incrementa, false);
-
-            // mId allows you to update the notification later on.
-            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
-
-            return mBuilderN;
-
-        } else if (accion.equals(NOTIFICACION_BD_FINAL)) {
-            mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_final));
-
-            mBuilderN.setAutoCancel(true);
-
-            // ticker
-            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_final);
-            mBuilderN.setTicker(tickerText);
-
-            mBuilderN.setProgress(0, 0, false);
-
-            // mId allows you to update the notification later on.
-            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
-
-            return mBuilderN;
-
-        } else if (accion.equals(NOTIFICACION_BD_ERROR)) {
-            mBuilderN.setContentText(contexto.getString(R.string.recarga_bd_desc_error));
-
-            mBuilderN.setAutoCancel(true);
-
-            // ticker
-            CharSequence tickerText = contexto.getString(R.string.recarga_bd_desc_error);
-            mBuilderN.setTicker(tickerText);
-
-            mBuilderN.setProgress(0, 0, false);
-
-            // mId allows you to update the notification later on.
-            mNotificationManager.notify(NOTIFICACION_BASE_DATOS, mBuilderN.build());
-
-            return mBuilderN;
-
-        }
-
+        //}
         return null;
 
     }
@@ -311,6 +386,8 @@ public class Notificaciones {
      *
      * @param contexto
      */
+
+    @SuppressLint("MissingPermission")
     public static void notificacionNoticias(Context contexto, String[] extendido, int nuevas) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -392,7 +469,7 @@ public class Notificaciones {
 
         PendingIntent resultPendingIntent = null;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE);
         } else {
             resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -400,9 +477,15 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        /*if (mNotificationManager.areNotificationsEnabled()) {
+            mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
+        }*/
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            mNotificationManager.notify(NOTIFICACION_NOTICIAS, mBuilder.build());
+        }
 
     }
 
@@ -411,6 +494,7 @@ public class Notificaciones {
      *
      * @param contexto
      */
+    @SuppressLint("MissingPermission")
     public static void notificacionAvisosTram(Context contexto, String[] extendido) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -499,9 +583,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+        }
 
     }
 
@@ -510,6 +597,7 @@ public class Notificaciones {
      *
      * @param contexto
      */
+    @SuppressLint("MissingPermission")
     public static void notificacionAvisosAlberApps(Context contexto, String[] extendido) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -598,9 +686,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_NOTICIAS_ALBERAPPS, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_NOTICIAS_ALBERAPPS, mBuilder.build());
+        } 
 
     }
 
@@ -610,6 +701,7 @@ public class Notificaciones {
      *
      * @param contexto
      */
+    @SuppressLint("MissingPermission")
     public static void notificacionAlarma(Context contexto, CharSequence aviso, int parada) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -695,9 +787,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_ALARMAS, mBuilder.build());
+        }
 
     }
 
@@ -751,9 +846,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        //mNotificationManager.notify(NOTIFICACION_SERVICIO_ALERTAS, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            //mNotificationManager.notify(NOTIFICACION_SERVICIO_ALERTAS, mBuilder.build());
+        }
 
         return mBuilder.build();
 
@@ -765,6 +863,7 @@ public class Notificaciones {
      *
      * @param contexto
      */
+    @SuppressLint("MissingPermission")
     public static void notificacionAlarmaDiaria(Context contexto, List<String> extendido) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -856,9 +955,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_ALARMA_DIARIA, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_ALARMA_DIARIA, mBuilder.build());
+        }
 
     }
 
@@ -867,6 +969,7 @@ public class Notificaciones {
      *
      * @param contexto
      */
+    @SuppressLint("MissingPermission")
     public static void notificacionAvisosMensajesTiempoBus(Context contexto, String titulo, String contenido, String extendido) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
@@ -956,9 +1059,12 @@ public class Notificaciones {
 
         mBuilder.setContentIntent(resultPendingIntent);
 
-        NotificationManager mNotificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+        NotificationManagerCompat mNotificationManager = NotificationManagerCompat.from(contexto);
+
+        if (mNotificationManager.areNotificationsEnabled()) {
+            // mId allows you to update the notification later on.
+            mNotificationManager.notify(NOTIFICACION_NOTICIAS_TRAM, mBuilder.build());
+        }
 
     }
 

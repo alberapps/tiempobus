@@ -63,7 +63,9 @@ public class FragmentNoticiasRss extends Fragment {
             actividad.cargarListadoRss();
         }*/
         if (actividad.noticiasTwTram != null) {
-            actividad.cargarListadoTodasTram(actividad.noticiasTwTram);
+            //actividad.cargarHeaderNoticiasRss(true);
+            //actividad.cargarListadoTodasTram(actividad.noticiasTwTram);
+            actividad.cargarListadoRss(true);
         }
 
         // Progreso lista

@@ -299,10 +299,9 @@ public class ParadasCercanas {
 
             flC.getLastLocation().addOnSuccessListener(context, location -> {
 
-                /*if (location == null) {
+                if (location == null) {
                     Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();
-                    return;
-                }*/
+                } else {
 
                 double latitud = location.getLatitude();
                 double longitud = location.getLongitude();
@@ -358,7 +357,7 @@ public class ParadasCercanas {
                     }
 
                 }
-            });
+            }});
         } catch (Exception e) {
 
             Toast.makeText(context, context.getString(R.string.error_gps), Toast.LENGTH_SHORT).show();

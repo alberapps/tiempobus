@@ -581,5 +581,7 @@ favorit per crear la teua llista.</string>
 
     <string name="tw_desactivado">Desactivat. Accedir a preferències per activar.</string>
 
+    <string name="notification_perm">Notificacions desactivades</string>
+
 
 </resources>

@@ -221,7 +221,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
             } else {
 
-                FragmentManager fragmentManager = this.getSupportFragmentManager();
+                /*FragmentManager fragmentManager = this.getSupportFragmentManager();
 
                 Fragment fragVuelta = fragmentManager.findFragmentById(R.id.infolinea_4_fragment);
 
@@ -231,7 +231,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
 
                 ft.commit();
 
-                Log.d("infolinea", "eliminar panel horarios tram");
+                Log.d("infolinea", "eliminar panel horarios tram");*/
 
 
             }
