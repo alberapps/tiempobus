@@ -2099,8 +2099,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                         // NOTICIAS
                         boolean verificaNoticias = laActividad.preferencias.getBoolean("aviso_noticias", true);
-                        boolean verificaNoticiasTram = laActividad.preferencias.getBoolean("aviso_noticias_tram", true);
-                        boolean verificaNoticiasAlberApps = laActividad.preferencias.getBoolean("aviso_noticias_alberapps", true);
+                        boolean verificaNoticiasTram = false;//laActividad.preferencias.getBoolean("aviso_noticias_tram", true);
+                        boolean verificaNoticiasAlberApps = false; //laActividad.preferencias.getBoolean("aviso_noticias_alberapps", true);
 
                         if (verificaNoticias) {
                             laActividad.datosPantallaPrincipal.verificarNuevasNoticias();

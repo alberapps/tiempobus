@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import alberapps.java.noticias.tw.tw4j.ProcesarTwitter4j;
-import twitter4j.TwitterException;
+//import twitter4j.TwitterException;
 
 public class ProcesarTwitter {
 
@@ -126,7 +126,7 @@ public class ProcesarTwitter {
             }
 
 
-        } catch (TwitterException e) {
+        } /*catch (TwitterException e) {
 //88 rate limit exceeded
             TwResultado resultado = new TwResultado();
 
@@ -138,7 +138,7 @@ public class ProcesarTwitter {
             lista.add(resultado);
 
             e.printStackTrace();
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
 
             TwResultado resultado = new TwResultado();
 
@@ -255,7 +255,7 @@ public class ProcesarTwitter {
             }
 
 
-        } catch (TwitterException e) {
+        }/* catch (TwitterException e) {
 //88 rate limit exceeded
             TwResultado resultado = new TwResultado();
 
@@ -267,7 +267,7 @@ public class ProcesarTwitter {
             lista.add(resultado);
 
             e.printStackTrace();
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
 
             TwResultado resultado = new TwResultado();
 
@@ -343,7 +343,7 @@ public class ProcesarTwitter {
 
             }
 
-        } catch (TwitterException e) {
+        }/* catch (TwitterException e) {
 //88 rate limit exceeded
             TwResultado resultado = new TwResultado();
 
@@ -355,7 +355,7 @@ public class ProcesarTwitter {
             lista.add(resultado);
 
             e.printStackTrace();
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
 
             TwResultado resultado = new TwResultado();
 
@@ -432,7 +432,7 @@ public class ProcesarTwitter {
 
             }
 
-        } catch (TwitterException e) {
+        }/* catch (TwitterException e) {
 //88 rate limit exceeded
             TwResultado resultado = new TwResultado();
 
@@ -444,7 +444,7 @@ public class ProcesarTwitter {
             lista.add(resultado);
 
             e.printStackTrace();
-        } catch (Exception e) {
+        }*/ catch (Exception e) {
 
             TwResultado resultado = new TwResultado();
 

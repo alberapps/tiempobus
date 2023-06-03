@@ -34,7 +34,7 @@ import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.tw.Constantes;
 import alberapps.java.noticias.tw.TwResultado;
 import alberapps.java.util.Conectividad;
-import twitter4j.Paging;
+/*import twitter4j.Paging;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
@@ -45,22 +45,22 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.UserList;
 import twitter4j.auth.OAuth2Token;
-import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.conf.ConfigurationBuilder;*/
 
 /**
  * Acceso a la api de twitter mediante la libreria twitter4j
  */
 public class ProcesarTwitter4j {
 
-    private ConfigurationBuilder builder;
+    //private ConfigurationBuilder builder;
 
-    private Twitter twitter;
+    //private Twitter twitter;
 
     /**
      * Inicializar
      */
     public void setUp() {
-
+/*
         builder = new ConfigurationBuilder();
         // builder.setUseSSL(true);
         builder.setApplicationOnlyAuthEnabled(true);
@@ -78,14 +78,14 @@ public class ProcesarTwitter4j {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+*/
     }
 
     /**
      * Recuperar el limite
      */
     public void recuperarRateLimit() {
-
+/*
         try {
 
             Map<String, RateLimitStatus> rateLimit = twitter.getRateLimitStatus("search");
@@ -96,7 +96,7 @@ public class ProcesarTwitter4j {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+*/
     }
 
     /**
@@ -107,7 +107,7 @@ public class ProcesarTwitter4j {
     public List<TwResultado> recuperarSearch() {
 
         List<TwResultado> listaResultados = null;
-
+/*
         try {
 
             Query query = new Query("from:Alicante_City");
@@ -144,7 +144,7 @@ public class ProcesarTwitter4j {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+*/
         return listaResultados;
 
     }
@@ -160,7 +160,7 @@ public class ProcesarTwitter4j {
     public List<TwResultado> recuperarTimeline(String twuser, String url, int elementos) throws Exception {
 
         List<TwResultado> listaResultados = new ArrayList<>();
-
+/*
 
         Paging pagina = new Paging();
 
@@ -205,7 +205,7 @@ public class ProcesarTwitter4j {
 
 
         //throw new Exception("prueba");
-
+*/
         return listaResultados;
 
     }
@@ -222,7 +222,7 @@ public class ProcesarTwitter4j {
     public List<TwResultado> recuperarListaUsuario(String twuser, String url, int elementos) throws Exception {
 
         List<TwResultado> listaResultados = new ArrayList<>();
-
+/*
 
         Paging pagina = new Paging(1, 25);
 
@@ -268,7 +268,7 @@ public class ProcesarTwitter4j {
 
 
         //throw new Exception("prueba");
-
+*/
         return listaResultados;
 
     }

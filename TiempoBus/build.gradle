@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 dependencies {
     //implementation fileTree(dir: 'libs', include: '*.jar')
     implementation 'com.google.maps.android:android-maps-utils:3.4.0'
-    implementation files('libs/twitter4j-core-4.0.7.jar')
+    //implementation files('libs/twitter4j-core-4.0.7.jar')
     //implementation files('libs/jsoup-1.13.1.jar')
 
-    implementation 'org.jsoup:jsoup:1.15.4'
+    implementation 'org.jsoup:jsoup:1.16.1'
 
 
     //compile 'com.google.firebase:firebase-messaging:10.0.1'
@@ -16,7 +16,7 @@ dependencies {
     //implementation 'com.android.support:multidex:1.0.3'
 
     //Drive nueva api
-    implementation 'com.google.http-client:google-http-client-gson:1.43.1'
+    implementation 'com.google.http-client:google-http-client-gson:1.43.2'
     implementation('com.google.api-client:google-api-client-android:2.2.0') {
         exclude group: 'org.apache.httpcomponents'
     }
@@ -29,18 +29,23 @@ dependencies {
 }
 
 android {
+    namespace 'alberapps.android.tiempobus'
     compileSdkVersion 33
     buildToolsVersion "33.0.2"
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 33
-        versionName "5.2.0"
+        versionName "5.2.6"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled false
         //multiDexEnabled true
 
+    }
+    buildFeatures {
+        renderScript true
+        aidl true
     }
 
     buildFeatures.viewBinding = true
@@ -66,7 +71,7 @@ android {
         }*/
         current {
             minSdkVersion 19
-            versionCode 1903  // Min API level 19
+            versionCode 1909  // Min API level 19
             dimension "api"
         }
 
@@ -75,13 +80,13 @@ android {
     dependencies {
 
         currentImplementation 'androidx.appcompat:appcompat:1.6.1'
-        currentImplementation 'com.google.android.material:material:1.8.0'
+        currentImplementation 'com.google.android.material:material:1.9.0'
         currentImplementation 'androidx.cardview:cardview:1.0.0'
         currentImplementation 'androidx.recyclerview:recyclerview:1.3.0'
         currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
         currentImplementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 
-        currentImplementation 'androidx.core:core:1.9.0'
+        currentImplementation 'androidx.core:core:1.10.1'
 
         currentImplementation 'com.android.volley:volley:1.2.1'
 
@@ -93,12 +98,12 @@ android {
         currentImplementation 'com.google.android.gms:play-services-location:21.0.1'
         currentImplementation 'com.google.android.gms:play-services-vision:20.1.3'
 
-        currentImplementation 'com.google.android.gms:play-services-auth:20.4.1'
+        currentImplementation 'com.google.android.gms:play-services-auth:20.5.0'
 
         //currentImplementation 'com.google.firebase:firebase-core:16.0.9'
         //API 16
-        currentImplementation 'com.google.firebase:firebase-analytics:21.2.1'
-        currentImplementation 'com.google.firebase:firebase-crashlytics:18.3.6'
+        currentImplementation 'com.google.firebase:firebase-analytics:21.3.0'
+        currentImplementation 'com.google.firebase:firebase-crashlytics:18.3.7'
 
         currentImplementation 'com.google.android.libraries.places:places-compat:2.6.0'
 

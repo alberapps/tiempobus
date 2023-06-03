@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.2.3</string>
+    <string name="app_version" translatable="false">5.2.6</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2023)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -290,17 +290,17 @@
 
     <string name="acercade_info_nuevo">Esta aplicación NO es oficial y se desarrolla de forma independiente.
 		\nDatos de líneas y tiempos ofrecidos y mantenidos por:</string>
-    <string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-    <string name="acercade_info_nuevo_2">Desarrollo:\nalberapps.blogspot.com - twitter.com/alberapps\nTraducciones:\nmagnoling.com - twitter.com/Magnoling_</string>
+    <string name="acercade_info_nuevo_bus">Esta aplicación NO es oficial y se desarrolla de forma independiente.\nDatos de líneas y tiempos ofrecidos y mantenidos por: alicante.vectalia.es</string>
+    <string name="acercade_info_nuevo_2">Desarrollo:\nblog.alberapps.com - twitter.com/alberapps\nTraducciones:\nMagnolia Solutions</string>
     <string name="aviso_infoapp" translatable="false">InfoApp</string>
-    <string name="infoapp_trad">Traducciones: magnoling.com</string>
+    <string name="infoapp_trad">Traducciones: Magnolia Solutions</string>
 
     <string name="legal">Tiempos obtenidos del sistema ISAE, que ofrece, en TIEMPO REAL, la ESTIMACIÓN de tiempos de paso de las redes TAM y TRAM.
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) y TRAM(www.tramalicante.es, www.fgv.es)
-		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
+		\nDatos de líneas y tiempos obtenidos de: TAM(alicante.vectalia.es) y TRAM(www.tramalicante.es, www.fgv.es)
+		\nMás información: blog.alberapps.com y twitter.com/alberapps</string>
 
 	<string name="legal_b">
 		Los nombres de empresas y logotipos de estas o sus productos, así como los datos obtenidos de sus páginas web, son propiedad de sus respectivos titulares y son reconocidos por esta aplicación.
@@ -340,8 +340,8 @@
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos obtenidos de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx)
-		\nMás información: alberapps.blogspot.com y twitter.com/alberapps</string>
+		\nDatos de líneas y tiempos obtenidos de: TAM(alicante.vectalia.es)
+		\nMás información: blog.alberapps.com y twitter.com/alberapps</string>
 
     <string name="literal_min">min</string>
 

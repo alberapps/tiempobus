@@ -85,12 +85,12 @@ public class SlidingTabsBasicFragment extends Fragment {
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
             //mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentNoticiasRss.class);
-            mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentTramTwitter.class);
+            //mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentTramTwitter.class);
         }
 
-        mTabsAdapter.addTab(getString(R.string.alberapps).toUpperCase(), FragmentAlberappsTwitter.class);
+        //mTabsAdapter.addTab(getString(R.string.alberapps).toUpperCase(), FragmentAlberappsTwitter.class);
 
-        mTabsAdapter.addTab(getString(R.string.tab_tw).toUpperCase(), FragmentTwitter.class);
+        //mTabsAdapter.addTab(getString(R.string.tab_tw).toUpperCase(), FragmentTwitter.class);
 
 
 

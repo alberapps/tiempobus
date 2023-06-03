@@ -62,17 +62,6 @@ public class TraduccionesActivity extends AppCompatActivity {
         //Status bar color init
         UtilidadesUI.initStatusBar(this);
 
-        ImageView botoMagnolia = (ImageView) findViewById(R.id.boton_magnolia);
-        assert botoMagnolia != null;
-        botoMagnolia.setOnClickListener(new ImageView.OnClickListener() {
-            public void onClick(View arg0) {
-
-                UtilidadesUI.openWebPage(TraduccionesActivity.this, "http://www.magnoling.com");
-
-            }
-        });
-
-
     }
 
     @Override

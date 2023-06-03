@@ -280,9 +280,9 @@ favorit per crear la teua llista.</string>
     
     <string name="acercade_info_nuevo">Esta aplicació NO és oficial i es desenvolupa de forma independent.
 		\nDades de línies i temps oferits i mantinguts per:</string>
-	<string name="acercade_info_nuevo_bus">Esta aplicació NO és oficial i es desenvolupa de forma independent.\nDades de línies i temps oferits i mantinguts per: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Desenvolupament:\nalberapps.blogspot.com - twitter.com/alberapps\nTraduccions:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="infoapp_trad">Traduccions: magnoling.com</string>
+	<string name="acercade_info_nuevo_bus">Esta aplicació NO és oficial i es desenvolupa de forma independent.\nDades de línies i temps oferits i mantinguts per: alicante.vectalia.es</string>
+	<string name="acercade_info_nuevo_2">Desenvolupament:\nblog.alberapps.com - twitter.com/alberapps\nTraduccions:\nMagnolia Solutions</string>
+    <string name="infoapp_trad">Traduccions: Magnolia Solutions</string>
     
     
     
@@ -290,8 +290,8 @@ favorit per crear la teua llista.</string>
         Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
 	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
 	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
-		\nDades de línies i temps obtinguts de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx) i TRAM(www.tramalicante.es, www.fgv.es)
-		\nMés informació: alberapps.blogspot.com i al Twitter: @alberapps</string>
+		\nDades de línies i temps obtinguts de: TAM(alicante.vectalia.es) i TRAM(www.tramalicante.es, www.fgv.es)
+		\nMés informació: blog.alberapps.com i al Twitter: @alberapps</string>
 		
 	<string name="legal_b">
 		Els noms d\'empreses i logotips d\'estes o els seus productes, així com les dades obtingudes de les pàgines web, són propietat dels seus respectius titulars i són reconeguts per esta aplicació.
@@ -328,8 +328,8 @@ favorit per crear la teua llista.</string>
         Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
 	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
 	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
-		\nDades de línies i temps obtinguts de: TAM(www.subus.es, isaealicante.subus.es/movil/index.aspx)
-		\nMés informació: alberapps.blogspot.com i twitter.com/alberapps</string>
+		\nDades de línies i temps obtinguts de: TAM(alicante.vectalia.es)
+		\nMés informació: blog.alberapps.com i twitter.com/alberapps</string>
     
     <string name="literal_min">min</string>
     

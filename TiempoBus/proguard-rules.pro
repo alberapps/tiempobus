@@ -15,7 +15,7 @@
 -keep class twitter4j.** { *; }
 #-keep class jsoup.** { *; }
 -keep class org.apache.** { *; }
-
+-dontwarn org.apache.http.**
 #
 -keep class com.google.api.** { *; }
 -keep class com.fasterxml.** { *; }

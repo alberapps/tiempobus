@@ -959,21 +959,21 @@ public class DatosPantallaPrincipal {
         Menu menu = context.mDrawerView.getMenu();
 
         final androidx.appcompat.widget.SwitchCompat botonBus = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasBus));
-        final androidx.appcompat.widget.SwitchCompat botonTram = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasTram));
-        final androidx.appcompat.widget.SwitchCompat botonAlberApps = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasAlberApps));
+        //final androidx.appcompat.widget.SwitchCompat botonTram = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasTram));
+        //final androidx.appcompat.widget.SwitchCompat botonAlberApps = (androidx.appcompat.widget.SwitchCompat) MenuItemCompat.getActionView(menu.findItem(R.id.switchNoticiasAlberApps));
 
 
         if (avisoBus) {
             botonBus.setChecked(true);
         }
 
-        if (avisoTram) {
+        /*if (avisoTram) {
             botonTram.setChecked(true);
         }
 
         if (avisoAlberApps) {
             botonAlberApps.setChecked(true);
-        }
+        }*/
 
         botonBus.setOnClickListener(new View.OnClickListener() {
 
@@ -986,7 +986,7 @@ public class DatosPantallaPrincipal {
             }
         });
 
-        botonTram.setOnClickListener(new View.OnClickListener() {
+        /*botonTram.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
@@ -995,9 +995,9 @@ public class DatosPantallaPrincipal {
                 editor.apply();
 
             }
-        });
+        });*/
 
-        botonAlberApps.setOnClickListener(new View.OnClickListener() {
+        /*botonAlberApps.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
@@ -1006,7 +1006,7 @@ public class DatosPantallaPrincipal {
                 editor.apply();
 
             }
-        });
+        });*/
 
 
         /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {

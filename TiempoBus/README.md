@@ -3,7 +3,7 @@ TiempoBus para Android
 TiempoBus (TempsBus) por Alberto Montiel
 Desde 2012
 
-http://alberapps.blogspot.com
+http://blog.alberapps.com
 https://twitter.com/alberapps
 https://play.google.com/store/apps/details?id=alberapps.android.tiempobus
 
@@ -11,7 +11,7 @@ Consulta dinámica de tiempos de paso de autobuses(TAM) y tranvías(TRAM) en Ali
 Información de recorridos, noticias, mapas, y más.
 
 TAM: Alicante, El Campello, Sant Joan, Sant Vicent del Raspeig, Mutxamel, Lanzaderas a la Universidad de Alicante, Autobús Turístico, Playa San Juan, etc.
-Información y tiempos ofrecidos y mantenidos por www.subus.es
+Información y tiempos ofrecidos y mantenidos por alicante.vectalia.es
 
 TRAM: L1(Luceros-Benidorm), L2(Luceros-Sant Vicent), L3(Luceros-El Campello), L4(Luceros-Pl. la Coruña), L9(Benidorm-Dénia *Solo información por ahora)
 Aplicación recomendada por TRAM de Alicante y FGV
@@ -33,9 +33,9 @@ Funcionalidades:
 
 
 * Esta aplicación NO ES OFICIAL, ni tiene relación con ninguna empresa o administración.
-La información y los tiempos son ofrecidos y mantenidos por http://www.subus.es, http://isaealicante.subus.es/movil y http://www.tramalicante.es
+La información y los tiempos son ofrecidos y mantenidos por http://alicante.vectalia.es y http://www.tramalicante.es
 
-Agradecimiento especial a Marta Frías Rodríguez y a Cristina Aroutiounova , por las traducciones de TiempoBus. (http://magnoling.com). Con la colaboración de Ana Merayo y Victor Prieto.
+Agradecimiento especial a Marta Frías Rodríguez y a Cristina Aroutiounova , por las traducciones de TiempoBus. (Magnolia Solutions). Con la colaboración de Ana Merayo y Victor Prieto.
 
 Permisos:
 
@@ -43,9 +43,9 @@ Permisos:
     Acceso a la tarjeta de memoria, para almacenar la imagen de fondo y la exportación de favoritos.
     Posicionamiento por GPS. Para la opción de mapas.
     Permiso para poder usar Google Play Services.
-    http://alberapps.blogspot.com.es/2014/01/permisos-android-tiempobus.html
+    http://blog.alberapps.com.es/2014/01/permisos-android-tiempobus.html
 
-Registro de cambios: http://alberapps.blogspot.com/p/changelog.html
+Registro de cambios: http://blog.alberapps.com/p/changelog.html
 
 Aplicación de código abierto, con licencia GPLv3 (http://www.gnu.org/licenses/gpl.html). El código fuente está disponible en: https://github.com/alberapps/tiempobus  y http://code.google.com/p/tiempobus/
 Cualquier uso de la aplicación y su código fuente, debe respetar las condiciones descritas en la licencia.

@@ -55,7 +55,7 @@
             android:summary="@string/conf_noticias_a"
             android:title="@string/preferencias_noticias_auto" />
         
-        <CheckBoxPreference
+        <!--CheckBoxPreference
                 android:key="aviso_noticias_tram"
                 android:title="@string/preferencias_noticias_auto_tram"
                 android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
@@ -63,7 +63,7 @@
         <CheckBoxPreference
             android:key="aviso_noticias_alberapps"
             android:title="@string/preferencias_noticias_auto_alberapps"
-            android:summary="@string/conf_noticias_a" android:defaultValue="true"/>
+            android:summary="@string/conf_noticias_a" android:defaultValue="true"/-->
 
 
         <CheckBoxPreference
@@ -81,7 +81,7 @@
             android:summary="@string/configuracion_alarmas_tono_desc"
             android:title="@string/configuracion_alarmas_tono_titulo" />
 
-        <PreferenceScreen
+        <!--PreferenceScreen
             android:key="conf_twitter"
             android:summary="@string/preferences"
             android:title="@string/tab_tw" >
@@ -119,7 +119,7 @@
                 android:defaultValue="true"
                 android:key="tw_6"
                 android:title="\@TramdeAlicante" />
-        </PreferenceScreen>
+        </PreferenceScreen-->
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/tarjeta" >
@@ -268,7 +268,7 @@
             android:title="@string/pagina_blog" >
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="http://alberapps.blogspot.com" />
+                android:data="http://blog.alberapps.com" />
         </PreferenceScreen>
 
         <!--

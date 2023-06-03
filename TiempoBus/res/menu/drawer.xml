@@ -84,14 +84,14 @@
                 android:id="@+id/switchNoticiasBus"
                 android:title="@string/tab_noticias"
                 app:actionLayout="@layout/switch_layout" />
-            <item
+            <!--item
                 android:id="@+id/switchNoticiasTram"
                 android:title="@string/tram_tw_txt"
                 app:actionLayout="@layout/switch_layout" />
             <item
                 android:id="@+id/switchNoticiasAlberApps"
                 android:title="@string/alberapps"
-                app:actionLayout="@layout/switch_layout" />
+                app:actionLayout="@layout/switch_layout" /-->
 
         </menu>
     </item>

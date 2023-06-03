@@ -360,7 +360,7 @@ public class NoticiasTabsPager extends AppCompatActivity {
                 }
 
                 // Inicia carga twitter
-                recargarTw();
+                ////recargarTw();
 
             }
         };

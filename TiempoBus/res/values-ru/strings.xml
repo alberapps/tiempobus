@@ -171,7 +171,7 @@
     <string name="aviso_noticia">Если содержание отображается неправильно, пожалуйста, нажмите на ссылку для доступа на сайт</string>
     <string name="noticias_links">Возможные ссылки</string>
     <string name="noticias_instrucciones">Нажмите на объявление, чтобы открыть детальную информацию.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Маршруты получены непосредственно из сайта subus.es.</string>
+    <string name="aviso_buscador_online">Маршруты получены непосредственно из сайта alicante.vectalia.es.</string>
     <string name="streetview_ko">Ошибка при доступе к Street View. Пожалуйста, проверьте, если приложение установлено.</string>
     <string name="streetview_boton">Street View</string>
 
@@ -277,11 +277,11 @@
     
     
     <string name="acercade_info_nuevo">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны:</string>
-	<string name="acercade_info_nuevo_bus">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Разработка:\nalberapps.blogspot.com - twitter.com/alberapps\nПеревод:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="infoapp_trad">Перевод: magnoling.com</string>
+	<string name="acercade_info_nuevo_bus">Это приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписаний предложены и поддержаны: alicante.vectalia.es</string>
+	<string name="acercade_info_nuevo_2">Разработка:\nblog.alberapps.com - twitter.com/alberapps\nПеревод:\nMagnolia Solutions</string>
+    <string name="infoapp_trad">Перевод: Magnolia Solutions</string>
     
-    <string name="legal">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM и TRAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
+    <string name="legal">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM и TRAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: TAM (alicante.vectalia.es) TRAM (www.tramalicante.es, www.fgv.es) \nУзнать больше: blog.alberapps.com и в Twitter: @alberapps</string>
 	
 	<string name="legal_b">Названия компаний и их логотипы или их продукции, а также данные, полученные с веб-сайта, являются собственностью их соответствующих владельцев и признаются этим приложением.</string>	  
     
@@ -305,7 +305,7 @@
     <string name="error_fondo">Error estableciendo la imagen de fondo</string>
     
 	
-    <string name="legal_sin_tram">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: www.subus.es и isaealicante.subus.es/movil/index.aspx \nУзнать больше: alberapps.blogspot.com и в Twitter: @alberapps</string>
+    <string name="legal_sin_tram">Время предложено системой ISAE, которая предлагает в режиме РЕАЛЬНОГО ВРЕМЕНИ, ПРИБЛИЗИТЕЛЬНОЕ время прибытия в сети TAM. \nЭто время может измениться по причинам, не связанным с приложением, как например: движения, изменение маршрута и т.д. \nКомпоненты, которые используют локальную базу данных, возможно не будут показывать последние изменения маршрута. \nЭто приложения НЕ ОФИЦИАЛЬНОЕ и разработано независимо от официального. \nДанные линий и расписания получены из: alicante.vectalia.es \nУзнать больше: blog.alberapps.com и в Twitter: @alberapps</string>
 	
     
     <string name="literal_min">мин</string>

@@ -277,16 +277,16 @@
         
     <string name="acercade_info_nuevo">This application is UNofficial and its development is independent.
 		\nLines and times data offered and maintained by:</string>
-    <string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.\nLines and times data offered and maintained by: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-    <string name="acercade_info_nuevo_2">Development:\nalberapps.blogspot.com - twitter.com/alberapps\nTranslations:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="infoapp_trad">Translations: magnoling.com</string>
+    <string name="acercade_info_nuevo_bus">This application is UNofficial and its development is independent.\nLines and times data offered and maintained by: alicante.vectalia.es</string>
+    <string name="acercade_info_nuevo_2">Development:\nblog.alberapps.com - twitter.com/alberapps\nTranslations:\nMagnolia Solutions</string>
+    <string name="infoapp_trad">Translations: Magnolia Solutions</string>
     
     <string name="legal">Times obtained from ISAE system, which offers, in REAL TIME, the time of arrival ESTIMATES in TRAM and TAM networks.
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
 	    \nFeatures using the local database may not show the latest route changes.
 	    \nThis application is UNofficial and its development is independent.
-		\nLines data and times obtained from:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx) and TRAM (www.tramalicante.es, www.fgv.es)
-		\nLearn more: alberapps.blogspot.com and twitter.com/alberapps</string>
+		\nLines data and times obtained from:  TAM (alicante.vectalia.es) and TRAM (www.tramalicante.es, www.fgv.es)
+		\nLearn more: blog.alberapps.com and twitter.com/alberapps</string>
 	
 	<string name="legal_b">
 		Names and logos of companies or their products, and data obtained from their website are a property of their respective owners and are recognized by this application.
@@ -323,8 +323,8 @@
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
 	    \nFeatures using the local database may not show the latest route changes.
 	    \nThis application is UNofficial and its development is independent.
-		\nLines data and times obtained from:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx)
-		\nLearn more: alberapps.blogspot.com and twitter.com/alberapps</string>
+		\nLines data and times obtained from:  TAM (alicante.vectalia.es)
+		\nLearn more: blog.alberapps.com and twitter.com/alberapps</string>
 
     <string name="literal_min">min</string>
 

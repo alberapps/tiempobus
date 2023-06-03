@@ -10,6 +10,7 @@ dependencies {
 }
 
 android {
+    namespace 'alberapps.android.tiempobuswidgets'
     compileSdkVersion 33
     buildToolsVersion "33.0.2"
     defaultConfig {
@@ -68,6 +69,10 @@ android {
     }
     lint {
         disable 'MissingTranslation'
+    }
+    buildFeatures {
+        renderScript true
+        aidl true
     }
 
 }

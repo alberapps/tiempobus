@@ -170,7 +170,7 @@
     <string name="aviso_noticia">Wenn der Inhalt nicht richtig gezeigt wird, bitte klicken Sie das Link, um auf das Web zu zugreifen.</string>
     <string name="noticias_links">Mögliche Linken</string>
     <string name="noticias_instrucciones">Klicken Sie bitte auf die Nachricht, um ihr Detail zu öffnen.\nPowered by Jsoup</string>
-    <string name="aviso_buscador_online">Die Verläufe werden direkt von subus.es erlangt.</string>
+    <string name="aviso_buscador_online">Die Verläufe werden direkt von alicante.vectalia.es erlangt.</string>
     <string name="streetview_ko">Fehler beim Zugreifen auf Street View. Bitte überprüfen Sie, wenn es installiert ist.</string>
     <string name="streetview_boton">Street View</string>
 
@@ -278,16 +278,16 @@
         
     <string name="acercade_info_nuevo">Diese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
 		\nDatei von Linien uns Zeiten gebotet und gewartet von:</string>
-	<string name="acercade_info_nuevo_bus">Diese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.\nDatei von Linien uns Zeiten gebotet und gewartet von: subus.es - isaealicante.subus.es/movil/index.aspx</string>
-	<string name="acercade_info_nuevo_2">Entwicklung:\nalberapps.blogspot.com - twitter.com/alberapps\nÜbersetzungen:\nmagnoling.com - twitter.com/Magnoling_</string>
-    <string name="infoapp_trad">Übersetzungen: magnoling.com</string>
+	<string name="acercade_info_nuevo_bus">Diese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.\nDatei von Linien uns Zeiten gebotet und gewartet von: alicante.vectalia.es</string>
+	<string name="acercade_info_nuevo_2">Entwicklung:\nblog.alberapps.com - twitter.com/alberapps\nÜbersetzungen:\nMagnolia Solutions</string>
+    <string name="infoapp_trad">Übersetzungen: Magnolia Solutions</string>
     
     <string name="legal">Zeiten erlangt von dem System ISAE, dass die Annäherungen von Ankunftszeiten vom TAM und TRAM Netze in ECHTZEIT bietet.
         \nDiese Angaben können auf fremde Grunde sich ändern, wie Verkehr, Veränderungen im Verläufe, etc.
 	    \nEs ist möglich, dass die Funktionen, die die Datenbank benutzen, nicht über die letzte Aktualisierung verfügen.
 	    \nDiese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
-		\nDaten von Linien und Zeiten erlangt von:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx) und TRAM (www.tramalicante.es, www.fgv.es)
-		\nMehr Information: alberapps.blogspot.com y twitter.com/alberapps</string>
+		\nDaten von Linien und Zeiten erlangt von:  TAM (alicante.vectalia.es) und TRAM (www.tramalicante.es, www.fgv.es)
+		\nMehr Information: blog.alberapps.com y twitter.com/alberapps</string>
 	
 	<string name="legal_b">
 		Die Namen und Embleme von Unternehmen oder ihren Produkte, sowie auch die Daten auf ihrer Website, gehört ihren jeweiligen Besitzern und werden von dieser App erkennt.
@@ -324,8 +324,8 @@
         \nDiese Angaben können auf fremde Grunde sich ändern, wie Verkehr, Veränderungen im Verläufe, etc.
 	    \nEs ist möglich, dass die Funktionen, die die Datenbank benutzen, nicht über die letzte Aktualisierung verfügen.
 	    \nDiese App ist NICHT offiziell und ihre Entwicklung ist unabhängig.
-		\nDaten von Linien und Zeiten erlangt von:  TAM (www.subus.es, isaealicante.subus.es/movil/index.aspx)
-		\nMehr Information: alberapps.blogspot.com y twitter.com/alberapps</string>
+		\nDaten von Linien und Zeiten erlangt von:  TAM (alicante.vectalia.es)
+		\nMehr Information: blog.alberapps.com y twitter.com/alberapps</string>
     
     <string name="literal_min">min</string>
     
