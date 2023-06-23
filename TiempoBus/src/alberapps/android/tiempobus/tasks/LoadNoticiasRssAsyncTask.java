@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import alberapps.java.noticias.rss.NoticiaRss;
+import alberapps.java.tram.news.AlberappsNewsParser;
 import alberapps.java.tram.news.TramNewsParser;
 
 /**
@@ -63,6 +64,8 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
             Boolean usarCache = true;
             Context context = null;
 
+            boolean alberapps = false;
+
             if (datos.length > 1) {
 
                 usarCache = (Boolean) datos[0];
@@ -79,8 +82,15 @@ public class LoadNoticiasRssAsyncTask extends AsyncTask<Object, Void, List<Notic
                 context = (Context) datos[2];
             }
 
+            if (datos.length >= 4) {
+                alberapps = (boolean) datos[3];
+            }
 
-            noticiasList = TramNewsParser.getTramNews(usarCache, userAgent, context);
+            if (alberapps) {
+                noticiasList = AlberappsNewsParser.getAlberappsNews(usarCache, userAgent, context);
+            } else {
+                noticiasList = TramNewsParser.getTramNews(usarCache, userAgent, context);
+            }
 
 
         } catch (Exception e) {

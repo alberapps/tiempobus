@@ -79,7 +79,12 @@ public class NoticiasRssAdapter extends ArrayAdapter<NoticiaRss> {
                     descripcion.setTypeface(ubuntu);
                 }
 
-                String text = Utilidades.getFechaString2(noticia.getDateItem()) + "\n" + noticia.getTitulo();
+                String text = "";
+                if (noticia.getDateItem() != null) {
+                    text = Utilidades.getFechaString2(noticia.getDateItem()) + "\n" + noticia.getTitulo();
+                } else {
+                    text = noticia.getTitulo();
+                }
 
                 titulo.setText(text);
                 descripcion.setText(noticia.getDescripcion());

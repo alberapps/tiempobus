@@ -496,7 +496,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
                     String aux = datos.getDatosTransbordos().get(0).getTrenesDestino();
                     String[] auxList = null;
                     String aux2 = "";
-                    if(aux != null){
+                    /*if(aux != null){
                         auxList = aux.split(":");
                     }
 
@@ -504,9 +504,9 @@ public class PrincipalHorarioTramFragment extends Fragment {
                         aux2 = auxList[1].trim();
                     }else {
                         aux2 = aux.trim();
-                    }
+                    }*/
 
-                    datosInfoDestinos.setText(aux2);
+                    datosInfoDestinos.setText(aux);
 
                     if (datos.getHorariosItemCombinados(1) != null && datos.getHorariosItemCombinados(1).size() > 1) {
 
@@ -534,7 +534,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
                         datosInfo2.setText(horasPaso2.getDatoInfo().replace("Paso ", ""));
 
                         aux = datos.getDatosTransbordos().get(1).getTrenesDestino();
-                        auxList = null;
+                        /*auxList = null;
                         aux2 = "";
                         if(aux != null){
                             auxList = aux.split(":");
@@ -544,9 +544,9 @@ public class PrincipalHorarioTramFragment extends Fragment {
                             aux2 = auxList[1].trim();
                         }else {
                             aux2 = aux.trim();
-                        }
+                        }*/
 
-                        datosInfoDestinos2.setText(aux2);
+                        datosInfoDestinos2.setText(aux);
 
 
                         horariosPaso2.setVisibility(View.VISIBLE);
@@ -571,7 +571,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
 
 
                             aux = datos.getDatosTransbordos().get(2).getTrenesDestino();
-                            auxList = null;
+                            /*auxList = null;
                             aux2 = "";
                             if(aux != null){
                                 auxList = aux.split(":");
@@ -581,9 +581,9 @@ public class PrincipalHorarioTramFragment extends Fragment {
                                 aux2 = auxList[1].trim();
                             }else {
                                 aux2 = aux.trim();
-                            }
+                            }*/
 
-                            datosInfoDestinos3.setText(aux2);
+                            datosInfoDestinos3.setText(aux);
 
                             horariosPaso3.setVisibility(View.VISIBLE);
 

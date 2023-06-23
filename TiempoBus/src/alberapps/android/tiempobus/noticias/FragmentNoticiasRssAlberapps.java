@@ -1,6 +1,6 @@
 /**
  * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- * Copyright (C) 2012 Alberto Montiel
+ * Copyright (C) 2023 Alberto Montiel
  * <p>
  * <p>
  * This program is free software: you can redistribute it and/or modify
@@ -34,11 +34,11 @@ import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.util.UtilidadesUI;
 
 /**
- * Fragmento vuelta
+ * Fragmento alberapps
  */
-public class FragmentNoticiasRss extends Fragment {
+public class FragmentNoticiasRssAlberapps extends Fragment {
 
-    public static final String noticiasURL = "https://www.tramalacant.es/noticies";
+    public static final String noticiasURL = "https://blog.alberapps.com";
 
     private NoticiasTabsPager actividad;
 
@@ -62,19 +62,19 @@ public class FragmentNoticiasRss extends Fragment {
         /*if (actividad.noticiasRss != null) {
             actividad.cargarListadoRss();
         }*/
-        if (actividad.noticiasTwTram != null) {
+        //if (actividad.noticiasTwTram != null) {
             //actividad.cargarHeaderNoticiasRss(true);
             //actividad.cargarListadoTodasTram(actividad.noticiasTwTram);
-            actividad.cargarListadoRss(true);
-        }
+            actividad.cargarListadoRssAlberapps(true);
+        //}
 
         // Progreso lista
-        ListView listRssWiew = (ListView) actividad.findViewById(R.id.noticias_rss);
-        TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias_rss);
+        ListView listRssWiew = (ListView) actividad.findViewById(R.id.noticias_rss_alberapps);
+        TextView vacio = (TextView) actividad.findViewById(R.id.vacio_noticias_rss_alberapps);
         if (vacio != null) {
             vacio.setVisibility(View.INVISIBLE);
         }
-        ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_rss);
+        ProgressBar lpb = (ProgressBar) actividad.findViewById(R.id.progreso_rss_alberapps);
         if(lpb != null) {
             lpb.setIndeterminate(true);
             listRssWiew.setEmptyView(lpb);
@@ -86,7 +86,7 @@ public class FragmentNoticiasRss extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.noticias_rss, container, false);
+        return inflater.inflate(R.layout.noticias_rss_alberapps, container, false);
     }
 
     /**
@@ -99,7 +99,7 @@ public class FragmentNoticiasRss extends Fragment {
 
         String fondo_galeria = preferencias.getString("image_galeria", "");
 
-        View contenedor_principal = getActivity().findViewById(R.id.contenedor_noticias_rss);
+        View contenedor_principal = getActivity().findViewById(R.id.contenedor_noticias_rss_alberapps);
 
         UtilidadesUI.setupFondoAplicacion(fondo_galeria, contenedor_principal, getActivity());
 

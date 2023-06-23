@@ -132,28 +132,20 @@ public class HorarioTram {
             HorarioItem info = new HorarioItem();
             info.setInfoRecorrido(new ArrayList<String>());
 
-            String[] duracion1 = duracion.split(":");
-            String[] tipoBillete1 = tipoBillete.split(":");
+            info.getInfoRecorrido().add(duracion);
+            info.getInfoRecorrido().add(tipoBillete);
 
-            if (duracion1.length > 1) {
-                info.getInfoRecorrido().add(duracion1[1].trim());
-            }
-            if (tipoBillete1.length > 1) {
-                info.getInfoRecorrido().add(tipoBillete1[1].trim());
-            }
-
-
-            if (lineasTransbordos != null && !lineasTransbordos.isEmpty()) {
+            if (datosTransbordos != null && !datosTransbordos.isEmpty()) {
 
                 StringBuffer transbordos = new StringBuffer("");
 
-                for (int i = 0; i < lineasTransbordos.size(); i++) {
+                for (int i = 0; i < datosTransbordos.size(); i++) {
 
                     if (i > 0) {
                         transbordos.append(" -> ");
                     }
 
-                    transbordos.append(lineasTransbordos.get(i));
+                    transbordos.append(datosTransbordos.get(i).getDatoPaso());
 
                 }
 
@@ -167,8 +159,6 @@ public class HorarioTram {
             listado.add(info);
 
         }
-
-        //for (int i = 0; i < datosTransbordos.size(); i++) {
 
         if (datosTransbordos != null && !datosTransbordos.isEmpty() && datosTransbordos.size() > paso) {
 
@@ -185,43 +175,10 @@ public class HorarioTram {
                 }
             }
 
-            //lineasTransbordos.remove("L4L");
-
-
-            //items.get(items.size() - 1).setLinea(lineasTransbordos.get(lineasTransbordos.size() - 1));
-
-            /*for (int j = 0; j < items.size(); j++) {
-
-                if(j == 0) {
-                    items.get(0).setLinea(lineasTransbordos.get(0));
-                }else if(j == items.size()-1) {
-                    items.get(items.size() - 1).setLinea(lineasTransbordos.get(lineasTransbordos.size() - 1));
-                }else {
-
-                    if(lineasTransbordos.size() == datosTransbordos.size()) {
-
-                        if (lineasTransbordos != null && !lineasTransbordos.isEmpty() && lineasTransbordos.size() > paso) {
-                            items.get(j).setLinea(lineasTransbordos.get(paso));
-                        } else {
-                            items.get(j).setLinea("");
-                        }
-
-                    } else {
-                        items.get(j).setLinea("");
-                    }
-
-                }
-
-
-
-            }*/
-
-
-
             listado.addAll(items);
 
         }
-        //}
+
 
         if(listado.isEmpty()){
             return null;

@@ -29,6 +29,7 @@ import alberapps.android.tiempobus.infolineas.sliding.InfoLineaFragmentPagerAdap
 import alberapps.android.tiempobus.noticias.FragmentAlberappsTwitter;
 import alberapps.android.tiempobus.noticias.FragmentNoticias;
 import alberapps.android.tiempobus.noticias.FragmentNoticiasRss;
+import alberapps.android.tiempobus.noticias.FragmentNoticiasRssAlberapps;
 import alberapps.android.tiempobus.noticias.FragmentTramTwitter;
 import alberapps.android.tiempobus.noticias.FragmentTwitter;
 import alberapps.android.tiempobus.noticias.NoticiasTabsPager;
@@ -84,9 +85,11 @@ public class SlidingTabsBasicFragment extends Fragment {
         mTabsAdapter.addTab(getString(R.string.tab_noticias).toUpperCase(), FragmentNoticias.class);
 
         if (UtilidadesTRAM.ACTIVADO_TRAM) {
-            //mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentNoticiasRss.class);
+            mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentNoticiasRss.class);
             //mTabsAdapter.addTab(getString(R.string.rss_tram).toUpperCase(), FragmentTramTwitter.class);
         }
+
+        mTabsAdapter.addTab(getString(R.string.alberapps_info).toUpperCase(), FragmentNoticiasRssAlberapps.class);
 
         //mTabsAdapter.addTab(getString(R.string.alberapps).toUpperCase(), FragmentAlberappsTwitter.class);
 

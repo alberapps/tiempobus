@@ -114,6 +114,11 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
                     datos.append(horas.getInfoRecorrido().get(i));
 
+                    if (i == 0) {
+                        datos.append(" ");
+                        datos.append(contexto.getString(R.string.leer_4));
+                    }
+
                 }
 
                 text.setText(datos.toString());
@@ -214,7 +219,7 @@ public class HorariosTramAdapter extends ArrayAdapter<HorarioItem> {
 
 
                 //Formato colores
-                DatosPantallaPrincipal.formatoLinea(contexto, datosGrupoHora, horas.getLinea(), false);
+                //DatosPantallaPrincipal.formatoLinea(contexto, datosGrupoHora, horas.getLinea(), false);
             }
 
 

@@ -134,7 +134,7 @@ public class Utilidades {
 
     public static Date getDateRss(String fecha) {
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
 
         Date fechaDate = null;
 
@@ -293,6 +293,24 @@ public class Utilidades {
     public static String getFechaES(Date fecha) {
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+
+        String fechaString = null;
+
+        if (fecha != null) {
+
+            fechaString = df.format(fecha);
+
+            return fechaString;
+
+        }
+
+        return null;
+
+    }
+
+    public static String getFechaEN2(Date fecha) {
+
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         String fechaString = null;
 

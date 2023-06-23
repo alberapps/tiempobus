@@ -1,6 +1,6 @@
 /**
  * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- * Copyright (C) 2015 Alberto Montiel
+ * Copyright (C) 2023 Alberto Montiel
  * <p/>
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -21,6 +21,8 @@ package alberapps.java.tram.horarios;
 import android.content.Context;
 import android.net.Uri;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -34,206 +36,92 @@ import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 /**
- * Procesar horarios usando JSOUP
+ * Procesar horarios tram
  */
 public class ProcesarHorariosTram {
-
-    //public static String URL_TRAM_HORARIOS = "http://www.tramalicante.es/horarios.mobi.php?origen=124&destino=34&fecha=07/03/2015&hini=19:00&hfin=20:59&calcular=1";
 
     public static HorarioTram getHorarios(DatosConsultaHorariosTram datosConsulta, Context context) throws Exception {
 
         HorarioTram horarioTram = new HorarioTram();
 
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https").authority("www.tramalicante.es").appendPath("horarios.php")
+        builder.scheme("http").encodedAuthority("api.alberapps.com:8080").appendPath("tempsbusbackend")
+                .appendPath("2.0")
+                .appendPath("getTramSchedule")
                 .appendQueryParameter("origen", Integer.toString(datosConsulta.getCodEstacionOrigen()))
                 .appendQueryParameter("destino", Integer.toString(datosConsulta.getCodEstacionDestino()))
-                .appendQueryParameter("fecha", Utilidades.getFechaES(datosConsulta.getDiaDate()))
-                .appendQueryParameter("hini", datosConsulta.getHoraDesde())
-                .appendQueryParameter("hfin", datosConsulta.getHoraHasta())
-                .appendQueryParameter("calcular", "1")
-        ;
+                .appendQueryParameter("dia", Utilidades.getFechaEN2(datosConsulta.getDiaDate()))
+                .appendQueryParameter("horaDesde", datosConsulta.getHoraDesde())
+                .appendQueryParameter("horaHasta", datosConsulta.getHoraHasta());
 
 
         Uri urlHorarios = builder.build();
 
+        String str = Conectividad.conexionGetUtf8String(urlHorarios.toString(), true);
 
-        //InputStream is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
-        InputStream is = null;
+        JSONObject infoJson = new JSONObject(str);
 
-        //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true));
-        //} else {
-        //    is = Utilidades.stringToStream(Conectividad.conexionGetUtf8String(urlHorarios.toString(), true, context));
-        //}
+        horarioTram.setEstacionOrigen(infoJson.getString("estacionOrigen"));
+        horarioTram.setEstacionDestino(infoJson.getString("estacionDestino"));
+        horarioTram.setHoras(infoJson.getString("horas"));
+        horarioTram.setDia(infoJson.getString("dia"));
+        horarioTram.setDuracion(infoJson.getString("duracion"));
+        horarioTram.setTipoBillete(infoJson.getString("tipoBillete"));
 
-
-        Document doc = Jsoup.parse(is, "UTF-8", urlHorarios.toString());
-
-        //String title = doc.title();
-
-        Elements consulta = doc.getElementsByClass("consulta");
-
-        //Datos trayecto
-        Elements ul = consulta.select("ul");
-
-        //Datos individuales
-        Elements liList = ul.select("li");
-
-        horarioTram.setEstacionOrigen(liList.get(0).text());
-        horarioTram.setEstacionDestino(liList.get(1).text());
-        horarioTram.setHoras(liList.get(2).text());
-        horarioTram.setDia(liList.get(3).text());
-        horarioTram.setDuracion(liList.get(4).text());
-        horarioTram.setTipoBillete(liList.get(5).text());
-
-        if (liList.size() > 6) {
-            horarioTram.setTransbordos(liList.get(6).text());
-
-            Elements imgList = liList.get(6).select("img");
-
-            for (int i = 0; i < imgList.size(); i++) {
-
-                if (horarioTram.getLineasTransbordos() == null) {
-                    horarioTram.setLineasTransbordos(new ArrayList<String>());
-                }
-
-                String linea = imgList.get(i).attr("title");
-
-                if (!horarioTram.getLineasTransbordos().contains("L" + linea)) {
-                    horarioTram.getLineasTransbordos().add("L" + linea);
-                }
+        horarioTram.setTransbordos(infoJson.getString("transbordos"));
 
 
-            }
-
-            //Parche paradas L5
-            //if(UtilidadesTRAM.esParadaExclusivaL5(Integer.toString(datosConsulta.getCodEstacionDestino()))){
-
-//                horarioTram.getLineasTransbordos().remove("L4");
-
-  //          }
-
-
-
+        if (horarioTram.getLineasTransbordos() == null) {
+            horarioTram.setLineasTransbordos(new ArrayList<String>());
         }
-
-        //
 
         //Transbordos
 
-        Elements spanList = consulta.select("span.texto_transbordo");
+        JSONArray transbordosJson = infoJson.getJSONArray("datosTransbordos");
 
         DatoTransbordo datoTransbordo = null;
 
         List<DatoTransbordo> datosTransbordo = new ArrayList<>();
 
-        for (int i = 0; i < spanList.size(); i++) {
+        for (int i = 0; i < transbordosJson.length(); i++) {
+
+            JSONObject transbordoJson = transbordosJson.getJSONObject(i);
 
             datoTransbordo = new DatoTransbordo();
-            datoTransbordo.setDatoPaso(spanList.get(i).text());
+            datoTransbordo.setDatoPaso(transbordoJson.getString("datoPaso"));
+            datoTransbordo.setTrenesDestino(transbordoJson.getString("trenesDestino"));
+
+            //////
+            horarioTram.getLineasTransbordos().add(datoTransbordo.getTrenesDestino());
+
+
+            JSONObject tablaHorasJson = transbordoJson.getJSONObject("tablaHoras");
+            JSONObject datosHorasJson = tablaHorasJson.getJSONObject("datosHoras");
+
+            datoTransbordo.setTablaHoras(new TablaHoras());
+            datoTransbordo.getTablaHoras().setDatosHoras(new LinkedHashMap<String, List<String>>());
+
+            for (int j = 0; j < datosHorasJson.names().length(); j++) {
+
+                JSONArray valuesJson = datosHorasJson.getJSONArray(datosHorasJson.names().get(j).toString());
+
+                List<String> data = new ArrayList<>();
+                for (int n = 0; n < valuesJson.length(); n++) {
+
+                    data.add(valuesJson.getString(n));
+
+                }
+
+                datoTransbordo.getTablaHoras().getDatosHoras().put(datosHorasJson.names().get(j).toString(), data);
+
+
+            }
+
             datosTransbordo.add(datoTransbordo);
 
         }
 
-
-        Elements h3List = consulta.select("h3");
-        for (int j = 0; j < h3List.size(); j++) {
-
-            datosTransbordo.get(j).setTrenesDestino(h3List.get(j).text());
-
-        }
-
         horarioTram.setDatosTransbordos(datosTransbordo);
-
-
-        //Horarios
-        Elements tableList = consulta.select("table");
-
-        Elements tr = null;
-        Elements td = null;
-        List<String> fila = null;
-        String filaId = "";
-        String filaIdAnterior = "";
-
-
-        //Recorre las tablas de horarios
-        for (int i = 0; i < tableList.size(); i++) {
-
-            //Filas de horarios
-            tr = tableList.get(i).select("tr");
-
-
-            horarioTram.getDatosTransbordos().get(i).setTablaHoras(new TablaHoras());
-            horarioTram.getDatosTransbordos().get(i).getTablaHoras().setDatosHoras(new LinkedHashMap<String, List<String>>());
-
-            filaIdAnterior = "";
-
-            //Horas de cada fila
-            for (int j = 0; j < tr.size(); j++) {
-
-                fila = new ArrayList<>();
-                if (!filaId.equals("") && !filaId.equals("__")) {
-                    filaIdAnterior = filaId;
-                }
-                filaId = "";
-
-                td = tr.get(j).select("td");
-
-                if (td.size() > 0) {
-                    for (int k = 0; k < td.size(); k++) {
-
-                        //La primera corresponde al grupo de horas
-                        if (k == 0) {
-                            filaId = td.get(k).text();
-                        } else {
-                            fila.add(td.get(k).text());
-                        }
-
-                    }
-
-                    if (filaId.equals("__")) {
-                        //Si la nueva fila sigue siendo de la misma hora
-                        horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().get(filaIdAnterior).addAll(fila);
-                    } else {
-                        //Guardar la fila con su grupo
-                        horarioTram.getDatosTransbordos().get(i).getTablaHoras().getDatosHoras().put(filaId, fila);
-                    }
-
-                }
-
-            }
-
-
-        }
-
-
-
-        //TODO parche
-        /*horarioTram.getLineasTransbordos().remove("L41");
-
-        if(horarioTram.getLineasTransbordos().size() > horarioTram.getDatosTransbordos().size()){
-
-            List<String> aux = new ArrayList<>();
-
-            for(int i = 0; i < horarioTram.getDatosTransbordos().size(); i++){
-
-                /*if( i==0 ) {
-                    aux.add(horarioTram.getLineasTransbordos().get(0));
-                }else if(i == horarioTram.getDatosTransbordos().size() - 1){
-                    aux.add(horarioTram.getLineasTransbordos().get(horarioTram.getLineasTransbordos().size() - 1));
-                } else {
-                    aux.add("Var");
-                }*/
-
-                //aux.add(UtilidadesTRAM.getLineaHorario(horarioTram.getDatosTransbordos().get(i).ge))
-
-
-            /*}
-
-            horarioTram.setLineasTransbordos(aux);
-
-        }*/
 
         return horarioTram;
 

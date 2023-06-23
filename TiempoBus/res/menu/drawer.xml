@@ -28,7 +28,7 @@
             android:title="@string/historial_titulo" />
     </group>
 
-    <!--item android:title="@string/infolinea_horarios">
+    <item android:title="@string/infolinea_horarios">
         <menu>
 
             <item
@@ -42,7 +42,7 @@
 
         </menu>
 
-    </item-->
+    </item>
 
     <group
         android:id="@+id/menu_pref"

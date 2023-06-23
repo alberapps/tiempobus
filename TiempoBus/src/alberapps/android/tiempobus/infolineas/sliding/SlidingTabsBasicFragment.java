@@ -97,7 +97,7 @@ public class SlidingTabsBasicFragment extends Fragment {
             mTabsAdapter.addTab(getString(R.string.linea).toUpperCase(), FragmentLineas.class);
             mTabsAdapter.addTab(getString(R.string.parada_tram).toUpperCase(), FragmentIda.class);
             //Horarios tram desactivado
-            //mTabsAdapter.addTab(getString(R.string.infolinea_horarios).toUpperCase(), FragmentHorariosTram.class);
+            mTabsAdapter.addTab(getString(R.string.infolinea_horarios).toUpperCase(), FragmentHorariosTram.class);
         }
 
 

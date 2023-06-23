@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.2.6</string>
+    <string name="app_version" translatable="false">5.3.0</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2023)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -747,5 +747,7 @@
 
     <string name="tw_desactivado">Desactivado. Acceder a preferencias para activar.</string>
     <string name="notification_perm">Notificaciones desactivadas</string>
+
+    <string name="alberapps_info" translatable="false">AlberApps</string>
 
 </resources>

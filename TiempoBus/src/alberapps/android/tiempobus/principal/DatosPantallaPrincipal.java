@@ -784,6 +784,14 @@ public class DatosPantallaPrincipal {
 
     }
 
+    public static boolean esTramRTH(int paradaActual) {
+
+        if (Integer.toString(paradaActual).length() < 4 || Integer.toString(paradaActual).charAt(0) == '1') {
+            return true;
+        } else return UtilidadesTRAM.esParadaL2(Integer.toString(paradaActual));
+
+    }
+
     public static boolean esTram(String paradaActual) {
 
         if (UtilidadesTRAM.ACTIVADO_TRAM_RT) {

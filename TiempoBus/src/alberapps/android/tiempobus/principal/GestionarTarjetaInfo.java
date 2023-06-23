@@ -1479,14 +1479,14 @@ public class GestionarTarjetaInfo {
 
             FragmentManager fragmentManager = context.getSupportFragmentManager();
 
-            if (fragHorarios == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            if (fragHorarios == null && DatosPantallaPrincipal.esTramRTH(context.paradaActual)) {
                 fragHorarios = new PrincipalHorarioTramFragment();
 
             }
 
             Fragment fragHorariosAux = fragmentManager.findFragmentByTag("FRAGMENT_HORARIOS_PRINC_TRAM");
 
-            if (fragHorariosAux != null && !DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            if (fragHorariosAux != null && !DatosPantallaPrincipal.esTramRTH(context.paradaActual)) {
 
 
                 FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -1494,7 +1494,7 @@ public class GestionarTarjetaInfo {
                 ft.commit();
 
 
-            } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            } else if (fragHorariosAux == null && DatosPantallaPrincipal.esTramRTH(context.paradaActual)) {
 
                 if (context.findViewById(R.id.contenedor_fragment_horarios) != null) {
 
@@ -1506,7 +1506,7 @@ public class GestionarTarjetaInfo {
                     fragHorarios = null;
                 }
 
-            } else if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            } else if (DatosPantallaPrincipal.esTramRTH(context.paradaActual)) {
 
                 ((PrincipalHorarioTramFragment) fragHorariosAux).recargarHorarios();
 
@@ -1526,7 +1526,7 @@ public class GestionarTarjetaInfo {
         //TODO revisar errores
         try {
 
-            if (DatosPantallaPrincipal.esTram(context.paradaActual)) {
+            if (DatosPantallaPrincipal.esTramRTH(context.paradaActual)) {
 
                 FragmentManager fragmentManager = context.getSupportFragmentManager();
 

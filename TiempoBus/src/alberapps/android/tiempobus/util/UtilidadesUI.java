@@ -339,15 +339,15 @@ public class UtilidadesUI {
             String locale = Locale.getDefault().getLanguage();
 
             if (locale.substring(0, 2).equals("es")) {
-                idioma = "_es";
+                idioma = "es";
             } else if (locale.substring(0, 2).equals("ca")) {
-                idioma = "_vl";
+                idioma = "ca";
             } else {
-                idioma = "_es";
+                idioma = "es";
             }
 
         } catch (Exception e) {
-            idioma = "_es";
+            idioma = "es";
         }
 
         return idioma;

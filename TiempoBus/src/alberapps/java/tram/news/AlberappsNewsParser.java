@@ -1,6 +1,6 @@
 /**
  * TiempoBus - Informacion sobre tiempos de paso de autobuses en Alicante
- * Copyright (C) 2019 Alberto Montiel
+ * Copyright (C) 2023 Alberto Montiel
  * <p/>
  * <p/>
  * This program is free software: you can redistribute it and/or modify
@@ -23,30 +23,28 @@ import android.net.Uri;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.safety.Safelist;
-import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.noticias.rss.NoticiaRss;
-import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
 
 
-public class TramNewsParser {
+public class AlberappsNewsParser {
 
 
-    public static List<NoticiaRss> getTramNews(Boolean usarCache, String userAgentDefault, Context context) throws Exception {
+    public static List<NoticiaRss> getAlberappsNews(Boolean usarCache, String userAgentDefault, Context context) throws Exception {
 
         List<NoticiaRss> newsTram = new ArrayList<>();
-        //https://www.tramalacant.es/ca/rss
+        //https://blog.alberapps.com/feeds/posts/default?alt=rss
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https").authority("www.tramalacant.es");
-        builder.appendPath(UtilidadesUI.getIdiomaRssTram());
-        builder.appendPath("rss");
+        builder.scheme("https").authority("blog.alberapps.com");
+        builder.appendPath("feeds");
+        builder.appendPath("posts");
+        builder.appendPath("default");
+        builder.appendQueryParameter("alt","rss");
 
         ParserXML parserXML = new ParserXML();
 
@@ -65,8 +63,6 @@ public class TramNewsParser {
                 newsItem.setTitulo(noticias.getNoticiasList().get(i).getTitle());
 
                 Document doc = Jsoup.parse(Utilidades.stringToStream(noticias.getNoticiasList().get(i).getDescription()), "UTF-8", builder.toString());
-                //String safe = Jsoup.clean(doc.html(), "https://www.tramalacant.es", Safelist.basic());
-                //Document doc2 = Jsoup.parse(Utilidades.stringToStream(safe), "UTF-8", builder.toString());
                 if(doc.text().contains("...")) {
                     newsItem.setDescripcion(doc.text().split("\\.\\.\\.")[0] + "...");
                 } else {
@@ -74,7 +70,7 @@ public class TramNewsParser {
                 }
 
                 newsItem.setLink(noticias.getNoticiasList().get(i).getLink());
-                //newsItem.setDateItem(Utilidades.getDateRss(newsItem.getDate()));
+                newsItem.setDateItem(Utilidades.getDateRss(noticias.getNoticiasList().get(i).getPubDate()));
 
             } catch (Exception e) {
                 e.printStackTrace();

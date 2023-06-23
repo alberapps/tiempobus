@@ -49,12 +49,18 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <!--fragment
+            <fragment
                 android:id="@+id/noticias_2_fragment"
                 android:name="alberapps.android.tiempobus.noticias.FragmentNoticiasRss"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" /-->
+                android:layout_weight="1" />
+            <fragment
+                android:id="@+id/noticias_4_fragment"
+                android:name="alberapps.android.tiempobus.noticias.FragmentNoticiasRssAlberapps"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
             <!--fragment
                 android:id="@+id/noticias_2_fragment"
                 android:name="alberapps.android.tiempobus.noticias.FragmentTramTwitter"
