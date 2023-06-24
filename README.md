@@ -1,9 +1,9 @@
-TiempoBus para Android
+TiempoBus y Tram para Android
 
-TiempoBus (TempsBus) por Alberto Montiel
+TiempoBus y Tram (TempsBus i Tram) por Alberto Montiel
 Desde 2012
 
-http://alberapps.blogspot.com
+https://blog.alberapps.com
 https://twitter.com/alberapps
 https://play.google.com/store/apps/details?id=alberapps.android.tiempobus
 
@@ -35,7 +35,7 @@ Funcionalidades:
 * Esta aplicación NO ES OFICIAL, ni tiene relación con ninguna empresa o administración.
 La información y los tiempos son ofrecidos y mantenidos por http://www.subus.es, http://isaealicante.subus.es/movil y http://www.tramalicante.es
 
-Agradecimiento especial a Marta Frías Rodríguez y a Cristina Aroutiounova , por las traducciones de TiempoBus. (http://magnoling.com). Con la colaboración de Ana Merayo y Victor Prieto.
+Agradecimiento especial a Marta Frías Rodríguez y a Cristina Aroutiounova, por las traducciones de TiempoBus. (Magnolia Solutions). Con la colaboración de Ana Merayo y Victor Prieto.
 
 Permisos:
 
