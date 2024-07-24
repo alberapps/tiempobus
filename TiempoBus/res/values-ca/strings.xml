@@ -230,8 +230,8 @@ favorit per crear la teua llista.</string>
     <string name="traducciones_desc">Informació i autors</string>
     
     
-    <string name="menu_widget">>>TiempoBus Widget</string>
-    <string name="widget_instalar">Vols accedir a Google Play per instal·lar TiempoBus Widgets?</string>
+    <string name="menu_widget">>>TempsBus Widget</string>
+    <string name="widget_instalar">Vols accedir a Google Play per instal·lar TempsBus Widgets?</string>
     <string name="widget_market">Google Play no està instal·lat al dispositiu</string>
 
     <string name="observaciones">Observacions:</string>

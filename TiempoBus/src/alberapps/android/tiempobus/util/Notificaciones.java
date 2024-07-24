@@ -255,11 +255,11 @@ public class Notificaciones {
 
         NotificationCompat.Builder mBuilder = null;
 
-        if (BuildConfig.FLAVOR.equals("legacy")) {
-            mBuilder = new NotificationCompat.Builder(contexto);
-        } else {
+        //if (BuildConfig.FLAVOR.equals("legacy")) {
+        //    mBuilder = new NotificationCompat.Builder(contexto);
+        //} else {
             mBuilder = new NotificationCompat.Builder(contexto, channel);
-        }
+        //}
 
         return mBuilder;
 

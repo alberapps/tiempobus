@@ -41,6 +41,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,7 @@ public class HistorialActivity extends AppCompatActivity {
 		 * cargar el cursor cuando sea necesario
 		 */
         //Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
-        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, null, null, orden, null);
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, (String) null, (String[]) null, orden, (CancellationSignal) null);
 
 		/*
          * Mapeamos las querys SQL a los campos de las vistas

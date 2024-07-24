@@ -48,6 +48,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.content.ContentResolverCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.core.view.MenuItemCompat;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -129,7 +130,7 @@ public class DatosPantallaPrincipal {
             String parametros[] = {Integer.toString(paradaActual)};
 
             //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             if (cursor != null) {
                 List<Parada> listaParadas = new ArrayList<>();
@@ -205,7 +206,7 @@ public class DatosPantallaPrincipal {
             HashMap<String, String> datosFav = new HashMap<>();
 
 
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, (String) null, (String[]) null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, (CancellationSignal) null);
 
 
             if (cursor != null) {
@@ -246,7 +247,7 @@ public class DatosPantallaPrincipal {
             String parametros[] = {Integer.toString(paradaActual)};
 
             //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             List<Parada> listaParadas = null;
 
@@ -348,7 +349,7 @@ public class DatosPantallaPrincipal {
             String parametros[] = {parada};
 
             //Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             if (cursor != null) {
 
@@ -1242,7 +1243,7 @@ public class DatosPantallaPrincipal {
 
 
             //Cursor cursor = context.managedQuery(HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER);
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, null, null, HistorialDB.Historial.DEFAULT_SORT_ORDER, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), HistorialDB.Historial.CONTENT_URI, HistorialActivity.PROJECTION, (String) null, (String[]) null, HistorialDB.Historial.DEFAULT_SORT_ORDER, (CancellationSignal) null);
 
             if (cursor != null) {
 
@@ -1284,7 +1285,7 @@ public class DatosPantallaPrincipal {
 
         try {
 
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, (String) null, (String[]) null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, (CancellationSignal) null);
 
             if (cursor != null) {
 

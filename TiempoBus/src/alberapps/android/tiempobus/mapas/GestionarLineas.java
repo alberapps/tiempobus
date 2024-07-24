@@ -113,6 +113,7 @@ public class GestionarLineas {
                 //Si no hay datos, cargar desde offline
                 if (context.datosMapaCargadosIda != null && context.datosMapaCargadosIda.getRecorrido() == null || context.datosMapaCargadosIda.getRecorrido().equals("")) {
                     context.mapasOffline.loadDatosRecorridoOffline();
+                    Toast.makeText(context.getApplicationContext(), context.getString(R.string.error_tiempos), Toast.LENGTH_LONG).show();
                 } else {
                     cargarMapa(null);
                 }

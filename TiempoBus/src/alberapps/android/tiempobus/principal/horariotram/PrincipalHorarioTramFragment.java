@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -874,7 +875,7 @@ public class PrincipalHorarioTramFragment extends Fragment {
             String parametros[] = {Integer.toString(parada)};
 
             //Cursor cursor = getActivity().managedQuery(HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null);
-            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, null, parametros, null, null);
+            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), HistorialDB.Historial.CONTENT_URI_ID_PARADA, HistorialActivity.PROJECTION, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             if (cursor != null) {
 

@@ -48,6 +48,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -834,7 +835,7 @@ public class FragmentHorariosTram extends Fragment {
 
 
             //Cursor cursor = actividad.managedQuery(TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER);
-            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, null, null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, null);
+            Cursor cursor = ContentResolverCompat.query(getActivity().getContentResolver(), TiempoBusDb.Favoritos.CONTENT_URI, FavoritosActivity.PROJECTION, (String) null, (String[]) null, TiempoBusDb.Favoritos.DEFAULT_SORT_ORDER, (CancellationSignal) null);
 
             if (cursor != null) {
 

@@ -43,6 +43,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.NotificationCompat.Builder;
 import androidx.core.content.ContentResolverCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -156,7 +157,7 @@ public class GestionarTarjetaInfo {
         try {
 
             //Cursor cursor = context.managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
+            Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             if (cursor == null) {
 

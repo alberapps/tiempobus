@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.fragment.app.Fragment;
 
 import java.io.InputStream;
@@ -753,7 +754,7 @@ public class FragmentLineas extends Fragment {
 
         try {
             //cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
+            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
         } catch (Exception e) {
 
             cursorParadas = null;
@@ -811,7 +812,7 @@ public class FragmentLineas extends Fragment {
                 // Recorrido
 
                 //Cursor cursorRecorrido = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-                Cursor cursorRecorrido = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
+                Cursor cursorRecorrido = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
                 if (cursorRecorrido != null) {
                     cursorRecorrido.moveToFirst();
 
@@ -863,7 +864,7 @@ public class FragmentLineas extends Fragment {
 
         try {
             //cursorParadas = getActivity().managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
+            cursorParadas = ContentResolverCompat.query(getActivity().getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
         } catch (Exception e) {
 
             cursorParadas = null;

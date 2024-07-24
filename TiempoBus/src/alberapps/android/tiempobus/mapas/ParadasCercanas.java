@@ -33,6 +33,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -118,7 +119,7 @@ public class ParadasCercanas {
 
         try {
             //cursor = context.managedQuery(BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null);
-            cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_PROXIMAS_URI, null, selection, parametros, null, null);
+            cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_PROXIMAS_URI, (String[]) null, selection, parametros, (String) null, (CancellationSignal) null);
 
         } catch (Exception e) {
 

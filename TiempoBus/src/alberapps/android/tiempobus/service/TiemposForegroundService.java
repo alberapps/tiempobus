@@ -27,6 +27,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ServiceInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -106,7 +107,21 @@ public class TiemposForegroundService extends Service {
         if (mStartForeground != null) {
             mStartForegroundArgs[0] = Integer.valueOf(id);
             mStartForegroundArgs[1] = notification;
-            invokeMethod(mStartForeground, mStartForegroundArgs);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && mStartForeground.getName().equals("startForeground")) {
+
+                Object[] mStartForegroundArgs2 = new Object[3];
+                mStartForegroundArgs2[0] = mStartForegroundArgs[0];
+                mStartForegroundArgs2[1] = mStartForegroundArgs[1];
+                mStartForegroundArgs2[2] = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+
+                //invokeMethod(mStartForeground, mStartForegroundArgs2);
+                startForeground((Integer) mStartForegroundArgs[0], (Notification) mStartForegroundArgs[1], ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+            } else {
+                invokeMethod(mStartForeground, mStartForegroundArgs);
+            }
+
+
             return;
         }
 

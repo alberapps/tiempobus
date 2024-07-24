@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.widget.Toast;
 
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +67,7 @@ public class MapasOffline {
         try {
 
             //cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-            cursorParadas = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
+            cursorParadas = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
         } catch (Exception e) {
 
@@ -132,7 +133,7 @@ public class MapasOffline {
 
                 try {
                     //cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-                    cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
+                    cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
                 } catch (Exception e) {
                     cursorRecorrido = null;
                     e.printStackTrace();
@@ -181,7 +182,7 @@ public class MapasOffline {
         Cursor cursorRecorrido = null;
 
         try {
-            cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
+            cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
         } catch (Exception e) {
             cursorRecorrido = null;
             e.printStackTrace();
@@ -230,7 +231,7 @@ public class MapasOffline {
 
         try {
             //cursorParadas = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null);
-            cursorParadas = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, null, null, parametros, null, null);
+            cursorParadas = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
         } catch (Exception e) {
 
             cursorParadas = null;
@@ -272,7 +273,7 @@ public class MapasOffline {
 
             try {
                 //cursorRecorrido = context.managedQuery(BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null);
-                cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, null, null, parametros, null, null);
+                cursorRecorrido = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.PARADAS_LINEA_RECORRIDO_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
             } catch (Exception e) {
                 cursorRecorrido = null;
                 e.printStackTrace();

@@ -39,6 +39,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 import androidx.core.view.MenuItemCompat;
 
 import alberapps.android.tiempobus.MainActivity;
@@ -85,7 +86,7 @@ public class DatosParadaActivity extends AppCompatActivity {
 
         Uri uri = getIntent().getData();
         //Cursor cursor = managedQuery(uri, null, null, null, null);
-        Cursor cursor = ContentResolverCompat.query(getContentResolver(), uri, null, null, null, null, null);
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), uri, (String[]) null, (String) null, (String[]) null, (String) null, (CancellationSignal) null);
 
         if (cursor == null) {
             finish();

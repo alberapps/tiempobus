@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 dependencies {
     //implementation fileTree(dir: 'libs', include: '*.jar')
-    implementation 'com.google.maps.android:android-maps-utils:3.4.0'
+    implementation 'com.google.maps.android:android-maps-utils:3.8.2'
     //implementation files('libs/twitter4j-core-4.0.7.jar')
     //implementation files('libs/jsoup-1.13.1.jar')
 
-    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.jsoup:jsoup:1.18.1'
 
 
     //compile 'com.google.firebase:firebase-messaging:10.0.1'
@@ -16,11 +16,11 @@ dependencies {
     //implementation 'com.android.support:multidex:1.0.3'
 
     //Drive nueva api
-    implementation 'com.google.http-client:google-http-client-gson:1.43.2'
-    implementation('com.google.api-client:google-api-client-android:2.2.0') {
+    implementation 'com.google.http-client:google-http-client-gson:1.44.2'
+    implementation('com.google.api-client:google-api-client-android:2.6.0') {
         exclude group: 'org.apache.httpcomponents'
     }
-    implementation('com.google.apis:google-api-services-drive:v3-rev20230306-2.0.0') {
+    implementation('com.google.apis:google-api-services-drive:v3-rev20240628-2.0.0') {
         exclude group: 'org.apache.httpcomponents'
     }
 
@@ -30,82 +30,82 @@ dependencies {
 
 android {
     namespace 'alberapps.android.tiempobus'
-    compileSdkVersion 33
-    buildToolsVersion "33.0.2"
+    compileSdk 34
+    //buildToolsVersion '34.0.0'
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 33
-        versionName "5.2.6"
+        minSdkVersion 21
+        targetSdk 34
+        versionName "5.3.0"
+        versionCode 1910
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled false
         //multiDexEnabled true
 
+        //versionCode 1910
+
     }
     buildFeatures {
+
+        buildConfig true
         renderScript true
         aidl true
     }
 
     buildFeatures.viewBinding = true
 
-    flavorDimensions "api"
+    //flavorDimensions api
 
-    productFlavors {
+    //productFlavors {
 
-        /*legacy {
-            minSdkVersion 9
-            versionCode 978 // Min API level 9
-            dimension "api"
-        }*/
-        /*current {
-            minSdkVersion 14
-            versionCode 1500  // Min API level 14
-            dimension "api"
-        }*/
-        /*current {
-            minSdkVersion 16
-            versionCode 1601  // Min API level 16
-            dimension "api"
-        }*/
-        current {
-            minSdkVersion 19
-            versionCode 1909  // Min API level 19
-            dimension "api"
-        }
+    /*legacy {
+        minSdkVersion 9
+        versionCode 978 // Min API level 9
+        dimension "api"
+    }*/
+    /*current {
+        minSdkVersion 14
+        versionCode 1500  // Min API level 14
+        dimension "api"
+    }*/
+    /*current {
+        minSdkVersion 16
+        versionCode 1601  // Min API level 16
+        dimension "api"
+    }*/
+    //current {
+    //    minSdkVersion 19
+    //    versionCode 1910  // Min API level 19
+    //    dimension "api"
+    //}
 
-    }
+    //}
 
     dependencies {
 
-        currentImplementation 'androidx.appcompat:appcompat:1.6.1'
-        currentImplementation 'com.google.android.material:material:1.9.0'
-        currentImplementation 'androidx.cardview:cardview:1.0.0'
-        currentImplementation 'androidx.recyclerview:recyclerview:1.3.0'
-        currentImplementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        currentImplementation 'androidx.vectordrawable:vectordrawable:1.1.0'
+        //currentImplementation
+        implementation 'androidx.appcompat:appcompat:1.7.0'
+        implementation 'com.google.android.material:material:1.12.0'
+        implementation 'androidx.cardview:cardview:1.0.0'
+        implementation 'androidx.recyclerview:recyclerview:1.3.2'
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        implementation 'androidx.vectordrawable:vectordrawable:1.2.0'
 
-        currentImplementation 'androidx.core:core:1.10.1'
+        implementation 'androidx.core:core:1.13.1'
 
-        currentImplementation 'com.android.volley:volley:1.2.1'
+        implementation 'com.google.android.gms:play-services-maps:19.0.0'
+        implementation 'com.google.android.gms:play-services-location:21.3.0'
+        implementation 'com.google.android.gms:play-services-vision:20.1.3'
 
-        //currentImplementation 'androidx.preference:preference:1.1.1'
-
-        //currentImplementation 'com.android.support:preference-v7:27.1.1'
-
-        currentImplementation 'com.google.android.gms:play-services-maps:18.1.0'
-        currentImplementation 'com.google.android.gms:play-services-location:21.0.1'
-        currentImplementation 'com.google.android.gms:play-services-vision:20.1.3'
-
-        currentImplementation 'com.google.android.gms:play-services-auth:20.5.0'
+        implementation 'com.google.android.gms:play-services-auth:21.2.0'
 
         //currentImplementation 'com.google.firebase:firebase-core:16.0.9'
         //API 16
-        currentImplementation 'com.google.firebase:firebase-analytics:21.3.0'
-        currentImplementation 'com.google.firebase:firebase-crashlytics:18.3.7'
+        implementation 'com.google.firebase:firebase-analytics:22.0.2'
+        implementation 'com.google.firebase:firebase-crashlytics:19.0.3'
 
-        currentImplementation 'com.google.android.libraries.places:places-compat:2.6.0'
+        implementation 'com.google.android.libraries.places:places-compat:2.6.0'
 
         /*legacyImplementation 'com.android.support:appcompat-v7:25.3.1'
         legacyImplementation 'com.android.support:cardview-v7:25.3.1'
@@ -193,7 +193,7 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0']
+            excludes += ['META-INF/DEPENDENCIES', 'META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/license.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/notice.txt', 'META-INF/ASL2.0', 'META-INF/INDEX.LIST']
         }
     }
 

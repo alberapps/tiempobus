@@ -161,13 +161,13 @@
                     android:summary="@string/conf_conectividad_titulo_desc_tiempos"
                     android:title="@string/conf_conectividad_titulo_check_tiempos" />-->
             </PreferenceCategory>
-            <PreferenceCategory android:title="@string/conf_bd_titulo" >
+            <!--PreferenceCategory android:title="@string/conf_bd_titulo" -->
                  <!--CheckBoxPreference
                     android:defaultValue="true"
                     android:key="control_verificar_actualiza"
                     android:summary="@string/pref_control_actualizar_desc"
                     android:title="@string/pref_control_actualizar_titulo" /-->
-                <PreferenceScreen
+                <!--PreferenceScreen
                     android:key="reiniciar_db"
                     android:summary="@string/conf_db_recargar_desc"
                     android:title="@string/conf_db_recargar" >
@@ -177,7 +177,7 @@
                     android:summary="@string/conf_db_actualizar_desc"
                     android:title="@string/conf_db_actualizar" >
                 </PreferenceScreen>
-            </PreferenceCategory>
+            </PreferenceCategory-->
             <PreferenceCategory android:title="@string/menu_mapa" >
                 <ListPreference
                     android:defaultValue="30"

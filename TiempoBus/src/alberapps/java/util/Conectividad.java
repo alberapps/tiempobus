@@ -25,6 +25,9 @@ import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.util.Log;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -284,7 +287,11 @@ public class Conectividad {
                 Log.d("CONEXION", "Con cache");
             }
 
+            int res = urlConnection.getResponseCode();
+
             in = new BufferedInputStream(urlConnection.getInputStream());
+
+
 
             if (utf8) {
                 datos = Utilidades.obtenerStringDeStreamUTF8(in);
@@ -772,6 +779,32 @@ public class Conectividad {
         }
 
         return in2;
+
+    }
+
+
+    public static InputStream doGetJSoup(String url, String userAgent) throws Exception {
+
+        InputStream result = null;
+        try {
+            result = Jsoup.connect(url).method(Connection.Method.GET)
+                    .ignoreContentType(true)
+                    .timeout(10000)
+                    .header("Cache-Control", "no-cache")
+                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
+
+                    .header("Connection", "keep-alive")
+
+                    .userAgent(userAgent)
+                    .execute().bodyStream();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Exception("Error al acceder al servicio");
+        }
+
+        return result;
 
     }
 

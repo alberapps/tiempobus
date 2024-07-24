@@ -38,6 +38,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -277,7 +278,7 @@ public class FavoritoNuevoActivity extends AppCompatActivity {
             String parametros[] = {numParada};
 
             //Cursor cursor = managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-            cursor = ContentResolverCompat.query(getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
+            cursor = ContentResolverCompat.query(getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
             if (cursor != null) {
                 List<Parada> listaParadas = new ArrayList<>();

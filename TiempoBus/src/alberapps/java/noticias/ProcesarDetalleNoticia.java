@@ -61,16 +61,23 @@ public class ProcesarDetalleNoticia {
 
         try {
 
-            String conexion = null;
+            //String conexion = null;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 conexion = Conectividad.conexionGetUtf8StringUserAgent(url, true, userAgentDefault);
             } else {
                 conexion = Conectividad.conexionGetUtf8StringUserAgent(url, true, userAgentDefault, context);
             }
 
 
-            Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", url);
+            Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", url);*/
+
+            Document doc = Jsoup.connect(url).timeout(10000)
+                    .header("Cache-Control", "no-cache")
+                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
+                    .header("Connection", "keep-alive")
+                    .userAgent(userAgentDefault).get();
 
             noticias = new Noticias();
 

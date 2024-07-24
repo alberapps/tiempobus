@@ -49,6 +49,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -153,7 +154,7 @@ public class FavoritosActivity extends AppCompatActivity {
         //Cursor cursor = managedQuery(getIntent().getData(), PROJECTION, null, null, orden);
 
         //Sustituir managedquery deprecated
-        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, null, null, orden, null);
+        Cursor cursor = ContentResolverCompat.query(getContentResolver(), getIntent().getData(), PROJECTION, (String) null, (String[]) null, orden, (CancellationSignal) null);
 
         List<Favorito> listaFavoritos = new ArrayList<>();
 

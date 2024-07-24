@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import androidx.core.content.ContentResolverCompat;
+import androidx.core.os.CancellationSignal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -423,7 +424,7 @@ public class ProcesarEstructura {
                 try {
 
                     //Cursor cursor = ((FragmentActivity) context).managedQuery(BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null);
-                    Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, null, null, parametros, null, null);
+                    Cursor cursor = ContentResolverCompat.query(context.getContentResolver(), BuscadorLineasProvider.DATOS_PARADA_URI, (String[]) null, (String) null, parametros, (String) null, (CancellationSignal) null);
 
                     if (cursor != null) {
 

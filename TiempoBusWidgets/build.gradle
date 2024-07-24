@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: '*.jar')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    //implementation fileTree(dir: 'libs', include: '*.jar')
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -11,11 +11,10 @@ dependencies {
 
 android {
     namespace 'alberapps.android.tiempobuswidgets'
-    compileSdkVersion 33
-    buildToolsVersion "33.0.2"
+    compileSdk 34
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 33
+        minSdkVersion 21
+        targetSdk 34
         versionCode 17
         versionName "3.7.1"
         vectorDrawables.useSupportLibrary = true

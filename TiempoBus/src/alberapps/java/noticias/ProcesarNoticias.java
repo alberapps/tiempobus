@@ -45,85 +45,102 @@ public class ProcesarNoticias {
 
         List<Noticias> noticias = new ArrayList<>();
 
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https").authority("alicante.vectalia.es");
-        builder.appendPath(UtilidadesUI.getIdiomaWebSubus());
-        builder.appendPath("alertas");
+        try {
 
-        String conexion = null;
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("https").authority("alicante.vectalia.es");
+            builder.appendPath(UtilidadesUI.getIdiomaWebSubus());
+            builder.appendPath("alertas");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //String conexion = null;
+
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault);
         } else {
             conexion = Conectividad.conexionGetUtf8StringUserAgent(builder.toString(), usarCache, userAgentDefault, context);
-        }
+        }*/
+
+            //Document doc = Jsoup.connect(builder.toString()).userAgent(userAgentDefault).execute().parse();
+
+            //Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());
+
+            Document doc = Jsoup.connect(builder.toString()).timeout(10000)
+                    .header("Cache-Control", "no-cache")
+                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
+                    .header("Connection", "keep-alive")
+                    .userAgent(userAgentDefault).get();
 
 
-        Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());
+            //Seccion de noticias
+            Elements seccionNoticias = doc.select("div.novedades_alertas");
+
+            //Listado de noticias
+            Elements noticiasList = seccionNoticias.select("div.txt_novedades_alertas");
 
 
-        //Seccion de noticias
-        Elements seccionNoticias = doc.select("div.novedades_alertas");
+            Noticias noticia = null;
 
-        //Listado de noticias
-        Elements noticiasList = seccionNoticias.select("div.txt_novedades_alertas");
+            //Recorrer listado de noticias
+            for (int i = 0; i < noticiasList.size(); i++) {
+
+                String fecha = noticiasList.get(i).select("div.fecha_novedades").text();
+
+                Elements seccionLink = noticiasList.get(i).select("a[href]");
+
+                String h2 = seccionLink.get(0).select("h2").text();
+                String p = seccionLink.get(0).select("p").text();
+
+                String noticiaTexto = h2;
+
+                String noticiaLineas = p;
+
+                String link = seccionLink.get(0).attr("abs:href");
+
+                noticia = new Noticias();
+
+                String fechaDoble = null;
+
+                if (fecha.length() > 8) {
+
+                    //del 09/03/15 al 09/06/15
+
+                    fechaDoble = fecha;
+
+                    String[] fechaString = fechaDoble.split(" ");
+
+                    fecha = fechaString[1];
+
+                }
 
 
-        Noticias noticia = null;
+                noticia.setFecha(Utilidades.getFechaDateCorta(fecha));
 
-        //Recorrer listado de noticias
-        for (int i = 0; i < noticiasList.size(); i++) {
+                if (fechaDoble != null) {
+                    noticia.setFechaDoble(fechaDoble);
+                }
 
-            String fecha = noticiasList.get(i).select("div.fecha_novedades").text();
+                noticia.setNoticia(noticiaTexto);
+                noticia.setLinks(new ArrayList<String>());
+                noticia.setDescLink(new ArrayList<String>());
+                noticia.getLinks().add(link);
+                noticia.getDescLink().add(noticiaTexto);
+                noticia.setNoticiaLineas(noticiaLineas);
 
-            Elements seccionLink = noticiasList.get(i).select("a[href]");
 
-            String h2 = seccionLink.get(0).select("h2").text();
-            String p = seccionLink.get(0).select("p").text();
-
-            String noticiaTexto = h2;
-
-            String noticiaLineas = p;
-
-            String link = seccionLink.get(0).attr("abs:href");
-
-            noticia = new Noticias();
-
-            String fechaDoble = null;
-
-            if (fecha.length() > 8) {
-
-                //del 09/03/15 al 09/06/15
-
-                fechaDoble = fecha;
-
-                String[] fechaString = fechaDoble.split(" ");
-
-                fecha = fechaString[1];
+                noticias.add(noticia);
 
             }
 
 
-            noticia.setFecha(Utilidades.getFechaDateCorta(fecha));
+            Collections.sort(noticias);
 
-            if (fechaDoble != null) {
-                noticia.setFechaDoble(fechaDoble);
-            }
+        } catch (Exception e) {
 
-            noticia.setNoticia(noticiaTexto);
-            noticia.setLinks(new ArrayList<String>());
-            noticia.setDescLink(new ArrayList<String>());
-            noticia.getLinks().add(link);
-            noticia.getDescLink().add(noticiaTexto);
-            noticia.setNoticiaLineas(noticiaLineas);
-
-
-            noticias.add(noticia);
+            e.printStackTrace();
+            throw e;
 
         }
-
-
-        Collections.sort(noticias);
 
         return noticias;
 
