@@ -199,7 +199,8 @@
             android:key="traducciones"
             android:summary="@string/traducciones_desc"
             android:title="@string/traducciones" >
-            <intent android:action=".appinfo.TraduccionesActivity" />
+            <!--intent android:action=".appinfo.TraduccionesActivity"/-->
+            <intent android:targetPackage="alberapps.android.tiempobus" android:targetClass="alberapps.android.tiempobus.appinfo.TraduccionesActivity"/>
         </PreferenceScreen>
 
         <ListPreference
@@ -264,7 +265,8 @@
             android:key="screen_preference"
             android:summary="@string/summary_screen_preference"
             android:title="@string/title_screen_preference" >
-            <intent android:action=".appinfo.AppInfoActivity" />
+            <!--intent android:action=".appinfo.AppInfoActivity" /-->
+            <intent android:targetPackage="alberapps.android.tiempobus" android:targetClass="alberapps.android.tiempobus.appinfo.AppInfoActivity"/>
 
             <!-- You can place more preferences here that will be shown on the next screen. -->
             <!--

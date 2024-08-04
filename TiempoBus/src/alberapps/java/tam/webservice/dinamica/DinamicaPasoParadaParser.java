@@ -49,7 +49,7 @@ public class DinamicaPasoParadaParser {
      * @return
      * @throws Exception
      */
-    public GetPasoParadaResult consultarServicio(String linea, String parada, Boolean cacheTiempos) throws Exception {
+    public GetPasoParadaResult consultarServicio(String linea, String parada, Boolean cacheTiempos, boolean enableHttps) throws Exception {
 
         InputStream is = null;
 
@@ -60,6 +60,11 @@ public class DinamicaPasoParadaParser {
             //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, parada), cacheTiempos));
 
             Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_DINAMICA_PASOPARADA).buildUpon();
+
+            if(!enableHttps) {
+                builder.scheme("http");
+            }
+
             if (linea != null) {
                 builder.appendQueryParameter("line", linea);
             }

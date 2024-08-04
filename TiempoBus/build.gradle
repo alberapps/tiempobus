@@ -35,15 +35,14 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdk 34
-        versionName "5.3.0"
-        versionCode 1910
+        versionName "5.4.1"
+        versionCode 2002
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        multiDexEnabled false
+        //multiDexEnabled true
         //multiDexEnabled true
 
-        //versionCode 1910
 
     }
     buildFeatures {
@@ -119,6 +118,10 @@ android {
         legacyImplementation 'com.google.android.gms:play-services-places:10.0.1'
         legacyImplementation 'com.google.android.gms:play-services-analytics:10.0.1'
         legacyImplementation 'com.google.android.gms:play-services-vision:10.0.1'*/
+
+
+
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
     }
 
 
@@ -176,8 +179,9 @@ android {
 
 
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        coreLibraryDesugaringEnabled true
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 
 

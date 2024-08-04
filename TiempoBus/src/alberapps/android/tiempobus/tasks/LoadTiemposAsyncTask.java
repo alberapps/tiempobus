@@ -24,7 +24,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
+import java.security.cert.CertPathValidatorException;
 import java.util.ArrayList;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
@@ -105,13 +108,22 @@ public class LoadTiemposAsyncTask extends AsyncTask<Object, Void, DatosRespuesta
 
 
             } else {
-                llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI, cacheTiempos);
+                llegadasBus = ProcesarTiemposService.procesaTiemposLlegada(paradaI, cacheTiempos, preferencias.getBoolean("enable_https_alberapps", true));
             }
 
             datosRespuesta.setListaBusLlegada(llegadasBus);
 
 
-        } catch (TiempoBusException e) {
+        } catch (SSLHandshakeException ex) {
+            SharedPreferences.Editor editor = preferencias.edit();
+            editor.putBoolean("enable_https_alberapps", false);
+            editor.apply();
+
+            ex.printStackTrace();
+
+            return null;
+        }
+        catch (TiempoBusException e) {
 
             e.printStackTrace();
 

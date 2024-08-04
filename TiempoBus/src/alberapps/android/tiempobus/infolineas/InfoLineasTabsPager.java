@@ -102,7 +102,7 @@ public class InfoLineasTabsPager extends AppCompatActivity {
     SharedPreferences preferencias = null;
 
     AsyncTask<Object, Void, DatosHorarios> taskHorarios = null;
-    AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
+    AsyncTask<Object, Void, ArrayList<BusLinea>> taskBuses = null;
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskDatosLinea = null;
     AsyncTask<DatosInfoLinea, Void, DatosInfoLinea> taskInfoLineaIda = null;
 

@@ -11,7 +11,8 @@
         <item name="colorPrimaryDark">@color/mi_material_blue_principal_700</item>
         <item name="colorAccent">@color/mi_material_blue_principal</item>
 
-        <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
+        <item name="android:statusBarColor">@color/background_2</item>
+        <!--item name="android:windowLightStatusBar">true</item-->
 
         <!--item name="actionBarStyle">@style/Header.Material</item-->
 
@@ -68,7 +69,8 @@
         <!--item name="actionBarStyle">@style/Header.Material</item-->
 
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
-        <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
+        <item name="android:statusBarColor">@color/background_2</item>
+        <!--item name="android:windowLightStatusBar">true</item-->
 
         <item name="android:windowContentOverlay">@null</item>
 
@@ -108,7 +110,8 @@
 
 
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
-        <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
+        <item name="android:statusBarColor">@color/background_2</item>
+        <!--item name="android:windowLightStatusBar">true</item-->
 
         <item name="android:navigationBarColor">@color/navigation_bar_color</item>
 

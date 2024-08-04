@@ -118,7 +118,7 @@ public class MapasActivity extends AppCompatActivity
 
     public AsyncTask<String, Void, DatosMapa> taskDatosMapa = null;
     public AsyncTask<String, Void, DatosMapa> taskDatosMapaVuelta = null;
-    public AsyncTask<String, Void, ArrayList<BusLinea>> taskBuses = null;
+    public AsyncTask<Object, Void, ArrayList<BusLinea>> taskBuses = null;
     public AsyncTask<Object, Void, DatosMapa> taskVehiculosMapa = null;
     public AsyncTask<Object, Void, DatosMapa[]> taskDatosMapaV3 = null;
 

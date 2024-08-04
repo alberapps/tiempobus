@@ -802,12 +802,15 @@ public class Notificaciones {
      *
      * @param contexto
      */
-    public static Notification notificacionServicioAlerta(Context contexto, CharSequence aviso) {
+    public static Notification notificacionServicioAlerta(Context contexto, CharSequence aviso, boolean ongoing) {
 
         PreferenceManager.setDefaultValues(contexto, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(contexto);
 
         NotificationCompat.Builder mBuilder = initBuilder(contexto, CHANNEL_LOW);
+
+        //mBuilder.setOngoing(ongoing);
+        mBuilder.setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE);
 
         String texto = contexto.getString(R.string.foreground_service);
 
@@ -852,6 +855,8 @@ public class Notificaciones {
             // mId allows you to update the notification later on.
             //mNotificationManager.notify(NOTIFICACION_SERVICIO_ALERTAS, mBuilder.build());
         }
+
+
 
         return mBuilder.build();
 

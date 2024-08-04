@@ -18,8 +18,11 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.infolineas.DatosInfoLinea;
 import alberapps.java.tam.mapas.DatosMapa;
 import alberapps.java.tam.webservice.estructura.ProcesarEstructura;
@@ -48,8 +51,11 @@ public class LoadDatosInfoLineasAsyncTask extends AsyncTask<DatosInfoLinea, Void
 
                 //DatosMapa[] paradas = ProcesarMapaServiceV3.getDatosMapa(datos[0].getUrl());
 
+                PreferenceManager.setDefaultValues(datos[0].getContext(), R.xml.preferences, false);
+                SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(datos[0].getContext());
+
                 //Nuevo acceso por servicio web
-                DatosMapa[] paradas = ProcesarEstructura.getDatosLineas(datos[0].getLinea(), datos[0].getSublinea(), true);
+                DatosMapa[] paradas = ProcesarEstructura.getDatosLineas(datos[0].getLinea(), datos[0].getSublinea(), true, preferencias.getBoolean("enable_https_alberapps", true));
 
                 //Cargar transbordos de base de datos local
                 ProcesarEstructura.cargarDatosTransbordosBD(paradas[0], datos[0].getContext());

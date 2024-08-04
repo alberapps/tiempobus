@@ -48,7 +48,7 @@ public class ProcesarEstructura {
      *
      * @return
      */
-    public static DatosMapa[] getDatosLineas(String linea, String sublinea, boolean cache) {
+    public static DatosMapa[] getDatosLineas(String linea, String sublinea, boolean cache, boolean enableHttps) {
 
         DatosMapa[] datosMapa = {null, null};
 
@@ -71,7 +71,7 @@ public class ProcesarEstructura {
 
             EstructuraGetRutasSublineaParser parser = new EstructuraGetRutasSublineaParser();
 
-            GetRutaSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache);
+            GetRutaSublineaResult datos = parser.consultarServicio(lineab, sublinea, cache, enableHttps);
 
 
             if (datos != null && datos.getInfoRutaList() != null && !datos.getInfoRutaList().isEmpty()) {
@@ -191,7 +191,7 @@ public class ProcesarEstructura {
      *
      * @return
      */
-    public static DatosMapa[] getDatosNodosMapa(String linea, String sublinea, boolean cache) {
+    public static DatosMapa[] getDatosNodosMapa(String linea, String sublinea, boolean cache, boolean enableHttps) {
 
         DatosMapa[] datosMapa = {null, null};
 
@@ -212,7 +212,7 @@ public class ProcesarEstructura {
             //if (datos != null && datos.getInfoNodoMapList() != null && !datos.getInfoNodoMapList().isEmpty()) {
 
 
-            DatosMapa[] datosLineas = getDatosLineas(linea, sublinea, cache);
+            DatosMapa[] datosLineas = getDatosLineas(linea, sublinea, cache, enableHttps);
 
             /*String parada = null;
 

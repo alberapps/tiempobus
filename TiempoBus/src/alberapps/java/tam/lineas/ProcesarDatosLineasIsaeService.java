@@ -44,7 +44,7 @@ import alberapps.java.util.Utilidades;
  */
 public class ProcesarDatosLineasIsaeService {
 
-    public static List<DatosLinea> getLineasInfo(String offline) {
+    public static List<DatosLinea> getLineasInfo(String offline, boolean enableHttps) {
 
         List<DatosLinea> lineas = null;
 
@@ -59,8 +59,14 @@ public class ProcesarDatosLineasIsaeService {
                 //st = Conectividad.conexionGetIsoStream(DatosTam.URL_SERVIDOR_LINEAS);
                 //doc = Jsoup.parse(st, "ISO-8859-1", DatosTam.URL_SERVIDOR_LINEAS);
 
-                String conexion = Conectividad.conexionGetUtf8StringUserAgent(DatosTam.URL_SERVIDOR_LINEAS, true, null);
-                doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", DatosTam.URL_SERVIDOR_LINEAS);
+                String url = DatosTam.URL_SERVIDOR_LINEAS;
+
+                if(!enableHttps) {
+                    url = url.replace("https", "http");
+                }
+
+                String conexion = Conectividad.conexionGetUtf8StringUserAgent(url, true, null);
+                doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", url);
 
 
             } else {
@@ -160,11 +166,11 @@ public class ProcesarDatosLineasIsaeService {
      * @return
      * @throws IOException
      */
-    public static ArrayList<BusLinea> getLineasBus(String offline) throws IOException {
+    public static ArrayList<BusLinea> getLineasBus(String offline, boolean enableHttps) throws IOException {
 
         ArrayList<BusLinea> lineasBus = new ArrayList<>();
 
-        List<DatosLinea> datosRecuperados = getLineasInfo(offline);
+        List<DatosLinea> datosRecuperados = getLineasInfo(offline, enableHttps);
 
         if (datosRecuperados != null && !datosRecuperados.isEmpty()) {
 

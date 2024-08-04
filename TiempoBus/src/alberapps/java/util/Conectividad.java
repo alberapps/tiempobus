@@ -47,6 +47,7 @@ import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.TrustManagerFactory;
 
 import alberapps.android.tiempobus.util.Comunes;
@@ -299,7 +300,26 @@ public class Conectividad {
                 datos = Utilidades.obtenerStringDeStream(in);
             }
 
-        } catch (IOException e) {
+        }
+        catch (SSLHandshakeException ex) {
+            ex.printStackTrace();
+
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex2) {
+
+            }
+
+            throw ex;
+        }
+
+        catch (IOException e) {
 
             e.printStackTrace();
 
@@ -316,6 +336,7 @@ public class Conectividad {
             }
 
             throw new Exception("Error al acceder al servicio");
+
 
         } finally {
             if (urlConnection != null) {

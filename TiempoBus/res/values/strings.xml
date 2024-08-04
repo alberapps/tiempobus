@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.3.0</string>
+    <string name="app_version" translatable="false">5.4.0</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
-    <string name="app_autor" translatable="false">Alberto Montiel (2023)</string>
+    <string name="app_autor" translatable="false">Alberto Montiel (2024)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
     <string name="app_autor_web" translatable="false">blog.alberapps.com</string>
     <string name="app_autor_tw" translatable="false">\@alberapps</string>

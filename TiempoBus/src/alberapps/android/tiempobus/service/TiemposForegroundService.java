@@ -108,14 +108,7 @@ public class TiemposForegroundService extends Service {
             mStartForegroundArgs[0] = Integer.valueOf(id);
             mStartForegroundArgs[1] = notification;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE && mStartForeground.getName().equals("startForeground")) {
-
-                Object[] mStartForegroundArgs2 = new Object[3];
-                mStartForegroundArgs2[0] = mStartForegroundArgs[0];
-                mStartForegroundArgs2[1] = mStartForegroundArgs[1];
-                mStartForegroundArgs2[2] = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
-
-                //invokeMethod(mStartForeground, mStartForegroundArgs2);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 startForeground((Integer) mStartForegroundArgs[0], (Notification) mStartForegroundArgs[1], ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
             } else {
                 invokeMethod(mStartForeground, mStartForegroundArgs);
@@ -238,7 +231,7 @@ public class TiemposForegroundService extends Service {
                     // Set the info for the views that show in the notification panel.
                     //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
 
-                    Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
+                    Notification notification = Notificaciones.notificacionServicioAlerta(this, text, true);
 
                     startForegroundCompat(R.string.foreground_service_started, notification);
 
@@ -437,9 +430,9 @@ public class TiemposForegroundService extends Service {
 
                         Log.d("TiemposService", "Recalculando para TRAM");
 
-                        new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1], datos[6]);
+                        new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1], datos[6], getApplicationContext());
                     } else {
-                        new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1]);
+                        new LoadTiemposLineaParadaAsyncTask(loadTiemposLineaParadaAsyncTaskResponder).execute(datos[0], datos[1], null, getApplicationContext());
                     }
 
                 } else {

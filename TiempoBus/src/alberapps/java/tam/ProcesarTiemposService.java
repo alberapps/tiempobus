@@ -42,7 +42,7 @@ public class ProcesarTiemposService {
      * @return lista bus
      * @throws Exception
      */
-    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Boolean cacheTiempos) throws Exception {
+    public static ArrayList<BusLlegada> procesaTiemposLlegada(int parada, Boolean cacheTiempos, boolean enableHttps) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class ProcesarTiemposService {
         DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
 
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada), cacheTiempos);
+        GetPasoParadaResult serviceResult = service.consultarServicio(null, Integer.toString(parada), cacheTiempos, enableHttps);
 
         //Control de sin resultados
         if (serviceResult != null && serviceResult.getPasoParadaList() != null && serviceResult.getPasoParadaList().isEmpty()) {
@@ -172,14 +172,14 @@ public class ProcesarTiemposService {
      * @return bus
      * @throws Exception
      */
-    public static BusLlegada procesaTiemposLlegadaConParadaLinea(String linea, String parada) throws Exception {
+    public static BusLlegada procesaTiemposLlegadaConParadaLinea(String linea, String parada, boolean enableHttps) throws Exception {
 
         ArrayList<BusLlegada> buses = new ArrayList<>();
 
         //GetPasoParadaXmlWebservice service = new GetPasoParadaXmlWebservice();
         DinamicaPasoParadaParser service = new DinamicaPasoParadaParser();
 
-        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, false);
+        GetPasoParadaResult serviceResult = service.consultarServicio(linea, parada, false, enableHttps);
 
         for (int i = 0; i < serviceResult.getPasoParadaList().size(); i++) {
 

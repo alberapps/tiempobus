@@ -45,7 +45,7 @@ public class EstructuraGetRutasSublineaParser {
      * @return
      * @throws Exception
      */
-    public GetRutaSublineaResult consultarServicio(String linea, String sublinea, Boolean cache) throws Exception {
+    public GetRutaSublineaResult consultarServicio(String linea, String sublinea, Boolean cache, Boolean enableHttps) throws Exception {
 
         InputStream is = null;
 
@@ -56,6 +56,11 @@ public class EstructuraGetRutasSublineaParser {
             //is = Utilidades.stringToStream(Conectividad.conexionPostUtf8(URL, datosPost(linea, sublinea), cache));
 
             Uri.Builder builder = Uri.parse(DatosTam.URL_SERVIDOR_ESTRUCTURA_RUTAS).buildUpon();
+
+            if(!enableHttps) {
+                builder.scheme("http");
+            }
+
             builder.appendQueryParameter("line", linea);
             //builder.appendQueryParameter("sublinea", sublinea);
             builder.build();

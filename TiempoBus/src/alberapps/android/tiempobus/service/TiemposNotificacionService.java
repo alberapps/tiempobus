@@ -206,7 +206,7 @@ public class TiemposNotificacionService extends Service {
             //notification.setLatestEventInfo(this, getText(R.string.foreground_service) + " Parada: " + parada, text, contentIntent);
 
 
-            Notification notification = Notificaciones.notificacionServicioAlerta(this, text);
+            Notification notification = Notificaciones.notificacionServicioAlerta(this, text, true);
 
 
             startForegroundCompat(R.string.foreground_service_started, notification);

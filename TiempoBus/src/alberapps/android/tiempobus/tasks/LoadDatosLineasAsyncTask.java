@@ -17,17 +17,21 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
+import alberapps.android.tiempobus.R;
 import alberapps.java.tam.BusLinea;
 import alberapps.java.tam.lineas.ProcesarDatosLineasIsaeService;
 
 /**
  * Cargar informacion de las lineas
  */
-public class LoadDatosLineasAsyncTask extends AsyncTask<String, Void, ArrayList<BusLinea>> {
+public class LoadDatosLineasAsyncTask extends AsyncTask<Object, Void, ArrayList<BusLinea>> {
 
 
     public interface LoadDatosLineasAsyncTaskResponder {
@@ -43,17 +47,20 @@ public class LoadDatosLineasAsyncTask extends AsyncTask<String, Void, ArrayList<
 
 
     @Override
-    protected ArrayList<BusLinea> doInBackground(String... datos) {
+    protected ArrayList<BusLinea> doInBackground(Object... datos) {
         ArrayList<BusLinea> lineasBus = null;
         try {
 
             String datosOffline = null;
 
             if (datos != null && datos.length > 0 && datos[0] != null) {
-                datosOffline = datos[0];
+                datosOffline = (String)datos[0];
             }
 
-            lineasBus = ProcesarDatosLineasIsaeService.getLineasBus(datosOffline);
+            PreferenceManager.setDefaultValues((Context) datos[1], R.xml.preferences, false);
+            SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences((Context) datos[1]);
+
+            lineasBus = ProcesarDatosLineasIsaeService.getLineasBus(datosOffline, preferencias.getBoolean("enable_https_alberapps", true));
 
 
         } catch (Exception e) {

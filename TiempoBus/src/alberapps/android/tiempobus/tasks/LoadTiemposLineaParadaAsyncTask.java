@@ -19,8 +19,12 @@
  */
 package alberapps.android.tiempobus.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
+import alberapps.android.tiempobus.R;
 import alberapps.android.tiempobus.principal.DatosPantallaPrincipal;
 import alberapps.java.tam.BusLlegada;
 import alberapps.java.tam.ProcesarTiemposService;
@@ -31,7 +35,7 @@ import alberapps.java.tram.linea9.ProcesarTiemposTramL9Texto;
  * Tarea asincrona que se encarga de consultar los tiempos para una linea y
  * parada
  */
-public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, BusLlegada> {
+public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<Object, Void, BusLlegada> {
 
     /**
      * Interfaz que deberian implementar las clases que la quieran usar Sirve
@@ -56,29 +60,34 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<String, Void, Bus
      * Ejecuta el proceso en segundo plano
      */
     @Override
-    protected BusLlegada doInBackground(String... datos) {
+    protected BusLlegada doInBackground(Object... datos) {
 
         BusLlegada llegadasBus = null;
 
         try {
 
-            int paradaI = Integer.parseInt(datos[1]);
+            int paradaI = Integer.parseInt((String)datos[1]);
 
-            String linea = datos[0];
+            String linea = (String) datos[0];
 
-            if(linea.equals("L9")){
+            Context context = (Context) datos[3];
+
+            PreferenceManager.setDefaultValues(context, R.xml.preferences, false);
+            SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(context);
+
+            /* if(linea.equals("L9")){
 
                 //Tiempos isae tram diesel
-                llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegadaConLineaConDestino(datos[0],paradaI, datos[2]);
+                llegadasBus = ProcesarTiemposTramL9Texto.procesaTiemposLlegadaConLineaConDestino((String) datos[0],paradaI, (String) datos[2]);
 
-            } else if (DatosPantallaPrincipal.esLineaTram(datos[0])) {
+            } else if (DatosPantallaPrincipal.esLineaTram((String) datos[0])) {
                 //linea, parada, destino
-                llegadasBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino(datos[0], datos[1], datos[2]);
+                llegadasBus = ProcesarTiemposTramIsaeService.getParadaConLineaConDestino((String) datos[0], (String) datos[1], (String) datos[2]);
 
-            } else {
+            } else {*/
                 //linea, parada
-                llegadasBus = ProcesarTiemposService.procesaTiemposLlegadaConParadaLinea(datos[0], datos[1]);
-            }
+                llegadasBus = ProcesarTiemposService.procesaTiemposLlegadaConParadaLinea((String) datos[0], (String) datos[1], preferencias.getBoolean("enable_https_alberapps", true));
+            //}
 
 
         } catch (Exception e) {
