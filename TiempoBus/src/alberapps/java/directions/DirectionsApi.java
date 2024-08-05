@@ -193,11 +193,11 @@ public class DirectionsApi {
                                         step1.getTransitDetails().setHeadsign(transitDetail.getString("headsign"));
                                     }
 
-                                    if (transitDetail.has("arrival_stop")) {
+                                    if (transitDetail.has("arrival_stop") && !transitDetail.getJSONObject("arrival_stop").isNull("name")) {
                                         step1.getTransitDetails().setArrivalStop(transitDetail.getJSONObject("arrival_stop").getString("name"));
                                     }
 
-                                    if (transitDetail.has("departure_stop")) {
+                                    if (transitDetail.has("departure_stop") && !transitDetail.getJSONObject("departure_stop").isNull("name")) {
                                         step1.getTransitDetails().setDepartureStop(transitDetail.getJSONObject("departure_stop").getString("name"));
                                     }
 
@@ -214,7 +214,9 @@ public class DirectionsApi {
 
                                         JSONObject line1 = transitDetail.getJSONObject("line");
                                         step1.getTransitDetails().getLine().setType(line1.getJSONObject("vehicle").getString("type"));
-                                        step1.getTransitDetails().getLine().setName(line1.getString("name"));
+                                        if(!line1.isNull("name")) {
+                                            step1.getTransitDetails().getLine().setName(line1.getString("name"));
+                                        }
 
                                         if (line1.has("short_name")) {
                                             step1.getTransitDetails().getLine().setShortName(line1.getString("short_name"));

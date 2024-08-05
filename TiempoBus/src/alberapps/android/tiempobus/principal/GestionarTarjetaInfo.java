@@ -219,7 +219,12 @@ public class GestionarTarjetaInfo {
 
                 parada.setText(cursor.getString(paradaIndex));
 
-                localizacion.setText(cursor.getString(direccionIndex));
+                String text = cursor.getString(direccionIndex);
+                if(text.contains("-")) {
+                    text = text.replace(parada.getText().toString() + "-", "");
+                }
+
+                localizacion.setText(text);
 
                 String observa = observaciones.toString();
 

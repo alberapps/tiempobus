@@ -57,6 +57,7 @@ public class InformacionMapaFragment extends SupportMapFragment implements OnMap
 
         getMapAsync(this);
 
+
         return view;
     }
 
