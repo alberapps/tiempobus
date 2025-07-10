@@ -17,6 +17,9 @@
 
         <item name="android:windowContentOverlay">@null</item>
 
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:fitsSystemWindows">true</item>
+
 
         <!--item name="android:windowTranslucentStatus">true</item-->
 
@@ -70,6 +73,9 @@
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
         <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
 
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:fitsSystemWindows">true</item>
+
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="android:colorButtonNormal">@color/mi_material_blue_principal</item>
@@ -109,6 +115,9 @@
 
         <item name="actionBarTheme">@style/Theme.TiempoBus.ActionBarTheme</item>
         <item name="android:statusBarColor">@color/backgroud_preferences_2</item>
+
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:fitsSystemWindows">true</item>
 
         <item name="android:navigationBarColor">@color/navigation_bar_color</item>
 

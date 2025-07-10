@@ -72,6 +72,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -130,7 +132,7 @@ import alberapps.java.util.Conectividad;
  * Actividad principal de la aplicacion
  */
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener, FragmentSecundarioTablet.OnHeadlineSelectedListener,
-        SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener {
+        SwipeRefreshLayout.OnRefreshListener, PrincipalHorarioTramFragment.OnFragmentInteractionListener, OnMapsSdkInitializedCallback {
 
     public static final int SUB_ACTIVITY_REQUEST_PARADA = 1000;
     public static final int SUB_ACTIVITY_REQUEST_ADDFAV = 1001;
@@ -280,6 +282,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Notificaciones.requestNotificationPermission(this);
         }
+
+        MapsInitializer.initialize(getApplicationContext(), MapsInitializer.Renderer.LATEST, this);
 
     }
 
@@ -1770,6 +1774,18 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         handler.sendEmptyMessage(MSG_ERROR_TIEMPOS);
 
+    }
+
+    @Override
+    public void onMapsSdkInitialized(@NonNull MapsInitializer.Renderer renderer) {
+        switch (renderer) {
+            case LATEST:
+                Log.d("TiempoBus Maps","Maps latest");
+                break;
+            case LEGACY:
+                Log.d("TiempoBus Maps","Maps legacy");
+                break;
+        }
     }
 
 

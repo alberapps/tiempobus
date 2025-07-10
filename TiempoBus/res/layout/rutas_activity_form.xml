@@ -62,7 +62,7 @@
                     <EditText
                         android:id="@+id/ruta_origen"
                         android:layout_width="190dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@color/white"
                         android:inputType="text"
                         android:maxLines="1"
@@ -109,7 +109,7 @@
                     <EditText
                         android:id="@+id/ruta_destino"
                         android:layout_width="190dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="50dp"
                         android:background="@color/white"
                         android:inputType="text"
                         android:maxLines="1"

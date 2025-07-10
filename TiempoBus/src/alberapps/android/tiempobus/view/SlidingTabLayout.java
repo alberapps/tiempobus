@@ -194,6 +194,9 @@ public class SlidingTabLayout extends HorizontalScrollView {
         int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources().getDisplayMetrics().density);
         textView.setPadding(padding, padding, padding, padding);
 
+        /// /
+        textView.setLayoutParams(new MarginLayoutParams(padding * 7, padding * 3));
+
         textView.setTextColor(context.getResources().getColor(TEXT_COLOR));
 
         return textView;

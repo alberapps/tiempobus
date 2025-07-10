@@ -48,7 +48,7 @@
     <EditText
         android:id="@+id/texto_buscar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/menu_search"
         android:inputType="text"

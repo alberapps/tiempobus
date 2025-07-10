@@ -22,9 +22,9 @@ public class Comunes {
 
 	public static final int TIMEOUT_WEBSERVICE = 30 * 1000;
 
-	public static final int CONNECT_TIMEOUT = 7000;
+	public static final int CONNECT_TIMEOUT = 9000;
 
-	public static final int READ_TIMEOUT = 7000;
+	public static final int READ_TIMEOUT = 9000;
 
 	//Activar y desactivar actualizacion remota de datos de lineas
 	public static final boolean ACTUALIZACIONES_REMOTAS = false;

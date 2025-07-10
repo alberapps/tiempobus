@@ -1,5 +1,6 @@
 package alberapps.java.tram.news;
 
+import android.content.Context;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -18,7 +19,7 @@ public class ParserXML {
     private final String ns = null;
 
 
-    public Noticias parserNoticias(String urlEntrada, Boolean usarCache, String userAgentDefault) {
+    public Noticias parserNoticias(String urlEntrada, Boolean usarCache, String userAgentDefault, Context context) {
 
         List<NoticiaRss> listaNoticias = new ArrayList<NoticiaRss>();
 
@@ -28,7 +29,12 @@ public class ParserXML {
 
         try {
 
-            String conexion = Conectividad.conexionGetUtf8StringUserAgent(urlEntrada, usarCache, userAgentDefault);
+            String conexion = null;
+            if(urlEntrada.contains("tramalacant.es")) {
+                conexion = Conectividad.conexionGetWebBusCert(urlEntrada, usarCache, userAgentDefault, true, context);
+            } else {
+                conexion = Conectividad.conexionGetUtf8StringUserAgent(urlEntrada, usarCache, userAgentDefault);
+            }
 
             st = Utilidades.stringToStream(conexion);
 

@@ -387,8 +387,8 @@ public class Conectividad {
 
             InputStream caInput = null;
 
-            if (urlGet.contains("tramalicante.es")) {
-                caInput = new BufferedInputStream(contextParam.getAssets().open("crt1.crt"));
+            if (urlGet.contains("tramalacant.es")) {
+                caInput = new BufferedInputStream(contextParam.getAssets().open("tramalacant.pem"));
             } else {
                 caInput = new BufferedInputStream(contextParam.getAssets().open("crt2.crt"));
             }

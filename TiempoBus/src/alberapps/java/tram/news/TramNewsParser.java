@@ -50,7 +50,7 @@ public class TramNewsParser {
 
         ParserXML parserXML = new ParserXML();
 
-        Noticias noticias = parserXML.parserNoticias(builder.toString(), usarCache, userAgentDefault);
+        Noticias noticias = parserXML.parserNoticias(builder.toString(), usarCache, userAgentDefault, context);
 
         NoticiaRss newsItem = null;
 
