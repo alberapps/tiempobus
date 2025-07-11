@@ -48,6 +48,7 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLHandshakeException;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import alberapps.android.tiempobus.util.Comunes;
@@ -381,51 +382,13 @@ public class Conectividad {
 
         try {
 
-
-            // Load CAs from an InputStream
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-
-            InputStream caInput = null;
-
-            if (urlGet.contains("tramalacant.es")) {
-                caInput = new BufferedInputStream(contextParam.getAssets().open("tramalacant.pem"));
-            } else {
-                caInput = new BufferedInputStream(contextParam.getAssets().open("crt2.crt"));
-            }
-
-
-            Certificate ca;
-            try {
-                ca = cf.generateCertificate(caInput);
-                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
-            } finally {
-                caInput.close();
-            }
-
-
-            // Create a KeyStore containing our trusted CAs
-            String keyStoreType = KeyStore.getDefaultType();
-            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("ca", ca);
-
-
-            // Create a TrustManager that trusts the CAs in our KeyStore
-            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-            tmf.init(keyStore);
-
-            // Create an SSLContext that uses our TrustManager
-            SSLContext context = SSLContext.getInstance("TLS");
-            context.init(null, tmf.getTrustManagers(), null);
-
             // Crear url
             urlGet = urlGet + "/";
             URL url = new URL(urlGet);
 
             urlConnection =
                     (HttpsURLConnection) url.openConnection();
-            urlConnection.setSSLSocketFactory(context.getSocketFactory());
+            urlConnection.setSSLSocketFactory(getSSlSocketFactory(urlGet, contextParam));
 
             urlConnection.setReadTimeout(Comunes.READ_TIMEOUT);
             urlConnection.setConnectTimeout(Comunes.CONNECT_TIMEOUT);
@@ -491,6 +454,55 @@ public class Conectividad {
 
         return datos;
 
+    }
+
+
+    public static SSLSocketFactory getSSlSocketFactory(String urlGet, Context contextParam) {
+
+        try {
+            // Load CAs from an InputStream
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+            InputStream caInput = null;
+
+            if (urlGet.contains("tramalacant.es")) {
+                caInput = new BufferedInputStream(contextParam.getAssets().open("tramalacant.pem"));
+            } else if (urlGet.contains("vectalia.es")){
+                caInput = new BufferedInputStream(contextParam.getAssets().open("vectalia.pem"));
+            }
+
+
+            Certificate ca;
+            try {
+                ca = cf.generateCertificate(caInput);
+                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+            } finally {
+                caInput.close();
+            }
+
+
+            // Create a KeyStore containing our trusted CAs
+            String keyStoreType = KeyStore.getDefaultType();
+            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+
+            // Create a TrustManager that trusts the CAs in our KeyStore
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(keyStore);
+
+            // Create an SSLContext that uses our TrustManager
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, tmf.getTrustManagers(), null);
+
+            return context.getSocketFactory();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

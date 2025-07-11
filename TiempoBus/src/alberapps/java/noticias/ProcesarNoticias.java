@@ -22,6 +22,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -29,6 +30,8 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.net.ssl.SSLSocketFactory;
 
 import alberapps.android.tiempobus.util.UtilidadesUI;
 import alberapps.java.util.Conectividad;
@@ -64,13 +67,22 @@ public class ProcesarNoticias {
 
             //Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());
 
-            Document doc = Jsoup.connect(builder.toString()).timeout(10000)
+            Connection jcon = Jsoup.connect(builder.toString()).timeout(10000)
                     .header("Cache-Control", "no-cache")
                     .header("Accept", "application/json, text/javascript, */*; q=0.01")
                     .header("Accept-Encoding", "gzip, deflate, br, zstd")
                     .header("Connection", "keep-alive")
-                    .userAgent(userAgentDefault).get();
+                    .userAgent(userAgentDefault);
 
+
+            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1){
+                SSLSocketFactory fact = Conectividad.getSSlSocketFactory(builder.toString(), context);
+                if(fact != null) {
+                    jcon.sslSocketFactory(fact);
+                }
+            }
+
+            Document doc = jcon.get();
 
             //Seccion de noticias
             Elements seccionNoticias = doc.select("div.novedades_alertas");
