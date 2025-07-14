@@ -225,8 +225,8 @@ favorit per crear la teua llista.</string>
             
     <string name="traducciones">Traduccions</string>
     <string name="traducciones_tit">Suport d\'idioma</string>
-    <string name="traducciones_cambiar">Canviar "locale"</string>
-    <string name="traducciones_locale">locale</string>
+    <string name="traducciones_cambiar">Canviar l\'idioma manualment</string>
+    <string name="traducciones_locale">Idioma</string>
     <string name="traducciones_desc">Informació i autors</string>
     
     

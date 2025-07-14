@@ -29,9 +29,9 @@
     
    <string-array name="entries_locale_desc">
         <item>default</item>
-        <item>es</item>
-        <item>ca</item>
-        <item>en</item>
+        <item>es (castellano)</item>
+        <item>ca (català - valencià)</item>
+        <item>en (english)</item>
         <item>it</item>
         <item>fr</item>
         <item>de</item>  

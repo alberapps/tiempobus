@@ -29,9 +29,9 @@
     
    <string-array name="entries_locale_desc">
         <item>default</item>
-        <item>es</item>
-        <item>ca</item>
-        <item>en</item>
+        <item>es (castellano)</item>
+        <item>ca (català - valencià)</item>
+        <item>en (english)</item>
         <item>it</item>
         <item>fr</item>
         <item>de</item> 
@@ -97,18 +97,18 @@
 
     <string-array name="estaciones_tram">
         <item>Albufereta</item>
-        <item>Alicante-Luceros</item>
-        <item>Alqueries</item>
+        <item>Alicante - Luceros</item>
+        <item>Bosc de Diana</item>
         <item>Altea</item>
         <item>Amerador</item>
-        <item>Av. Benidorm</item>
+        <item>Av. Benidorm / Platja de San Joan</item>
         <item>Av. Naciones</item>
         <item>Benidorm</item>
         <item>Benidorm Intermodal</item>
         <item>Benissa</item>
         <item>Bulevar del Pla</item>
         <item>C.C. La Marina - Finestrat</item>
-        <item>Cabo Huertas</item>
+        <item>Cabo Huertas / Cap de l\'Horta</item>
         <item>Cala Piteres</item>
         <item>Calp</item>
         <item>Camí Coves</item>
@@ -125,20 +125,19 @@
         <item>El Albir</item>
         <item>El Campello</item>
         <item>Fabraquer</item>
-        <item>Ferrandet</item>
         <item>Garbinet</item>
         <item>Garganes</item>
-        <item>Gastón Castelló</item>
+        <item>Pintor Gastón Castelló</item>
         <item>Gata</item>
         <item>Holanda</item>
         <item>Hospital</item>
         <item>Hospital Vila</item>
         <item>Instituto</item>
         <item>L\'Alfàs del Pí</item>
-        <item>La Goteta- Plaza Mar 2</item>
+        <item>La Goteta - Plaza Mar 2</item>
         <item>La Isleta</item>
         <item>La Marina</item>
-        <item>La Pedrera</item>
+        <item>Pedrera - Vessanes</item>
         <item>La Vila Joiosa</item>
         <item>La Xara</item>
         <item>Les Llances</item>
@@ -149,7 +148,7 @@
         <item>Mercado</item>
         <item>Miriam Blasco</item>
         <item>Muchavista</item>
-        <item>Olla de Altea</item>
+        <item>Olla de Altea / l\'Olla - Altea</item>
         <item>Paises Escandinavos</item>
         <item>Paradís</item>
         <item>Pla Barraques</item>
