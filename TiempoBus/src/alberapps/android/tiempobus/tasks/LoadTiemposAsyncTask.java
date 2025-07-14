@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
-import java.security.cert.CertPathValidatorException;
 import java.util.ArrayList;
 
 import javax.net.ssl.SSLHandshakeException;

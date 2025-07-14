@@ -21,6 +21,7 @@ package alberapps.java.noticias;
 import android.content.Context;
 import android.os.Build;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,6 +30,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import javax.net.ssl.SSLSocketFactory;
 
 import alberapps.java.util.Conectividad;
 import alberapps.java.util.Utilidades;
@@ -72,12 +75,7 @@ public class ProcesarDetalleNoticia {
 
             Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", url);*/
 
-            Document doc = Jsoup.connect(url).timeout(10000)
-                    .header("Cache-Control", "no-cache")
-                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
-                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
-                    .header("Connection", "keep-alive")
-                    .userAgent(userAgentDefault).get();
+            Document doc = Conectividad.doGetJSoupDocument(url, userAgentDefault, context);
 
             noticias = new Noticias();
 

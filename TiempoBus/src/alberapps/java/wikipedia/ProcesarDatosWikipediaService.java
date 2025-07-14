@@ -76,7 +76,7 @@ public class ProcesarDatosWikipediaService {
 
         try {
 
-            is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, null, true));
+            is = Utilidades.stringToStream(Conectividad.conexionGetIso(urlGet, true, null, true, 0));
 
             if (is != null) {
 

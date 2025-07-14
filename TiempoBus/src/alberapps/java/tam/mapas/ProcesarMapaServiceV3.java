@@ -137,7 +137,7 @@ public class ProcesarMapaServiceV3 {
             String userAgentDefault = Utilidades.getAndroidUserAgent(context);
 
             //isZip = Conectividad.conexionGetStream(url, userAgentDefault);
-            isZip = Conectividad.doGetJSoup(url, userAgentDefault);
+            isZip = Conectividad.doGetJSoup(url, userAgentDefault, context);
 
             // Verificar si kml llega comprimido en zip
             entrada = new DataInputStream(isZip);

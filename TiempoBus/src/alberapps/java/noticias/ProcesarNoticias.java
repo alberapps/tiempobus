@@ -67,22 +67,7 @@ public class ProcesarNoticias {
 
             //Document doc = Jsoup.parse(Utilidades.stringToStream(conexion), "UTF-8", builder.toString());
 
-            Connection jcon = Jsoup.connect(builder.toString()).timeout(10000)
-                    .header("Cache-Control", "no-cache")
-                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
-                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
-                    .header("Connection", "keep-alive")
-                    .userAgent(userAgentDefault);
-
-
-            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1){
-                SSLSocketFactory fact = Conectividad.getSSlSocketFactory(builder.toString(), context);
-                if(fact != null) {
-                    jcon.sslSocketFactory(fact);
-                }
-            }
-
-            Document doc = jcon.get();
+            Document doc = Conectividad.doGetJSoupDocument(builder.toString(), userAgentDefault, context);
 
             //Seccion de noticias
             Elements seccionNoticias = doc.select("div.novedades_alertas");

@@ -27,6 +27,7 @@ import android.util.Log;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,6 +45,7 @@ import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -155,7 +157,7 @@ public class Conectividad {
      */
     public static String conexionGetUtf8(String url) throws Exception {
 
-        return conexionGetIso(url, false, null, true);
+        return conexionGetIso(url, false, null, true, 0);
 
     }
 
@@ -254,7 +256,7 @@ public class Conectividad {
      * @param usarCache
      * @return string
      */
-    public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
+    public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8, int retry) throws Exception {
 
         // Abrir Conexion
         HttpURLConnection urlConnection = null;
@@ -299,6 +301,12 @@ public class Conectividad {
                 datos = Utilidades.obtenerStringDeStreamUTF8(in);
             } else {
                 datos = Utilidades.obtenerStringDeStream(in);
+            }
+
+            if ((datos.contains("<error><code>051</code>") || datos.contains("<GetPasoParadaResult><status>0</status></GetPasoParadaResult></GetPasoParadaResponse>")) && retry < 3) {
+                Log.d("CONEXION", "Reintento: " + retry);
+                TimeUnit.SECONDS.sleep(2);
+                return conexionGetIso(urlGet, usarCache, userAgent, utf8, retry + 1);
             }
 
         }
@@ -514,7 +522,7 @@ public class Conectividad {
      */
     public static InputStream conexionGetIsoStream(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, false, 0));
 
     }
 
@@ -524,14 +532,14 @@ public class Conectividad {
      */
     public static String conexionGetIsoString(String urlGet) throws Exception {
 
-        return conexionGetIso(urlGet, true, null, false);
+        return conexionGetIso(urlGet, true, null, false, 0);
 
     }
 
 
     public static InputStream conexionGetUtf8Stream(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, true));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, true, null, true, 0));
 
     }
 
@@ -541,7 +549,7 @@ public class Conectividad {
      */
     public static String conexionGetUtf8String(String urlGet, Boolean usarCache) throws Exception {
 
-        return conexionGetIso(urlGet, usarCache, null, true);
+        return conexionGetIso(urlGet, usarCache, null, true, 0);
 
     }
 
@@ -554,7 +562,7 @@ public class Conectividad {
 
     public static String conexionGetUtf8StringUserAgent(String urlGet, Boolean usarCache, String userAgent) throws Exception {
 
-        return conexionGetIso(urlGet, usarCache, userAgent, true);
+        return conexionGetIso(urlGet, usarCache, userAgent, true,0);
 
     }
 
@@ -575,7 +583,7 @@ public class Conectividad {
      */
     public static InputStream conexionGetIsoStream(String urlGet, Boolean usarCache, String userAgent) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, usarCache, userAgent, false, 0));
 
     }
 
@@ -588,7 +596,7 @@ public class Conectividad {
      */
     public static InputStream conexionGetIsoStreamNoCache(String urlGet) throws Exception {
 
-        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, null, false));
+        return Utilidades.stringToStreamIso(conexionGetIso(urlGet, false, null, false, 0));
 
     }
 
@@ -816,11 +824,11 @@ public class Conectividad {
     }
 
 
-    public static InputStream doGetJSoup(String url, String userAgent) throws Exception {
+    public static InputStream doGetJSoup(String url, String userAgent, Context context) throws Exception {
 
         InputStream result = null;
         try {
-            result = Jsoup.connect(url).method(Connection.Method.GET)
+            Connection jcon = Jsoup.connect(url).method(Connection.Method.GET)
                     .ignoreContentType(true)
                     .timeout(10000)
                     .header("Cache-Control", "no-cache")
@@ -829,8 +837,17 @@ public class Conectividad {
 
                     .header("Connection", "keep-alive")
 
-                    .userAgent(userAgent)
-                    .execute().bodyStream();
+                    .userAgent(userAgent);
+
+
+            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1){
+                SSLSocketFactory fact = Conectividad.getSSlSocketFactory(url, context);
+                if(fact != null) {
+                    jcon.sslSocketFactory(fact);
+                }
+            }
+
+            result = jcon.execute().bodyStream();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -838,6 +855,37 @@ public class Conectividad {
         }
 
         return result;
+
+    }
+
+
+    public static Document doGetJSoupDocument(String url, String userAgent, Context context) throws Exception {
+
+        Document doc = null;
+        try {
+            Connection jcon = Jsoup.connect(url).timeout(Comunes.CONNECT_TIMEOUT)
+                    .header("Cache-Control", "no-cache")
+                    .header("Accept", "application/json, text/javascript, */*; q=0.01")
+                    .header("Accept-Encoding", "gzip, deflate, br, zstd")
+                    .header("Connection", "keep-alive")
+                    .userAgent(userAgent);
+
+
+            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1){
+                SSLSocketFactory fact = Conectividad.getSSlSocketFactory(url, context);
+                if(fact != null) {
+                    jcon.sslSocketFactory(fact);
+                }
+            }
+
+            doc = jcon.get();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new Exception("Error al acceder al servicio");
+        }
+
+        return doc;
 
     }
 
