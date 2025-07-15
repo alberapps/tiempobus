@@ -58,8 +58,9 @@ public class LoadTiemposLineaParadaAsyncTask extends AsyncTask<List<Datos>, Void
 	/**
 	 * Ejecuta el proceso en segundo plano
 	 */
-	@Override
-	protected List<BusLlegada> doInBackground(List<Datos>... datos) {
+	@SafeVarargs
+    @Override
+	protected final List<BusLlegada> doInBackground(List<Datos>... datos) {
 		List<BusLlegada> llegadasBus = null;
 		try {
 

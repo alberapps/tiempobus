@@ -30,6 +30,8 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
 import alberapps.java.tam.UtilidadesTAM;
 
 /**
@@ -114,7 +116,10 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         rv.setTextViewText(R.id.bus_parada, parada);
         rv.setTextViewText(R.id.tiempo_principal, tiempoPrimero);
 
-        //formatoLinea(mContext, rv..setba.busLinea, bus.getLinea());
+        if(linea.contains("L") && linea.length() == 2) {
+            rv.setInt(R.id.bus_linea, "setBackgroundResource", R.drawable.circulo_l3);
+            //formatoLinea(mContext, rv, linea);
+        }
 
         // Set the click intent so that we can handle it and show a toast
         // message

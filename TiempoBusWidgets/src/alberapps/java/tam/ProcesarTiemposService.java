@@ -19,6 +19,8 @@
  */
 package alberapps.java.tam;
 
+import android.util.Log;
+
 import alberapps.java.tam.webservice.GetPasoParadaResult;
 import alberapps.java.tam.webservice.GetPasoParadaXmlWebservice;
 
@@ -75,6 +77,8 @@ public class ProcesarTiemposService {
 			buses = bus;
 
 		}
+
+		Log.d("TIEMPOS", buses.getLinea());
 
 		return buses;
 	}

@@ -88,6 +88,7 @@ class TiemposDataProviderObserver extends ContentObserver {
 public class TiemposWidgetProvider extends AppWidgetProvider {
 	public static String CLICK_ACTION = "alberapps.android.tiempobuswidgets.CLICK";
 	public static String REFRESH_ACTION = "alberapps.android.tiempobuswidgets.REFRESH";
+	public static String UPDATE_ACTION = "alberapps.android.tiempobuswidgets.UPDATE";
 	public static String DATO_ID = "alberapps.android.tiempobuswidgets.dato";
 
 	private static HandlerThread sWorkerThread;
@@ -187,6 +188,13 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 			// actualizar(context, intent);
 
+		} else if (action.equals(UPDATE_ACTION)) {
+
+			Log.d("tag", "UPDATE_ACTION ");
+
+			final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+			final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+			this.onUpdate(context,mgr, mgr.getAppWidgetIds(cn));
 		}
 
 		super.onReceive(ctx, intent);
@@ -205,6 +213,7 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 		preferencias = context.getSharedPreferences("datoswidget", Context.MODE_MULTI_PROCESS);
 
 		listaTiempos = new ArrayList<>();
+
 
 		LoadTiemposLineaParadaAsyncTaskResponder loadTiemposLineaParadaAsyncTaskResponder = new LoadTiemposLineaParadaAsyncTaskResponder() {
 			public void tiemposLoaded(List<BusLlegada> tiempos) {
@@ -276,7 +285,17 @@ public class TiemposWidgetProvider extends AppWidgetProvider {
 
 							final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
 							final ComponentName cn = new ComponentName(context, TiemposWidgetProvider.class);
+
+							Log.d("LISTA", "Notificar cambios: " + listaTiempos.size());
+
 							mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn), R.id.tiempos_list);
+
+							final Intent updateIntent = new Intent(context, TiemposWidgetProvider.class);
+							updateIntent.setAction(TiemposWidgetProvider.UPDATE_ACTION);
+							context.sendBroadcast(updateIntent);
+
+
+
 
 						}
 					});

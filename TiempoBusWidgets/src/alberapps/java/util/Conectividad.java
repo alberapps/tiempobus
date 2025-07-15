@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Acceso a la red. Conexiones para distintas versiones de Android
@@ -43,7 +44,7 @@ public class Conectividad {
      */
     public static String conexionGetUtf8(String url) throws Exception {
 
-        return conexionGetIso(url, false, null, true);
+        return conexionGetIso(url, false, null, true, 0);
 
     }
 
@@ -54,7 +55,7 @@ public class Conectividad {
      * @param usarCache
      * @return string
      */
-    public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8) throws Exception {
+    public static String conexionGetIso(String urlGet, boolean usarCache, String userAgent, boolean utf8, int retry) throws Exception {
 
 
         // Abrir Conexion
@@ -96,6 +97,12 @@ public class Conectividad {
                 datos = Utilidades.obtenerStringDeStreamUTF8(in);
             } else {
                 datos = Utilidades.obtenerStringDeStream(in);
+            }
+
+            if ((datos.contains("<error><code>051</code>") || datos.contains("<GetPasoParadaResult><status>0</status></GetPasoParadaResult></GetPasoParadaResponse>")) && retry < 3) {
+                Log.d("CONEXION", "Reintento: " + retry);
+                TimeUnit.SECONDS.sleep(2);
+                return conexionGetIso(urlGet, usarCache, userAgent, utf8, retry + 1);
             }
 
         } catch (IOException e) {
