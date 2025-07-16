@@ -636,7 +636,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
 
                 break;
-            case R.id.navigation_item_link_tw:
+            /*case R.id.navigation_item_link_tw:
 
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "M10");
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Menu - TW");
@@ -645,7 +645,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
                 UtilidadesUI.openWebPage(this, "https://twitter.com/alberapps");
 
-                break;
+                break;*/
         }
 
 

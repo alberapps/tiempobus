@@ -271,7 +271,7 @@ favorit per crear la teua llista.</string>
     <string name="conf_tiempo_recarga_desc">Freqüència amb la qual es realitzen les recàrregues</string>
     <string name="conf_tiempo_recarga_titulo">Freqüència (En segons)</string>
     
-    <string name="aviso_buscador_offline_tram">Recorreguts precarregats amb dades obtingudes de tramalicante.es</string>
+    <string name="aviso_buscador_offline_tram">Recorreguts precarregats amb dades obtingudes de tramalacant.es</string>
     <string name="alarm_tram">El Tram %1$s s\'aproxima a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
@@ -290,7 +290,7 @@ favorit per crear la teua llista.</string>
         Els temps poden variar per raons alienes a l\'aplicació, com el trànsit, canvis de recorregut, etc.
 	    \nLes funcions que utilitzen la base de dades local, poden no disposar dels últims canvis en els recorreguts.
 	    \nEsta aplicació NO és oficial i es desenvolupa de forma independent.
-		\nDades de línies i temps obtinguts de: TAM(alicante.vectalia.es) i TRAM(www.tramalicante.es, www.fgv.es)
+		\nDades de línies i temps obtinguts de: TAM(alicante.vectalia.es) i TRAM(www.tramalacant.es, www.fgv.es)
 		\nMés informació: blog.alberapps.com i al Twitter: @alberapps</string>
 		
 	<string name="legal_b">
@@ -428,7 +428,7 @@ favorit per crear la teua llista.</string>
     <string name="error_twitter">No s\'han pogut recuperar dades de Twitter</string>
     <string name="error_voz_lectura"> Error: No s\'ha pogut llegir el text</string>
     <string name="mensaje_borrar_pregunta"> Esborrar la dada?</string>
-    <string name="horarios_tram_aviso">Els recorreguts es recuperen directament de la web de tramalicante.es</string>
+    <string name="horarios_tram_aviso">Els recorreguts es recuperen directament de la web de tramalacant.es</string>
     <string name="sin_fecha">Sense data</string>
     <string name="noticias_todas">Veure totes</string>
     <string name="noticias_no_todas">Amagar</string>
@@ -449,7 +449,7 @@ favorit per crear la teua llista.</string>
     <string name="transbordos">Transbords</string>
     <string name="notiemporeal">Horari (No és en temps real)</string>
     <string name="sin_novedades">Sense novetats</string>
-    <string name="avisos_web_tram">Avisos Tram - tramalicante.es</string>
+    <string name="avisos_web_tram">Avisos Tram - tramalacant.es</string>
     <string name="que_hay_cerca">Què hi ha a prop?</string>
     <string name="satelite">Satèl·lit</string>
     <string name="origen_destino">Origen i Destinació</string>
@@ -573,8 +573,8 @@ favorit per crear la teua llista.</string>
 
     <string name="drawer_app_name">TempsBus i Tram\nAlberApps</string>
     <string name="configurar_tema_menu">Configurar Tema</string>
-    <string name="configurar_tema_oscuro">Tema Fosc</string>
-    <string name="configurar_tema_claro">Tema Clar</string>
+    <string name="configurar_tema_oscuro">Tema Clar/Fosc</string>
+    <string name="configurar_tema_claro">Tema Clar/Fosc</string>
     <string name="configurar_tema_auto">Tema del Sistema</string>
 
     <string name="info_covid">Informació Covid-19</string>

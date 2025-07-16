@@ -93,7 +93,7 @@ public class AppInfoActivity extends AppCompatActivity {
             botonTram.setOnClickListener(new ImageButton.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    UtilidadesUI.openWebPage(AppInfoActivity.this, "http://www.tramalicante.es");
+                    UtilidadesUI.openWebPage(AppInfoActivity.this, "https://www.tramalacant.es");
 
                 }
             });

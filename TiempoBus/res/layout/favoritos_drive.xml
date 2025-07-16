@@ -171,7 +171,7 @@
 
                 <Button
                     android:id="@+id/drive_exportar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/archivo_drive_backup_3"
@@ -179,7 +179,7 @@
 
                 <Button
                     android:id="@+id/drive_importar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/archivo_drive_backup_4"

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">TiempoBus y Tram</string>
-    <string name="app_version" translatable="false">5.5.0</string>
+    <string name="app_version" translatable="false">5.5.1</string>
     <string name="app_licencia" translatable="false">http://www.gnu.org/licenses/gpl.html</string>
     <string name="app_autor" translatable="false">Alberto Montiel (2025)</string>
     <string name="app_autor_mail" translatable="false">alberapps@gmail.com</string>
@@ -177,7 +177,7 @@
     <string name="noticias_links">Enlaces posibles</string>
     <string name="noticias_instrucciones">Pulsar sobre el aviso para abrir su detalle.\nPowered by Jsoup</string>
     <string name="aviso_buscador_online">Los recorridos se recuperan directamente de la web de alicante.vectalia.es.</string>
-    <string name="horarios_tram_aviso">Los recorridos se recuperan directamente de la web de tramalicante.es</string>
+    <string name="horarios_tram_aviso">Los recorridos se recuperan directamente de la web de tramalacant.es</string>
     <string name="streetview_ko">Error al intentar acceder a Street View, comprueba si está instalado.</string>
     <string name="streetview_boton">Street View</string>
     <string name="guion" translatable="false">-</string>
@@ -283,7 +283,7 @@
     <string name="conf_tiempo_recarga_desc">Frecuencia con la que se realizan las recargas</string>
     <string name="conf_tiempo_recarga_titulo">Frecuencia (En segundos)</string>
 
-    <string name="aviso_buscador_offline_tram">Recorridos precargados con datos obtenidos de tramalicante.es</string>
+    <string name="aviso_buscador_offline_tram">Recorridos precargados con datos obtenidos de tramalacant.es</string>
     <string name="alarm_tram">El Tram %1$s se acerca a la parada %2$s</string>
     <string name="notification_title_tram">¡Alerta de Tram!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
@@ -299,7 +299,7 @@
         \nEstos tiempos pueden variar por razones ajenas a la aplicación, como el tráfico, cambios de recorrido, etc.
 	    \nLas funciones que usan la base de datos, pueden no disponer de los últimos cambios en los recorridos.
 	    \nEsta aplicación NO es oficial y se desarrolla de forma independiente.
-		\nDatos de líneas y tiempos obtenidos de: TAM(alicante.vectalia.es) y TRAM(www.tramalicante.es, www.fgv.es)
+		\nDatos de líneas y tiempos obtenidos de: TAM(alicante.vectalia.es) y TRAM(www.tramalacant.es, www.fgv.es)
 		\nMás información: blog.alberapps.com y twitter.com/alberapps</string>
 
 	<string name="legal_b">
@@ -506,13 +506,13 @@
     <string name="clear_cache_complete_toast">Caches have been cleared</string>
     <string name="imageview_description">Image Thumbnail</string>
     <string name="no_network_connection_toast">No network connection found</string>
-    <string name="avisos_web_tram">Avisos Tram - tramalicante.es</string>
+    <string name="avisos_web_tram">Avisos Tram - tramalacant.es</string>
     <string name="sin_novedades">Sin novedades</string>
     <string name="que_hay_cerca">¿Qué hay cerca?</string>
     <string name="tram_txt" translatable="false">Tram</string>
     <string name="tram_tw_txt" translatable="false">\@tramdealicante</string>
     <string name="tiempo_real">Tiempo Real</string>
-    <string name="tramalicante" translatable="false">tramalicante.es</string>
+    <string name="tramalicante" translatable="false">tramalacant.es</string>
 
     <string name="error_tiempos_tram">Información en Tiempo Real NO DISPONIBLE de forma indefinida.\nTram de Alicante no ofrece este servicio actualmente.</string>
 
@@ -667,7 +667,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
 
-    <string name="url_tram" translatable="false">tramalicante.es</string>
+    <string name="url_tram" translatable="false">tramalacant.es</string>
     <string name="url_fgv" translatable="false">fgv.es</string>
 
     <string name="info_error">Información no disponible</string>
@@ -739,8 +739,8 @@
 
 
     <string name="configurar_tema_menu">Configurar Tema</string>
-    <string name="configurar_tema_oscuro">Tema Oscuro</string>
-    <string name="configurar_tema_claro">Tema Claro</string>
+    <string name="configurar_tema_oscuro">Tema Claro/Oscuro</string>
+    <string name="configurar_tema_claro">Tema Claro/Oscuro</string>
     <string name="configurar_tema_auto">Tema del Sistema</string>
 
     <string name="info_covid">Información Covid-19</string>

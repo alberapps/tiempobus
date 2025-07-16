@@ -36,7 +36,7 @@ import alberapps.java.util.Conectividad;
  */
 public class ProcesarAvisosTram {
 
-    public static String URL_TRAM_AVISOS = "http://www.tramalicante.es/page.php?page=144";
+    public static String URL_TRAM_AVISOS = "https://www.tramalacant.es/page.php?page=144";
 
     public static List<Aviso> getAvisosTram() throws Exception {
 
@@ -45,7 +45,7 @@ public class ProcesarAvisosTram {
         String idioma = UtilidadesUI.getIdiomaRssTram();
 
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https").authority("www.tramalicante.es").appendPath("page.php")
+        builder.scheme("https").authority("www.tramalacant.es").appendPath("page.php")
                 .appendQueryParameter("page", "144")
                 .appendQueryParameter("idioma", idioma);
 

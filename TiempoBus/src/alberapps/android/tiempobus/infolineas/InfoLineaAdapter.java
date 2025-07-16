@@ -188,7 +188,7 @@ public class InfoLineaAdapter extends ArrayAdapter<BusLinea> implements Filterab
                 informacionText1.setText(R.string.infolinea_horarios_pdf);
 
                 //Desactivado horarios
-                informacionText1.setVisibility(View.INVISIBLE);
+                //informacionText1.setVisibility(View.INVISIBLE);
 
                 // Carga de horarios tram
                 // Link informacion

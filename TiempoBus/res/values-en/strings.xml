@@ -270,7 +270,7 @@
     <string name="conf_tiempo_recarga_desc">Frequency of reloads</string>
     <string name="conf_tiempo_recarga_titulo">Frequency (in seconds)</string>
 
-    <string name="aviso_buscador_offline_tram">Pre-loaded routes obtained from tramalicante.es</string>
+    <string name="aviso_buscador_offline_tram">Pre-loaded routes obtained from tramalacant.es</string>
     <string name="alarm_tram">Tram %1$s arrives at the stop %2$s</string>
     <string name="notification_title_tram">Tram Alert!</string>
     <string name="mapas_vehiculo_titulo_tram">TRAM</string>
@@ -285,7 +285,7 @@
         \nThese times may vary for reasons unrelated to the app, as traffic, route changes, etc.
 	    \nFeatures using the local database may not show the latest route changes.
 	    \nThis application is UNofficial and its development is independent.
-		\nLines data and times obtained from:  TAM (alicante.vectalia.es) and TRAM (www.tramalicante.es, www.fgv.es)
+		\nLines data and times obtained from:  TAM (alicante.vectalia.es) and TRAM (www.tramalacant.es, www.fgv.es)
 		\nLearn more: blog.alberapps.com and twitter.com/alberapps</string>
 	
 	<string name="legal_b">
@@ -356,7 +356,7 @@
 
     <string name="foreground_service_started_2">Verify time every 60 seconds</string>
     <string name="bus_tram">Bus and Tram</string>
-    <string name="horarios_tram_aviso">Tours are retrieved directly from the site tramalicante.es</string>
+    <string name="horarios_tram_aviso">Tours are retrieved directly from the site tramalacant.es</string>
     <string name="notiemporeal">Timetable (It is not realtime)</string>
     <string name="noticias_no_todas">Hide</string>
     <string name="noticias_todas">See all</string>
@@ -368,7 +368,7 @@
     <string name="imageview_description">Image Thumbnail</string>
     <string name="no_network_connection_toast">No network connection found</string>
     <string name="andar">Walk</string>
-    <string name="avisos_web_tram">Tram Notices - tramalicante.es</string>
+    <string name="avisos_web_tram">Tram Notices - tramalacant.es</string>
     <string name="duracion">Duration</string>
     <string name="grupos_todos">All groups</string>
     <string name="sin_novedades">No news</string>

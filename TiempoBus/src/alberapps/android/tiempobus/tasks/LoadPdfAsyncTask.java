@@ -56,10 +56,10 @@ public class LoadPdfAsyncTask extends AsyncTask<Object, Void, Object> {
             Context context = (Context) datos[1];
             String userAgentDefault = (String) datos[2];
 
-            String url = PdfHorariosBus.getUrlPdfLinea(linea, userAgentDefault, true);
+            String url = PdfHorariosBus.getUrlPdfLinea(linea, userAgentDefault, true, context);
 
             if(url != null && !url.equals("")) {
-                PdfHorariosBus.abrirPdfGDocs(url, context);
+                PdfHorariosBus.abrirPdf(url, context);
             }else{
                 return false;
             }

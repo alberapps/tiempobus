@@ -201,6 +201,7 @@ public class InfoLineaParadasAdapter extends ArrayAdapter<PlaceMark> {
         } else {
 
             informacionText.setText(R.string.infolinea_horarios_pdf);
+            informacionText.setVisibility(View.INVISIBLE);
             //informacionPdf.setVisibility(View.VISIBLE);
 
             // Carga de horarios tram

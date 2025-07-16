@@ -66,6 +66,18 @@ public class PdfHorariosBus {
 
     }
 
+    /**
+     * Abrir pdf
+     *
+     * @param url
+     */
+    public static void abrirPdf(String url, Context context) {
+
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        context.startActivity(Intent.createChooser(i, "PDF"));
+
+    }
+
 
     /**
      * Noticias de tipo Aviso y Modificacion
@@ -74,7 +86,7 @@ public class PdfHorariosBus {
      * @return link
      * @throws Exception
      */
-    public static String getUrlPdfLinea(String linea, String userAgentDefault, boolean horario) throws Exception {
+    public static String getUrlPdfLinea(String linea, String userAgentDefault, boolean horario, Context context) throws Exception {
 
         InputStream st = null;
 
@@ -83,7 +95,9 @@ public class PdfHorariosBus {
         try {
 
 
-            Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(URL_SUBUS_PLANOS, true, userAgentDefault)), "UTF-8", URL_SUBUS_PLANOS);
+            Document doc = Conectividad.doGetJSoupDocument(URL_SUBUS_PLANOS, userAgentDefault, context);
+
+            //Document doc = Jsoup.parse(Utilidades.stringToStream(Conectividad.conexionGetUtf8StringUserAgent(URL_SUBUS_PLANOS, true, userAgentDefault)), "UTF-8", URL_SUBUS_PLANOS);
 
 
             //Seccion de pdf

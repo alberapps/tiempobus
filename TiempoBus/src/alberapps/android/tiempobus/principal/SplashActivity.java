@@ -37,8 +37,10 @@ public class SplashActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if(preferencias.getBoolean("dark_theme",false)) {
+        if(preferencias.contains("dark_theme") && preferencias.getBoolean("dark_theme",false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if(preferencias.contains("dark_theme") && !preferencias.getBoolean("dark_theme",false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
         Intent intent = new Intent(this, MainActivity.class);

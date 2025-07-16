@@ -97,8 +97,8 @@ public class GestionTram {
 
         if (bus.getNumLinea().equals("L1") || bus.getNumLinea().equals("L3")) {
 
-            seleccionHorarioTramL1L3();
-
+            //seleccionHorarioTramL1L3();
+            abrirPdfGDocs(0);
         } else if (bus.getNumLinea().equals("L2")) {
             abrirPdfGDocs(2);
         } else if (bus.getNumLinea().equals("L4")) {
@@ -106,9 +106,9 @@ public class GestionTram {
         } else if (bus.getNumLinea().equals("L9")) {
             abrirPdfGDocs(4);
         } else if (bus.getNumLinea().equals("L5")) {
-            //abrirPdfGDocs(4);
+            abrirPdfGDocs(3);
 
-            Toast.makeText(context, context.getString(R.string.info_error), Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, context.getString(R.string.info_error), Toast.LENGTH_LONG).show();
 
         }
 

@@ -1379,7 +1379,7 @@ public class DatosPantallaPrincipal {
             imgTram.setOnClickListener(new TextView.OnClickListener() {
                 public void onClick(View arg0) {
 
-                    UtilidadesUI.openWebPage(context, "http://www.tramalicante.es");
+                    UtilidadesUI.openWebPage(context, "https://www.tramalacant.es");
 
                 }
             });
